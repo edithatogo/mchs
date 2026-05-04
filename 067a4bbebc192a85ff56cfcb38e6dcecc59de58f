@@ -1,0 +1,16 @@
+Modernize Python tooling and validation stack.
+
+Changed:
+- Packaging/lockfile: pyproject, requirements files, uv.lock
+- CI: GitHub Actions PR CI, slow validation, Codecov
+- Typing: ty.toml and scoring layout fix
+- Validation: Hypothesis/mutmut/Scalene helper tests
+- Docs: README, DEVELOPMENT, Conductor docs, Vale, Renovate
+- Tests: CLI, helpers, outpatient coverage, validation tooling
+
+Validated with:
+- uv run pytest -q
+- uv run --with pytest-cov pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=80 -q
+- uv run --with ruff ruff format --check .
+- uv run --with ruff ruff check .
+- uv run ty check
