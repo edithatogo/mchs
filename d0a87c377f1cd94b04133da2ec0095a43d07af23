@@ -1,0 +1,13 @@
+Conductor track: ar_drg_grouper_integration_20260512
+
+Validation:
+- uv run ruff check nwau_py/ar_drg_grouper.py tests/test_ar_drg_grouper_integration_track.py
+- uv run ty check --error all nwau_py/ar_drg_grouper.py tests/test_ar_drg_grouper_integration_track.py
+- uv run pytest tests/test_ar_drg_grouper_integration_track.py tests/test_ar_drg_icd_mapping_registry_track.py tests/test_coding_set_version_registry.py tests/test_formula_parameter_bundle_pipeline.py -q
+- python3 -m json.tool contracts/ar-drg-icd-mapping-registry/*.json and examples/*.json
+- smoke: local external grouper reference validates for 2026
+
+Review:
+- Interface-contract scope complete.
+- Does not execute or bundle proprietary AR-DRG grouping logic.
+- Licensed grouper execution and parity remain local/user-supplied and deferred to later tracks.
