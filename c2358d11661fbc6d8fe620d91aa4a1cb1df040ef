@@ -1,0 +1,17 @@
+Task: IHACPA 2026-27 support review corrections
+
+Summary:
+- Added SHA-256 checksum evidence for core NEP26/NEC26 determination and technical specification downloads from official IHACPA resource links.
+- Reconciled IHACPA 2026-27 track metadata/index with completed-but-conservative status.
+- Removed reliance on zero-byte extracted NEP26 SAS placeholders from community mental health inventory; NEP26 now references raw source artifacts conservatively.
+- Added explicit source note that NEP26 calculator parity validation is not claimed without SAS/Excel output comparison tests.
+
+Validation:
+- uv run ruff check targeted 2026-27 Python/test files: passed.
+- uv run ty check --error all targeted 2026-27 Python/test files: passed.
+- uv run pytest tests/test_pricing_constants.py tests/test_ihacpa_2026_27_track.py tests/test_community_mh_inventory.py -q: 28 passed.
+- uv run pytest tests/test_docs_site_sota_refresh.py tests/test_source_archive_manifest.py tests/test_ihacpa_2026_27_track.py tests/test_community_mh_inventory.py tests/test_pricing_constants.py -q: 38 passed.
+
+Residual:
+- HAC/AHR companion technical-specification hashes are deferred to a safety-and-quality follow-on track.
+- NEP26 calculator parity remains unclaimed until SAS/Excel output validation exists.
