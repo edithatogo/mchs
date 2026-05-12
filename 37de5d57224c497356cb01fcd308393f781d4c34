@@ -1,0 +1,15 @@
+Track: Coding-Set Version Registry
+
+Implemented a metadata-only coding-set registry and compatibility validators for AR-DRG, AECC, UDG, Tier 2, AMHCC, ICD-10-AM, ACHI, ACS, and AN-SNAP. Added package lazy exports, CLI registry listing and compatibility checks, contract fixtures, Starlight governance docs, Conductor strategy/review/CI notes, and focused regression tests. Licensed code tables and groupers remain excluded.
+
+Validation:
+- uv run ruff check nwau_py/coding_set_registry.py nwau_py/coding_set_registry_data.py nwau_py/cli/main.py nwau_py/__init__.py tests/test_coding_set_version_registry.py
+- uv run ty check --error all nwau_py/coding_set_registry.py nwau_py/coding_set_registry_data.py nwau_py/cli/main.py nwau_py/__init__.py tests/test_coding_set_version_registry.py
+- uv run pytest tests/test_coding_set_version_registry.py tests/test_classification_validation.py tests/test_reference_data_manifest_schema.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- python3 -m json.tool contracts/coding-set-registry/coding-set-registry.contract.json >/dev/null
+- python3 -m json.tool contracts/coding-set-registry/coding-set-registry.schema.json >/dev/null
+- python3 -m json.tool contracts/coding-set-registry/examples/registry-entries.json >/dev/null
+- python3 -m json.tool contracts/coding-set-registry/examples/compatibility-validation.pass.json >/dev/null
+- python3 -m json.tool contracts/coding-set-registry/examples/compatibility-validation.fail.json >/dev/null
+- uv run funding-calculator coding-set registry list --year 2026 > /tmp/coding-set-registry.json && python3 -m json.tool /tmp/coding-set-registry.json >/dev/null
+- uv run funding-calculator coding-set registry validate-compatibility --entry AR-DRG --year 2026 --version v12.0 > /tmp/coding-set-compatible.json && python3 -m json.tool /tmp/coding-set-compatible.json >/dev/null
