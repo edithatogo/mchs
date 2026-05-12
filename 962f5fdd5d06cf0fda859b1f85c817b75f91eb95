@@ -2,7 +2,7 @@ Task: R Binding
 
 Summary:
 - Selected a thin R wrapper over the shared CLI plus CSV file interchange as the initial least-duplicative path, with Arrow/Parquet deferred until the shared file contract exists.
-- Added an  prototype under r-binding/ with DESCRIPTION, NAMESPACE, wrapper functions, README, Rd docs, and testthat guardrails.
+- Added an nwauR prototype under r-binding/ with DESCRIPTION, NAMESPACE, wrapper functions, README, Rd docs, and testthat guardrails.
 - Added R Markdown/Quarto tutorial documentation using synthetic fixtures and no CRAN-readiness claim.
 - Added CI feasibility notes and local R CMD check evidence.
 - Added pytest text-contract tests that enforce wrapper-only behavior, selected strategy, fixture reuse, and no duplicated formula constants in R source.
