@@ -1,0 +1,14 @@
+C ABI binding track completed.
+
+Validation:
+- uv run ruff check tests/test_c_abi_binding_track.py
+- uv run ty check --error all tests/test_c_abi_binding_track.py
+- uv run pytest tests/test_c_abi_binding_track.py tests/test_docs_site_sota_refresh.py -q
+- cargo fmt --all --check in rust
+- cargo test -p nwau-c-abi
+- cargo clippy -p nwau-c-abi --all-targets --all-features -- -D warnings
+
+Notes:
+- Added wrapper-only Rust C ABI scaffold with committed header.
+- ABI exposes version queries, borrowed string views, status messages, and a fail-closed acute 2025 entrypoint.
+- Production readiness remains blocked on shared fixture parity and ABI compatibility gates.
