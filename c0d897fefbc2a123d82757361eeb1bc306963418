@@ -1,0 +1,16 @@
+Phase 2 Verification Report
+=========================
+Task: Define community mental health input/output schema and validation fixtures.
+Files changed:
+  - nwau_py/calculators/community_mh_contract.py (new)
+  - nwau_py/contracts.py (added community_mh identifier)
+  - tests/test_community_mh_contract.py (11 tests)
+  - conductor/.../fixture_gaps.md (gap record)
+
+Tests: 29/29 passed (Phase 1 + Phase 2)
+Key deliverables:
+  - Community MH contract with distinct calculator_id 'community_mh'
+  - Required input columns: AMHCC, SC_PAT_PUB, SC_NOPAT_PUB, STATE
+  - Output column: NWAU{suffix}
+  - Fixture gap record for all NEP21-NEP25 years
+  - Input/output validation helpers
