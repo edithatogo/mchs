@@ -1,0 +1,21 @@
+Task: Classification Input Validation foundation
+
+Summary:
+- Added conservative classification compatibility matrix for AR-DRG, AECC, UDG, Tier 2, and AMHCC.
+- Added nwau_py.classification_validation with year-aware and stream-aware preflight validation helpers.
+- Added package-level lazy exports for the validation API.
+- Added focused tests for valid, missing, invalid, and incompatible version cases.
+- Updated track metadata/index/plan to keep the track in progress and identify dependencies on coding-set registry and licensed-product workflow tracks.
+
+Review findings addressed:
+- Matrix is explicitly non-canonical and must consume the coding-set registry/licensing tracks.
+- Validation is pricing-year aware and stream-aware; UDG and AECC are not treated as interchangeable.
+- Licensed/non-redistributable AR-DRG content is represented by metadata only, not bundled tables/manuals.
+
+Validation:
+- uv run ruff check nwau_py/classification_validation.py nwau_py/__init__.py tests/test_classification_validation.py
+- uv run ty check --error all nwau_py/classification_validation.py nwau_py/__init__.py tests/test_classification_validation.py
+- uv run pytest tests/test_classification_validation.py tests/test_ihacpa_2026_27_track.py (13 passed)
+
+Residual risk:
+- Track remains in progress; validator is not yet wired into every calculator/CLI entry point.
