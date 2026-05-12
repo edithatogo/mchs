@@ -1,0 +1,12 @@
+CLI/file interoperability binding track completed.
+
+Validation:
+- uv run ruff check tests/test_cli_file_interop_binding_track.py tests/test_cli.py
+- uv run ty check --error all tests/test_cli_file_interop_binding_track.py tests/test_cli.py nwau_py/cli/main.py
+- uv run pytest tests/test_cli_file_interop_binding_track.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- uv run funding-calculator interop contract | python3 -m json.tool
+
+Notes:
+- Added additive funding-calculator interop contract command.
+- Added machine-readable CLI/file contract schema, contract, and synthetic manifests.
+- CI notes use the current Python Click entrypoint; Rust binary gates are explicitly deferred.
