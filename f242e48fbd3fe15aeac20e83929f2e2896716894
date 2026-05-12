@@ -1,0 +1,12 @@
+Conductor track: formula_parameter_bundle_pipeline_20260512
+
+Validation:
+- uv run ruff check nwau_py/formula_parameter_bundle.py nwau_py/calculators/acute.py nwau_py/calculators/__init__.py nwau_py/data/loader.py nwau_py/__init__.py tests/test_formula_parameter_bundle_pipeline.py
+- uv run ty check --error all nwau_py/formula_parameter_bundle.py nwau_py/calculators/acute.py nwau_py/calculators/__init__.py nwau_py/data/loader.py nwau_py/__init__.py tests/test_formula_parameter_bundle_pipeline.py
+- uv run pytest tests/test_formula_parameter_bundle_pipeline.py tests/test_pricing_year_validation_gates.py tests/test_pricing_year_diff_tooling.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- python3 -m json.tool reference-data/2025/parameter-bundles/acute/acute-2025-canary/v1/bundle.json >/dev/null
+- formula bundle canary smoke loaded acute-2025-canary source-only with 3 weights
+
+Review:
+- Source-only canary scope complete.
+- Official SAS/Excel extraction remains follow-on and no parity validation is claimed.
