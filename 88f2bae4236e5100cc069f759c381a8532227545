@@ -1,0 +1,12 @@
+Conductor track: ar_drg_icd_mapping_registry_20260512
+
+Validation:
+- uv run ruff check nwau_py/ar_drg_mapping_registry.py nwau_py/ar_drg_mapping_registry_data.py nwau_py/calculators/acute.py nwau_py/__init__.py tests/test_ar_drg_icd_mapping_registry_track.py
+- uv run ty check --error all nwau_py/ar_drg_mapping_registry.py nwau_py/ar_drg_mapping_registry_data.py nwau_py/calculators/acute.py nwau_py/__init__.py tests/test_ar_drg_icd_mapping_registry_track.py
+- uv run pytest tests/test_ar_drg_icd_mapping_registry_track.py tests/test_coding_set_version_registry.py tests/test_formula_parameter_bundle_pipeline.py -q
+- python3 -m json.tool contracts/ar-drg-icd-mapping-registry/*.json and examples/*.json
+
+Review:
+- Metadata-registry scope complete.
+- Does not implement or redistribute proprietary AR-DRG grouping tables or grouper logic.
+- Table-level parity remains deferred to grouper integration and parity fixture tracks.
