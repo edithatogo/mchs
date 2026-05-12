@@ -1,0 +1,7 @@
+Task: Define community mental health input/output schema and validation fixtures.
+Summary: Created community_mh_contract.py with CalculatorContract that requires AMHCC, SC_PAT_PUB, SC_NOPAT_PUB, STATE as input columns and NWAU{suffix} as output column. Added community_mh identifier to shared CALCULATOR_IDENTIFIERS. Created fixture_gaps.md documenting that no golden fixtures exist for any community MH year. Tests cover valid/invalid input/output validation and contract properties.
+
+Files created:
+  - nwau_py/calculators/community_mh_contract.py (contract module)
+  - tests/test_community_mh_contract.py (11 tests)
+  - conductor/.../fixture_gaps.md (gap record)
