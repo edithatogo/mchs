@@ -1,0 +1,9 @@
+Track: IHACPA Source Scanner
+
+Implemented a conservative offline IHACPA source scanner under the installed `funding-calculator sources ...` CLI surface. Added source discovery helpers, dry-run/add-year CLI commands, contract fixtures, Starlight governance docs, track strategy/CI notes, synthetic parser fixtures, and regression tests.
+
+Validation:
+- uv run ruff check nwau_py/source_scanner.py nwau_py/cli/main.py tests/test_ihacpa_source_scanner.py
+- uv run ty check --error all nwau_py/source_scanner.py nwau_py/cli/main.py tests/test_ihacpa_source_scanner.py
+- uv run pytest tests/test_ihacpa_source_scanner.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- uv run funding-calculator sources scan --html-file tests/fixtures/source_scanner/nwau_scanner_listing.html --source-page-url https://www.ihacpa.gov.au/ --year 2027 --json > /tmp/source-scan.json && python3 -m json.tool /tmp/source-scan.json >/dev/null
