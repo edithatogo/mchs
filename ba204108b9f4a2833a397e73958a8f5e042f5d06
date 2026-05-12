@@ -1,0 +1,12 @@
+TypeScript/WASM binding track completed.
+
+Validation:
+- uv run ruff check tests/test_typescript_wasm_binding_track.py
+- uv run ty check --error all tests/test_typescript_wasm_binding_track.py
+- uv run pytest tests/test_typescript_wasm_binding_track.py tests/test_docs_site_sota_refresh.py -q
+- npm install && npm audit --audit-level=moderate && npm run typecheck && npm test in wasm-binding
+
+Notes:
+- Added wrapper-only TypeScript adapter shell for future wasm-pack output.
+- Browser demos remain synthetic-data-only and not publication-ready.
+- npm audit reported zero vulnerabilities after upgrading Vitest to 4.1.6.
