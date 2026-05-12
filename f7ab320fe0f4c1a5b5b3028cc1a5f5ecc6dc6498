@@ -1,0 +1,13 @@
+Track: Pricing-Year Diff Tooling
+
+Implemented conservative offline pricing-year manifest diff tooling under `funding-calculator diff-year <from-year> <to-year>`. Added markdown default output, JSON output with `--json`, comparison across constants, coding sets, source artifacts, validation metadata, and gaps, plus contract fixtures, Starlight governance docs, Conductor strategy/review/CI notes, and regression tests.
+
+Validation:
+- uv run ruff check nwau_py/pricing_year_diff.py nwau_py/cli/main.py tests/test_pricing_year_diff_tooling.py
+- uv run ty check --error all nwau_py/pricing_year_diff.py nwau_py/cli/main.py tests/test_pricing_year_diff_tooling.py
+- uv run pytest tests/test_pricing_year_diff_tooling.py tests/test_pricing_year_validation_gates.py tests/test_reference_data_manifest_schema.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- python3 -m json.tool contracts/pricing-year-diff/pricing-year-diff.contract.json >/dev/null
+- python3 -m json.tool contracts/pricing-year-diff/pricing-year-diff.schema.json >/dev/null
+- python3 -m json.tool contracts/pricing-year-diff/examples/diff-year.json >/dev/null
+- uv run funding-calculator diff-year 2025 2026 --json > /tmp/diff-year-2025-2026.json && python3 -m json.tool /tmp/diff-year-2025-2026.json >/dev/null
+- uv run funding-calculator diff-year 2025 2026 > /tmp/diff-year-2025-2026.md && test -s /tmp/diff-year-2025-2026.md
