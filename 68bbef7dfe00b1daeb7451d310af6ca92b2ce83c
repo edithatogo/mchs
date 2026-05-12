@@ -1,0 +1,12 @@
+Julia binding track completed.
+
+Validation:
+- uv run ruff check tests/test_julia_binding_track.py
+- uv run ty check --error all tests/test_julia_binding_track.py
+- uv run pytest tests/test_julia_binding_track.py tests/test_docs_site_sota_refresh.py -q
+- julia --project=julia-binding -e 'using Pkg; Pkg.test()'
+
+Notes:
+- Wrapper-only Julia prototype calls the shared Python CLI.
+- CSV is the executable prototype; Arrow remains the target interchange format.
+- C ABI, ccall, jlrs, and General Registry readiness are deferred until fixture-backed parity and stable contracts exist.
