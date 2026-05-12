@@ -1,0 +1,19 @@
+Task: Historical IHACPA Coverage Audit
+
+Summary:
+- Added historical source inventory from 2012-13 through 2026-27 with separate NEP, technical-spec, NWAU calculator, price-weight, NHCDC/costing, and validation columns.
+- Added foundational 2012-13 NEP and technical-spec PDF hashes while keeping 2012-13 calculator support as an explicit gap.
+- Added manifest gap notes and a validation roadmap separating specification extraction from calculator parity.
+- Updated docs and coverage matrices to prevent NHCDC/costing evidence from being treated as calculator support.
+- Added executable validation script for the historical inventory contract.
+- Marked the Conductor track complete with explicit validation gaps.
+
+Validation:
+- uv run ruff check scripts/validate_historical_ihacpa_inventory.py tests/test_historical_ihacpa_coverage_track.py: passed.
+- uv run ty check --error all scripts/validate_historical_ihacpa_inventory.py tests/test_historical_ihacpa_coverage_track.py: passed.
+- uv run pytest tests/test_historical_ihacpa_coverage_track.py tests/test_docs_site_sota_refresh.py tests/test_source_archive_manifest.py -q: 15 passed.
+- uv run python scripts/validate_historical_ihacpa_inventory.py: passed.
+
+Residual:
+- No 2012-13 NWAU calculator artifact was proven.
+- Full hash census for every historical downloadable artifact remains follow-on work before stronger support claims.
