@@ -1,0 +1,18 @@
+Task: Community Mental Health Calculator Support Phase 3 stabilization
+
+Summary:
+- Added year-aware community mental health contract construction and validation.
+- Registered community mental health as a distinct fixture service stream.
+- Documented shadow-pricing versus active-pricing status and fixture gaps.
+- Fixed Conductor plan consistency for completed Phase 1 subtasks and Phase 2/3 work.
+- Corrected ty strict CI/pre-commit usage from invalid --strict flag to --error all.
+
+Review fixes applied:
+- Addressed reviewer finding that output validation was hardcoded to 2025 by adding year-aware validators and tests for 2021-2025.
+- Addressed reviewer finding that community MH was not distinct in validation/docs surfaces.
+- Addressed plan inconsistency for completed inventory subtasks.
+
+Validation:
+- uv run ty check --error all nwau_py/contracts.py nwau_py/calculators/community_mh_contract.py nwau_py/calculators/community_mh_inventory.py tests/test_contracts.py tests/test_community_mh_contract.py tests/test_community_mh_inventory.py tests/test_fixture_manifest.py
+- uv run ruff check nwau_py/contracts.py nwau_py/calculators/community_mh_contract.py nwau_py/calculators/community_mh_inventory.py nwau_py/fixtures.py tests/test_contracts.py tests/test_community_mh_contract.py tests/test_community_mh_inventory.py tests/test_fixture_manifest.py
+- uv run pytest tests/test_contracts.py tests/test_community_mh_contract.py tests/test_community_mh_inventory.py tests/test_fixture_manifest.py (69 passed)
