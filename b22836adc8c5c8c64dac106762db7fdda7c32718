@@ -1,0 +1,15 @@
+Task: IHACPA 2026-27 Support Phase 1 source-inventory increment
+
+Summary:
+- Added a conservative 2026-27 source inventory for NEP, NEC, technical specs, classification versions, calculators, and price weights.
+- Updated public docs to state NEP26/calculator availability without claiming parity validation.
+- Added tests for track files, source inventory scope, official URLs, conservative validation status, AR-DRG v12.0, and Tier 2 v10.0.
+
+Reviewer caveats:
+- Official currentness reviewed against IHACPA pages on 2026-05-12; NEP26 is ,418 per NWAU and calculators are listed.
+- Phase 1 remains in progress because durable checksums/canonical provenance manifest entries are not complete.
+- Prefer stable IHACPA landing pages in docs; direct PDF/XLSB/7Z assets may rotate.
+
+Validation:
+- uv run pytest tests/test_ihacpa_2026_27_track.py tests/test_archive_ihacpa_sources.py tests/test_source_archive_manifest.py (8 passed)
+- uv run ruff check tests/test_ihacpa_2026_27_track.py
