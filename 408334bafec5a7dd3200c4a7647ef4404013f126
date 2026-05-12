@@ -1,0 +1,6 @@
+Task: Inventory community mental health calculator artifacts by year.
+Summary: Created community_mh_inventory.py module with CommunityMHArtifact dataclass and CMTY_MH_ARTIFACTS list covering NEP21-NEP25. Each entry records SAS templates, calculators, price weights, Excel workbooks, and shadow/active pricing status. Key finding: NEP25 is the first year where community mental health is actively priced (activity-based funding); NEP21-NEP24 are shadow-pricing years. NEP22 has a dedicated AMHCC shadow Excel workbook. No mental health calculators exist before NEP21.
+
+Files created:
+  - nwau_py/calculators/community_mh_inventory.py (module + data)
+  - tests/test_community_mh_inventory.py (15 tests, 100% coverage)
