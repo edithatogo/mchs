@@ -1,0 +1,16 @@
+Task: Classification validation review fixes
+
+Summary:
+- Removed the stale legacy classification validator/matrix surface so nwau_py.classification_validation is the single canonical API.
+- Wired AMHCC preflight validation into the community mental health calculator entry point.
+- Corrected ED UDG validation so mapped UDG inputs validate source mapping fields while provided-UDG paths still validate the UDG field.
+- Tightened optional version handling for strict ty checks.
+- Fixed CLI preflight to use canonical required-field checks only.
+
+Validation:
+- uv run ruff check targeted classification/calculator/CLI/test files: passed.
+- uv run ty check --error all targeted classification/calculator/CLI/test files: passed.
+- uv run pytest tests/test_classification_validation.py tests/test_cli.py tests/test_community_mh_contract.py tests/test_community_mh_calculator.py tests/test_cli_integration.py tests/test_acute.py tests/test_ed.py tests/test_mh.py tests/test_outpatients.py -q: 77 passed, 2 skipped.
+
+Residual:
+- Untracked pricing constants files intentionally left for the IHACPA 2026-27/pricing-year workstream.
