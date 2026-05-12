@@ -1,0 +1,14 @@
+Track: Pricing-Year Validation Gates
+
+Implemented a conservative offline pricing-year evidence gate under `funding-calculator validate-year <year>`. Added JSON/text CLI output, repository-local manifest and fixture evidence checks, contract fixtures, Starlight governance docs, Conductor strategy/review/CI notes, and regression tests. The gate does not assert support; it reports local evidence presence and keeps support claims separate.
+
+Validation:
+- uv run ruff check nwau_py/pricing_year_validation.py nwau_py/cli/main.py tests/test_pricing_year_validation_gates.py
+- uv run ty check --error all nwau_py/pricing_year_validation.py nwau_py/cli/main.py tests/test_pricing_year_validation_gates.py
+- uv run pytest tests/test_pricing_year_validation_gates.py tests/test_reference_data_manifest_schema.py tests/test_fixture_manifest.py tests/test_cli.py tests/test_docs_site_sota_refresh.py -q
+- python3 -m json.tool contracts/pricing-year-validation/pricing-year-validation.contract.json >/dev/null
+- python3 -m json.tool contracts/pricing-year-validation/pricing-year-validation.schema.json >/dev/null
+- python3 -m json.tool contracts/pricing-year-validation/examples/validate-year.pass.json >/dev/null
+- python3 -m json.tool contracts/pricing-year-validation/examples/validate-year.fail.json >/dev/null
+- uv run funding-calculator validate-year 2025 --json > /tmp/validate-year-2025.json && python3 -m json.tool /tmp/validate-year-2025.json >/dev/null
+- uv run funding-calculator validate-year 2027 --json > /tmp/validate-year-2027.json; test $? -eq 1 && python3 -m json.tool /tmp/validate-year-2027.json >/dev/null
