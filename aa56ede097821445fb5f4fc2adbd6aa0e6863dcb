@@ -1,0 +1,13 @@
+Conductor track: icd_achi_acs_license_workflow_20260512
+
+Validation:
+- uv run ruff check nwau_py/licensed_product_workflow.py nwau_py/licensed_product_workflow_data.py nwau_py/__init__.py tests/test_icd_achi_acs_license_workflow_track.py
+- uv run ty check --error all nwau_py/licensed_product_workflow.py nwau_py/licensed_product_workflow_data.py nwau_py/__init__.py tests/test_icd_achi_acs_license_workflow_track.py
+- uv run pytest tests/test_icd_achi_acs_license_workflow_track.py tests/test_ar_drg_grouper_integration_track.py tests/test_ar_drg_icd_mapping_registry_track.py tests/test_coding_set_version_registry.py tests/test_formula_parameter_bundle_pipeline.py -q
+- python3 -m json.tool contracts/icd-achi-acs-license-workflow/*.json and examples/*.json
+- smoke: env-backed local path resolution and missing licensed asset diagnostics
+
+Review:
+- Local-only metadata workflow scope complete.
+- Does not ship ICD-10-AM, ACHI, ACS, AR-DRG tables, manuals, code rows, or grouper binaries.
+- Users remain responsible for lawful licensed access.
