@@ -1,0 +1,19 @@
+Task: R Binding
+
+Summary:
+- Selected a thin R wrapper over the shared CLI plus CSV file interchange as the initial least-duplicative path, with Arrow/Parquet deferred until the shared file contract exists.
+- Added an  prototype under r-binding/ with DESCRIPTION, NAMESPACE, wrapper functions, README, Rd docs, and testthat guardrails.
+- Added R Markdown/Quarto tutorial documentation using synthetic fixtures and no CRAN-readiness claim.
+- Added CI feasibility notes and local R CMD check evidence.
+- Added pytest text-contract tests that enforce wrapper-only behavior, selected strategy, fixture reuse, and no duplicated formula constants in R source.
+- Marked the Conductor track complete.
+
+Validation:
+- uv run ruff check tests/test_r_binding_track.py: passed.
+- uv run ty check --error all tests/test_r_binding_track.py: passed.
+- uv run pytest tests/test_r_binding_track.py tests/test_docs_site_sota_refresh.py -q: 13 passed.
+- R CMD check --no-manual --no-build-vignettes r-binding: package checks and testthat passed with only the standard source-directory NOTE.
+
+Residual:
+- The R wrapper is CSV-backed today; Arrow/Parquet remains a follow-on after the shared file contract lands.
+- No unconditional R GitHub Actions workflow was added; CI should be enabled after the CLI install path is stable in CI.
