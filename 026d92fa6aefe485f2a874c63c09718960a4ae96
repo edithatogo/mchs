@@ -1,0 +1,21 @@
+Task: Python Rust Binding Stabilization
+
+Summary:
+- Stabilized the optional Rust acute 2025 Python bridge with explicit import diagnostics and guarded filesystem fallback behavior.
+- Added tests for missing/broken extension behavior, scalar bridge contract, pure-Python default execution, and Rust-backed golden fixture parity.
+- Hardened PyO3/maturin package metadata and module exports.
+- Added cross-platform maturin wheel build/install smoke testing to PR CI.
+- Documented batch boundary, response/error contract, fallback policy, wheel/platform posture, and opt-in Rust status.
+- Marked the Conductor track complete.
+
+Validation:
+- uv run ruff check nwau_py/rust_bridge.py tests/test_rust_bridge.py tests/test_python_rust_binding_stabilization_track.py: passed.
+- uv run ty check --error all nwau_py/rust_bridge.py tests/test_rust_bridge.py tests/test_python_rust_binding_stabilization_track.py: passed.
+- uv run pytest tests/test_rust_bridge.py tests/test_python_rust_binding_stabilization_track.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_docs_site_sota_refresh.py -q: 21 passed.
+- cd rust && cargo fmt --all --check && cargo test && cargo clippy --all-targets --all-features -- -D warnings: passed.
+- cd rust/crates/nwau-py && uv run --with maturin maturin build --release --out ../../../dist: passed.
+- Installed the built wheel into a temporary venv and imported nwau_py.rust_bridge.load_rust_extension().kernel_label(): passed.
+
+Residual:
+- Rust-backed execution remains opt-in and acute-2025 scoped.
+- CI wheel smoke test validates import/loading, while full parity remains covered by golden fixture tests.
