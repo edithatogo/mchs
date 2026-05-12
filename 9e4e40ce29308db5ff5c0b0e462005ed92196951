@@ -1,0 +1,8 @@
+Task: Implement the initial community mental health calculator surface.
+Summary: Created community_mh_calculator.py module with calculate_community_mh() and CommunityMHCalculator class. Calculator applies community-specific formula: NWAU = max(0, SC_PAT_PUB * cmty_sc_pat_pw + SC_NOPAT_PUB * cmty_sc_nopat_pw). Outputs year-specific NWAU column. Registers in calculators/__init__.py.
+
+Files created:
+  - nwau_py/calculators/community_mh_calculator.py (calculator module)
+  - tests/test_community_mh_calculator.py (9 tests)
+Modified:
+  - nwau_py/calculators/__init__.py (added community MH exports)
