@@ -1,0 +1,16 @@
+Phase 3 Verification Report
+=========================
+Task: Implement initial community mental health calculator surface.
+Files created:
+  - nwau_py/calculators/community_mh_calculator.py (calculator + class API)
+  - tests/test_community_mh_calculator.py (9 tests)
+  - nwau_py/docs/community_mh.md (documentation)
+Modified:
+  - nwau_py/calculators/__init__.py (exports)
+
+Tests: 44/44 passed across all track modules
+Key deliverables:
+  - calculate_community_mh() function
+  - CommunityMHCalculator class
+  - CommunityMHParams dataclass
+  - Documentation with supported years, pricing status, caveats
