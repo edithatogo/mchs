@@ -1,0 +1,16 @@
+Phase 1 Verification Report
+=========================
+Task: Inventory community mental health calculator artifacts by year.
+Files changed:
+  - nwau_py/calculators/community_mh_inventory.py (new)
+  - tests/test_community_mh_inventory.py (new)
+  - conductor/tracks/community_mental_health_calculator_20260512/plan.md (updated)
+
+Tests: 15/15 passed, 100% module coverage
+Lint: ruff clean
+Key findings:
+  - NEP21-NEP25 have community MH SAS artifacts
+  - NEP25 is first year with active ABF pricing
+  - NEP21-NEP24 are shadow-pricing years
+  - NEP22 has dedicated AMHCC shadow Excel workbook
+  - No MH calculators before NEP21
