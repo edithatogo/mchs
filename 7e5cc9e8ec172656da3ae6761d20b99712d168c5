@@ -1,0 +1,10 @@
+Language surface recommendation update
+
+Made JVM posture Kotlin-first with Java-compatible bytecode/interoperability rather than Java-authored binding. Added roadmap tracks for Scala/Spark, Swift, Stata, and MATLAB as future contract/file/service consumers.
+
+Validation:
+- uv run ruff check tests/test_java_jvm_binding_track.py
+- uv run pytest tests/test_java_jvm_binding_track.py -q
+- python3 -m json.tool for JVM contracts/examples/fixtures and new track metadata
+- npm run build (docs-site)
+- Gradle build skipped: local gradle command unavailable
