@@ -1,0 +1,7 @@
+Conductor track: AR-DRG Version Parity Fixtures
+
+Validation:
+- uv run ruff check nwau_py/ar_drg_version_parity_fixtures.py nwau_py/ar_drg_version_parity_fixtures_data.py nwau_py/__init__.py tests/test_ar_drg_version_parity_fixtures.py tests/test_ar_drg_version_parity_fixtures_track.py
+- uv run ty check --error all nwau_py/ar_drg_version_parity_fixtures.py nwau_py/ar_drg_version_parity_fixtures_data.py nwau_py/__init__.py tests/test_ar_drg_version_parity_fixtures.py tests/test_ar_drg_version_parity_fixtures_track.py
+- uv run pytest tests/test_ar_drg_version_parity_fixtures.py tests/test_ar_drg_version_parity_fixtures_track.py tests/test_icd_achi_acs_license_workflow_track.py tests/test_ar_drg_grouper_integration_track.py tests/test_ar_drg_icd_mapping_registry_track.py -q
+- python3 -m json.tool for all AR-DRG parity fixture contract files
