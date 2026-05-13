@@ -1,0 +1,9 @@
+Conductor track: Polyglot Rust Core Roadmap
+
+Implemented roadmap/governance artifacts for the Python-baseline to Rust-core lifecycle, explicit synthetic contract bundle, packaging matrix, Starlight docs page, tests, and resolved review blockers.
+
+Validation:
+- uv run ruff check tests/test_polyglot_rust_core_roadmap_track.py
+- uv run pytest tests/test_polyglot_rust_core_roadmap_track.py -q
+- python3 -m json.tool contract/schema/examples and track metadata
+- npm run build (docs-site)
