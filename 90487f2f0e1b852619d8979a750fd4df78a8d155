@@ -1,0 +1,10 @@
+Conductor track: Go Binding
+
+Implemented CLI/Arrow-file-first Go binding roadmap, synthetic live contract bundle, minimal non-formula Go scaffold, Starlight governance page, fixture-backed tests, and resolved review gaps.
+
+Validation:
+- uv run ruff check tests/test_go_binding_track.py
+- uv run pytest tests/test_go_binding_track.py -q
+- python3 -m json.tool contract/schema/examples, fixtures, and metadata
+- npm run build (docs-site)
+- gofmt -w . && go test ./... (bindings/go)
