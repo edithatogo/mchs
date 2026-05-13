@@ -1,0 +1,10 @@
+Conductor track: C#/.NET Binding
+
+Implemented service-boundary-first .NET binding roadmap, synthetic contract bundle, minimal non-formula C# scaffold, Starlight governance page, fixture-backed tests, and resolved review blockers.
+
+Validation:
+- uv run ruff check tests/test_csharp_dotnet_binding_track.py
+- uv run pytest tests/test_csharp_dotnet_binding_track.py -q
+- python3 -m json.tool contract/schema/examples, fixtures, and metadata
+- npm run build (docs-site)
+- dotnet build bindings/dotnet/DotNetBinding.csproj --nologo
