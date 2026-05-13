@@ -1,0 +1,7 @@
+Conductor track: Emergency Code Mapping Pipeline
+
+Validation:
+- uv run ruff check nwau_py/emergency_code_mapping_pipeline.py nwau_py/emergency_transition_registry.py nwau_py/__init__.py tests/test_emergency_code_mapping_pipeline_track.py
+- uv run ty check --error all nwau_py/emergency_code_mapping_pipeline.py nwau_py/emergency_transition_registry.py nwau_py/__init__.py tests/test_emergency_code_mapping_pipeline_track.py
+- uv run pytest tests/test_emergency_code_mapping_pipeline_track.py tests/test_emergency_udg_aecc_transition_registry_track.py -q
+- python3 -m json.tool for emergency code mapping pipeline contract and example JSON files
