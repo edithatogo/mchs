@@ -1,0 +1,7 @@
+Conductor track: Emergency Classification Parity Fixtures
+
+Validation:
+- uv run ruff check nwau_py/emergency_classification_parity_fixtures.py nwau_py/emergency_classification_parity_fixtures_data.py nwau_py/emergency_transition_registry.py nwau_py/emergency_code_mapping_pipeline.py nwau_py/emergency_grouper.py nwau_py/__init__.py tests/test_emergency_classification_parity_fixtures_track.py
+- uv run ty check --error all nwau_py/emergency_classification_parity_fixtures.py nwau_py/emergency_classification_parity_fixtures_data.py nwau_py/emergency_transition_registry.py nwau_py/emergency_code_mapping_pipeline.py nwau_py/emergency_grouper.py nwau_py/__init__.py tests/test_emergency_classification_parity_fixtures_track.py
+- uv run pytest tests/test_emergency_classification_parity_fixtures_track.py tests/test_emergency_grouper_integration_track.py tests/test_emergency_code_mapping_pipeline_track.py tests/test_emergency_udg_aecc_transition_registry_track.py -q
+- python3 -m json.tool for emergency classification parity fixture contract and example JSON files
