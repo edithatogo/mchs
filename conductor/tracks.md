@@ -515,3 +515,67 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Docker MCP Registry Readiness**
 *Link: [./tracks/docker_mcp_registry_readiness_20260517/](./tracks/docker_mcp_registry_readiness_20260517/)*
 *Gate: repository readiness is implemented; do not claim Docker MCP Catalog publication until Docker Registry validation and PR or merge evidence exist.*
+
+---
+
+## Power Platform Completion Program
+
+---
+
+- [ ] **Track: Power Platform Subrepo ALM Foundation**
+*Link: [./tracks/power_platform_subrepo_alm_foundation_20260518/](./tracks/power_platform_subrepo_alm_foundation_20260518/)*
+*Gate: Power Platform assets live in a configured subrepo or documented subtree with no broken gitlink state, and ALM ownership is explicit.*
+
+---
+
+- [ ] **Track: Power Platform Service Boundary API**
+*Link: [./tracks/power_platform_service_boundary_api_20260518/](./tracks/power_platform_service_boundary_api_20260518/)*
+*Gate: A secured HTTP API exposes validation/calculation/evidence endpoints aligned to shared contracts and is ready for custom connector generation.*
+
+---
+
+- [ ] **Track: Power Platform Custom Connector**
+*Link: [./tracks/power_platform_custom_connector_20260518/](./tracks/power_platform_custom_connector_20260518/)*
+*Gate: A source-controlled custom connector can be packed into the solution and imports cleanly with connection references and environment variables.*
+
+---
+
+- [ ] **Track: Power Platform Unpacked Solution Source Tree**
+*Link: [./tracks/power_platform_solution_source_tree_20260518/](./tracks/power_platform_solution_source_tree_20260518/)*
+*Gate: The repository contains actual unpacked solution assets with solution identity, components, environment variables, connection references, and packaging metadata.*
+
+---
+
+- [ ] **Track: Power Platform App Surface**
+*Link: [./tracks/power_platform_canvas_or_model_app_20260518/](./tracks/power_platform_canvas_or_model_app_20260518/)*
+*Gate: A canvas or model-driven app is included in the solution, uses the custom connector, and contains no duplicated calculation formulas.*
+
+---
+
+- [ ] **Track: Power Automate Orchestration Flows**
+*Link: [./tracks/power_platform_automate_flows_20260518/](./tracks/power_platform_automate_flows_20260518/)*
+*Gate: Flows are solution-aware, call the custom connector only, log correlation IDs, and do not duplicate calculator logic.*
+
+---
+
+- [ ] **Track: Power Platform ALM CI/CD**
+*Link: [./tracks/power_platform_alm_ci_cd_20260518/](./tracks/power_platform_alm_ci_cd_20260518/)*
+*Gate: CI can pack, validate, and publish solution artifacts without credentials leakage; deployment jobs are environment-gated.*
+
+---
+
+- [ ] **Track: Power Platform NSW Environment Deployment**
+*Link: [./tracks/power_platform_nsw_environment_deployment_20260518/](./tracks/power_platform_nsw_environment_deployment_20260518/)*
+*Gate: The solution is imported into the NSW environment with configured connection references, environment variables, and smoke-test evidence.*
+
+---
+
+- [ ] **Track: Power Platform Managed Solution Promotion**
+*Link: [./tracks/power_platform_managed_solution_promotion_20260518/](./tracks/power_platform_managed_solution_promotion_20260518/)*
+*Gate: Managed solution promotion is repeatable, versioned, approval-gated, and reversible without unmanaged edits in downstream environments.*
+
+---
+
+- [ ] **Track: Power Platform Operational Evidence and Governance**
+*Link: [./tracks/power_platform_operational_evidence_20260518/](./tracks/power_platform_operational_evidence_20260518/)*
+*Gate: Power Platform completion claims are backed by solution checker, deployment, smoke-test, monitoring, support, and privacy evidence.*
