@@ -1,0 +1,27 @@
+<ImportExportXml version="9.2.0.0" SolutionPackageVersion="9.2" languagecode="1033">
+  <SolutionManifest>
+    <UniqueName>mchs_alm_orchestration</UniqueName>
+    <LocalizedNames>
+      <LocalizedName description="Microcosting Health Services ALM" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="MCHS Power Platform orchestration-only managed solution." languagecode="1033" />
+    </Descriptions>
+    <Version>0.2.2.0</Version>
+    <Managed>0</Managed>
+    <Publisher>
+      <UniqueName>mchs</UniqueName>
+      <LocalizedNames>
+        <LocalizedName description="Microcosting Health Services" languagecode="1033" />
+      </LocalizedNames>
+      <CustomizationPrefix>mchs</CustomizationPrefix>
+      <CustomizationOptionValuePrefix>90220</CustomizationOptionValuePrefix>
+    </Publisher>
+    <RootComponents>
+      <RootComponent type="29" schemaName="mchs_service_boundary" behavior="0" />
+      <RootComponent type="300" schemaName="mchs_api_base_url" behavior="0" />
+      <RootComponent type="300" schemaName="mchs_api_contract_version" behavior="0" />
+      <RootComponent type="300" schemaName="mchs_fixture_gate" behavior="0" />
+    </RootComponents>
+  </SolutionManifest>
+</ImportExportXml>

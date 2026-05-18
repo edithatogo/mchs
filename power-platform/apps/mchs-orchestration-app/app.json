@@ -1,0 +1,14 @@
+{
+  "name": "mchs-orchestration-app",
+  "type": "canvas-app-source-manifest",
+  "displayName": "MCHS Orchestration",
+  "screens": [
+    {"name": "CalculatorSelection", "purpose": "Select calculator and pricing year"},
+    {"name": "InputValidation", "purpose": "Collect synthetic-safe inputs and call ValidateInput"},
+    {"name": "Results", "purpose": "Display connector response, diagnostics, provenance, and support status"},
+    {"name": "Evidence", "purpose": "Display release and registry evidence returned by GetEvidence"}
+  ],
+  "connectorActions": ["ListCalculators", "GetCalculatorSchema", "ValidateInput", "Calculate", "GetEvidence"],
+  "formulaLogicPolicy": "No calculator formulas or pricing constants are stored in app expressions. All actions call the custom connector.",
+  "dataPolicy": "Synthetic examples only in source control. Patient-level data is not stored by this app manifest."
+}

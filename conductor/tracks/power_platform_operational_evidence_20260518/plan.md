@@ -23,3 +23,11 @@
     - [ ] Record DLP policy compatibility
     - [ ] Record no patient-level committed data evidence
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Operational Governance' (Protocol in workflow.md)
+
+## External Blocker
+
+- [ ] Task: Complete NSW tenant deployment evidence once credentials and target environment details are available.
+    - [ ] Provide target environment URL and ID.
+    - [ ] Authenticate `pac` against the NSW tenant.
+    - [ ] Import managed solution and record output.
+    - [ ] Run app, connector, and flow smoke tests.

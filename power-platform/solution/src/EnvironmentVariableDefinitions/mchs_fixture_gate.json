@@ -1,0 +1,1 @@
+{"schemaName":"mchs_fixture_gate","displayName":"MCHS Fixture Gate","type":"String","defaultValue":"synthetic-only","description":"Deployment safety gate for synthetic examples versus controlled real-data environments."}

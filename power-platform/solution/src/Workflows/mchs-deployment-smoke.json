@@ -1,0 +1,1 @@
+{"name":"mchs-deployment-smoke","trigger":"Manual","connectionReference":"mchs_service_boundary","operation":"Health","correlationIdSource":"workflow.run.name","storesPatientData":false,"containsFormulaLogic":false}

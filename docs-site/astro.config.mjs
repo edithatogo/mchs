@@ -121,6 +121,7 @@ export default defineConfig({
               items: [
                 'governance/release-policy',
                 'governance/supply-chain-controls',
+                'governance/power-platform-deployment-readiness',
                 'governance/starlight-extensions',
               ],
             },

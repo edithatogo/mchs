@@ -1,0 +1,58 @@
+{
+  "release_id": "nwau-pp-nsw-readiness-template",
+  "git_commit": "TBD",
+  "git_tag": "vTBD",
+  "packages": [
+    "nwau-py",
+    "mchs-power-platform-connector"
+  ],
+  "supported_scope": {
+    "jurisdiction": ["NSW"],
+    "surfaces": ["power-platform-managed-solution"],
+    "year": "2026"
+  },
+  "source_manifests": [
+    "power-platform/solution/solution-manifest.md"
+  ],
+  "schema_versions": {
+    "nwau_core": "0.2.2",
+    "evidence_bundle": "contracts/release/evidence-bundle.schema.json"
+  },
+  "fixture_results": [
+    {
+      "type": "deployment-smoke",
+      "environment": "dev",
+      "status": "not-run",
+      "notes": "Blocked until deployment tenant credentials are provisioned."
+    }
+  ],
+  "parity_reports": [],
+  "coverage": {
+    "threshold": 0.0,
+    "actual": 0.0
+  },
+  "sbom": {
+    "status": "planned"
+  },
+  "security": {
+    "tenant_credentials_status": "missing",
+    "secret_store": "pending-approval"
+  },
+  "provenance": {
+    "deploy_runbook": "power-platform/deployment/nsw-managed-solution-promotion-runbook.md",
+    "readiness_template": "power-platform/deployment/nsw-deployment-readiness-template.md"
+  },
+  "known_limitations": [
+    "Blocker: tenant_client_secret_missing",
+    "Blocker: tenant_service_principal_missing",
+    "Blocker: tenant_environment_id_unknown"
+  ],
+  "rollback": {
+    "status": "defined",
+    "artifact": "managed solution backup required before promotion"
+  },
+  "governance": {
+    "nsw_real_deployment_claim": false,
+    "notes": "Template only; no live NSW tenant deployment claim."
+  }
+}

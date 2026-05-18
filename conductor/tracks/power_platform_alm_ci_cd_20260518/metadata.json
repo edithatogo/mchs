@@ -1,18 +1,30 @@
 {
   "track_id": "power_platform_alm_ci_cd_20260518",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "power-platform-completion",
-  "current_state": "planned",
+  "current_state": "source-complete",
   "primary_contract": "power-platform/solution/README.md",
   "dependencies": [
     "power_platform_solution_source_tree_20260518",
     "power_platform_automate_flows_20260518",
     "power_platform_canvas_or_model_app_20260518"
   ],
-  "completion_evidence": [],
-  "publication_status": "not-published",
+  "completion_evidence": [
+    "power-platform/README.md",
+    "power-platform/repository/subrepo-contract.md",
+    "power-platform/service/mchs_power_platform_service.py",
+    "power-platform/connectors/mchs-service-boundary/openapi.json",
+    "power-platform/solution/src/Other/Solution.xml",
+    "power-platform/apps/mchs-orchestration-app/app.json",
+    "power-platform/flows/validate-input/flow.json",
+    ".github/workflows/power-platform-alm.yml",
+    "scripts/validate_power_platform_static.py",
+    "scripts/validate_power_platform_alm_gates.py",
+    "tests/test_power_platform_completion_program.py"
+  ],
+  "publication_status": "not-applicable",
   "created_at": "2026-05-18T13:22:30Z",
-  "updated_at": "2026-05-18T13:22:30Z",
+  "updated_at": "2026-05-18T14:14:20Z",
   "description": "Automate Power Platform solution validation, packing, checker execution, and artifact publication through CI/CD."
 }

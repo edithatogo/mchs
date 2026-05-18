@@ -1,0 +1,29 @@
+{
+  "connectionReferences": [
+    {
+      "name": "mchs_service_boundary",
+      "displayName": "MCHS Service Boundary Connector",
+      "connector": "custom",
+      "api": "mchs-service-boundary",
+      "endpointHint": "Calculator execution and validation service.",
+      "requiresAuthentication": true,
+      "supportsEnvironmentOverride": true,
+      "allowedRoles": ["solution.admin", "solution.approver"]
+    },
+    {
+      "name": "mchs_solution_checker",
+      "displayName": "MCHS Solution Checker",
+      "connector": "custom",
+      "api": "mchs-solution-checker",
+      "endpointHint": "Schema and validation metadata endpoint.",
+      "requiresAuthentication": true,
+      "supportsEnvironmentOverride": true,
+      "allowedRoles": ["solution.admin", "solution.approver"]
+    }
+  ],
+  "declarationPolicy": {
+    "sourceOfTruth": "power-platform solution metadata",
+    "managedInPipeline": true,
+    "secretStorage": "environment"
+  }
+}

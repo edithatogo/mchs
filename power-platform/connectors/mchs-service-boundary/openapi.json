@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MCHS Service Boundary",
+    "version": "0.2.2",
+    "description": "Power Platform custom connector for MCHS orchestration. Calculation logic remains in the secured service boundary and canonical runtime."
+  },
+  "servers": [{"url": "https://{host}", "variables": {"host": {"default": "example.invalid"}}}],
+  "paths": {
+    "/healthz": {"get": {"operationId": "Health", "responses": {"200": {"description": "Service health"}}}},
+    "/calculators": {"post": {"operationId": "ListCalculators", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformRequest"}}}}, "responses": {"200": {"description": "Calculator list", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformResponse"}}}}}}},
+    "/schemas/calculator": {"post": {"operationId": "GetCalculatorSchema", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformRequest"}}}}, "responses": {"200": {"description": "Calculator schema", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformResponse"}}}}}}},
+    "/validate": {"post": {"operationId": "ValidateInput", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformRequest"}}}}, "responses": {"200": {"description": "Validation result", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformResponse"}}}}}}},
+    "/calculate": {"post": {"operationId": "Calculate", "requestBody": {"required": true, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformRequest"}}}}, "responses": {"200": {"description": "Calculation response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformResponse"}}}}}}},
+    "/evidence": {"post": {"operationId": "GetEvidence", "requestBody": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformRequest"}}}}, "responses": {"200": {"description": "Evidence response", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/PowerPlatformResponse"}}}}}}}
+  },
+  "components": {
+    "securitySchemes": {"apiKey": {"type": "apiKey", "in": "header", "name": "x-api-key"}},
+    "schemas": {
+      "PowerPlatformRequest": {"type": "object", "properties": {"contract_version": {"type": "string"}, "calculator_id": {"type": "string"}, "pricing_year": {"type": "string"}, "direction": {"type": "string"}, "bundle_id": {"type": "string"}, "fixture_gate": {"type": "string"}, "correlation_id": {"type": "string"}, "input_payload": {"type": "object", "additionalProperties": true}}},
+      "PowerPlatformResponse": {"type": "object", "required": ["status", "result_payload", "trace_id"], "properties": {"status": {"type": "string"}, "result_payload": {"nullable": true}, "warnings": {"type": "array", "items": {"type": "string"}}, "diagnostics": {}, "provenance": {"type": "object", "additionalProperties": true}, "trace_id": {"type": "string"}}}
+    }
+  },
+  "security": [{"apiKey": []}]
+}

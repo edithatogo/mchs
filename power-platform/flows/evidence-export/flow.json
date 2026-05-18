@@ -1,0 +1,1 @@
+{"name":"mchs-evidence-export","trigger":"Manual","connectionReference":"mchs_service_boundary","operation":"GetEvidence","correlationIdSource":"workflow.run.name","storesPatientData":false,"containsFormulaLogic":false}

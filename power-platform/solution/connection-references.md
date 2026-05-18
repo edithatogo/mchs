@@ -8,6 +8,10 @@ Power Platform orchestration surface.
 - `mchs_service_boundary`
 - `mchs_solution_checker`
 
+Canonical declaration:
+
+- `power-platform/solution/connection-references.json`
+
 ## Rules
 
 - Keep connection wiring declarative.

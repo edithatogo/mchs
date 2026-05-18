@@ -15,7 +15,11 @@ PAC_HELP_CHECKS=(
   "pac auth --help"
   "pac org --help"
   "pac solution --help"
+  "pac solution pack --help"
+  "pac solution unpack --help"
+  "pac solution import --help"
   "pac solution checker --help"
+  "pac solution checker run --help"
   "pac pipeline --help"
 )
 

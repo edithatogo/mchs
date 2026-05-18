@@ -15,4 +15,15 @@ Rules:
   or custom connector.
 - Real-data workflows stay outside browser-hosted demo shells.
 
+For Power Platform deployments, use the NSW readiness templates and managed
+promotion runbooks under:
+
+- `power-platform/deployment/nsw-deployment-readiness-template.md`
+- `power-platform/deployment/nsw-managed-solution-promotion-runbook.md`
+- `power-platform/evidence/nsw-operational-readiness-bundle-template.json`
+
+NSW production deployment readiness is not yet claimed. Deployments remain
+`blocked` until tenant credentials, managed import evidence, and rollback
+verification are present.
+
 See the canonical source in [ADR 0005](../../../../docs/adr/0005-web-and-power-platform-delivery.md).

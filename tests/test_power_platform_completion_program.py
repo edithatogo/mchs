@@ -1,0 +1,74 @@
+from __future__ import annotations
+
+import json
+import subprocess
+import sys
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+PP = ROOT / "power-platform"
+
+
+def test_power_platform_static_validator_passes() -> None:
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_power_platform_static.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "Power Platform static validation passed" in result.stdout
+
+
+def test_solution_source_tree_has_real_solution_metadata() -> None:
+    solution = PP / "solution" / "src" / "Other" / "Solution.xml"
+    customizations = PP / "solution" / "src" / "customizations.xml"
+    assert solution.exists()
+    assert customizations.exists()
+    root = ET.parse(solution).getroot()
+    unique = root.find("./SolutionManifest/UniqueName")
+    version = root.find("./SolutionManifest/Version")
+    assert unique is not None
+    assert unique.text == "mchs_alm_orchestration"
+    assert version is not None
+    assert version.text == "0.2.2.0"
+
+
+def test_custom_connector_openapi_has_required_operations_and_security() -> None:
+    spec = json.loads(
+        (PP / "connectors" / "mchs-service-boundary" / "openapi.json").read_text()
+    )
+    operations = {
+        operation["operationId"]
+        for path in spec["paths"].values()
+        for operation in path.values()
+    }
+    assert {
+        "Health",
+        "ListCalculators",
+        "GetCalculatorSchema",
+        "ValidateInput",
+        "Calculate",
+        "GetEvidence",
+    } <= operations
+    assert "apiKey" in spec["components"]["securitySchemes"]
+
+
+def test_app_and_flows_are_orchestration_only() -> None:
+    app = json.loads((PP / "apps" / "mchs-orchestration-app" / "app.json").read_text())
+    assert app["type"] == "canvas-app-source-manifest"
+    assert "No calculator formulas" in app["formulaLogicPolicy"]
+    for flow_path in (PP / "flows").glob("*/flow.json"):
+        flow = json.loads(flow_path.read_text())
+        assert flow["connectionReference"] == "mchs_service_boundary"
+        assert flow["storesPatientData"] is False
+        assert flow["containsFormulaLogic"] is False
+
+
+def test_deployment_evidence_does_not_overclaim_nsw_deployment() -> None:
+    status = json.loads((PP / "evidence" / "deployment-status.json").read_text())
+    assert status["sourceReady"] is True
+    assert status["nswDeploymentClaimed"] is False
+    assert status["managedPromotionClaimed"] is False
+    assert status["status"] == "blocked_external_credentials"

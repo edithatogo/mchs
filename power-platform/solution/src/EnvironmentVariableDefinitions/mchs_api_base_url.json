@@ -1,0 +1,1 @@
+{"schemaName":"mchs_api_base_url","displayName":"MCHS API Base URL","type":"String","defaultValue":"https://example.invalid","description":"Environment-specific base URL for the secured MCHS service boundary."}
