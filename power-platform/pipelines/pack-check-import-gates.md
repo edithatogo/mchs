@@ -3,9 +3,9 @@
 The ALM workflow keeps the solution lifecycle deterministic by requiring three locally
 reproducible gates before environment promotion:
 
-- **Pack gate**: `pac solution pack --help`, `pac solution unpack --help`
-- **Check gate**: `pac solution checker run --help`
-- **Import gate**: `pac solution import --help`
+- **Pack gate**: `pac solution pack help`, `pac solution unpack help`
+- **Check gate**: `pac solution check help` for solution checker validation
+- **Import gate**: `pac solution import help`
 
 Current enforcement:
 

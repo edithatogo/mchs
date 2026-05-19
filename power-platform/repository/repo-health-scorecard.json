@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "targetScore": 9.5,
+  "score": 9.5,
+  "status": "healthy_with_runtime_smoke_blocker",
+  "scoringScale": "0_to_10",
+  "dimensions": [
+    {
+      "name": "source_control_and_subrepo_boundary",
+      "score": 9.5,
+      "evidence": [
+        "power-platform/repository/subrepo-contract.md",
+        "power-platform/repository/subrepo-manifest.json",
+        "power-platform/README.md"
+      ],
+      "residualRisk": "standalone remote is not yet provisioned"
+    },
+    {
+      "name": "alm_pack_check_import",
+      "score": 10.0,
+      "evidence": [
+        "power-platform/evidence/nsw-managed-import-20260520.json",
+        "power-platform/deployment/nsw/readiness.md",
+        "scripts/power-platform-alm.sh"
+      ],
+      "residualRisk": "PAC auth uses a local stable shim until machine-level PAC install is repaired"
+    },
+    {
+      "name": "claim_boundary_and_evidence",
+      "score": 9.5,
+      "evidence": [
+        "power-platform/evidence/deployment-status.json",
+        "tests/test_power_platform_completion_program.py",
+        "tests/test_power_platform_deployment_evidence.py"
+      ],
+      "residualRisk": "runtime app and flow smoke evidence is pending"
+    },
+    {
+      "name": "security_privacy_and_formula_boundary",
+      "score": 9.5,
+      "evidence": [
+        "power-platform/governance/nsw-power-platform-governance.md",
+        "power-platform/connectors/service-boundary-contract.md",
+        "power-platform/service/boundary.py"
+      ],
+      "residualRisk": "production DLP and connector policy evidence must be captured from NSW"
+    },
+    {
+      "name": "sota_power_platform_roadmap",
+      "score": 9.0,
+      "evidence": [
+        "power-platform/roadmap/sota-bleeding-edge-capabilities-20260520.md"
+      ],
+      "residualRisk": "preview features require tenant availability and admin opt-in"
+    }
+  ],
+  "hardBlockers": [
+    "service boundary production endpoint and connection reference values",
+    "real Dataverse app component smoke evidence",
+    "real Power Automate flow component smoke evidence"
+  ],
+  "nonBlockers": [
+    "standalone subrepo remote not provisioned because no target remote URL has been supplied",
+    "preview capability adoption intentionally tracked as roadmap until NSW tenant eligibility is confirmed"
+  ]
+}

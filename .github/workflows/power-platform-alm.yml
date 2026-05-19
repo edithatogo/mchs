@@ -29,6 +29,7 @@ jobs:
           python-version: '3.11'
       - run: python scripts/validate_power_platform_static.py
       - run: python scripts/validate_power_platform_alm_gates.py
+      - run: python scripts/validate_power_platform_repo_health.py
       - run: bash -n scripts/power-platform-alm.sh
       - run: bash -n scripts/power-platform-alm-lifecycle-gates.sh
 

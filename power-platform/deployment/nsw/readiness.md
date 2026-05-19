@@ -49,3 +49,22 @@ PATH="/tmp/mchs-tools:$PATH" ./scripts/bootstrap-power-platform-alm.sh --check-a
 ```
 
 Authentication and command-surface checks pass with that shim.
+
+
+## Managed Import Evidence - 2026-05-20
+
+- Managed solution import: complete.
+- Solution unique name: `mchs_alm_orchestration`.
+- Version: `0.2.2.0`.
+- Managed: `True`.
+- Solution Checker correlation ID: `a797a828-b297-420d-8372-686ce60de571`.
+- Solution Checker findings: critical `0`, high `0`, medium `0`, low `0`, informational `0`.
+- Managed artifact SHA-256: `50bbe04a5b27907409c231f620d65b95867fbcb65912e9282d3b09c168528efa`.
+- Import verification: `pac solution list` shows `mchs_alm_orchestration` version `0.2.2.0` as managed in `dylan`.
+
+## Remaining Runtime Smoke Boundary
+
+Do not claim app or flow runtime readiness yet. The imported package establishes
+the managed ALM solution shell and evidence chain. Runtime app/flow smoke remains
+pending until real app/flow components are imported, connection references are
+configured, and the production service boundary endpoint is reachable.

@@ -6,14 +6,25 @@ an approved service boundary and must not implement calculator formula logic.
 
 ## Source-Control Model
 
-The current repository uses an in-repository Power Platform source tree under
-`power-platform/`. The previous top-level workspace contained a gitlink-like
+The current repository uses `power-platform/` as a governed in-repository
+subrepo boundary. The boundary contract and manifest live in
+`power-platform/repository/` and are validated by tests.
+
+The previous top-level workspace contained a gitlink-like
 `microcosting_healthservices` entry without a `.gitmodules` mapping; that state
 is treated as legacy and must not be used as deployment evidence.
 
 If this surface is later split into a standalone subrepo, add an explicit
 `.gitmodules` entry or documented subtree import procedure before claiming a
 subrepo-managed deployment.
+
+## Repo Health
+
+The Power Platform repo-health target is `9.5/10`. Current evidence is recorded
+in `repository/repo-health-scorecard.json`. The score is intentionally
+`healthy_with_runtime_smoke_blocker`: ALM import evidence is present, but
+runtime app and flow smoke remains blocked until live components, connection
+references, and a production service endpoint are configured.
 
 ## Required Layout
 
@@ -28,6 +39,7 @@ subrepo-managed deployment.
 - `deployment/`: target-environment deployment plans and blocked/complete evidence.
 - `evidence/`: validation, checker, import, smoke, and governance evidence.
 - `governance/`: privacy, DLP, monitoring, and support controls.
+- `roadmap/`: current and preview Power Platform capability adoption plans.
 
 ## Claim Boundary
 

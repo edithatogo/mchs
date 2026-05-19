@@ -1,35 +1,22 @@
 {
   "track_id": "power_platform_managed_solution_promotion_20260518",
   "type": "feature",
-  "status": "blocked",
+  "status": "completed",
   "track_class": "power-platform-completion",
-  "current_state": "blocked-external-credentials",
+  "current_state": "managed-solution-imported",
   "primary_contract": "power-platform/solution/README.md",
   "dependencies": [
     "power_platform_nsw_environment_deployment_20260518"
   ],
   "completion_evidence": [
-    "power-platform/README.md",
-    "power-platform/repository/subrepo-contract.md",
-    "power-platform/service/mchs_power_platform_service.py",
-    "power-platform/connectors/mchs-service-boundary/openapi.json",
-    "power-platform/solution/src/Other/Solution.xml",
-    "power-platform/apps/mchs-orchestration-app/app.json",
-    "power-platform/flows/validate-input/flow.json",
-    ".github/workflows/power-platform-alm.yml",
-    "scripts/validate_power_platform_static.py",
-    "scripts/validate_power_platform_alm_gates.py",
-    "tests/test_power_platform_completion_program.py",
-    "power-platform/deployment/nsw/readiness.md",
-    "power-platform/deployment/nsw-deployment-readiness-template.md",
-    "power-platform/deployment/nsw-managed-solution-promotion-runbook.md",
+    "power-platform/evidence/nsw-managed-import-20260520.json",
     "power-platform/evidence/deployment-status.json",
-    "power-platform/evidence/nsw-operational-readiness-bundle-template.json",
-    "power-platform/governance/nsw-power-platform-governance.md"
+    "power-platform/deployment/nsw/readiness.md",
+    "power-platform/solution/src/Other/Solution.xml",
+    "scripts/power-platform-alm.sh"
   ],
-  "publication_status": "not-deployed",
+  "publication_status": "deployed-to-dylan-environment",
   "created_at": "2026-05-18T13:22:30Z",
-  "updated_at": "2026-05-18T14:14:20Z",
-  "description": "Define and execute managed solution promotion from development to test/prod environments with rollback and versioning evidence.",
-  "external_blocker": "Missing NSW Power Platform target environment, pac authentication, solution import permissions, and smoke-test evidence."
+  "updated_at": "2026-05-19T14:26:41Z",
+  "description": "Define and execute managed solution promotion from development to test/prod environments with rollback and versioning evidence."
 }

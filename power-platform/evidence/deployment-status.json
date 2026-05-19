@@ -1,14 +1,13 @@
 {
-  "status": "authenticated_pending_import",
-  "asOf": "2026-05-19",
+  "status": "managed_solution_imported_pending_runtime_smoke",
+  "asOf": "2026-05-20",
   "sourceReady": true,
-  "nswDeploymentClaimed": false,
-  "managedPromotionClaimed": false,
+  "nswDeploymentClaimed": true,
+  "managedPromotionClaimed": true,
   "missing": [
-    "managed solution pack/import execution output",
-    "solution checker output against target environment",
-    "app and flow smoke evidence",
-    "service boundary production endpoint and connection reference values"
+    "service boundary production endpoint and connection reference values",
+    "real Dataverse app component smoke evidence",
+    "real Power Automate flow component smoke evidence"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -19,5 +18,30 @@
   "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
   "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
   "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
-  "environmentUniqueName": "unq8b153003d5eaf01189f5002248942"
+  "environmentUniqueName": "unq8b153003d5eaf01189f5002248942",
+  "managedSolutionImported": true,
+  "solutionUniqueName": "mchs_alm_orchestration",
+  "solutionVersion": "0.2.2.0",
+  "managedArtifactSha256": "50bbe04a5b27907409c231f620d65b95867fbcb65912e9282d3b09c168528efa",
+  "solutionCheckerCorrelationId": "a797a828-b297-420d-8372-686ce60de571",
+  "solutionCheckerFindings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 0
+  },
+  "productionReadinessClaimed": false
+  ,"repoHealth": {
+    "targetScore": 9.5,
+    "score": 9.5,
+    "status": "healthy_with_runtime_smoke_blocker",
+    "scorecard": "power-platform/repository/repo-health-scorecard.json"
+  },
+  "subrepo": {
+    "mode": "in_repository_governed_subrepo_boundary",
+    "manifest": "power-platform/repository/subrepo-manifest.json",
+    "standaloneRemoteProvisioned": false
+  },
+  "sotaRoadmap": "power-platform/roadmap/sota-bleeding-edge-capabilities-20260520.md"
 }

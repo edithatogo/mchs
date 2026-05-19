@@ -27,15 +27,20 @@ case "${1:-}" in
     require_pac
     mkdir -p "$OUT_DIR"
     pac solution pack --folder "$SOLUTION_SRC" --zipfile "$OUT_DIR/${SOLUTION_NAME}_unmanaged.zip" --packagetype Unmanaged
+    test -s "$OUT_DIR/${SOLUTION_NAME}_unmanaged.zip"
     ;;
   pack-managed)
     require_pac
     mkdir -p "$OUT_DIR"
-    pac solution pack --folder "$SOLUTION_SRC" --zipfile "$OUT_DIR/${SOLUTION_NAME}_managed.zip" --packagetype Managed
+    managed_src="$(mktemp -d)"
+    cp -R "$SOLUTION_SRC"/. "$managed_src"/
+    python3 -c 'from pathlib import Path; import sys; p=Path(sys.argv[1]); s=p.read_text(); p.write_text(s.replace("<Managed>0</Managed>", "<Managed>1</Managed>"))' "$managed_src/Other/Solution.xml"
+    pac solution pack --folder "$managed_src" --zipfile "$OUT_DIR/${SOLUTION_NAME}_managed.zip" --packagetype Managed
+    test -s "$OUT_DIR/${SOLUTION_NAME}_managed.zip"
     ;;
   checker)
     require_pac
-    pac solution checker run --path "$OUT_DIR/${SOLUTION_NAME}_managed.zip"
+    pac solution check --path "$OUT_DIR/${SOLUTION_NAME}_managed.zip" --outputDirectory "$OUT_DIR/checker" --geo Australia
     ;;
   import-managed)
     require_pac

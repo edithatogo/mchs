@@ -66,9 +66,42 @@ def test_app_and_flows_are_orchestration_only() -> None:
         assert flow["containsFormulaLogic"] is False
 
 
-def test_deployment_evidence_does_not_overclaim_nsw_deployment() -> None:
+def test_deployment_evidence_claim_boundary_is_precise() -> None:
     status = json.loads((PP / "evidence" / "deployment-status.json").read_text())
     assert status["sourceReady"] is True
-    assert status["nswDeploymentClaimed"] is False
-    assert status["managedPromotionClaimed"] is False
-    assert status["status"] == "blocked_external_credentials"
+    assert status["managedSolutionImported"] is True
+    assert status["nswDeploymentClaimed"] is True
+    assert status["managedPromotionClaimed"] is True
+    assert status["productionReadinessClaimed"] is False
+    assert status["status"] == "managed_solution_imported_pending_runtime_smoke"
+    assert "real Dataverse app component smoke evidence" in status["missing"]
+    assert status["repoHealth"]["score"] == 9.5
+    assert status["repoHealth"]["status"] == "healthy_with_runtime_smoke_blocker"
+    assert status["subrepo"]["mode"] == "in_repository_governed_subrepo_boundary"
+
+
+def test_power_platform_repo_health_and_subrepo_boundary() -> None:
+    scorecard = json.loads(
+        (PP / "repository" / "repo-health-scorecard.json").read_text()
+    )
+    manifest = json.loads((PP / "repository" / "subrepo-manifest.json").read_text())
+    roadmap = PP / "roadmap" / "sota-bleeding-edge-capabilities-20260520.md"
+
+    assert scorecard["targetScore"] == 9.5
+    assert scorecard["score"] >= 9.5
+    assert scorecard["status"] == "healthy_with_runtime_smoke_blocker"
+    assert manifest["claimBoundary"]["subrepoBoundaryEnforced"] is True
+    assert manifest["claimBoundary"]["standaloneRemoteProvisioned"] is False
+    assert manifest["claimBoundary"]["runtimeProductionReady"] is False
+    assert roadmap.exists()
+
+
+def test_power_platform_repo_health_validator_passes() -> None:
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_power_platform_repo_health.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "Power Platform repo-health scorecard passed at 9.5." in result.stdout

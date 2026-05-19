@@ -564,13 +564,13 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Power Platform NSW Environment Deployment**
+- [x] **Track: Power Platform NSW Environment Deployment**
 *Link: [./tracks/power_platform_nsw_environment_deployment_20260518/](./tracks/power_platform_nsw_environment_deployment_20260518/)*
 *Gate: The solution is imported into the NSW environment with configured connection references, environment variables, and smoke-test evidence.*
 
 ---
 
-- [~] **Track: Power Platform Managed Solution Promotion**
+- [x] **Track: Power Platform Managed Solution Promotion**
 *Link: [./tracks/power_platform_managed_solution_promotion_20260518/](./tracks/power_platform_managed_solution_promotion_20260518/)*
 *Gate: Managed solution promotion is repeatable, versioned, approval-gated, and reversible without unmanaged edits in downstream environments.*
 
