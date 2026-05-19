@@ -31,10 +31,10 @@ REQUIRED_FILES = [
 
 
 COMMAND_SURFACES = [
-    "pac solution pack",
-    "pac solution unpack",
-    "pac solution import",
-    "pac solution checker run",
+    "pac solution pack help",
+    "pac solution unpack help",
+    "pac solution import help",
+    "pac solution check help",
 ]
 
 
@@ -118,19 +118,17 @@ def check_command_surface(results: ValidationResult, require_tools: bool) -> Non
 
     for command in COMMAND_SURFACES:
         proc = subprocess.run(
-            ["bash", "-lc", f"{command} --help"],
+            ["bash", "-lc", command],
             check=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
         )
         if proc.returncode != 0:
-            results.errors.append(f"command surface regression: {command} --help")
+            results.errors.append(f"command surface regression: {command}")
             continue
         if not proc.stdout.strip():
-            results.warnings.append(
-                f"command surface returned empty output: {command} --help"
-            )
+            results.warnings.append(f"command surface returned empty output: {command}")
 
 
 def parse_args() -> argparse.Namespace:

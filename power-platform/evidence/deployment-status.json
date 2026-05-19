@@ -1,14 +1,23 @@
 {
-  "status": "blocked_external_credentials",
+  "status": "authenticated_pending_import",
   "asOf": "2026-05-19",
   "sourceReady": true,
   "nswDeploymentClaimed": false,
   "managedPromotionClaimed": false,
   "missing": [
-    "target NSW environment URL/id",
-    "pac auth targeting the NSW environment",
-    "solution import output",
+    "managed solution pack/import execution output",
     "solution checker output against target environment",
-    "app and flow smoke evidence"
-  ]
+    "app and flow smoke evidence",
+    "service boundary production endpoint and connection reference values"
+  ],
+  "azureCliAuthenticated": true,
+  "pacAuthenticated": true,
+  "pacProfile": "nsw-dylan",
+  "tenantId": "a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+  "tenantName": "NSW Health Department",
+  "user": "Dylan.Mordaunt@health.nsw.gov.au",
+  "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+  "environmentUniqueName": "unq8b153003d5eaf01189f5002248942"
 }
