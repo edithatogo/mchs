@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "blocked",
   "track_class": "power-platform-completion",
-  "current_state": "blocked-runtime-app-flow-smoke",
+  "current_state": "blocked-runtime-connector-flow-smoke",
   "primary_contract": "power-platform/solution/README.md",
   "dependencies": [
     "power_platform_managed_solution_promotion_20260518"
@@ -19,5 +19,5 @@
   "created_at": "2026-05-18T13:22:30Z",
   "updated_at": "2026-05-20T00:00:00Z",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
-  "external_blocker": "Managed solution shell, custom connector, and generated canvas app are published in NSW dylan. The app launches and has visual-review evidence, but it remains generated UI and is not visually optimized. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
+  "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app are published in NSW dylan. The optimized app launches with visual evidence. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
 }

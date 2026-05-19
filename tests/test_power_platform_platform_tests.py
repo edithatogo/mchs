@@ -20,12 +20,17 @@ def test_power_platform_platform_test_status_is_truthful() -> None:
     assert checks["solution-checker"] == "passed"
     assert checks["custom-connector-registration"] == "passed"
     assert checks["generated-canvas-msapp"] == "passed"
-    assert checks["real-power-app-visual-review"] == "passed_with_findings"
+    assert checks["real-power-app-visual-review"] == "passed"
     assert checks["real-power-app-runtime-smoke"] == "partial"
     assert checks["real-power-automate-flow-smoke"] == "blocked"
     assert status["visualFunction"]["viewedInTenant"] is True
-    assert status["visualFunction"]["optimizedInTenant"] is False
+    assert status["visualFunction"]["optimizedInTenant"] is True
+    assert status["visualFunction"]["optimizedAppId"] == (
+        "669d0089-8abe-4e94-ab50-aa69513a6cc4"
+    )
     assert status["claimBoundary"]["allPlatformTestsPassed"] is False
+    assert status["claimBoundary"]["visualFunctionOptimized"] is True
+    assert status["claimBoundary"]["productionReadinessClaimed"] is False
 
 
 def test_power_platform_canvas_app_publication_evidence_is_precise() -> None:
@@ -34,9 +39,12 @@ def test_power_platform_canvas_app_publication_evidence_is_precise() -> None:
     assert evidence["appId"] == "ff64f58a-73de-42ee-b92d-f65503619c49"
     assert evidence["claimBoundary"]["appPublished"] is True
     assert evidence["claimBoundary"]["appLaunchSmokePassed"] is True
-    assert evidence["claimBoundary"]["visualFunctionOptimized"] is False
+    assert evidence["claimBoundary"]["visualFunctionOptimized"] is True
     assert evidence["claimBoundary"]["serviceBoundaryExecutionProven"] is False
     assert evidence["claimBoundary"]["productionReadinessClaimed"] is False
+    assert evidence["optimizedPublication"]["appId"] == (
+        "669d0089-8abe-4e94-ab50-aa69513a6cc4"
+    )
 
 
 def test_power_platform_platform_test_validator_passes() -> None:

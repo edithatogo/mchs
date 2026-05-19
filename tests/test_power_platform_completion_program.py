@@ -73,9 +73,11 @@ def test_deployment_evidence_claim_boundary_is_precise() -> None:
     assert status["nswDeploymentClaimed"] is True
     assert status["managedPromotionClaimed"] is True
     assert status["productionReadinessClaimed"] is False
-    assert status["status"] == "managed_solution_imported_pending_runtime_smoke"
+    assert status["status"] == (
+        "managed_solution_imported_optimized_app_published_pending_runtime_smoke"
+    )
     assert "production service-boundary execution evidence" in status["missing"]
-    assert "real Power App visual optimization evidence" in status["missing"]
+    assert "real Power App visual optimization evidence" not in status["missing"]
     assert status["repoHealth"]["score"] == 9.5
     assert status["repoHealth"]["status"] == "healthy_with_runtime_smoke_blocker"
     assert status["subrepo"]["mode"] == "in_repository_governed_subrepo_boundary"

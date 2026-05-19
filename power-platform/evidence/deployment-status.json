@@ -1,5 +1,5 @@
 {
-  "status": "managed_solution_imported_pending_runtime_smoke",
+  "status": "managed_solution_imported_optimized_app_published_pending_runtime_smoke",
   "asOf": "2026-05-20",
   "sourceReady": true,
   "nswDeploymentClaimed": true,
@@ -7,8 +7,7 @@
   "missing": [
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
-    "production service-boundary execution evidence",
-    "real Power App visual optimization evidence"
+    "production service-boundary execution evidence"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -30,6 +29,7 @@
   "canvasAppId": "ff64f58a-73de-42ee-b92d-f65503619c49",
   "canvasAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
   "generatedCanvasMsappSha256": "baeec10504d1e4c5706c242575693e7eaba0f2bb364d4026b51efb36eb4519c9",
+  "optimizedCanvasMsappSha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7",
   "solutionCheckerCorrelationId": "a797a828-b297-420d-8372-686ce60de571",
   "solutionCheckerFindings": {
     "critical": 0,
@@ -38,8 +38,8 @@
     "low": 0,
     "informational": 0
   },
-  "productionReadinessClaimed": false
-  ,"repoHealth": {
+  "productionReadinessClaimed": false,
+  "repoHealth": {
     "targetScore": 9.5,
     "score": 9.5,
     "status": "healthy_with_runtime_smoke_blocker",
@@ -60,5 +60,11 @@
     "dataverseMcpServer": "readiness_scaffolded_blocked_pending_admin_enablement",
     "agenticGovernanceObservability": "implemented_as_evidence_contract"
   },
-  "platformTestStatus": "power-platform/evidence/platform-test-status.json"
+  "platformTestStatus": "power-platform/evidence/platform-test-status.json",
+  "optimizedCanvasAppPublished": true,
+  "optimizedCanvasAppName": "MCHS Orchestration Optimized",
+  "optimizedCanvasAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+  "optimizedCanvasAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+  "optimizedCanvasAppScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+  "optimizedCanvasAppScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237"
 }

@@ -41,5 +41,5 @@
     - [x] Generate canvas app artifact from custom connector.
     - [x] Publish/import generated canvas app into the NSW tenant.
     - [x] View the real Power App in the NSW tenant.
-    - [ ] Optimize and evidence visual function in the NSW tenant.
+    - [x] Optimize and evidence visual function in the NSW tenant.
     - [ ] Run app, connector, and flow smoke tests.

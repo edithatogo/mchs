@@ -36,8 +36,8 @@ def main() -> int:
         raise SystemExit("custom connector registration must remain evidenced")
     if checks["generated-canvas-msapp"]["status"] != "passed":
         raise SystemExit("generated canvas msapp must remain evidenced")
-    if checks["real-power-app-visual-review"]["status"] != "passed_with_findings":
-        raise SystemExit("Power App visual review must be evidenced with findings")
+    if checks["real-power-app-visual-review"]["status"] != "passed":
+        raise SystemExit("Power App visual review must be evidenced as passed")
     if checks["real-power-app-runtime-smoke"]["status"] != "partial":
         raise SystemExit("Power App runtime smoke must remain partial")
     if checks["real-power-automate-flow-smoke"]["status"] != "blocked":
@@ -46,8 +46,18 @@ def main() -> int:
     boundary = status["claimBoundary"]
     if boundary["allPlatformTestsPassed"]:
         raise SystemExit("all platform tests are overclaimed")
+    visual = status["visualFunction"]
     if boundary["visualFunctionOptimized"]:
-        raise SystemExit("visual function is overclaimed")
+        if not visual["optimizedInTenant"]:
+            raise SystemExit("visual function is overclaimed without tenant evidence")
+        for required in [
+            "optimizedAppId",
+            "optimizedAppPlayUrl",
+            "optimizedScreenshot",
+            "optimizedScreenshotSha256",
+        ]:
+            if not visual.get(required):
+                raise SystemExit(f"visual optimization evidence missing: {required}")
     if boundary["productionReadinessClaimed"]:
         raise SystemExit("production readiness is overclaimed")
     if "Power App visual review" not in plan["requiredOrder"]:

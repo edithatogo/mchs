@@ -1,0 +1,68 @@
+name: Power Platform Official Actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_live_checks:
+        description: Run live Dataverse checks with configured repository secrets
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - 'power-platform/**'
+      - '.github/workflows/power-platform-official-actions.yml'
+
+jobs:
+  official-actions-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Microsoft Power Platform Actions
+        uses: microsoft/powerplatform-actions/actions-install@v1
+      - name: Pack managed solution with Microsoft action
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: power-platform/solution/src
+          solution-file: dist/power-platform/mchs_alm_orchestration_managed.zip
+          solution-type: Managed
+      - name: Pack unmanaged solution with Microsoft action
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: power-platform/solution/src
+          solution-file: dist/power-platform/mchs_alm_orchestration_unmanaged.zip
+          solution-type: Unmanaged
+      - uses: actions/upload-artifact@v4
+        with:
+          name: power-platform-solution-artifacts
+          path: dist/power-platform/*.zip
+
+  official-actions-live-gate:
+    if: github.event_name == 'workflow_dispatch' && inputs.run_live_checks == true
+    runs-on: ubuntu-latest
+    environment: nsw-power-platform
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Microsoft Power Platform Actions
+        uses: microsoft/powerplatform-actions/actions-install@v1
+      - name: Verify target environment identity
+        uses: microsoft/powerplatform-actions/who-am-i@v1
+        with:
+          environment-url: ${{ secrets.POWER_PLATFORM_ENVIRONMENT_URL }}
+          app-id: ${{ secrets.POWER_PLATFORM_APPLICATION_ID }}
+          client-secret: ${{ secrets.POWER_PLATFORM_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.POWER_PLATFORM_TENANT_ID }}
+      - name: Pack managed solution for live checker
+        uses: microsoft/powerplatform-actions/pack-solution@v1
+        with:
+          solution-folder: power-platform/solution/src
+          solution-file: dist/power-platform/mchs_alm_orchestration_managed.zip
+          solution-type: Managed
+      - name: Run solution checker
+        uses: microsoft/powerplatform-actions/checker@v1
+        with:
+          environment-url: ${{ secrets.POWER_PLATFORM_ENVIRONMENT_URL }}
+          app-id: ${{ secrets.POWER_PLATFORM_APPLICATION_ID }}
+          client-secret: ${{ secrets.POWER_PLATFORM_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.POWER_PLATFORM_TENANT_ID }}
+          path: dist/power-platform/mchs_alm_orchestration_managed.zip
+          geo: Australia

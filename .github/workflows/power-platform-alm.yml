@@ -12,7 +12,11 @@ on:
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
       - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_toolchain.py'
+      - 'scripts/validate_power_platform_visual_contract.py'
       - '.github/workflows/power-platform-alm.yml'
+      - '.github/workflows/power-platform-official-actions.yml'
+      - '.github/workflows/power-bi-devops.yml'
   push:
     branches: [master]
     paths:
@@ -25,6 +29,8 @@ on:
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
       - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_toolchain.py'
+      - 'scripts/validate_power_platform_visual_contract.py'
   workflow_dispatch:
 
 jobs:
@@ -41,6 +47,8 @@ jobs:
       - run: python scripts/validate_power_platform_sota_capabilities.py
       - run: python scripts/validate_power_platform_operational_evidence.py
       - run: python scripts/validate_power_platform_platform_tests.py
+      - run: python scripts/validate_power_platform_toolchain.py
+      - run: python scripts/validate_power_platform_visual_contract.py
       - run: bash -n scripts/power-platform-alm.sh
       - run: bash -n scripts/power-platform-alm-lifecycle-gates.sh
 

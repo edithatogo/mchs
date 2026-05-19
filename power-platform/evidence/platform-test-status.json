@@ -30,8 +30,8 @@
     },
     {
       "name": "real-power-app-visual-review",
-      "status": "passed_with_findings",
-      "evidence": "power-platform/evidence/canvas-app-publication-20260520.json"
+      "status": "passed",
+      "evidence": "power-platform/evidence/canvas-app-publication-20260520.json; optimized app screenshot power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png"
     },
     {
       "name": "real-power-app-runtime-smoke",
@@ -47,7 +47,7 @@
   ],
   "visualFunction": {
     "viewedInTenant": true,
-    "optimizedInTenant": false,
+    "optimizedInTenant": true,
     "requiredEvidence": [
       "app URL",
       "screenshots or Playwright trace",
@@ -56,11 +56,19 @@
       "empty/error/loading states pass",
       "connector consent or preconsent verification"
     ],
-    "evidence": "power-platform/evidence/canvas-app-publication-20260520.json"
+    "evidence": "power-platform/evidence/canvas-app-publication-20260520.json",
+    "optimizedSource": "power-platform/apps/mchs-orchestration-app/source/Src/HomeScreen_Screen.fx.yaml",
+    "optimizedArtifact": "dist/power-platform/apps/mchs-orchestration-optimized.msapp",
+    "optimizedArtifactSha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7",
+    "optimizedAppName": "MCHS Orchestration Optimized",
+    "optimizedAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "optimizedAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "optimizedScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+    "optimizedScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237"
   },
   "claimBoundary": {
     "allPlatformTestsPassed": false,
-    "visualFunctionOptimized": false,
+    "visualFunctionOptimized": true,
     "productionReadinessClaimed": false
   }
 }

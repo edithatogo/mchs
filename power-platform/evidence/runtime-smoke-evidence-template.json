@@ -29,7 +29,10 @@
     "appId": "ff64f58a-73de-42ee-b92d-f65503619c49",
     "appUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
     "syntheticLaunchTrace": "power-platform/evidence/canvas-app-publication-20260520.json",
-    "syntheticSubmissionTrace": null
+    "syntheticSubmissionTrace": null,
+    "optimizedAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "optimizedAppUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "optimizedLaunchTrace": "power-platform/evidence/canvas-app-publication-20260520.json"
   },
   "flowSmoke": {
     "status": "blocked_missing_real_flow_component",

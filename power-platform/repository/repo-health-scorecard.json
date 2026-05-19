@@ -34,7 +34,7 @@
         "tests/test_power_platform_completion_program.py",
         "tests/test_power_platform_deployment_evidence.py"
       ],
-      "residualRisk": "runtime app and flow smoke evidence is pending"
+      "residualRisk": "runtime connector and flow smoke evidence is pending; visual optimization is evidenced in NSW dylan"
     },
     {
       "name": "security_privacy_and_formula_boundary",
@@ -58,8 +58,7 @@
   "hardBlockers": [
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
-    "production service-boundary execution evidence",
-    "real Power App visual optimization evidence"
+    "production service-boundary execution evidence"
   ],
   "nonBlockers": [
     "standalone subrepo remote not provisioned because no target remote URL has been supplied",

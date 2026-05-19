@@ -1,0 +1,279 @@
+HomeScreen_Screen As screen:
+    Fill: =RGBA(247, 250, 247, 1)
+    LoadingSpinner: =LoadingSpinner.Controls
+    LoadingSpinnerColor: =RGBA(16, 94, 60, 1)
+    ZIndex: =1
+
+    HomeScreen_Header_ManualContainer As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(8, 61, 47, 1)
+        Height: =190
+        LayoutMode: =LayoutMode.Manual
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HomeScreen_Header_Eyebrow_Label As label:
+            Color: =RGBA(184, 226, 200, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =13
+            Text: ="NSW dylan | Managed ALM surface | Synthetic data only"
+            Width: =Parent.Width - 96
+            X: =48
+            Y: =24
+            ZIndex: =1
+
+        HomeScreen_Header_Title_Label As label:
+            Color: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Bold
+            Height: =58
+            Role: =TextRole.Heading1
+            Size: =34
+            Text: ="MCHS Orchestration"
+            Width: =Parent.Width - 96
+            X: =48
+            Y: =52
+            ZIndex: =2
+
+        HomeScreen_Header_Description_Label As label:
+            Color: =RGBA(226, 240, 230, 1)
+            Font: =Font.'Segoe UI'
+            Height: =56
+            Size: =15
+            Text: ="Run governed service-boundary checks, validate synthetic requests, and capture traceable evidence without placing calculator formula logic inside Power Apps."
+            Width: =Parent.Width - 96
+            X: =48
+            Y: =112
+            ZIndex: =3
+
+    HomeScreen_Status_Band As groupContainer.horizontalAutoLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =116
+        LayoutGap: =16
+        PaddingLeft: =48
+        PaddingRight: =48
+        PaddingTop: =16
+        Width: =Parent.Width
+        Y: =HomeScreen_Header_ManualContainer.Height
+        ZIndex: =2
+
+        HomeScreen_Status_Connector As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(232, 246, 236, 1)
+            Height: =84
+            LayoutGap: =2
+            PaddingLeft: =18
+            PaddingTop: =12
+            Width: =(Parent.Width - 128) / 3
+            ZIndex: =1
+
+            HomeScreen_Status_Connector_Label As label:
+                Color: =RGBA(28, 72, 47, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =26
+                Size: =13
+                Text: ="Connector"
+                Width: =Parent.Width - 36
+                ZIndex: =1
+
+            HomeScreen_Status_Connector_Value As label:
+                Color: =RGBA(16, 94, 60, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =20
+                Text: ="Registered"
+                Width: =Parent.Width - 36
+                ZIndex: =2
+
+        HomeScreen_Status_Runtime As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 247, 222, 1)
+            Height: =84
+            LayoutGap: =2
+            PaddingLeft: =18
+            PaddingTop: =12
+            Width: =(Parent.Width - 128) / 3
+            ZIndex: =2
+
+            HomeScreen_Status_Runtime_Label As label:
+                Color: =RGBA(97, 69, 0, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =26
+                Size: =13
+                Text: ="Runtime"
+                Width: =Parent.Width - 36
+                ZIndex: =1
+
+            HomeScreen_Status_Runtime_Value As label:
+                Color: =RGBA(128, 86, 0, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =20
+                Text: ="Endpoint pending"
+                Width: =Parent.Width - 36
+                ZIndex: =2
+
+        HomeScreen_Status_Evidence As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(231, 242, 255, 1)
+            Height: =84
+            LayoutGap: =2
+            PaddingLeft: =18
+            PaddingTop: =12
+            Width: =(Parent.Width - 128) / 3
+            ZIndex: =3
+
+            HomeScreen_Status_Evidence_Label As label:
+                Color: =RGBA(21, 67, 120, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =26
+                Size: =13
+                Text: ="Evidence"
+                Width: =Parent.Width - 36
+                ZIndex: =1
+
+            HomeScreen_Status_Evidence_Value As label:
+                Color: =RGBA(21, 67, 120, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Size: =20
+                Text: ="Launch passed"
+                Width: =Parent.Width - 36
+                ZIndex: =2
+
+    HomeScreen_Main_Container As groupContainer.horizontalAutoLayoutContainer:
+        Fill: =RGBA(247, 250, 247, 1)
+        Height: =Parent.Height - HomeScreen_Header_ManualContainer.Height - HomeScreen_Status_Band.Height
+        LayoutGap: =24
+        PaddingLeft: =48
+        PaddingRight: =48
+        PaddingTop: =28
+        Width: =Parent.Width
+        Y: =HomeScreen_Header_ManualContainer.Height + HomeScreen_Status_Band.Height
+        ZIndex: =3
+
+        HomeScreen_Primary_Actions As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height - 40
+            LayoutGap: =14
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            Width: =Parent.Width * 0.52
+            ZIndex: =1
+
+            HomeScreen_Primary_Title As label:
+                Color: =RGBA(30, 42, 38, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Role: =TextRole.Heading2
+                Size: =22
+                Text: ="Operational checks"
+                Width: =Parent.Width - 44
+                ZIndex: =1
+
+            HomeScreen_Primary_Intro As label:
+                Color: =RGBA(83, 92, 88, 1)
+                Height: =44
+                Size: =13
+                Text: ="Use these checks in order. Health and schema checks should pass before validation, calculation, and evidence operations are treated as runtime proof."
+                Width: =Parent.Width - 44
+                ZIndex: =2
+
+            HomeScreen_Health_Screen_Button As button:
+                Fill: =RGBA(16, 94, 60, 1)
+                Height: =48
+                OnSelect: =Navigate(Health_Screen);
+                Size: =15
+                Text: ="1. Health check"
+                Width: =Parent.Width - 44
+                ZIndex: =3
+
+            HomeScreen_ListCalculators_Screen_Button As button:
+                Fill: =RGBA(16, 94, 60, 1)
+                Height: =48
+                OnSelect: =Navigate(ListCalculators_Screen);
+                Size: =15
+                Text: ="2. List calculators"
+                Width: =Parent.Width - 44
+                ZIndex: =4
+
+            HomeScreen_GetCalculatorSchema_Screen_Button As button:
+                Fill: =RGBA(16, 94, 60, 1)
+                Height: =48
+                OnSelect: =Navigate(GetCalculatorSchema_Screen);
+                Size: =15
+                Text: ="3. Schema lookup"
+                Width: =Parent.Width - 44
+                ZIndex: =5
+
+            HomeScreen_ValidateInput_Screen_Button As button:
+                Fill: =RGBA(21, 67, 120, 1)
+                Height: =48
+                OnSelect: =Navigate(ValidateInput_Screen);
+                Size: =15
+                Text: ="4. Validate synthetic input"
+                Width: =Parent.Width - 44
+                ZIndex: =6
+
+            HomeScreen_Calculate_Screen_Button As button:
+                Fill: =RGBA(128, 86, 0, 1)
+                Height: =48
+                OnSelect: =Navigate(Calculate_Screen);
+                Size: =15
+                Text: ="5. Calculate synthetic request"
+                Width: =Parent.Width - 44
+                ZIndex: =7
+
+            HomeScreen_GetEvidence_Screen_Button As button:
+                Fill: =RGBA(84, 54, 116, 1)
+                Height: =48
+                OnSelect: =Navigate(GetEvidence_Screen);
+                Size: =15
+                Text: ="6. Export evidence"
+                Width: =Parent.Width - 44
+                ZIndex: =8
+
+        HomeScreen_Governance_Panel As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(30, 42, 38, 1)
+            Height: =Parent.Height - 40
+            LayoutGap: =16
+            PaddingLeft: =24
+            PaddingRight: =24
+            PaddingTop: =24
+            Width: =Parent.Width * 0.36
+            ZIndex: =2
+
+            HomeScreen_Governance_Title As label:
+                Color: =RGBA(255, 255, 255, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Role: =TextRole.Heading2
+                Size: =22
+                Text: ="Readiness guardrails"
+                Width: =Parent.Width - 48
+                ZIndex: =1
+
+            HomeScreen_Governance_Copy As label:
+                Color: =RGBA(226, 240, 230, 1)
+                Height: =112
+                Size: =14
+                Text: ="This app is published in a developer environment. It is ready for visual review and launch smoke only. Production readiness still requires service endpoint, connection reference, flow smoke, DLP, and monitoring evidence."
+                Width: =Parent.Width - 48
+                ZIndex: =2
+
+            HomeScreen_Governance_Trace As label:
+                Color: =RGBA(184, 226, 200, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =48
+                Size: =13
+                Text: ="Support trace: copy the Power Apps session ID and connector correlation ID for every failed runtime check."
+                Width: =Parent.Width - 48
+                ZIndex: =3
+
+            HomeScreen_Governance_Privacy As label:
+                Color: =RGBA(255, 247, 222, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =64
+                Size: =13
+                Text: ="Privacy: use synthetic fixtures only. Do not enter patient-level or private NSW operational data."
+                Width: =Parent.Width - 48
+                ZIndex: =4

@@ -27,33 +27,53 @@
       "path": "power-platform/evidence/screenshots/mchs-orchestration-health-click-20260520.png",
       "sha256": "3d0cd011b594fb60415abbd76562abf594e6278aabb72ea4f587d9ae06d79333",
       "description": "Generated Health operation screen after click"
+    },
+    {
+      "path": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+      "sha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
+      "description": "Published optimized app launch in Power Apps player"
     }
   ],
   "observations": [
     "App imports, saves, publishes, and launches in the NSW dylan developer environment.",
     "Generated app exposes connector operation screens for GetCalculatorSchema, Health, ListCalculators, Calculate, GetEvidence, and ValidateInput.",
     "The player displays a developer-environment banner.",
-    "Visual function is basic generated UI and not yet optimized for production use.",
-    "The Health click navigates to Health_Screen, but does not prove production service-boundary execution."
+    "The Health click navigates to Health_Screen, but does not prove production service-boundary execution.",
+    "A separate optimized app was saved, published, launched, and visually verified in the NSW dylan environment because the original generated app was read-only during overwrite attempt."
   ],
   "visualReview": {
     "viewedInTenant": true,
-    "status": "passed_with_findings",
+    "status": "passed",
+    "optimizedArtifactGenerated": true,
+    "optimizedArtifact": "dist/power-platform/apps/mchs-orchestration-optimized.msapp",
+    "optimizedArtifactSha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7",
     "requiredImprovements": [
-      "Replace generated connector UI with a purpose-built orchestration home screen.",
-      "Add explicit synthetic-data and non-production environment warnings.",
-      "Add loading, success, validation-error, and connector-error states.",
-      "Expose copyable correlation IDs for support.",
-      "Validate keyboard navigation and color contrast after redesign.",
-      "Configure production service-boundary endpoint and connection reference before claiming runtime calculation smoke."
-    ]
+      "Configure production service-boundary endpoint and connection reference before claiming runtime calculation smoke.",
+      "Run accessibility and responsive checks against the final production-hosted app before release.",
+      "Capture connector consent or preconsent evidence for production users."
+    ],
+    "optimizedArtifactPublished": true,
+    "optimizedAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "optimizedAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "optimizedScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+    "optimizedScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237"
   },
   "claimBoundary": {
     "appPublished": true,
     "appLaunchSmokePassed": true,
-    "visualFunctionOptimized": false,
+    "visualFunctionOptimized": true,
     "serviceBoundaryExecutionProven": false,
     "flowSmokePassed": false,
     "productionReadinessClaimed": false
+  },
+  "optimizedPublication": {
+    "appName": "MCHS Orchestration Optimized",
+    "appId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "playUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "artifact": "dist/power-platform/apps/mchs-orchestration-optimized.msapp",
+    "artifactSha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7",
+    "screenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+    "screenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
+    "status": "published_and_launch_verified"
   }
 }
