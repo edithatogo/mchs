@@ -19,5 +19,5 @@
   "created_at": "2026-05-18T13:22:30Z",
   "updated_at": "2026-05-20T00:00:00Z",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
-  "external_blocker": "Managed solution shell imported and operational evidence contracts are complete, but real Dataverse app/flow components, connection-reference values, service-boundary production endpoint, DLP policy capture, and runtime smoke evidence are still pending."
+  "external_blocker": "Managed solution shell imported and operational evidence contracts are complete, but the real Power App has not been viewed or visually optimized in the tenant, and real Dataverse app/flow components, connection-reference values, service-boundary production endpoint, DLP policy capture, and runtime smoke evidence are still pending."
 }

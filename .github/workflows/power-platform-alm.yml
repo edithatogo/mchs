@@ -11,6 +11,7 @@ on:
       - 'scripts/validate_power_platform_repo_health.py'
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
+      - 'scripts/validate_power_platform_platform_tests.py'
       - '.github/workflows/power-platform-alm.yml'
   push:
     branches: [master]
@@ -23,6 +24,7 @@ on:
       - 'scripts/validate_power_platform_repo_health.py'
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
+      - 'scripts/validate_power_platform_platform_tests.py'
   workflow_dispatch:
 
 jobs:
@@ -38,6 +40,7 @@ jobs:
       - run: python scripts/validate_power_platform_repo_health.py
       - run: python scripts/validate_power_platform_sota_capabilities.py
       - run: python scripts/validate_power_platform_operational_evidence.py
+      - run: python scripts/validate_power_platform_platform_tests.py
       - run: bash -n scripts/power-platform-alm.sh
       - run: bash -n scripts/power-platform-alm-lifecycle-gates.sh
 

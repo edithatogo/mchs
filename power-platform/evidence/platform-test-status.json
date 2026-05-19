@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "platformChecks": [
+    {
+      "name": "pac-auth-and-solution-visibility",
+      "status": "passed",
+      "evidence": "pac solution list shows mchs_alm_orchestration 0.2.2.0 managed True"
+    },
+    {
+      "name": "solution-checker",
+      "status": "passed",
+      "evidence": "correlation a797a828-b297-420d-8372-686ce60de571, zero findings"
+    },
+    {
+      "name": "real-power-app-visual-review",
+      "status": "blocked",
+      "evidence": null,
+      "blocker": "real app URL/component is not available in the imported managed shell"
+    },
+    {
+      "name": "real-power-app-runtime-smoke",
+      "status": "blocked",
+      "evidence": null,
+      "blocker": "real app component and configured connection reference are missing"
+    },
+    {
+      "name": "real-power-automate-flow-smoke",
+      "status": "blocked",
+      "evidence": null,
+      "blocker": "real flow component and configured connection reference are missing"
+    }
+  ],
+  "visualFunction": {
+    "viewedInTenant": false,
+    "optimizedInTenant": false,
+    "requiredEvidence": [
+      "app URL",
+      "screenshots or Playwright trace",
+      "accessibility pass",
+      "responsive layout pass",
+      "empty/error/loading states pass",
+      "connector consent or preconsent verification"
+    ]
+  },
+  "claimBoundary": {
+    "allPlatformTestsPassed": false,
+    "visualFunctionOptimized": false,
+    "productionReadinessClaimed": false
+  }
+}

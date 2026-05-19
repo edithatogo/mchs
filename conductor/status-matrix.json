@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "statusVocabulary": [
+    "complete",
+    "in_progress",
+    "planned",
+    "blocked_external",
+    "prototype",
+    "roadmap_only",
+    "published",
+    "not_ready"
+  ],
+  "portfolioClaimBoundary": {
+    "allTracksImplemented": false,
+    "allContractsProductionReady": false,
+    "allExternalRuntimeOutcomesProven": false
+  },
+  "incompleteTracksFromIndex": [
+    "rust_core_ga_20260513",
+    "canonical_contract_foundation_20260513",
+    "support_status_matrix_20260513",
+    "cli_file_contracts_20260513",
+    "http_api_contract_20260513",
+    "mcp_contract_20260513",
+    "openai_tool_adapter_20260513",
+    "audience_language_strategy_20260513",
+    "hwau_terminology_migration_20260513",
+    "state_local_price_registry_20260513",
+    "jurisdiction_price_source_index_20260513",
+    "nsw_funding_model_20260513",
+    "jurisdiction_funding_model_registry_20260513",
+    "parallel_valuation_outputs_20260513",
+    "rust_crate_boundary_rename_20260513",
+    "github_pages_api_architecture_20260513",
+    "release_evidence_bundle_20260513",
+    "scala_spark_binding_20260513",
+    "swift_binding_20260513",
+    "stata_interop_binding_20260513",
+    "matlab_interop_binding_20260513",
+    "power_platform_operational_evidence_20260518"
+  ],
+  "recommendedNextTracks": [
+    "canonical_contract_foundation_20260513",
+    "support_status_matrix_20260513",
+    "mcp_contract_20260513",
+    "http_api_contract_20260513",
+    "power_platform_operational_evidence_20260518"
+  ],
+  "powerPlatformRuntimeBlockers": [
+    "service boundary production endpoint and connection reference values",
+    "real Dataverse app component smoke evidence",
+    "real Power Automate flow component smoke evidence",
+    "real Power App visual review and visual optimization evidence"
+  ]
+}

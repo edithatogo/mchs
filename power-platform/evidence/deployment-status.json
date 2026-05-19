@@ -7,7 +7,8 @@
   "missing": [
     "service boundary production endpoint and connection reference values",
     "real Dataverse app component smoke evidence",
-    "real Power Automate flow component smoke evidence"
+    "real Power Automate flow component smoke evidence",
+    "real Power App visual review and optimization evidence"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -52,5 +53,6 @@
     "copilotRealTimeConnectorKnowledge": "scaffolded_blocked_pending_copilot_studio_configuration",
     "dataverseMcpServer": "readiness_scaffolded_blocked_pending_admin_enablement",
     "agenticGovernanceObservability": "implemented_as_evidence_contract"
-  }
+  },
+  "platformTestStatus": "power-platform/evidence/platform-test-status.json"
 }

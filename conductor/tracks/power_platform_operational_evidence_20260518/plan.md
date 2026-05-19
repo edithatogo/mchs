@@ -10,6 +10,11 @@
     - [x] Record synthetic request/response trace template
     - [x] Record diagnostics and provenance output template
     - [x] Record support status and known limitations
+- [x] Task: Create platform and visual test evidence contract
+    - [x] Record PAC solution visibility evidence
+    - [x] Record real Power App visual review blocker
+    - [x] Record real app and flow smoke blockers
+    - [x] Record visual optimization checklist
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Evidence Bundle' (Protocol in workflow.md)
 
 ## Phase 2: Operational Governance
@@ -30,4 +35,6 @@
     - [x] Provide target environment URL and ID.
     - [x] Authenticate `pac` against the NSW tenant.
     - [x] Import managed solution and record output.
+    - [ ] View the real Power App in the NSW tenant.
+    - [ ] Optimize and evidence visual function in the NSW tenant.
     - [ ] Run app, connector, and flow smoke tests.
