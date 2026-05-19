@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_monitoring_dlp",
+  "status": "blocked_pending_tenant_policy_capture",
+  "monitoring": {
+    "connectorFailures": "required",
+    "flowRunFailures": "required",
+    "serviceBoundaryHealth": "required",
+    "appHealthMetrics": "required",
+    "correlationIdsWithoutPatientData": "required"
+  },
+  "dlp": {
+    "policyName": null,
+    "customConnectorAllowed": false,
+    "environmentPolicyCaptured": false,
+    "tenantPolicyCaptured": false
+  },
+  "support": {
+    "owner": "TBD",
+    "escalationPath": "TBD",
+    "requiredDiagnosticFields": [
+      "solutionVersion",
+      "environmentId",
+      "connectorOperation",
+      "correlationId",
+      "sanitizedPayloadHash"
+    ]
+  },
+  "claimBoundary": {
+    "monitoringConfigured": false,
+    "dlpEvidenceCaptured": false,
+    "productionReadinessClaimed": false
+  }
+}

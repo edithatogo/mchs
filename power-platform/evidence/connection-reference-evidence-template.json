@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_connection_references",
+  "status": "blocked_pending_connection_values",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "requiredConnectionReferences": [
+    {
+      "logicalName": "mchs_service_boundary",
+      "connector": "mchs-service-boundary",
+      "authentication": "api_key_or_entra_gateway",
+      "valueStatus": "missing"
+    }
+  ],
+  "environmentVariables": [
+    {
+      "logicalName": "mchs_api_base_url",
+      "valueStatus": "missing",
+      "secret": false
+    },
+    {
+      "logicalName": "mchs_api_contract_version",
+      "valueStatus": "template",
+      "secret": false
+    },
+    {
+      "logicalName": "mchs_fixture_gate",
+      "valueStatus": "template",
+      "secret": false
+    }
+  ],
+  "claimBoundary": {
+    "connectionsConfigured": false,
+    "productionReadinessClaimed": false
+  }
+}

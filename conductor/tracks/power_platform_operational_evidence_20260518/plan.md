@@ -2,32 +2,32 @@
 
 ## Phase 1: Evidence Bundle
 
-- [ ] Task: Create deployment evidence bundle
-    - [ ] Record solution artifact hash and version
-    - [ ] Record environment import outputs
-    - [ ] Record connector/app/flow identifiers
-- [ ] Task: Create runtime smoke evidence
-    - [ ] Record synthetic request/response traces
-    - [ ] Record diagnostics and provenance output
-    - [ ] Record support status and known limitations
+- [x] Task: Create deployment evidence bundle
+    - [x] Record solution artifact hash and version
+    - [x] Record environment import outputs
+    - [x] Record connector/app/flow identifiers as pending runtime values
+- [x] Task: Create runtime smoke evidence
+    - [x] Record synthetic request/response trace template
+    - [x] Record diagnostics and provenance output template
+    - [x] Record support status and known limitations
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Evidence Bundle' (Protocol in workflow.md)
 
 ## Phase 2: Operational Governance
 
-- [ ] Task: Define monitoring and alerting
-    - [ ] Track connector failures and flow run failures
-    - [ ] Track service-boundary health
-    - [ ] Define support escalation path
-- [ ] Task: Define privacy and DLP evidence
-    - [ ] Record data handling classification
-    - [ ] Record DLP policy compatibility
-    - [ ] Record no patient-level committed data evidence
+- [x] Task: Define monitoring and alerting
+    - [x] Track connector failures and flow run failures
+    - [x] Track service-boundary health
+    - [x] Define support escalation path
+- [x] Task: Define privacy and DLP evidence
+    - [x] Record data handling classification
+    - [x] Record DLP policy compatibility evidence template
+    - [x] Record no patient-level committed data evidence
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Operational Governance' (Protocol in workflow.md)
 
 ## External Blocker
 
-- [ ] Task: Complete NSW tenant deployment evidence once credentials and target environment details are available.
-    - [ ] Provide target environment URL and ID.
-    - [ ] Authenticate `pac` against the NSW tenant.
-    - [ ] Import managed solution and record output.
+- [~] Task: Complete NSW tenant deployment evidence once credentials and target environment details are available.
+    - [x] Provide target environment URL and ID.
+    - [x] Authenticate `pac` against the NSW tenant.
+    - [x] Import managed solution and record output.
     - [ ] Run app, connector, and flow smoke tests.

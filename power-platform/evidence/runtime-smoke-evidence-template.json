@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_runtime_smoke",
+  "status": "blocked_pending_live_runtime_execution",
+  "asOf": "2026-05-20",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "serviceBoundary": {
+    "productionEndpoint": null,
+    "healthCheckStatus": "not-run",
+    "healthCheckCorrelationId": null
+  },
+  "connectionReferences": {
+    "status": "blocked_missing_values",
+    "required": [
+      "mchs_service_boundary"
+    ],
+    "configured": []
+  },
+  "appSmoke": {
+    "status": "blocked_missing_real_app_component",
+    "appId": null,
+    "appUrl": null,
+    "syntheticLaunchTrace": null,
+    "syntheticSubmissionTrace": null
+  },
+  "flowSmoke": {
+    "status": "blocked_missing_real_flow_component",
+    "flowIds": [],
+    "syntheticRunIds": [],
+    "failedRunIds": []
+  },
+  "syntheticDataPolicy": {
+    "patientLevelDataUsed": false,
+    "privateNswOperationalDataUsed": false,
+    "fixtureOnly": true
+  },
+  "claimBoundary": {
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}

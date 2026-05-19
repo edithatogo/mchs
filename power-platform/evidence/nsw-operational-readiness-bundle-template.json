@@ -1,7 +1,7 @@
 {
-  "release_id": "nwau-pp-nsw-readiness-template",
+  "release_id": "mchs-pp-nsw-dylan-operational-readiness",
   "git_commit": "TBD",
-  "git_tag": "vTBD",
+  "git_tag": "v0.2.2",
   "packages": [
     "nwau-py",
     "mchs-power-platform-connector"
@@ -20,10 +20,17 @@
   },
   "fixture_results": [
     {
-      "type": "deployment-smoke",
-      "environment": "dev",
-      "status": "not-run",
-      "notes": "Blocked until deployment tenant credentials are provisioned."
+      "type": "managed-solution-import",
+      "environment": "nsw-dylan",
+      "status": "passed",
+      "evidence": "power-platform/evidence/nsw-managed-import-20260520.json"
+    },
+    {
+      "type": "runtime-app-flow-smoke",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/runtime-smoke-evidence-template.json",
+      "notes": "Blocked until real app and flow components, service endpoint, and connection reference values are configured."
     }
   ],
   "parity_reports": [],
@@ -35,24 +42,27 @@
     "status": "planned"
   },
   "security": {
-    "tenant_credentials_status": "missing",
-    "secret_store": "pending-approval"
+    "tenant_credentials_status": "interactive-user-authenticated",
+    "secret_store": "pending-service-principal-or-approved-secret-store"
   },
   "provenance": {
     "deploy_runbook": "power-platform/deployment/nsw-managed-solution-promotion-runbook.md",
     "readiness_template": "power-platform/deployment/nsw-deployment-readiness-template.md"
   },
   "known_limitations": [
-    "Blocker: tenant_client_secret_missing",
-    "Blocker: tenant_service_principal_missing",
-    "Blocker: tenant_environment_id_unknown"
+    "Blocker: service_boundary_production_endpoint_missing",
+    "Blocker: connection_reference_values_missing",
+    "Blocker: real_dataverse_app_component_smoke_missing",
+    "Blocker: real_power_automate_flow_component_smoke_missing"
   ],
   "rollback": {
     "status": "defined",
     "artifact": "managed solution backup required before promotion"
   },
   "governance": {
-    "nsw_real_deployment_claim": false,
-    "notes": "Template only; no live NSW tenant deployment claim."
+    "nsw_real_deployment_claim": true,
+    "managed_solution_import_claim": true,
+    "runtime_production_readiness_claim": false,
+    "notes": "Managed solution shell import is evidenced; runtime app/flow readiness remains blocked."
   }
 }
