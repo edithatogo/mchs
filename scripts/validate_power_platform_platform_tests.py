@@ -36,13 +36,12 @@ def main() -> int:
         raise SystemExit("custom connector registration must remain evidenced")
     if checks["generated-canvas-msapp"]["status"] != "passed":
         raise SystemExit("generated canvas msapp must remain evidenced")
-    for blocked in [
-        "real-power-app-visual-review",
-        "real-power-app-runtime-smoke",
-        "real-power-automate-flow-smoke",
-    ]:
-        if checks[blocked]["status"] != "blocked":
-            raise SystemExit(f"{blocked} cannot be unblocked without live evidence")
+    if checks["real-power-app-visual-review"]["status"] != "passed_with_findings":
+        raise SystemExit("Power App visual review must be evidenced with findings")
+    if checks["real-power-app-runtime-smoke"]["status"] != "partial":
+        raise SystemExit("Power App runtime smoke must remain partial")
+    if checks["real-power-automate-flow-smoke"]["status"] != "blocked":
+        raise SystemExit("Power Automate flow smoke must remain blocked")
 
     boundary = status["claimBoundary"]
     if boundary["allPlatformTestsPassed"]:

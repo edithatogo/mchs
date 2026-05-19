@@ -6,9 +6,9 @@
   "managedPromotionClaimed": true,
   "missing": [
     "service boundary production endpoint and connection reference values",
-    "real Dataverse app component smoke evidence",
     "real Power Automate flow component smoke evidence",
-    "real Power App visual review and optimization evidence"
+    "production service-boundary execution evidence",
+    "real Power App visual optimization evidence"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -26,6 +26,9 @@
   "managedArtifactSha256": "50bbe04a5b27907409c231f620d65b95867fbcb65912e9282d3b09c168528efa",
   "customConnectorRegistered": true,
   "customConnectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+  "canvasAppPublished": true,
+  "canvasAppId": "ff64f58a-73de-42ee-b92d-f65503619c49",
+  "canvasAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
   "generatedCanvasMsappSha256": "baeec10504d1e4c5706c242575693e7eaba0f2bb364d4026b51efb36eb4519c9",
   "solutionCheckerCorrelationId": "a797a828-b297-420d-8372-686ce60de571",
   "solutionCheckerFindings": {

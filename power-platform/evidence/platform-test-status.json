@@ -30,15 +30,13 @@
     },
     {
       "name": "real-power-app-visual-review",
-      "status": "blocked",
-      "evidence": null,
-      "blocker": "real app URL/component is not available in the imported managed shell"
+      "status": "passed_with_findings",
+      "evidence": "power-platform/evidence/canvas-app-publication-20260520.json"
     },
     {
       "name": "real-power-app-runtime-smoke",
-      "status": "blocked",
-      "evidence": null,
-      "blocker": "real app component and configured connection reference are missing"
+      "status": "partial",
+      "evidence": "app launches and generated Health button navigates to Health_Screen; production service-boundary execution remains unproven"
     },
     {
       "name": "real-power-automate-flow-smoke",
@@ -48,7 +46,7 @@
     }
   ],
   "visualFunction": {
-    "viewedInTenant": false,
+    "viewedInTenant": true,
     "optimizedInTenant": false,
     "requiredEvidence": [
       "app URL",
@@ -57,7 +55,8 @@
       "responsive layout pass",
       "empty/error/loading states pass",
       "connector consent or preconsent verification"
-    ]
+    ],
+    "evidence": "power-platform/evidence/canvas-app-publication-20260520.json"
   },
   "claimBoundary": {
     "allPlatformTestsPassed": false,

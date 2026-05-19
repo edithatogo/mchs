@@ -25,10 +25,10 @@
     "configured": []
   },
   "appSmoke": {
-    "status": "blocked_missing_real_app_component",
-    "appId": null,
-    "appUrl": null,
-    "syntheticLaunchTrace": null,
+    "status": "partial_launch_passed_connector_execution_blocked",
+    "appId": "ff64f58a-73de-42ee-b92d-f65503619c49",
+    "appUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "syntheticLaunchTrace": "power-platform/evidence/canvas-app-publication-20260520.json",
     "syntheticSubmissionTrace": null
   },
   "flowSmoke": {

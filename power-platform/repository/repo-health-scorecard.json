@@ -57,9 +57,9 @@
   ],
   "hardBlockers": [
     "service boundary production endpoint and connection reference values",
-    "real Dataverse app component smoke evidence",
     "real Power Automate flow component smoke evidence",
-    "real Power App visual review and optimization evidence"
+    "production service-boundary execution evidence",
+    "real Power App visual optimization evidence"
   ],
   "nonBlockers": [
     "standalone subrepo remote not provisioned because no target remote URL has been supplied",

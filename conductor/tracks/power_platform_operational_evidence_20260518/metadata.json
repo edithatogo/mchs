@@ -19,5 +19,5 @@
   "created_at": "2026-05-18T13:22:30Z",
   "updated_at": "2026-05-20T00:00:00Z",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
-  "external_blocker": "Managed solution shell and custom connector are imported, and a canvas .msapp artifact has been generated. PAC does not expose a canvas app upload/publish command in this environment, so the generated app still must be imported through the maker portal or another supported API path before visual review, optimization, connection-reference configuration, flow smoke, DLP policy capture, and runtime smoke evidence can complete."
+  "external_blocker": "Managed solution shell, custom connector, and generated canvas app are published in NSW dylan. The app launches and has visual-review evidence, but it remains generated UI and is not visually optimized. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
 }

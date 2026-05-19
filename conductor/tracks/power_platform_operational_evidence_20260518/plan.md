@@ -39,7 +39,7 @@
     - [x] Import managed solution and record output.
     - [x] Register custom connector and record connector ID.
     - [x] Generate canvas app artifact from custom connector.
-    - [ ] Publish/import generated canvas app into the NSW tenant.
-    - [ ] View the real Power App in the NSW tenant.
+    - [x] Publish/import generated canvas app into the NSW tenant.
+    - [x] View the real Power App in the NSW tenant.
     - [ ] Optimize and evidence visual function in the NSW tenant.
     - [ ] Run app, connector, and flow smoke tests.

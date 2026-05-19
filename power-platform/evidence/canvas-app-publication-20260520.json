@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_canvas_app_publication",
+  "asOf": "2026-05-20",
+  "tenantName": "NSW Health Department",
+  "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "appName": "MCHS Orchestration",
+  "appId": "ff64f58a-73de-42ee-b92d-f65503619c49",
+  "playUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+  "sourceArtifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration.msapp",
+    "sha256": "baeec10504d1e4c5706c242575693e7eaba0f2bb364d4026b51efb36eb4519c9"
+  },
+  "screenshots": [
+    {
+      "path": "power-platform/evidence/screenshots/powerapps-studio-generated-app-20260520.png",
+      "sha256": "a065e03edf255bcad17b968f230c39d552c27e3a20e17086cc3d2390c32978e3",
+      "description": "Power Apps Studio generated app view"
+    },
+    {
+      "path": "power-platform/evidence/screenshots/mchs-orchestration-play-20260520.png",
+      "sha256": "1c62becbe821ad9a26a0717a65986c0b9ac471864be146714c69983f1461bbc9",
+      "description": "Published app launch in Power Apps player"
+    },
+    {
+      "path": "power-platform/evidence/screenshots/mchs-orchestration-health-click-20260520.png",
+      "sha256": "3d0cd011b594fb60415abbd76562abf594e6278aabb72ea4f587d9ae06d79333",
+      "description": "Generated Health operation screen after click"
+    }
+  ],
+  "observations": [
+    "App imports, saves, publishes, and launches in the NSW dylan developer environment.",
+    "Generated app exposes connector operation screens for GetCalculatorSchema, Health, ListCalculators, Calculate, GetEvidence, and ValidateInput.",
+    "The player displays a developer-environment banner.",
+    "Visual function is basic generated UI and not yet optimized for production use.",
+    "The Health click navigates to Health_Screen, but does not prove production service-boundary execution."
+  ],
+  "visualReview": {
+    "viewedInTenant": true,
+    "status": "passed_with_findings",
+    "requiredImprovements": [
+      "Replace generated connector UI with a purpose-built orchestration home screen.",
+      "Add explicit synthetic-data and non-production environment warnings.",
+      "Add loading, success, validation-error, and connector-error states.",
+      "Expose copyable correlation IDs for support.",
+      "Validate keyboard navigation and color contrast after redesign.",
+      "Configure production service-boundary endpoint and connection reference before claiming runtime calculation smoke."
+    ]
+  },
+  "claimBoundary": {
+    "appPublished": true,
+    "appLaunchSmokePassed": true,
+    "visualFunctionOptimized": false,
+    "serviceBoundaryExecutionProven": false,
+    "flowSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}

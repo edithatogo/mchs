@@ -20,12 +20,23 @@ def test_power_platform_platform_test_status_is_truthful() -> None:
     assert checks["solution-checker"] == "passed"
     assert checks["custom-connector-registration"] == "passed"
     assert checks["generated-canvas-msapp"] == "passed"
-    assert checks["real-power-app-visual-review"] == "blocked"
-    assert checks["real-power-app-runtime-smoke"] == "blocked"
+    assert checks["real-power-app-visual-review"] == "passed_with_findings"
+    assert checks["real-power-app-runtime-smoke"] == "partial"
     assert checks["real-power-automate-flow-smoke"] == "blocked"
-    assert status["visualFunction"]["viewedInTenant"] is False
+    assert status["visualFunction"]["viewedInTenant"] is True
     assert status["visualFunction"]["optimizedInTenant"] is False
     assert status["claimBoundary"]["allPlatformTestsPassed"] is False
+
+
+def test_power_platform_canvas_app_publication_evidence_is_precise() -> None:
+    evidence = _json(PP / "evidence" / "canvas-app-publication-20260520.json")
+    assert evidence["appName"] == "MCHS Orchestration"
+    assert evidence["appId"] == "ff64f58a-73de-42ee-b92d-f65503619c49"
+    assert evidence["claimBoundary"]["appPublished"] is True
+    assert evidence["claimBoundary"]["appLaunchSmokePassed"] is True
+    assert evidence["claimBoundary"]["visualFunctionOptimized"] is False
+    assert evidence["claimBoundary"]["serviceBoundaryExecutionProven"] is False
+    assert evidence["claimBoundary"]["productionReadinessClaimed"] is False
 
 
 def test_power_platform_platform_test_validator_passes() -> None:
