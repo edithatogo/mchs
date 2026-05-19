@@ -4,6 +4,9 @@ This directory contains the source connector definitions consumed by Power Platf
 for orchestration of calculator workflows.
 
 - `apiDefinition.swagger.json`: OpenAPI 3.0 contract for the connector surface.
+- `apiDefinition.swagger2.json`: Swagger 2.0 deployment artifact for
+  `pac connector create`, because the current Power Platform custom connector
+  import path rejects OpenAPI 3 definitions.
 - `apiProperties.json`: Connector metadata and connection-parameter declarations.
 
 Deployment policy:

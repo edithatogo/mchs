@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MCHS Service Boundary",
+    "version": "0.2.2",
+    "description": "Power Platform custom connector for MCHS orchestration. Calculation logic remains in the secured service boundary and canonical runtime."
+  },
+  "host": "example.invalid",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "Health",
+        "summary": "Read boundary readiness",
+        "responses": {"200": {"description": "Service is running", "schema": {"type": "object"}}}
+      }
+    },
+    "/v1/calculators": {
+      "get": {
+        "operationId": "ListCalculators",
+        "summary": "List calculators through the service boundary",
+        "parameters": [{"name": "pricing_year", "in": "query", "required": false, "type": "string"}],
+        "responses": {"200": {"description": "Calculator list response", "schema": {"$ref": "#/definitions/PowerPlatformResponse"}}}
+      }
+    },
+    "/v1/schemas/{schema_name}": {
+      "get": {
+        "operationId": "GetCalculatorSchema",
+        "summary": "Read a schema through the service boundary",
+        "parameters": [{"name": "schema_name", "in": "path", "required": true, "type": "string"}],
+        "responses": {"200": {"description": "Schema response", "schema": {"$ref": "#/definitions/PowerPlatformResponse"}}}
+      }
+    },
+    "/v1/validate": {
+      "post": {
+        "operationId": "ValidateInput",
+        "summary": "Validate a synthetic calculation request",
+        "parameters": [{"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/PowerPlatformRequest"}}],
+        "responses": {"200": {"description": "Validation response", "schema": {"$ref": "#/definitions/PowerPlatformResponse"}}}
+      }
+    },
+    "/v1/calculate": {
+      "post": {
+        "operationId": "Calculate",
+        "summary": "Run a synthetic calculation request",
+        "parameters": [{"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/PowerPlatformRequest"}}],
+        "responses": {"200": {"description": "Calculation response", "schema": {"$ref": "#/definitions/PowerPlatformResponse"}}}
+      }
+    },
+    "/v1/evidence": {
+      "post": {
+        "operationId": "GetEvidence",
+        "summary": "Read evidence through the service boundary",
+        "parameters": [{"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/PowerPlatformRequest"}}],
+        "responses": {"200": {"description": "Evidence response", "schema": {"$ref": "#/definitions/PowerPlatformResponse"}}}
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {"type": "apiKey", "name": "x-api-key", "in": "header"}
+  },
+  "security": [{"api_key": []}],
+  "definitions": {
+    "PowerPlatformRequest": {
+      "type": "object",
+      "properties": {
+        "contract_version": {"type": "string"},
+        "calculator_id": {"type": "string"},
+        "pricing_year": {"type": "string"},
+        "direction": {"type": "string"},
+        "bundle_id": {"type": "string"},
+        "fixture_gate": {"type": "string"},
+        "correlation_id": {"type": "string"},
+        "input_payload": {"type": "object"}
+      }
+    },
+    "PowerPlatformResponse": {
+      "type": "object",
+      "required": ["status", "result_payload", "trace_id"],
+      "properties": {
+        "status": {"type": "string"},
+        "result_payload": {"type": "object"},
+        "warnings": {"type": "array", "items": {"type": "string"}},
+        "diagnostics": {"type": "object"},
+        "provenance": {"type": "object"},
+        "trace_id": {"type": "string"}
+      }
+    }
+  }
+}

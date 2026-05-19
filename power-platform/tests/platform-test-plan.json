@@ -6,6 +6,8 @@
     "pac auth and target environment selection",
     "solution visibility and managed version check",
     "solution checker result verification",
+    "custom connector registration",
+    "generated canvas msapp artifact",
     "connection reference value configuration",
     "environment variable value configuration",
     "service boundary health check",

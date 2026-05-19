@@ -12,6 +12,8 @@
     - [x] Record support status and known limitations
 - [x] Task: Create platform and visual test evidence contract
     - [x] Record PAC solution visibility evidence
+    - [x] Register custom connector in NSW `dylan`
+    - [x] Generate canvas `.msapp` artifact from registered connector
     - [x] Record real Power App visual review blocker
     - [x] Record real app and flow smoke blockers
     - [x] Record visual optimization checklist
@@ -35,6 +37,9 @@
     - [x] Provide target environment URL and ID.
     - [x] Authenticate `pac` against the NSW tenant.
     - [x] Import managed solution and record output.
+    - [x] Register custom connector and record connector ID.
+    - [x] Generate canvas app artifact from custom connector.
+    - [ ] Publish/import generated canvas app into the NSW tenant.
     - [ ] View the real Power App in the NSW tenant.
     - [ ] Optimize and evidence visual function in the NSW tenant.
     - [ ] Run app, connector, and flow smoke tests.

@@ -65,3 +65,29 @@ def test_connector_metadata_references_api_definition():
     assert metadata["apiDefinition"] == "apiDefinition.swagger.json"
     assert "connectionParameters" in metadata["properties"]
     assert "api_key" in metadata["properties"]["connectionParameters"]
+
+
+def test_connector_has_swagger2_deployment_artifact():
+    swagger2 = json.loads(
+        (
+            ROOT
+            / "power-platform"
+            / "connectors"
+            / "mchs-service-boundary"
+            / "apiDefinition.swagger2.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert swagger2["swagger"] == "2.0"
+    assert swagger2["securityDefinitions"]["api_key"]["in"] == "header"
+    assert {
+        "Health",
+        "ListCalculators",
+        "GetCalculatorSchema",
+        "ValidateInput",
+        "Calculate",
+        "GetEvidence",
+    } <= {
+        operation["operationId"]
+        for methods in swagger2["paths"].values()
+        for operation in methods.values()
+    }

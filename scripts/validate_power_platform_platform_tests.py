@@ -19,6 +19,8 @@ def main() -> int:
     for required in [
         "pac-auth-and-solution-visibility",
         "solution-checker",
+        "custom-connector-registration",
+        "generated-canvas-msapp",
         "real-power-app-visual-review",
         "real-power-app-runtime-smoke",
         "real-power-automate-flow-smoke",
@@ -30,6 +32,10 @@ def main() -> int:
         raise SystemExit("PAC solution visibility must remain evidenced")
     if checks["solution-checker"]["status"] != "passed":
         raise SystemExit("solution checker must remain evidenced")
+    if checks["custom-connector-registration"]["status"] != "passed":
+        raise SystemExit("custom connector registration must remain evidenced")
+    if checks["generated-canvas-msapp"]["status"] != "passed":
+        raise SystemExit("generated canvas msapp must remain evidenced")
     for blocked in [
         "real-power-app-visual-review",
         "real-power-app-runtime-smoke",

@@ -18,6 +18,8 @@ def test_power_platform_platform_test_status_is_truthful() -> None:
     checks = {check["name"]: check["status"] for check in status["platformChecks"]}
     assert checks["pac-auth-and-solution-visibility"] == "passed"
     assert checks["solution-checker"] == "passed"
+    assert checks["custom-connector-registration"] == "passed"
+    assert checks["generated-canvas-msapp"] == "passed"
     assert checks["real-power-app-visual-review"] == "blocked"
     assert checks["real-power-app-runtime-smoke"] == "blocked"
     assert checks["real-power-automate-flow-smoke"] == "blocked"
