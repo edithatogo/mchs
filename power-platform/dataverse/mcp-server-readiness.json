@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "capability": "dataverse_mcp_server",
+  "status": "readiness_scaffolded_blocked_pending_admin_enablement",
+  "featureFlag": "MCHS_DATAVERSE_MCP_SERVER",
+  "featureEnabled": false,
+  "targetEnvironment": {
+    "name": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "id": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
+  },
+  "requiredAdminControls": [
+    "Managed Environment confirmed",
+    "Dataverse MCP server enabled for environment",
+    "allowed MCP clients configured",
+    "connector policies reviewed",
+    "DLP policy reviewed",
+    "Copilot credit and billing impact accepted",
+    "least-privilege roles assigned",
+    "audit logging owner assigned"
+  ],
+  "allowedClientCandidates": [
+    "Copilot Studio",
+    "VS Code GitHub Copilot",
+    "GitHub Copilot CLI",
+    "Claude Desktop",
+    "Claude Code"
+  ],
+  "claimBoundary": {
+    "adminEnabled": false,
+    "externalClientsAllowed": false,
+    "productionReadinessClaimed": false
+  }
+}

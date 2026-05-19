@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "capability": "native_power_platform_pipelines",
+  "status": "scaffolded_blocked_pending_nsw_pipeline_host",
+  "featureFlag": "MCHS_POWER_PLATFORM_NATIVE_PIPELINES",
+  "featureEnabled": false,
+  "stableFallback": "scripts/power-platform-alm.sh",
+  "target": {
+    "tenant": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
+  },
+  "requiredInputs": [
+    "pipeline host environment id",
+    "pipeline id or name",
+    "development environment id",
+    "target environment id",
+    "delegated deployment approvers",
+    "connection reference owner mappings",
+    "environment variable deployment values"
+  ],
+  "prevalidation": [
+    "github actions source validation",
+    "managed solution pack",
+    "solution checker",
+    "pipeline dependency prevalidation",
+    "connection reference validation",
+    "environment variable validation"
+  ],
+  "claimBoundary": {
+    "pipelineHostConfigured": false,
+    "pipelineRunCompleted": false,
+    "productionReadinessClaimed": false
+  }
+}

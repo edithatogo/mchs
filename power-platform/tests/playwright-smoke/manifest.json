@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "capability": "playwright_power_apps_runtime_smoke",
+  "status": "scaffolded_blocked_pending_real_app_url",
+  "featureFlag": "MCHS_POWER_PLATFORM_PLAYWRIGHT_SMOKE",
+  "featureEnabled": false,
+  "testRunner": "playwright",
+  "blockedBy": [
+    "real Power Apps app URL",
+    "authorized NSW test user",
+    "configured service boundary connection reference",
+    "real app component imported into managed solution",
+    "real flow component imported into managed solution"
+  ],
+  "scenarios": [
+    "app_launch",
+    "connector_consent_or_preconsent",
+    "synthetic_happy_path_calculation",
+    "synthetic_validation_failure",
+    "evidence_export_reachable"
+  ],
+  "claimBoundary": {
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}

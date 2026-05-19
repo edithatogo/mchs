@@ -79,6 +79,25 @@ repeatable evidence.
 - Runtime smoke evidence is attached to the deployment evidence bundle.
 - Rollback is documented and tested for the affected capability.
 
+## Implemented Guarded Artifacts
+
+- Native Power Platform Pipelines:
+  `power-platform/pipelines/native-pipelines-manifest.json`.
+- Playwright runtime smoke scaffold:
+  `power-platform/tests/playwright-smoke/manifest.json`.
+- Power Apps Code Apps evaluation:
+  `power-platform/apps/code-apps/evaluation-manifest.json`.
+- Copilot Studio real-time connector knowledge:
+  `power-platform/copilot/real-time-connector-knowledge.json`.
+- Dataverse MCP server readiness:
+  `power-platform/dataverse/mcp-server-readiness.json`.
+- Agentic governance and observability:
+  `power-platform/governance/agentic-observability.json`.
+
+These artifacts are enforced by
+`scripts/validate_power_platform_sota_capabilities.py`. Preview or
+tenant-admin-dependent capabilities remain disabled until NSW evidence exists.
+
 ## Microsoft Documentation Basis
 
 - Power Platform 2026 release wave 1: Dataverse APIs, MCP servers, Python SDK,

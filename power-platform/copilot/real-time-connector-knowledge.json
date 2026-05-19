@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "capability": "copilot_studio_real_time_connector_knowledge",
+  "status": "scaffolded_blocked_pending_copilot_studio_configuration",
+  "featureFlag": "MCHS_COPILOT_REAL_TIME_CONNECTOR_KNOWLEDGE",
+  "featureEnabled": false,
+  "connector": "mchs_service_boundary",
+  "knowledgeMode": "real_time_no_replication",
+  "allowedOperations": [
+    "Health",
+    "ListCalculators",
+    "GetCalculatorSchema",
+    "ValidateInput",
+    "Calculate",
+    "GetEvidence"
+  ],
+  "disallowedPatterns": [
+    "copy private NSW operational data into Microsoft Graph",
+    "store calculator formulas in prompts",
+    "use Copilot prompt text as calculation logic"
+  ],
+  "requiredApprovals": [
+    "Copilot Studio environment availability",
+    "DLP policy permits custom connector use",
+    "authentication scopes approved",
+    "audit owner assigned"
+  ],
+  "claimBoundary": {
+    "copilotConfigured": false,
+    "productionReadinessClaimed": false
+  }
+}

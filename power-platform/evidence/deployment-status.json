@@ -43,5 +43,14 @@
     "manifest": "power-platform/repository/subrepo-manifest.json",
     "standaloneRemoteProvisioned": false
   },
-  "sotaRoadmap": "power-platform/roadmap/sota-bleeding-edge-capabilities-20260520.md"
+  "sotaRoadmap": "power-platform/roadmap/sota-bleeding-edge-capabilities-20260520.md",
+  "sotaCapabilities": {
+    "validator": "scripts/validate_power_platform_sota_capabilities.py",
+    "nativePipelines": "scaffolded_blocked_pending_nsw_pipeline_host",
+    "playwrightRuntimeSmoke": "scaffolded_blocked_pending_real_app_url",
+    "codeApps": "evaluation_scaffolded_not_adopted",
+    "copilotRealTimeConnectorKnowledge": "scaffolded_blocked_pending_copilot_studio_configuration",
+    "dataverseMcpServer": "readiness_scaffolded_blocked_pending_admin_enablement",
+    "agenticGovernanceObservability": "implemented_as_evidence_contract"
+  }
 }
