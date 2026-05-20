@@ -47,6 +47,31 @@ def normalize_https_base_url(base_url: str | None) -> str | None:
 def evaluate_configuration(config: dict) -> tuple[int, dict]:
     service_boundary = config.get("serviceBoundary", {})
     base_url = normalize_https_base_url(service_boundary.get("httpsBaseUrl"))
+    base_url_env = service_boundary.get(
+        "baseUrlEnvironmentVariable",
+        "mchs_api_base_url",
+    )
+
+    required_inputs = [
+        {
+            "logicalName": base_url_env,
+            "valueStatus": "provided" if base_url is not None else "missing",
+            "purpose": "Real public HTTPS base URL for the service boundary",
+        }
+    ]
+    required_checks = [
+        {
+            "name": "healthz",
+            "path": service_boundary.get("healthzPath", HEALTHZ_PATH),
+            "expectedStatusCode": 200,
+        },
+        {
+            "name": "serverCard",
+            "path": service_boundary.get("serverCardPath", SERVER_CARD_PATH),
+            "expectedStatusCode": 200,
+            "expectedContentType": "application/json",
+        },
+    ]
 
     summary = {
         "status": "blocked_pending_real_https_endpoint",
@@ -54,14 +79,23 @@ def evaluate_configuration(config: dict) -> tuple[int, dict]:
             "logicalConnectionReference": service_boundary.get(
                 "logicalConnectionReference", "mchs_service_boundary"
             ),
-            "baseUrlEnvironmentVariable": service_boundary.get(
-                "baseUrlEnvironmentVariable", "mchs_api_base_url"
-            ),
+            "baseUrlEnvironmentVariable": base_url_env,
             "httpsBaseUrl": base_url,
             "healthzPath": service_boundary.get("healthzPath", HEALTHZ_PATH),
             "serverCardPath": service_boundary.get("serverCardPath", SERVER_CARD_PATH),
             "apiKeySecretConfigured": bool(
                 service_boundary.get("apiKeySecretConfigured", False)
+            ),
+        },
+        "handoff": {
+            "status": "blocked_pending_real_https_endpoint"
+            if base_url is None
+            else "ready_for_probe",
+            "requiredInputs": required_inputs,
+            "requiredChecks": required_checks,
+            "nextAction": (
+                "Provide a real public HTTPS base URL, publish the healthz and "
+                "server-card routes, then rerun this validator with --probe."
             ),
         },
         "checks": [],

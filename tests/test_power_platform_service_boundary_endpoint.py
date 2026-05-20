@@ -29,6 +29,13 @@ def test_service_boundary_endpoint_template_is_blocked() -> None:
     assert data["serviceBoundary"]["baseUrlEnvironmentVariable"] == "mchs_api_base_url"
     assert data["claimBoundary"]["endpointConfigured"] is False
     assert data["claimBoundary"]["productionReadinessClaimed"] is False
+    assert data["handoff"]["status"] == "blocked_pending_real_https_endpoint"
+    assert data["handoff"]["requiredInputs"][0]["logicalName"] == "mchs_api_base_url"
+    assert data["handoff"]["requiredInputs"][0]["valueStatus"] == "missing"
+    assert data["handoff"]["requiredChecks"][0]["path"] == "/healthz"
+    assert data["handoff"]["requiredChecks"][1]["path"] == (
+        "/.well-known/mcp/server-card.json"
+    )
 
 
 def test_service_boundary_endpoint_validation_is_blocked_without_base_url() -> None:
@@ -40,6 +47,12 @@ def test_service_boundary_endpoint_validation_is_blocked_without_base_url() -> N
     assert exit_code == 2
     assert summary["status"] == "blocked_pending_real_https_endpoint"
     assert summary["checks"][0]["status"] == "blocked"
+    assert summary["handoff"]["requiredInputs"][0]["logicalName"] == "mchs_api_base_url"
+    assert summary["handoff"]["requiredChecks"][0]["path"] == "/healthz"
+    assert (
+        summary["handoff"]["requiredChecks"][1]["expectedContentType"]
+        == "application/json"
+    )
 
 
 def test_service_boundary_endpoint_normalization_rejects_non_https() -> None:

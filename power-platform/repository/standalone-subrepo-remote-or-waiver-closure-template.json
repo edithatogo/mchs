@@ -22,20 +22,33 @@
     "status": "blocked",
     "reason": "No standalone remote has been provisioned for Power Platform governance boundary; runtime closure cannot claim subrepo separation.",
     "approvedBy": null,
-    "approvalRecord": null
+    "approvalRecord": null,
+    "reviewDate": null,
+    "riskAcceptance": null
   },
   "selectedOption": null,
   "closureChecklist": [
-    "Provide definitive standalone remote URL, default branch, and owner",
+    "Provide definitive standalone remote URL, default branch, sync procedure, and owner",
     "Update subrepo manifest with the remote and pinned commit procedure",
     "Record push/pull/check/import/release checklist in `power-platform/repository/subrepo-contract.md`",
     "Capture NSW import owner and rollback owner for the standalone flow",
-    "Attach an explicit waiver decision if production separation is deferred",
-    "Do not claim repo-health 9.9 until remoteUrl or waiver.approvedBy is populated"
+    "Attach an explicit waiver decision with approver, approval record, reason, review date, and risk acceptance if production separation is deferred",
+    "Do not claim repo-health 9.9 until the full standaloneRemote or explicitWaiver record is populated"
   ],
   "requiredClosureFields": {
-    "standaloneRemote": ["remoteUrl"],
-    "explicitWaiver": ["approvedBy"]
+    "standaloneRemote": [
+      "remoteUrl",
+      "defaultBranch",
+      "syncProcedure",
+      "importOwner"
+    ],
+    "explicitWaiver": [
+      "approvedBy",
+      "approvalRecord",
+      "reason",
+      "reviewDate",
+      "riskAcceptance"
+    ]
   },
   "claimBoundary": {
     "standaloneRemoteOperational": false,

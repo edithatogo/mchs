@@ -16,8 +16,20 @@ def _json(path: Path) -> dict:
 
 
 def _closure_authorized(closure: dict) -> bool:
-    return bool(closure["standaloneRemote"].get("remoteUrl")) or bool(
-        closure["waiver"].get("approvedBy")
+    remote = closure["standaloneRemote"]
+    waiver = closure["waiver"]
+    return all(
+        remote.get(field)
+        for field in ("remoteUrl", "defaultBranch", "syncProcedure", "importOwner")
+    ) or all(
+        waiver.get(field)
+        for field in (
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        )
     )
 
 
@@ -117,15 +129,41 @@ def main() -> int:
         if item["gate"] == "standalone_power_platform_subrepo_remote_or_explicit_waiver"
     )
     if closure_gate.get("requiredClosureEvidence") != {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"],
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
     }:
-        raise SystemExit("subrepo closure gate must require remoteUrl or approvedBy")
+        raise SystemExit(
+            "subrepo closure gate must require a full remote or waiver record"
+        )
     if closure["requiredClosureFields"] != {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"],
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
     }:
-        raise SystemExit("subrepo closure must declare remoteUrl or approvedBy as required")
+        raise SystemExit(
+            "subrepo closure must declare a full remote or waiver record as required"
+        )
     if not _closure_authorized(closure):
         if closure["status"] != "blocked_pending_remote_or_explicit_waiver":
             raise SystemExit(
@@ -138,7 +176,7 @@ def main() -> int:
                 "subrepo closure must not pick an option before evidence exists"
             )
     if health99["claimBoundary"]["score99Claimed"] and not _closure_authorized(closure):
-        raise SystemExit("9.9 claim requires standalone remote URL or waiver approver")
+        raise SystemExit("9.9 claim requires a full remote or waiver closure record")
 
     print("Power Platform page/function coverage and 9.9 contract passed.")
     return 0

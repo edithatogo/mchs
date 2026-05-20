@@ -15,6 +15,65 @@ EXPECTED_SECRETS = [
     "POWER_PLATFORM_TENANT_ID",
 ]
 
+EXPECTED_SECRET_CHECKS = [
+    {
+        "name": "POWER_PLATFORM_ENVIRONMENT_URL",
+        "source": "repository secret",
+        "check": "gh secret list",
+        "observed": False,
+    },
+    {
+        "name": "POWER_PLATFORM_APPLICATION_ID",
+        "source": "repository secret",
+        "check": "gh secret list",
+        "observed": False,
+    },
+    {
+        "name": "POWER_PLATFORM_CLIENT_SECRET",
+        "source": "repository secret",
+        "check": "gh secret list",
+        "observed": False,
+    },
+    {
+        "name": "POWER_PLATFORM_TENANT_ID",
+        "source": "repository secret",
+        "check": "gh secret list",
+        "observed": False,
+    },
+]
+
+EXPECTED_WORKFLOW_DISPATCH = {
+    "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+    "event": "workflow_dispatch",
+    "inputs": {
+        "run_live_checks": {
+            "type": "boolean",
+            "required": True,
+            "expected": True,
+        },
+        "workflow": {
+            "type": "string",
+            "required": True,
+            "expected": "Power Platform Official Actions",
+        },
+        "trigger": {
+            "type": "string",
+            "required": True,
+            "expected": "workflow_dispatch",
+        },
+    },
+}
+
+EXPECTED_RUN_WORKFLOW_DISPATCH = {
+    "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+    "event": "workflow_dispatch",
+    "inputs": {
+        "run_live_checks": True,
+        "workflow": "Power Platform Official Actions",
+        "trigger": "workflow_dispatch",
+    },
+}
+
 EXPECTED_GATE_EVIDENCE = [
     "workflow run URL",
     "who-am-i target environment output",
@@ -36,10 +95,25 @@ EXPECTED_NOT_RUN = {
     "status": "not_run",
     "runId": None,
     "runUrl": None,
+    "runUrlPattern": r"^https://github\.com/[^/]+/[^/]+/actions/runs/\d+$",
     "whoAmI": "not_run",
     "solutionArtifact": "dist/power-platform/mchs_alm_orchestration_managed.zip",
     "solutionArtifactSha256": None,
     "solutionArtifactPackStatus": "not_run",
+}
+
+EXPECTED_SOLUTION_CHECKER = {
+    "result": "not_run",
+    "findings": None,
+    "command": "pac solution checker run",
+    "reportPath": None,
+}
+
+EXPECTED_ARTIFACT_EVIDENCE = {
+    "path": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+    "hashAlgorithm": "sha256",
+    "hashPattern": r"^[a-f0-9]{64}$",
+    "hashCommand": "sha256sum dist/power-platform/mchs_alm_orchestration_managed.zip",
 }
 
 
@@ -59,6 +133,17 @@ def _validate_required_lists(data: dict, path: Path) -> None:
             f"{path}: requiredSecrets must remain the four repository secrets",
         )
         _require(
+            data.get("requiredSecretChecks") == EXPECTED_SECRET_CHECKS,
+            (
+                f"{path}: requiredSecretChecks must stay aligned with "
+                "the blocked secret inventory"
+            ),
+        )
+        _require(
+            data.get("workflowDispatchInputs") == EXPECTED_WORKFLOW_DISPATCH,
+            f"{path}: workflowDispatchInputs must remain the dispatch contract",
+        )
+        _require(
             data.get("requiredGateEvidence") == EXPECTED_GATE_EVIDENCE,
             f"{path}: requiredGateEvidence must stay aligned with live-gate evidence",
         )
@@ -67,6 +152,17 @@ def _validate_required_lists(data: dict, path: Path) -> None:
     _require(
         data.get("requiredSecrets") == EXPECTED_SECRETS,
         f"{path}: requiredSecrets must remain the four repository secrets",
+    )
+    _require(
+        data.get("requiredSecretChecks") == EXPECTED_SECRET_CHECKS,
+        (
+            f"{path}: requiredSecretChecks must stay aligned with "
+            "the blocked secret inventory"
+        ),
+    )
+    _require(
+        data.get("workflowDispatchInputs") == EXPECTED_WORKFLOW_DISPATCH,
+        f"{path}: workflowDispatchInputs must remain the dispatch contract",
     )
     _require(
         data.get("requiredEvidence") == EXPECTED_CURRENT_EVIDENCE,
@@ -83,19 +179,41 @@ def _validate_run_block(data: dict, path: Path) -> None:
             f"{path}: run.{key} must remain {expected!r} until live evidence exists",
         )
 
+    _require(
+        run["runUrlPattern"] == EXPECTED_NOT_RUN["runUrlPattern"],
+        f"{path}: run.runUrlPattern must be the GitHub Actions run URL pattern",
+    )
+
+    workflow_dispatch = run.get("workflowDispatchInputs")
+    _require(
+        workflow_dispatch == EXPECTED_RUN_WORKFLOW_DISPATCH,
+        (
+            f"{path}: run.workflowDispatchInputs must stay aligned with "
+            "the concrete dispatch values"
+        ),
+    )
+
     solution_checker = run.get("solutionChecker")
     _require(
         isinstance(solution_checker, dict),
         f"{path}: run.solutionChecker must be a mapping",
     )
+    for key, expected in EXPECTED_SOLUTION_CHECKER.items():
+        _require(
+            solution_checker.get(key) == expected,
+            f"{path}: run.solutionChecker.{key} must remain {expected!r}",
+        )
+
+    solution_artifact = run.get("solutionArtifactEvidence")
     _require(
-        solution_checker.get("result") == "not_run",
-        f"{path}: run.solutionChecker.result must remain not_run",
+        isinstance(solution_artifact, dict),
+        f"{path}: run.solutionArtifactEvidence must be a mapping",
     )
-    _require(
-        solution_checker.get("findings") is None,
-        f"{path}: run.solutionChecker.findings must remain null",
-    )
+    for key, expected in EXPECTED_ARTIFACT_EVIDENCE.items():
+        _require(
+            solution_artifact.get(key) == expected,
+            f"{path}: run.solutionArtifactEvidence.{key} must remain {expected!r}",
+        )
 
 
 def _validate_claim_boundary(data: dict, path: Path) -> None:

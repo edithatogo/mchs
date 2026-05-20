@@ -21,13 +21,28 @@
     "calculator formulas remain outside Power Platform app and flow assets",
     "runtime readiness requires service boundary, app smoke, and flow smoke evidence"
   ],
+  "closureRequirements": {
+    "standaloneRemote": [
+      "remoteUrl",
+      "defaultBranch",
+      "syncProcedure",
+      "importOwner"
+    ],
+    "explicitWaiver": [
+      "approvedBy",
+      "approvalRecord",
+      "reason",
+      "reviewDate",
+      "riskAcceptance"
+    ]
+  },
   "standaloneSplitRequirements": [
     "provision a dedicated remote repository",
     "record default branch and owner",
     "pin parent repository to a submodule gitlink or subtree commit",
     "document pull, push, pack, check, import, and release procedures",
     "record NSW import owner and rollback owner",
-    "record remoteUrl or waiver.approvedBy before any 9.9 claim"
+    "record a fully populated standaloneRemote or explicitWaiver closure record before any 9.9 claim"
   ],
   "claimBoundary": {
     "subrepoBoundaryEnforced": true,

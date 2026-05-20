@@ -5,15 +5,57 @@
   "asOf": "2026-05-21",
   "targetWorkflow": ".github/workflows/power-platform-official-actions.yml",
   "workflowDispatchInputs": {
-    "run_live_checks": true,
-    "workflow": "Power Platform Official Actions",
-    "trigger": "workflow_dispatch"
+    "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+    "event": "workflow_dispatch",
+    "inputs": {
+      "run_live_checks": {
+        "type": "boolean",
+        "required": true,
+        "expected": true
+      },
+      "workflow": {
+        "type": "string",
+        "required": true,
+        "expected": "Power Platform Official Actions"
+      },
+      "trigger": {
+        "type": "string",
+        "required": true,
+        "expected": "workflow_dispatch"
+      }
+    }
   },
   "requiredSecrets": [
     "POWER_PLATFORM_ENVIRONMENT_URL",
     "POWER_PLATFORM_APPLICATION_ID",
     "POWER_PLATFORM_CLIENT_SECRET",
     "POWER_PLATFORM_TENANT_ID"
+  ],
+  "requiredSecretChecks": [
+    {
+      "name": "POWER_PLATFORM_ENVIRONMENT_URL",
+      "source": "repository secret",
+      "check": "gh secret list",
+      "observed": false
+    },
+    {
+      "name": "POWER_PLATFORM_APPLICATION_ID",
+      "source": "repository secret",
+      "check": "gh secret list",
+      "observed": false
+    },
+    {
+      "name": "POWER_PLATFORM_CLIENT_SECRET",
+      "source": "repository secret",
+      "check": "gh secret list",
+      "observed": false
+    },
+    {
+      "name": "POWER_PLATFORM_TENANT_ID",
+      "source": "repository secret",
+      "check": "gh secret list",
+      "observed": false
+    }
   ],
   "requiredGateEvidence": [
     "workflow run URL",
@@ -28,14 +70,32 @@
     "status": "not_run",
     "runId": null,
     "runUrl": null,
+    "runUrlPattern": "^https://github\\.com/[^/]+/[^/]+/actions/runs/\\d+$",
+    "workflowDispatchInputs": {
+      "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+      "event": "workflow_dispatch",
+      "inputs": {
+        "run_live_checks": true,
+        "workflow": "Power Platform Official Actions",
+        "trigger": "workflow_dispatch"
+      }
+    },
     "whoAmI": "not_run",
     "solutionChecker": {
       "result": "not_run",
-      "findings": null
+      "findings": null,
+      "command": "pac solution checker run",
+      "reportPath": null
     },
     "solutionArtifact": "dist/power-platform/mchs_alm_orchestration_managed.zip",
     "solutionArtifactSha256": null,
-    "solutionArtifactPackStatus": "not_run"
+    "solutionArtifactPackStatus": "not_run",
+    "solutionArtifactEvidence": {
+      "path": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+      "hashAlgorithm": "sha256",
+      "hashPattern": "^[a-f0-9]{64}$",
+      "hashCommand": "sha256sum dist/power-platform/mchs_alm_orchestration_managed.zip"
+    }
   },
   "claimBoundary": {
     "officialLiveGateCompleted": false,

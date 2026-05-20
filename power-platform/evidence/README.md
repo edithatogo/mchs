@@ -13,19 +13,24 @@ recorded here.
   managed import recorded and runtime blockers preserved.
 - `runtime-smoke-evidence-template.json`: app, flow, and service-boundary smoke
   evidence shape.
+- `canvas-app-publication-20260520.json`: publication blocker record that keeps
+  app ID and play URL evidence machine-checkable without claiming production
+  readiness.
 - `service-boundary-endpoint-template.json`: blocked endpoint configuration and
-  probe contract for a real HTTPS service boundary once provided.
+  probe contract for a real HTTPS service boundary once provided, including a
+  machine-checkable handoff with the required base URL input and probe paths.
 - `flow-smoke-evidence-template.json`: structured real Power Automate flow smoke
   traceability and blocked checklist while live run evidence is absent.
 - `connection-reference-evidence-template.json`: connection reference and
   environment-variable deployment value evidence shape, including the blocked
-  service-boundary endpoint handoff.
+  service-boundary endpoint handoff, the connector connection ID placeholder,
+  the environment binding, and the PAC observation requirements.
 - `monitoring-dlp-evidence-template.json`: monitoring, DLP, support, and
   escalation evidence shape.
 - `official-github-live-gate-evidence-template.json`: official GitHub Actions live-gate
   evidence shape for environment-bound validation.
-- `github-live-gate-20260521.json`: current blocked live-gate record with the
-  repository secrets, workflow run URL, who-am-i, solution checker, and
+- `github-live-gate-20260521.json`: current blocked live-gate record with
+  structured secret, workflow dispatch, run URL, who-am-i, solution checker, and
   artifact-hash placeholders preserved.
 - `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`:
   standalone subrepo split decision and waiver closure checklist.

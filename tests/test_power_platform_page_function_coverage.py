@@ -83,8 +83,19 @@ def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
         if gate["gate"] == "standalone_power_platform_subrepo_remote_or_explicit_waiver"
     )
     assert closure_gate["requiredClosureEvidence"] == {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"],
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
     }
     assert all(
         status == "blocked"
@@ -96,14 +107,31 @@ def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
     assert contract["claimBoundary"]["score99Claimed"] is False
     assert contract["claimBoundary"]["operationPageSourceUxComplete"] is True
     assert closure["requiredClosureFields"] == {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"],
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
     }
     assert closure["status"] == "blocked_pending_remote_or_explicit_waiver"
     assert closure["claimBoundary"]["subrepoClosureComplete"] is False
     assert closure["selectedOption"] is None
     assert closure["standaloneRemote"]["remoteUrl"] is None
+    assert closure["standaloneRemote"]["defaultBranch"] is None
+    assert closure["standaloneRemote"]["syncProcedure"] is None
+    assert closure["standaloneRemote"]["importOwner"] is None
     assert closure["waiver"]["approvedBy"] is None
+    assert closure["waiver"]["approvalRecord"] is None
+    assert closure["waiver"]["reviewDate"] is None
+    assert closure["waiver"]["riskAcceptance"] is None
 
 
 def test_page_function_coverage_validator_passes() -> None:
@@ -129,7 +157,20 @@ def test_subrepo_closure_template_requires_remote_or_waiver_approver() -> None:
     assert template["status"] == "blocked_pending_remote_or_explicit_waiver"
     assert template["selectedOption"] is None
     assert template["requiredClosureFields"] == {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"],
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
     }
-    assert "remoteUrl or waiver.approvedBy" in " ".join(template["closureChecklist"])
+    assert "full standaloneRemote or explicitWaiver record" in " ".join(
+        template["closureChecklist"]
+    )

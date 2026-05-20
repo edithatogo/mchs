@@ -37,6 +37,14 @@ def test_power_platform_canvas_app_publication_evidence_is_precise() -> None:
     evidence = _json(PP / "evidence" / "canvas-app-publication-20260520.json")
     assert evidence["appName"] == "MCHS Orchestration"
     assert evidence["appId"] == "ff64f58a-73de-42ee-b92d-f65503619c49"
+    assert evidence["requiredEvidence"] == [
+        "appId",
+        "playUrl",
+        "optimizedPublication.appId",
+        "optimizedPublication.playUrl",
+        "visualReview.viewedInTenant",
+        "visualReview.optimizedArtifactPublished",
+    ]
     assert evidence["claimBoundary"]["appPublished"] is True
     assert evidence["claimBoundary"]["appLaunchSmokePassed"] is True
     assert evidence["claimBoundary"]["visualFunctionOptimized"] is True

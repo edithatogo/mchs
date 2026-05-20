@@ -123,6 +123,53 @@ def test_power_platform_operational_evidence_contracts_are_precise():
         "POWER_PLATFORM_CLIENT_SECRET",
         "POWER_PLATFORM_TENANT_ID",
     ]
+    assert live_gate_template["requiredSecretChecks"] == [
+        {
+            "name": "POWER_PLATFORM_ENVIRONMENT_URL",
+            "source": "repository secret",
+            "check": "gh secret list",
+            "observed": False,
+        },
+        {
+            "name": "POWER_PLATFORM_APPLICATION_ID",
+            "source": "repository secret",
+            "check": "gh secret list",
+            "observed": False,
+        },
+        {
+            "name": "POWER_PLATFORM_CLIENT_SECRET",
+            "source": "repository secret",
+            "check": "gh secret list",
+            "observed": False,
+        },
+        {
+            "name": "POWER_PLATFORM_TENANT_ID",
+            "source": "repository secret",
+            "check": "gh secret list",
+            "observed": False,
+        },
+    ]
+    assert live_gate_template["workflowDispatchInputs"] == {
+        "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+        "event": "workflow_dispatch",
+        "inputs": {
+            "run_live_checks": {
+                "type": "boolean",
+                "required": True,
+                "expected": True,
+            },
+            "workflow": {
+                "type": "string",
+                "required": True,
+                "expected": "Power Platform Official Actions",
+            },
+            "trigger": {
+                "type": "string",
+                "required": True,
+                "expected": "workflow_dispatch",
+            },
+        },
+    }
     assert "workflow run URL" in live_gate_template["requiredGateEvidence"]
     assert (
         "who-am-i target environment output"
@@ -135,11 +182,45 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     )
     assert live_gate_template["claimBoundary"]["officialLiveGateCompleted"] is False
     assert live_gate["status"] == "blocked_pending_repository_secrets_and_workflow_run"
+    assert live_gate["workflowDispatchInputs"] == {
+        "workflowFile": ".github/workflows/power-platform-official-actions.yml",
+        "event": "workflow_dispatch",
+        "inputs": {
+            "run_live_checks": {
+                "type": "boolean",
+                "required": True,
+                "expected": True,
+            },
+            "workflow": {
+                "type": "string",
+                "required": True,
+                "expected": "Power Platform Official Actions",
+            },
+            "trigger": {
+                "type": "string",
+                "required": True,
+                "expected": "workflow_dispatch",
+            },
+        },
+    }
     assert live_gate["run"]["status"] == "not_run"
     assert live_gate["run"]["runUrl"] is None
+    assert (
+        live_gate["run"]["runUrlPattern"]
+        == r"^https://github\.com/[^/]+/[^/]+/actions/runs/\d+$"
+    )
     assert live_gate["run"]["whoAmI"] == "not_run"
     assert live_gate["run"]["solutionChecker"]["result"] == "not_run"
+    assert live_gate["run"]["solutionChecker"]["command"] == "pac solution checker run"
     assert live_gate["run"]["solutionArtifactSha256"] is None
+    assert live_gate["run"]["solutionArtifactEvidence"] == {
+        "path": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+        "hashAlgorithm": "sha256",
+        "hashPattern": r"^[a-f0-9]{64}$",
+        "hashCommand": (
+            "sha256sum dist/power-platform/mchs_alm_orchestration_managed.zip"
+        ),
+    }
     assert live_gate["claimBoundary"]["officialLiveGatePassed"] is False
     assert live_gate["claimBoundary"]["productionDeploymentSecretsConfigured"] is False
     assert flow_smoke["claimBoundary"]["flowSmokePassed"] is False

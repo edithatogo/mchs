@@ -36,8 +36,19 @@
       "status": "blocked",
       "evidence": "power-platform/repository/subrepo-closure-20260521.json",
       "requiredClosureEvidence": {
-        "standaloneRemote": ["remoteUrl"],
-        "explicitWaiver": ["approvedBy"]
+        "standaloneRemote": [
+          "remoteUrl",
+          "defaultBranch",
+          "syncProcedure",
+          "importOwner"
+        ],
+        "explicitWaiver": [
+          "approvedBy",
+          "approvalRecord",
+          "reason",
+          "reviewDate",
+          "riskAcceptance"
+        ]
       }
     }
   ],

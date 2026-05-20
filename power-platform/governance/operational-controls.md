@@ -21,6 +21,11 @@
   deployment secret stores.
 - Evidence must include the DLP policy name or ID before runtime readiness is
   claimed.
+- Monitoring/DLP evidence must carry the exact failure metric set
+  (`connectorFailures`, `flowRunFailures`, `serviceBoundaryHealth`,
+  `appHealthMetrics`, `correlationIdsWithoutPatientData`) and the exact support
+  diagnostic fields (`solutionVersion`, `environmentId`, `connectorOperation`,
+  `correlationId`, `sanitizedPayloadHash`).
 
 ## Support
 

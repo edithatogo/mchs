@@ -8,6 +8,14 @@
   "appName": "MCHS Orchestration",
   "appId": "ff64f58a-73de-42ee-b92d-f65503619c49",
   "playUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+  "requiredEvidence": [
+    "appId",
+    "playUrl",
+    "optimizedPublication.appId",
+    "optimizedPublication.playUrl",
+    "visualReview.viewedInTenant",
+    "visualReview.optimizedArtifactPublished"
+  ],
   "sourceArtifact": {
     "path": "dist/power-platform/apps/mchs-orchestration.msapp",
     "sha256": "baeec10504d1e4c5706c242575693e7eaba0f2bb364d4026b51efb36eb4519c9"

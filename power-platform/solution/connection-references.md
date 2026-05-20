@@ -17,3 +17,7 @@ Canonical declaration:
 - Keep connection wiring declarative.
 - Do not encode calculator behavior in the connection reference.
 - Treat any authentication material as environment-managed configuration.
+- Keep the blocker evidence explicit in
+  `power-platform/evidence/connection-reference-evidence-template.json` so the
+  environment binding, connector connection ID placeholder, and PAC discovery
+  checks stay machine-readable while the connection remains unconfigured.

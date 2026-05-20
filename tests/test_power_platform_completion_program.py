@@ -107,14 +107,36 @@ def test_power_platform_repo_health_and_subrepo_boundary() -> None:
     assert manifest["claimBoundary"]["subrepoBoundaryEnforced"] is True
     assert manifest["claimBoundary"]["standaloneRemoteProvisioned"] is False
     assert manifest["claimBoundary"]["runtimeProductionReady"] is False
+    assert manifest["closureRequirements"] == {
+        "standaloneRemote": [
+            "remoteUrl",
+            "defaultBranch",
+            "syncProcedure",
+            "importOwner",
+        ],
+        "explicitWaiver": [
+            "approvedBy",
+            "approvalRecord",
+            "reason",
+            "reviewDate",
+            "riskAcceptance",
+        ],
+    }
     assert (
-        "record remoteUrl or waiver.approvedBy before any 9.9 claim"
+        "record a fully populated standaloneRemote or explicitWaiver "
+        "closure record before any 9.9 claim"
         in manifest["standaloneSplitRequirements"]
     )
     assert closure["status"] == "blocked_pending_remote_or_explicit_waiver"
     assert closure["claimBoundary"]["subrepoClosureComplete"] is False
     assert closure["standaloneRemote"]["remoteUrl"] is None
+    assert closure["standaloneRemote"]["defaultBranch"] is None
+    assert closure["standaloneRemote"]["syncProcedure"] is None
+    assert closure["standaloneRemote"]["importOwner"] is None
     assert closure["waiver"]["approvedBy"] is None
+    assert closure["waiver"]["approvalRecord"] is None
+    assert closure["waiver"]["reviewDate"] is None
+    assert closure["waiver"]["riskAcceptance"] is None
     assert roadmap.exists()
 
 

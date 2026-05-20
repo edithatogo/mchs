@@ -18,6 +18,7 @@
     {
       "flowLogicalName": "mchs-validate-input",
       "flowFile": "power-platform/flows/validate-input/flow.json",
+      "operation": "ValidateInput",
       "connectionReference": "mchs_service_boundary",
       "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
       "flowId": null,
@@ -28,6 +29,7 @@
     {
       "flowLogicalName": "mchs-calculate-request",
       "flowFile": "power-platform/flows/calculate-request/flow.json",
+      "operation": "Calculate",
       "connectionReference": "mchs_service_boundary",
       "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
       "flowId": null,
@@ -38,6 +40,7 @@
     {
       "flowLogicalName": "mchs-evidence-export",
       "flowFile": "power-platform/flows/evidence-export/flow.json",
+      "operation": "GetEvidence",
       "connectionReference": "mchs_service_boundary",
       "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
       "flowId": null,
@@ -48,6 +51,7 @@
     {
       "flowLogicalName": "mchs-deployment-smoke",
       "flowFile": "power-platform/flows/deployment-smoke/flow.json",
+      "operation": "Health",
       "connectionReference": "mchs_service_boundary",
       "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
       "flowId": null,
@@ -61,6 +65,7 @@
       "flowLogicalName": "mchs-validate-input",
       "flowFile": "power-platform/flows/validate-input/flow.json",
       "status": "blocked",
+      "operation": "ValidateInput",
       "requiredEvidence": [
         "flowId",
         "runId",
@@ -75,6 +80,7 @@
       "flowLogicalName": "mchs-calculate-request",
       "flowFile": "power-platform/flows/calculate-request/flow.json",
       "status": "blocked",
+      "operation": "Calculate",
       "requiredEvidence": [
         "flowId",
         "runId",
@@ -88,6 +94,7 @@
       "flowLogicalName": "mchs-evidence-export",
       "flowFile": "power-platform/flows/evidence-export/flow.json",
       "status": "blocked",
+      "operation": "GetEvidence",
       "requiredEvidence": [
         "flowId",
         "runId",
@@ -100,6 +107,7 @@
       "flowLogicalName": "mchs-deployment-smoke",
       "flowFile": "power-platform/flows/deployment-smoke/flow.json",
       "status": "blocked",
+      "operation": "Health",
       "requiredEvidence": [
         "flowId",
         "runId",

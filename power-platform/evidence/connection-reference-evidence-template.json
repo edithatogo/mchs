@@ -3,6 +3,20 @@
   "evidenceType": "power_platform_connection_references",
   "status": "blocked_pending_connection_values",
   "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "requiredEvidence": [
+    "environmentId",
+    "requiredConnectionReferences[].connectorId",
+    "requiredConnectionReferences[].baseUrlEnvironmentVariable",
+    "requiredConnectionReferences[].valueStatus",
+    "environmentVariables[].logicalName",
+    "pacObservedConnections.checkedWithPacConnectionList",
+    "pacObservedConnections.customConnectorConnectionFound",
+    "pacObservedConnections.customConnectorConnectionId",
+    "pacObservedConnections.customConnectorApiId",
+    "pacObservedConnector.checkedWithPacConnectorList",
+    "pacObservedConnector.connectorId",
+    "pacObservedConnector.status"
+  ],
   "requiredConnectionReferences": [
     {
       "logicalName": "mchs_service_boundary",
@@ -47,6 +61,7 @@
   "pacObservedConnections": {
     "checkedWithPacConnectionList": true,
     "customConnectorConnectionFound": false,
+    "customConnectorConnectionId": null,
     "customConnectorApiId": "/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary",
     "notes": "pac connection list returned Dataverse/Microsoft connectors but no MCHS custom connector connection."
   },

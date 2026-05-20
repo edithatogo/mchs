@@ -88,7 +88,10 @@ solution checker output, app smoke evidence, and flow smoke evidence.
   with per-flow IDs, run IDs, and synthetic pass evidence for the tenant environment.
 - DLP/monitoring/connector policy checklist: complete
   `power-platform/evidence/monitoring-dlp-evidence-template.json` with policy identifiers,
-  connector allow-state, and monitored failure evidence.
+  connector allow-state, exact failure metrics (`connectorFailures`, `flowRunFailures`,
+  `serviceBoundaryHealth`, `appHealthMetrics`, `correlationIdsWithoutPatientData`), and
+  support diagnostic fields (`solutionVersion`, `environmentId`, `connectorOperation`,
+  `correlationId`, `sanitizedPayloadHash`).
 - Official GitHub live-gate checklist: run
   `.github/workflows/power-platform-official-actions.yml` with `run_live_checks=true`
   and store workflow evidence in

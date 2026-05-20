@@ -31,6 +31,30 @@
     "endpointValidated": false,
     "productionReadinessClaimed": false
   },
+  "handoff": {
+    "status": "blocked_pending_real_https_endpoint",
+    "requiredInputs": [
+      {
+        "logicalName": "mchs_api_base_url",
+        "valueStatus": "missing",
+        "purpose": "Real public HTTPS base URL for the service boundary"
+      }
+    ],
+    "requiredChecks": [
+      {
+        "name": "healthz",
+        "path": "/healthz",
+        "expectedStatusCode": 200
+      },
+      {
+        "name": "serverCard",
+        "path": "/.well-known/mcp/server-card.json",
+        "expectedStatusCode": 200,
+        "expectedContentType": "application/json"
+      }
+    ],
+    "nextAction": "Provide a real public HTTPS base URL, publish the healthz and server-card routes, then rerun scripts/validate_power_platform_service_boundary_endpoint.py with --probe."
+  },
   "localPreviewSmoke": {
     "status": "passed_local_only",
     "url": "http://127.0.0.1:8702/healthz",
