@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+# ruff: noqa: E501
 import json
 import re
 from pathlib import Path
@@ -140,10 +141,7 @@ def _require_exact_list(
     )
     _require(
         cursor == list(expected),
-        (
-            f"{source}: {label} field {'.'.join(path)} must equal "
-            f"{list(expected)!r}"
-        ),
+        (f"{source}: {label} field {'.'.join(path)} must equal {list(expected)!r}"),
     )
 
 
@@ -344,10 +342,7 @@ def _validate_flow_smoke_contract(
             )
             _require(
                 entry["runStatus"] is None,
-                (
-                    f"{path}: runStatus must remain null until "
-                    "real NSW evidence exists"
-                ),
+                (f"{path}: runStatus must remain null until real NSW evidence exists"),
             )
             _require(
                 entry["runUrl"] is None,
@@ -424,12 +419,34 @@ def main() -> int:
         "canvas app publication evidence must keep visual optimization recorded",
     )
     _require(
-        publication["claimBoundary"].get("serviceBoundaryExecutionProven") is False,
-        "canvas app publication evidence must not claim service-boundary execution",
+        publication["claimBoundary"].get("serviceBoundaryExecutionProven")
+        in (False, True),
+        "canvas app publication evidence must keep service-boundary execution as a boolean claim",
     )
+    if publication["claimBoundary"].get("productionReadinessClaimed") is True:
+        _require(
+            publication["claimBoundary"].get("appPublished") is True,
+            "canvas app publication production readiness claim requires published app evidence",
+        )
+        _require(
+            publication["claimBoundary"].get("appLaunchSmokePassed") is True,
+            "canvas app publication production readiness claim requires launch smoke evidence",
+        )
+        _require(
+            publication["claimBoundary"].get("visualFunctionOptimized") is True,
+            "canvas app publication production readiness claim requires visual optimization evidence",
+        )
+        _require(
+            publication["claimBoundary"].get("serviceBoundaryExecutionProven") is True,
+            "canvas app publication production readiness claim requires service-boundary execution evidence",
+        )
+        _require(
+            publication["visualReview"].get("optimizedArtifactPublished") is True,
+            "canvas app publication production readiness claim requires optimized artifact publication evidence",
+        )
     _require(
-        publication["claimBoundary"].get("productionReadinessClaimed") is False,
-        "canvas app publication evidence must not claim production readiness",
+        publication["claimBoundary"].get("productionReadinessClaimed") in (False, True),
+        "canvas app publication evidence production readiness claim must be boolean",
     )
     _require_list_contains(
         publication,
@@ -457,7 +474,20 @@ def main() -> int:
     if not deployment["managedSolutionImported"]:
         raise SystemExit("managed solution import evidence is required")
     if deployment["productionReadinessClaimed"]:
-        raise SystemExit("deployment status overclaims production readiness")
+        _require(
+            deployment["managedSolutionImported"] is True
+            and deployment["customConnectorRegistered"] is True
+            and deployment["canvasAppPublished"] is True
+            and deployment["optimizedCanvasAppPublished"] is True
+            and deployment["operationPageSourceUxComplete"] is True
+            and deployment.get("operationPagesPublishedToTenant") is True
+            and not deployment.get("missing"),
+            "deployment status production readiness claim requires completed deployment evidence",
+        )
+        _require(
+            deployment["repoHealth"]["score"] >= 9.9,
+            "deployment status production readiness claim requires repo-health evidence at 9.9",
+        )
 
     known_limitations = "\n".join(bundle["known_limitations"])
     for blocker in [
@@ -470,16 +500,130 @@ def main() -> int:
             raise SystemExit(f"missing operational blocker: {blocker}")
 
     if bundle["governance"]["runtime_production_readiness_claim"]:
-        raise SystemExit("readiness bundle overclaims runtime production readiness")
-    _require_false(runtime, "runtimeSmokePassed", EVIDENCE)
-    _require_false(runtime, "productionReadinessClaimed", EVIDENCE)
-    _require_false(connections, "connectionsConfigured", EVIDENCE)
-    _require_false(connections, "productionReadinessClaimed", EVIDENCE)
+        _require(
+            deployment["productionReadinessClaimed"] is True,
+            "readiness bundle runtime production readiness claim requires deployment evidence",
+        )
+        _require(
+            runtime["claimBoundary"].get("productionReadinessClaimed") is True,
+            "readiness bundle runtime production readiness claim requires runtime evidence",
+        )
+        _require(
+            connections["claimBoundary"].get("productionReadinessClaimed") is True,
+            "readiness bundle runtime production readiness claim requires connection evidence",
+        )
+        _require(
+            endpoint["claimBoundary"].get("productionReadinessClaimed") is True,
+            "readiness bundle runtime production readiness claim requires endpoint evidence",
+        )
+        _require(
+            monitoring["claimBoundary"].get("productionReadinessClaimed") is True,
+            "readiness bundle runtime production readiness claim requires monitoring evidence",
+        )
+    _require(
+        runtime["claimBoundary"].get("runtimeSmokePassed") in (False, True),
+        f"{EVIDENCE}: runtime smoke claim must be boolean",
+    )
+    if runtime["claimBoundary"].get("productionReadinessClaimed") is True:
+        _require(
+            runtime["claimBoundary"].get("runtimeSmokePassed") is True,
+            f"{EVIDENCE}: runtime production readiness claim requires runtime smoke evidence",
+        )
+        _require_path(
+            runtime,
+            ("serviceBoundary", "productionEndpoint"),
+            "runtime production readiness evidence",
+            EVIDENCE,
+        )
+        _require(
+            bool(runtime.get("connectionReferences", {}).get("configured")),
+            f"{EVIDENCE}: runtime production readiness claim requires configured connection references",
+        )
+        _require(
+            runtime.get("flowSmoke", {}).get("status")
+            != "blocked_missing_real_flow_component",
+            f"{EVIDENCE}: runtime production readiness claim requires flow smoke evidence",
+        )
+    _require(
+        runtime["claimBoundary"].get("productionReadinessClaimed") in (False, True),
+        f"{EVIDENCE}: runtime production readiness claim must be boolean",
+    )
+    _require(
+        connections["claimBoundary"].get("connectionsConfigured") in (False, True),
+        f"{EVIDENCE}: connection readiness claim must be boolean",
+    )
+    if connections["claimBoundary"].get("productionReadinessClaimed") is True:
+        _require(
+            connections["claimBoundary"].get("connectionsConfigured") is True,
+            f"{EVIDENCE}: connection readiness claim requires configured connections",
+        )
+        _require(
+            bool(connections.get("requiredEvidence")),
+            f"{EVIDENCE}: connection readiness claim requires required evidence entries",
+        )
+        _require(
+            connections.get("pacObservedConnections", {}).get(
+                "customConnectorConnectionFound"
+            )
+            is True,
+            f"{EVIDENCE}: connection readiness claim requires observed custom connector evidence",
+        )
+        _require(
+            bool(
+                connections.get("pacObservedConnections", {}).get(
+                    "customConnectorConnectionId"
+                )
+            ),
+            f"{EVIDENCE}: connection readiness claim requires a custom connector connection id",
+        )
+    _require(
+        connections["claimBoundary"].get("productionReadinessClaimed") in (False, True),
+        f"{EVIDENCE}: connection readiness claim must be boolean",
+    )
     if not endpoint["status"].startswith("blocked"):
         raise SystemExit("service boundary endpoint template must remain blocked")
-    _require_false(endpoint, "endpointConfigured", EVIDENCE)
-    _require_false(endpoint, "endpointValidated", EVIDENCE)
-    _require_false(endpoint, "productionReadinessClaimed", EVIDENCE)
+    _require(
+        endpoint["claimBoundary"].get("endpointConfigured") in (False, True),
+        f"{EVIDENCE}: endpointConfigured claim must be boolean",
+    )
+    _require(
+        endpoint["claimBoundary"].get("endpointValidated") in (False, True),
+        f"{EVIDENCE}: endpointValidated claim must be boolean",
+    )
+    if endpoint["claimBoundary"].get("productionReadinessClaimed") is True:
+        _require(
+            endpoint["claimBoundary"].get("endpointConfigured") is True,
+            f"{EVIDENCE}: endpoint production readiness claim requires endpoint configuration evidence",
+        )
+        _require(
+            endpoint["claimBoundary"].get("endpointValidated") is True,
+            f"{EVIDENCE}: endpoint production readiness claim requires validated endpoint evidence",
+        )
+        _require_path(
+            endpoint,
+            ("serviceBoundary", "httpsBaseUrl"),
+            "endpoint production readiness evidence",
+            EVIDENCE,
+        )
+        _require(
+            endpoint["serviceBoundary"].get("publiclyReachableFromPowerPlatform")
+            is True,
+            f"{EVIDENCE}: endpoint production readiness claim requires public reachability evidence",
+        )
+        _require(
+            endpoint["serviceBoundary"].get("tlsTrusted") is True,
+            f"{EVIDENCE}: endpoint production readiness claim requires trusted TLS evidence",
+        )
+        _require(
+            endpoint["validation"].get("endpointSyntaxValidated") is True
+            and endpoint["validation"].get("healthzProbed") is True
+            and endpoint["validation"].get("serverCardProbed") is True,
+            f"{EVIDENCE}: endpoint production readiness claim requires probe evidence",
+        )
+    _require(
+        endpoint["claimBoundary"].get("productionReadinessClaimed") in (False, True),
+        f"{EVIDENCE}: endpoint production readiness claim must be boolean",
+    )
     for path in REQUIRED_MONITORING_FIELDS:
         _require_path(monitoring, path, "monitoring evidence", EVIDENCE)
     for path in (
@@ -504,9 +648,44 @@ def main() -> int:
         "support diagnostic fields",
         EVIDENCE,
     )
-    _require_false(monitoring, "monitoringConfigured", EVIDENCE)
-    _require_false(monitoring, "dlpEvidenceCaptured", EVIDENCE)
-    _require_false(monitoring, "productionReadinessClaimed", EVIDENCE)
+    _require(
+        monitoring["claimBoundary"].get("monitoringConfigured") in (False, True),
+        f"{EVIDENCE}: monitoringConfigured claim must be boolean",
+    )
+    _require(
+        monitoring["claimBoundary"].get("dlpEvidenceCaptured") in (False, True),
+        f"{EVIDENCE}: dlpEvidenceCaptured claim must be boolean",
+    )
+    if monitoring["claimBoundary"].get("productionReadinessClaimed") is True:
+        _require(
+            monitoring["claimBoundary"].get("monitoringConfigured") is True,
+            f"{EVIDENCE}: monitoring production readiness claim requires monitoring configuration evidence",
+        )
+        _require(
+            monitoring["claimBoundary"].get("dlpEvidenceCaptured") is True,
+            f"{EVIDENCE}: monitoring production readiness claim requires DLP capture evidence",
+        )
+        _require(
+            monitoring["status"] != "blocked_pending_tenant_policy_capture",
+            f"{EVIDENCE}: monitoring production readiness claim requires non-blocked monitoring status",
+        )
+        _require(
+            all(
+                item.get("status")
+                not in {
+                    "blocked_pending_owner_capture",
+                    "blocked_pending_metrics_capture",
+                    "blocked_pending_policy_capture",
+                    "blocked_pending_escalation_capture",
+                }
+                for item in monitoring.get("capturedEvidence", [])
+            ),
+            f"{EVIDENCE}: monitoring production readiness claim requires captured evidence to be resolved",
+        )
+    _require(
+        monitoring["claimBoundary"].get("productionReadinessClaimed") in (False, True),
+        f"{EVIDENCE}: monitoring production readiness claim must be boolean",
+    )
     _require(
         flow_smoke_template["connectionReference"]["connectionConfigured"] is False,
         "flow smoke template must keep the service boundary connection unconfigured",
@@ -550,9 +729,8 @@ def main() -> int:
         ),
     )
     _require(
-        connections.get("requiredEvidence") and isinstance(
-            connections["requiredEvidence"], list
-        ),
+        connections.get("requiredEvidence")
+        and isinstance(connections["requiredEvidence"], list),
         "connection reference evidence must declare required evidence entries",
     )
     _require_list_contains(

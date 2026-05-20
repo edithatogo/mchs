@@ -166,6 +166,7 @@ def test_repo_health_99_claim_requires_evidence_before_true_claim() -> None:
         }
     )
     closure["claimBoundary"]["subrepoClosureComplete"] = True
+    closure["selectedOption"] = "standalone_remote"
 
     try:
         validator._claim_99_supported(

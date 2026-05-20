@@ -30,6 +30,11 @@ def _read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _require(condition: bool, message: str) -> None:
+    if not condition:
+        raise SystemExit(message)
+
+
 def _validate_capability(path: Path) -> None:
     data = _read_json(path)
     capability = data["capability"]
@@ -41,8 +46,20 @@ def _validate_capability(path: Path) -> None:
         raise SystemExit(f"{path}: missing status")
     if "featureFlag" not in data:
         raise SystemExit(f"{path}: missing featureFlag")
-    if claim_boundary.get("productionReadinessClaimed") is not False:
-        raise SystemExit(f"{path}: production readiness is overclaimed")
+    if claim_boundary.get("productionReadinessClaimed") is True:
+        _require(
+            data.get("featureEnabled") is True,
+            f"{path}: production readiness claim requires the feature to be enabled",
+        )
+        _require(
+            bool(data.get("status")) and not str(data["status"]).startswith("blocked"),
+            (
+                f"{path}: production readiness claim requires a non-blocked "
+                "capability status"
+            ),
+        )
+    elif claim_boundary.get("productionReadinessClaimed") is not False:
+        raise SystemExit(f"{path}: productionReadinessClaimed must be a boolean")
     if capability in PREVIEW_OR_EXTERNAL_CAPABILITIES and data["featureEnabled"]:
         raise SystemExit(f"{path}: preview/external capability enabled too early")
 

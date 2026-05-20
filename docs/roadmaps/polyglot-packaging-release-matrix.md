@@ -51,7 +51,10 @@ Common release gates apply to every surface:
 | Web demos | Static demo shell, documentation demo, or hosted sample app | Unpublished demo distribution only | `preview` | Release only as a demo surface that calls the shared artifact or file contract; do not embed a separate formula implementation. |
 | Power Platform managed solutions | Managed solution, connectors, environment variables, and flow/app packaging | Private / roadmap-only (no public solution registry evidence) | `private` | Release when the managed solution boundary is explicit, the service contract is approved, and no formula logic lives inside apps, flows, or low-code expressions. |
 
-Registry note: do not assert publication on any surface unless the target registry page is explicitly linked in evidence.
+Registry note: do not assert publication on any surface unless the target
+registry page is explicitly linked in evidence. The current machine-readable
+status for non-Python alternative formats is
+`docs/roadmaps/release/alternative-format-publication-status-20260521.json`.
 
 ## Surface-specific notes
 

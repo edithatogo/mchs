@@ -38,15 +38,27 @@ def _claim_99_supported(health99: dict, closure: dict, path: Path) -> None:
     if claim_boundary.get("score99Claimed") is not True:
         raise SystemExit(f"{path}: 9.9 claim requires score99Claimed evidence")
     if claim_boundary.get("repoHealth99Eligible") is not True:
-        raise SystemExit(f"{path}: 9.9 claim requires repo-health 9.9 eligibility evidence")
+        raise SystemExit(
+            f"{path}: 9.9 claim requires repo-health 9.9 eligibility evidence"
+        )
     if claim_boundary.get("operationPagesComplete") is not True:
-        raise SystemExit(f"{path}: 9.9 claim requires complete operation pages evidence")
+        raise SystemExit(
+            f"{path}: 9.9 claim requires complete operation pages evidence"
+        )
     if closure["claimBoundary"].get("subrepoClosureComplete") is not True:
-        raise SystemExit(f"{path}: 9.9 claim requires a completed subrepo closure record")
+        raise SystemExit(
+            f"{path}: 9.9 claim requires a completed subrepo closure record"
+        )
+    if closure.get("selectedOption") is None:
+        raise SystemExit(f"{path}: 9.9 claim requires a selected closure option")
     if health99["currentScore"] < health99["targetScore"]:
-        raise SystemExit(f"{path}: currentScore must reach targetScore before a 9.9 claim")
+        raise SystemExit(
+            f"{path}: currentScore must reach targetScore before a 9.9 claim"
+        )
     if not _closure_authorized(closure):
-        raise SystemExit(f"{path}: 9.9 claim requires a full remote or waiver closure record")
+        raise SystemExit(
+            f"{path}: 9.9 claim requires a full remote or waiver closure record"
+        )
     blocked_gates = [
         gate["gate"]
         for gate in health99["requiredGates"]

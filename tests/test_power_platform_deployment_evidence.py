@@ -659,6 +659,7 @@ def test_repo_health_production_claim_requires_evidence_before_true_claim():
         }
     )
     closure["claimBoundary"]["subrepoClosureComplete"] = True
+    closure["selectedOption"] = "standalone_remote"
 
     try:
         validator._require_production_claim_evidence(
