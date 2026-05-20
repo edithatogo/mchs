@@ -21,16 +21,80 @@
     "tlsTrusted": false
   },
   "operationSmokeMatrix": [
-    {"operationId": "Health", "status": "blocked", "requiredEvidence": ["HTTP 200", "trace or session ID", "screenshot"]},
-    {"operationId": "ListCalculators", "status": "blocked", "requiredEvidence": ["calculator list response", "trace_id", "screenshot"]},
-    {"operationId": "GetCalculatorSchema", "status": "blocked", "requiredEvidence": ["schema payload", "trace_id", "screenshot"]},
-    {"operationId": "ValidateInput", "status": "blocked", "requiredEvidence": ["synthetic validation response", "trace_id", "screenshot"]},
-    {"operationId": "Calculate", "status": "blocked", "requiredEvidence": ["synthetic calculation response", "trace_id", "screenshot"]},
-    {"operationId": "GetEvidence", "status": "blocked", "requiredEvidence": ["evidence payload", "trace_id", "screenshot"]}
+    {
+      "operationId": "Health",
+      "status": "blocked",
+      "requiredEvidence": [
+        "HTTP 200",
+        "trace or session ID",
+        "screenshot"
+      ]
+    },
+    {
+      "operationId": "ListCalculators",
+      "status": "blocked",
+      "requiredEvidence": [
+        "calculator list response",
+        "trace_id",
+        "screenshot"
+      ]
+    },
+    {
+      "operationId": "GetCalculatorSchema",
+      "status": "blocked",
+      "requiredEvidence": [
+        "schema payload",
+        "trace_id",
+        "screenshot"
+      ]
+    },
+    {
+      "operationId": "ValidateInput",
+      "status": "blocked",
+      "requiredEvidence": [
+        "synthetic validation response",
+        "trace_id",
+        "screenshot"
+      ]
+    },
+    {
+      "operationId": "Calculate",
+      "status": "blocked",
+      "requiredEvidence": [
+        "synthetic calculation response",
+        "trace_id",
+        "screenshot"
+      ]
+    },
+    {
+      "operationId": "GetEvidence",
+      "status": "blocked",
+      "requiredEvidence": [
+        "evidence payload",
+        "trace_id",
+        "screenshot"
+      ]
+    }
   ],
   "claimBoundary": {
     "liveServiceBoundarySmokePassed": false,
     "calculationCorrectnessProvenFromPowerApps": false,
-    "productionReadinessClaimed": false
+    "productionReadinessClaimed": false,
+    "localServiceBoundarySmokePassed": true,
+    "publicHttpsServiceBoundarySmokePassed": false
+  },
+  "localPreviewSmoke": {
+    "status": "passed_local_only",
+    "healthz": {
+      "url": "http://127.0.0.1:8702/healthz",
+      "header": "x-api-key",
+      "responseStatus": "ok"
+    },
+    "productionEquivalent": false
+  },
+  "publicTunnelAttempt": {
+    "tool": "tailscale funnel",
+    "status": "blocked_tailnet_funnel_not_enabled",
+    "publicHttpsEndpointCreated": false
   }
 }

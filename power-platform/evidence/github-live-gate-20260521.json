@@ -18,8 +18,38 @@
     "approval environment record if required"
   ],
   "workflowRuns": [],
+  "run": {
+    "status": "not_run",
+    "runId": null,
+    "runUrl": null,
+    "whoAmI": "not_run",
+    "solutionChecker": {
+      "result": "not_run",
+      "findings": null
+    },
+    "solutionArtifact": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+    "solutionArtifactSha256": null,
+    "solutionArtifactPackStatus": "not_run"
+  },
   "claimBoundary": {
     "officialLiveGatePassed": false,
-    "productionDeploymentSecretsConfigured": false
+    "productionDeploymentSecretsConfigured": false,
+    "officialLiveGateCompleted": false,
+    "tenantRuntimeClaimsAllowed": false,
+    "productionReadinessClaimed": false
+  },
+  "requiredGateEvidence": [
+    "workflow run URL",
+    "who-am-i target environment output",
+    "solution checker result",
+    "packed managed solution artifact hash",
+    "managed import/visibility checks from pac",
+    "runtime smoke command evidence"
+  ],
+  "repositorySecretsObserved": {
+    "checkedWithGhSecretList": true,
+    "configuredSecretNames": [],
+    "requiredSecretsPresent": false,
+    "notes": "gh secret list returned no repository secrets for edithatogo/mchs in this session."
   }
 }

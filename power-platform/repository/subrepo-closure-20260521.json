@@ -7,17 +7,56 @@
   "acceptableClosureOptions": [
     {
       "option": "standalone_remote",
-      "requiredEvidence": ["remote URL", "sync direction", "release owner", "promotion branch policy"]
+      "requiredFields": [
+        "remoteUrl"
+      ],
+      "requiredEvidence": [
+        "remote URL",
+        "sync direction",
+        "release owner",
+        "promotion branch policy"
+      ]
     },
     {
       "option": "explicit_waiver",
-      "requiredEvidence": ["waiver approver", "reason", "review date", "risk acceptance"]
+      "requiredFields": [
+        "approvedBy"
+      ],
+      "requiredEvidence": [
+        "waiver approver",
+        "reason",
+        "review date",
+        "risk acceptance"
+      ]
     }
   ],
+  "requiredClosureFields": {
+    "standaloneRemote": [
+      "remoteUrl"
+    ],
+    "explicitWaiver": [
+      "approvedBy"
+    ]
+  },
   "selectedOption": null,
   "claimBoundary": {
     "standaloneRemoteProvisioned": false,
     "explicitWaiverRecorded": false,
     "subrepoClosureComplete": false
+  },
+  "standaloneRemote": {
+    "provisioned": false,
+    "remoteUrl": null,
+    "defaultBranch": null,
+    "syncProcedure": null,
+    "importOwner": null,
+    "provisioningStatus": "not_provisioned"
+  },
+  "waiver": {
+    "required": true,
+    "status": "blocked",
+    "reason": "No standalone remote has been supplied for the governed Power Platform boundary.",
+    "approvedBy": null,
+    "approvalRecord": null
   }
 }

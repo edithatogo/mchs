@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "asOf": "2026-05-21",
   "evidenceType": "power_automate_flow_smoke",
-  "status": "blocked_pending_real_flow_import_connection_and_run",
+  "status": "blocked_pending_real_nsw_flow_import_connection_and_run",
   "requiredFlows": [
     "deployment-smoke",
     "validate-input",
@@ -10,12 +10,109 @@
     "evidence-export"
   ],
   "requiredEvidence": [
-    "flow ID in NSW dylan",
+    "flow logical name in NSW dylan",
+    "flow ID",
+    "run ID",
     "connection reference binding",
-    "synthetic run ID",
+    "connection reference ID",
     "run status succeeded",
     "action-level input/output summary with no patient data",
     "failure-mode capture or retry policy evidence"
+  ],
+  "realNswRunEvidence": [
+    {
+      "flowLogicalName": "mchs-validate-input",
+      "flowFile": "power-platform/flows/validate-input/flow.json",
+      "connectionReference": "mchs_service_boundary",
+      "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null
+    },
+    {
+      "flowLogicalName": "mchs-calculate-request",
+      "flowFile": "power-platform/flows/calculate-request/flow.json",
+      "connectionReference": "mchs_service_boundary",
+      "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null
+    },
+    {
+      "flowLogicalName": "mchs-evidence-export",
+      "flowFile": "power-platform/flows/evidence-export/flow.json",
+      "connectionReference": "mchs_service_boundary",
+      "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null
+    },
+    {
+      "flowLogicalName": "mchs-deployment-smoke",
+      "flowFile": "power-platform/flows/deployment-smoke/flow.json",
+      "connectionReference": "mchs_service_boundary",
+      "connectionReferenceId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null
+    }
+  ],
+  "flowSmokeChecklist": [
+    {
+      "flowLogicalName": "mchs-validate-input",
+      "flowFile": "power-platform/flows/validate-input/flow.json",
+      "status": "blocked",
+      "requiredEvidence": [
+        "flowId",
+        "runId",
+        "connectionReferenceId",
+        "connectionReference",
+        "correlationId",
+        "sanitizedPayloadHash",
+        "successfulResponseForSyntheticInput"
+      ]
+    },
+    {
+      "flowLogicalName": "mchs-calculate-request",
+      "flowFile": "power-platform/flows/calculate-request/flow.json",
+      "status": "blocked",
+      "requiredEvidence": [
+        "flowId",
+        "runId",
+        "connectionReference",
+        "connectionReferenceId",
+        "connectorLatencySummary",
+        "correlationId"
+      ]
+    },
+    {
+      "flowLogicalName": "mchs-evidence-export",
+      "flowFile": "power-platform/flows/evidence-export/flow.json",
+      "status": "blocked",
+      "requiredEvidence": [
+        "flowId",
+        "runId",
+        "connectionReference",
+        "connectionReferenceId",
+        "bundleScopeAndId"
+      ]
+    },
+    {
+      "flowLogicalName": "mchs-deployment-smoke",
+      "flowFile": "power-platform/flows/deployment-smoke/flow.json",
+      "status": "blocked",
+      "requiredEvidence": [
+        "flowId",
+        "runId",
+        "connectionReference",
+        "connectionReferenceId",
+        "deploymentProfile"
+      ]
+    }
   ],
   "runs": [],
   "claimBoundary": {

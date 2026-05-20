@@ -46,6 +46,8 @@ This is a planning template and **does not claim an active NSW production deploy
 - Import result logs for each managed import.
 - Smoke test transcript (`/health`, `/status`, or equivalent) for each environment.
 - Audit trail record for configuration changes.
+- DLP policy ID, connector allow state, monitoring owner, failure metrics, and
+  support escalation record before any 9.9 claim.
 
 ## Blocker register (operationally enforced)
 

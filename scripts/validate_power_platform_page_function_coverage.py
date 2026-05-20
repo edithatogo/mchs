@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PP = ROOT / "power-platform"
 COVERAGE = PP / "apps" / "mchs-orchestration-app" / "page-function-coverage.json"
 HEALTH99 = PP / "repository" / "health-9-9" / "contract.json"
+SUBREPO_CLOSURE = PP / "repository" / "subrepo-closure-20260521.json"
 OPENAPI = PP / "connectors" / "mchs-service-boundary" / "openapi.json"
 
 
@@ -14,9 +15,16 @@ def _json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def _closure_authorized(closure: dict) -> bool:
+    return bool(closure["standaloneRemote"].get("remoteUrl")) or bool(
+        closure["waiver"].get("approvedBy")
+    )
+
+
 def main() -> int:
     coverage = _json(COVERAGE)
     health99 = _json(HEALTH99)
+    closure = _json(SUBREPO_CLOSURE)
     openapi = _json(OPENAPI)
 
     connector_operations = {
@@ -102,6 +110,35 @@ def main() -> int:
             continue
         if status != "blocked":
             raise SystemExit("live 9.9 gates must remain blocked until evidence exists")
+
+    closure_gate = next(
+        item
+        for item in health99["requiredGates"]
+        if item["gate"] == "standalone_power_platform_subrepo_remote_or_explicit_waiver"
+    )
+    if closure_gate.get("requiredClosureEvidence") != {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"],
+    }:
+        raise SystemExit("subrepo closure gate must require remoteUrl or approvedBy")
+    if closure["requiredClosureFields"] != {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"],
+    }:
+        raise SystemExit("subrepo closure must declare remoteUrl or approvedBy as required")
+    if not _closure_authorized(closure):
+        if closure["status"] != "blocked_pending_remote_or_explicit_waiver":
+            raise SystemExit(
+                "subrepo closure must stay blocked until remote or waiver exists"
+            )
+        if closure["claimBoundary"]["subrepoClosureComplete"]:
+            raise SystemExit("subrepo closure completion is overclaimed")
+        if closure["selectedOption"] is not None:
+            raise SystemExit(
+                "subrepo closure must not pick an option before evidence exists"
+            )
+    if health99["claimBoundary"]["score99Claimed"] and not _closure_authorized(closure):
+        raise SystemExit("9.9 claim requires standalone remote URL or waiver approver")
 
     print("Power Platform page/function coverage and 9.9 contract passed.")
     return 0

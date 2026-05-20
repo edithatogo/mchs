@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidenceType": "power_platform_official_github_actions_live_gate",
-  "status": "blocked_pending_official_live_gate_run",
+  "status": "blocked_pending_repository_secrets_and_workflow_run",
   "asOf": "2026-05-21",
   "targetWorkflow": ".github/workflows/power-platform-official-actions.yml",
   "workflowDispatchInputs": {
@@ -15,6 +15,14 @@
     "POWER_PLATFORM_CLIENT_SECRET",
     "POWER_PLATFORM_TENANT_ID"
   ],
+  "requiredGateEvidence": [
+    "workflow run URL",
+    "who-am-i target environment output",
+    "solution checker result",
+    "packed managed solution artifact hash",
+    "managed import/visibility checks from pac",
+    "runtime smoke command evidence"
+  ],
   "environment": "nsw-power-platform",
   "run": {
     "status": "not_run",
@@ -26,14 +34,9 @@
       "findings": null
     },
     "solutionArtifact": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+    "solutionArtifactSha256": null,
     "solutionArtifactPackStatus": "not_run"
   },
-  "requiredGateEvidence": [
-    "verified_target-environment identity",
-    "solution checker executed in environment",
-    "managed import/visibility checks from pac",
-    "runtime smoke smoke command evidence"
-  ],
   "claimBoundary": {
     "officialLiveGateCompleted": false,
     "tenantRuntimeClaimsAllowed": false,

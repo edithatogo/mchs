@@ -21,7 +21,7 @@ pricing formulas directly.
 ## Security contract
 
 - If `MCHS_SERVICE_BOUNDARY_API_KEY` is set, requests must include
-  `x-mchs-api-key` with the same value.
+  `x-mchs-api-key` or the connector-compatible `x-api-key` with the same value.
 - If unset, requests are accepted without authentication in deterministic
   CI/preview runs.
 - TLS is required by deployment platform; this service only provides HTTP handler

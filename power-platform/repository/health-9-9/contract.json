@@ -34,7 +34,11 @@
     {
       "gate": "standalone_power_platform_subrepo_remote_or_explicit_waiver",
       "status": "blocked",
-      "evidence": "power-platform/repository/subrepo-closure-20260521.json"
+      "evidence": "power-platform/repository/subrepo-closure-20260521.json",
+      "requiredClosureEvidence": {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"]
+      }
     }
   ],
   "claimBoundary": {

@@ -74,3 +74,13 @@ def test_schema_lookup_delegates_to_mcp_resources():
     assert payload["status"] == "success"
     assert payload["result_payload"]["schema_name"] == "calculator"
     assert "$schema" in payload["result_payload"]["schema"]
+
+
+def test_connector_api_key_header_alias_is_accepted(monkeypatch):
+    module = _load_boundary_module()
+    monkeypatch.setenv("MCHS_SERVICE_BOUNDARY_API_KEY", "synthetic-key")
+    status, payload = module.handle_service_request(
+        "GET", "/healthz", headers={"x-api-key": "synthetic-key"}
+    )
+    assert status == 200
+    assert payload["status"] == "ok"

@@ -10,6 +10,8 @@ the repo-health scorecard.
 Do not rely on a gitlink without a `.gitmodules` mapping as evidence of managed
 ALM. A split to a standalone Git submodule or subtree is allowed only when the
 remote URL, pinned commit, sync procedure, and NSW import owner are recorded.
+The 9.9 repo-health gate additionally requires either a standalone remote URL
+or an explicit waiver approver before the closure can be claimed complete.
 
 ## Legacy State
 
@@ -44,6 +46,7 @@ If split into a subrepo later, record:
 - push/pull procedure
 - release artifact procedure
 - responsible owner for NSW environment import
+- either the standalone remote URL or the waiver approver before any 9.9 claim
 
 ## Current Subrepo Boundary
 

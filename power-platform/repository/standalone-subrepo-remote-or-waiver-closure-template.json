@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidenceType": "power_platform_subrepo_remote_or_explicit_waiver",
-  "status": "blocked_pending_remote_or_waiver",
+  "status": "blocked_pending_remote_or_explicit_waiver",
   "asOf": "2026-05-21",
   "subrepoBoundary": {
     "mode": "in_repository_governed_subrepo_boundary",
@@ -24,13 +24,19 @@
     "approvedBy": null,
     "approvalRecord": null
   },
+  "selectedOption": null,
   "closureChecklist": [
     "Provide definitive standalone remote URL, default branch, and owner",
     "Update subrepo manifest with the remote and pinned commit procedure",
     "Record push/pull/check/import/release checklist in `power-platform/repository/subrepo-contract.md`",
     "Capture NSW import owner and rollback owner for the standalone flow",
-    "Attach an explicit waiver decision if production separation is deferred"
+    "Attach an explicit waiver decision if production separation is deferred",
+    "Do not claim repo-health 9.9 until remoteUrl or waiver.approvedBy is populated"
   ],
+  "requiredClosureFields": {
+    "standaloneRemote": ["remoteUrl"],
+    "explicitWaiver": ["approvedBy"]
+  },
   "claimBoundary": {
     "standaloneRemoteOperational": false,
     "explicitWaiverRecorded": false,

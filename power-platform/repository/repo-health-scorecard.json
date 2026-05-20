@@ -62,7 +62,7 @@
     "Power App operation pages are source-UX complete but not live runtime-proven"
   ],
   "nonBlockers": [
-    "standalone subrepo remote not provisioned because no target remote URL has been supplied",
+    "standalone subrepo remote not provisioned because no target remote URL or waiver approver has been supplied",
     "preview capability adoption intentionally tracked as roadmap until NSW tenant eligibility is confirmed"
   ],
   "targetScoreCandidate": 9.9,

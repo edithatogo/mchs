@@ -61,6 +61,7 @@ def test_page_function_coverage_does_not_overclaim_runtime_completion() -> None:
 
 def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
     contract = _json(PP / "repository" / "health-9-9" / "contract.json")
+    closure = _json(PP / "repository" / "subrepo-closure-20260521.json")
     assert contract["targetScore"] == 9.9
     assert contract["currentScore"] == 9.5
     assert contract["status"] == "not_eligible_live_runtime_flow_governance_blocked"
@@ -76,6 +77,15 @@ def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
     assert statuses["all_connector_operation_pages_source_ux_complete"] == (
         "passed_source_evidence"
     )
+    closure_gate = next(
+        gate
+        for gate in contract["requiredGates"]
+        if gate["gate"] == "standalone_power_platform_subrepo_remote_or_explicit_waiver"
+    )
+    assert closure_gate["requiredClosureEvidence"] == {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"],
+    }
     assert all(
         status == "blocked"
         for gate, status in statuses.items()
@@ -85,6 +95,15 @@ def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
         assert (ROOT / gate["evidence"]).exists()
     assert contract["claimBoundary"]["score99Claimed"] is False
     assert contract["claimBoundary"]["operationPageSourceUxComplete"] is True
+    assert closure["requiredClosureFields"] == {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"],
+    }
+    assert closure["status"] == "blocked_pending_remote_or_explicit_waiver"
+    assert closure["claimBoundary"]["subrepoClosureComplete"] is False
+    assert closure["selectedOption"] is None
+    assert closure["standaloneRemote"]["remoteUrl"] is None
+    assert closure["waiver"]["approvedBy"] is None
 
 
 def test_page_function_coverage_validator_passes() -> None:
@@ -99,3 +118,18 @@ def test_page_function_coverage_validator_passes() -> None:
         "Power Platform page/function coverage and 9.9 contract passed."
         in result.stdout
     )
+
+
+def test_subrepo_closure_template_requires_remote_or_waiver_approver() -> None:
+    template = _json(
+        PP
+        / "repository"
+        / "standalone-subrepo-remote-or-waiver-closure-template.json"
+    )
+    assert template["status"] == "blocked_pending_remote_or_explicit_waiver"
+    assert template["selectedOption"] is None
+    assert template["requiredClosureFields"] == {
+        "standaloneRemote": ["remoteUrl"],
+        "explicitWaiver": ["approvedBy"],
+    }
+    assert "remoteUrl or waiver.approvedBy" in " ".join(template["closureChecklist"])

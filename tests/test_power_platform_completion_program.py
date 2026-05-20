@@ -93,6 +93,8 @@ def test_power_platform_repo_health_and_subrepo_boundary() -> None:
         (PP / "repository" / "repo-health-scorecard.json").read_text()
     )
     manifest = json.loads((PP / "repository" / "subrepo-manifest.json").read_text())
+    closure_path = PP / "repository" / "subrepo-closure-20260521.json"
+    closure = json.loads(closure_path.read_text())
     roadmap = PP / "roadmap" / "sota-bleeding-edge-capabilities-20260520.md"
 
     assert scorecard["targetScore"] == 9.5
@@ -105,6 +107,14 @@ def test_power_platform_repo_health_and_subrepo_boundary() -> None:
     assert manifest["claimBoundary"]["subrepoBoundaryEnforced"] is True
     assert manifest["claimBoundary"]["standaloneRemoteProvisioned"] is False
     assert manifest["claimBoundary"]["runtimeProductionReady"] is False
+    assert (
+        "record remoteUrl or waiver.approvedBy before any 9.9 claim"
+        in manifest["standaloneSplitRequirements"]
+    )
+    assert closure["status"] == "blocked_pending_remote_or_explicit_waiver"
+    assert closure["claimBoundary"]["subrepoClosureComplete"] is False
+    assert closure["standaloneRemote"]["remoteUrl"] is None
+    assert closure["waiver"]["approvedBy"] is None
     assert roadmap.exists()
 
 

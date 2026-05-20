@@ -27,6 +27,24 @@ CONNECTIONS = (
 MONITORING = (
     ROOT / "power-platform" / "evidence" / "monitoring-dlp-evidence-template.json"
 )
+FLOW_SMOKE_TEMPLATE = (
+    ROOT / "power-platform" / "evidence" / "flow-smoke-evidence-template.json"
+)
+FLOW_SMOKE_EVIDENCE = (
+    ROOT / "power-platform" / "evidence" / "power-automate-flow-smoke-20260521.json"
+)
+ENDPOINT = ROOT / "power-platform" / "evidence" / (
+    "service-boundary-endpoint-template.json"
+)
+GITHUB_LIVE_GATE_TEMPLATE = (
+    ROOT
+    / "power-platform"
+    / "evidence"
+    / "official-github-live-gate-evidence-template.json"
+)
+GITHUB_LIVE_GATE = ROOT / "power-platform" / "evidence" / (
+    "github-live-gate-20260521.json"
+)
 
 
 def _json(path: Path) -> dict:
@@ -76,6 +94,11 @@ def test_power_platform_evidence_templates_exist():
         RUNTIME_SMOKE,
         CONNECTIONS,
         MONITORING,
+        FLOW_SMOKE_TEMPLATE,
+        FLOW_SMOKE_EVIDENCE,
+        ENDPOINT,
+        GITHUB_LIVE_GATE_TEMPLATE,
+        GITHUB_LIVE_GATE,
     ]:
         assert path.exists(), path
 
@@ -84,12 +107,67 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     runtime = _json(RUNTIME_SMOKE)
     connections = _json(CONNECTIONS)
     monitoring = _json(MONITORING)
+    flow_smoke = _json(FLOW_SMOKE_TEMPLATE)
+    flow_smoke_evidence = _json(FLOW_SMOKE_EVIDENCE)
 
     assert runtime["claimBoundary"]["runtimeSmokePassed"] is False
     assert runtime["claimBoundary"]["productionReadinessClaimed"] is False
     assert connections["claimBoundary"]["connectionsConfigured"] is False
     assert monitoring["claimBoundary"]["monitoringConfigured"] is False
     assert monitoring["claimBoundary"]["dlpEvidenceCaptured"] is False
+    live_gate_template = _json(GITHUB_LIVE_GATE_TEMPLATE)
+    live_gate = _json(GITHUB_LIVE_GATE)
+    assert live_gate_template["requiredSecrets"] == [
+        "POWER_PLATFORM_ENVIRONMENT_URL",
+        "POWER_PLATFORM_APPLICATION_ID",
+        "POWER_PLATFORM_CLIENT_SECRET",
+        "POWER_PLATFORM_TENANT_ID",
+    ]
+    assert "workflow run URL" in live_gate_template["requiredGateEvidence"]
+    assert (
+        "who-am-i target environment output"
+        in live_gate_template["requiredGateEvidence"]
+    )
+    assert "solution checker result" in live_gate_template["requiredGateEvidence"]
+    assert (
+        "packed managed solution artifact hash"
+        in live_gate_template["requiredGateEvidence"]
+    )
+    assert live_gate_template["claimBoundary"]["officialLiveGateCompleted"] is False
+    assert live_gate["status"] == "blocked_pending_repository_secrets_and_workflow_run"
+    assert live_gate["run"]["status"] == "not_run"
+    assert live_gate["run"]["runUrl"] is None
+    assert live_gate["run"]["whoAmI"] == "not_run"
+    assert live_gate["run"]["solutionChecker"]["result"] == "not_run"
+    assert live_gate["run"]["solutionArtifactSha256"] is None
+    assert live_gate["claimBoundary"]["officialLiveGatePassed"] is False
+    assert live_gate["claimBoundary"]["productionDeploymentSecretsConfigured"] is False
+    assert flow_smoke["claimBoundary"]["flowSmokePassed"] is False
+    assert flow_smoke_evidence["claimBoundary"]["flowSmokePassed"] is False
+    assert all(entry["flowId"] is None for entry in flow_smoke["realNswRunEvidence"])
+    assert all(
+        entry["runId"] is None for entry in flow_smoke_evidence["realNswRunEvidence"]
+    )
+    assert all(
+        "connectionReference" in item["requiredEvidence"]
+        for item in flow_smoke["flowSmokeChecklist"]
+    )
+    assert all(
+        "connectionReferenceId" in item["requiredEvidence"]
+        for item in flow_smoke["flowSmokeChecklist"]
+    )
+    assert monitoring["dlp"]["policyId"]
+    assert monitoring["dlp"]["policyName"]
+    assert monitoring["dlp"]["policyClassification"]
+    assert monitoring["connectorPolicy"]["policyId"]
+    assert monitoring["connectorPolicy"]["policyName"]
+    assert monitoring["connectorPolicy"]["connectorAllowState"]
+    assert monitoring["monitoring"]["owner"]
+    assert monitoring["monitoring"]["failureMetrics"]["connectorFailures"]
+    assert monitoring["support"]["owner"]
+    assert monitoring["support"]["escalationOwner"]
+    assert monitoring["support"]["escalationPath"]
+    assert monitoring["support"]["escalationContact"]
 
 
 def test_power_platform_operational_evidence_validator_passes():
@@ -104,3 +182,36 @@ def test_power_platform_operational_evidence_validator_passes():
         text=True,
     )
     assert "Power Platform operational evidence contracts passed." in result.stdout
+
+
+def test_power_platform_repo_health_9_9_gate_validator_passes():
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_power_platform_repo_health.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert (
+        "Power Platform repo-health scorecard passed at 9.5 with 9.9 gate."
+        in result.stdout
+    )
+
+
+def test_power_platform_github_live_gate_validator_passes():
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_power_platform_github_live_gate.py"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    assert "Power Platform official GitHub live-gate evidence contract passed." in (
+        result.stdout
+    )

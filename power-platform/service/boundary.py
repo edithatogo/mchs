@@ -35,11 +35,14 @@ def _validate_api_key(headers: Any) -> str | None:
         headers.get("x-mchs-api-key")
         or headers.get("X-MCHS-API-KEY")
         or headers.get("X-Mchs-Api-Key")
+        or headers.get("x-api-key")
+        or headers.get("X-API-KEY")
+        or headers.get("X-Api-Key")
     )
     if not header_value:
-        return "x-mchs-api-key is required"
+        return "x-mchs-api-key or x-api-key is required"
     if header_value != required_key:
-        return "x-mchs-api-key is invalid"
+        return "x-mchs-api-key or x-api-key is invalid"
     return None
 
 
