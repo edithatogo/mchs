@@ -4,12 +4,25 @@ This package is for creating and collecting evidence from a real public HTTPS
 service-boundary endpoint. The checked-in JSON files are examples only and do
 not claim that a live endpoint exists.
 
-## Required inputs
+## Aggregate preflight
+
+Run the repo-wide preflight first:
+
+```bash
+./scripts/bootstrap-power-platform-alm.sh --check-auth
+```
+
+This is the single aggregate preflight command for the operator surface. It
+confirms the supported ALM toolchain and auth state, but it does not provide
+endpoint evidence or claim that a live service-boundary host exists.
+
+## Remaining external evidence required
 
 - A real public HTTPS base URL
 - A deployed API key or equivalent secret material for the service boundary
-- `GET /healthz`
-- `GET /.well-known/mcp/server-card.json`
+- A live `GET /healthz` response from the real endpoint
+- A live `GET /.well-known/mcp/server-card.json` response from the real endpoint
+- A probe JSON artifact captured from that real endpoint
 
 ## Example artifacts
 
@@ -39,20 +52,7 @@ python3 scripts/validate_power_platform_service_boundary_endpoint.py \
   > /tmp/mchs-service-boundary-validate.json
 ```
 
-3. Run the offline preflight gate against the operator input and probe JSON.
-
-```bash
-python3 scripts/preflight_power_platform_service_boundary_endpoint_operator_package.py \
-  --operator-input power-platform/evidence/examples/service-boundary-endpoint-operator-input.example.json \
-  --probe-result power-platform/evidence/examples/service-boundary-probe-result.example.json \
-  > /tmp/mchs-service-boundary-preflight.json
-```
-
-The checked-in example payloads are intentionally blocked because they still
-use placeholder values. Replace them with real JSON artifacts before treating
-the operator package as ready.
-
-4. Probe the real endpoint and capture the validator output as JSON.
+3. Probe the real endpoint and capture the validator output as JSON.
 
 ```bash
 python3 scripts/validate_power_platform_service_boundary_endpoint.py \
@@ -61,7 +61,7 @@ python3 scripts/validate_power_platform_service_boundary_endpoint.py \
   > /tmp/mchs-service-boundary-probe.json
 ```
 
-5. Render the evidence record from the real probe result.
+4. Render the evidence record from the real probe result.
 
 ```bash
 python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
@@ -81,8 +81,9 @@ python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
   --output /tmp/mchs-service-boundary-evidence-preview.json
 ```
 
-The preflight gate above will still block that example base URL because it is a
-placeholder host, which is the expected behavior.
+The aggregate preflight command above still passes or fails independently of
+the example payloads. The example base URL remains a placeholder host and does
+not count as external evidence.
 
 ## Guardrails
 

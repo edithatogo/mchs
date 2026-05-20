@@ -7,6 +7,18 @@ This runbook is intentionally blocked-state only. It packages evidence and
 captures blockers, but it does not claim that a live app or connector binding
 exists.
 
+## Aggregate preflight
+
+Run the repo-wide preflight first:
+
+```bash
+./scripts/bootstrap-power-platform-alm.sh --check-auth
+```
+
+This is the single aggregate preflight command for the operator surface. It
+confirms the supported ALM toolchain and auth state, but it does not replace
+PAC re-auth or observe app and connector evidence.
+
 ## Package contents
 
 - `power-platform/evidence/pac-operator-package-20260521.json`
@@ -14,23 +26,21 @@ exists.
 - `power-platform/evidence/canvas-app-publication-20260520.json`
 - `power-platform/evidence/connection-reference-evidence-template.json`
 
-## Current state
+## Remaining external evidence required
 
-- PAC re-auth is not yet re-captured in a fresh operator session.
-- App publication evidence exists, but this package does not claim a new live
-  publication event.
-- Custom connector connection binding remains blocked until a real
-  `connectionId` is observed.
-- The current PAC blocker evidence is machine-checkable and remains blocked
-  until `appId`, `playUrl`, and `connectionId` are all present.
-- Placeholder-looking `appId`, `playUrl`, and `connectionId` values are also
-  blocked by the capture helper and do not count as evidence.
+- A fresh `pac auth list` result in the intended tenant and environment
+- An observed `appId` from the live app publication evidence
+- An observed `playUrl` that matches that same live app
+- An observed `connectionId` from the custom connector binding
+- The environment binding for that connection, captured from the live tenant
 
 ## Runbook
 
 ### 1. Re-authenticate PAC
 
 - Use `pac auth create` in the intended tenant/environment context.
+- If the aggregate preflight above fails, fix the local ALM toolchain or auth
+  state before continuing.
 - Confirm the authenticated context matches the tenant and environment recorded
   in the PAC evidence files.
 - Do not treat successful login as proof of app publication or connector

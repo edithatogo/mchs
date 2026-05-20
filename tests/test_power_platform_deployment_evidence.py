@@ -63,6 +63,12 @@ GITHUB_LIVE_GATE_TEMPLATE = (
 GITHUB_LIVE_GATE = (
     ROOT / "power-platform" / "evidence" / ("github-live-gate-20260521.json")
 )
+REMAINING_BLOCKERS = (
+    ROOT / "power-platform" / "evidence" / "remaining-blockers-20260521.json"
+)
+REPO_HEALTH_SCORECARD = (
+    ROOT / "power-platform" / "repository" / "repo-health-scorecard.json"
+)
 
 
 def _json(path: Path) -> dict:
@@ -101,6 +107,17 @@ def test_power_platform_artifacts_state_no_live_nsw_claim():
     for path in [RUNBOOK, PAC_RUNBOOK, READINESS, GOVERNANCE]:
         text = _text(path).lower()
         assert "do not claim" in text
+
+
+def test_power_platform_deployment_readiness_roadmap_documents_local_only_preflight():
+    text = _text(ROOT / "docs" / "roadmaps" / "power-platform-deployment-readiness.md")
+    lowered = text.lower()
+
+    assert "aggregate-readiness-preflight" in lowered
+    assert "local-only" in lowered
+    assert "validate_power_platform_repo_health.py" in lowered
+    assert "validate_power_platform_github_live_gate.py" in lowered
+    assert "dispatch live workflows" in lowered
 
 
 def test_power_platform_evidence_templates_exist():
@@ -617,3 +634,30 @@ def test_power_platform_github_live_gate_validator_passes():
     assert "Power Platform official GitHub live-gate evidence contract passed." in (
         result.stdout
     )
+
+
+def test_power_platform_remaining_blockers_are_machine_readable_and_unresolved():
+    scorecard = _json(REPO_HEALTH_SCORECARD)
+    remaining = _json(REMAINING_BLOCKERS)
+
+    assert remaining["evidenceType"] == "power_platform_remaining_blockers"
+    assert remaining["status"] == "blocked_with_remaining_blockers"
+    assert remaining["claimBoundary"] == {
+        "productionReadinessClaimed": False,
+        "blockersResolvedClaimed": False,
+        "externalBlockersResolvedClaimed": False,
+    }
+    assert remaining["generatedFrom"] == {
+        "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
+        "deploymentStatus": "power-platform/evidence/deployment-status.json",
+    }
+
+    assert [blocker["summary"] for blocker in remaining["remainingBlockers"]] == (
+        scorecard["hardBlockers"]
+    )
+    for blocker in remaining["remainingBlockers"]:
+        assert blocker["resolved"] is False
+        assert blocker["source"] == (
+            "power-platform/repository/repo-health-scorecard.json"
+        )
+        assert blocker["supportingEvidence"]

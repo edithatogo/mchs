@@ -28,7 +28,7 @@ recorded here.
 - `pac-observation-capture-20260521.json`: current machine-checkable PAC
   blocker capture. It remains blocked until `appId`, `playUrl`, and
   `connectionId` are observed.
-- `deployment/pac-operator-runbook.md`: operator runbook for PAC re-auth,
+- `power-platform/deployment/pac-operator-runbook.md`: operator runbook for PAC re-auth,
   app publication evidence, and custom connector connection binding.
 - `service-boundary-endpoint-template.json`: blocked endpoint configuration and
   probe contract for a real HTTPS service boundary once provided, including a
@@ -157,3 +157,8 @@ claimed.
 `scripts/validate_power_platform_platform_tests.py` enforces that platform tests
 and visual optimization are not overclaimed before real app/flow evidence
 exists.
+
+`scripts/preflight_power_platform_readiness.py` runs the blocked endpoint,
+GitHub, PAC, flow-smoke, DLP, and subrepo checks together and prints one JSON
+summary. It is a reporting wrapper only and does not mutate the checked-in
+evidence files.

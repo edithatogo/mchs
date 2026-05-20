@@ -80,7 +80,7 @@
     "artifact": "managed solution backup required before promotion"
   },
   "governance": {
-    "nsw_real_deployment_claim": true,
+    "nsw_real_deployment_claim": false,
     "managed_solution_import_claim": true,
     "runtime_production_readiness_claim": false,
     "notes": "Managed solution shell import is evidenced; runtime app/flow readiness remains blocked."

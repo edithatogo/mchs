@@ -12,10 +12,12 @@ on:
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
       - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_github_live_gate.py'
       - 'scripts/validate_power_platform_toolchain.py'
       - 'scripts/validate_power_platform_visual_contract.py'
       - 'scripts/bootstrap-power-platform-github-live-gate.sh'
       - 'scripts/bootstrap-power-platform-github-live-gate.md'
+      - 'docs/roadmaps/power-platform-deployment-readiness.md'
       - '.github/workflows/power-platform-alm.yml'
       - '.github/workflows/power-platform-official-actions.yml'
       - '.github/workflows/power-bi-devops.yml'
@@ -31,10 +33,12 @@ on:
       - 'scripts/validate_power_platform_sota_capabilities.py'
       - 'scripts/validate_power_platform_operational_evidence.py'
       - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_github_live_gate.py'
       - 'scripts/validate_power_platform_toolchain.py'
       - 'scripts/validate_power_platform_visual_contract.py'
       - 'scripts/bootstrap-power-platform-github-live-gate.sh'
       - 'scripts/bootstrap-power-platform-github-live-gate.md'
+      - 'docs/roadmaps/power-platform-deployment-readiness.md'
   workflow_dispatch:
 
 jobs:
@@ -47,14 +51,24 @@ jobs:
           python-version: '3.11'
       - run: python scripts/validate_power_platform_static.py
       - run: python scripts/validate_power_platform_alm_gates.py
-      - run: python scripts/validate_power_platform_repo_health.py
       - run: python scripts/validate_power_platform_sota_capabilities.py
-      - run: python scripts/validate_power_platform_operational_evidence.py
-      - run: python scripts/validate_power_platform_platform_tests.py
       - run: python scripts/validate_power_platform_toolchain.py
       - run: python scripts/validate_power_platform_visual_contract.py
       - run: bash -n scripts/power-platform-alm.sh
       - run: bash -n scripts/power-platform-alm-lifecycle-gates.sh
+
+  aggregate-readiness-preflight:
+    name: Aggregate readiness preflight (local-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/validate_power_platform_repo_health.py
+      - run: python scripts/validate_power_platform_operational_evidence.py
+      - run: python scripts/validate_power_platform_platform_tests.py
+      - run: python scripts/validate_power_platform_github_live_gate.py
 
   pack-check-import-gates:
     runs-on: ubuntu-latest

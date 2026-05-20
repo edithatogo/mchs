@@ -58,6 +58,12 @@ def test_power_platform_alm_lifecycle_validator_runs_non_interactively():
 
 def test_power_platform_alm_lifecycle_workflow_runs_pack_check_import_matrix():
     text = _read_text(WORKFLOW)
+    assert "Aggregate readiness preflight (local-only)" in text
     assert "pack-check-import-gates" in text
     assert "gate: [pack, check, import]" in text
+    assert "validate_power_platform_repo_health.py" in text
+    assert "validate_power_platform_operational_evidence.py" in text
+    assert "validate_power_platform_platform_tests.py" in text
+    assert "validate_power_platform_github_live_gate.py" in text
     assert "power-platform-alm-lifecycle-gates.sh --gate" in text
+    assert "gh workflow run" not in text

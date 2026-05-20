@@ -26,4 +26,4 @@ NSW production deployment readiness is not yet claimed. Deployments remain
 `blocked` until tenant credentials, managed import evidence, and rollback
 verification are present.
 
-See the canonical source in [ADR 0005](../../../../docs/adr/0005-web-and-power-platform-delivery.md).
+See the canonical source in [ADR 0005](../../../../../docs/adr/0005-web-and-power-platform-delivery.md).

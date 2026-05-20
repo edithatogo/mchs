@@ -28,6 +28,18 @@ explicit evidence and blocker tracking.
 Any missing tenant credential keeps the surface in `blocked` and prevents release
 readiness claims.
 
+## CI wiring
+
+- `.github/workflows/power-platform-alm.yml` runs an `aggregate-readiness-preflight`
+  job as a local-only validation step.
+- The job checks repository health, operational evidence, platform test status,
+  and the GitHub live-gate evidence contract with local files only.
+- The local validators are `validate_power_platform_repo_health.py`,
+  `validate_power_platform_operational_evidence.py`,
+  `validate_power_platform_platform_tests.py`, and
+  `validate_power_platform_github_live_gate.py`.
+- The job does not read repository secrets or dispatch live workflows.
+
 ## Governance contract
 
 - No formula logic in Power Platform apps, flows, or formulas.
