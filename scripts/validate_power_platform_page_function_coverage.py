@@ -33,6 +33,32 @@ def _closure_authorized(closure: dict) -> bool:
     )
 
 
+def _claim_99_supported(health99: dict, closure: dict, path: Path) -> None:
+    claim_boundary = health99["claimBoundary"]
+    if claim_boundary.get("score99Claimed") is not True:
+        raise SystemExit(f"{path}: 9.9 claim requires score99Claimed evidence")
+    if claim_boundary.get("repoHealth99Eligible") is not True:
+        raise SystemExit(f"{path}: 9.9 claim requires repo-health 9.9 eligibility evidence")
+    if claim_boundary.get("operationPagesComplete") is not True:
+        raise SystemExit(f"{path}: 9.9 claim requires complete operation pages evidence")
+    if closure["claimBoundary"].get("subrepoClosureComplete") is not True:
+        raise SystemExit(f"{path}: 9.9 claim requires a completed subrepo closure record")
+    if health99["currentScore"] < health99["targetScore"]:
+        raise SystemExit(f"{path}: currentScore must reach targetScore before a 9.9 claim")
+    if not _closure_authorized(closure):
+        raise SystemExit(f"{path}: 9.9 claim requires a full remote or waiver closure record")
+    blocked_gates = [
+        gate["gate"]
+        for gate in health99["requiredGates"]
+        if gate["status"] == "blocked"
+    ]
+    if blocked_gates:
+        raise SystemExit(
+            f"{path}: 9.9 claim requires all required gates to move beyond blocked: "
+            f"{blocked_gates}"
+        )
+
+
 def main() -> int:
     coverage = _json(COVERAGE)
     health99 = _json(HEALTH99)
@@ -101,14 +127,14 @@ def main() -> int:
     if boundary["everyCalculationFunctionFullyProven"]:
         raise SystemExit("calculation/function proof is overclaimed")
     if boundary["repoHealth99Eligible"]:
-        raise SystemExit("repo-health 9.9 eligibility is overclaimed")
+        _claim_99_supported(health99, closure, HEALTH99)
 
     if health99["currentScore"] != 9.5:
         raise SystemExit("9.9 contract must preserve current score at 9.5")
     if health99["targetScore"] != 9.9:
         raise SystemExit("9.9 contract target is not 9.9")
     if health99["claimBoundary"]["score99Claimed"]:
-        raise SystemExit("9.9 score is overclaimed")
+        _claim_99_supported(health99, closure, HEALTH99)
     for item in health99["requiredGates"]:
         if not (ROOT / item["evidence"]).exists():
             raise SystemExit(f"9.9 gate evidence target missing: {item['evidence']}")
@@ -175,8 +201,8 @@ def main() -> int:
             raise SystemExit(
                 "subrepo closure must not pick an option before evidence exists"
             )
-    if health99["claimBoundary"]["score99Claimed"] and not _closure_authorized(closure):
-        raise SystemExit("9.9 claim requires a full remote or waiver closure record")
+    if health99["claimBoundary"]["score99Claimed"]:
+        _claim_99_supported(health99, closure, HEALTH99)
 
     print("Power Platform page/function coverage and 9.9 contract passed.")
     return 0

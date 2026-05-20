@@ -14,9 +14,7 @@ BUNDLE = (
 RUNBOOK = (
     ROOT / "power-platform" / "deployment" / "nsw-managed-solution-promotion-runbook.md"
 )
-PAC_RUNBOOK = (
-    ROOT / "power-platform" / "deployment" / "pac-operator-runbook.md"
-)
+PAC_RUNBOOK = ROOT / "power-platform" / "deployment" / "pac-operator-runbook.md"
 READINESS = (
     ROOT / "power-platform" / "deployment" / "nsw-deployment-readiness-template.md"
 )
@@ -66,6 +64,7 @@ GITHUB_LIVE_GATE = (
 REMAINING_BLOCKERS = (
     ROOT / "power-platform" / "evidence" / "remaining-blockers-20260521.json"
 )
+EVIDENCE_README = ROOT / "power-platform" / "evidence" / "README.md"
 REPO_HEALTH_SCORECARD = (
     ROOT / "power-platform" / "repository" / "repo-health-scorecard.json"
 )
@@ -107,6 +106,24 @@ def test_power_platform_artifacts_state_no_live_nsw_claim():
     for path in [RUNBOOK, PAC_RUNBOOK, READINESS, GOVERNANCE]:
         text = _text(path).lower()
         assert "do not claim" in text
+
+
+def test_power_platform_remaining_blocker_ids_are_documented():
+    remaining = _json(REMAINING_BLOCKERS)
+    blocker_ids = [blocker["id"] for blocker in remaining["remainingBlockers"]]
+
+    documented_surfaces = [_text(EVIDENCE_README)]
+    for directory in [
+        ROOT / "docs" / "runbooks",
+        ROOT / "power-platform" / "deployment",
+    ]:
+        documented_surfaces.extend(
+            _text(path) for path in sorted(directory.glob("*.md"))
+        )
+
+    documented_text = "\n".join(documented_surfaces)
+    for blocker_id in blocker_ids:
+        assert blocker_id in documented_text, blocker_id
 
 
 def test_power_platform_deployment_readiness_roadmap_documents_local_only_preflight():
@@ -618,6 +635,45 @@ def test_power_platform_repo_health_9_9_gate_validator_passes():
         "Power Platform repo-health scorecard passed at 9.5 with 9.9 gate."
         in result.stdout
     )
+
+
+def test_repo_health_production_claim_requires_evidence_before_true_claim():
+    import scripts.validate_power_platform_repo_health as validator
+
+    scorecard = _json(REPO_HEALTH_SCORECARD)
+    manifest = _json(ROOT / "power-platform" / "repository" / "subrepo-manifest.json")
+    deployment = _json(ROOT / "power-platform" / "evidence" / "deployment-status.json")
+    closure = _json(
+        ROOT / "power-platform" / "repository" / "subrepo-closure-20260521.json"
+    )
+    deployment["productionReadinessClaimed"] = True
+    scorecard["score"] = 9.9
+    deployment["missing"] = []
+    deployment["repoHealth"]["score"] = 9.9
+    closure["standaloneRemote"].update(
+        {
+            "remoteUrl": "https://example.invalid/repo.git",
+            "defaultBranch": "main",
+            "syncProcedure": "documented",
+            "importOwner": "owner@example.invalid",
+        }
+    )
+    closure["claimBoundary"]["subrepoClosureComplete"] = True
+
+    try:
+        validator._require_production_claim_evidence(
+            deployment,
+            manifest,
+            scorecard,
+            closure,
+            ROOT / "power-platform" / "evidence" / "deployment-status.json",
+        )
+    except SystemExit as exc:
+        assert "production readiness claim requires" in str(exc)
+    else:
+        raise AssertionError(
+            "expected a SystemExit for an unsupported production claim"
+        )
 
 
 def test_power_platform_github_live_gate_validator_passes():

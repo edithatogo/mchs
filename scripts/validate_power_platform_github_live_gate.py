@@ -216,6 +216,61 @@ def _validate_run_block(data: dict, path: Path) -> None:
         )
 
 
+def _validate_live_gate_production_claim(data: dict, path: Path) -> None:
+    claim_boundary = data.get("claimBoundary", {})
+    if claim_boundary.get("productionReadinessClaimed") is not True:
+        return
+
+    _require(
+        claim_boundary.get("officialLiveGateCompleted") is True,
+        f"{path}: production readiness claim requires officialLiveGateCompleted evidence",
+    )
+    _require(
+        claim_boundary.get("tenantRuntimeClaimsAllowed") is True,
+        f"{path}: production readiness claim requires tenant runtime evidence",
+    )
+    _require(
+        claim_boundary.get("productionDeploymentSecretsConfigured") is True,
+        f"{path}: production readiness claim requires deployment secrets evidence",
+    )
+
+    run = data.get("run", {})
+    _require(run.get("status") != "not_run", f"{path}: production readiness claim requires a workflow run")
+    _require(bool(run.get("runUrl")), f"{path}: production readiness claim requires a workflow run URL")
+    _require(
+        run.get("solutionChecker", {}).get("result") not in (None, "not_run"),
+        f"{path}: production readiness claim requires solution checker evidence",
+    )
+    _require(
+        bool(run.get("solutionArtifactSha256")),
+        f"{path}: production readiness claim requires a packed managed solution artifact hash",
+    )
+    _require(
+        data.get("repositorySecretsObserved", {}).get("requiredSecretsPresent") is True,
+        f"{path}: production readiness claim requires repository secrets evidence",
+    )
+    _require(
+        all(check.get("observed") is True for check in data.get("requiredSecretChecks", [])),
+        f"{path}: production readiness claim requires all repository secrets to be observed",
+    )
+    _require(
+        claim_boundary.get("officialLiveGatePassed") is True,
+        f"{path}: production readiness claim requires the official live gate to be passed",
+    )
+    _require(
+        claim_boundary.get("officialLiveGateCompleted") is True,
+        f"{path}: production readiness claim requires official live gate completion",
+    )
+    _require(
+        claim_boundary.get("tenantRuntimeClaimsAllowed") is True,
+        f"{path}: production readiness claim requires tenant runtime claims to be allowed",
+    )
+    _require(
+        claim_boundary.get("productionDeploymentSecretsConfigured") is True,
+        f"{path}: production readiness claim requires deployment secrets to be configured",
+    )
+
+
 def _validate_claim_boundary(data: dict, path: Path) -> None:
     claim_boundary = data.get("claimBoundary")
     _require(
@@ -223,25 +278,26 @@ def _validate_claim_boundary(data: dict, path: Path) -> None:
         f"{path}: missing claimBoundary block",
     )
     _require(
-        claim_boundary.get("officialLiveGateCompleted") is False,
-        f"{path}: officialLiveGateCompleted must remain false",
+        claim_boundary.get("officialLiveGateCompleted") in (False, True),
+        f"{path}: officialLiveGateCompleted must be a boolean",
     )
     _require(
-        claim_boundary.get("tenantRuntimeClaimsAllowed") is False,
-        f"{path}: tenantRuntimeClaimsAllowed must remain false",
+        claim_boundary.get("tenantRuntimeClaimsAllowed") in (False, True),
+        f"{path}: tenantRuntimeClaimsAllowed must be a boolean",
     )
     _require(
-        claim_boundary.get("productionReadinessClaimed") is False,
-        f"{path}: productionReadinessClaimed must remain false",
+        claim_boundary.get("productionReadinessClaimed") in (False, True),
+        f"{path}: productionReadinessClaimed must be a boolean",
     )
+    _validate_live_gate_production_claim(data, path)
     if path == CURRENT:
         _require(
-            claim_boundary.get("officialLiveGatePassed") is False,
-            f"{path}: officialLiveGatePassed must remain false",
+            claim_boundary.get("officialLiveGatePassed") in (False, True),
+            f"{path}: officialLiveGatePassed must be a boolean",
         )
         _require(
-            claim_boundary.get("productionDeploymentSecretsConfigured") is False,
-            f"{path}: productionDeploymentSecretsConfigured must remain false",
+            claim_boundary.get("productionDeploymentSecretsConfigured") in (False, True),
+            f"{path}: productionDeploymentSecretsConfigured must be a boolean",
         )
 
 

@@ -45,6 +45,63 @@ def _closure_authorized(closure: dict) -> bool:
     )
 
 
+def _require_production_claim_evidence(
+    deployment: dict,
+    manifest: dict,
+    scorecard: dict,
+    closure: dict,
+    path: Path,
+) -> None:
+    if deployment.get("productionReadinessClaimed") is True:
+        if not deployment.get("managedSolutionImported"):
+            raise SystemExit(f"{path}: production readiness claim requires managed solution import evidence")
+        if not deployment.get("customConnectorRegistered"):
+            raise SystemExit(f"{path}: production readiness claim requires custom connector registration evidence")
+        if not deployment.get("canvasAppPublished"):
+            raise SystemExit(f"{path}: production readiness claim requires canvas app publication evidence")
+        if not deployment.get("optimizedCanvasAppPublished"):
+            raise SystemExit(f"{path}: production readiness claim requires optimized canvas app publication evidence")
+        if not deployment.get("operationPageSourceUxComplete"):
+            raise SystemExit(f"{path}: production readiness claim requires operation page source UX evidence")
+        if deployment.get("operationPagesPublishedToTenant") is not True:
+            raise SystemExit(f"{path}: production readiness claim requires published operation pages")
+        if deployment.get("missing"):
+            raise SystemExit(f"{path}: production readiness claim requires missing blockers to be cleared")
+        if scorecard.get("score", 0) < 9.9:
+            raise SystemExit(f"{path}: production readiness claim requires the scorecard to reach 9.9")
+        repo_health = deployment.get("repoHealth", {})
+        if repo_health.get("score", 0) < 9.9:
+            raise SystemExit(f"{path}: production readiness claim requires repo-health to reach 9.9")
+        if repo_health.get("targetScoreCandidate") != 9.9:
+            raise SystemExit(f"{path}: production readiness claim requires the 9.9 candidate to remain recorded")
+        if not _closure_authorized(closure):
+            raise SystemExit(f"{path}: production readiness claim requires a full remote or waiver closure record")
+        if closure["claimBoundary"].get("subrepoClosureComplete") is not True:
+            raise SystemExit(f"{path}: production readiness claim requires a completed subrepo closure record")
+
+    if manifest["claimBoundary"].get("runtimeProductionReady") is True:
+        if not deployment.get("productionReadinessClaimed"):
+            raise SystemExit(
+                f"{path}: runtime production readiness claim requires deployment production readiness evidence"
+            )
+        if not manifest.get("standaloneRemoteProvisioned"):
+            raise SystemExit(
+                f"{path}: runtime production readiness claim requires a provisioned standalone remote"
+            )
+        if scorecard.get("score", 0) < 9.9:
+            raise SystemExit(
+                f"{path}: runtime production readiness claim requires repo-health score 9.9 evidence"
+            )
+        if not _closure_authorized(closure):
+            raise SystemExit(
+                f"{path}: runtime production readiness claim requires a full remote or waiver closure record"
+            )
+        if closure["claimBoundary"].get("subrepoClosureComplete") is not True:
+            raise SystemExit(
+                f"{path}: runtime production readiness claim requires a completed subrepo closure record"
+            )
+
+
 def _require_path(data: dict, path: tuple[str, ...], label: str, source: Path) -> None:
     cursor: object = data
     for key in path:
@@ -122,8 +179,7 @@ def main() -> int:
         raise SystemExit("Power Platform subrepo mode is not explicitly governed")
     if not manifest["claimBoundary"]["subrepoBoundaryEnforced"]:
         raise SystemExit("Power Platform subrepo boundary is not enforced")
-    if manifest["claimBoundary"]["runtimeProductionReady"]:
-        raise SystemExit("Power Platform runtime readiness is overclaimed")
+    _require_production_claim_evidence(deployment, manifest, scorecard, closure, PP)
     if manifest["closureRequirements"] != {
         "standaloneRemote": [
             "remoteUrl",
@@ -140,8 +196,6 @@ def main() -> int:
         ],
     }:
         raise SystemExit("Power Platform closure requirements are not fully recorded")
-    if deployment["productionReadinessClaimed"]:
-        raise SystemExit("Deployment status overclaims production readiness")
     if closure["requiredClosureFields"] != {
         "standaloneRemote": [
             "remoteUrl",

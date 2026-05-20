@@ -25,6 +25,69 @@ FLOW_SMOKE_SAMPLE = EVIDENCE / "flow-smoke-capture-sample.json"
 DLP_SAMPLE = EVIDENCE / "monitoring-dlp-capture-sample.json"
 GITHUB_EVIDENCE = EVIDENCE / "github-live-gate-20260521.json"
 
+ACTIONABLE_CHECKS: dict[str, dict[str, str]] = {
+    "endpoint": {
+        "help": (
+            "Validates whether a real public service-boundary HTTPS endpoint "
+            "has been supplied and can be probed."
+        ),
+        "nextAction": (
+            "Provide a real public HTTPS base URL, publish /healthz and "
+            "/.well-known/mcp/server-card.json, then rerun the endpoint probe."
+        ),
+    },
+    "github": {
+        "help": (
+            "Validates the GitHub live-gate evidence contract and required "
+            "repository secret/run placeholders."
+        ),
+        "nextAction": (
+            "Configure the required repository secrets and run the official "
+            "Power Platform Actions workflow to capture a real run URL."
+        ),
+    },
+    "pac": {
+        "help": (
+            "Captures the current Power Apps app publication and custom "
+            "connector connection observations."
+        ),
+        "nextAction": (
+            "Run PAC auth and recapture real appId, playUrl, and custom "
+            "connector connectionId values."
+        ),
+    },
+    "flow_smoke": {
+        "help": (
+            "Validates the Power Automate flow-smoke capture payload shape "
+            "without writing readiness evidence."
+        ),
+        "nextAction": (
+            "Provide real flowId, runId, runStatus, and HTTPS runUrl values "
+            "for every source-controlled flow."
+        ),
+    },
+    "dlp": {
+        "help": (
+            "Validates monitoring, DLP, connector-policy, and support "
+            "capture fields without claiming admin evidence."
+        ),
+        "nextAction": (
+            "Supply real monitoring and DLP evidence fields from the NSW "
+            "tenant/admin source of record."
+        ),
+    },
+    "subrepo": {
+        "help": (
+            "Validates the Power Platform subrepo closure route without "
+            "claiming 9.9 repo health."
+        ),
+        "nextAction": (
+            "Supply either a complete standalone remote record or a complete "
+            "explicit waiver record."
+        ),
+    },
+}
+
 
 def _run(argv: list[str]) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -86,6 +149,8 @@ def _check_result(
         "observedStatus": observed_status,
         "blocked": blocked,
         "ok": ok,
+        "help": ACTIONABLE_CHECKS[name]["help"],
+        "nextAction": ACTIONABLE_CHECKS[name]["nextAction"],
         "details": {
             "stdout": stdout,
             "stderr": stderr,

@@ -148,11 +148,40 @@ def test_page_function_coverage_validator_passes() -> None:
     )
 
 
+def test_repo_health_99_claim_requires_evidence_before_true_claim() -> None:
+    import scripts.validate_power_platform_page_function_coverage as validator
+
+    contract = _json(PP / "repository" / "health-9-9" / "contract.json")
+    closure = _json(PP / "repository" / "subrepo-closure-20260521.json")
+    contract["claimBoundary"]["score99Claimed"] = True
+    contract["claimBoundary"]["repoHealth99Eligible"] = True
+    contract["claimBoundary"]["operationPagesComplete"] = True
+    contract["currentScore"] = 9.9
+    closure["standaloneRemote"].update(
+        {
+            "remoteUrl": "https://example.invalid/repo.git",
+            "defaultBranch": "main",
+            "syncProcedure": "documented",
+            "importOwner": "owner@example.invalid",
+        }
+    )
+    closure["claimBoundary"]["subrepoClosureComplete"] = True
+
+    try:
+        validator._claim_99_supported(
+            contract,
+            closure,
+            PP / "repository" / "health-9-9" / "contract.json",
+        )
+    except SystemExit as exc:
+        assert "requires all required gates" in str(exc)
+    else:
+        raise AssertionError("expected a SystemExit for an unsupported 9.9 claim")
+
+
 def test_subrepo_closure_template_requires_remote_or_waiver_approver() -> None:
     template = _json(
-        PP
-        / "repository"
-        / "standalone-subrepo-remote-or-waiver-closure-template.json"
+        PP / "repository" / "standalone-subrepo-remote-or-waiver-closure-template.json"
     )
     assert template["status"] == "blocked_pending_remote_or_explicit_waiver"
     assert template["selectedOption"] is None

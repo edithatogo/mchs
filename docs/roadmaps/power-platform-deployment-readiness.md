@@ -34,6 +34,9 @@ readiness claims.
   job as a local-only validation step.
 - The job checks repository health, operational evidence, platform test status,
   and the GitHub live-gate evidence contract with local files only.
+- The aggregate preflight summary keeps every blocked check actionable by
+  pairing each check with `help` and `nextAction` fields in the checked-in
+  contract.
 - The local validators are `validate_power_platform_repo_health.py`,
   `validate_power_platform_operational_evidence.py`,
   `validate_power_platform_platform_tests.py`, and
