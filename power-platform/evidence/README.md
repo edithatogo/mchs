@@ -16,13 +16,31 @@ recorded here.
 - `canvas-app-publication-20260520.json`: publication blocker record that keeps
   app ID and play URL evidence machine-checkable without claiming production
   readiness.
+- `pac-operator-package-20260521.json`: blocked operator package manifest for
+  PAC re-auth, app publication evidence, and custom connector connection
+  binding. It points at the current PAC blocker capture and does not claim a
+  live app or connection.
 - `scripts/capture_power_platform_pac_observations.py`: capture helper for
   current PAC observations. It writes `pac-observation-capture-<as-of>.json`
   and stays blocked until `appId`, `playUrl`, and `connectionId` are all
   present.
+- `pac-observation-capture-20260521.json`: current machine-checkable PAC
+  blocker capture. It remains blocked until `appId`, `playUrl`, and
+  `connectionId` are observed.
+- `deployment/pac-operator-runbook.md`: operator runbook for PAC re-auth,
+  app publication evidence, and custom connector connection binding.
 - `service-boundary-endpoint-template.json`: blocked endpoint configuration and
   probe contract for a real HTTPS service boundary once provided, including a
   machine-checkable handoff with the required base URL input and probe paths.
+- `examples/service-boundary-endpoint-operator-input.example.json`: operator
+  input sample showing the fields to populate before creating a live probe
+  config.
+- `examples/service-boundary-probe-result.example.json`: sample probe payload
+  shape for the updater when you want a dry-run package without claiming a live
+  endpoint.
+- `docs/runbooks/service-boundary-public-endpoint-operator-package.md`: the
+  operator package/runbook with exact command sequence for building a real
+  public HTTPS service-boundary endpoint and collecting probe evidence.
 - `scripts/update_power_platform_service_boundary_endpoint_evidence.py`:
   evidence renderer that accepts a real HTTPS base URL plus a probe-result JSON
   file and emits an updated record while keeping `productionReadinessClaimed`
@@ -35,6 +53,14 @@ recorded here.
   and `runUrl`. The script writes to
   `power-platform/evidence/power-automate-flow-smoke-20260521.json` by
   default.
+- `flow-smoke-capture-runbook.md`: operator-facing capture runbook for
+  collecting Power Automate flow run metadata, checking the required fields,
+  and converting a completed capture into evidence without claiming a live
+  run from placeholders.
+- `flow-smoke-capture-sample.json`: placeholder capture package that shows the
+  expected `flowRuns` shape with null fields and reminder text. It is not a
+  live capture and will stay blocked until operators replace every placeholder
+  with real run metadata.
 - `connection-reference-evidence-template.json`: connection reference and
   environment-variable deployment value evidence shape, including the blocked
   service-boundary endpoint handoff, the connector connection ID placeholder,
@@ -44,6 +70,12 @@ recorded here.
   `scripts/update_power_platform_monitoring_dlp_evidence.py` to merge supplied
   policy and monitoring fields into the blocked evidence record without
   claiming readiness early.
+- `monitoring-dlp-operator-runbook.md`: operator runbook for collecting the
+  monitoring, DLP, connector policy, and support capture inputs from a real
+  admin environment.
+- `monitoring-dlp-capture-sample.json`: placeholder-only capture input with the
+  exact required fields expected by the monitoring/DLP updater. It is a sample
+  shape, not evidence that any admin export has already been obtained.
 - `official-github-live-gate-evidence-template.json`: official GitHub Actions live-gate
   evidence shape for environment-bound validation.
 - `scripts/bootstrap-power-platform-github-live-gate.sh`: non-destructive bootstrap
@@ -57,6 +89,12 @@ recorded here.
   artifact-hash placeholders preserved.
 - `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`:
   standalone subrepo split decision and waiver closure checklist.
+- `standalone-subrepo-remote-input-template.json`: sample input values for the
+  standalone remote closure path.
+- `explicit-waiver-input-template.json`: sample input values for the explicit
+  waiver closure path.
+- `scripts/bootstrap-power-platform-subrepo-closure.md`: operator runbook for
+  the subrepo closure writer and the two closure paths.
 - `platform-test-status.json`: live platform-test status, including the fact
   that the Power App has not yet been viewed, smoke-tested, or visually
   optimized in the tenant.
@@ -72,17 +110,31 @@ supplied HTTPS endpoint configuration or probes a provided real endpoint
 without inventing one in source control.
 
 When a real URL exists, use the validator to capture probe output and the
-renderer to create a derived evidence record:
+renderer to create a derived evidence record. The example files in
+`power-platform/evidence/examples/` show the required JSON shapes, but they do
+not claim that a live endpoint exists:
 
 ```bash
+REAL_BASE_URL='https://your-real-public-host.example'
+
+jq --arg url "$REAL_BASE_URL" \
+  '.serviceBoundary.httpsBaseUrl = $url | .serviceBoundary.apiKeySecretConfigured = true' \
+  power-platform/evidence/service-boundary-endpoint-template.json \
+  > /tmp/mchs-service-boundary-config.json
+
 python3 scripts/validate_power_platform_service_boundary_endpoint.py \
-  --config power-platform/evidence/service-boundary-endpoint-template.json \
+  --config /tmp/mchs-service-boundary-config.json \
   --probe > /tmp/mchs-service-boundary-probe.json
 
 python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
-  --https-base-url https://example.service.boundary \
+  --https-base-url "$REAL_BASE_URL" \
   --probe-result /tmp/mchs-service-boundary-probe.json \
   --output /tmp/mchs-service-boundary-evidence.json
+
+python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
+  --https-base-url 'https://service-boundary.example' \
+  --probe-result power-platform/evidence/examples/service-boundary-probe-result.example.json \
+  --output /tmp/mchs-service-boundary-evidence-preview.json
 ```
 
 The checked-in template stays blocked; only the generated artifact reflects the

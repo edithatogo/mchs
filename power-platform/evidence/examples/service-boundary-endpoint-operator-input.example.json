@@ -1,0 +1,9 @@
+{
+  "baseUrlEnvironmentVariable": "mchs_api_base_url",
+  "healthzPath": "/healthz",
+  "httpsBaseUrl": "https://service-boundary.example",
+  "logicalConnectionReference": "mchs_service_boundary",
+  "notes": "Example only. Replace httpsBaseUrl with the real public HTTPS endpoint before probing.",
+  "serverCardPath": "/.well-known/mcp/server-card.json",
+  "apiKeySecretConfigured": true
+}

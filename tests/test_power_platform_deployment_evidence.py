@@ -14,6 +14,9 @@ BUNDLE = (
 RUNBOOK = (
     ROOT / "power-platform" / "deployment" / "nsw-managed-solution-promotion-runbook.md"
 )
+PAC_RUNBOOK = (
+    ROOT / "power-platform" / "deployment" / "pac-operator-runbook.md"
+)
 READINESS = (
     ROOT / "power-platform" / "deployment" / "nsw-deployment-readiness-template.md"
 )
@@ -24,11 +27,26 @@ RUNTIME_SMOKE = (
 CONNECTIONS = (
     ROOT / "power-platform" / "evidence" / "connection-reference-evidence-template.json"
 )
+PAC_OPERATOR_PACKAGE = (
+    ROOT / "power-platform" / "evidence" / "pac-operator-package-20260521.json"
+)
 MONITORING = (
     ROOT / "power-platform" / "evidence" / "monitoring-dlp-evidence-template.json"
 )
+MONITORING_RUNBOOK = (
+    ROOT / "power-platform" / "evidence" / "monitoring-dlp-operator-runbook.md"
+)
+MONITORING_SAMPLE = (
+    ROOT / "power-platform" / "evidence" / "monitoring-dlp-capture-sample.json"
+)
 FLOW_SMOKE_TEMPLATE = (
     ROOT / "power-platform" / "evidence" / "flow-smoke-evidence-template.json"
+)
+FLOW_SMOKE_RUNBOOK = (
+    ROOT / "power-platform" / "evidence" / "flow-smoke-capture-runbook.md"
+)
+FLOW_SMOKE_SAMPLE_CAPTURE = (
+    ROOT / "power-platform" / "evidence" / "flow-smoke-capture-sample.json"
 )
 FLOW_SMOKE_EVIDENCE = (
     ROOT / "power-platform" / "evidence" / "power-automate-flow-smoke-20260521.json"
@@ -80,7 +98,7 @@ def test_power_platform_evidence_bundle_contains_required_fields_and_blockers():
 
 
 def test_power_platform_artifacts_state_no_live_nsw_claim():
-    for path in [RUNBOOK, READINESS, GOVERNANCE]:
+    for path in [RUNBOOK, PAC_RUNBOOK, READINESS, GOVERNANCE]:
         text = _text(path).lower()
         assert "do not claim" in text
 
@@ -88,13 +106,19 @@ def test_power_platform_artifacts_state_no_live_nsw_claim():
 def test_power_platform_evidence_templates_exist():
     for path in [
         RUNBOOK,
+        PAC_RUNBOOK,
         READINESS,
         GOVERNANCE,
         BUNDLE,
         RUNTIME_SMOKE,
         CONNECTIONS,
+        PAC_OPERATOR_PACKAGE,
         MONITORING,
+        MONITORING_RUNBOOK,
+        MONITORING_SAMPLE,
         FLOW_SMOKE_TEMPLATE,
+        FLOW_SMOKE_RUNBOOK,
+        FLOW_SMOKE_SAMPLE_CAPTURE,
         FLOW_SMOKE_EVIDENCE,
         ENDPOINT,
         GITHUB_LIVE_GATE_TEMPLATE,
@@ -106,13 +130,32 @@ def test_power_platform_evidence_templates_exist():
 def test_power_platform_operational_evidence_contracts_are_precise():
     runtime = _json(RUNTIME_SMOKE)
     connections = _json(CONNECTIONS)
+    pac_package = _json(PAC_OPERATOR_PACKAGE)
     monitoring = _json(MONITORING)
     flow_smoke = _json(FLOW_SMOKE_TEMPLATE)
+    flow_smoke_runbook = _text(FLOW_SMOKE_RUNBOOK)
+    flow_smoke_sample = _json(FLOW_SMOKE_SAMPLE_CAPTURE)
     flow_smoke_evidence = _json(FLOW_SMOKE_EVIDENCE)
 
     assert runtime["claimBoundary"]["runtimeSmokePassed"] is False
     assert runtime["claimBoundary"]["productionReadinessClaimed"] is False
     assert connections["claimBoundary"]["connectionsConfigured"] is False
+    assert pac_package["status"] == "blocked_pending_required_pac_observations"
+    assert pac_package["requiredEvidence"] == [
+        "appId",
+        "playUrl",
+        "connectionId",
+    ]
+    assert pac_package["currentAuthBlocker"]["missingRequiredObservations"] == [
+        "appId",
+        "playUrl",
+        "connectionId",
+    ]
+    assert pac_package["currentAuthBlocker"]["claimBoundary"] == {
+        "appPublished": False,
+        "connectionConfigured": False,
+        "productionReadinessClaimed": False,
+    }
     assert monitoring["claimBoundary"]["monitoringConfigured"] is False
     assert monitoring["claimBoundary"]["dlpEvidenceCaptured"] is False
     live_gate_template = _json(GITHUB_LIVE_GATE_TEMPLATE)
@@ -225,6 +268,16 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     assert live_gate["claimBoundary"]["productionDeploymentSecretsConfigured"] is False
     assert flow_smoke["claimBoundary"]["flowSmokePassed"] is False
     assert flow_smoke_evidence["claimBoundary"]["flowSmokePassed"] is False
+    assert "do not claim" in flow_smoke_runbook.lower()
+    assert "flow-smoke-capture-sample.json" in flow_smoke_runbook
+    assert "update_power_platform_flow_smoke_evidence.py" in flow_smoke_runbook
+    assert flow_smoke_sample["status"] == "template_placeholder_only"
+    assert flow_smoke_sample["captureType"] == "power_automate_flow_smoke_capture"
+    assert len(flow_smoke_sample["flowRuns"]) == 4
+    assert all(entry["flowId"] is None for entry in flow_smoke_sample["flowRuns"])
+    assert all(entry["runId"] is None for entry in flow_smoke_sample["flowRuns"])
+    assert all(entry["runStatus"] is None for entry in flow_smoke_sample["flowRuns"])
+    assert all(entry["runUrl"] is None for entry in flow_smoke_sample["flowRuns"])
     assert all(entry["flowId"] is None for entry in flow_smoke["realNswRunEvidence"])
     assert all(
         entry["runId"] is None for entry in flow_smoke_evidence["realNswRunEvidence"]
@@ -254,6 +307,43 @@ def test_power_platform_operational_evidence_contracts_are_precise():
         entry["field"] == "support.escalationContact"
         for entry in monitoring["capturedEvidence"]
     )
+
+
+def test_power_platform_monitoring_dlp_operator_package_is_placeholder_only():
+    runbook = _text(MONITORING_RUNBOOK).lower()
+    assert "do not claim real admin evidence exists" in runbook
+    assert "monitoring-dlp-capture-sample.json" in runbook
+
+    sample = _json(MONITORING_SAMPLE)
+    assert sample == {
+        "monitoring": {
+            "owner": "TBD",
+            "failureMetrics": {
+                "connectorFailures": "required",
+                "flowRunFailures": "required",
+                "serviceBoundaryHealth": "required",
+                "appHealthMetrics": "required",
+                "correlationIdsWithoutPatientData": "required",
+            },
+        },
+        "dlp": {
+            "policyId": "TBD",
+            "policyName": "TBD",
+            "policyClassification": "TBD",
+            "policyCaptureState": "blocked_pending_policy_capture",
+        },
+        "connectorPolicy": {
+            "policyId": "TBD",
+            "policyName": "TBD",
+            "connectorAllowState": "blocked_pending_policy_capture",
+        },
+        "support": {
+            "owner": "TBD",
+            "escalationOwner": "TBD",
+            "escalationPath": "TBD",
+            "escalationContact": "TBD",
+        },
+    }
 
 
 def test_power_platform_monitoring_dlp_updater_stays_blocked_until_complete(
