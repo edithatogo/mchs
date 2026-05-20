@@ -1,0 +1,200 @@
+GetCalculatorSchema_Screen As screen:
+    ZIndex: =1
+
+    GetCalculatorSchema_Button As button:
+        DisplayMode: =DisplayMode.Edit
+        FocusedBorderThickness: =2
+        Font: =Font.'Segoe UI'
+        Height: =40
+        OnSelect: |-
+            =IfError(
+                ClearCollect(GetCalculatorSchema, MCHSServiceBoundary.GetCalculatorSchema(GetCalculatorSchema_Path_schema_name_TextInput.Text)),
+                Notify(
+                    FirstError.Message,
+                    NotificationType.Error,
+                    5000
+                );
+            	
+                false,
+                Notify(
+                    "Schema response",
+                    NotificationType.Success,
+                    5000
+                );
+            );
+        Size: =14
+        Text: ="GET"
+        Width: =150
+        X: =GetCalculatorSchema_VerticalContainer.X
+        Y: =Parent.Height - (GetCalculatorSchema_Button.Height + 20)
+        ZIndex: =1
+
+    GetCalculatorSchema_OK_DataTable As dataTable.datatable:
+        Fill: =RGBA(0, 0, 0, 0)
+        Font: =Font.'Segoe UI'
+        Height: =(Parent.Height - GetCalculatorSchema_OK_DataTable.Y) - 20
+        Items: =GetCalculatorSchema
+        Size: =14
+        Width: =Parent.Width - GetCalculatorSchema_OK_DataTable.X - 10
+        X: =GetCalculatorSchema_VerticalContainer.Width + 30
+        Y: =GetCalculatorSchema_Header_ManualContainer.Y + GetCalculatorSchema_Header_ManualContainer.Height + 40
+        ZIndex: =2
+
+        GetCalculatorSchema_OK_provenance_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="provenance"
+            FieldName: ="provenance"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            IsHyperlink: =true
+            OnSelect: |-
+                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.provenance, IndentFour), HeaderTitle: "provenance"})
+            Order: =6
+            Text: =Text("provenance")
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+        GetCalculatorSchema_OK_diagnostics_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="diagnostics"
+            FieldName: ="diagnostics"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            IsHyperlink: =true
+            OnSelect: |-
+                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.diagnostics, IndentFour), HeaderTitle: "diagnostics"})
+            Order: =5
+            Text: =Text("diagnostics")
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =2
+
+        GetCalculatorSchema_OK_warnings_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="warnings"
+            FieldName: ="warnings"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            IsHyperlink: =true
+            OnSelect: |-
+                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.warnings, IndentFour), HeaderTitle: "warnings"})
+            Order: =4
+            Text: =First(ThisItem.warnings).Value
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =3
+
+        GetCalculatorSchema_OK_trace_id_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="trace_id"
+            FieldName: ="trace_id"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            Order: =3
+            Text: =ThisItem.trace_id
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =4
+
+        GetCalculatorSchema_OK_result_payload_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="result_payload"
+            FieldName: ="result_payload"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            IsHyperlink: =true
+            OnSelect: |-
+                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.result_payload, IndentFour), HeaderTitle: "result_payload"})
+            Order: =2
+            Text: =Text("result_payload")
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =5
+
+        GetCalculatorSchema_OK_status_DataTableColumn As dataTableColumn.textualColumn:
+            FieldDisplayName: ="status"
+            FieldName: ="status"
+            FieldVariantName: ="textualColumn"
+            Height: =Parent.Height
+            Order: =1
+            Text: =ThisItem.status
+            Width: =100
+            X: =0
+            Y: =0
+            ZIndex: =6
+
+    GetCalculatorSchema_VerticalContainer As groupContainer.verticalAutoLayoutContainer:
+        Height: =(Parent.Height - GetCalculatorSchema_VerticalContainer.Y) - 100
+        LayoutOverflowX: =LayoutOverflow.Scroll
+        LayoutOverflowY: =LayoutOverflow.Scroll
+        PaddingLeft: =10
+        Width: =Parent.Width * 0.35
+        X: =10
+        Y: =GetCalculatorSchema_Header_ManualContainer.Y + GetCalculatorSchema_Header_ManualContainer.Height + 40
+        ZIndex: =3
+
+        GetCalculatorSchema_Path_schema_name_Label As label:
+            Color: =RGBA(50, 49, 48, 1)
+            DisplayMode: =DisplayMode.View
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =32
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingTop: =0
+            Size: =14
+            Text: ="schema_name"
+            Tooltip: ="schema_name"
+            Width: =Parent.Width * 0.85
+            X: =0
+            ZIndex: =1
+
+        GetCalculatorSchema_Path_schema_name_TextInput As text:
+            AccessibleLabel: ="schema_name"
+            Clear: =true
+            DisplayMode: =DisplayMode.Edit
+            Font: =Font.'Segoe UI'
+            Height: =32
+            Size: =14
+            Width: =Parent.Width * 0.85
+            ZIndex: =2
+
+    GetCalculatorSchema_Header_ManualContainer As groupContainer.manualLayoutContainer:
+        Height: =GetCalculatorSchema_Header_title_Label.Y + GetCalculatorSchema_Header_title_Label.Height
+        LayoutDirection: =LayoutDirection.Horizontal
+        LayoutMode: =LayoutMode.Manual
+        Width: =Parent.Width
+        ZIndex: =4
+
+        GetCalculatorSchema_Header_title_Label As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Role: =TextRole.Heading1
+            Size: =32
+            Text: ="GetCalculatorSchema"
+            Width: =Parent.Width
+            X: =0
+            ZIndex: =1
+
+        GetCalculatorSchema_Header_return_IconArrowLeft As icon.ArrowLeft:
+            AccessibleLabel: ="Home"
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.Edit
+            Height: =100
+            Icon: =Icon.ArrowLeft
+            OnSelect: =Navigate(HomeScreen_Screen);
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            TabIndex: =0
+            Width: =100
+            X: =0
+            ZIndex: =2
+

@@ -20,6 +20,10 @@ def main() -> int:
         raise SystemExit("Power Platform repo-health score is below 9.5")
     if scorecard["targetScore"] != 9.5:
         raise SystemExit("Power Platform repo-health target must remain 9.5")
+    if scorecard.get("targetScoreCandidate") != 9.9:
+        raise SystemExit("Power Platform repo-health 9.9 candidate is not recorded")
+    if not (PP / "repository" / "health-9-9" / "contract.json").exists():
+        raise SystemExit("Power Platform repo-health 9.9 contract is missing")
     if manifest["mode"] != "in_repository_governed_subrepo_boundary":
         raise SystemExit("Power Platform subrepo mode is not explicitly governed")
     if not manifest["claimBoundary"]["subrepoBoundaryEnforced"]:
@@ -29,7 +33,7 @@ def main() -> int:
     if deployment["productionReadinessClaimed"]:
         raise SystemExit("Deployment status overclaims production readiness")
 
-    print("Power Platform repo-health scorecard passed at 9.5.")
+    print("Power Platform repo-health scorecard passed at 9.5 with 9.9 gate.")
     return 0
 
 

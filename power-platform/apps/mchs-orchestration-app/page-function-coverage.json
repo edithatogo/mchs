@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "appName": "MCHS Orchestration Optimized",
+  "claim": "Every connector operation page is now source-controlled and explicitly tracked, but the operation pages are not complete until UX states and live connector execution are evidenced.",
+  "homeScreen": {
+    "source": "power-platform/apps/mchs-orchestration-app/source/Src/HomeScreen_Screen.fx.yaml",
+    "uxStatus": "optimized_and_published",
+    "runtimeSmokeStatus": "launch_smoke_passed",
+    "complete": true
+  },
+  "operationCoverage": [
+    {
+      "operationId": "Health",
+      "screen": "Health_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/Health_Screen.fx.yaml",
+      "requiredPurpose": "Verify service-boundary readiness before any calculation workflow.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    },
+    {
+      "operationId": "ListCalculators",
+      "screen": "ListCalculators_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/ListCalculators_Screen.fx.yaml",
+      "requiredPurpose": "List available calculators from the service boundary without embedding formulas.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    },
+    {
+      "operationId": "GetCalculatorSchema",
+      "screen": "GetCalculatorSchema_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/GetCalculatorSchema_Screen.fx.yaml",
+      "requiredPurpose": "Retrieve the selected calculator schema and display request requirements.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    },
+    {
+      "operationId": "ValidateInput",
+      "screen": "ValidateInput_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/ValidateInput_Screen.fx.yaml",
+      "requiredPurpose": "Validate synthetic input before any calculation execution.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    },
+    {
+      "operationId": "Calculate",
+      "screen": "Calculate_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/Calculate_Screen.fx.yaml",
+      "requiredPurpose": "Submit synthetic calculation requests to the service boundary only.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    },
+    {
+      "operationId": "GetEvidence",
+      "screen": "GetEvidence_Screen",
+      "source": "power-platform/apps/mchs-orchestration-app/source/Src/GetEvidence_Screen.fx.yaml",
+      "requiredPurpose": "Retrieve traceable evidence bundles for support and governance review.",
+      "sourceControlled": true,
+      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
+      "complete": false,
+      "mustHaveBeforeComplete": [
+        "optimized page layout committed",
+        "loading state",
+        "success state",
+        "validation or connector error state",
+        "copyable trace or correlation id",
+        "keyboard and responsive evidence",
+        "live connector execution evidence in NSW dylan"
+      ]
+    }
+  ],
+  "requiredOperations": [
+    "Health",
+    "ListCalculators",
+    "GetCalculatorSchema",
+    "ValidateInput",
+    "Calculate",
+    "GetEvidence"
+  ],
+  "completionGate": {
+    "allOperationPagesSourceControlled": true,
+    "allOperationPagesUxComplete": false,
+    "allOperationRuntimeSmokePassed": false,
+    "allCalculationsFullyImplementedInApp": false,
+    "reason": "Power Apps must remain orchestration-only; calculation implementation is delegated to the service boundary and canonical runtime, but each operation page still needs optimized UX and live smoke evidence."
+  },
+  "claimBoundary": {
+    "homeOptimized": true,
+    "operationPagesComplete": false,
+    "everyCalculationFunctionFullyProven": false,
+    "repoHealth99Eligible": false,
+    "productionReadinessClaimed": false
+  }
+}

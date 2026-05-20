@@ -7,7 +7,8 @@
   "missing": [
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
-    "production service-boundary execution evidence"
+    "production service-boundary execution evidence",
+    "Power App operation pages are not UX-complete or runtime-proven"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -43,7 +44,9 @@
     "targetScore": 9.5,
     "score": 9.5,
     "status": "healthy_with_runtime_smoke_blocker",
-    "scorecard": "power-platform/repository/repo-health-scorecard.json"
+    "scorecard": "power-platform/repository/repo-health-scorecard.json",
+    "targetScoreCandidate": 9.9,
+    "health99Contract": "power-platform/repository/health-9-9/contract.json"
   },
   "subrepo": {
     "mode": "in_repository_governed_subrepo_boundary",
@@ -66,5 +69,6 @@
   "optimizedCanvasAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
   "optimizedCanvasAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
   "optimizedCanvasAppScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
-  "optimizedCanvasAppScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237"
+  "optimizedCanvasAppScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
+  "pageFunctionCoverage": "power-platform/apps/mchs-orchestration-app/page-function-coverage.json"
 }

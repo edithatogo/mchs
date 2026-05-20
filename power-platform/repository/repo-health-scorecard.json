@@ -58,10 +58,14 @@
   "hardBlockers": [
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
-    "production service-boundary execution evidence"
+    "production service-boundary execution evidence",
+    "Power App operation pages are source-controlled but not yet UX-complete or runtime-proven"
   ],
   "nonBlockers": [
     "standalone subrepo remote not provisioned because no target remote URL has been supplied",
     "preview capability adoption intentionally tracked as roadmap until NSW tenant eligibility is confirmed"
-  ]
+  ],
+  "targetScoreCandidate": 9.9,
+  "candidateStatus": "blocked_until_page_function_coverage_and_live_runtime_smoke_pass",
+  "health99Contract": "power-platform/repository/health-9-9/contract.json"
 }

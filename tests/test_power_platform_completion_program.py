@@ -78,7 +78,11 @@ def test_deployment_evidence_claim_boundary_is_precise() -> None:
     )
     assert "production service-boundary execution evidence" in status["missing"]
     assert "real Power App visual optimization evidence" not in status["missing"]
+    assert "Power App operation pages are not UX-complete or runtime-proven" in (
+        status["missing"]
+    )
     assert status["repoHealth"]["score"] == 9.5
+    assert status["repoHealth"]["targetScoreCandidate"] == 9.9
     assert status["repoHealth"]["status"] == "healthy_with_runtime_smoke_blocker"
     assert status["subrepo"]["mode"] == "in_repository_governed_subrepo_boundary"
 
@@ -91,8 +95,12 @@ def test_power_platform_repo_health_and_subrepo_boundary() -> None:
     roadmap = PP / "roadmap" / "sota-bleeding-edge-capabilities-20260520.md"
 
     assert scorecard["targetScore"] == 9.5
+    assert scorecard["targetScoreCandidate"] == 9.9
     assert scorecard["score"] >= 9.5
     assert scorecard["status"] == "healthy_with_runtime_smoke_blocker"
+    assert scorecard["health99Contract"] == (
+        "power-platform/repository/health-9-9/contract.json"
+    )
     assert manifest["claimBoundary"]["subrepoBoundaryEnforced"] is True
     assert manifest["claimBoundary"]["standaloneRemoteProvisioned"] is False
     assert manifest["claimBoundary"]["runtimeProductionReady"] is False
@@ -107,4 +115,6 @@ def test_power_platform_repo_health_validator_passes() -> None:
         capture_output=True,
         text=True,
     )
-    assert "Power Platform repo-health scorecard passed at 9.5." in result.stdout
+    assert "Power Platform repo-health scorecard passed at 9.5 with 9.9 gate." in (
+        result.stdout
+    )

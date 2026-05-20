@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-05-20",
+  "asOf": "2026-05-21",
   "statusVocabulary": [
     "complete",
     "in_progress",
@@ -38,19 +38,21 @@
     "swift_binding_20260513",
     "stata_interop_binding_20260513",
     "matlab_interop_binding_20260513",
-    "power_platform_operational_evidence_20260518"
+    "power_platform_operational_evidence_20260518",
+    "repo_health_9_9_power_platform_completion_20260521"
   ],
   "recommendedNextTracks": [
     "canonical_contract_foundation_20260513",
     "support_status_matrix_20260513",
     "mcp_contract_20260513",
     "http_api_contract_20260513",
-    "power_platform_operational_evidence_20260518"
+    "power_platform_operational_evidence_20260518",
+    "repo_health_9_9_power_platform_completion_20260521"
   ],
   "powerPlatformRuntimeBlockers": [
     "service boundary production endpoint and connection reference values",
     "real Dataverse app component smoke evidence",
     "real Power Automate flow component smoke evidence",
-    "real Power App visual review and visual optimization evidence"
+    "Power App operation pages are not UX-complete or runtime-proven"
   ]
 }

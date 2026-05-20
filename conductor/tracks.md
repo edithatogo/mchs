@@ -579,3 +579,9 @@ content alone is not sufficient evidence for marking a track complete.
 - [~] **Track: Power Platform Operational Evidence and Governance**
 *Link: [./tracks/power_platform_operational_evidence_20260518/](./tracks/power_platform_operational_evidence_20260518/)*
 *Gate: Power Platform completion claims are backed by solution checker, deployment, smoke-test, monitoring, support, and privacy evidence.*
+
+---
+
+- [~] **Track: Repo Health 9.9 Power Platform Completion**
+*Link: [./tracks/repo_health_9_9_power_platform_completion_20260521/](./tracks/repo_health_9_9_power_platform_completion_20260521/)*
+*Gate: raise Power Platform repo health toward 9.9 only after every operation page is complete, every connector and flow path is live-smoked, governance evidence is captured, official ALM gates run, and subrepo ownership is closed or waived.*
