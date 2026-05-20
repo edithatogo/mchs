@@ -13,10 +13,16 @@ recorded here.
   managed import recorded and runtime blockers preserved.
 - `runtime-smoke-evidence-template.json`: app, flow, and service-boundary smoke
   evidence shape.
+- `flow-smoke-evidence-template.json`: structured real Power Automate flow smoke
+  traceability and blocked checklist while live run evidence is absent.
 - `connection-reference-evidence-template.json`: connection reference and
   environment-variable deployment value evidence shape.
 - `monitoring-dlp-evidence-template.json`: monitoring, DLP, support, and
   escalation evidence shape.
+- `official-github-live-gate-evidence-template.json`: official GitHub Actions live-gate
+  evidence shape for environment-bound validation.
+- `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`:
+  standalone subrepo split decision and waiver closure checklist.
 - `platform-test-status.json`: live platform-test status, including the fact
   that the Power App has not yet been viewed, smoke-tested, or visually
   optimized in the tenant.

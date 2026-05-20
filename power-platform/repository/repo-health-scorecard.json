@@ -59,13 +59,20 @@
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
     "production service-boundary execution evidence",
-    "Power App operation pages are source-controlled but not yet UX-complete or runtime-proven"
+    "Power App operation pages are source-UX complete but not live runtime-proven"
   ],
   "nonBlockers": [
     "standalone subrepo remote not provisioned because no target remote URL has been supplied",
     "preview capability adoption intentionally tracked as roadmap until NSW tenant eligibility is confirmed"
   ],
   "targetScoreCandidate": 9.9,
-  "candidateStatus": "blocked_until_page_function_coverage_and_live_runtime_smoke_pass",
-  "health99Contract": "power-platform/repository/health-9-9/contract.json"
+  "candidateStatus": "blocked_until_live_runtime_flow_governance_alm_and_subrepo_gates_pass",
+  "health99Contract": "power-platform/repository/health-9-9/contract.json",
+  "health99EvidenceTargets": [
+    "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+    "power-platform/evidence/power-automate-flow-smoke-20260521.json",
+    "power-platform/evidence/dlp-monitoring-policy-evidence-20260521.json",
+    "power-platform/evidence/github-live-gate-20260521.json",
+    "power-platform/repository/subrepo-closure-20260521.json"
+  ]
 }

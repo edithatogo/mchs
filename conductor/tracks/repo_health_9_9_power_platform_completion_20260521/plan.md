@@ -26,7 +26,7 @@
 
 ## External Blockers
 
-- [ ] Task: Complete generated operation page redesigns with loading, success, validation-error, connector-error, trace ID, keyboard, and responsive evidence.
+- [x] Task: Complete generated operation page redesigns with loading, success, validation-error, connector-error, trace ID, keyboard, and responsive evidence.
 - [ ] Task: Configure production service-boundary endpoint and connection reference values.
 - [ ] Task: Execute live app connector smoke for Health, ListCalculators, GetCalculatorSchema, ValidateInput, Calculate, and GetEvidence.
 - [ ] Task: Add and execute real Power Automate flow smoke.

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "asOf": "2026-05-21",
   "appName": "MCHS Orchestration Optimized",
-  "claim": "Every connector operation page is now source-controlled and explicitly tracked, but the operation pages are not complete until UX states and live connector execution are evidenced.",
+  "claim": "Every connector operation page is source-controlled and source-UX complete for governed synthetic operation use, but live runtime execution remains unproven until NSW endpoint, connection reference, and smoke evidence exist.",
   "homeScreen": {
     "source": "power-platform/apps/mchs-orchestration-app/source/Src/HomeScreen_Screen.fx.yaml",
     "uxStatus": "optimized_and_published",
@@ -16,17 +16,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/Health_Screen.fx.yaml",
       "requiredPurpose": "Verify service-boundary readiness before any calculation workflow.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     },
     {
@@ -35,17 +44,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/ListCalculators_Screen.fx.yaml",
       "requiredPurpose": "List available calculators from the service boundary without embedding formulas.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     },
     {
@@ -54,17 +72,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/GetCalculatorSchema_Screen.fx.yaml",
       "requiredPurpose": "Retrieve the selected calculator schema and display request requirements.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     },
     {
@@ -73,17 +100,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/ValidateInput_Screen.fx.yaml",
       "requiredPurpose": "Validate synthetic input before any calculation execution.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     },
     {
@@ -92,17 +128,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/Calculate_Screen.fx.yaml",
       "requiredPurpose": "Submit synthetic calculation requests to the service boundary only.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     },
     {
@@ -111,17 +156,26 @@
       "source": "power-platform/apps/mchs-orchestration-app/source/Src/GetEvidence_Screen.fx.yaml",
       "requiredPurpose": "Retrieve traceable evidence bundles for support and governance review.",
       "sourceControlled": true,
-      "pageUxStatus": "generated_connector_page_not_yet_optimized",
+      "pageUxStatus": "optimized_source_ready_pending_live_smoke",
       "runtimeSmokeStatus": "blocked_pending_service_endpoint_and_connection_reference",
       "complete": false,
       "mustHaveBeforeComplete": [
+        "live connector execution evidence in NSW dylan",
+        "service boundary production endpoint configured",
+        "connection reference configured",
+        "runtime screenshot or trace captured"
+      ],
+      "sourceUxComplete": true,
+      "completedSourceUxRequirements": [
         "optimized page layout committed",
         "loading state",
         "success state",
         "validation or connector error state",
         "copyable trace or correlation id",
-        "keyboard and responsive evidence",
-        "live connector execution evidence in NSW dylan"
+        "keyboard-oriented controls and accessible labels",
+        "responsive layout formulas",
+        "synthetic-data warning",
+        "no embedded calculator formula logic"
       ]
     }
   ],
@@ -135,16 +189,17 @@
   ],
   "completionGate": {
     "allOperationPagesSourceControlled": true,
-    "allOperationPagesUxComplete": false,
+    "allOperationPagesUxComplete": true,
     "allOperationRuntimeSmokePassed": false,
     "allCalculationsFullyImplementedInApp": false,
-    "reason": "Power Apps must remain orchestration-only; calculation implementation is delegated to the service boundary and canonical runtime, but each operation page still needs optimized UX and live smoke evidence."
+    "reason": "Power Apps operation pages are source-UX complete and orchestration-only. Calculation implementation remains delegated to the service boundary and canonical runtime; live smoke evidence is still required before final operation completion or repo-health 9.9 eligibility."
   },
   "claimBoundary": {
     "homeOptimized": true,
     "operationPagesComplete": false,
     "everyCalculationFunctionFullyProven": false,
     "repoHealth99Eligible": false,
-    "productionReadinessClaimed": false
+    "productionReadinessClaimed": false,
+    "operationPagesSourceUxComplete": true
   }
 }

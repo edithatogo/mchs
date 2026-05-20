@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "github_power_platform_live_gate",
+  "status": "blocked_pending_repository_secrets_and_workflow_run",
+  "workflow": ".github/workflows/power-platform-official-actions.yml",
+  "requiredSecrets": [
+    "POWER_PLATFORM_ENVIRONMENT_URL",
+    "POWER_PLATFORM_APPLICATION_ID",
+    "POWER_PLATFORM_CLIENT_SECRET",
+    "POWER_PLATFORM_TENANT_ID"
+  ],
+  "requiredEvidence": [
+    "workflow run URL",
+    "who-am-i target environment output",
+    "packed managed solution artifact hash",
+    "solution checker result",
+    "approval environment record if required"
+  ],
+  "workflowRuns": [],
+  "claimBoundary": {
+    "officialLiveGatePassed": false,
+    "productionDeploymentSecretsConfigured": false
+  }
+}

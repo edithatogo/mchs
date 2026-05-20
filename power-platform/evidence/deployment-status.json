@@ -1,5 +1,5 @@
 {
-  "status": "managed_solution_imported_optimized_app_published_pending_runtime_smoke",
+  "status": "managed_solution_imported_optimized_app_and_pages_source_ready_pending_runtime_smoke",
   "asOf": "2026-05-20",
   "sourceReady": true,
   "nswDeploymentClaimed": true,
@@ -8,7 +8,7 @@
     "service boundary production endpoint and connection reference values",
     "real Power Automate flow component smoke evidence",
     "production service-boundary execution evidence",
-    "Power App operation pages are not UX-complete or runtime-proven"
+    "Power App operation pages are source-UX complete but not live runtime-proven"
   ],
   "azureCliAuthenticated": true,
   "pacAuthenticated": true,
@@ -70,5 +70,20 @@
   "optimizedCanvasAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
   "optimizedCanvasAppScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
   "optimizedCanvasAppScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
-  "pageFunctionCoverage": "power-platform/apps/mchs-orchestration-app/page-function-coverage.json"
+  "pageFunctionCoverage": "power-platform/apps/mchs-orchestration-app/page-function-coverage.json",
+  "operationPageSourceUxComplete": true,
+  "operationPagesOptimizedArtifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "sha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f"
+  },
+  "operationPagesOptimizedMsappSha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f",
+  "operationPagesPublishedToTenant": false,
+  "operationPagesPublishAttempt": {
+    "asOf": "2026-05-21",
+    "artifact": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "artifactSha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f",
+    "portalUrl": "https://make.powerapps.com/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/canvas/?action=app-from-file",
+    "status": "attempted_file_upload_stalled_in_maker_loading_state",
+    "publishedToTenant": false
+  }
 }

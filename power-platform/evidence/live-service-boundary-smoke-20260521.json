@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "live_service_boundary_smoke",
+  "status": "blocked_pending_https_endpoint_and_connection_reference",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "customConnector": {
+    "displayName": "MCHS Service Boundary",
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "connectionReference": "mchs_service_boundary"
+  },
+  "requiredEndpoint": {
+    "httpsBaseUrl": null,
+    "apiKeySecretConfigured": false,
+    "publiclyReachableFromPowerPlatform": false,
+    "tlsTrusted": false
+  },
+  "operationSmokeMatrix": [
+    {"operationId": "Health", "status": "blocked", "requiredEvidence": ["HTTP 200", "trace or session ID", "screenshot"]},
+    {"operationId": "ListCalculators", "status": "blocked", "requiredEvidence": ["calculator list response", "trace_id", "screenshot"]},
+    {"operationId": "GetCalculatorSchema", "status": "blocked", "requiredEvidence": ["schema payload", "trace_id", "screenshot"]},
+    {"operationId": "ValidateInput", "status": "blocked", "requiredEvidence": ["synthetic validation response", "trace_id", "screenshot"]},
+    {"operationId": "Calculate", "status": "blocked", "requiredEvidence": ["synthetic calculation response", "trace_id", "screenshot"]},
+    {"operationId": "GetEvidence", "status": "blocked", "requiredEvidence": ["evidence payload", "trace_id", "screenshot"]}
+  ],
+  "claimBoundary": {
+    "liveServiceBoundarySmokePassed": false,
+    "calculationCorrectnessProvenFromPowerApps": false,
+    "productionReadinessClaimed": false
+  }
+}

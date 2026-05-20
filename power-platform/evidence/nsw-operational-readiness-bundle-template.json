@@ -31,6 +31,26 @@
       "status": "blocked",
       "evidence_template": "power-platform/evidence/runtime-smoke-evidence-template.json",
       "notes": "Blocked until real app and flow components, service endpoint, and connection reference values are configured."
+    },
+    {
+      "type": "real-power-automate-flow-smoke",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/flow-smoke-evidence-template.json",
+      "notes": "Blocked until each flow run can be executed against tenant with real connector values."
+    },
+    {
+      "type": "official-live-gate",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/official-github-live-gate-evidence-template.json",
+      "notes": "Blocked until official Actions live gate executes against Power Platform environment."
+    },
+    {
+      "type": "standalone-subrepo-closure",
+      "status": "blocked",
+      "evidence_template": "power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json",
+      "notes": "Blocked until standalone remote governance is provisioned or explicit waiver is recorded."
     }
   ],
   "parity_reports": [],

@@ -29,7 +29,9 @@
     "optimizedSourceGenerated": true,
     "optimizedMsappPacked": true,
     "optimizedAppPublished": true,
-    "productionRuntimeReady": false
+    "productionRuntimeReady": false,
+    "operationPagesSourceUxComplete": true,
+    "operationPagesPublished": false
   },
   "publication": {
     "publishedInTenant": true,
@@ -41,5 +43,9 @@
     "screenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
     "screenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
     "publicationMode": "separate optimized app because existing generated app opened read-only during overwrite attempt"
+  },
+  "operationPagesOptimizedArtifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "sha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f"
   }
 }

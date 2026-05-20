@@ -1,356 +1,352 @@
 Calculate_Screen As screen:
+    Fill: =RGBA(247, 250, 247, 1)
+    LoadingSpinner: =LoadingSpinner.Controls
+    LoadingSpinnerColor: =RGBA(16, 94, 60, 1)
+    OnVisible: =UpdateContext({locLoading: false, locStatus: "Ready", locTrace: "not run", locError: Blank()})
     ZIndex: =1
 
-    Calculate_Button As button:
-        DisplayMode: =DisplayMode.Edit
-        FocusedBorderThickness: =2
-        Font: =Font.'Segoe UI'
-        Height: =40
-        OnSelect: |-
-            =IfError(
-                ClearCollect(Calculate, MCHSServiceBoundary.Calculate({contract_version: Calculate_Body_contract_version_TextInput.Text,calculator_id: Calculate_Body_calculator_id_TextInput.Text,pricing_year: Calculate_Body_pricing_year_TextInput.Text,direction: Calculate_Body_direction_TextInput.Text,bundle_id: Calculate_Body_bundle_id_TextInput.Text,fixture_gate: Calculate_Body_fixture_gate_TextInput.Text,correlation_id: Calculate_Body_correlation_id_TextInput.Text,input_payload: {}})),
-                Notify(
-                    FirstError.Message,
-                    NotificationType.Error,
-                    5000
-                );
-            	
-                false,
-                Notify(
-                    "Calculation response",
-                    NotificationType.Success,
-                    5000
-                );
-            );
-        Size: =14
-        Text: ="POST"
-        Width: =150
-        X: =Calculate_VerticalContainer.X
-        Y: =Parent.Height - (Calculate_Button.Height + 20)
+    Calculate_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(8, 61, 47, 1)
+        Height: =170
+        LayoutMode: =LayoutMode.Manual
+        Width: =Parent.Width
         ZIndex: =1
 
-    Calculate_OK_DataTable As dataTable.datatable:
-        Fill: =RGBA(0, 0, 0, 0)
-        Font: =Font.'Segoe UI'
-        Height: =(Parent.Height - Calculate_OK_DataTable.Y) - 20
-        Items: =Calculate
-        Size: =14
-        Width: =Parent.Width - Calculate_OK_DataTable.X - 10
-        X: =Calculate_VerticalContainer.Width + 30
-        Y: =Calculate_Header_ManualContainer.Y + Calculate_Header_ManualContainer.Height + 40
-        ZIndex: =2
-
-        Calculate_OK_provenance_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="provenance"
-            FieldName: ="provenance"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            IsHyperlink: =true
-            OnSelect: |-
-                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.provenance, IndentFour), HeaderTitle: "provenance"})
-            Order: =6
-            Text: =Text("provenance")
-            Width: =100
-            X: =0
-            Y: =0
+        Calculate_Back As icon.ArrowLeft:
+            AccessibleLabel: ="Back to governed operation home"
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =64
+            Icon: =Icon.ArrowLeft
+            OnSelect: =Navigate(HomeScreen_Screen)
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            TabIndex: =0
+            Width: =64
+            X: =24
+            Y: =24
             ZIndex: =1
 
-        Calculate_OK_diagnostics_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="diagnostics"
-            FieldName: ="diagnostics"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            IsHyperlink: =true
-            OnSelect: |-
-                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.diagnostics, IndentFour), HeaderTitle: "diagnostics"})
-            Order: =5
-            Text: =Text("diagnostics")
-            Width: =100
-            X: =0
-            Y: =0
+        Calculate_Eyebrow As label:
+            Color: =RGBA(184, 226, 200, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =13
+            Text: ="POST | NSW dylan | Synthetic data only | Connector operation"
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =24
             ZIndex: =2
 
-        Calculate_OK_warnings_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="warnings"
-            FieldName: ="warnings"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            IsHyperlink: =true
-            OnSelect: |-
-                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.warnings, IndentFour), HeaderTitle: "warnings"})
-            Order: =4
-            Text: =First(ThisItem.warnings).Value
-            Width: =100
-            X: =0
-            Y: =0
+        Calculate_Title As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =48
+            Role: =TextRole.Heading1
+            Size: =30
+            Text: ="Calculate synthetic request"
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =54
             ZIndex: =3
 
-        Calculate_OK_trace_id_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="trace_id"
-            FieldName: ="trace_id"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            Order: =3
-            Text: =ThisItem.trace_id
-            Width: =100
-            X: =0
-            Y: =0
+        Calculate_Subtitle As label:
+            Color: =RGBA(226, 240, 230, 1)
+            Height: =54
+            Size: =14
+            Text: ="Submit fixture-safe calculation requests to the service boundary after health, schema, and validation checks pass."
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =104
             ZIndex: =4
 
-        Calculate_OK_result_payload_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="result_payload"
-            FieldName: ="result_payload"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            IsHyperlink: =true
-            OnSelect: |-
-                =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.result_payload, IndentFour), HeaderTitle: "result_payload"})
-            Order: =2
-            Text: =Text("result_payload")
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =5
+    Calculate_Main As groupContainer.horizontalAutoLayoutContainer:
+        Fill: =RGBA(247, 250, 247, 1)
+        Height: =Parent.Height - Calculate_Header.Height
+        LayoutGap: =22
+        PaddingLeft: =42
+        PaddingRight: =42
+        PaddingTop: =26
+        Width: =Parent.Width
+        Y: =Calculate_Header.Height
+        ZIndex: =2
 
-        Calculate_OK_status_DataTableColumn As dataTableColumn.textualColumn:
-            FieldDisplayName: ="status"
-            FieldName: ="status"
-            FieldVariantName: ="textualColumn"
-            Height: =Parent.Height
-            Order: =1
-            Text: =ThisItem.status
-            Width: =100
-            X: =0
-            Y: =0
-            ZIndex: =6
+        Calculate_InputPanel As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height - 52
+            LayoutGap: =10
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            Width: =Parent.Width * 0.38
+            ZIndex: =1
 
-    Calculate_VerticalContainer As groupContainer.verticalAutoLayoutContainer:
-        Height: =(Parent.Height - Calculate_VerticalContainer.Y) - 100
-        LayoutOverflowX: =LayoutOverflow.Scroll
-        LayoutOverflowY: =LayoutOverflow.Scroll
-        PaddingLeft: =10
-        Width: =Parent.Width * 0.35
-        X: =10
-        Y: =Calculate_Header_ManualContainer.Y + Calculate_Header_ManualContainer.Height + 40
-        ZIndex: =3
+            Calculate_PanelTitle As label:
+                Color: =RGBA(30, 42, 38, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                Role: =TextRole.Heading2
+                Size: =20
+                Text: ="Operation inputs"
+                Width: =Parent.Width - 44
+                ZIndex: =1
+
+            Calculate_Purpose As label:
+                Color: =RGBA(83, 92, 88, 1)
+                Height: =74
+                Size: =13
+                Text: ="Power Apps orchestrates the call only. Calculator formulas, constants, and pricing logic stay in the canonical runtime."
+                Width: =Parent.Width - 44
+                ZIndex: =2
+
+            Calculate_SyntheticWarning As label:
+                Color: =RGBA(128, 86, 0, 1)
+                Fill: =RGBA(255, 247, 222, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =64
+                Size: =12
+                Text: ="Synthetic data only. Do not enter patient-level data, private NSW operational data, or production identifiers."
+                Width: =Parent.Width - 44
+                ZIndex: =3
+
+            Calculate_StateCopy As label:
+                Color: =RGBA(21, 67, 120, 1)
+                Fill: =RGBA(231, 242, 255, 1)
+                Height: =72
+                Size: =12
+                Text: ="States covered: loading, success, validation error, connector error. For support, copy the trace ID or the Power Apps session ID."
+                Width: =Parent.Width - 44
+                ZIndex: =4
+
+            Calculate_Hint As label:
+                Color: =RGBA(83, 92, 88, 1)
+                Height: =54
+                Size: =12
+                Text: ="Only synthetic fixture requests are allowed until production governance evidence is captured."
+                Width: =Parent.Width - 44
+                ZIndex: =5
 
         Calculate_Body_contract_version_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =32
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =0
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="contract_version"
-            Tooltip: ="contract_version"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =1
+            Width: =Parent.Width - 44
+            ZIndex: =6
 
         Calculate_Body_contract_version_TextInput As text:
             AccessibleLabel: ="contract_version"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =2
+            Default: ="2026-05"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =7
 
         Calculate_Body_calculator_id_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="calculator_id"
-            Tooltip: ="calculator_id"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =3
+            Width: =Parent.Width - 44
+            ZIndex: =8
 
         Calculate_Body_calculator_id_TextInput As text:
             AccessibleLabel: ="calculator_id"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =4
+            Default: ="acute_nwau"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =9
 
         Calculate_Body_pricing_year_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="pricing_year"
-            Tooltip: ="pricing_year"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =5
+            Width: =Parent.Width - 44
+            ZIndex: =10
 
         Calculate_Body_pricing_year_TextInput As text:
             AccessibleLabel: ="pricing_year"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =6
+            Default: ="2026"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =11
 
         Calculate_Body_direction_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="direction"
-            Tooltip: ="direction"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =7
+            Width: =Parent.Width - 44
+            ZIndex: =12
 
         Calculate_Body_direction_TextInput As text:
             AccessibleLabel: ="direction"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =8
+            Default: ="input"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =13
 
         Calculate_Body_bundle_id_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="bundle_id"
-            Tooltip: ="bundle_id"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =9
+            Width: =Parent.Width - 44
+            ZIndex: =14
 
         Calculate_Body_bundle_id_TextInput As text:
             AccessibleLabel: ="bundle_id"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =10
+            Default: ="synthetic-smoke"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =15
 
         Calculate_Body_fixture_gate_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="fixture_gate"
-            Tooltip: ="fixture_gate"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =11
+            Width: =Parent.Width - 44
+            ZIndex: =16
 
         Calculate_Body_fixture_gate_TextInput As text:
             AccessibleLabel: ="fixture_gate"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =12
+            Default: ="synthetic-only"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =17
 
         Calculate_Body_correlation_id_Label As label:
-            Color: =RGBA(50, 49, 48, 1)
-            DisplayMode: =DisplayMode.View
-            Font: =Font.'Segoe UI'
+            Color: =RGBA(30, 42, 38, 1)
             FontWeight: =FontWeight.Semibold
-            Height: =52
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingTop: =20
-            Size: =14
+            Height: =28
+            Size: =12
             Text: ="correlation_id"
-            Tooltip: ="correlation_id"
-            Width: =Parent.Width * 0.85
-            X: =0
-            ZIndex: =13
+            Width: =Parent.Width - 44
+            ZIndex: =18
 
         Calculate_Body_correlation_id_TextInput As text:
             AccessibleLabel: ="correlation_id"
-            Clear: =true
-            DisplayMode: =DisplayMode.Edit
-            Font: =Font.'Segoe UI'
-            Height: =32
-            Size: =14
-            Width: =Parent.Width * 0.85
-            ZIndex: =14
+            Default: ="calculate-synthetic-smoke"
+            Height: =34
+            HintText: ="Synthetic value only"
+            Width: =Parent.Width - 44
+            ZIndex: =19
 
-    Calculate_Header_ManualContainer As groupContainer.manualLayoutContainer:
-        Height: =Calculate_Header_title_Label.Y + Calculate_Header_title_Label.Height
-        LayoutDirection: =LayoutDirection.Horizontal
-        LayoutMode: =LayoutMode.Manual
-        Width: =Parent.Width
-        ZIndex: =4
+            Calculate_RunButton As button:
+                AccessibleLabel: ="Calculate synthetic request"
+                DisplayMode: =If(locLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                Fill: =RGBA(16, 94, 60, 1)
+                Height: =46
+                OnSelect: |-
+                    =UpdateContext({locLoading: true, locStatus: "Submitting synthetic calculation", locTrace: Calculate_Body_correlation_id_TextInput.Text, locError: Blank()});
+                    IfError(
+                        ClearCollect(Calculate, MCHSServiceBoundary.Calculate({contract_version: Calculate_Body_contract_version_TextInput.Text, calculator_id: Calculate_Body_calculator_id_TextInput.Text, pricing_year: Calculate_Body_pricing_year_TextInput.Text, direction: Calculate_Body_direction_TextInput.Text, bundle_id: Calculate_Body_bundle_id_TextInput.Text, fixture_gate: Calculate_Body_fixture_gate_TextInput.Text, correlation_id: Calculate_Body_correlation_id_TextInput.Text, input_payload: {}})),
+                        UpdateContext({locLoading: false, locStatus: "Calculation connector error", locError: FirstError.Message, locTrace: "copy the Power Apps session ID"});
+                        Notify(FirstError.Message, NotificationType.Error, 5000),
+                        UpdateContext({locLoading: false, locStatus: "Calculation response returned", locError: Blank(), locTrace: Coalesce(First(Calculate).trace_id, Calculate_Body_correlation_id_TextInput.Text)});
+                        Notify("Calculation response", NotificationType.Success, 5000)
+                    );
+                Size: =14
+                Text: =If(locLoading, "Running...", "Calculate synthetic request")
+                Width: =Parent.Width - 44
+                ZIndex: =40
 
-        Calculate_Header_title_Label As label:
-            Align: =Align.Center
-            Color: =RGBA(255, 255, 255, 1)
-            DisplayMode: =DisplayMode.View
-            Fill: =RGBA(56, 96, 178, 1)
-            Font: =Font.'Segoe UI'
-            FontWeight: =FontWeight.Semibold
-            Height: =100
-            Role: =TextRole.Heading1
-            Size: =32
-            Text: ="Calculate"
-            Width: =Parent.Width
-            X: =0
-            ZIndex: =1
-
-        Calculate_Header_return_IconArrowLeft As icon.ArrowLeft:
-            AccessibleLabel: ="Home"
-            Color: =RGBA(255, 255, 255, 1)
-            DisplayMode: =DisplayMode.Edit
-            Height: =100
-            Icon: =Icon.ArrowLeft
-            OnSelect: =Navigate(HomeScreen_Screen);
-            PaddingBottom: =20
-            PaddingLeft: =20
-            PaddingRight: =20
-            PaddingTop: =20
-            TabIndex: =0
-            Width: =100
-            X: =0
+        Calculate_ResultPanel As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height - 52
+            LayoutGap: =12
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            Width: =Parent.Width * 0.52
             ZIndex: =2
 
+            Calculate_ResultTitle As label:
+                Color: =RGBA(30, 42, 38, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                Role: =TextRole.Heading2
+                Size: =20
+                Text: ="Result and trace"
+                Width: =Parent.Width - 44
+                ZIndex: =1
+
+            Calculate_Status As label:
+                Color: =If(locError = Blank(), RGBA(16, 94, 60, 1), RGBA(164, 38, 44, 1))
+                Fill: =If(locError = Blank(), RGBA(232, 246, 236, 1), RGBA(255, 235, 238, 1))
+                FontWeight: =FontWeight.Semibold
+                Height: =44
+                Size: =14
+                Text: ="Status: " & locStatus
+                Width: =Parent.Width - 44
+                ZIndex: =2
+
+            Calculate_Trace As label:
+                Color: =RGBA(21, 67, 120, 1)
+                Fill: =RGBA(231, 242, 255, 1)
+                Height: =44
+                Size: =13
+                Text: ="Trace ID: " & locTrace
+                Width: =Parent.Width - 44
+                ZIndex: =3
+
+            Calculate_Error As label:
+                Color: =RGBA(164, 38, 44, 1)
+                Fill: =RGBA(255, 235, 238, 1)
+                Height: =54
+                Size: =12
+                Text: =If(locError = Blank(), "No connector error recorded.", "Connector error: " & locError)
+                Width: =Parent.Width - 44
+                ZIndex: =4
+
+            Calculate_DataTable As dataTable.datatable:
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =Parent.Height - 220
+                Items: =Calculate
+                Size: =13
+                Width: =Parent.Width - 44
+                ZIndex: =5
+
+                Calculate_Status_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="status"
+                    FieldName: ="status"
+                    FieldVariantName: ="textualColumn"
+                    Order: =1
+                    Text: =ThisItem.status
+                    Width: =140
+                    ZIndex: =1
+
+                Calculate_Trace_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="trace_id"
+                    FieldName: ="trace_id"
+                    FieldVariantName: ="textualColumn"
+                    Order: =2
+                    Text: =ThisItem.trace_id
+                    Width: =180
+                    ZIndex: =2
+
+                Calculate_Result_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="result_payload"
+                    FieldName: ="result_payload"
+                    FieldVariantName: ="textualColumn"
+                    IsHyperlink: =true
+                    OnSelect: =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.result_payload, IndentFour), HeaderTitle: "result_payload"})
+                    Order: =3
+                    Text: =Text("result_payload")
+                    Width: =180
+                    ZIndex: =3

@@ -48,5 +48,7 @@
   "claimBoundary": {
     "runtimeSmokePassed": false,
     "productionReadinessClaimed": false
-  }
+  },
+  "liveServiceBoundarySmokeEvidence": "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+  "powerAutomateFlowSmokeEvidence": "power-platform/evidence/power-automate-flow-smoke-20260521.json"
 }

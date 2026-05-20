@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "power_automate_flow_smoke",
+  "status": "blocked_pending_real_flow_import_connection_and_run",
+  "requiredFlows": [
+    "deployment-smoke",
+    "validate-input",
+    "calculate-request",
+    "evidence-export"
+  ],
+  "requiredEvidence": [
+    "flow ID in NSW dylan",
+    "connection reference binding",
+    "synthetic run ID",
+    "run status succeeded",
+    "action-level input/output summary with no patient data",
+    "failure-mode capture or retry policy evidence"
+  ],
+  "runs": [],
+  "claimBoundary": {
+    "flowSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}

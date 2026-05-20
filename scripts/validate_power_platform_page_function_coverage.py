@@ -41,8 +41,21 @@ def main() -> int:
         text = source.read_text(encoding="utf-8")
         if operation["screen"] not in text:
             raise SystemExit(f"screen source does not declare {operation['screen']}")
+        for required_copy in [
+            "Synthetic data only",
+            "loading, success, validation error, connector error",
+            "Trace ID:",
+            "No connector error recorded",
+            "Power Apps session ID",
+        ]:
+            if required_copy not in text:
+                raise SystemExit(
+                    f"operation page missing required UX copy: {required_copy}"
+                )
+        if not operation.get("sourceUxComplete"):
+            raise SystemExit("operation page source UX must be complete")
         if operation["complete"]:
-            raise SystemExit("operation pages must not be marked complete before smoke")
+            raise SystemExit("operation pages must not be fully complete before smoke")
         if operation["runtimeSmokeStatus"] != (
             "blocked_pending_service_endpoint_and_connection_reference"
         ):
@@ -53,16 +66,18 @@ def main() -> int:
     gate = coverage["completionGate"]
     if not gate["allOperationPagesSourceControlled"]:
         raise SystemExit("operation page source control gate is not recorded")
-    if gate["allOperationPagesUxComplete"]:
-        raise SystemExit("operation page UX completion is overclaimed")
+    if not gate["allOperationPagesUxComplete"]:
+        raise SystemExit("operation page UX source completion is not recorded")
     if gate["allOperationRuntimeSmokePassed"]:
         raise SystemExit("operation runtime smoke is overclaimed")
     if gate["allCalculationsFullyImplementedInApp"]:
         raise SystemExit("calculation implementation is overclaimed inside Power Apps")
 
     boundary = coverage["claimBoundary"]
+    if not boundary["operationPagesSourceUxComplete"]:
+        raise SystemExit("operation page source UX boundary is not recorded")
     if boundary["operationPagesComplete"]:
-        raise SystemExit("operation page completion is overclaimed")
+        raise SystemExit("operation page runtime completion is overclaimed")
     if boundary["everyCalculationFunctionFullyProven"]:
         raise SystemExit("calculation/function proof is overclaimed")
     if boundary["repoHealth99Eligible"]:
@@ -74,8 +89,19 @@ def main() -> int:
         raise SystemExit("9.9 contract target is not 9.9")
     if health99["claimBoundary"]["score99Claimed"]:
         raise SystemExit("9.9 score is overclaimed")
-    if not all(gate["status"] == "blocked" for gate in health99["requiredGates"]):
-        raise SystemExit("9.9 gates must remain blocked until live evidence exists")
+    for item in health99["requiredGates"]:
+        if not (ROOT / item["evidence"]).exists():
+            raise SystemExit(f"9.9 gate evidence target missing: {item['evidence']}")
+    statuses = {item["gate"]: item["status"] for item in health99["requiredGates"]}
+    if statuses["all_connector_operation_pages_source_ux_complete"] != (
+        "passed_source_evidence"
+    ):
+        raise SystemExit("operation page source UX gate must be passed")
+    for gate_name, status in statuses.items():
+        if gate_name == "all_connector_operation_pages_source_ux_complete":
+            continue
+        if status != "blocked":
+            raise SystemExit("live 9.9 gates must remain blocked until evidence exists")
 
     print("Power Platform page/function coverage and 9.9 contract passed.")
     return 0

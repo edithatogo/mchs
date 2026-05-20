@@ -10,6 +10,7 @@
 - Capture Power Automate run IDs for validation, calculation, deployment smoke,
   and evidence export flows.
 - Store sanitized payload hashes only; do not store patient-level payloads.
+- Correlation IDs must be retained with flow/component name, flow ID, and run ID.
 
 ## Privacy and DLP
 
@@ -34,3 +35,9 @@ correlation ID, and sanitized diagnostic payload.
   `power-platform/evidence/runtime-smoke-evidence-template.json`.
 - Monitoring and DLP evidence:
   `power-platform/evidence/monitoring-dlp-evidence-template.json`.
+- Real flow smoke evidence:
+  `power-platform/evidence/flow-smoke-evidence-template.json`.
+- Official GitHub Actions live-gate evidence:
+  `power-platform/evidence/official-github-live-gate-evidence-template.json`.
+- Standalone subrepo closure evidence:
+  `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`.

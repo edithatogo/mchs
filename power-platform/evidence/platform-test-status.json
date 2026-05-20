@@ -70,5 +70,20 @@
     "allPlatformTestsPassed": false,
     "visualFunctionOptimized": true,
     "productionReadinessClaimed": false
+  },
+  "liveGateEvidence": {
+    "serviceBoundarySmoke": "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+    "powerAutomateFlowSmoke": "power-platform/evidence/power-automate-flow-smoke-20260521.json",
+    "dlpMonitoringPolicy": "power-platform/evidence/dlp-monitoring-policy-evidence-20260521.json",
+    "githubLiveGate": "power-platform/evidence/github-live-gate-20260521.json",
+    "subrepoClosure": "power-platform/repository/subrepo-closure-20260521.json"
+  },
+  "operationPagesPublishAttempt": {
+    "asOf": "2026-05-21",
+    "artifact": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "artifactSha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f",
+    "portalUrl": "https://make.powerapps.com/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/canvas/?action=app-from-file",
+    "status": "attempted_file_upload_stalled_in_maker_loading_state",
+    "publishedToTenant": false
   }
 }

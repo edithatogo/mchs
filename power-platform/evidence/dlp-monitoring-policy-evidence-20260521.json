@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "dlp_monitoring_connector_policy",
+  "status": "blocked_pending_nsw_admin_policy_capture",
+  "requiredEvidence": [
+    "environment DLP policy name and classification",
+    "custom connector business/non-business classification",
+    "connector allowed with no patient data policy conflict",
+    "Power App and flow owner review",
+    "monitoring or alerting destination",
+    "failed run notification policy",
+    "retention and support escalation owner"
+  ],
+  "capturedEvidence": [],
+  "claimBoundary": {
+    "dlpCompatible": false,
+    "monitoringOperational": false,
+    "productionReadinessClaimed": false
+  }
+}

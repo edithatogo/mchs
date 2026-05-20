@@ -79,3 +79,18 @@ are provisioned and verified.
 Do not claim NSW deployment or production readiness from this template alone.
 Claims require target-environment credentials, managed solution import evidence,
 solution checker output, app smoke evidence, and flow smoke evidence.
+
+## Precision evidence checklists
+
+- Real flow smoke checklist: complete `power-platform/evidence/flow-smoke-evidence-template.json`
+  with per-flow IDs, run IDs, and synthetic pass evidence for the tenant environment.
+- DLP/monitoring/connector policy checklist: complete
+  `power-platform/evidence/monitoring-dlp-evidence-template.json` with policy identifiers,
+  connector allow-state, and monitored failure evidence.
+- Official GitHub live-gate checklist: run
+  `.github/workflows/power-platform-official-actions.yml` with `run_live_checks=true`
+  and store workflow evidence in
+  `power-platform/evidence/official-github-live-gate-evidence-template.json`.
+- Standalone subrepo closure checklist: provision standalone remote governance
+  in `power-platform/repository/subrepo-manifest.json` or explicitly close the waiver
+  in `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`.

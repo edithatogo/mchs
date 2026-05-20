@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "power_platform_subrepo_closure",
+  "status": "blocked_pending_remote_or_explicit_waiver",
+  "currentMode": "in_repository_governed_subrepo_boundary",
+  "acceptableClosureOptions": [
+    {
+      "option": "standalone_remote",
+      "requiredEvidence": ["remote URL", "sync direction", "release owner", "promotion branch policy"]
+    },
+    {
+      "option": "explicit_waiver",
+      "requiredEvidence": ["waiver approver", "reason", "review date", "risk acceptance"]
+    }
+  ],
+  "selectedOption": null,
+  "claimBoundary": {
+    "standaloneRemoteProvisioned": false,
+    "explicitWaiverRecorded": false,
+    "subrepoClosureComplete": false
+  }
+}

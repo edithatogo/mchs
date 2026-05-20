@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_subrepo_remote_or_explicit_waiver",
+  "status": "blocked_pending_remote_or_waiver",
+  "asOf": "2026-05-21",
+  "subrepoBoundary": {
+    "mode": "in_repository_governed_subrepo_boundary",
+    "path": "power-platform/",
+    "parentRepository": "https://github.com/edithatogo/mchs"
+  },
+  "standaloneRemote": {
+    "provisioned": false,
+    "remoteUrl": null,
+    "defaultBranch": null,
+    "syncProcedure": null,
+    "importOwner": null,
+    "provisioningStatus": "not_provisioned",
+    "recordedInManifest": "power-platform/repository/subrepo-manifest.json"
+  },
+  "waiver": {
+    "required": true,
+    "status": "blocked",
+    "reason": "No standalone remote has been provisioned for Power Platform governance boundary; runtime closure cannot claim subrepo separation.",
+    "approvedBy": null,
+    "approvalRecord": null
+  },
+  "closureChecklist": [
+    "Provide definitive standalone remote URL, default branch, and owner",
+    "Update subrepo manifest with the remote and pinned commit procedure",
+    "Record push/pull/check/import/release checklist in `power-platform/repository/subrepo-contract.md`",
+    "Capture NSW import owner and rollback owner for the standalone flow",
+    "Attach an explicit waiver decision if production separation is deferred"
+  ],
+  "claimBoundary": {
+    "standaloneRemoteOperational": false,
+    "explicitWaiverRecorded": false,
+    "productionReadinessClaimed": false
+  }
+}

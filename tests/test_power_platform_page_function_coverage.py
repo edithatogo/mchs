@@ -30,23 +30,31 @@ def test_every_connector_operation_has_source_controlled_page() -> None:
         "GetEvidence",
     }
     for operation in operations.values():
-        assert (ROOT / operation["source"]).exists()
+        source = ROOT / operation["source"]
+        text = source.read_text(encoding="utf-8")
+        assert source.exists()
         assert operation["sourceControlled"] is True
+        assert operation["sourceUxComplete"] is True
         assert operation["complete"] is False
+        assert "Synthetic data only" in text
+        assert "Trace ID:" in text
+        assert "Power Apps session ID" in text
         assert operation["runtimeSmokeStatus"] == (
             "blocked_pending_service_endpoint_and_connection_reference"
         )
 
 
-def test_page_function_coverage_does_not_overclaim_completion() -> None:
+def test_page_function_coverage_does_not_overclaim_runtime_completion() -> None:
     coverage = _json(
         PP / "apps" / "mchs-orchestration-app" / "page-function-coverage.json"
     )
     assert coverage["homeScreen"]["complete"] is True
     assert coverage["completionGate"]["allOperationPagesSourceControlled"] is True
-    assert coverage["completionGate"]["allOperationPagesUxComplete"] is False
+    assert coverage["completionGate"]["allOperationPagesUxComplete"] is True
     assert coverage["completionGate"]["allOperationRuntimeSmokePassed"] is False
     assert coverage["completionGate"]["allCalculationsFullyImplementedInApp"] is False
+    assert coverage["claimBoundary"]["operationPagesSourceUxComplete"] is True
+    assert coverage["claimBoundary"]["operationPagesComplete"] is False
     assert coverage["claimBoundary"]["repoHealth99Eligible"] is False
     assert coverage["claimBoundary"]["productionReadinessClaimed"] is False
 
@@ -55,17 +63,28 @@ def test_repo_health_99_contract_is_blocked_until_live_evidence() -> None:
     contract = _json(PP / "repository" / "health-9-9" / "contract.json")
     assert contract["targetScore"] == 9.9
     assert contract["currentScore"] == 9.5
-    assert contract["status"] == "not_eligible_runtime_and_page_completion_blocked"
+    assert contract["status"] == "not_eligible_live_runtime_flow_governance_blocked"
     assert {gate["gate"] for gate in contract["requiredGates"]} == {
-        "all_connector_operation_pages_complete",
+        "all_connector_operation_pages_source_ux_complete",
         "live_service_boundary_health_validate_calculate_evidence",
         "real_power_automate_flow_smoke",
         "dlp_monitoring_and_connector_policy_evidence",
         "official_github_actions_live_gate_run",
         "standalone_power_platform_subrepo_remote_or_explicit_waiver",
     }
-    assert all(gate["status"] == "blocked" for gate in contract["requiredGates"])
+    statuses = {gate["gate"]: gate["status"] for gate in contract["requiredGates"]}
+    assert statuses["all_connector_operation_pages_source_ux_complete"] == (
+        "passed_source_evidence"
+    )
+    assert all(
+        status == "blocked"
+        for gate, status in statuses.items()
+        if gate != "all_connector_operation_pages_source_ux_complete"
+    )
+    for gate in contract["requiredGates"]:
+        assert (ROOT / gate["evidence"]).exists()
     assert contract["claimBoundary"]["score99Claimed"] is False
+    assert contract["claimBoundary"]["operationPageSourceUxComplete"] is True
 
 
 def test_page_function_coverage_validator_passes() -> None:

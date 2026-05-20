@@ -74,13 +74,14 @@ def test_deployment_evidence_claim_boundary_is_precise() -> None:
     assert status["managedPromotionClaimed"] is True
     assert status["productionReadinessClaimed"] is False
     assert status["status"] == (
-        "managed_solution_imported_optimized_app_published_pending_runtime_smoke"
+        "managed_solution_imported_optimized_app_and_pages_source_ready_pending_runtime_smoke"
     )
     assert "production service-boundary execution evidence" in status["missing"]
     assert "real Power App visual optimization evidence" not in status["missing"]
-    assert "Power App operation pages are not UX-complete or runtime-proven" in (
-        status["missing"]
+    page_runtime_blocker = (
+        "Power App operation pages are source-UX complete but not live runtime-proven"
     )
+    assert page_runtime_blocker in status["missing"]
     assert status["repoHealth"]["score"] == 9.5
     assert status["repoHealth"]["targetScoreCandidate"] == 9.9
     assert status["repoHealth"]["status"] == "healthy_with_runtime_smoke_blocker"

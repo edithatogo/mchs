@@ -2,6 +2,13 @@
   "schemaVersion": 1,
   "evidenceType": "power_platform_monitoring_dlp",
   "status": "blocked_pending_tenant_policy_capture",
+  "asOf": "2026-05-21",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
   "monitoring": {
     "connectorFailures": "required",
     "flowRunFailures": "required",
@@ -10,10 +17,21 @@
     "correlationIdsWithoutPatientData": "required"
   },
   "dlp": {
+    "tenantName": "NSW Health Department",
+    "policyId": null,
     "policyName": null,
     "customConnectorAllowed": false,
     "environmentPolicyCaptured": false,
     "tenantPolicyCaptured": false
+  },
+  "connectorPolicy": {
+    "connectorName": "mchs-service-boundary",
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "policyId": null,
+    "policyName": null,
+    "policyAllowsConnector": false,
+    "flowRunPolicyChecked": false,
+    "scope": null
   },
   "support": {
     "owner": "TBD",
@@ -26,6 +44,14 @@
       "sanitizedPayloadHash"
     ]
   },
+  "checklist": [
+    "Capture tenant-level DLP policy name or ID before any production-ready claim",
+    "Capture environment DLP policy capture timestamp and proof",
+    "Confirm custom connector is explicitly allowed in connector policy",
+    "Store flow/connector failure counts by operation with correlation IDs",
+    "Store service-boundary health probe evidence without patient-level payloads",
+    "Capture connector policy screenshot or API response for admin review"
+  ],
   "claimBoundary": {
     "monitoringConfigured": false,
     "dlpEvidenceCaptured": false,
