@@ -14,6 +14,7 @@ import json
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = (
@@ -29,6 +30,18 @@ REQUIRED_WAIVER_FIELDS = (
     "reviewDate",
     "riskAcceptance",
 )
+
+PLACEHOLDER_VALUES = {
+    "placeholder",
+    "replace me",
+    "replace-me",
+    "fill me in",
+    "fill-me-in",
+    "tbd",
+    "todo",
+    "to be determined",
+    "to-be-determined",
+}
 
 BLOCKED_RECORD: dict[str, Any] = {
     "schemaVersion": 1,
@@ -112,6 +125,29 @@ def _require_text(value: str | None, label: str) -> str:
     return value.strip()
 
 
+def _require_complete_text(value: str | None, label: str) -> str:
+    text = _require_text(value, label)
+    normalized = " ".join(text.split()).lower()
+    if normalized in PLACEHOLDER_VALUES:
+        raise ValueError(f"{label} must be a complete value, not a placeholder")
+    if normalized.startswith("<") and normalized.endswith(">"):
+        raise ValueError(f"{label} must be a complete value, not a placeholder")
+    return text
+
+
+def _require_remote_url(value: str | None) -> str:
+    text = _require_complete_text(value, "remote-url")
+    parsed = urlparse(text)
+    if parsed.scheme != "https":
+        raise ValueError("remote-url must use https")
+    if not parsed.netloc:
+        raise ValueError("remote-url must include a host")
+    hostname = parsed.hostname or ""
+    if hostname == "example.invalid" or hostname.endswith(".invalid"):
+        raise ValueError("remote-url must not use a placeholder host")
+    return text.rstrip("/")
+
+
 def build_blocked_record(as_of: str = DEFAULT_AS_OF) -> dict[str, Any]:
     return _clone_blocked_record(as_of)
 
@@ -124,6 +160,10 @@ def build_standalone_remote_record(
     import_owner: str,
     as_of: str = DEFAULT_AS_OF,
 ) -> dict[str, Any]:
+    remote_url = _require_remote_url(remote_url)
+    default_branch = _require_complete_text(default_branch, "default-branch")
+    sync_procedure = _require_complete_text(sync_procedure, "sync-procedure")
+    import_owner = _require_complete_text(import_owner, "import-owner")
     record = _clone_blocked_record(as_of)
     record["status"] = "standalone_remote_recorded"
     record["selectedOption"] = "standalone_remote"
@@ -134,18 +174,17 @@ def build_standalone_remote_record(
     }
     record["standaloneRemote"] = {
         "provisioned": True,
-        "remoteUrl": _require_text(remote_url, "remote-url"),
-        "defaultBranch": _require_text(default_branch, "default-branch"),
-        "syncProcedure": _require_text(sync_procedure, "sync-procedure"),
-        "importOwner": _require_text(import_owner, "import-owner"),
+        "remoteUrl": remote_url,
+        "defaultBranch": default_branch,
+        "syncProcedure": sync_procedure,
+        "importOwner": import_owner,
         "provisioningStatus": "provisioned",
     }
     record["waiver"] = {
         "required": False,
         "status": "not_required",
         "reason": (
-            "Standalone remote is provisioned, so an explicit waiver "
-            "is not required."
+            "Standalone remote is provisioned, so an explicit waiver is not required."
         ),
         "approvedBy": None,
         "approvalRecord": None,
@@ -164,6 +203,11 @@ def build_explicit_waiver_record(
     risk_acceptance: str,
     as_of: str = DEFAULT_AS_OF,
 ) -> dict[str, Any]:
+    approved_by = _require_complete_text(approved_by, "approved-by")
+    approval_record = _require_complete_text(approval_record, "approval-record")
+    reason = _require_complete_text(reason, "reason")
+    review_date = _require_complete_text(review_date, "review-date")
+    risk_acceptance = _require_complete_text(risk_acceptance, "risk-acceptance")
     record = _clone_blocked_record(as_of)
     record["status"] = "explicit_waiver_recorded"
     record["selectedOption"] = "explicit_waiver"
@@ -183,11 +227,11 @@ def build_explicit_waiver_record(
     record["waiver"] = {
         "required": True,
         "status": "recorded",
-        "reason": _require_text(reason, "reason"),
-        "approvedBy": _require_text(approved_by, "approved-by"),
-        "approvalRecord": _require_text(approval_record, "approval-record"),
-        "reviewDate": _require_text(review_date, "review-date"),
-        "riskAcceptance": _require_text(risk_acceptance, "risk-acceptance"),
+        "reason": reason,
+        "approvedBy": approved_by,
+        "approvalRecord": approval_record,
+        "reviewDate": review_date,
+        "riskAcceptance": risk_acceptance,
     }
     return record
 

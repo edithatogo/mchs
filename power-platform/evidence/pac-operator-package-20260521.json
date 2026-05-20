@@ -33,7 +33,7 @@
       "connectionConfigured": false,
       "productionReadinessClaimed": false
     },
-    "nextAction": "Run PAC auth and recapture appId, playUrl, and connectionId before changing any claim state."
+    "nextAction": "Run PAC auth and recapture real appId, playUrl, and connectionId values before changing any claim state."
   },
   "claimBoundary": {
     "appPublished": false,

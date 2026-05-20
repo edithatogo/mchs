@@ -39,7 +39,20 @@ python3 scripts/validate_power_platform_service_boundary_endpoint.py \
   > /tmp/mchs-service-boundary-validate.json
 ```
 
-3. Probe the real endpoint and capture the validator output as JSON.
+3. Run the offline preflight gate against the operator input and probe JSON.
+
+```bash
+python3 scripts/preflight_power_platform_service_boundary_endpoint_operator_package.py \
+  --operator-input power-platform/evidence/examples/service-boundary-endpoint-operator-input.example.json \
+  --probe-result power-platform/evidence/examples/service-boundary-probe-result.example.json \
+  > /tmp/mchs-service-boundary-preflight.json
+```
+
+The checked-in example payloads are intentionally blocked because they still
+use placeholder values. Replace them with real JSON artifacts before treating
+the operator package as ready.
+
+4. Probe the real endpoint and capture the validator output as JSON.
 
 ```bash
 python3 scripts/validate_power_platform_service_boundary_endpoint.py \
@@ -48,7 +61,7 @@ python3 scripts/validate_power_platform_service_boundary_endpoint.py \
   > /tmp/mchs-service-boundary-probe.json
 ```
 
-4. Render the evidence record from the real probe result.
+5. Render the evidence record from the real probe result.
 
 ```bash
 python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
@@ -67,6 +80,9 @@ python3 scripts/update_power_platform_service_boundary_endpoint_evidence.py \
   --probe-result power-platform/evidence/examples/service-boundary-probe-result.example.json \
   --output /tmp/mchs-service-boundary-evidence-preview.json
 ```
+
+The preflight gate above will still block that example base URL because it is a
+placeholder host, which is the expected behavior.
 
 ## Guardrails
 

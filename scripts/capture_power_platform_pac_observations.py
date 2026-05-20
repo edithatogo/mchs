@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -16,6 +17,24 @@ DEFAULT_ENVIRONMENT_NAME = "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environm
 DEFAULT_ENVIRONMENT_ID = "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
 DEFAULT_ENVIRONMENT_URL = "https://orgefc9aa3e.crm6.dynamics.com/"
 REQUIRED_OBSERVATIONS = ("appId", "playUrl", "connectionId")
+UUID_RE = re.compile(
+    r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+)
+PLAY_URL_RE = re.compile(
+    r"^https://apps\.powerapps\.com/play/e/"
+    r"(?P<environment_id>[0-9a-fA-F-]{36})/"
+    r"a/(?P<app_id>[0-9a-fA-F-]{36})"
+    r"(?:\?tenantId=(?P<tenant_id>[0-9a-fA-F-]{36}))?$"
+)
+ZERO_UUID = "00000000-0000-0000-0000-000000000000"
+PLACEHOLDER_MARKERS = (
+    "placeholder",
+    "replace_me",
+    "replace-me",
+    "todo",
+    "tbd",
+    "your_",
+)
 
 
 def _clean(value: str | None) -> str | None:
@@ -23,6 +42,56 @@ def _clean(value: str | None) -> str | None:
         return None
     stripped = value.strip()
     return stripped or None
+
+
+def _is_placeholder_token(value: str) -> bool:
+    lowered = value.strip().lower()
+    return (
+        lowered == ZERO_UUID
+        or (lowered.startswith("{") and lowered.endswith("}"))
+        or (lowered.startswith("<") and lowered.endswith(">"))
+        or any(marker in lowered for marker in PLACEHOLDER_MARKERS)
+    )
+
+
+def _validate_uuid(value: str | None) -> tuple[str | None, str | None]:
+    normalized = _clean(value)
+    if normalized is None:
+        return None, "missing"
+    if _is_placeholder_token(normalized):
+        return None, "placeholder"
+    if not UUID_RE.fullmatch(normalized):
+        return None, "invalid_format"
+    return normalized, None
+
+
+def _validate_play_url(
+    value: str | None, *, expected_app_id: str | None = None
+) -> tuple[str | None, str | None]:
+    normalized = _clean(value)
+    if normalized is None:
+        return None, "missing"
+    if _is_placeholder_token(normalized):
+        return None, "placeholder"
+    match = PLAY_URL_RE.fullmatch(normalized)
+    if match is None:
+        return None, "invalid_format"
+    if any(
+        component.lower() == ZERO_UUID
+        for component in (
+            match.group("environment_id"),
+            match.group("app_id"),
+            match.group("tenant_id"),
+        )
+        if component is not None
+    ):
+        return None, "placeholder"
+    if (
+        expected_app_id is not None
+        and match.group("app_id").lower() != expected_app_id.lower()
+    ):
+        return None, "mismatch"
+    return normalized, None
 
 
 def _status(missing: list[str]) -> str:
@@ -45,30 +114,55 @@ def build_evidence(
     environment_id: str = DEFAULT_ENVIRONMENT_ID,
     environment_url: str = DEFAULT_ENVIRONMENT_URL,
 ) -> dict[str, Any]:
-    normalized_app_id = _clean(app_id)
-    normalized_play_url = _clean(play_url)
-    normalized_connection_id = _clean(connection_id)
+    normalized_app_id, app_id_reason = _validate_uuid(app_id)
+    normalized_play_url, play_url_reason = _validate_play_url(
+        play_url, expected_app_id=normalized_app_id
+    )
+    normalized_connection_id, connection_id_reason = _validate_uuid(connection_id)
+
+    validation = {
+        "appId": {"status": "observed" if app_id_reason is None else "blocked"},
+        "playUrl": {"status": "observed" if play_url_reason is None else "blocked"},
+        "connectionId": {
+            "status": "observed" if connection_id_reason is None else "blocked"
+        },
+    }
+    for field, reason in [
+        ("appId", app_id_reason),
+        ("playUrl", play_url_reason),
+        ("connectionId", connection_id_reason),
+    ]:
+        if reason is not None:
+            validation[field]["reason"] = reason
+
     missing = [
         field
-        for field, value in [
-            ("appId", normalized_app_id),
-            ("playUrl", normalized_play_url),
-            ("connectionId", normalized_connection_id),
+        for field, reason in [
+            ("appId", app_id_reason),
+            ("playUrl", play_url_reason),
+            ("connectionId", connection_id_reason),
         ]
-        if value is None
+        if reason is not None
     ]
+
+    app_publication_status = (
+        "observed" if app_id_reason is None and play_url_reason is None else "blocked"
+    )
+    connector_connection_status = (
+        "observed" if connection_id_reason is None else "blocked"
+    )
 
     app_publication = {
         "appId": normalized_app_id,
         "playUrl": normalized_play_url,
-        "status": "observed" if not missing else "blocked",
+        "status": app_publication_status,
     }
     if app_name:
         app_publication["appName"] = app_name
 
     connector_connection = {
         "connectionId": normalized_connection_id,
-        "status": "observed" if not missing else "blocked",
+        "status": connector_connection_status,
     }
     if connection_display_name:
         connector_connection["connectionDisplayName"] = connection_display_name
@@ -91,6 +185,7 @@ def build_evidence(
             "appPublication": app_publication,
             "customConnectorConnection": connector_connection,
         },
+        "validation": validation,
         "missingRequiredObservations": missing,
         "claimBoundary": {
             "appPublished": False,
@@ -98,8 +193,8 @@ def build_evidence(
             "productionReadinessClaimed": False,
         },
         "nextAction": (
-            "Capture a real PAC appId, playUrl, and connectionId, then rerun this "
-            "script to record the current observations."
+            "Capture real PAC appId, playUrl, and connectionId values; placeholders "
+            "and mismatched play URLs stay blocked until the observed values are real."
         ),
     }
     return evidence

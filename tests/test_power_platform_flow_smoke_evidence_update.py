@@ -8,6 +8,7 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "update_power_platform_flow_smoke_evidence.py"
 TEMPLATE = ROOT / "power-platform" / "evidence" / "flow-smoke-evidence-template.json"
+SAMPLE = ROOT / "power-platform" / "evidence" / "flow-smoke-capture-sample.json"
 
 
 def _load_module():
@@ -75,6 +76,27 @@ def test_flow_smoke_evidence_update_refuses_incomplete_capture(tmp_path) -> None
     assert not output.exists()
 
 
+def test_flow_smoke_evidence_update_rejects_placeholder_values(tmp_path) -> None:
+    module = _load_module()
+    output = tmp_path / "power-automate-flow-smoke.json"
+    capture = _complete_capture()
+    capture["flowRuns"][0]["runId"] = "replace_with_run_id"
+    capture["flowRuns"][0]["runStatus"] = "REPLACE_WITH_RUN_STATUS"
+
+    exit_code, summary, merged = module.build_flow_smoke_evidence(
+        _template(), capture, output_path=output
+    )
+
+    assert exit_code == 2
+    assert merged is None
+    assert summary["status"] == "blocked_pending_real_flow_run_capture"
+    assert summary["missingFields"]["mchs-validate-input"] == [
+        "runId",
+        "runStatus",
+    ]
+    assert not output.exists()
+
+
 def test_flow_smoke_evidence_update_merges_complete_capture(
     tmp_path, monkeypatch
 ) -> None:
@@ -118,3 +140,40 @@ def test_flow_smoke_evidence_update_merges_complete_capture(
     assert all(
         entry["runStatus"] == "succeeded" for entry in merged["realNswRunEvidence"]
     )
+
+
+def test_flow_smoke_preflight_blocks_placeholder_sample(
+    tmp_path, monkeypatch, capsys
+) -> None:
+    module = _load_module()
+    output = tmp_path / "power-automate-flow-smoke.json"
+    monkeypatch.setattr(
+        module,
+        "parse_args",
+        lambda: SimpleNamespace(
+            template=TEMPLATE,
+            capture=SAMPLE,
+            output=output,
+            preflight=True,
+        ),
+    )
+
+    exit_code = module.main()
+    summary = json.loads(capsys.readouterr().out)
+
+    assert exit_code == 2
+    assert summary["status"] == "blocked_pending_sample_capture"
+    assert any("placeholder" in issue.lower() for issue in summary["issues"])
+    assert not output.exists()
+
+
+def test_flow_smoke_preflight_rejects_non_https_run_url() -> None:
+    module = _load_module()
+    capture = _complete_capture()
+    capture["flowRuns"][1]["runUrl"] = "http://example.com/runs/calculate-request-001"
+
+    exit_code, summary = module.preflight_flow_smoke_capture(_template(), capture)
+
+    assert exit_code == 2
+    assert summary["status"] == "blocked_pending_sample_capture"
+    assert any("runUrl" in issue and "https" in issue for issue in summary["issues"])

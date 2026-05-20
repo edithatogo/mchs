@@ -23,6 +23,8 @@ exists.
   `connectionId` is observed.
 - The current PAC blocker evidence is machine-checkable and remains blocked
   until `appId`, `playUrl`, and `connectionId` are all present.
+- Placeholder-looking `appId`, `playUrl`, and `connectionId` values are also
+  blocked by the capture helper and do not count as evidence.
 
 ## Runbook
 
@@ -54,6 +56,8 @@ exists.
 - Run `scripts/capture_power_platform_pac_observations.py`.
 - If any of `appId`, `playUrl`, or `connectionId` is missing, the capture stays
   blocked.
+- If any required input looks like a placeholder or the `playUrl` does not
+  match the observed `appId`, the capture stays blocked.
 - Only update `power-platform/evidence/pac-operator-package-20260521.json`
   after the capture is complete.
 

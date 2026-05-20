@@ -4,6 +4,10 @@
 The updater is fail-closed: it merges the supplied monitoring and policy fields
 into the evidence template, but it keeps the record blocked and exits non-zero
 until every required field is populated.
+
+The preflight mode is stricter: it validates that the capture sample has the
+exact required monitoring, DLP, connector policy, and support shape and that no
+placeholder values remain.
 """
 
 from __future__ import annotations
@@ -42,6 +46,20 @@ REQUIRED_FIELDS: tuple[tuple[str, ...], ...] = (
     ("support", "escalationPath"),
     ("support", "escalationContact"),
 )
+EXPECTED_SHAPE: dict[tuple[str, ...], tuple[str, ...]] = {
+    (): ("monitoring", "dlp", "connectorPolicy", "support"),
+    ("monitoring",): ("owner", "failureMetrics"),
+    ("monitoring", "failureMetrics"): (
+        "connectorFailures",
+        "flowRunFailures",
+        "serviceBoundaryHealth",
+        "appHealthMetrics",
+        "correlationIdsWithoutPatientData",
+    ),
+    ("dlp",): ("policyId", "policyName", "policyClassification", "policyCaptureState"),
+    ("connectorPolicy",): ("policyId", "policyName", "connectorAllowState"),
+    ("support",): ("owner", "escalationOwner", "escalationPath", "escalationContact"),
+}
 UPDATE_SECTIONS = ("monitoring", "dlp", "connectorPolicy", "support")
 STATUS_BY_PREFIX = {
     ("monitoring", "owner"): "blocked_pending_owner_capture",
@@ -93,13 +111,19 @@ def _is_present(value: Any) -> bool:
     if value is None:
         return False
     if isinstance(value, str):
-        candidate = value.strip()
-        return candidate not in {"", "TBD", "required"} and not candidate.startswith(
-            "blocked_pending"
-        )
+        return not _is_placeholder(value)
     if isinstance(value, (list, tuple, set, dict)):
         return bool(value)
     return True
+
+
+def _is_placeholder(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+    candidate = value.strip().lower()
+    return candidate in {"", "tbd", "required", "template_placeholder_only"} or (
+        candidate.startswith("blocked_pending")
+    )
 
 
 def _get_path(data: dict[str, Any], path: tuple[str, ...]) -> Any:
@@ -134,6 +158,69 @@ def _placeholder(path: tuple[str, ...]) -> str:
         if path[: len(prefix)] == prefix:
             return placeholder
     return "TBD"
+
+
+def _validate_exact_shape(data: dict[str, Any]) -> tuple[list[str], list[str]]:
+    missing: list[str] = []
+    extra: list[str] = []
+
+    def walk(path: tuple[str, ...]) -> None:
+        expected = EXPECTED_SHAPE.get(path)
+        if expected is None:
+            return
+
+        cursor = data if not path else _get_path(data, path)
+        if not isinstance(cursor, dict):
+            extra.append(".".join(path))
+            return
+
+        actual_keys = set(cursor)
+        expected_keys = set(expected)
+
+        missing.extend(
+            ".".join((*path, key)) for key in sorted(expected_keys - actual_keys)
+        )
+        extra.extend(
+            ".".join((*path, key)) for key in sorted(actual_keys - expected_keys)
+        )
+
+        for key in sorted(expected_keys & actual_keys):
+            child_path = (*path, key)
+            if child_path in EXPECTED_SHAPE:
+                walk(child_path)
+            elif isinstance(cursor[key], dict):
+                extra.append(".".join(child_path))
+
+    walk(())
+    return missing, extra
+
+
+def _placeholder_fields(data: dict[str, Any]) -> list[str]:
+    fields: list[str] = []
+    for path in REQUIRED_FIELDS:
+        value = _get_path(data, path)
+        if _is_placeholder(value):
+            fields.append(".".join(path))
+    return fields
+
+
+def preflight_capture_sample(data: dict[str, Any]) -> dict[str, Any]:
+    missing, extra = _validate_exact_shape(data)
+    placeholder_fields = _placeholder_fields(data)
+    complete = not missing and not extra and not placeholder_fields
+    status = (
+        "preflight_passed"
+        if complete
+        else "blocked_pending_shape_or_placeholder_validation"
+    )
+    return {
+        "status": status,
+        "complete": complete,
+        "missingFields": missing,
+        "extraFields": extra,
+        "placeholderFields": placeholder_fields,
+        "requiredFields": [".".join(path) for path in REQUIRED_FIELDS],
+    }
 
 
 def _capture_entries(data: dict[str, Any]) -> list[dict[str, Any]]:
@@ -214,16 +301,29 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_OUTPUT,
         help="Path to write the updated evidence record.",
     )
+    parser.add_argument(
+        "--preflight",
+        action="store_true",
+        help=(
+            "Validate capture shape and reject placeholders without writing "
+            "an evidence record."
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    template = _json(args.template)
     supplied = _json(args.input)
     if not isinstance(supplied, dict):
         raise SystemExit(f"{args.input}: input must be a JSON object")
 
+    if args.preflight:
+        summary = preflight_capture_sample(supplied)
+        print(json.dumps(summary, indent=2, sort_keys=True))
+        return 0 if summary["complete"] else 2
+
+    template = _json(args.template)
     base = _json(args.output) if args.output.exists() else template
     evidence, missing = update_evidence(base, supplied)
     _dump(args.output, evidence)

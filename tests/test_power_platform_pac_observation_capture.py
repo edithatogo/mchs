@@ -85,6 +85,40 @@ def test_pac_observation_capture_records_current_observations(tmp_path: Path) ->
     assert saved["claimBoundary"]["productionReadinessClaimed"] is False
 
 
+def test_pac_observation_capture_blocks_placeholder_values(tmp_path: Path) -> None:
+    module = _load_module()
+    output = tmp_path / "placeholder.json"
+
+    evidence = module.build_evidence(
+        as_of="2026-05-21",
+        app_id="00000000-0000-0000-0000-000000000000",
+        play_url=(
+            "https://apps.powerapps.com/play/e/"
+            "00000000-0000-0000-0000-000000000000/"
+            "a/00000000-0000-0000-0000-000000000000"
+            "?tenantId=00000000-0000-0000-0000-000000000000"
+        ),
+        connection_id="00000000-0000-0000-0000-000000000000",
+    )
+    module.write_evidence(output, evidence)
+
+    saved = json.loads(output.read_text(encoding="utf-8"))
+    assert saved["status"] == "blocked_pending_required_pac_observations"
+    assert saved["currentPacObservations"]["appPublication"]["status"] == "blocked"
+    assert (
+        saved["currentPacObservations"]["customConnectorConnection"]["status"]
+        == "blocked"
+    )
+    assert saved["validation"]["appId"]["reason"] == "placeholder"
+    assert saved["validation"]["playUrl"]["reason"] == "placeholder"
+    assert saved["validation"]["connectionId"]["reason"] == "placeholder"
+    assert saved["missingRequiredObservations"] == [
+        "appId",
+        "playUrl",
+        "connectionId",
+    ]
+
+
 def test_pac_observation_capture_cli_writes_output_file(tmp_path: Path) -> None:
     output = tmp_path / "cli.json"
     result = subprocess.run(

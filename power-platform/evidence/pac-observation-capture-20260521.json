@@ -16,6 +16,20 @@
       "status": "blocked"
     }
   },
+  "validation": {
+    "appId": {
+      "reason": "missing",
+      "status": "blocked"
+    },
+    "connectionId": {
+      "reason": "missing",
+      "status": "blocked"
+    },
+    "playUrl": {
+      "reason": "missing",
+      "status": "blocked"
+    }
+  },
   "environment": {
     "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
     "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
@@ -28,7 +42,7 @@
     "playUrl",
     "connectionId"
   ],
-  "nextAction": "Capture a real PAC appId, playUrl, and connectionId, then rerun this script to record the current observations.",
+  "nextAction": "Capture real PAC appId, playUrl, and connectionId values; placeholders and mismatched play URLs stay blocked until the observed values are real.",
   "requiredEvidence": [
     "appId",
     "playUrl",

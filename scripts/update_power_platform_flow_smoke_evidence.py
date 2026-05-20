@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Update Power Platform flow-smoke evidence from a real capture payload.
+"""Update or preflight Power Platform flow-smoke evidence from a capture payload.
 
 The committed evidence stays blocked until a complete capture is supplied.
 This script merges a real capture payload into the blocked template only when
-every required flow run field is present.
+every required flow run field is present. It also exposes a preflight mode that
+checks the placeholder sample shape without claiming any real runs.
 """
 
 from __future__ import annotations
@@ -24,6 +25,8 @@ DEFAULT_OUTPUT = (
     ROOT / "power-platform" / "evidence" / ("power-automate-flow-smoke-20260521.json")
 )
 REQUIRED_CAPTURE_FIELDS = ("flowId", "runId", "runStatus", "runUrl")
+EXPECTED_CAPTURE_TYPE = "power_automate_flow_smoke_capture"
+EXPECTED_SAMPLE_STATUS = "template_placeholder_only"
 GUID_RE = re.compile(
     r"^[0-9a-fA-F]{8}-"
     r"[0-9a-fA-F]{4}-"
@@ -31,6 +34,7 @@ GUID_RE = re.compile(
     r"[0-9a-fA-F]{4}-"
     r"[0-9a-fA-F]{12}$"
 )
+PLACEHOLDER_RE = re.compile(r"(replace_with|placeholder|^tbd$|^required$)", re.I)
 
 
 def _json(path: Path) -> dict:
@@ -60,6 +64,13 @@ def _normalize_https_url(url: object) -> str | None:
     return candidate
 
 
+def _is_placeholder_text(value: object) -> bool:
+    if not isinstance(value, str):
+        return False
+    candidate = value.strip()
+    return bool(candidate) and PLACEHOLDER_RE.search(candidate) is not None
+
+
 def _capture_by_flow_logical_name(payload: dict) -> dict[str, dict]:
     entries = _as_list(payload)
     capture: dict[str, dict] = {}
@@ -81,7 +92,11 @@ def _missing_fields(entry: dict) -> list[str]:
     missing: list[str] = []
     for field in REQUIRED_CAPTURE_FIELDS:
         value = entry.get(field)
-        if not isinstance(value, str) or not value.strip():
+        if (
+            not isinstance(value, str)
+            or not value.strip()
+            or _is_placeholder_text(value)
+        ):
             missing.append(field)
     if "flowId" not in missing:
         flow_id = entry.get("flowId", "")
@@ -90,6 +105,77 @@ def _missing_fields(entry: dict) -> list[str]:
     if "runUrl" not in missing and _normalize_https_url(entry.get("runUrl")) is None:
         missing.append("runUrl")
     return sorted(set(missing))
+
+
+def _validate_preflight_capture_shape(
+    template: dict, capture_payload: dict
+) -> tuple[list[str], list[str]]:
+    issues: list[str] = []
+    if not isinstance(capture_payload, dict):
+        return ["capture payload must be a JSON object"], []
+
+    if capture_payload.get("captureType") != EXPECTED_CAPTURE_TYPE:
+        issues.append("captureType must remain power_automate_flow_smoke_capture")
+    if capture_payload.get("status") != EXPECTED_SAMPLE_STATUS:
+        issues.append("status must remain template_placeholder_only")
+
+    template_entries = {
+        entry["flowLogicalName"]: entry
+        for entry in template.get("realNswRunEvidence", [])
+        if isinstance(entry, dict) and "flowLogicalName" in entry
+    }
+    entries = capture_payload.get("flowRuns")
+    if not isinstance(entries, list):
+        issues.append("flowRuns must be a list")
+        return issues, []
+
+    observed_logical_names: list[str] = []
+    if len(entries) != len(template_entries):
+        issues.append(
+            f"flowRuns must contain {len(template_entries)} entries; got {len(entries)}"
+        )
+
+    seen_logical_names: set[str] = set()
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            issues.append(f"flowRuns[{index}] must be an object")
+            continue
+
+        logical_name = entry.get("flowLogicalName")
+        if not isinstance(logical_name, str) or not logical_name.strip():
+            issues.append(f"flowRuns[{index}].flowLogicalName must be present")
+            continue
+        observed_logical_names.append(logical_name)
+        if logical_name in seen_logical_names:
+            issues.append(
+                f"duplicate flowLogicalName in capture payload: {logical_name}"
+            )
+        seen_logical_names.add(logical_name)
+
+        if logical_name not in template_entries:
+            issues.append(
+                f"unexpected flowLogicalName in capture payload: {logical_name}"
+            )
+
+        for field in ("flowId", "runId", "runStatus", "runUrl", "captureNote"):
+            value = entry.get(field)
+            if not isinstance(value, str) or not value.strip():
+                issues.append(f"flowRuns[{index}].{field} must be populated")
+                continue
+            if _is_placeholder_text(value):
+                issues.append(f"flowRuns[{index}].{field} must not be a placeholder")
+                continue
+            if field == "flowId" and GUID_RE.match(value) is None:
+                issues.append(f"flowRuns[{index}].flowId must be a GUID")
+            if field == "runUrl" and _normalize_https_url(value) is None:
+                issues.append(f"flowRuns[{index}].runUrl must use https")
+
+    missing_logical_names = sorted(set(template_entries) - set(observed_logical_names))
+    if missing_logical_names:
+        issues.append(
+            "missing flowLogicalName entries: " + ", ".join(missing_logical_names)
+        )
+    return issues, observed_logical_names
 
 
 def build_flow_smoke_evidence(
@@ -122,8 +208,8 @@ def build_flow_smoke_evidence(
         "extraFlowLogicalNames": extra_logical_names,
         "missingFields": missing_fields,
         "nextAction": (
-            "Provide a capture entry for every flow logical name with flowId, "
-            "runId, runStatus, and runUrl, then rerun the script."
+            "Provide real flowId, runId, runStatus, and HTTPS runUrl values "
+            "for every flow logical name, then rerun the script."
         ),
     }
 
@@ -183,6 +269,38 @@ def build_flow_smoke_evidence(
     return 0, summary, merged
 
 
+def preflight_flow_smoke_capture(
+    template: dict,
+    capture_payload: dict,
+) -> tuple[int, dict]:
+    issues, observed_logical_names = _validate_preflight_capture_shape(
+        template, capture_payload
+    )
+    status = "ready_for_update" if not issues else "blocked_pending_sample_capture"
+    summary = {
+        "status": status,
+        "captureType": capture_payload.get("captureType")
+        if isinstance(capture_payload, dict)
+        else None,
+        "sampleShape": {
+            "expectedCaptureType": EXPECTED_CAPTURE_TYPE,
+            "expectedStatus": EXPECTED_SAMPLE_STATUS,
+            "expectedFlowLogicalNames": sorted(
+                entry["flowLogicalName"]
+                for entry in template.get("realNswRunEvidence", [])
+                if isinstance(entry, dict) and "flowLogicalName" in entry
+            ),
+            "observedFlowLogicalNames": observed_logical_names,
+        },
+        "issues": issues,
+        "nextAction": (
+            "Replace placeholder values with real flow IDs, run IDs, run statuses, "
+            "and HTTPS run URLs before using the updater."
+        ),
+    }
+    return (0 if not issues else 2), summary
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -201,6 +319,14 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument(
+        "--preflight",
+        action="store_true",
+        help=(
+            "Validate the placeholder capture sample shape without writing "
+            "updated evidence."
+        ),
+    )
+    parser.add_argument(
         "--output",
         type=Path,
         default=DEFAULT_OUTPUT,
@@ -211,17 +337,27 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    preflight = getattr(args, "preflight", False)
+    merged: dict | None
     try:
         template = _json(args.template)
         capture = _json(args.capture)
-        exit_code, summary, merged = build_flow_smoke_evidence(
-            template,
-            capture,
-            output_path=args.output,
-        )
+        if preflight:
+            exit_code, summary = preflight_flow_smoke_capture(template, capture)
+            merged = None
+        else:
+            exit_code, summary, merged = build_flow_smoke_evidence(
+                template,
+                capture,
+                output_path=args.output,
+            )
     except (OSError, json.JSONDecodeError, ValueError) as error:
         summary = {
-            "status": "blocked_pending_real_flow_run_capture",
+            "status": (
+                "blocked_pending_sample_capture"
+                if preflight
+                else "blocked_pending_real_flow_run_capture"
+            ),
             "template": args.template.as_posix(),
             "output": args.output.as_posix(),
             "error": str(error),
@@ -229,7 +365,7 @@ def main() -> int:
         merged = None
         exit_code = 2
 
-    if merged is not None:
+    if merged is not None and not preflight:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(merged, indent=2) + "\n", encoding="utf-8")
 

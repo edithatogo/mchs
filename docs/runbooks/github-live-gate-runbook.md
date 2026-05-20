@@ -23,6 +23,10 @@ manual GitHub release gates:
 The current workflows do not require stored NSW secrets in the repository.
 They rely on GitHub-provided tokens and on operator-supplied dispatch inputs.
 
+Before dispatching from `scripts/bootstrap-power-platform-github-live-gate.sh`,
+the operator-inputs env file must already be sanitized and free of the example
+placeholder values from `docs/runbooks/github-live-gate.env.example`.
+
 | Workflow item | Source in workflow | NSW value to supply | Notes |
 | --- | --- | --- | --- |
 | `GITHUB_TOKEN` | GitHub Actions secret context | None | GitHub injects this automatically. Do not store it in a file. |
@@ -41,6 +45,7 @@ They rely on GitHub-provided tokens and on operator-supplied dispatch inputs.
 4. For manual dispatches that accept `tag`, supply the exact tag string and do not improvise a branch name.
 5. Do not create repo secrets for `GITHUB_TOKEN` or `GH_TOKEN`; GitHub supplies those values automatically at runtime.
 6. Keep any future NSW-owned secret names out of source control and record them only in repository secret settings, not in this repo.
+7. Keep the local sanitized operator-inputs file free of the example placeholder values before running the bootstrap dispatch step.
 
 ## Workflow-specific notes
 

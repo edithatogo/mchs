@@ -3,6 +3,7 @@ set -euo pipefail
 
 readonly WORKFLOW_NAME="Power Platform Official Actions"
 readonly WORKFLOW_FILE=".github/workflows/power-platform-official-actions.yml"
+readonly DEFAULT_OPERATOR_INPUTS_FILE="docs/runbooks/github-live-gate.env"
 readonly REQUIRED_SECRETS=(
   "POWER_PLATFORM_ENVIRONMENT_URL"
   "POWER_PLATFORM_APPLICATION_ID"
@@ -11,6 +12,7 @@ readonly REQUIRED_SECRETS=(
 )
 
 DISPATCH=0
+OPERATOR_INPUTS_FILE="$DEFAULT_OPERATOR_INPUTS_FILE"
 PRESENT_SECRETS=()
 
 log() {
@@ -28,13 +30,15 @@ fail() {
 
 usage() {
   cat <<'EOF'
-Usage: ./scripts/bootstrap-power-platform-github-live-gate.sh [--dispatch]
+Usage: ./scripts/bootstrap-power-platform-github-live-gate.sh [--inputs-file PATH] [--dispatch]
 
 Checks the GitHub repository secrets required by the official Power Platform
-live gate, prints exact `gh secret set` commands for any missing secrets, and
-dispatches the workflow only after all secrets are present.
+live gate, validates a sanitized operator-inputs env file for placeholder
+values, prints exact `gh secret set` commands for any missing secrets, and
+dispatches the workflow only after the inputs and secrets are ready.
 
 Options:
+  --inputs-file PATH  Read sanitized operator inputs from PATH.
   --dispatch   Run the workflow dispatch after all required secrets exist.
   --help       Show this help text.
 
@@ -96,6 +100,166 @@ placeholder_for_secret() {
   esac
 }
 
+is_placeholder_angle_value() {
+  case "$1" in
+    '<'*'>')
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+validate_operator_input_value() {
+  local key="$1"
+  local value="$2"
+  local placeholder="$3"
+  local message="$4"
+
+  if [ -z "$value" ]; then
+    fail "$key is missing from $OPERATOR_INPUTS_FILE."
+  fi
+
+  if [ "$value" = "$placeholder" ] || is_placeholder_angle_value "$value"; then
+    fail "$key still contains a placeholder value in $OPERATOR_INPUTS_FILE: $message"
+  fi
+}
+
+validate_runtime_token_value() {
+  local key="$1"
+  local value="$2"
+
+  if [ -z "$value" ]; then
+    return 0
+  fi
+
+  if [ "$value" != "provided_by_github_actions" ]; then
+    fail "$key must not store a real token in $OPERATOR_INPUTS_FILE; omit it or keep the built-in GitHub runtime sentinel only."
+  fi
+}
+
+validate_operator_inputs_file() {
+  local line
+  local key
+  local value
+  local known_keys=""
+  local live_gate_workflow=""
+  local live_gate_tag=""
+  local nsw_operator_name=""
+  local nsw_operator_email=""
+  local nsw_approver_name=""
+  local nsw_approver_email=""
+  local nsw_release_reason=""
+  local nsw_release_notes=""
+  local github_token=""
+  local gh_token=""
+
+  [ -f "$OPERATOR_INPUTS_FILE" ] || fail "Missing sanitized operator inputs file: $OPERATOR_INPUTS_FILE"
+
+  log "Preflight operator inputs: $OPERATOR_INPUTS_FILE"
+
+  while IFS= read -r line || [ -n "$line" ]; do
+    line="${line%$'\r'}"
+    case "$line" in
+      ''|\#*)
+        continue
+        ;;
+    esac
+
+    case "$line" in
+      *=*)
+        key="${line%%=*}"
+        value="${line#*=}"
+        ;;
+      *)
+        fail "Invalid operator input line in $OPERATOR_INPUTS_FILE: $line"
+        ;;
+    esac
+
+    case "$key" in
+      LIVE_GATE_WORKFLOW)
+        live_gate_workflow="$value"
+        ;;
+      LIVE_GATE_TAG)
+        live_gate_tag="$value"
+        ;;
+      NSW_OPERATOR_NAME)
+        nsw_operator_name="$value"
+        ;;
+      NSW_OPERATOR_EMAIL)
+        nsw_operator_email="$value"
+        ;;
+      NSW_APPROVER_NAME)
+        nsw_approver_name="$value"
+        ;;
+      NSW_APPROVER_EMAIL)
+        nsw_approver_email="$value"
+        ;;
+      NSW_RELEASE_REASON)
+        nsw_release_reason="$value"
+        ;;
+      NSW_RELEASE_NOTES)
+        nsw_release_notes="$value"
+        ;;
+      GITHUB_TOKEN)
+        github_token="$value"
+        ;;
+      GH_TOKEN)
+        gh_token="$value"
+        ;;
+      *)
+        fail "Unknown operator input key in $OPERATOR_INPUTS_FILE: $key"
+        ;;
+    esac
+  done < "$OPERATOR_INPUTS_FILE"
+
+  validate_operator_input_value \
+    "LIVE_GATE_WORKFLOW" \
+    "$live_gate_workflow" \
+    "" \
+    "replace the example workflow with the actual workflow name you intend to reference"
+  validate_operator_input_value \
+    "LIVE_GATE_TAG" \
+    "$live_gate_tag" \
+    "v0.0.0" \
+    "replace the example release tag with the real tag you intend to use"
+  validate_operator_input_value \
+    "NSW_OPERATOR_NAME" \
+    "$nsw_operator_name" \
+    "NSW operator name" \
+    "replace the example operator name with the real approver/dispatcher name"
+  validate_operator_input_value \
+    "NSW_OPERATOR_EMAIL" \
+    "$nsw_operator_email" \
+    "operator@example.nsw.gov.au" \
+    "replace the example operator email with the real approver/dispatcher email"
+  validate_operator_input_value \
+    "NSW_APPROVER_NAME" \
+    "$nsw_approver_name" \
+    "NSW approver name" \
+    "replace the example approver name with the real approval name"
+  validate_operator_input_value \
+    "NSW_APPROVER_EMAIL" \
+    "$nsw_approver_email" \
+    "approver@example.nsw.gov.au" \
+    "replace the example approver email with the real approval email"
+  validate_operator_input_value \
+    "NSW_RELEASE_REASON" \
+    "$nsw_release_reason" \
+    "Manual live-gate dispatch for GitHub release or registry publication" \
+    "replace the example release reason with a real dispatch reason"
+  validate_operator_input_value \
+    "NSW_RELEASE_NOTES" \
+    "$nsw_release_notes" \
+    "Document the evidence bundle, dispatch time, and approval reference here" \
+    "replace the example release notes with the real evidence reference"
+  validate_runtime_token_value "GITHUB_TOKEN" "$github_token"
+  validate_runtime_token_value "GH_TOKEN" "$gh_token"
+
+  log "Operator inputs preflight passed."
+}
+
 collect_present_secrets() {
   local secret_json
 
@@ -133,6 +297,11 @@ main() {
 
   while [ "$#" -gt 0 ]; do
     case "$1" in
+      --inputs-file)
+        shift
+        [ "$#" -gt 0 ] || fail "--inputs-file requires a path argument."
+        OPERATOR_INPUTS_FILE="$1"
+        ;;
       --dispatch)
         DISPATCH=1
         ;;
@@ -151,6 +320,7 @@ main() {
   command_exists python3 || fail "python3 is required to parse gh JSON output."
   [[ -f "$WORKFLOW_FILE" ]] || fail "Missing workflow file: $WORKFLOW_FILE"
 
+  validate_operator_inputs_file
   parse_repo_metadata
   collect_present_secrets
 

@@ -23,7 +23,8 @@ recorded here.
 - `scripts/capture_power_platform_pac_observations.py`: capture helper for
   current PAC observations. It writes `pac-observation-capture-<as-of>.json`
   and stays blocked until `appId`, `playUrl`, and `connectionId` are all
-  present.
+  present. Placeholder-looking values and mismatched app/play URL pairs are
+  also blocked.
 - `pac-observation-capture-20260521.json`: current machine-checkable PAC
   blocker capture. It remains blocked until `appId`, `playUrl`, and
   `connectionId` are observed.
@@ -38,6 +39,9 @@ recorded here.
 - `examples/service-boundary-probe-result.example.json`: sample probe payload
   shape for the updater when you want a dry-run package without claiming a live
   endpoint.
+- `scripts/preflight_power_platform_service_boundary_endpoint_operator_package.py`:
+  offline gate that validates the operator input and probe JSON artifacts and
+  stays blocked on placeholder hosts or example-only probe text.
 - `docs/runbooks/service-boundary-public-endpoint-operator-package.md`: the
   operator package/runbook with exact command sequence for building a real
   public HTTPS service-boundary endpoint and collecting probe evidence.
@@ -79,9 +83,10 @@ recorded here.
 - `official-github-live-gate-evidence-template.json`: official GitHub Actions live-gate
   evidence shape for environment-bound validation.
 - `scripts/bootstrap-power-platform-github-live-gate.sh`: non-destructive bootstrap
-  path that checks required repository secrets, prints exact `gh secret set`
-  commands with placeholders, and only dispatches the workflow after the
-  secrets exist.
+  path that first validates the sanitized operator-inputs env file for
+  placeholder values, then checks required repository secrets, prints exact
+  `gh secret set` commands with placeholders, and only dispatches the workflow
+  after the inputs and secrets exist.
 - `scripts/bootstrap-power-platform-github-live-gate.md`: companion runbook for
   the live-gate bootstrap path.
 - `github-live-gate-20260521.json`: current blocked live-gate record with

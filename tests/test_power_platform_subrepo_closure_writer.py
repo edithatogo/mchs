@@ -134,3 +134,61 @@ def test_writer_rejects_incomplete_explicit_waiver_input(tmp_path: Path) -> None
     assert result.returncode != 0
     assert "--risk-acceptance" in result.stderr
     assert not output.exists()
+
+
+def test_writer_rejects_placeholder_standalone_remote_input(tmp_path: Path) -> None:
+    output = tmp_path / "subrepo-closure.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--output",
+            str(output),
+            "standalone-remote",
+            "--remote-url",
+            "<remote-url>",
+            "--default-branch",
+            "main",
+            "--sync-procedure",
+            "git pull --ff-only; git push",
+            "--import-owner",
+            "NSW import owner",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "remote-url must be a complete value, not a placeholder" in result.stderr
+    assert not output.exists()
+
+
+def test_writer_rejects_placeholder_explicit_waiver_input(tmp_path: Path) -> None:
+    output = tmp_path / "subrepo-closure.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--output",
+            str(output),
+            "explicit-waiver",
+            "--approved-by",
+            "<approver>",
+            "--approval-record",
+            "GOV-2026-05-21-001",
+            "--reason",
+            "Standalone remote is deferred pending repository split approval.",
+            "--review-date",
+            "2026-05-21",
+            "--risk-acceptance",
+            "Accepted by product owner for current governed boundary.",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "approved-by must be a complete value, not a placeholder" in result.stderr
+    assert not output.exists()

@@ -346,6 +346,106 @@ def test_power_platform_monitoring_dlp_operator_package_is_placeholder_only():
     }
 
 
+def test_power_platform_monitoring_dlp_preflight_gate_rejects_placeholder_sample(
+    tmp_path,
+):
+    import subprocess
+    import sys
+
+    output_path = tmp_path / "unused-preflight-output.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/update_power_platform_monitoring_dlp_evidence.py",
+            "--preflight",
+            "--input",
+            str(MONITORING_SAMPLE),
+            "--output",
+            str(output_path),
+        ],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 2
+    summary = json.loads(result.stdout)
+    assert summary["complete"] is False
+    assert summary["missingFields"] == []
+    assert summary["extraFields"] == []
+    assert len(summary["placeholderFields"]) == 17
+    assert "monitoring.owner" in summary["placeholderFields"]
+    assert "support.escalationContact" in summary["placeholderFields"]
+    assert not output_path.exists()
+
+
+def test_power_platform_monitoring_dlp_preflight_gate_accepts_complete_capture(
+    tmp_path,
+):
+    import subprocess
+    import sys
+
+    input_path = tmp_path / "complete-monitoring-dlp.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "monitoring": {
+                    "owner": "Platform Operations",
+                    "failureMetrics": {
+                        "connectorFailures": "captured connector failures",
+                        "flowRunFailures": "captured flow run failures",
+                        "serviceBoundaryHealth": "captured service boundary health",
+                        "appHealthMetrics": "captured app health metrics",
+                        "correlationIdsWithoutPatientData": (
+                            "captured sanitized correlation identifiers"
+                        ),
+                    },
+                },
+                "dlp": {
+                    "policyId": "policy-123",
+                    "policyName": "NSW Health DLP Policy",
+                    "policyClassification": "business",
+                    "policyCaptureState": "captured",
+                },
+                "connectorPolicy": {
+                    "policyId": "policy-123",
+                    "policyName": "NSW Health DLP Policy",
+                    "connectorAllowState": "captured",
+                },
+                "support": {
+                    "owner": "Platform Support",
+                    "escalationOwner": "Duty Manager",
+                    "escalationPath": "24x7 on-call",
+                    "escalationContact": "oncall@example.invalid",
+                },
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/update_power_platform_monitoring_dlp_evidence.py",
+            "--preflight",
+            "--input",
+            str(input_path),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    summary = json.loads(result.stdout)
+    assert summary["complete"] is True
+    assert summary["missingFields"] == []
+    assert summary["extraFields"] == []
+    assert summary["placeholderFields"] == []
+
+
 def test_power_platform_monitoring_dlp_updater_stays_blocked_until_complete(
     tmp_path,
 ):
