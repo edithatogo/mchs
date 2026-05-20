@@ -33,8 +33,8 @@ FLOW_SMOKE_TEMPLATE = (
 FLOW_SMOKE_EVIDENCE = (
     ROOT / "power-platform" / "evidence" / "power-automate-flow-smoke-20260521.json"
 )
-ENDPOINT = ROOT / "power-platform" / "evidence" / (
-    "service-boundary-endpoint-template.json"
+ENDPOINT = (
+    ROOT / "power-platform" / "evidence" / ("service-boundary-endpoint-template.json")
 )
 GITHUB_LIVE_GATE_TEMPLATE = (
     ROOT
@@ -42,8 +42,8 @@ GITHUB_LIVE_GATE_TEMPLATE = (
     / "evidence"
     / "official-github-live-gate-evidence-template.json"
 )
-GITHUB_LIVE_GATE = ROOT / "power-platform" / "evidence" / (
-    "github-live-gate-20260521.json"
+GITHUB_LIVE_GATE = (
+    ROOT / "power-platform" / "evidence" / ("github-live-gate-20260521.json")
 )
 
 
@@ -249,6 +249,137 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     assert monitoring["support"]["escalationOwner"]
     assert monitoring["support"]["escalationPath"]
     assert monitoring["support"]["escalationContact"]
+    assert "monitoring.owner" in monitoring["requiredEvidence"]
+    assert any(
+        entry["field"] == "support.escalationContact"
+        for entry in monitoring["capturedEvidence"]
+    )
+
+
+def test_power_platform_monitoring_dlp_updater_stays_blocked_until_complete(
+    tmp_path,
+):
+    import subprocess
+    import sys
+
+    input_path = tmp_path / "partial-monitoring-dlp.json"
+    output_path = tmp_path / "updated-monitoring-dlp.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "monitoring": {
+                    "owner": "Platform Operations",
+                },
+                "dlp": {
+                    "policyId": "policy-123",
+                },
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/update_power_platform_monitoring_dlp_evidence.py",
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+        ],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 2
+    summary = json.loads(result.stdout)
+    assert summary["complete"] is False
+    assert "dlp.policyName" in summary["missingFields"]
+    assert "monitoring.failureMetrics.connectorFailures" in summary["missingFields"]
+
+    updated = _json(output_path)
+    assert updated["status"].startswith("blocked")
+    assert updated["claimBoundary"]["monitoringConfigured"] is False
+    captured = {item["field"]: item for item in updated["capturedEvidence"]}
+    assert captured["monitoring.owner"]["status"] == "captured"
+    assert captured["dlp.policyId"]["status"] == "captured"
+    assert captured["dlp.policyName"]["status"].startswith("blocked")
+
+
+def test_power_platform_monitoring_dlp_updater_populates_complete_capture(
+    tmp_path,
+):
+    import subprocess
+    import sys
+
+    input_path = tmp_path / "complete-monitoring-dlp.json"
+    output_path = tmp_path / "complete-monitoring-dlp-evidence.json"
+    input_path.write_text(
+        json.dumps(
+            {
+                "monitoring": {
+                    "owner": "Platform Operations",
+                    "failureMetrics": {
+                        "connectorFailures": "captured connector failures",
+                        "flowRunFailures": "captured flow run failures",
+                        "serviceBoundaryHealth": "captured service boundary health",
+                        "appHealthMetrics": "captured app health metrics",
+                        "correlationIdsWithoutPatientData": (
+                            "captured sanitized correlation identifiers"
+                        ),
+                    },
+                },
+                "dlp": {
+                    "policyId": "policy-123",
+                    "policyName": "NSW Health DLP Policy",
+                    "policyClassification": "business",
+                    "policyCaptureState": "captured",
+                },
+                "connectorPolicy": {
+                    "policyId": "policy-123",
+                    "policyName": "NSW Health DLP Policy",
+                    "connectorAllowState": "captured",
+                },
+                "support": {
+                    "owner": "Platform Support",
+                    "escalationOwner": "Duty Manager",
+                    "escalationPath": "24x7 on-call",
+                    "escalationContact": "oncall@example.invalid",
+                },
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/update_power_platform_monitoring_dlp_evidence.py",
+            "--input",
+            str(input_path),
+            "--output",
+            str(output_path),
+        ],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    summary = json.loads(result.stdout)
+    assert summary["complete"] is True
+    assert summary["missingFields"] == []
+
+    updated = _json(output_path)
+    assert updated["status"].startswith("blocked")
+    assert updated["dlp"]["policyName"] == "NSW Health DLP Policy"
+    assert updated["connectorPolicy"]["connectorAllowState"] == "captured"
+    assert updated["support"]["escalationContact"] == "oncall@example.invalid"
+    assert all(item["status"] == "captured" for item in updated["capturedEvidence"])
 
 
 def test_power_platform_operational_evidence_validator_passes():

@@ -14,6 +14,8 @@ on:
       - 'scripts/validate_power_platform_platform_tests.py'
       - 'scripts/validate_power_platform_toolchain.py'
       - 'scripts/validate_power_platform_visual_contract.py'
+      - 'scripts/bootstrap-power-platform-github-live-gate.sh'
+      - 'scripts/bootstrap-power-platform-github-live-gate.md'
       - '.github/workflows/power-platform-alm.yml'
       - '.github/workflows/power-platform-official-actions.yml'
       - '.github/workflows/power-bi-devops.yml'
@@ -31,6 +33,8 @@ on:
       - 'scripts/validate_power_platform_platform_tests.py'
       - 'scripts/validate_power_platform_toolchain.py'
       - 'scripts/validate_power_platform_visual_contract.py'
+      - 'scripts/bootstrap-power-platform-github-live-gate.sh'
+      - 'scripts/bootstrap-power-platform-github-live-gate.md'
   workflow_dispatch:
 
 jobs:

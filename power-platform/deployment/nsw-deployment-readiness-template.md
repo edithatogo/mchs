@@ -93,9 +93,12 @@ solution checker output, app smoke evidence, and flow smoke evidence.
   support diagnostic fields (`solutionVersion`, `environmentId`, `connectorOperation`,
   `correlationId`, `sanitizedPayloadHash`).
 - Official GitHub live-gate checklist: run
-  `.github/workflows/power-platform-official-actions.yml` with `run_live_checks=true`
-  and store workflow evidence in
-  `power-platform/evidence/official-github-live-gate-evidence-template.json`.
+  `./scripts/bootstrap-power-platform-github-live-gate.sh --dispatch` after the
+  required repository secrets exist. The bootstrap path prints exact `gh secret
+  set` commands with placeholders for any missing secrets and only dispatches
+  `.github/workflows/power-platform-official-actions.yml` with
+  `run_live_checks=true` once the secrets are present. Store workflow evidence
+  in `power-platform/evidence/official-github-live-gate-evidence-template.json`.
 - Standalone subrepo closure checklist: provision standalone remote governance
   in `power-platform/repository/subrepo-manifest.json` or explicitly close the waiver
   in `power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json`.

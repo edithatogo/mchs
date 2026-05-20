@@ -4,14 +4,23 @@
   "evidenceType": "dlp_monitoring_connector_policy",
   "status": "blocked_pending_nsw_admin_policy_capture",
   "requiredEvidence": [
-    "environment DLP policy ID",
-    "environment DLP policy name and classification",
-    "custom connector business/non-business classification",
-    "connector allow state",
-    "monitoring owner",
-    "failure metrics by operation",
-    "support escalation owner",
-    "support escalation path"
+    "monitoring.owner",
+    "monitoring.failureMetrics.connectorFailures",
+    "monitoring.failureMetrics.flowRunFailures",
+    "monitoring.failureMetrics.serviceBoundaryHealth",
+    "monitoring.failureMetrics.appHealthMetrics",
+    "monitoring.failureMetrics.correlationIdsWithoutPatientData",
+    "dlp.policyId",
+    "dlp.policyName",
+    "dlp.policyClassification",
+    "dlp.policyCaptureState",
+    "connectorPolicy.policyId",
+    "connectorPolicy.policyName",
+    "connectorPolicy.connectorAllowState",
+    "support.owner",
+    "support.escalationOwner",
+    "support.escalationPath",
+    "support.escalationContact"
   ],
   "monitoring": {
     "owner": "TBD",
@@ -58,6 +67,36 @@
   },
   "capturedEvidence": [
     {
+      "field": "monitoring.owner",
+      "value": "TBD",
+      "status": "blocked_pending_owner_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.connectorFailures",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.flowRunFailures",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.serviceBoundaryHealth",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.appHealthMetrics",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.correlationIdsWithoutPatientData",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
       "field": "dlp.policyId",
       "value": "TBD",
       "status": "blocked_pending_policy_capture"
@@ -68,19 +107,34 @@
       "status": "blocked_pending_policy_capture"
     },
     {
+      "field": "dlp.policyClassification",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "dlp.policyCaptureState",
+      "value": "blocked_pending_policy_capture",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "connectorPolicy.policyId",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "connectorPolicy.policyName",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
       "field": "connectorPolicy.connectorAllowState",
       "value": "blocked_pending_policy_capture",
       "status": "blocked_pending_policy_capture"
     },
     {
-      "field": "monitoring.owner",
+      "field": "support.owner",
       "value": "TBD",
-      "status": "blocked_pending_owner_capture"
-    },
-    {
-      "field": "monitoring.failureMetrics",
-      "value": "required",
-      "status": "blocked_pending_metrics_capture"
+      "status": "blocked_pending_escalation_capture"
     },
     {
       "field": "support.escalationOwner",
@@ -89,6 +143,11 @@
     },
     {
       "field": "support.escalationPath",
+      "value": "TBD",
+      "status": "blocked_pending_escalation_capture"
+    },
+    {
+      "field": "support.escalationContact",
       "value": "TBD",
       "status": "blocked_pending_escalation_capture"
     }
