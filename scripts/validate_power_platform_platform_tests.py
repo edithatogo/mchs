@@ -70,15 +70,18 @@ def main() -> int:
             ]
         ):
             raise SystemExit(
-                "production readiness claim requires all core platform checks to be passed"
+                "production readiness claim requires all core platform "
+                "checks to be passed"
             )
         if checks["real-power-app-runtime-smoke"]["status"] != "passed":
             raise SystemExit(
-                "production readiness claim requires real Power App runtime smoke evidence"
+                "production readiness claim requires real Power App runtime "
+                "smoke evidence"
             )
         if checks["real-power-automate-flow-smoke"]["status"] != "passed":
             raise SystemExit(
-                "production readiness claim requires real Power Automate flow smoke evidence"
+                "production readiness claim requires real Power Automate "
+                "flow smoke evidence"
             )
         if not visual.get("optimizedInTenant"):
             raise SystemExit(

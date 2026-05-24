@@ -60,7 +60,8 @@ def main() -> int:
     if contract["claimBoundary"]["productionRuntimeReady"]:
         if not publication.get("publishedInTenant"):
             raise SystemExit(
-                "production runtime readiness claim requires tenant publication evidence"
+                "production runtime readiness claim requires tenant "
+                "publication evidence"
             )
         if not contract["claimBoundary"]["optimizedSourceGenerated"]:
             raise SystemExit(
@@ -68,11 +69,13 @@ def main() -> int:
             )
         if not contract["claimBoundary"]["optimizedMsappPacked"]:
             raise SystemExit(
-                "production runtime readiness claim requires packed optimized msapp evidence"
+                "production runtime readiness claim requires packed "
+                "optimized msapp evidence"
             )
         if not contract["claimBoundary"]["optimizedAppPublished"]:
             raise SystemExit(
-                "production runtime readiness claim requires optimized app publication evidence"
+                "production runtime readiness claim requires optimized app "
+                "publication evidence"
             )
 
     print("Power Platform visual performance contract passed.")
