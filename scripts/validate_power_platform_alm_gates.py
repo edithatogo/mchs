@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import subprocess
+import shutil
+import subprocess  # nosec B404
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -31,10 +32,10 @@ REQUIRED_FILES = [
 
 
 COMMAND_SURFACES = [
-    "pac solution pack help",
-    "pac solution unpack help",
-    "pac solution import help",
-    "pac solution check help",
+    ("solution", "pack", "help"),
+    ("solution", "unpack", "help"),
+    ("solution", "import", "help"),
+    ("solution", "check", "help"),
 ]
 
 
@@ -90,14 +91,7 @@ def check_markdown_contracts(results: ValidationResult) -> None:
 
 
 def command_available(name: str) -> bool:
-    return (
-        subprocess.run(
-            ["bash", "-lc", f"command -v {name}"],
-            check=False,
-            capture_output=True,
-        ).returncode
-        == 0
-    )
+    return shutil.which(name) is not None
 
 
 def check_command_surface(results: ValidationResult, require_tools: bool) -> None:
@@ -112,13 +106,15 @@ def check_command_surface(results: ValidationResult, require_tools: bool) -> Non
             )
         return
 
-    if not command_available("pac"):
+    pac_path = shutil.which("pac")
+    if pac_path is None:
         results.errors.append("pac is required for live command surface checks")
         return
 
-    for command in COMMAND_SURFACES:
-        proc = subprocess.run(
-            ["bash", "-lc", command],
+    for command_args in COMMAND_SURFACES:
+        command = "pac " + " ".join(command_args)
+        proc = subprocess.run(  # nosec B603
+            [pac_path, *command_args],
             check=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
