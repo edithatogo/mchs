@@ -5,8 +5,7 @@
   "status": "blocked_with_remaining_blockers",
   "generatedFrom": {
     "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
-    "deploymentStatus": "power-platform/evidence/deployment-status.json",
-    "liveTenantBrowserSweep": "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
+    "deploymentStatus": "power-platform/evidence/deployment-status.json"
   },
   "claimBoundary": {
     "productionReadinessClaimed": false,
