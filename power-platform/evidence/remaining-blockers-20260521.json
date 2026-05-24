@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidenceType": "power_platform_remaining_blockers",
-  "asOf": "2026-05-21",
+  "asOf": "2026-05-24",
   "status": "blocked_with_remaining_blockers",
   "generatedFrom": {
     "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
@@ -20,7 +20,8 @@
       "source": "power-platform/repository/repo-health-scorecard.json",
       "supportingEvidence": [
         "power-platform/evidence/connection-reference-evidence-template.json",
-        "power-platform/evidence/runtime-smoke-evidence-template.json"
+        "power-platform/evidence/runtime-smoke-evidence-template.json",
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
       ]
     },
     {
@@ -30,7 +31,8 @@
       "source": "power-platform/repository/repo-health-scorecard.json",
       "supportingEvidence": [
         "power-platform/evidence/flow-smoke-evidence-template.json",
-        "power-platform/evidence/power-automate-flow-smoke-20260521.json"
+        "power-platform/evidence/power-automate-flow-smoke-20260521.json",
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
       ]
     },
     {
@@ -40,7 +42,8 @@
       "source": "power-platform/repository/repo-health-scorecard.json",
       "supportingEvidence": [
         "power-platform/evidence/live-service-boundary-smoke-20260521.json",
-        "power-platform/evidence/runtime-smoke-evidence-template.json"
+        "power-platform/evidence/runtime-smoke-evidence-template.json",
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
       ]
     },
     {
@@ -50,13 +53,15 @@
       "source": "power-platform/repository/repo-health-scorecard.json",
       "supportingEvidence": [
         "power-platform/evidence/canvas-app-publication-20260520.json",
-        "power-platform/evidence/deployment-status.json"
+        "power-platform/evidence/deployment-status.json",
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
       ]
     }
   ],
   "notes": [
     "This file records the current remaining blockers only.",
     "No external blocker is claimed to be resolved here.",
-    "The blocker list is derived from the current hardBlockers entries in the repository scorecard."
+    "The blocker list is derived from the current hardBlockers entries in the repository scorecard.",
+    "The 2026-05-24 authenticated browser sweep confirms that the target tenant session exposes the documented MCHS app IDs, but does not expose a service-boundary connection, MCHS custom connector match, or MCHS flow run inventory sufficient to close the runtime blockers."
   ]
 }

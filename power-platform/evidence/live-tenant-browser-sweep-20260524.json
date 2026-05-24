@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_live_tenant_browser_sweep",
+  "asOf": "2026-05-24T11:45:00+10:00",
+  "status": "blocked_runtime_flow_and_connection_evidence_absent",
+  "environment": {
+    "displayName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "tenantId": "a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+    "portalUrls": {
+      "powerAppsApps": "https://make.powerapps.com/environments/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/apps",
+      "powerAppsConnections": "https://make.powerapps.com/environments/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/connections",
+      "powerAppsCustomConnectors": "https://make.powerapps.com/environments/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/customconnectors",
+      "powerAutomateFlows": "https://make.powerautomate.com/environments/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/flows"
+    }
+  },
+  "captureMethod": {
+    "tool": "Playwright authenticated browser session",
+    "authentication": "manual Microsoft sign-in completed by operator in the Playwright browser",
+    "tokenHandling": "tokens were not exported or written to disk; portal response bodies were captured through Playwright response listeners and sanitized"
+  },
+  "observations": {
+    "apps": {
+      "endpointStatus": 200,
+      "query": "editable classic canvas apps in target environment",
+      "count": 10,
+      "observedAppIds": [
+        "092b9d73-ceb5-40f6-a673-118f85502147",
+        "0d2a3086-d8ba-4c7e-8cef-dff6306573ab",
+        "25f52fe2-e026-450e-9dab-4b8ff6dae1c6",
+        "3928f5f3-4048-40dd-b517-2079d4249bfe",
+        "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+        "ad13e73c-b58e-47de-99f3-fa52a38792d9",
+        "b1103af7-d090-42ba-a547-a1404568e12b",
+        "dfb23181-b6ff-4909-9ebc-c0028c0046e4",
+        "e584c135-237e-45cc-b207-2c95726fb591",
+        "ff64f58a-73de-42ee-b92d-f65503619c49"
+      ],
+      "matchedPublishedMchsAppIds": [
+        "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+        "ff64f58a-73de-42ee-b92d-f65503619c49"
+      ],
+      "blockerImpact": "The documented original and optimized MCHS canvas app IDs are visible in the target environment, but this sweep did not execute connector-backed app screens or capture request/response smoke output."
+    },
+    "connections": {
+      "endpointStatus": 200,
+      "visibleConnectionCount": 27,
+      "powerAutomateVisibleConnectionCount": 28,
+      "matchedServiceBoundaryConnection": false,
+      "blockerImpact": "The target environment exposes connected generic connections, including Office, Dataverse, Teams, Planner, Users, and SharePoint connections, but no mchs_service_boundary or mchs-service-boundary connection was observed in the captured inventory."
+    },
+    "customConnectors": {
+      "endpointStatus": 200,
+      "visibleConnectorCatalogCount": 1548,
+      "matchedMchsServiceBoundaryConnector": false,
+      "blockerImpact": "The custom connector catalog loaded for the target environment, but the captured inventory did not expose an MCHS service-boundary custom connector match."
+    },
+    "flows": {
+      "powerAutomateRouteRenderedInventory": true,
+      "visibleText": "Searching for {0} found 0 flows",
+      "matchedMchsFlows": false,
+      "expectedFlowNames": [
+        "mchs-validate-input",
+        "mchs-calculate-request",
+        "mchs-evidence-export",
+        "mchs-deployment-smoke"
+      ],
+      "blockerImpact": "The target Power Automate My flows page rendered and reported zero flows, so no MCHS flow run metadata was available for flow smoke evidence."
+    }
+  },
+  "screenshots": [
+    "power-platform/evidence/screenshots/powerapps-target-apps-20260524.png",
+    "power-platform/evidence/screenshots/powerapps-target-connections-20260524.png",
+    "power-platform/evidence/screenshots/powerautomate-target-flows-20260524.png"
+  ],
+  "claimBoundary": {
+    "productionReadinessClaimed": false,
+    "runtimeSmokePassed": false,
+    "flowSmokePassed": false,
+    "serviceBoundaryConnectionResolved": false,
+    "dlpMonitoringResolved": false
+  },
+  "remainingActions": [
+    "Open the visible MCHS app and execute connector-backed screens against a real service-boundary connection, then capture request/response smoke evidence.",
+    "Create or bind the mchs-service-boundary custom connector connection and record the real connection ID.",
+    "Ensure the expected MCHS Power Automate flows are imported or shared into the target environment, then capture flowId, runId, runStatus, and runUrl for each smoke run.",
+    "Capture tenant DLP and monitoring policy evidence from the appropriate admin portal."
+  ]
+}
