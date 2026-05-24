@@ -1,8 +1,8 @@
 # Docker MCP Registry Local Validation Evidence
 
 Date: 2026-05-17
-Source commit under validation: `a33823b0b607b42e7bf2782bd9a513b01434e3ce`
-Docker MCP Registry PR: `https://github.com/docker/mcp-registry/pull/3595`
+Source commit under validation: `0401b673f62aefa3976cf43ca6cfd00bab96bcf4`
+Docker MCP Registry PR: `https://github.com/docker/mcp-registry/pull/3799`
 
 ## Source Repository Validation
 
@@ -60,7 +60,7 @@ Result:
 pinned remote git context:
 
 ```text
-https://github.com/edithatogo/mchs.git#a33823b0b607b42e7bf2782bd9a513b01434e3ce
+https://github.com/edithatogo/mchs.git#0401b673f62aefa3976cf43ca6cfd00bab96bcf4
 ```
 
 In this local environment the BuildKit remote git-context process produced no
@@ -71,8 +71,12 @@ blocker, not as evidence of an invalid MCHS Dockerfile.
 
 ## Submission Evidence
 
-- Fork branch: `https://github.com/edithatogo/mcp-registry/tree/add-mchs-mcp`
-- Docker MCP Registry PR: `https://github.com/docker/mcp-registry/pull/3595`
+- Fork branch: `https://github.com/edithatogo/mcp-registry/tree/add-mchs-mcp-20260524`
+- Docker MCP Registry PR: `https://github.com/docker/mcp-registry/pull/3799`
 
 Docker MCP Catalog publication is not claimed until the PR is merged or the
 catalog listing is visible.
+
+## Review Follow-up
+
+The automated Codex review on PR 3799 identified a `tools.json` drift issue for `mchs.get_schema`: `direction` was listed as required even though the pinned MCP server makes it optional. The PR branch was updated in commit `f5fa706599ca708ea77ee86c93d039a3a3158132`, `go run ./cmd/validate --name mchs` passed again, and the review thread was resolved.

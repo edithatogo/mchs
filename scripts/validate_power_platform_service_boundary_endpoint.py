@@ -131,7 +131,7 @@ def probe_endpoint(base_url: str, timeout: float) -> list[dict]:
         url = f"{base_url}{path}"
         request = Request(url, headers={"Accept": "application/json"})
         try:
-            with urlopen(request, timeout=timeout) as response:
+            with urlopen(request, timeout=timeout) as response:  # nosec B310
                 status_code = getattr(response, "status", response.getcode())
                 body = response.read()
                 content_type = response.headers.get("Content-Type", "")
