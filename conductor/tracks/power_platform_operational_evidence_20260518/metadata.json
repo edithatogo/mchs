@@ -18,11 +18,12 @@
     "power-platform/evidence/flow-smoke-evidence-template.json",
     "power-platform/evidence/connection-reference-evidence-template.json",
     "power-platform/evidence/monitoring-dlp-evidence-template.json",
+    "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
     "scripts/validate_power_platform_operational_evidence.py"
   ],
   "publication_status": "not-deployed",
   "created_at": "2026-05-18T13:22:30Z",
-  "updated_at": "2026-05-24T08:35:00Z",
+  "updated_at": "2026-05-24T11:35:00+10:00",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
-  "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app are published in NSW dylan. The optimized app launches with visual evidence. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
+  "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app were previously evidenced in NSW dylan. The 2026-05-24 authenticated browser sweep of the selected NSW Health Department default environment found zero editable classic canvas apps, no MCHS service-boundary connection, and no usable MCHS flow/custom connector inventory. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
 }

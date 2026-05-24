@@ -103,6 +103,12 @@ recorded here.
 - `platform-test-status.json`: live platform-test status, including the fact
   that the Power App has not yet been viewed, smoke-tested, or visually
   optimized in the tenant.
+- `live-tenant-browser-sweep-20260524.json`: authenticated Playwright browser
+  sweep of the NSW Health Department default environment. It records that the
+  selected tenant session returned zero editable classic canvas apps, visible
+  connected generic connections but no MCHS service-boundary connection, and no
+  usable MCHS flow/custom connector inventory. This is blocker evidence only;
+  it does not claim runtime readiness.
 
 ## Evidence import mapping
 

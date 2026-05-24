@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_live_tenant_browser_sweep",
+  "asOf": "2026-05-24T11:35:00+10:00",
+  "status": "blocked_runtime_resources_absent_or_not_visible",
+  "environment": {
+    "displayName": "NSW Health Department (default) (Upgrade)",
+    "environmentId": "Default-a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "tenantId": "a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "portalUrls": {
+      "powerAppsApps": "https://make.powerapps.com/environments/Default-a687a7bf-02db-43df-bcbb-e7a8bda611a2/apps",
+      "powerAppsConnections": "https://make.powerapps.com/environments/Default-a687a7bf-02db-43df-bcbb-e7a8bda611a2/connections",
+      "powerAppsCustomConnectors": "https://make.powerapps.com/environments/Default-a687a7bf-02db-43df-bcbb-e7a8bda611a2/customconnectors",
+      "powerAutomateFlows": "https://make.powerautomate.com/environments/Default-a687a7bf-02db-43df-bcbb-e7a8bda611a2/flows"
+    }
+  },
+  "captureMethod": {
+    "tool": "Playwright authenticated browser session",
+    "authentication": "manual Microsoft sign-in completed by operator in the Playwright browser",
+    "tokenHandling": "tokens were not exported or written to disk; portal response bodies were captured through Playwright response listeners and sanitized"
+  },
+  "observations": {
+    "apps": {
+      "endpointStatus": 200,
+      "query": "editable classic canvas apps in selected environment",
+      "count": 0,
+      "matchedMchsApp": false,
+      "blockerImpact": "No editable classic canvas app was visible in this environment, so app runtime smoke and connector-backed screen testing cannot be completed from this tenant session."
+    },
+    "connections": {
+      "endpointStatus": 200,
+      "visibleConnectionCount": 6,
+      "visibleConnectionNamesOrIds": [
+        "ec6e308a78a147c8849c98316edc32a8",
+        "shared-office365-f21b36d6-4fda-4d09-bebb-e45889c6770f",
+        "053d666a6c8d4ca4b4522aa5d166930b",
+        "f485cb94f7ed401db254d30d02fdaa80",
+        "aa0d323ad5ac4a3e9963f3b6484acf1f",
+        "a8530baf61eb431fb02f5046fc5b8136"
+      ],
+      "matchedServiceBoundaryConnection": false,
+      "blockerImpact": "Visible connections are generic tenant connections; no mchs_service_boundary or mchs-service-boundary connection was observed."
+    },
+    "customConnectors": {
+      "inventoryRendered": false,
+      "matchedMchsServiceBoundaryConnector": false,
+      "blockerImpact": "The custom connectors route shell loaded, but no connector inventory response was captured in this browser session."
+    },
+    "flows": {
+      "powerAppsFlowsRouteRenderedInventory": false,
+      "powerAutomateFlowsRouteRenderedInventory": false,
+      "matchedMchsFlows": false,
+      "expectedFlowNames": [
+        "mchs-validate-input",
+        "mchs-calculate-request",
+        "mchs-evidence-export",
+        "mchs-deployment-smoke"
+      ],
+      "blockerImpact": "No flow inventory or MCHS flow run metadata was captured, so Power Automate flow smoke remains blocked."
+    }
+  },
+  "screenshots": [
+    "power-platform/evidence/screenshots/powerapps-home-authenticated-20260524.png",
+    "power-platform/evidence/screenshots/powerapps-apps-list-20260524.png",
+    "power-platform/evidence/screenshots/powerautomate-flows-page-20260524.png"
+  ],
+  "claimBoundary": {
+    "productionReadinessClaimed": false,
+    "runtimeSmokePassed": false,
+    "flowSmokePassed": false,
+    "serviceBoundaryConnectionResolved": false,
+    "dlpMonitoringResolved": false
+  },
+  "remainingActions": [
+    "Publish or restore the MCHS canvas app in the target environment, then capture its app ID and play URL from the live tenant.",
+    "Create or bind the mchs-service-boundary custom connector connection and record the real connection ID.",
+    "Run the MCHS app screens against the real connector-backed service boundary and capture runtime response evidence.",
+    "Run each MCHS Power Automate flow and capture flowId, runId, runStatus, and runUrl.",
+    "Capture tenant DLP and monitoring policy evidence from the appropriate admin portal."
+  ]
+}
