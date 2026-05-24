@@ -16,6 +16,9 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  MCP_PUBLISHER_VERSION: v1.3.10
+  MCP_PUBLISHER_ARCHIVE: mcp-publisher_linux_amd64.tar.gz
+  MCP_PUBLISHER_SHA256: dc97c003df75d40134b9bf003077ac9057187d64f8d601c4f2457980712dbb62
 
 jobs:
   publish:
@@ -67,7 +70,11 @@ jobs:
       - name: Install mcp-publisher
         run: |
           set -euo pipefail
-          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar -xz -f - mcp-publisher
+          download_url="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/${MCP_PUBLISHER_ARCHIVE}"
+          curl --fail --location --show-error --silent --output "${MCP_PUBLISHER_ARCHIVE}" "${download_url}"
+          echo "${MCP_PUBLISHER_SHA256}  ${MCP_PUBLISHER_ARCHIVE}" | sha256sum --check --strict
+          tar -xz -f "${MCP_PUBLISHER_ARCHIVE}" mcp-publisher
+          chmod 0755 mcp-publisher
 
       - name: Authenticate to MCP Registry
         run: ./mcp-publisher login github-oidc
