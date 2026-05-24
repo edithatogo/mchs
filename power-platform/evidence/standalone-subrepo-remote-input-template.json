@@ -1,0 +1,7 @@
+{
+  "asOf": "2026-05-21",
+  "remoteUrl": "https://github.com/example/power-platform-subrepo.git",
+  "defaultBranch": "main",
+  "syncProcedure": "git pull --ff-only; git push --follow-tags",
+  "importOwner": "NSW import owner"
+}

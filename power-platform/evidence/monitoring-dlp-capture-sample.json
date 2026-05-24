@@ -1,0 +1,29 @@
+{
+  "monitoring": {
+    "owner": "TBD",
+    "failureMetrics": {
+      "connectorFailures": "required",
+      "flowRunFailures": "required",
+      "serviceBoundaryHealth": "required",
+      "appHealthMetrics": "required",
+      "correlationIdsWithoutPatientData": "required"
+    }
+  },
+  "dlp": {
+    "policyId": "TBD",
+    "policyName": "TBD",
+    "policyClassification": "TBD",
+    "policyCaptureState": "blocked_pending_policy_capture"
+  },
+  "connectorPolicy": {
+    "policyId": "TBD",
+    "policyName": "TBD",
+    "connectorAllowState": "blocked_pending_policy_capture"
+  },
+  "support": {
+    "owner": "TBD",
+    "escalationOwner": "TBD",
+    "escalationPath": "TBD",
+    "escalationContact": "TBD"
+  }
+}

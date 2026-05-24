@@ -1,0 +1,44 @@
+name: Power Platform blocker - production service-boundary execution evidence
+description: Local issue-generation template for the unresolved production service-boundary execution evidence blocker.
+title: "[Power Platform blocker] production service-boundary execution evidence"
+labels:
+  - power-platform
+  - blocker
+  - local-template
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is local only.
+        Do not create or claim a live issue from it unless the blocker is still open.
+
+        Blocker id: `production_service_boundary_execution_evidence`
+        Source scorecard: `power-platform/repository/repo-health-scorecard.json`
+        Supporting evidence:
+        - `power-platform/evidence/live-service-boundary-smoke-20260521.json`
+        - `power-platform/evidence/runtime-smoke-evidence-template.json`
+  - type: textarea
+    id: current_gap
+    attributes:
+      label: Current gap
+      description: Record the missing production service-boundary execution evidence.
+      placeholder: Describe the production endpoint run, execution trace, or smoke proof that is still missing.
+    validations:
+      required: true
+  - type: textarea
+    id: closure_evidence
+    attributes:
+      label: Closure evidence
+      description: Record the evidence that must be captured before this blocker can be closed.
+      placeholder: Include the live execution evidence, artifact paths, or operational proof required for closure.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have not claimed production readiness or blocker resolution.
+          required: true
+        - label: I am using repository evidence, not a live GitHub issue, as the source of truth.
+          required: true

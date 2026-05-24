@@ -1,0 +1,36 @@
+{
+  "name": "mchs-service-boundary",
+  "displayName": "MCHS Service Boundary",
+  "version": "0.2.2",
+  "publisher": "Microcosting Health Services",
+  "iconBrandColor": "#166534",
+  "description": "Source-controlled custom connector package for the MCHS orchestration boundary.",
+  "apiDefinition": "apiDefinition.swagger.json",
+  "properties": {
+    "iconBrandColor": "#166534",
+    "capabilities": [],
+    "connectionParameters": {
+      "baseUrl": {
+        "type": "string",
+        "uiDefinition": {
+          "displayName": "Service base URL",
+          "description": "Base URL for the deployed service boundary (for example, https://mchs-service...).",
+          "tooltip": "Point to a secure, managed endpoint."
+        },
+        "required": true,
+        "defaultValue": ""
+      },
+      "api_key": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "Service API key",
+          "description": "Deployment managed API key for the boundary.",
+          "tooltip": "Set this from target environment configuration."
+        },
+        "required": true
+      }
+    },
+    "publisher": "Microcosting Health Services",
+    "documentation": "Use this connector to call the secure MCHS service boundary from Power Platform."
+  }
+}

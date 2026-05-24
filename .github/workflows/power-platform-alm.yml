@@ -2,42 +2,91 @@ name: Power Platform ALM
 
 on:
   pull_request:
+    paths:
+      - 'power-platform/**'
+      - 'scripts/power-platform-alm.sh'
+      - 'scripts/power-platform-alm-lifecycle-gates.sh'
+      - 'scripts/validate_power_platform_static.py'
+      - 'scripts/validate_power_platform_alm_gates.py'
+      - 'scripts/validate_power_platform_repo_health.py'
+      - 'scripts/validate_power_platform_sota_capabilities.py'
+      - 'scripts/validate_power_platform_operational_evidence.py'
+      - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_github_live_gate.py'
+      - 'scripts/validate_power_platform_toolchain.py'
+      - 'scripts/validate_power_platform_visual_contract.py'
+      - 'scripts/bootstrap-power-platform-github-live-gate.sh'
+      - 'scripts/bootstrap-power-platform-github-live-gate.md'
+      - 'docs/roadmaps/power-platform-deployment-readiness.md'
+      - '.github/workflows/power-platform-alm.yml'
+      - '.github/workflows/power-platform-official-actions.yml'
+      - '.github/workflows/power-bi-devops.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'power-platform/**'
+      - 'scripts/power-platform-alm.sh'
+      - 'scripts/power-platform-alm-lifecycle-gates.sh'
+      - 'scripts/validate_power_platform_static.py'
+      - 'scripts/validate_power_platform_alm_gates.py'
+      - 'scripts/validate_power_platform_repo_health.py'
+      - 'scripts/validate_power_platform_sota_capabilities.py'
+      - 'scripts/validate_power_platform_operational_evidence.py'
+      - 'scripts/validate_power_platform_platform_tests.py'
+      - 'scripts/validate_power_platform_github_live_gate.py'
+      - 'scripts/validate_power_platform_toolchain.py'
+      - 'scripts/validate_power_platform_visual_contract.py'
+      - 'scripts/bootstrap-power-platform-github-live-gate.sh'
+      - 'scripts/bootstrap-power-platform-github-live-gate.md'
+      - 'docs/roadmaps/power-platform-deployment-readiness.md'
   workflow_dispatch:
 
 jobs:
-  validate:
+  static-validation:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: '3.11'
+      - run: python scripts/validate_power_platform_static.py
+      - run: python scripts/validate_power_platform_alm_gates.py
+      - run: python scripts/validate_power_platform_sota_capabilities.py
+      - run: python scripts/validate_power_platform_toolchain.py
+      - run: python scripts/validate_power_platform_visual_contract.py
+      - run: bash -n scripts/power-platform-alm.sh
+      - run: bash -n scripts/power-platform-alm-lifecycle-gates.sh
 
-      - name: Verify track scaffold files
-        run: |
-          test -f conductor/archive/power_platform_alm_app_20260510/spec.md
-          test -f conductor/archive/power_platform_alm_app_20260510/plan.md
-          test -f conductor/archive/power_platform_alm_app_20260510/index.md
-          test -f conductor/archive/power_platform_alm_app_20260510/metadata.json
-          test -f power-platform/solution/README.md
-          test -f power-platform/solution/solution-manifest.md
-          test -f power-platform/solution/environment-variables.md
-          test -f power-platform/solution/connection-references.md
-          test -f power-platform/solution/alm-workflow.md
-          test -f power-platform/solution/app-surface.md
-          test -f power-platform/connectors/service-boundary-contract.md
+  aggregate-readiness-preflight:
+    name: Aggregate readiness preflight (local-only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python scripts/validate_power_platform_repo_health.py
+      - run: python scripts/validate_power_platform_operational_evidence.py
+      - run: python scripts/validate_power_platform_platform_tests.py
+      - run: python scripts/validate_power_platform_github_live_gate.py
 
-      - name: Syntax check bootstrap scripts
-        run: |
-          bash -n scripts/bootstrap-power-platform-alm.sh
-          bash -n scripts/bootstrap-power-platform-powerbi-cli.sh
+  pack-check-import-gates:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: [pack, check, import]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: bash scripts/power-platform-alm-lifecycle-gates.sh --gate ${{ matrix.gate }}
 
-      - name: Run track tests
-        run: |
-          python -m pytest -q \
-            tests/test_power_platform_alm_app_track.py \
-            tests/test_power_bi_cli_tooling_track.py \
-            tests/test_tracks_registry.py
+  deployment-gate:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: nsw-power-platform
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "Deployment is intentionally environment-gated and requires pac auth/secrets."

@@ -11,12 +11,16 @@ UPGRADE_TO_MINIMUM=0
 CHECK_AUTH=0
 
 PAC_HELP_CHECKS=(
-  "pac --help"
-  "pac auth --help"
-  "pac org --help"
-  "pac solution --help"
-  "pac solution checker --help"
-  "pac pipeline --help"
+  "pac help"
+  "pac auth help"
+  "pac org help"
+  "pac solution help"
+  "pac solution pack help"
+  "pac solution unpack help"
+  "pac solution import help"
+  "pac solution check help"
+  "pac solution check help"
+  "pac pipeline help"
 )
 
 AZ_HELP_CHECKS=(
@@ -167,7 +171,7 @@ install_az_if_requested() {
 upgrade_pac_if_requested() {
   local version
 
-  version="$(read_version pac "pac --version")"
+  version="$(read_version pac "pac help")"
   log "pac version detected: $version"
 
   if ! version_lt "$version" "$MIN_PAC_VERSION"; then
@@ -184,7 +188,7 @@ upgrade_pac_if_requested() {
 
   log "Upgrading pac via dotnet tool update --global $PAC_DOTNET_TOOL"
   dotnet tool update --global "$PAC_DOTNET_TOOL"
-  version="$(read_version pac "pac --version")"
+  version="$(read_version pac "pac help")"
   log "pac version after upgrade: $version"
   version_lt "$version" "$MIN_PAC_VERSION" && fail "pac remains below minimum version $MIN_PAC_VERSION after upgrade."
 }

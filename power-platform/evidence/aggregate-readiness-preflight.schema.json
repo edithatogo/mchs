@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/power-platform/evidence/aggregate-readiness-preflight.schema.json",
+  "title": "Power Platform aggregate readiness preflight summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "readinessClaimed",
+    "allChecksBlocked",
+    "checkCount",
+    "checks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    },
+    "readinessClaimed": {
+      "type": "boolean"
+    },
+    "allChecksBlocked": {
+      "type": "boolean"
+    },
+    "checkCount": {
+      "type": "integer"
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "command",
+          "expectedExitCode",
+          "observedExitCode",
+          "expectedStatus",
+          "observedStatus",
+          "blocked",
+          "ok",
+          "help",
+          "nextAction",
+          "details"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "expectedExitCode": {
+            "type": "integer"
+          },
+          "observedExitCode": {
+            "type": "integer"
+          },
+          "expectedStatus": {
+            "type": "string"
+          },
+          "observedStatus": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "blocked": {
+            "type": "boolean"
+          },
+          "ok": {
+            "type": "boolean"
+          },
+          "help": {
+            "type": "string",
+            "minLength": 1
+          },
+          "nextAction": {
+            "type": "string",
+            "minLength": 1
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

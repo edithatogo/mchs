@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "platformChecks": [
+    {
+      "name": "pac-auth-and-solution-visibility",
+      "status": "passed",
+      "evidence": "pac solution list shows mchs_alm_orchestration 0.2.2.0 managed True"
+    },
+    {
+      "name": "solution-checker",
+      "status": "passed",
+      "evidence": "correlation a797a828-b297-420d-8372-686ce60de571, zero findings"
+    },
+    {
+      "name": "custom-connector-registration",
+      "status": "passed",
+      "evidence": "power-platform/evidence/custom-connector-registration-20260520.json"
+    },
+    {
+      "name": "generated-canvas-msapp",
+      "status": "passed",
+      "evidence": "dist/power-platform/apps/mchs-orchestration.msapp sha256 baeec10504d1e4c5706c242575693e7eaba0f2bb364d4026b51efb36eb4519c9"
+    },
+    {
+      "name": "real-power-app-visual-review",
+      "status": "passed",
+      "evidence": "power-platform/evidence/canvas-app-publication-20260520.json; optimized app screenshot power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png"
+    },
+    {
+      "name": "real-power-app-runtime-smoke",
+      "status": "partial",
+      "evidence": "app launches and generated Health button navigates to Health_Screen; production service-boundary execution remains unproven"
+    },
+    {
+      "name": "real-power-automate-flow-smoke",
+      "status": "blocked",
+      "evidence": null,
+      "blocker": "real flow component and configured connection reference are missing"
+    }
+  ],
+  "visualFunction": {
+    "viewedInTenant": true,
+    "optimizedInTenant": true,
+    "requiredEvidence": [
+      "app URL",
+      "screenshots or Playwright trace",
+      "accessibility pass",
+      "responsive layout pass",
+      "empty/error/loading states pass",
+      "connector consent or preconsent verification"
+    ],
+    "evidence": "power-platform/evidence/canvas-app-publication-20260520.json",
+    "optimizedSource": "power-platform/apps/mchs-orchestration-app/source/Src/HomeScreen_Screen.fx.yaml",
+    "optimizedArtifact": "dist/power-platform/apps/mchs-orchestration-optimized.msapp",
+    "optimizedArtifactSha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7",
+    "optimizedAppName": "MCHS Orchestration Optimized",
+    "optimizedAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "optimizedAppPlayUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "optimizedScreenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+    "optimizedScreenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237"
+  },
+  "claimBoundary": {
+    "allPlatformTestsPassed": false,
+    "visualFunctionOptimized": true,
+    "productionReadinessClaimed": false
+  },
+  "liveGateEvidence": {
+    "serviceBoundarySmoke": "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+    "powerAutomateFlowSmoke": "power-platform/evidence/power-automate-flow-smoke-20260521.json",
+    "dlpMonitoringPolicy": "power-platform/evidence/dlp-monitoring-policy-evidence-20260521.json",
+    "githubLiveGate": "power-platform/evidence/github-live-gate-20260521.json",
+    "subrepoClosure": "power-platform/repository/subrepo-closure-20260521.json"
+  },
+  "operationPagesPublishAttempt": {
+    "asOf": "2026-05-21",
+    "artifact": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "artifactSha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f",
+    "portalUrl": "https://make.powerapps.com/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/canvas/?action=app-from-file",
+    "status": "attempted_file_upload_stalled_in_maker_loading_state",
+    "publishedToTenant": false
+  }
+}

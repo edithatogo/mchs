@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_connection_references",
+  "status": "blocked_pending_connection_values",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "requiredEvidence": [
+    "environmentId",
+    "requiredConnectionReferences[].connectorId",
+    "requiredConnectionReferences[].baseUrlEnvironmentVariable",
+    "requiredConnectionReferences[].valueStatus",
+    "environmentVariables[].logicalName",
+    "pacObservedConnections.checkedWithPacConnectionList",
+    "pacObservedConnections.customConnectorConnectionFound",
+    "pacObservedConnections.customConnectorConnectionId",
+    "pacObservedConnections.customConnectorApiId",
+    "pacObservedConnector.checkedWithPacConnectorList",
+    "pacObservedConnector.connectorId",
+    "pacObservedConnector.status"
+  ],
+  "requiredConnectionReferences": [
+    {
+      "logicalName": "mchs_service_boundary",
+      "connector": "mchs-service-boundary",
+      "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+      "authentication": "api_key_or_entra_gateway",
+      "baseUrlEnvironmentVariable": "mchs_api_base_url",
+      "apiKeySecretName": "mchs_service_boundary_api_key",
+      "valueStatus": "missing"
+    }
+  ],
+  "endpointConfiguration": {
+    "connectionReference": "mchs_service_boundary",
+    "httpsBaseUrl": null,
+    "healthzPath": "/healthz",
+    "serverCardPath": "/.well-known/mcp/server-card.json",
+    "expectedScheme": "https",
+    "apiKeySecretConfigured": false,
+    "probeRequired": true
+  },
+  "environmentVariables": [
+    {
+      "logicalName": "mchs_api_base_url",
+      "valueStatus": "missing",
+      "secret": false
+    },
+    {
+      "logicalName": "mchs_api_contract_version",
+      "valueStatus": "template",
+      "secret": false
+    },
+    {
+      "logicalName": "mchs_fixture_gate",
+      "valueStatus": "template",
+      "secret": false
+    }
+  ],
+  "claimBoundary": {
+    "connectionsConfigured": false,
+    "productionReadinessClaimed": false
+  },
+  "pacObservedConnections": {
+    "checkedWithPacConnectionList": true,
+    "customConnectorConnectionFound": false,
+    "customConnectorConnectionId": null,
+    "customConnectorApiId": "/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary",
+    "notes": "pac connection list returned Dataverse/Microsoft connectors but no MCHS custom connector connection."
+  },
+  "pacObservedConnector": {
+    "checkedWithPacConnectorList": true,
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "displayName": "MCHS Service Boundary",
+    "status": "registered"
+  }
+}

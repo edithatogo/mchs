@@ -16,4 +16,4 @@ Rules:
   or custom connector.
 * Real-data workflows stay outside browser-hosted demo shells.
 
-See the canonical source in [ADR 0005](../../../../docs/adr/0005-web-and-power-platform-delivery.md).
+See the canonical source in [ADR 0005](../../../../../../docs/adr/0005-web-and-power-platform-delivery.md).

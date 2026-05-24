@@ -1,0 +1,21 @@
+{
+  "track_id": "repo_health_9_9_power_platform_completion_20260521",
+  "type": "feature",
+  "status": "blocked",
+  "track_class": "power-platform-completion",
+  "current_state": "blocked-runtime-flow-governance-alm-subrepo-evidence",
+  "primary_contract": "power-platform/repository/health-9-9/contract.json",
+  "dependencies": [
+    "power_platform_operational_evidence_20260518"
+  ],
+  "completion_evidence": [
+    "power-platform/apps/mchs-orchestration-app/page-function-coverage.json",
+    "power-platform/repository/health-9-9/contract.json",
+    "scripts/validate_power_platform_page_function_coverage.py",
+    "tests/test_power_platform_page_function_coverage.py"
+  ],
+  "publication_status": "not-eligible-for-9.9-until-live-evidence",
+  "created_at": "2026-05-21T00:00:00Z",
+  "updated_at": "2026-05-21T00:00:00Z",
+  "description": "Power Platform operation pages are source-UX complete, but 9.9 remains blocked until live service-boundary execution, flow smoke, governance, ALM live gate, and subrepo closure evidence exist."
+}

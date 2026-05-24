@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_remaining_blockers",
+  "asOf": "2026-05-21",
+  "status": "blocked_with_remaining_blockers",
+  "generatedFrom": {
+    "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
+    "deploymentStatus": "power-platform/evidence/deployment-status.json"
+  },
+  "claimBoundary": {
+    "productionReadinessClaimed": false,
+    "blockersResolvedClaimed": false,
+    "externalBlockersResolvedClaimed": false
+  },
+  "remainingBlockers": [
+    {
+      "id": "service_boundary_production_endpoint_and_connection_reference_values",
+      "summary": "service boundary production endpoint and connection reference values",
+      "resolved": false,
+      "source": "power-platform/repository/repo-health-scorecard.json",
+      "supportingEvidence": [
+        "power-platform/evidence/connection-reference-evidence-template.json",
+        "power-platform/evidence/runtime-smoke-evidence-template.json"
+      ]
+    },
+    {
+      "id": "real_power_automate_flow_component_smoke_evidence",
+      "summary": "real Power Automate flow component smoke evidence",
+      "resolved": false,
+      "source": "power-platform/repository/repo-health-scorecard.json",
+      "supportingEvidence": [
+        "power-platform/evidence/flow-smoke-evidence-template.json",
+        "power-platform/evidence/power-automate-flow-smoke-20260521.json"
+      ]
+    },
+    {
+      "id": "production_service_boundary_execution_evidence",
+      "summary": "production service-boundary execution evidence",
+      "resolved": false,
+      "source": "power-platform/repository/repo-health-scorecard.json",
+      "supportingEvidence": [
+        "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+        "power-platform/evidence/runtime-smoke-evidence-template.json"
+      ]
+    },
+    {
+      "id": "power_app_operation_pages_are_source_ux_complete_but_not_live_runtime_proven",
+      "summary": "Power App operation pages are source-UX complete but not live runtime-proven",
+      "resolved": false,
+      "source": "power-platform/repository/repo-health-scorecard.json",
+      "supportingEvidence": [
+        "power-platform/evidence/canvas-app-publication-20260520.json",
+        "power-platform/evidence/deployment-status.json"
+      ]
+    }
+  ],
+  "notes": [
+    "This file records the current remaining blockers only.",
+    "No external blocker is claimed to be resolved here.",
+    "The blocker list is derived from the current hardBlockers entries in the repository scorecard."
+  ]
+}

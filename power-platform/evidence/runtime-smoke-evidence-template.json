@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_runtime_smoke",
+  "status": "blocked_pending_live_runtime_execution",
+  "asOf": "2026-05-20",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "serviceBoundary": {
+    "productionEndpoint": null,
+    "healthCheckStatus": "not-run",
+    "healthCheckCorrelationId": null
+  },
+  "connectionReferences": {
+    "status": "blocked_missing_values",
+    "required": [
+      "mchs_service_boundary"
+    ],
+    "registeredConnectorIds": [
+      "0f3d6edc-9653-f111-bec6-00224893a0e1"
+    ],
+    "configured": []
+  },
+  "appSmoke": {
+    "status": "partial_launch_passed_connector_execution_blocked",
+    "appId": "ff64f58a-73de-42ee-b92d-f65503619c49",
+    "appUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "syntheticLaunchTrace": "power-platform/evidence/canvas-app-publication-20260520.json",
+    "syntheticSubmissionTrace": null,
+    "optimizedAppId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "optimizedAppUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "optimizedLaunchTrace": "power-platform/evidence/canvas-app-publication-20260520.json"
+  },
+  "flowSmoke": {
+    "status": "blocked_missing_real_flow_component",
+    "flowIds": [],
+    "syntheticRunIds": [],
+    "failedRunIds": []
+  },
+  "syntheticDataPolicy": {
+    "patientLevelDataUsed": false,
+    "privateNswOperationalDataUsed": false,
+    "fixtureOnly": true
+  },
+  "claimBoundary": {
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  },
+  "liveServiceBoundarySmokeEvidence": "power-platform/evidence/live-service-boundary-smoke-20260521.json",
+  "powerAutomateFlowSmokeEvidence": "power-platform/evidence/power-automate-flow-smoke-20260521.json"
+}

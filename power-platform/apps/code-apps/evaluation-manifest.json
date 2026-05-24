@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "capability": "power_apps_code_apps",
+  "status": "evaluation_scaffolded_not_adopted",
+  "featureFlag": "MCHS_POWER_APPS_CODE_APPS",
+  "featureEnabled": false,
+  "candidateUse": "code_first_orchestration_ui",
+  "stableFallback": "canvas_or_model_driven_app_manifest",
+  "requiredApprovals": [
+    "NSW environment code apps enabled",
+    "Power Apps Premium licensing confirmed",
+    "ALM limitation accepted because Code Apps do not support Power Platform Git integration",
+    "service principal ownership limitation accepted",
+    "mobile and Windows client limitations accepted"
+  ],
+  "guardrails": [
+    "no calculator formulas in client code",
+    "service-boundary connector only for calculations",
+    "synthetic data only in committed examples",
+    "DLP and Conditional Access remain enforced"
+  ],
+  "claimBoundary": {
+    "adopted": false,
+    "nswEnabled": false,
+    "productionReadinessClaimed": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "environmentVariables": [
+    {
+      "name": "mchs_api_base_url",
+      "type": "string",
+      "required": true,
+      "default": "",
+      "description": "Base URL for the secure service boundary endpoint.",
+      "secret": false
+    },
+    {
+      "name": "mchs_api_contract_version",
+      "type": "string",
+      "required": true,
+      "default": "2026-05",
+      "description": "Contract version negotiated with the boundary.",
+      "secret": false
+    },
+    {
+      "name": "mchs_api_calculator_id",
+      "type": "string",
+      "required": true,
+      "default": "nwau-calculator",
+      "description": "Default calculator identifier for the orchestration request.",
+      "secret": false
+    },
+    {
+      "name": "mchs_api_pricing_year",
+      "type": "string",
+      "required": true,
+      "default": "2025",
+      "description": "Pricing year passed through to the boundary service.",
+      "secret": false
+    }
+  ],
+  "environmentPolicies": {
+    "valuesInSourceControl": false,
+    "environmentScopedOnly": true
+  }
+}

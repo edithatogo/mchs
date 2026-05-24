@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "captureType": "power_automate_flow_smoke_capture",
+  "status": "template_placeholder_only",
+  "asOf": "REPLACE_WITH_CAPTURE_DATE",
+  "capturedBy": "REPLACE_WITH_OPERATOR_NAME",
+  "tenantName": "REPLACE_WITH_TENANT_NAME",
+  "environmentName": "REPLACE_WITH_POWER_PLATFORM_ENVIRONMENT",
+  "environmentUrl": "REPLACE_WITH_POWER_PLATFORM_ENVIRONMENT_URL",
+  "flowRuns": [
+    {
+      "flowLogicalName": "mchs-validate-input",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null,
+      "captureNote": "replace_with_real_run_metadata"
+    },
+    {
+      "flowLogicalName": "mchs-calculate-request",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null,
+      "captureNote": "replace_with_real_run_metadata"
+    },
+    {
+      "flowLogicalName": "mchs-evidence-export",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null,
+      "captureNote": "replace_with_real_run_metadata"
+    },
+    {
+      "flowLogicalName": "mchs-deployment-smoke",
+      "flowId": null,
+      "runId": null,
+      "runStatus": null,
+      "runUrl": null,
+      "captureNote": "replace_with_real_run_metadata"
+    }
+  ],
+  "notes": [
+    "This file is a placeholder capture package only.",
+    "Do not submit it as evidence until every placeholder has been replaced with real run metadata.",
+    "The updater script requires real flow IDs, run IDs, run statuses, and HTTPS run URLs."
+  ]
+}

@@ -36,7 +36,15 @@ def validate_wheel(wheel_path: Path) -> None:
         package_readme = wheel.read("nwau_py/README.md").decode()
 
     _assert("nwau_py/mcp_server.py" in names, "wheel is missing nwau_py/mcp_server.py")
+    _assert(
+        "nwau_py/mcp_http_server.py" in names,
+        "wheel is missing nwau_py/mcp_http_server.py",
+    )
     _assert("mchs-mcp" in entry_points, "wheel is missing mchs-mcp entry point")
+    _assert(
+        "mchs-mcp-http" in entry_points,
+        "wheel is missing mchs-mcp-http entry point",
+    )
     _assert(
         "mcp-name: io.github.edithatogo/mchs" in package_readme,
         "wheel package README is missing MCP Registry verification marker",
@@ -75,6 +83,10 @@ def validate_sdist(sdist_path: Path) -> None:
     _assert(
         f"{prefix}/nwau_py/mcp_server.py" in names,
         "sdist is missing nwau_py/mcp_server.py",
+    )
+    _assert(
+        f"{prefix}/nwau_py/mcp_http_server.py" in names,
+        "sdist is missing nwau_py/mcp_http_server.py",
     )
     _assert(
         f"{prefix}/nwau_py/mcp_assets/canonical/calculator.schema.json" in names,

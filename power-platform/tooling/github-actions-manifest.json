@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "githubActions": {
+    "powerPlatform": {
+      "provider": "microsoft/powerplatform-actions",
+      "workflow": ".github/workflows/power-platform-official-actions.yml",
+      "installedAsWorkflowReferences": true,
+      "actions": [
+        "actions-install@v1",
+        "pack-solution@v1",
+        "who-am-i@v1",
+        "checker@v1"
+      ],
+      "liveGateRequiresSecrets": [
+        "POWER_PLATFORM_ENVIRONMENT_URL",
+        "POWER_PLATFORM_APPLICATION_ID",
+        "POWER_PLATFORM_CLIENT_SECRET",
+        "POWER_PLATFORM_TENANT_ID"
+      ]
+    },
+    "powerBI": {
+      "workflow": ".github/workflows/power-bi-devops.yml",
+      "tooling": [
+        "powerbi CLI",
+        "powerbi-visuals-tools pbiviz",
+        "Power BI REST API / Fabric deployment pipeline boundary"
+      ],
+      "pbiToolsStatus": "not_available_on_current_macos_package_managers"
+    }
+  },
+  "localCliTools": {
+    "pac": "installed via stable shim at /tmp/mchs-tools/pac; default dotnet pac remains unstable on this machine",
+    "az": "installed",
+    "gh": "installed",
+    "node": "installed",
+    "npm": "installed",
+    "dotnet": "installed",
+    "powerbi": "installed",
+    "pbiviz": "installed",
+    "pbi-tools": "not available from npm, Homebrew search, or dotnet tool search on this host"
+  },
+  "claimBoundary": {
+    "githubWorkflowReferencesInstalled": true,
+    "localRequiredCliToolsInstalled": true,
+    "pbiToolsInstalled": false,
+    "productionDeploymentSecretsConfigured": false
+  }
+}

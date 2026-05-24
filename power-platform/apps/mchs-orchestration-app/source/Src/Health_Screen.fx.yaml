@@ -1,0 +1,233 @@
+Health_Screen As screen:
+    Fill: =RGBA(247, 250, 247, 1)
+    LoadingSpinner: =LoadingSpinner.Controls
+    LoadingSpinnerColor: =RGBA(16, 94, 60, 1)
+    OnVisible: =UpdateContext({locLoading: false, locStatus: "Ready", locTrace: "not run", locError: Blank()})
+    ZIndex: =1
+
+    Health_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(8, 61, 47, 1)
+        Height: =170
+        LayoutMode: =LayoutMode.Manual
+        Width: =Parent.Width
+        ZIndex: =1
+
+        Health_Back As icon.ArrowLeft:
+            AccessibleLabel: ="Back to governed operation home"
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =64
+            Icon: =Icon.ArrowLeft
+            OnSelect: =Navigate(HomeScreen_Screen)
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            TabIndex: =0
+            Width: =64
+            X: =24
+            Y: =24
+            ZIndex: =1
+
+        Health_Eyebrow As label:
+            Color: =RGBA(184, 226, 200, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =13
+            Text: ="GET | NSW dylan | Synthetic data only | Connector operation"
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =24
+            ZIndex: =2
+
+        Health_Title As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FontWeight: =FontWeight.Bold
+            Height: =48
+            Role: =TextRole.Heading1
+            Size: =30
+            Text: ="Health check"
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =54
+            ZIndex: =3
+
+        Health_Subtitle As label:
+            Color: =RGBA(226, 240, 230, 1)
+            Height: =54
+            Size: =14
+            Text: ="Confirm the service boundary is reachable before schema, validation, calculation, or evidence operations are trusted."
+            Width: =Parent.Width - 128
+            X: =96
+            Y: =104
+            ZIndex: =4
+
+    Health_Main As groupContainer.horizontalAutoLayoutContainer:
+        Fill: =RGBA(247, 250, 247, 1)
+        Height: =Parent.Height - Health_Header.Height
+        LayoutGap: =22
+        PaddingLeft: =42
+        PaddingRight: =42
+        PaddingTop: =26
+        Width: =Parent.Width
+        Y: =Health_Header.Height
+        ZIndex: =2
+
+        Health_InputPanel As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height - 52
+            LayoutGap: =10
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            Width: =Parent.Width * 0.38
+            ZIndex: =1
+
+            Health_PanelTitle As label:
+                Color: =RGBA(30, 42, 38, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                Role: =TextRole.Heading2
+                Size: =20
+                Text: ="Operation inputs"
+                Width: =Parent.Width - 44
+                ZIndex: =1
+
+            Health_Purpose As label:
+                Color: =RGBA(83, 92, 88, 1)
+                Height: =74
+                Size: =13
+                Text: ="Read service readiness through the custom connector. This page does not perform calculation logic."
+                Width: =Parent.Width - 44
+                ZIndex: =2
+
+            Health_SyntheticWarning As label:
+                Color: =RGBA(128, 86, 0, 1)
+                Fill: =RGBA(255, 247, 222, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =64
+                Size: =12
+                Text: ="Synthetic data only. Do not enter patient-level data, private NSW operational data, or production identifiers."
+                Width: =Parent.Width - 44
+                ZIndex: =3
+
+            Health_StateCopy As label:
+                Color: =RGBA(21, 67, 120, 1)
+                Fill: =RGBA(231, 242, 255, 1)
+                Height: =72
+                Size: =12
+                Text: ="States covered: loading, success, validation error, connector error. For support, copy the trace ID or the Power Apps session ID."
+                Width: =Parent.Width - 44
+                ZIndex: =4
+
+            Health_Hint As label:
+                Color: =RGBA(83, 92, 88, 1)
+                Height: =54
+                Size: =12
+                Text: ="Success means the connector endpoint answered. It does not prove calculation correctness."
+                Width: =Parent.Width - 44
+                ZIndex: =5
+
+            Health_RunButton As button:
+                AccessibleLabel: ="Run health check"
+                DisplayMode: =If(locLoading, DisplayMode.Disabled, DisplayMode.Edit)
+                Fill: =RGBA(16, 94, 60, 1)
+                Height: =46
+                OnSelect: |-
+                    =UpdateContext({locLoading: true, locStatus: "Running health check", locTrace: "pending", locError: Blank()});
+                    IfError(
+                        Set(HealthResult, MCHSServiceBoundary.Health()),
+                        UpdateContext({locLoading: false, locStatus: "Connector error", locError: FirstError.Message, locTrace: "copy the Power Apps session ID"});
+                        Notify(FirstError.Message, NotificationType.Error, 5000),
+                        UpdateContext({locLoading: false, locStatus: "Health check passed", locError: Blank(), locTrace: Coalesce(Text(HealthResult.trace_id), "service-ready")});
+                        Notify("Service is running", NotificationType.Success, 5000)
+                    );
+                Size: =14
+                Text: =If(locLoading, "Running...", "Run health check")
+                Width: =Parent.Width - 44
+                ZIndex: =40
+
+        Health_ResultPanel As groupContainer.verticalAutoLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height - 52
+            LayoutGap: =12
+            PaddingLeft: =22
+            PaddingRight: =22
+            PaddingTop: =22
+            Width: =Parent.Width * 0.52
+            ZIndex: =2
+
+            Health_ResultTitle As label:
+                Color: =RGBA(30, 42, 38, 1)
+                FontWeight: =FontWeight.Bold
+                Height: =32
+                Role: =TextRole.Heading2
+                Size: =20
+                Text: ="Result and trace"
+                Width: =Parent.Width - 44
+                ZIndex: =1
+
+            Health_Status As label:
+                Color: =If(locError = Blank(), RGBA(16, 94, 60, 1), RGBA(164, 38, 44, 1))
+                Fill: =If(locError = Blank(), RGBA(232, 246, 236, 1), RGBA(255, 235, 238, 1))
+                FontWeight: =FontWeight.Semibold
+                Height: =44
+                Size: =14
+                Text: ="Status: " & locStatus
+                Width: =Parent.Width - 44
+                ZIndex: =2
+
+            Health_Trace As label:
+                Color: =RGBA(21, 67, 120, 1)
+                Fill: =RGBA(231, 242, 255, 1)
+                Height: =44
+                Size: =13
+                Text: ="Trace ID: " & locTrace
+                Width: =Parent.Width - 44
+                ZIndex: =3
+
+            Health_Error As label:
+                Color: =RGBA(164, 38, 44, 1)
+                Fill: =RGBA(255, 235, 238, 1)
+                Height: =54
+                Size: =12
+                Text: =If(locError = Blank(), "No connector error recorded.", "Connector error: " & locError)
+                Width: =Parent.Width - 44
+                ZIndex: =4
+
+            Health_DataTable As dataTable.datatable:
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =Parent.Height - 220
+                Items: =[HealthResult]
+                Size: =13
+                Width: =Parent.Width - 44
+                ZIndex: =5
+
+                Health_Status_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="status"
+                    FieldName: ="status"
+                    FieldVariantName: ="textualColumn"
+                    Order: =1
+                    Text: =ThisItem.status
+                    Width: =140
+                    ZIndex: =1
+
+                Health_Trace_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="trace_id"
+                    FieldName: ="trace_id"
+                    FieldVariantName: ="textualColumn"
+                    Order: =2
+                    Text: =ThisItem.trace_id
+                    Width: =180
+                    ZIndex: =2
+
+                Health_Result_Column As dataTableColumn.textualColumn:
+                    FieldDisplayName: ="result_payload"
+                    FieldName: ="result_payload"
+                    FieldVariantName: ="textualColumn"
+                    IsHyperlink: =true
+                    OnSelect: =Navigate(DynamicContentScreen_Screen, ScreenTransition.None, {DisplayText: JSON(Parent.Selected.result_payload, IndentFour), HeaderTitle: "result_payload"})
+                    Order: =3
+                    Text: =Text("result_payload")
+                    Width: =180
+                    ZIndex: =3

@@ -13,13 +13,17 @@
 - Build format: packed solution artifact for import into target environments.
 - Promotion format: managed solution for downstream environments.
 
+Machine-readable root manifest:
+
+- `source-controlled-metadata.json`: solution package identity and component map for source-control and tooling checks.
+
 ## Included Asset Placeholders
 
-- Canvas or model-driven app surface.
-- Environment variables.
-- Connection references.
-- Custom connector or service-boundary binding.
-- Optional Dataverse tables for orchestration metadata only.
+- App surface manifest: `apps/mchs-orchestrator/app-surface-manifest.json`.
+- Environment variables: `environment-variables.json`.
+- Connection references: `connection-references.json`.
+- Flow definition: `flows/mchs-submit-calculation.json`.
+- Custom connector/service-boundary binding captured in connection references.
 
 ## Exclusions
 

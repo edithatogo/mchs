@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "alternative_format_publication_status",
+  "claimBoundary": {
+    "allAlternativeFormatsPublished": false,
+    "registryPublicationComplete": false,
+    "productionReadinessClaimed": false
+  },
+  "baselinePublishedSurface": {
+    "surface": "Python",
+    "package": "nwau-py",
+    "registry": "PyPI",
+    "status": "published_baseline_runtime",
+    "alternativeFormat": false
+  },
+  "alternativeFormats": [
+    {
+      "surface": "Rust crates",
+      "matrixSurface": "Rust",
+      "registry": "crates.io",
+      "status": "unpublished",
+      "published": false,
+      "blockingEvidence": "local crates exist; release automation and public crate API are not promoted"
+    },
+    {
+      "surface": "R package",
+      "matrixSurface": "R",
+      "registry": "CRAN or r-universe",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no registry submission evidence"
+    },
+    {
+      "surface": "Julia package",
+      "matrixSurface": "Julia",
+      "registry": "Julia General Registry",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no registry submission evidence"
+    },
+    {
+      "surface": "NuGet / C#",
+      "registry": "NuGet",
+      "status": "unpublished",
+      "published": false,
+      "blockingEvidence": "no public NuGet package evidence"
+    },
+    {
+      "surface": "Go module",
+      "matrixSurface": "Go",
+      "registry": "pkg.go.dev",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no public module evidence"
+    },
+    {
+      "surface": "TypeScript / WASM",
+      "registry": "npm",
+      "status": "private_shell_only",
+      "published": false,
+      "blockingEvidence": "wasm-binding/package.json remains private"
+    },
+    {
+      "surface": "Kotlin/Native",
+      "registry": "Maven Central or GitHub Packages",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no registry submission evidence"
+    },
+    {
+      "surface": "Scala / Spark",
+      "registry": "Maven Central or Spark package index",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no registry submission evidence"
+    },
+    {
+      "surface": "Swift",
+      "registry": "Swift Package Index",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no registry submission evidence"
+    },
+    {
+      "surface": "Stata",
+      "registry": "SSC or GitHub release artifact",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no package evidence"
+    },
+    {
+      "surface": "MATLAB",
+      "registry": "MATLAB File Exchange or toolbox artifact",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no toolbox publication evidence"
+    },
+    {
+      "surface": "C ABI",
+      "registry": "GitHub release artifact",
+      "status": "unpublished_local_artifact_only",
+      "published": false,
+      "blockingEvidence": "no published shared-library artifact evidence"
+    },
+    {
+      "surface": "SQL / DuckDB",
+      "registry": "DuckDB extension registry or release artifact",
+      "status": "unpublished_local_prototype",
+      "published": false,
+      "blockingEvidence": "no extension publication evidence"
+    },
+    {
+      "surface": "MCP server",
+      "registry": "Official MCP Registry",
+      "status": "metadata_prepared_not_published",
+      "published": false,
+      "blockingEvidence": "registry publication waits for a package release that includes mchs-mcp"
+    },
+    {
+      "surface": "SAS interop",
+      "registry": "release artifact",
+      "status": "private_roadmap_only",
+      "published": false,
+      "blockingEvidence": "no public interop artifact evidence"
+    },
+    {
+      "surface": "Branded CLI distribution",
+      "matrixSurface": "CLI / file",
+      "registry": "PyPI, Homebrew, or GitHub release artifact",
+      "status": "unpublished",
+      "published": false,
+      "blockingEvidence": "Python CLI entrypoint exists, branded CLI distribution is not published"
+    },
+    {
+      "surface": "Web demos",
+      "registry": "hosted static site or release artifact",
+      "status": "unpublished_demo_distribution",
+      "published": false,
+      "blockingEvidence": "no hosted demo publication evidence"
+    },
+    {
+      "surface": "Power Platform managed solutions",
+      "registry": "Power Platform tenant or managed-solution distribution",
+      "status": "private_blocked_by_runtime_evidence",
+      "published": false,
+      "blockingEvidence": "managed solution readiness remains blocked by endpoint, connector connection, flow smoke, and tenant evidence"
+    }
+  ],
+  "sourceOfTruth": [
+    "docs/roadmaps/polyglot-packaging-release-matrix.md",
+    "docs/roadmaps/release/evidence-bundle-format.md"
+  ],
+  "nextAction": "Do not mark an alternative format published until the target registry page or release artifact is linked in evidence."
+}

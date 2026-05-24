@@ -1,0 +1,1 @@
+{"schemaName":"mchs_api_contract_version","displayName":"MCHS API Contract Version","type":"String","defaultValue":"0.2.2","description":"Contract version expected by connector, app, and flows."}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_service_boundary_endpoint",
+  "status": "blocked_pending_real_https_endpoint",
+  "asOf": "2026-05-21",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "serviceBoundary": {
+    "logicalConnectionReference": "mchs_service_boundary",
+    "baseUrlEnvironmentVariable": "mchs_api_base_url",
+    "httpsBaseUrl": null,
+    "apiKeySecretConfigured": false,
+    "healthzPath": "/healthz",
+    "serverCardPath": "/.well-known/mcp/server-card.json",
+    "expectedScheme": "https",
+    "publiclyReachableFromPowerPlatform": false,
+    "tlsTrusted": false
+  },
+  "validation": {
+    "endpointSyntaxValidated": false,
+    "healthzProbed": false,
+    "serverCardProbed": false,
+    "probeRequired": true
+  },
+  "claimBoundary": {
+    "endpointConfigured": false,
+    "endpointValidated": false,
+    "productionReadinessClaimed": false
+  },
+  "handoff": {
+    "status": "blocked_pending_real_https_endpoint",
+    "requiredInputs": [
+      {
+        "logicalName": "mchs_api_base_url",
+        "valueStatus": "missing",
+        "purpose": "Real public HTTPS base URL for the service boundary"
+      }
+    ],
+    "requiredChecks": [
+      {
+        "name": "healthz",
+        "path": "/healthz",
+        "expectedStatusCode": 200
+      },
+      {
+        "name": "serverCard",
+        "path": "/.well-known/mcp/server-card.json",
+        "expectedStatusCode": 200,
+        "expectedContentType": "application/json"
+      }
+    ],
+    "nextAction": "Provide a real public HTTPS base URL, publish the healthz and server-card routes, then rerun scripts/validate_power_platform_service_boundary_endpoint.py with --probe."
+  },
+  "localPreviewSmoke": {
+    "status": "passed_local_only",
+    "url": "http://127.0.0.1:8702/healthz",
+    "apiKeyHeaderAccepted": "x-api-key",
+    "responseStatus": "ok",
+    "productionEquivalent": false
+  },
+  "publicTunnelAttempt": {
+    "tool": "tailscale funnel",
+    "status": "blocked_tailnet_funnel_not_enabled",
+    "enablementUrlProvidedByCli": "https://login.tailscale.com/f/funnel?node=n2zKi7ezWM11CNTRL",
+    "publicHttpsEndpointCreated": false
+  }
+}

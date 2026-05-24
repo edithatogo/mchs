@@ -1,0 +1,67 @@
+{
+  "app": {
+    "name": "mchs-orchestrator",
+    "displayName": "MCHS Calculator Orchestrator",
+    "appType": "model-driven",
+    "surfaceVersion": "1.0.0",
+    "entryPoints": [
+      {
+        "type": "screen",
+        "name": "CalculatorLaunch",
+        "responsibility": "Collect parameters and launch calculation orchestration"
+      },
+      {
+        "type": "screen",
+        "name": "ValidationFeedback",
+        "responsibility": "Surface validation issues returned by service-boundary checks"
+      }
+    ],
+    "inputs": {
+      "calculatorId": {
+        "type": "string",
+        "required": true,
+        "description": "Selected calculator identifier for orchestration boundary request."
+      },
+      "pricingYear": {
+        "type": "string",
+        "required": true,
+        "description": "Pricing year or support year for the selected calculator."
+      },
+      "fixtureId": {
+        "type": "string",
+        "required": false,
+        "description": "Optional fixture or study identifier."
+      },
+      "payload": {
+        "type": "object",
+        "required": true,
+        "description": "Calculator request payload serialised as JSON."
+      }
+    },
+    "outputs": {
+      "status": "success|validation_required|failure",
+      "result": "Normalized calculator result envelope from service boundary.",
+      "warnings": "Non-blocking validation notices.",
+      "traceId": "Observability trace identifier."
+    },
+    "flowBindings": [
+      "mchs-submit-calculation"
+    ],
+    "governance": {
+      "orchestrationOnly": true,
+      "formulaLogicAllowed": false,
+      "clientSideOnlyData": false,
+      "requiresServiceBoundary": true
+    },
+    "environmentVariableRefs": [
+      "mchs_api_base_url",
+      "mchs_api_contract_version",
+      "mchs_api_calculator_id",
+      "mchs_api_pricing_year"
+    ],
+    "connectionReferenceRefs": [
+      "mchs_service_boundary",
+      "mchs_solution_checker"
+    ]
+  }
+}

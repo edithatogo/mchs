@@ -1,0 +1,30 @@
+{
+  "track_id": "docker_mcp_registry_readiness_20260517",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "publication",
+  "priority": "near-term",
+  "current_state": "submitted-to-docker-registry-pr",
+  "primary_contract": "contracts/mcp/registry/docker-mcp-registry-readiness-contract.md",
+  "dependencies": [
+    "mcp_server_registry_submission_20260516",
+    "mcp_contract_20260513",
+    "release_supply_chain_governance_20260504"
+  ],
+  "completion_evidence": [
+    "Dockerfile",
+    ".dockerignore",
+    "scripts/smoke_mcp_container.py",
+    "contracts/mcp/registry/docker/server.yaml",
+    "contracts/mcp/registry/docker/tools.json",
+    "contracts/mcp/registry/docker/readme.md",
+    "contracts/mcp/registry/docker/local-validation-20260517.md",
+    "tests/test_mcp_server.py",
+    "https://github.com/docker/mcp-registry/pull/3799",
+    "Docker PR review fix f5fa706599ca708ea77ee86c93d039a3a3158132"
+  ],
+  "publication_status": "submitted-not-catalog-published",
+  "created_at": "2026-05-17T05:34:46Z",
+  "updated_at": "2026-05-24T07:59:00Z",
+  "description": "Add the container, metadata, validation, and PR evidence required before submitting MCHS to the Docker MCP Registry."
+}

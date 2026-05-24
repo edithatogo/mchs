@@ -1,0 +1,13 @@
+{
+  "serverInfo": {
+    "name": "io.github.edithatogo/mchs",
+    "version": "0.2.2"
+  },
+  "authentication": {
+    "required": false,
+    "schemes": []
+  },
+  "tools": "Generated at runtime from nwau_py.mcp_server.list_tools()",
+  "resources": "Generated at runtime from nwau_py.mcp_server.list_resources()",
+  "prompts": []
+}

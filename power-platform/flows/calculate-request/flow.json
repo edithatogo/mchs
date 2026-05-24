@@ -1,0 +1,1 @@
+{"name":"mchs-calculate-request","trigger":"PowerAppsV2","connectionReference":"mchs_service_boundary","operation":"Calculate","correlationIdSource":"triggerBody.correlation_id","storesPatientData":false,"containsFormulaLogic":false}

@@ -1,0 +1,49 @@
+{
+  "solution": {
+    "id": "mchs_alm_orchestration",
+    "name": "Microcosting Health Services ALM",
+    "publisher": "mchs",
+    "version": "0.2.3",
+    "description": "Source-controlled Power Platform ALM solution for orchestration-only calculator workflows.",
+    "environment": "governed",
+    "target": "solution-based",
+    "managedSolution": true,
+    "supportsManagedEnvironments": true,
+    "isSingleSourceOfTruth": true,
+    "createdFrom": "pac pack/unpack workflow",
+    "components": {
+      "apps": [
+        {
+          "name": "mchs-orchestrator",
+          "path": "power-platform/apps/mchs-orchestrator",
+          "artifact": "app-surface-manifest.json",
+          "type": "model-driven",
+          "role": "user-facing-orchestration"
+        }
+      ],
+      "flows": [
+        {
+          "name": "mchs-submit-calculation",
+          "path": "power-platform/flows/mchs-submit-calculation.json",
+          "type": "cloud-flow",
+          "role": "orchestration-boundary-call"
+        }
+      ],
+      "environmentVariables": {
+        "path": "power-platform/solution/environment-variables.json"
+      },
+      "connectionReferences": {
+        "path": "power-platform/solution/connection-references.json"
+      }
+    },
+    "contracts": {
+      "serviceBoundary": "power-platform/connectors/service-boundary-contract.md",
+      "surface": "power-platform/apps/mchs-orchestrator/app-surface-manifest.json",
+      "flowBinding": "power-platform/flows/mchs-submit-calculation.json"
+    },
+    "notes": [
+      "No formula logic is implemented in Power Platform assets.",
+      "All sensitive endpoint and authentication settings are environment-bound."
+    ]
+  }
+}

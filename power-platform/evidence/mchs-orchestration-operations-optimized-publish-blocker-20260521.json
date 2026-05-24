@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_app_publication_blocker",
+  "asOf": "2026-05-21",
+  "tenantName": "NSW Health Department",
+  "pacProfile": "nsw-dylan",
+  "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "portalUrl": "https://make.powerapps.com/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/canvas/?action=app-from-file",
+  "artifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "sha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f"
+  },
+  "packageChecks": {
+    "fileType": "zip archive",
+    "header": {
+      "DocVersion": "1.294",
+      "MinVersionToLoad": "1.294",
+      "MSAppStructureVersion": "2.0"
+    },
+    "dataSourcesManifest": "present but empty"
+  },
+  "publishAttempt": {
+    "status": "attempted_file_upload_stalled_in_maker_loading_state",
+    "publishedToTenant": false,
+    "source": "power-platform/evidence/deployment-status.json",
+    "observedOn": "2026-05-21"
+  },
+  "blocker": {
+    "code": "maker_loading_state_stall",
+    "summary": "The NSW dylan app-from-file import does not complete; the maker page stalls in a loading state before publication/import finishes.",
+    "impact": "Cannot confirm that dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp was published or imported into NSW dylan."
+  },
+  "nextAction": {
+    "step": "Retry the app-from-file import in the NSW dylan environment and capture the resulting app ID and play URL; if the maker still stalls, collect a browser console/network trace from the same URL for escalation."
+  }
+}
