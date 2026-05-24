@@ -3,7 +3,7 @@ package interop
 import (
 	"context"
 
-	"example.com/mchs-bindings-go/model"
+	"github.com/edithatogo/mchs/bindings/go/model"
 )
 
 // Adapter defines the file interop boundary used by the CLI and any future
