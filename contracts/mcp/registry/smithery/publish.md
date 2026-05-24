@@ -1,6 +1,6 @@
 # Smithery Publication Runbook
 
-Status: prepared, not yet submitted.
+Status: published as stdio MCPB release `73c5a62b-a82a-49bd-be46-7f26dca1ae12` on 2026-05-24.
 
 ## Endpoint
 
@@ -18,17 +18,18 @@ Routes:
 - `GET /.well-known/mcp/server-card.json`: static server-card metadata for
   Smithery scanner fallback.
 
-## Publication Gate
+## Publication Evidence
 
-Do not submit until the endpoint is reachable through public HTTPS. For local
-validation, tunnel or deploy the service and verify `initialize`, `tools/list`,
-and the server card from the public URL.
+Smithery accepted a local stdio MCPB bundle after authentication for namespace
+`edithatogo`.
 
-## Submission Command
-
-```bash
-smithery mcp publish "https://<public-host>/mcp" -n @edithatogo/mchs
+```text
+Release ID: 73c5a62b-a82a-49bd-be46-7f26dca1ae12
+MCP URL: https://mchs--edithatogo.run.tools
+Server Page: https://smithery.ai/servers/edithatogo/mchs
 ```
 
-Record the Smithery listing URL, scan result, and submission timestamp in
-`contracts/mcp/registry/submission-decisions.md` before claiming publication.
+The published bundle uses the Python MCPB runtime shape and explicit tool
+`inputSchema` metadata for all six tools. The Streamable HTTP adapter remains
+available for a future public HTTPS deployment, but Smithery publication is no
+longer blocked on hosting.
