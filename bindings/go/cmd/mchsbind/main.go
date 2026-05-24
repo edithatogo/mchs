@@ -9,8 +9,8 @@ import (
 	"io"
 	"os"
 
-	"example.com/mchs-bindings-go/interop"
-	"example.com/mchs-bindings-go/model"
+	"github.com/edithatogo/mchs/bindings/go/interop"
+	"github.com/edithatogo/mchs/bindings/go/model"
 )
 
 func main() {
