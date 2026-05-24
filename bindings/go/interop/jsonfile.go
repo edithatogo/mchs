@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"example.com/mchs-bindings-go/model"
+	"github.com/edithatogo/mchs/bindings/go/model"
 )
 
 // JSONFileAdapter stores the workbook model as plain JSON on disk.
