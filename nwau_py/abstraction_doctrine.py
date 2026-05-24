@@ -261,9 +261,7 @@ _BOUNDARY_NOTES: dict[
         "Apps may depend on binding adapters, but not on duplicated "
         "implementation logic.",
     ),
-    ("app", "release"): (
-        "Apps may read release metadata only as published context.",
-    ),
+    ("app", "release"): ("Apps may read release metadata only as published context.",),
     ("release", "formula"): (
         "Release metadata may enumerate formula kernels, but it must not "
         "contain formula code.",
@@ -325,14 +323,12 @@ def _build_boundaries() -> tuple[AbstractionBoundary, ...]:
     boundaries: list[AbstractionBoundary] = []
     for source_surface, target_surfaces in ABSTRACTION_BOUNDARY_MATRIX.items():
         boundaries.extend(
-            
-                AbstractionBoundary(
-                    source_surface=source_surface,
-                    target_surface=target_surface,
-                    notes=_BOUNDARY_NOTES[(source_surface, target_surface)],
-                )
-                for target_surface in target_surfaces
-            
+            AbstractionBoundary(
+                source_surface=source_surface,
+                target_surface=target_surface,
+                notes=_BOUNDARY_NOTES[(source_surface, target_surface)],
+            )
+            for target_surface in target_surfaces
         )
     return tuple(boundaries)
 

@@ -99,8 +99,7 @@ def test_go_binding_track_metadata_docs_and_contract_bundle_are_conservative():
     assert "Go Binding" in tracks
     assert (
         "support Go services and data pipelines through shared-core or "
-        "file/service contracts without formula duplication."
-        in tracks
+        "file/service contracts without formula duplication." in tracks
     )
 
     bundle_map = _as_mapping(bundle)

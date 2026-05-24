@@ -30,13 +30,16 @@ def main() -> None:
     inventory = INVENTORY.read_text(encoding="utf-8")
     years = _manifest_years()
 
-    assert 2012 not in years, "2012-13 must remain an explicit calculator gap"
-    assert set(range(2013, 2027)).issubset(years), (
-        "calculator manifest coverage must span 2013-14 through 2026-27"
-    )
+    if 2012 in years:
+        raise AssertionError("2012-13 must remain an explicit calculator gap")
+    if not set(range(2013, 2027)).issubset(years):
+        raise AssertionError(
+            "calculator manifest coverage must span 2013-14 through 2026-27"
+        )
 
     for digest in FOUNDATIONAL_HASHES:
-        assert digest in inventory, f"missing foundational 2012-13 hash {digest}"
+        if digest not in inventory:
+            raise AssertionError(f"missing foundational 2012-13 hash {digest}")
 
     required_phrases = [
         "NEP determination",
@@ -49,7 +52,8 @@ def main() -> None:
         "not calculator parity evidence",
     ]
     for phrase in required_phrases:
-        assert phrase in inventory, f"missing historical audit phrase: {phrase}"
+        if phrase not in inventory:
+            raise AssertionError(f"missing historical audit phrase: {phrase}")
 
 
 if __name__ == "__main__":

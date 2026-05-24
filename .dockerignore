@@ -1,0 +1,16 @@
+.git
+.github
+.venv
+.cache
+.pytest_cache
+.ruff_cache
+.ty
+__pycache__
+*.pyc
+archive
+build
+dist
+tests
+docs-site
+node_modules
+.playwright-mcp

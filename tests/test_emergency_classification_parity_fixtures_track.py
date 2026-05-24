@@ -21,10 +21,7 @@ from nwau_py.emergency_classification_parity_fixtures import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = (
-    ROOT
-    / "conductor"
-    / "tracks"
-    / "emergency_classification_parity_fixtures_20260512"
+    ROOT / "conductor" / "tracks" / "emergency_classification_parity_fixtures_20260512"
 )
 CONTRACT = ROOT / "contracts" / "emergency-classification-parity-fixtures"
 
@@ -148,9 +145,7 @@ def test_registration_helpers_preserve_synthetic_and_local_boundaries() -> None:
         raw_source_fields=("COMPENSABLE_STATUS", "DVA_STATUS"),
         expected_classification="AECC",
         expected_nwau_outputs=("Error_Code", "GWAU26", "NWAU26"),
-        source_refs=(
-            "archive/ihacpa/raw/2026/emergency/aecc/parity/manifest.json",
-        ),
+        source_refs=("archive/ihacpa/raw/2026/emergency/aecc/parity/manifest.json",),
         local_path_hint="archive/ihacpa/raw/2026/emergency/aecc/parity/manifest.json",
         notes=("local only",),
     )

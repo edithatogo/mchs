@@ -1,0 +1,53 @@
+{
+  "asOf": "2026-05-21",
+  "claimBoundary": {
+    "appPublished": false,
+    "connectionConfigured": false,
+    "productionReadinessClaimed": false
+  },
+  "currentPacObservations": {
+    "appPublication": {
+      "appId": null,
+      "playUrl": null,
+      "status": "blocked"
+    },
+    "customConnectorConnection": {
+      "connectionId": null,
+      "status": "blocked"
+    }
+  },
+  "validation": {
+    "appId": {
+      "reason": "missing",
+      "status": "blocked"
+    },
+    "connectionId": {
+      "reason": "missing",
+      "status": "blocked"
+    },
+    "playUrl": {
+      "reason": "missing",
+      "status": "blocked"
+    }
+  },
+  "environment": {
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+    "tenantName": "NSW Health Department"
+  },
+  "evidenceType": "power_platform_pac_observation_capture",
+  "missingRequiredObservations": [
+    "appId",
+    "playUrl",
+    "connectionId"
+  ],
+  "nextAction": "Capture real PAC appId, playUrl, and connectionId values; placeholders and mismatched play URLs stay blocked until the observed values are real.",
+  "requiredEvidence": [
+    "appId",
+    "playUrl",
+    "connectionId"
+  ],
+  "schemaVersion": 1,
+  "status": "blocked_pending_required_pac_observations"
+}

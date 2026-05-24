@@ -75,8 +75,7 @@ def test_c_abi_binding_track_requires_versioned_memory_safe_arrow_contract():
 
     assert (
         "define a stable institutional embedding abi only after core schemas "
-        "and calculator parity are stable."
-        in registry
+        "and calculator parity are stable." in registry
     )
     assert "c abi wrapper or secured service boundary" in packaging
     assert "arrow c data interface" in strategy

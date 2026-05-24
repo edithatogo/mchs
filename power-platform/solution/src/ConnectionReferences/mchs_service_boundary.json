@@ -1,0 +1,1 @@
+{"logicalName":"mchs_service_boundary","displayName":"MCHS Service Boundary","connectorId":"mchs-service-boundary","description":"Connection reference for the MCHS custom connector. Secrets are environment-managed."}

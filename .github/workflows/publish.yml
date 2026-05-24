@@ -1,6 +1,9 @@
 name: Publish Python package
 
 on:
+  push:
+    tags:
+      - "v*"
   release:
     types:
       - published
@@ -22,7 +25,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     env:
-      RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag }}
+      RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
       RELEASE_REF_TYPE: tag
     steps:
       - name: Check out repository at tagged ref
@@ -48,7 +51,7 @@ jobs:
 
       - name: Validate release tag and package version metadata
         env:
-          RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag }}
+          RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
           RELEASE_REF_TYPE: tag
         run: uv run python .github/scripts/validate_release_metadata.py
 

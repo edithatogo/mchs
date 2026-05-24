@@ -62,8 +62,9 @@ def test_pricing_year_diff_tooling_track_and_contract_are_complete():
     assert metadata["status"] == "complete"
     assert metadata["current_state"] == "implemented-with-manifest-backed-diffs"
     assert metadata["publication_status"] == "not-ready"
-    assert "funding-calculator diff-year <from-year> <to-year>" in (
-        metadata["primary_contract"]
+    assert (
+        "funding-calculator diff-year <from-year> <to-year>"
+        in (metadata["primary_contract"])
     )
     assert "- [x] **Track: Pricing-Year Diff Tooling**" in registry
     assert "source changes" in docs

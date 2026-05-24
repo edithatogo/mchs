@@ -1,0 +1,71 @@
+{
+  "flow": {
+    "name": "mchs-submit-calculation",
+    "displayName": "Submit calculator orchestration request",
+    "description": "Accepts validated app parameters and posts request payload to the secure boundary endpoint.",
+    "category": "Instant",
+    "owner": "mchs",
+    "version": "1.0.0",
+    "triggers": [
+      {
+        "type": "manual",
+        "kind": "power-apps",
+        "summary": "Starts from app surface with contract-compliant payload."
+      }
+    ],
+    "steps": [
+      {
+        "id": "compose-request",
+        "type": "compose",
+        "operation": "Build orchestration payload",
+        "inputs": [
+          "contract_version",
+          "calculator_id",
+          "pricing_year",
+          "fixture_id",
+          "input_payload"
+        ]
+      },
+      {
+        "id": "call-boundary",
+        "type": "http",
+        "operation": "POST /calculators/run",
+        "connection": "mchs_service_boundary",
+        "inputSchema": {
+          "contract_version": "string",
+          "calculator_id": "string",
+          "pricing_year": "string",
+          "fixture_id": "string",
+          "input_payload": "object"
+        }
+      },
+      {
+        "id": "normalize-response",
+        "type": "transform",
+        "operation": "project response to status/result/warnings/trace_id"
+      },
+      {
+        "id": "emit-status",
+        "type": "response",
+        "operation": "Return result envelope to app screen"
+      }
+    ],
+    "errorHandling": [
+      "propagate-http-errors",
+      "return-status-failure-with-message"
+    ],
+    "contract": {
+      "statusValues": ["success", "validation_required", "failure"],
+      "requiredFields": ["status", "result", "warnings", "trace_id"]
+    },
+    "security": {
+      "noSensitiveLogic": true,
+      "noFormulaExecution": true,
+      "noSecretInCode": true
+    },
+    "connections": [
+      "mchs_service_boundary",
+      "mchs_solution_checker"
+    ]
+  }
+}

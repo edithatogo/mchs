@@ -164,8 +164,7 @@ def test_fixture_gap_record_exists():
         "conductor/archive/community_mental_health_calculator_20260512/fixture_gaps.md"
     )
     assert gap_path.exists(), (
-        "Fixture gap record not found. "
-        "Create track fixture_gaps.md"
+        "Fixture gap record not found. Create track fixture_gaps.md"
     )
     content = gap_path.read_text(encoding="utf-8")
     lower = content.lower()
@@ -173,8 +172,7 @@ def test_fixture_gap_record_exists():
     for year in ("nep21", "nep22", "nep23", "nep24", "nep25"):
         assert year in lower
     assert (
-        "synthetic mock data" in lower
-        or "official ihacpa calculator output" in lower
+        "synthetic mock data" in lower or "official ihacpa calculator output" in lower
     )
 
 

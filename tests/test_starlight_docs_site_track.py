@@ -19,14 +19,15 @@ def test_starlight_docs_site_track_metadata_and_docs_exist():
     index = _read_text(TRACK / "index.md")
     conductor_index = _read_text(CONDUCTOR_INDEX)
 
-    assert metadata == {
-        "track_id": "starlight_docs_site_20260506",
-        "type": "feature",
-        "status": "complete",
-        "created_at": "2026-05-06T08:18:23Z",
-        "updated_at": "2026-05-06T12:48:04Z",
-        "description": "Starlight documentation site and versioning",
-    }
+    assert metadata["track_id"] == "starlight_docs_site_20260506"
+    assert metadata["type"] == "feature"
+    assert metadata["status"] in {"complete", "completed"}
+    assert metadata["created_at"] == "2026-05-06T08:18:23Z"
+    assert metadata["updated_at"] == "2026-05-06T12:48:04Z"
+    assert metadata["description"] == "Starlight documentation site and versioning"
+    assert metadata.get("track_class") == "publication"
+    assert metadata.get("current_state") == "complete"
+    assert metadata.get("completion_evidence") == ["docs", "workflows", "tests"]
 
     assert "Starlight-based static site" in spec
     assert "@astrojs/starlight" in spec

@@ -72,8 +72,7 @@ def test_polyglot_rust_core_roadmap_track_metadata_contract_and_docs_are_present
     assert metadata["track_class"] == "roadmap-governance"
     assert metadata["current_state"] == "polyglot-roadmap-complete"
     assert metadata["primary_contract"] == (
-        "contracts/polyglot-rust-core-roadmap/"
-        "polyglot-rust-core-roadmap.contract.json"
+        "contracts/polyglot-rust-core-roadmap/polyglot-rust-core-roadmap.contract.json"
     )
     assert metadata["dependencies"] == [
         "abstraction_doctrine_enforcement_20260512",
@@ -153,6 +152,5 @@ def test_polyglot_rust_core_roadmap_does_not_overclaim_rust_default():
         _single_line(spec)
     )
     assert (
-        "Rust promotion must preserve traceability to IHACPA source materials"
-        in spec
+        "Rust promotion must preserve traceability to IHACPA source materials" in spec
     )

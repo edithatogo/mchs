@@ -1,0 +1,44 @@
+name: Power Platform blocker - real Power Automate flow component smoke evidence
+description: Local issue-generation template for the unresolved Power Automate smoke-evidence blocker.
+title: "[Power Platform blocker] real Power Automate flow component smoke evidence"
+labels:
+  - power-platform
+  - blocker
+  - local-template
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is local only.
+        Do not create or claim a live issue from it unless the blocker is still open.
+
+        Blocker id: `real_power_automate_flow_component_smoke_evidence`
+        Source scorecard: `power-platform/repository/repo-health-scorecard.json`
+        Supporting evidence:
+        - `power-platform/evidence/flow-smoke-evidence-template.json`
+        - `power-platform/evidence/power-automate-flow-smoke-20260521.json`
+  - type: textarea
+    id: current_gap
+    attributes:
+      label: Current gap
+      description: Record the missing real Power Automate component smoke evidence.
+      placeholder: Describe which component, flow, or smoke check is still only templated or synthetic.
+    validations:
+      required: true
+  - type: textarea
+    id: closure_evidence
+    attributes:
+      label: Closure evidence
+      description: Record the evidence that must be captured before this blocker can be closed.
+      placeholder: Include the flow run output, smoke evidence, or operational capture that resolves the blocker.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have not claimed production readiness or blocker resolution.
+          required: true
+        - label: I am using repository evidence, not a live GitHub issue, as the source of truth.
+          required: true

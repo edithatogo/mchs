@@ -111,8 +111,74 @@ def test_mcp_registry_metadata_is_prepared_but_not_overclaimed():
 
 
 def test_pypi_readme_contains_mcp_registry_verification_marker():
-    readme = (
-        mcp_server._project_root() / "nwau_py" / "README.md"
-    ).read_text(encoding="utf-8")
+    readme = (mcp_server._project_root() / "nwau_py" / "README.md").read_text(
+        encoding="utf-8"
+    )
 
     assert "<!-- mcp-name: io.github.edithatogo/mchs -->" in readme
+
+
+def test_mcp_http_server_card_matches_contract_tools():
+    from nwau_py import mcp_http_server
+
+    card = mcp_http_server.server_card()
+
+    assert card["serverInfo"]["name"] == "io.github.edithatogo/mchs"
+    assert card["authentication"] == {"required": False, "schemes": []}
+    assert {tool["name"] for tool in card["tools"]} == {
+        "mchs.list_calculators",
+        "mchs.get_schema",
+        "mchs.validate_input",
+        "mchs.calculate",
+        "mchs.explain_result",
+        "mchs.get_evidence",
+    }
+    assert card["metadata"]["transport"] == "streamable-http"
+
+
+def test_mcp_http_dispatch_reuses_json_rpc_handler():
+    from nwau_py import mcp_http_server
+
+    response = mcp_http_server.handle_http_json_rpc(
+        {"jsonrpc": "2.0", "id": 7, "method": "tools/list", "params": {}}
+    )
+
+    assert response is not None
+    assert response["id"] == 7
+    assert response["result"]["tools"][0]["name"].startswith("mchs.")
+
+
+def test_mcp_registry_readiness_contracts_are_explicit():
+    root = mcp_server._project_root()
+    smithery = (
+        root / "contracts" / "mcp" / "registry" / "smithery-readiness-contract.md"
+    ).read_text(encoding="utf-8")
+    docker = (
+        root
+        / "contracts"
+        / "mcp"
+        / "registry"
+        / "docker-mcp-registry-readiness-contract.md"
+    ).read_text(encoding="utf-8")
+
+    assert "Streamable HTTP" in smithery
+    assert "/.well-known/mcp/server-card.json" in smithery
+    assert "Dockerfile" in docker
+    assert "task validate -- --name mchs" in docker
+
+
+def test_docker_registry_candidate_metadata_is_prepared_not_published():
+    root = mcp_server._project_root()
+    server_yaml = (
+        root / "contracts" / "mcp" / "registry" / "docker" / "server.yaml"
+    ).read_text(encoding="utf-8")
+    tools_json = json.loads(
+        (root / "contracts" / "mcp" / "registry" / "docker" / "tools.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert "name: mchs" in server_yaml
+    assert "image: mcp/mchs" in server_yaml
+    assert "type: server" in server_yaml
+    assert {tool["name"] for tool in tools_json} >= {"mchs.list_calculators"}

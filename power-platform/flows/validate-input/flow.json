@@ -1,0 +1,1 @@
+{"name":"mchs-validate-input","trigger":"PowerAppsV2","connectionReference":"mchs_service_boundary","operation":"ValidateInput","correlationIdSource":"triggerBody.correlation_id","storesPatientData":false,"containsFormulaLogic":false}

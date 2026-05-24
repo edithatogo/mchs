@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "targetScore": 9.9,
+  "currentScore": 9.5,
+  "status": "not_eligible_live_runtime_flow_governance_blocked",
+  "principle": "A 9.9 repo-health score requires externally evidenced runtime behavior and complete per-operation Power App UX, not only source readiness.",
+  "requiredGates": [
+    {
+      "gate": "all_connector_operation_pages_source_ux_complete",
+      "status": "passed_source_evidence",
+      "evidence": "power-platform/apps/mchs-orchestration-app/page-function-coverage.json"
+    },
+    {
+      "gate": "live_service_boundary_health_validate_calculate_evidence",
+      "status": "blocked",
+      "evidence": "power-platform/evidence/live-service-boundary-smoke-20260521.json"
+    },
+    {
+      "gate": "real_power_automate_flow_smoke",
+      "status": "blocked",
+      "evidence": "power-platform/evidence/power-automate-flow-smoke-20260521.json"
+    },
+    {
+      "gate": "dlp_monitoring_and_connector_policy_evidence",
+      "status": "blocked",
+      "evidence": "power-platform/evidence/dlp-monitoring-policy-evidence-20260521.json"
+    },
+    {
+      "gate": "official_github_actions_live_gate_run",
+      "status": "blocked",
+      "evidence": "power-platform/evidence/github-live-gate-20260521.json"
+    },
+    {
+      "gate": "standalone_power_platform_subrepo_remote_or_explicit_waiver",
+      "status": "blocked",
+      "evidence": "power-platform/repository/subrepo-closure-20260521.json",
+      "requiredClosureEvidence": {
+        "standaloneRemote": [
+          "remoteUrl",
+          "defaultBranch",
+          "syncProcedure",
+          "importOwner"
+        ],
+        "explicitWaiver": [
+          "approvedBy",
+          "approvalRecord",
+          "reason",
+          "reviewDate",
+          "riskAcceptance"
+        ]
+      }
+    }
+  ],
+  "claimBoundary": {
+    "score99Claimed": false,
+    "productionRuntimeReady": false,
+    "allExternalBusinessOutcomesProven": false,
+    "operationPageSourceUxComplete": true
+  }
+}

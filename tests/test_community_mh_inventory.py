@@ -75,7 +75,10 @@ def test_nep22_has_excel_workbook():
     nep22 = next(a for a in CMTY_MH_ARTIFACTS if a.year == "2022")
     assert len(nep22.excel_workbooks) >= 1
     for wb in nep22.excel_workbooks:
-        assert Path(wb).exists(), f"Excel workbook not found: {wb}"
+        path = Path(wb)
+        assert path.suffix == ".xlsb"
+        assert path.parts[:4] == ("archive", "ihacpa", "raw", "2022")
+        assert "amhcc_shadow" in path.name
 
 
 def test_nep26_has_excel_workbook():
@@ -83,7 +86,10 @@ def test_nep26_has_excel_workbook():
     nep26 = next(a for a in CMTY_MH_ARTIFACTS if a.year == "2026")
     assert len(nep26.excel_workbooks) >= 1
     for wb in nep26.excel_workbooks:
-        assert Path(wb).exists(), f"Excel workbook not found: {wb}"
+        path = Path(wb)
+        assert path.suffix == ".xlsb"
+        assert path.parts[:4] == ("archive", "ihacpa", "raw", "2026")
+        assert "mental_health_activity_community" in path.name
 
 
 def test_amhcc_prefix_convention_documented():

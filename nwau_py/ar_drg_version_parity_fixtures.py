@@ -115,7 +115,7 @@ def _normalize_relative_path(path: str | Path, *, field: str) -> str:
 
 
 def _coerce_version_window(
-    value: ARDRGGrouperVersionWindow | Mapping[str, Any]
+    value: ARDRGGrouperVersionWindow | Mapping[str, Any],
 ) -> ARDRGGrouperVersionWindow:
     if isinstance(value, ARDRGGrouperVersionWindow):
         return value

@@ -58,8 +58,8 @@
       },
       "knownLimitations": [
         "Official MCP Registry submission requires mcp-publisher authentication.",
-        "Smithery submission is deferred until Streamable HTTP or MCPB packaging exists.",
-        "Docker MCP Registry submission is deferred because the first release is not containerized."
+        "Smithery publication is not claimed until the HTTP adapter is hosted on public HTTPS and Smithery scan evidence exists.",
+        "Docker MCP Catalog publication is not claimed until Docker Registry validation and PR or merge evidence exists."
       ]
     }
   }

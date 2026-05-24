@@ -89,9 +89,7 @@ CODING_SET_FAMILY_ROWS: tuple[dict[str, object], ...] = (
         "aliases": ("tier-2", "tier_2", "tier 2"),
         "licensed": False,
         "restriction": None,
-        "notes": (
-            "The repository records the 2026 NEP transition to Tier 2 v10.0.",
-        ),
+        "notes": ("The repository records the 2026 NEP transition to Tier 2 v10.0.",),
         "versions": (
             ("2013", None),
             ("2014", None),

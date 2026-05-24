@@ -62,3 +62,17 @@ The bootstrap script verifies:
 - `az account --help`
 
 This keeps the phase-2 contract lightweight, explicit, and suitable for CI documentation checks.
+
+## Subrepo Closure Operator Runbook
+
+Use `./scripts/write_power_platform_subrepo_closure.py` with the companion
+`scripts/bootstrap-power-platform-subrepo-closure.md` runbook when you need to
+prepare the subrepo closure evidence package.
+
+- Start with the blocked default record if neither closure path is ready.
+- Use the standalone remote sample when the boundary has a real remote and
+  import owner.
+- Use the explicit waiver sample only when governance has signed off on the
+  deferred split.
+- Do not describe any of these records as a 9.9 completion claim unless the
+  rest of the live evidence package is actually complete.

@@ -1,0 +1,52 @@
+DynamicContentScreen_Screen As screen:
+    ZIndex: =1
+
+    DynamicContentScreen_HtmlViewer As htmlViewer:
+        DisplayMode: =DisplayMode.View
+        Font: =Font.'Segoe UI'
+        Height: =Parent.Height - DynamicContentScreen_HtmlViewer.Y
+        HtmlText: ="<pre><code>" & DisplayText & "</code></pre>"
+        PaddingLeft: =25
+        Size: =14
+        Width: =Parent.Width
+        Y: =DynamicContentScreen_Header_ManualContainer.Y + DynamicContentScreen_Header_ManualContainer.Height
+        ZIndex: =1
+
+    DynamicContentScreen_Header_ManualContainer As groupContainer.manualLayoutContainer:
+        Height: =DynamicContentScreen_Header_title_Label.Y + DynamicContentScreen_Header_title_Label.Height
+        LayoutDirection: =LayoutDirection.Horizontal
+        LayoutMode: =LayoutMode.Manual
+        Width: =Parent.Width
+        ZIndex: =2
+
+        DynamicContentScreen_Header_title_Label As label:
+            Align: =Align.Center
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(56, 96, 178, 1)
+            Font: =Font.'Segoe UI'
+            FontWeight: =FontWeight.Semibold
+            Height: =100
+            Role: =TextRole.Heading1
+            Size: =32
+            Text: =HeaderTitle
+            Width: =Parent.Width
+            X: =0
+            ZIndex: =1
+
+        DynamicContentScreen_Header_return_IconArrowLeft As icon.ArrowLeft:
+            AccessibleLabel: ="Back"
+            Color: =RGBA(255, 255, 255, 1)
+            DisplayMode: =DisplayMode.Edit
+            Height: =100
+            Icon: =Icon.ArrowLeft
+            OnSelect: =Back();
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            TabIndex: =0
+            Width: =100
+            X: =0
+            ZIndex: =2
+

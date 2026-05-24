@@ -209,9 +209,7 @@ def validate_pricing_year(
             reference_status = manifest.validation_status
             reference_current_year = manifest.current_pricing_year
             reference_parity_claim = manifest.validation.parity_claim
-            unresolved_gaps = tuple(
-                gap.gap_id for gap in manifest.unresolved_gaps()
-            )
+            unresolved_gaps = tuple(gap.gap_id for gap in manifest.unresolved_gaps())
             warnings.extend(
                 [
                     f"reference-data manifest status: {manifest.validation_status}",
@@ -308,8 +306,6 @@ def format_pricing_year_validation_report(report: PricingYearValidationReport) -
         lines.append("errors:")
         lines.extend(f"- {error}" for error in report.errors)
 
-    lines.append(
-        "local validation gate: " + ("passed" if report.passed else "failed")
-    )
+    lines.append("local validation gate: " + ("passed" if report.passed else "failed"))
     lines.append("support claim: not asserted")
     return "\n".join(lines)

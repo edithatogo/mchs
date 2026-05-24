@@ -223,7 +223,10 @@ def test_public_exports_include_mapping_pipeline_and_transition_api() -> None:
     pipeline_exports = set(pipeline.__all__) | {"emergency_code_mapping_pipeline"}
     assert expected.issubset(pipeline_exports)
 
-    assert emergency_transition_registry.get_emergency_classification_status(
-        "aecc",
-        "2026",
-    ) == "valid"
+    assert (
+        emergency_transition_registry.get_emergency_classification_status(
+            "aecc",
+            "2026",
+        )
+        == "valid"
+    )

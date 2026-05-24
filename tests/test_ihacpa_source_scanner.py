@@ -259,9 +259,9 @@ def test_source_scanner_track_is_marked_complete_and_conservative():
         "conductor/tracks/ihacpa_source_scanner_20260512/metadata.json"
     )
     registry = Path("conductor/tracks.md").read_text(encoding="utf-8")
-    spec = Path(
-        "conductor/tracks/ihacpa_source_scanner_20260512/spec.md"
-    ).read_text(encoding="utf-8")
+    spec = Path("conductor/tracks/ihacpa_source_scanner_20260512/spec.md").read_text(
+        encoding="utf-8"
+    )
 
     assert metadata["status"] == "complete"
     assert metadata["current_state"] == "prototype"

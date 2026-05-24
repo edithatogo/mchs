@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-20",
+  "appName": "MCHS Orchestration Optimized",
+  "target": "high_performing_governed_operations_console",
+  "source": "power-platform/apps/mchs-orchestration-app/source/Src/HomeScreen_Screen.fx.yaml",
+  "optimizedArtifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration-optimized.msapp",
+    "sha256": "9040d1d68f2f9183027cec7b7aa0322add56b437148355227ec66bf77dc3c4e7"
+  },
+  "requirements": [
+    "clear operational hierarchy",
+    "explicit environment and synthetic-data warning",
+    "visible connector/runtime/evidence status cards",
+    "ordered workflow actions",
+    "support trace guidance",
+    "privacy guardrail copy",
+    "responsive width formulas",
+    "loading spinner enabled",
+    "no calculator formula logic in Power Apps"
+  ],
+  "performanceBudget": {
+    "homeScreenControlsMax": 42,
+    "homeScreenExternalConnectorCallsOnVisibleMax": 0,
+    "homeScreenNestedContainersMax": 8,
+    "homeScreenUsesLazyNavigation": true
+  },
+  "claimBoundary": {
+    "optimizedSourceGenerated": true,
+    "optimizedMsappPacked": true,
+    "optimizedAppPublished": true,
+    "productionRuntimeReady": false,
+    "operationPagesSourceUxComplete": true,
+    "operationPagesPublished": false
+  },
+  "publication": {
+    "publishedInTenant": true,
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "appId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "playUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "screenshot": "power-platform/evidence/screenshots/mchs-orchestration-optimized-play-20260520.png",
+    "screenshotSha256": "b7d6c95154c63222a1417ad6407f1e98cb1e4e0afeb0e521e1a755d37fdf5237",
+    "publicationMode": "separate optimized app because existing generated app opened read-only during overwrite attempt"
+  },
+  "operationPagesOptimizedArtifact": {
+    "path": "dist/power-platform/apps/mchs-orchestration-operations-optimized.msapp",
+    "sha256": "a4161460e1d58ce09de4e097cd344732060a2dd7d08395bb323e3b3839a4e17f"
+  }
+}

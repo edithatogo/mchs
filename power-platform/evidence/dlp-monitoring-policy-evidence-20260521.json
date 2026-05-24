@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "evidenceType": "dlp_monitoring_connector_policy",
+  "status": "blocked_pending_nsw_admin_policy_capture",
+  "requiredEvidence": [
+    "monitoring.owner",
+    "monitoring.failureMetrics.connectorFailures",
+    "monitoring.failureMetrics.flowRunFailures",
+    "monitoring.failureMetrics.serviceBoundaryHealth",
+    "monitoring.failureMetrics.appHealthMetrics",
+    "monitoring.failureMetrics.correlationIdsWithoutPatientData",
+    "dlp.policyId",
+    "dlp.policyName",
+    "dlp.policyClassification",
+    "dlp.policyCaptureState",
+    "connectorPolicy.policyId",
+    "connectorPolicy.policyName",
+    "connectorPolicy.connectorAllowState",
+    "support.owner",
+    "support.escalationOwner",
+    "support.escalationPath",
+    "support.escalationContact"
+  ],
+  "monitoring": {
+    "owner": "TBD",
+    "failureMetrics": {
+      "connectorFailures": "required",
+      "flowRunFailures": "required",
+      "serviceBoundaryHealth": "required",
+      "appHealthMetrics": "required",
+      "correlationIdsWithoutPatientData": "required"
+    }
+  },
+  "dlp": {
+    "tenantName": "NSW Health Department",
+    "policyId": "TBD",
+    "policyName": "TBD",
+    "policyClassification": "TBD",
+    "policyCaptureState": "blocked_pending_policy_capture",
+    "customConnectorAllowed": false,
+    "environmentPolicyCaptured": false,
+    "tenantPolicyCaptured": false
+  },
+  "connectorPolicy": {
+    "connectorName": "mchs-service-boundary",
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "policyId": "TBD",
+    "policyName": "TBD",
+    "connectorAllowState": "blocked_pending_policy_capture",
+    "policyAllowsConnector": false,
+    "flowRunPolicyChecked": false,
+    "scope": "TBD"
+  },
+  "support": {
+    "owner": "TBD",
+    "escalationOwner": "TBD",
+    "escalationPath": "TBD",
+    "escalationContact": "TBD",
+    "requiredDiagnosticFields": [
+      "solutionVersion",
+      "environmentId",
+      "connectorOperation",
+      "correlationId",
+      "sanitizedPayloadHash"
+    ]
+  },
+  "capturedEvidence": [
+    {
+      "field": "monitoring.owner",
+      "value": "TBD",
+      "status": "blocked_pending_owner_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.connectorFailures",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.flowRunFailures",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.serviceBoundaryHealth",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.appHealthMetrics",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "monitoring.failureMetrics.correlationIdsWithoutPatientData",
+      "value": "required",
+      "status": "blocked_pending_metrics_capture"
+    },
+    {
+      "field": "dlp.policyId",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "dlp.policyName",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "dlp.policyClassification",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "dlp.policyCaptureState",
+      "value": "blocked_pending_policy_capture",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "connectorPolicy.policyId",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "connectorPolicy.policyName",
+      "value": "TBD",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "connectorPolicy.connectorAllowState",
+      "value": "blocked_pending_policy_capture",
+      "status": "blocked_pending_policy_capture"
+    },
+    {
+      "field": "support.owner",
+      "value": "TBD",
+      "status": "blocked_pending_escalation_capture"
+    },
+    {
+      "field": "support.escalationOwner",
+      "value": "TBD",
+      "status": "blocked_pending_escalation_capture"
+    },
+    {
+      "field": "support.escalationPath",
+      "value": "TBD",
+      "status": "blocked_pending_escalation_capture"
+    },
+    {
+      "field": "support.escalationContact",
+      "value": "TBD",
+      "status": "blocked_pending_escalation_capture"
+    }
+  ],
+  "claimBoundary": {
+    "dlpCompatible": false,
+    "monitoringOperational": false,
+    "productionReadinessClaimed": false
+  }
+}

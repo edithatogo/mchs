@@ -26,10 +26,7 @@ from nwau_py import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = (
-    ROOT
-    / "conductor"
-    / "tracks"
-    / "emergency_udg_aecc_transition_registry_20260512"
+    ROOT / "conductor" / "tracks" / "emergency_udg_aecc_transition_registry_20260512"
 )
 
 AECC_FIELDS = ("AECC", "COMPENSABLE_STATUS", "DVA_STATUS")

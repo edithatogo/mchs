@@ -1,0 +1,17 @@
+{
+  "properties": {
+    "connectionParameters": {
+      "api_key": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "Service API key",
+          "description": "Deployment-managed API key for the secured MCHS service boundary. Do not commit real values.",
+          "tooltip": "Provided by the target environment owner."
+        }
+      }
+    },
+    "iconBrandColor": "#14532d",
+    "capabilities": [],
+    "publisher": "Microcosting Health Services"
+  }
+}

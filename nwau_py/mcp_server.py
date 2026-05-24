@@ -14,7 +14,22 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
-from .contracts import CALCULATOR_IDENTIFIERS
+try:
+    from .contracts import CALCULATOR_IDENTIFIERS
+except ModuleNotFoundError as error:
+    if error.name != "pydantic":
+        raise
+    CALCULATOR_IDENTIFIERS = frozenset(
+        {
+            "acute",
+            "adjust",
+            "community_mh",
+            "ed",
+            "mh",
+            "outpatients",
+            "subacute",
+        }
+    )
 
 SERVER_NAME = "mchs"
 SERVER_REGISTRY_NAME = "io.github.edithatogo/mchs"

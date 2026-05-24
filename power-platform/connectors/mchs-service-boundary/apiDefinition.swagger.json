@@ -1,0 +1,326 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MCHS Service Boundary",
+    "version": "0.2.2",
+    "description": "Connector-facing HTTP boundary for Power Platform orchestration. This boundary delegates to existing MCP handlers and does not duplicate pricing formulas."
+  },
+  "servers": [
+    {
+      "url": "https://{host}",
+      "variables": {
+        "host": {
+          "default": "example.invalid"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "operationId": "Health",
+        "summary": "Read boundary readiness",
+        "responses": {
+          "200": {
+            "description": "Service is running",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/calculators": {
+      "get": {
+        "operationId": "ListCalculators",
+        "summary": "List calculators through MCP boundary",
+        "parameters": [
+          {
+            "name": "pricing_year",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Calculator list response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/calculators/{calculator_id}": {
+      "get": {
+        "operationId": "GetCalculator",
+        "summary": "Read a calculator definition by id",
+        "parameters": [
+          {
+            "name": "calculator_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Calculator details response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Calculator not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/schemas/{schema_name}": {
+      "get": {
+        "operationId": "GetSchema",
+        "summary": "Read canonical schema by name",
+        "parameters": [
+          {
+            "name": "schema_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Canonical schema response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/validate": {
+      "post": {
+        "operationId": "ValidateInput",
+        "summary": "Validate calculation request at the boundary contract",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceBoundaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/calculations": {
+      "post": {
+        "operationId": "Calculate",
+        "summary": "Validate and delegate calculation request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceBoundaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calculation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/evidence/{bundle_id}": {
+      "get": {
+        "operationId": "GetEvidence",
+        "summary": "Read evidence for an evidence bundle",
+        "parameters": [
+          {
+            "name": "bundle_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Evidence response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calculators/run": {
+      "post": {
+        "operationId": "RunCalculation",
+        "summary": "Legacy connector compatibility alias for Calculate",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceBoundaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Calculation response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServiceBoundaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-mchs-api-key"
+      }
+    },
+    "schemas": {
+      "ServiceBoundaryRequest": {
+        "type": "object",
+        "required": ["contract_version", "calculator_id", "pricing_year", "input_payload"],
+        "properties": {
+          "contract_version": {
+            "type": "string",
+            "description": "Contract version expected by orchestrator and boundary."
+          },
+          "calculator_id": {
+            "type": "string",
+            "description": "Calculator identifier from MCP boundary."
+          },
+          "pricing_year": {
+            "type": "string",
+            "description": "Pricing year."
+          },
+          "fixture_id": {
+            "type": "string",
+            "description": "Optional fixture/test identifier."
+          },
+          "input_payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Calculator payload forwarded to MCP boundary."
+          }
+        }
+      },
+      "ServiceBoundaryResponse": {
+        "type": "object",
+        "required": ["status", "result_payload", "result", "trace_id"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["success", "validation_required", "failure"]
+          },
+          "result_payload": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "result": {
+            "type": "object",
+            "description": "Backward-compatibility alias of result_payload.",
+            "additionalProperties": true
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "trace_id": {
+            "type": "string"
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string"},
+          "service": {"type": "string"},
+          "server": {"type": "string"},
+          "transport": {"type": "string"},
+          "contract_version": {"type": "string"}
+        },
+        "required": ["status", "service"]
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

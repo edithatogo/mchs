@@ -20,3 +20,11 @@ This directory is the tracked source-control home for the Power Platform ALM app
 
 Unpacked solution assets are the editable source-of-truth representation for the
 Power Platform app. Build and promotion use `pac`-driven pack/unpack operations.
+
+## Implemented Source-Control Payload
+
+- `source-controlled-metadata.json`: root solution metadata and component map.
+- `environment-variables.json`: environment-variable contract source of truth.
+- `connection-references.json`: connection-reference contract source of truth.
+- `apps/mchs-orchestrator/app-surface-manifest.json`: app orchestration surface contract.
+- `flows/mchs-submit-calculation.json`: orchestration flow definition used by the app.

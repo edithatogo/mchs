@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/n/nwau-py/nwau_py-{{ version }}.tar.gz
-  sha256: c4257dea4626c611231503e3f8ea058e578ab6a0581af567ffb14d9f9193ad7e
+  sha256: c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480
 
 build:
   noarch: python
@@ -32,6 +32,7 @@ requirements:
     - polars
     - pyreadstat
     - pyxlsb
+    - pyyaml
 
 test:
   imports:

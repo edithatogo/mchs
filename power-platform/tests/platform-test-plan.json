@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "name": "mchs_power_platform_live_platform_test_plan",
+  "status": "blocked_pending_real_app_flow_components",
+  "requiredOrder": [
+    "pac auth and target environment selection",
+    "solution visibility and managed version check",
+    "solution checker result verification",
+    "custom connector registration",
+    "generated canvas msapp artifact",
+    "connection reference value configuration",
+    "environment variable value configuration",
+    "service boundary health check",
+    "Power App visual review",
+    "Power App runtime smoke",
+    "Power Automate flow smoke",
+    "DLP and monitoring evidence capture"
+  ],
+  "visualOptimizationChecklist": [
+    "clear landing state for calculator selection",
+    "visible environment and contract version",
+    "synthetic-data warning is prominent",
+    "loading state during connector calls",
+    "human-readable validation errors",
+    "copyable correlation ID for support",
+    "responsive layout at desktop and tablet widths",
+    "keyboard navigability",
+    "sufficient color contrast",
+    "no formula logic exposed in the app"
+  ],
+  "blockedBy": [
+    "real app component",
+    "real flow component",
+    "service boundary production endpoint",
+    "connection reference values",
+    "Power App URL"
+  ]
+}

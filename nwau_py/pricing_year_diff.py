@@ -187,8 +187,7 @@ def _compare_record_sections(
         for plain in (_to_plain_dict(item) for item in before_items)
     }
     after_map = {
-        key_fn(plain): plain
-        for plain in (_to_plain_dict(item) for item in after_items)
+        key_fn(plain): plain for plain in (_to_plain_dict(item) for item in after_items)
     }
 
     changes: list[ItemChange] = []
@@ -274,13 +273,13 @@ def compare_pricing_year_manifests(
     source_artifacts = _compare_record_sections(
         from_manifest.source_artifacts,
         to_manifest.source_artifacts,
-        key_fn=lambda item: f'{item["kind"]} :: {item["service_stream"]}',
+        key_fn=lambda item: f"{item['kind']} :: {item['service_stream']}",
     )
     validation = _compare_validation(from_manifest, to_manifest)
     gaps = _compare_record_sections(
         from_manifest.gaps,
         to_manifest.gaps,
-        key_fn=lambda item: f'{item["scope"]} :: {item["kind"]}',
+        key_fn=lambda item: f"{item['scope']} :: {item['kind']}",
     )
 
     return PricingYearDiffReport(

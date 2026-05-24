@@ -197,7 +197,6 @@ def test_contract_examples_are_metadata_only_and_local_only() -> None:
     assert precomputed["privacy"]["contains_phi"] is False
     assert "proprietary grouping rules" in json.dumps(precomputed).lower()
     assert all(
-        item["license_boundary"] == "local-only"
-        for item in external["references"]
+        item["license_boundary"] == "local-only" for item in external["references"]
     )
     assert diagnostics["diagnostics"]["status"] == "pass"

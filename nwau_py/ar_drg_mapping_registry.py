@@ -133,9 +133,7 @@ class ARDRGMappingAssetReference:
             object.__setattr__(
                 self,
                 "local_path_hint",
-                _normalize_non_blank(
-                    self.local_path_hint, field="local_path_hint"
-                ),
+                _normalize_non_blank(self.local_path_hint, field="local_path_hint"),
             )
         object.__setattr__(
             self,

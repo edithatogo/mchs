@@ -4,7 +4,7 @@
   "status": "new",
   "track_class": "core",
   "priority": "immediate",
-  "current_state": "roadmap-created",
+  "current_state": "phase-1-roadmap-priority-freeze-complete",
   "parallelism": "depth-2",
   "workstreams": ["rust-kernel", "surface-contracts", "parity-cicd", "governance-docs"],
   "primary_contract": "docs/roadmaps/rust-core-ga.md",
@@ -20,8 +20,18 @@
     "stata_interop_binding_20260513",
     "matlab_interop_binding_20260513"
   ],
+  "completion_evidence": [
+    "docs/roadmaps/rust-core-ga.md",
+    "docs/roadmaps/polyglot-rust-core.md",
+    "docs/roadmaps/polyglot-rust-core-architecture.md",
+    "conductor/tracks.md",
+    "conductor/tracks/scala_spark_binding_20260513/metadata.json",
+    "conductor/tracks/swift_binding_20260513/metadata.json",
+    "conductor/tracks/stata_interop_binding_20260513/metadata.json",
+    "conductor/tracks/matlab_interop_binding_20260513/metadata.json"
+  ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-24T08:25:00Z",
   "description": "Make Rust Core GA the immediate priority and defer lower-priority adapter expansion until release-candidate evidence exists."
 }

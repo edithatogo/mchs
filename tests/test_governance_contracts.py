@@ -110,9 +110,7 @@ def test_api_mcp_openai_relationship_keeps_logic_in_rust_core():
 
     assert relationship["canonical_logic_owner"] == "rust-core"
 
-    by_surface = {
-        item["surface"]: item for item in relationship["relationships"]
-    }
+    by_surface = {item["surface"]: item for item in relationship["relationships"]}
     assert by_surface["http-api"]["role"] == "domain transport"
     assert by_surface["mcp"]["role"] == "agent transport"
     assert by_surface["openai-tool-adapter"]["role"] == "generated tool adapter"

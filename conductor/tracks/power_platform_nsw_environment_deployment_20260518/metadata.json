@@ -1,0 +1,22 @@
+{
+  "track_id": "power_platform_nsw_environment_deployment_20260518",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "power-platform-completion",
+  "current_state": "managed-solution-imported",
+  "primary_contract": "power-platform/solution/README.md",
+  "dependencies": [
+    "power_platform_alm_ci_cd_20260518"
+  ],
+  "completion_evidence": [
+    "power-platform/evidence/nsw-managed-import-20260520.json",
+    "power-platform/evidence/deployment-status.json",
+    "power-platform/deployment/nsw/readiness.md",
+    "power-platform/solution/src/Other/Solution.xml",
+    "scripts/power-platform-alm.sh"
+  ],
+  "publication_status": "deployed-to-dylan-environment",
+  "created_at": "2026-05-18T13:22:30Z",
+  "updated_at": "2026-05-19T14:26:41Z",
+  "description": "Deploy the managed solution to the target NSW Power Platform environment and record tenant/environment evidence."
+}

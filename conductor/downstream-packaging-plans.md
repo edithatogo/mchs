@@ -28,8 +28,12 @@ non-Python surfaces that sit on top of the Rust core.
 
 - Recommended evaluation path: CLI/file wrapper first, with CSV as the
   executable prototype and Arrow as the target batch interchange format.
+- Native package evaluation should include `jlrs` as an embedding option once
+  the Rust core boundary is stable enough to justify direct runtime coupling.
 - Deferred evaluation path: C ABI or `ccall` only after the Rust core contract
   is stable enough to expose versioned symbols.
+- A Julia `ccall` wrapper remains the lower-level fallback when `jlrs` is not
+  appropriate.
 - Package shape: a thin wrapper over the shared calculator boundary with
   minimal Julia-side logic.
 - Release expectations: keep Julia package versioning aligned with the Rust

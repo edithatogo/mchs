@@ -23,9 +23,7 @@ class CommunityMHParams:
     debug_mode: bool = False
 
 
-def _load_cmty_weights(
-    ref_dir: Path, year: str = _DEFAULT_YEAR
-) -> pd.DataFrame:
+def _load_cmty_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
     """Load the community mental health price-weight table."""
     suffix = year[-2:]
     df = pd.read_sas(

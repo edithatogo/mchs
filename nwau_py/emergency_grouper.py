@@ -76,9 +76,7 @@ _YEAR_RE = re.compile(r"^(?:201[3-9]|202[0-6])$")
 _VERSION_RE = re.compile(r"^[A-Za-z0-9_. -]+$")
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _REFERENCE_ID_RE = re.compile(r"^[a-z][a-z0-9_]*$")
-_LOCAL_HOSTS: Final[frozenset[str]] = frozenset(
-    {"localhost", "127.0.0.1", "::1"}
-)
+_LOCAL_HOSTS: Final[frozenset[str]] = frozenset({"localhost", "127.0.0.1", "::1"})
 _SUPPORTED_SCHEMES: Final[frozenset[str]] = frozenset({"http", "https", "file"})
 
 
@@ -110,9 +108,7 @@ def _normalize_year(year: str) -> str:
 def _normalize_version(version: str, *, field: str) -> str:
     normalized = _normalize_non_blank(version, field=field)
     if not _VERSION_RE.fullmatch(normalized):
-        raise EmergencyGrouperError(
-            f"{field} must be a deterministic version label"
-        )
+        raise EmergencyGrouperError(f"{field} must be a deterministic version label")
     return normalized
 
 
@@ -144,8 +140,7 @@ def _normalize_streams(streams: Any) -> tuple[str, ...]:
     unknown = tuple(stream for stream in normalized if stream not in EMERGENCY_STREAMS)
     if unknown:
         raise EmergencyGrouperError(
-            "stream_compatibility contains unsupported streams: "
-            + ", ".join(unknown)
+            "stream_compatibility contains unsupported streams: " + ", ".join(unknown)
         )
     return normalized
 
@@ -297,9 +292,7 @@ class EmergencyGrouperReference:
                 f"unsupported reference_type {self.reference_type!r}"
             )
         if self.access_mode not in {"user_supplied", "local_only"}:
-            raise EmergencyGrouperError(
-                f"unsupported access_mode {self.access_mode!r}"
-            )
+            raise EmergencyGrouperError(f"unsupported access_mode {self.access_mode!r}")
         if self.license_boundary not in {"local-only", "restricted", "metadata-only"}:
             raise EmergencyGrouperError(
                 f"unsupported license_boundary {self.license_boundary!r}"
@@ -322,9 +315,7 @@ class EmergencyGrouperReference:
             object.__setattr__(
                 self,
                 "local_path_hint",
-                _normalize_relative_path(
-                    self.local_path_hint, field="local_path_hint"
-                ),
+                _normalize_relative_path(self.local_path_hint, field="local_path_hint"),
             )
 
         windows = tuple(
@@ -441,9 +432,7 @@ class EmergencyGrouperProvenance:
             ),
         )
         if self.source_mode not in EMERGENCY_GROUPER_SOURCE_MODES:
-            raise EmergencyGrouperError(
-                f"unsupported source_mode {self.source_mode!r}"
-            )
+            raise EmergencyGrouperError(f"unsupported source_mode {self.source_mode!r}")
         if self.tool_id is not None:
             object.__setattr__(
                 self, "tool_id", _normalize_non_blank(self.tool_id, field="tool_id")
@@ -473,9 +462,7 @@ class EmergencyGrouperProvenance:
             object.__setattr__(
                 self,
                 "mapping_bundle_id",
-                _normalize_non_blank(
-                    self.mapping_bundle_id, field="mapping_bundle_id"
-                ),
+                _normalize_non_blank(self.mapping_bundle_id, field="mapping_bundle_id"),
             )
         if self.mapping_bundle_version is not None:
             object.__setattr__(
@@ -548,9 +535,7 @@ class EmergencyGrouperOutputRecord:
         object.__setattr__(
             self,
             "classification_code",
-            _normalize_non_blank(
-                self.classification_code, field="classification_code"
-            ),
+            _normalize_non_blank(self.classification_code, field="classification_code"),
         )
         if not isinstance(self.provenance, EmergencyGrouperProvenance):
             raise EmergencyGrouperError(
@@ -621,7 +606,7 @@ class EmergencyGrouperCompatibilityResult:
 
 
 def _coerce_version_window(
-    value: EmergencyGrouperVersionWindow | dict[str, Any]
+    value: EmergencyGrouperVersionWindow | dict[str, Any],
 ) -> EmergencyGrouperVersionWindow:
     if isinstance(value, EmergencyGrouperVersionWindow):
         return value
@@ -632,9 +617,7 @@ def _coerce_version_window(
     return EmergencyGrouperVersionWindow(
         system=str(value["system"]),
         pricing_year=str(value["pricing_year"]),
-        emergency_classification_version=str(
-            value["emergency_classification_version"]
-        ),
+        emergency_classification_version=str(value["emergency_classification_version"]),
         stream_compatibility=tuple(value["stream_compatibility"]),
         source_refs=tuple(value["source_refs"]),
         notes=tuple(value.get("notes", ())),

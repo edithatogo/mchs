@@ -1,6 +1,5 @@
 """Tests for the community mental health calculator module."""
 
-
 import numpy as np
 import pandas as pd
 

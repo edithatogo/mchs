@@ -169,9 +169,7 @@ def _build_family(row: dict[str, object]) -> CodingSetFamily:
         display_name=str(row["display_name"]),
         aliases=tuple(str(alias) for alias in cast(tuple[str, ...], row["aliases"])),
         licensed=bool(row["licensed"]),
-        restriction=(
-            None if row["restriction"] is None else str(row["restriction"])
-        ),
+        restriction=(None if row["restriction"] is None else str(row["restriction"])),
         notes=tuple(str(note) for note in cast(tuple[str, ...], row["notes"])),
         versions=tuple(
             CodingSetVersion(year=str(year), expected_version=version)
@@ -290,18 +288,15 @@ def validate_coding_set_compatibility(
     expected_version = family.version_for_year(normalized_year)
     declared_version: str | None = None
     if version is not None:
-        declared_version = _normalize_non_blank(
-            version, field="coding_set_version"
-        )
+        declared_version = _normalize_non_blank(version, field="coding_set_version")
         if not _VERSION_RE.fullmatch(declared_version):
             raise CodingSetRegistryError(
                 "coding_set_version must be a deterministic version label"
-        )
+            )
 
     if expected_version is None:
         reason = (
-            f"{family.display_name} is not mapped for pricing year "
-            f"{normalized_year}"
+            f"{family.display_name} is not mapped for pricing year {normalized_year}"
         )
         return CodingSetCompatibilityResult(
             system=family.system,

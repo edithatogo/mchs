@@ -1,0 +1,27 @@
+name: Power BI DevOps Tooling
+
+on:
+  pull_request:
+    paths:
+      - 'power-bi/**'
+      - 'power-platform/tooling/**'
+      - '.github/workflows/power-bi-devops.yml'
+  workflow_dispatch:
+
+jobs:
+  power-bi-tooling:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Power BI visual tools
+        run: npm install -g powerbi-visuals-tools@latest
+      - name: Verify pbiviz
+        run: pbiviz --version
+      - name: Record Power BI REST deployment boundary
+        shell: bash
+        run: |
+          test -f power-platform/tooling/github-actions-manifest.json
+          echo "Power BI deployment uses Fabric/Power BI REST APIs or deployment pipelines when service-principal secrets are configured."

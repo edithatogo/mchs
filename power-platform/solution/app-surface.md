@@ -17,3 +17,7 @@
 - The app is a user-facing orchestration shell.
 - The app consumes environment variables and connection references.
 - The app must stay aligned with the service-boundary contract.
+
+Machine-readable definition:
+
+- `power-platform/apps/mchs-orchestrator/app-surface-manifest.json`

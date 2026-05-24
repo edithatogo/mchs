@@ -206,9 +206,7 @@ class _HTMLLinkParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         normalized_tag = tag.lower()
         if normalized_tag == self._heading_tag:
-            self._current_heading = _normalize_whitespace(
-                "".join(self._heading_chunks)
-            )
+            self._current_heading = _normalize_whitespace("".join(self._heading_chunks))
             self._heading_tag = None
             self._heading_chunks = []
             return
@@ -429,14 +427,14 @@ def _discover_explicit_urls(
     urls: tuple[str, ...], *, pricing_year: str | None
 ) -> list[SourceDiscovery]:
     return [
-            _make_discovery(
-                source_url=url,
-                label=_infer_filename(url),
-                source_kind="explicit-url",
-                source_document="url-list",
-                base_url=None,
-                pricing_year=pricing_year,
-            )
+        _make_discovery(
+            source_url=url,
+            label=_infer_filename(url),
+            source_kind="explicit-url",
+            source_document="url-list",
+            base_url=None,
+            pricing_year=pricing_year,
+        )
         for url in urls
     ]
 

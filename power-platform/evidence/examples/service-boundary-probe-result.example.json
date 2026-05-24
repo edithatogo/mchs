@@ -1,0 +1,15 @@
+{
+  "status": "probe_failed",
+  "checks": [
+    {
+      "name": "healthz",
+      "status": "failed",
+      "error": "Example only. Run the validator against a real public HTTPS endpoint to collect actual probe evidence."
+    },
+    {
+      "name": "server-card",
+      "status": "failed",
+      "error": "Example only. Run the validator against a real public HTTPS endpoint to collect actual probe evidence."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "solutionUniqueName": "mchs_alm_orchestration",
+  "solutionDisplayName": "Microcosting Health Services ALM",
+  "publisherUniqueName": "mchs",
+  "publisherDisplayName": "Microcosting Health Services",
+  "version": "0.2.2.0",
+  "serviceBoundary": {
+    "baseUrlEnvironmentVariable": "mchs_api_base_url",
+    "contractVersionEnvironmentVariable": "mchs_api_contract_version",
+    "fixtureGateEnvironmentVariable": "mchs_fixture_gate"
+  },
+  "connectionReferences": [
+    "mchs_service_boundary"
+  ],
+  "environmentVariables": [
+    "mchs_api_base_url",
+    "mchs_api_contract_version",
+    "mchs_fixture_gate",
+    "mchs_default_calculator_id",
+    "mchs_default_pricing_year"
+  ]
+}

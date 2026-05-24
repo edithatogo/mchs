@@ -74,4 +74,4 @@ jobs:
         run: uv sync --locked --group test --group profiling
 
       - name: Run Scalene profiling
-        run: mkdir -p .cache/validation/scalene && uv run scalene --cli --outfile .cache/validation/scalene/scalene.out --html python -m pytest
+        run: mkdir -p .cache/validation/scalene && uv run scalene run --cli --outfile .cache/validation/scalene/scalene.out --html python -m pytest

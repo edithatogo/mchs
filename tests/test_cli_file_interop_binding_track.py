@@ -198,9 +198,7 @@ def test_cli_file_interop_fixture_manifests_require_round_trip_and_synthetic_dat
     assert "synthetic arrow/parquet bundle for bundle-contract tests" in (
         str(arrow_notes[0]).lower()
     )
-    assert "no patient-level data included" in (
-        str(arrow_notes[1]).lower()
-    )
+    assert "no patient-level data included" in (str(arrow_notes[1]).lower())
 
 
 def test_cli_file_interop_track_metadata_stays_roadmap_only():

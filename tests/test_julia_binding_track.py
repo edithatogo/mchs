@@ -62,8 +62,7 @@ def test_julia_binding_records_the_selected_cli_file_strategy():
     assert "selected path: cli/file integration" in plan
     assert (
         "support julia analytics through c abi or arrow/cli interop while "
-        "preserving single-sourced calculator logic"
-        in registry
+        "preserving single-sourced calculator logic" in registry
     )
 
 

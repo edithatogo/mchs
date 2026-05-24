@@ -626,9 +626,7 @@ def build_emergency_code_mapping_bundle_record(
 ) -> EmergencyCodeMappingBundleRecord:
     """Build a strict emergency mapping bundle record from typed inputs."""
     if system is None and target_system is None:
-        raise EmergencyCodeMappingPipelineError(
-            "system or target_system is required"
-        )
+        raise EmergencyCodeMappingPipelineError("system or target_system is required")
     if system is not None and target_system is not None:
         canonical_system = normalize_emergency_classification_system(system)
         if canonical_system != normalize_emergency_classification_system(target_system):
@@ -642,9 +640,7 @@ def build_emergency_code_mapping_bundle_record(
             raise EmergencyCodeMappingPipelineError(
                 "system or target_system is required"
             )
-        canonical_system = normalize_emergency_classification_system(
-            selected_system
-        )
+        canonical_system = normalize_emergency_classification_system(selected_system)
     normalized_year = _normalize_year(pricing_year)
     resolved_display_name = (
         display_name
@@ -739,9 +735,7 @@ _EMERGENCY_CODE_MAPPING_BUNDLE_RECORDS: Final[
                 ),
                 local_path_hint="tests/fixtures/derived/emergency_code_mapping/2025/udg/manifest.json",
                 restricted=False,
-                notes=(
-                    "Derived validation fixture for dry-run bundle review.",
-                ),
+                notes=("Derived validation fixture for dry-run bundle review.",),
             ),
         ),
         validation_status="validated",
@@ -813,9 +807,7 @@ _EMERGENCY_CODE_MAPPING_BUNDLE_RECORDS: Final[
                 ),
                 local_path_hint="tests/fixtures/derived/emergency_code_mapping/2026/aecc/manifest.json",
                 restricted=False,
-                notes=(
-                    "Derived validation fixture for dry-run bundle review.",
-                ),
+                notes=("Derived validation fixture for dry-run bundle review.",),
             ),
         ),
         validation_status="validated",

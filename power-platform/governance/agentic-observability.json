@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "capability": "agentic_governance_observability",
+  "status": "implemented_as_evidence_contract",
+  "featureFlag": "MCHS_AGENTIC_GOVERNANCE_OBSERVABILITY",
+  "featureEnabled": true,
+  "requiredEvidenceFields": [
+    "dlpPolicy",
+    "connectorPolicy",
+    "managedEnvironmentState",
+    "solutionCheckerResult",
+    "managedImportResult",
+    "connectionReferenceMappings",
+    "environmentVariableValues",
+    "appHealthMetrics",
+    "flowRunOutcomes",
+    "agentIdentity",
+    "leastPrivilegeRoleAssignment",
+    "auditLogReference",
+    "rollbackReference"
+  ],
+  "agentRules": [
+    "agents are audited actors",
+    "agents use least-privilege roles",
+    "agents do not bypass DLP policies",
+    "agents do not store calculator formulas in prompts or flows",
+    "agents do not process private NSW operational data without explicit approval"
+  ],
+  "claimBoundary": {
+    "evidenceContractImplemented": true,
+    "tenantEvidenceCaptured": false,
+    "productionReadinessClaimed": false
+  }
+}

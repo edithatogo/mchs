@@ -4,6 +4,8 @@
   "status": "completed",
   "track_class": "binding",
   "current_state": "design-complete",
+  "deferred_until": "rust_core_ga_20260513:release-candidate",
+  "deferred_reason": "Rust Core GA is the immediate priority; Scala/Spark remains a boundary-only future consumer until required GA surfaces are stable.",
   "primary_contract": "contracts/scala-spark-binding/scala-spark-binding.contract.json",
   "dependencies": [
     "polyglot_rust_core_roadmap_20260512",

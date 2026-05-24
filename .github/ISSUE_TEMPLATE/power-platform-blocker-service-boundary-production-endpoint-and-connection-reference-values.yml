@@ -1,0 +1,44 @@
+name: Power Platform blocker - service boundary production endpoint and connection reference values
+description: Local issue-generation template for the unresolved Power Platform blocker recorded in the current repo-health scorecard.
+title: "[Power Platform blocker] service boundary production endpoint and connection reference values"
+labels:
+  - power-platform
+  - blocker
+  - local-template
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is local only.
+        Do not create or claim a live issue from it unless the blocker is still open.
+
+        Blocker id: `service_boundary_production_endpoint_and_connection_reference_values`
+        Source scorecard: `power-platform/repository/repo-health-scorecard.json`
+        Supporting evidence:
+        - `power-platform/evidence/connection-reference-evidence-template.json`
+        - `power-platform/evidence/runtime-smoke-evidence-template.json`
+  - type: textarea
+    id: current_gap
+    attributes:
+      label: Current gap
+      description: Record the missing production endpoint or connection reference values.
+      placeholder: Describe the exact endpoint, connection reference, or configuration value that is still missing.
+    validations:
+      required: true
+  - type: textarea
+    id: closure_evidence
+    attributes:
+      label: Closure evidence
+      description: Record the evidence that must be captured before this blocker can be closed.
+      placeholder: Include the checked-in files, environment outputs, or operator evidence that resolve the blocker.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations
+      options:
+        - label: I have not claimed production readiness or blocker resolution.
+          required: true
+        - label: I am using repository evidence, not a live GitHub issue, as the source of truth.
+          required: true

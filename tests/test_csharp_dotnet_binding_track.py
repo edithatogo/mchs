@@ -94,8 +94,7 @@ def test_csharp_dotnet_binding_track_metadata_docs_and_contract_bundle_are_safe(
     assert "shared golden fixtures and provenance diagnostics" in spec
 
     assert (
-        "Compare C ABI/PInvoke, service boundary, and CLI/Arrow-file interop."
-        in plan
+        "Compare C ABI/PInvoke, service boundary, and CLI/Arrow-file interop." in plan
     )
     assert "Preserve diagnostics and provenance metadata." in plan
     assert "shared-fixture tests" in plan
@@ -178,12 +177,12 @@ def test_csharp_dotnet_binding_preserves_provenance_without_formula_logic():
     pass_provenance = _as_mapping(pass_example["provenance"])
 
     assert bundle_diagnostics["format"] == pass_diagnostics["format"] == "json"
-    assert bundle_provenance["checksum_algorithm"] == pass_provenance[
-        "checksum_algorithm"
-    ] == "sha256"
-    assert bundle_provenance["preserve_fields"] == pass_provenance[
-        "preserve_fields"
-    ]
+    assert (
+        bundle_provenance["checksum_algorithm"]
+        == pass_provenance["checksum_algorithm"]
+        == "sha256"
+    )
+    assert bundle_provenance["preserve_fields"] == pass_provenance["preserve_fields"]
     assert bundle["formula_logic_location"] == "rust core"
     assert pass_example["formula_logic_location"] == "rust core"
     assert "c#" not in str(bundle["formula_logic_location"]).lower()

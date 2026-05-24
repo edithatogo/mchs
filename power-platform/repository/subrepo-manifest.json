@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "name": "mchs-power-platform-alm",
+  "mode": "in_repository_governed_subrepo_boundary",
+  "path": "power-platform/",
+  "parentRepository": "https://github.com/edithatogo/mchs",
+  "standaloneRemote": null,
+  "remoteProvisioningStatus": "not_provisioned",
+  "sourceOfTruth": "power-platform/",
+  "deploymentEnvironment": {
+    "tenant": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+    "environmentUniqueName": "unq8b153003d5eaf01189f5002248942"
+  },
+  "requiredBoundaries": [
+    "solution source is edited only under power-platform/solution/src",
+    "packed zip files are generated release artifacts",
+    "tenant secrets and connection values are not committed",
+    "calculator formulas remain outside Power Platform app and flow assets",
+    "runtime readiness requires service boundary, app smoke, and flow smoke evidence"
+  ],
+  "closureRequirements": {
+    "standaloneRemote": [
+      "remoteUrl",
+      "defaultBranch",
+      "syncProcedure",
+      "importOwner"
+    ],
+    "explicitWaiver": [
+      "approvedBy",
+      "approvalRecord",
+      "reason",
+      "reviewDate",
+      "riskAcceptance"
+    ]
+  },
+  "standaloneSplitRequirements": [
+    "provision a dedicated remote repository",
+    "record default branch and owner",
+    "pin parent repository to a submodule gitlink or subtree commit",
+    "document pull, push, pack, check, import, and release procedures",
+    "record NSW import owner and rollback owner",
+    "record a fully populated standaloneRemote or explicitWaiver closure record before any 9.9 claim"
+  ],
+  "claimBoundary": {
+    "subrepoBoundaryEnforced": true,
+    "standaloneRemoteProvisioned": false,
+    "managedSolutionImported": true,
+    "runtimeProductionReady": false
+  }
+}

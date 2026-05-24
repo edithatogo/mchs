@@ -240,9 +240,7 @@ def _normalize_year(year: str) -> str:
 def _expected_version_for(system: str, year: str) -> str | None:
     canonical_system = normalize_classification_system(system)
     normalized_year = _normalize_year(year)
-    return CLASSIFICATION_VERSION_MATRIX.get(canonical_system, {}).get(
-        normalized_year
-    )
+    return CLASSIFICATION_VERSION_MATRIX.get(canonical_system, {}).get(normalized_year)
 
 
 def get_expected_classification_version(system: str, year: str) -> str | None:

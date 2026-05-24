@@ -36,9 +36,7 @@ def test_registry_exposes_safe_synthetic_and_local_only_references() -> None:
 
 
 def test_registry_lookups_are_exact_and_metadata_only() -> None:
-    record = get_ar_drg_parity_fixture_record(
-        "ar_drg_version_parity_synthetic_2026"
-    )
+    record = get_ar_drg_parity_fixture_record("ar_drg_version_parity_synthetic_2026")
 
     assert record is not None
     assert record.fixture_kind == "synthetic"

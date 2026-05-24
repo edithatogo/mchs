@@ -176,7 +176,7 @@ def test_pre_commit_configuration_matches_the_current_python_quality_gate():
 def test_slow_validation_workflow_uses_the_expected_uv_group_commands():
     workflow = _read_text(SLOW_VALIDATION_WORKFLOW_FILE)
     scalene_command = (
-        "run: mkdir -p .cache/validation/scalene && uv run scalene --cli "
+        "run: mkdir -p .cache/validation/scalene && uv run scalene run --cli "
         "--outfile .cache/validation/scalene/scalene.out --html python -m pytest"
     )
 

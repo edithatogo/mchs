@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_pac_operator_package",
+  "asOf": "2026-05-21",
+  "status": "blocked_pending_required_pac_observations",
+  "packagePurpose": "PAC re-auth, app publication evidence, and custom connector connection binding",
+  "environment": {
+    "tenantName": "NSW Health Department",
+    "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/"
+  },
+  "artifacts": {
+    "runbook": "power-platform/deployment/pac-operator-runbook.md",
+    "appPublicationEvidence": "power-platform/evidence/canvas-app-publication-20260520.json",
+    "connectionReferenceEvidence": "power-platform/evidence/connection-reference-evidence-template.json",
+    "currentAuthBlockerEvidence": "power-platform/evidence/pac-observation-capture-20260521.json"
+  },
+  "requiredEvidence": [
+    "appId",
+    "playUrl",
+    "connectionId"
+  ],
+  "currentAuthBlocker": {
+    "status": "blocked",
+    "missingRequiredObservations": [
+      "appId",
+      "playUrl",
+      "connectionId"
+    ],
+    "claimBoundary": {
+      "appPublished": false,
+      "connectionConfigured": false,
+      "productionReadinessClaimed": false
+    },
+    "nextAction": "Run PAC auth and recapture real appId, playUrl, and connectionId values before changing any claim state."
+  },
+  "claimBoundary": {
+    "appPublished": false,
+    "connectionConfigured": false,
+    "productionReadinessClaimed": false
+  },
+  "notes": [
+    "App publication evidence is historical and does not imply a current live claim.",
+    "Custom connector connection binding remains unverified.",
+    "Use the blocker capture file for machine-checkable current state."
+  ]
+}

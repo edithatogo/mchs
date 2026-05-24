@@ -55,19 +55,15 @@ def test_historical_ihacpa_coverage_track_metadata_and_registry_stay_conservativ
     assert "Historical IHACPA Coverage Audit" in registry
     assert "[x] **Track: Historical IHACPA Coverage Audit**" in registry
     assert (
-        "verify how far official NEP, technical specification, calculator"
-        in registry
+        "verify how far official NEP, technical specification, calculator" in registry
     )
     assert "historical source inventory from 2012-13 to current year" in plan
     assert "Add separate matrix columns" in plan
     assert (
-        "Prioritize 2012-13 specification extraction separately from "
-        "calculator parity"
+        "Prioritize 2012-13 specification extraction separately from calculator parity"
     ) in plan
     assert "Add foundational 2012-13 PDF hashes" in plan
-    assert "executable historical inventory validation" in metadata[
-        "primary_contract"
-    ]
+    assert "executable historical inventory validation" in metadata["primary_contract"]
     assert "2012-13 NWAU calculator support remains an explicit gap" in track_index
 
 

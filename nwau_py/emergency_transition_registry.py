@@ -146,8 +146,7 @@ def _normalize_streams(streams: Any) -> tuple[str, ...]:
     unknown = tuple(stream for stream in normalized if stream not in EMERGENCY_STREAMS)
     if unknown:
         raise EmergencyClassificationRegistryError(
-            "stream_compatibility contains unsupported streams: "
-            + ", ".join(unknown)
+            "stream_compatibility contains unsupported streams: " + ", ".join(unknown)
         )
     return normalized
 
@@ -499,9 +498,7 @@ _EMERGENCY_CLASSIFICATION_RECORDS: Final[tuple[EmergencyClassificationRecord, ..
                     source_fields=EMERGENCY_CLASSIFICATION_REQUIRED_FIELDS["udg"],
                     stream_compatibility=EMERGENCY_STREAMS,
                     source_refs=EMERGENCY_CLASSIFICATION_SOURCE_REFS["udg"],
-                    notes=(
-                        "Legacy UDG remains accepted in the transition window.",
-                    ),
+                    notes=("Legacy UDG remains accepted in the transition window.",),
                 )
                 for year in ("2021", "2022", "2023", "2024", "2025", "2026")
             ),
@@ -539,9 +536,7 @@ _EMERGENCY_CLASSIFICATION_RECORDS: Final[tuple[EmergencyClassificationRecord, ..
                 source_fields=EMERGENCY_CLASSIFICATION_REQUIRED_FIELDS["aecc"],
                 stream_compatibility=EMERGENCY_STREAMS,
                 source_refs=EMERGENCY_CLASSIFICATION_SOURCE_REFS["aecc"],
-                notes=(
-                    "AECC v1.0 is shadow-priced in this transition year.",
-                ),
+                notes=("AECC v1.0 is shadow-priced in this transition year.",),
             ),
             EmergencyClassificationVersion(
                 year="2021",
@@ -613,9 +608,9 @@ EMERGENCY_TRANSITION_PERIODS: Final[tuple[EmergencyTransitionPeriod, ...]] = (
 )
 
 
-def list_emergency_classification_records() -> (
-    tuple[EmergencyClassificationRecord, ...]
-):
+def list_emergency_classification_records() -> tuple[
+    EmergencyClassificationRecord, ...
+]:
     """Return all known emergency classification records."""
     return _EMERGENCY_CLASSIFICATION_RECORDS
 
@@ -664,9 +659,7 @@ def list_emergency_transition_periods(
         return EMERGENCY_TRANSITION_PERIODS
     canonical = normalize_emergency_classification_system(system)
     return tuple(
-        period
-        for period in EMERGENCY_TRANSITION_PERIODS
-        if period.system == canonical
+        period for period in EMERGENCY_TRANSITION_PERIODS if period.system == canonical
     )
 
 
@@ -710,11 +703,7 @@ def _result(
     reason: str | None = None,
 ) -> EmergencyClassificationCompatibilityResult:
     period = get_emergency_transition_period(record.system, year)
-    acceptance_state = (
-        "unavailable"
-        if period is None
-        else period.acceptance_state
-    )
+    acceptance_state = "unavailable" if period is None else period.acceptance_state
     compatible = reason is None and not missing_fields and declared_version is not None
     return EmergencyClassificationCompatibilityResult(
         system=record.system,
@@ -753,11 +742,7 @@ def validate_emergency_classification_compatibility(
         )
 
     period = get_emergency_transition_period(record.system, normalized_year)
-    acceptance_state = (
-        "unavailable"
-        if period is None
-        else period.acceptance_state
-    )
+    acceptance_state = "unavailable" if period is None else period.acceptance_state
 
     if stream is not None:
         normalized_stream = _normalize_non_blank(stream, field="stream")
@@ -787,8 +772,7 @@ def validate_emergency_classification_compatibility(
 
     if expected_version is None:
         reason = (
-            f"{record.display_name} is not available for pricing year "
-            f"{normalized_year}"
+            f"{record.display_name} is not available for pricing year {normalized_year}"
         )
         return EmergencyClassificationCompatibilityResult(
             system=record.system,

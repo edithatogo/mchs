@@ -100,9 +100,7 @@ def test_load_rust_extension_reports_candidate_diagnostics(monkeypatch):
 
 def test_rust_bridge_kernel_row_contract_is_scalar_and_positional_only():
     hints = get_type_hints(rust_bridge._calculate_acute_2025_row_contract)
-    assert "single-row boundary" in (
-        rust_bridge.calculate_acute_2025_row.__doc__ or ""
-    )
+    assert "single-row boundary" in (rust_bridge.calculate_acute_2025_row.__doc__ or "")
     assert hints["row"] == rust_bridge.RustKernelRow
     assert hints["reference"] == rust_bridge.RustKernelReference
     assert hints["adjustments"] == rust_bridge.RustKernelAdjustments

@@ -136,7 +136,7 @@ is exhausted or a risky design decision cannot be resolved from local context.
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message following the format `conductor(plan): Mark phase '<PHASE NAME>' as complete`.
 
-9.  **Auto-Advance:** Once the checkpoint is recorded, automatically continue with the next incomplete task, next phase, or next track. Do not pause for manual confirmation unless the workflow is blocked by missing context, a failing bounded retry, or a risky design decision that cannot be resolved from local context.
+9.  **Auto-Advance:** Once the checkpoint is recorded, automatically continue with the next incomplete task or next track. If the active track still has incomplete work, continue with the next incomplete phase or task inside that track before moving on. Do not pause for manual confirmation unless the workflow is blocked by missing context, a failing bounded retry, or a risky design decision that cannot be resolved from local context.
 
 10.  **Announce Completion:** Inform the user that the phase is complete and the checkpoint has been created, with the detailed automated review report attached as a git note.
 

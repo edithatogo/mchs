@@ -55,9 +55,7 @@ _REFERENCE_STATUSES: Final[frozenset[str]] = frozenset({"resolved", "unresolved"
 _LICENSE_BOUNDARIES: Final[frozenset[str]] = frozenset(
     {"local-only", "restricted", "metadata-only"}
 )
-_SOURCE_MODES: Final[frozenset[str]] = frozenset(
-    {"precomputed", "external-reference"}
-)
+_SOURCE_MODES: Final[frozenset[str]] = frozenset({"precomputed", "external-reference"})
 _EXPECTED_SYSTEMS: Final[tuple[str, ...]] = (
     "ar_drg",
     "icd_10_am",
@@ -106,9 +104,7 @@ def _normalize_optional_version(version: str | None, *, field: str) -> str | Non
 
 def _normalize_str_tuple(value: Any, *, field: str) -> tuple[str, ...]:
     if isinstance(value, (str, bytes)) or not isinstance(value, (list, tuple)):
-        raise ARDRGGrouperError(
-            f"{field} must be a tuple or list of non-empty strings"
-        )
+        raise ARDRGGrouperError(f"{field} must be a tuple or list of non-empty strings")
     normalized: list[str] = []
     seen: set[str] = set()
     for item in value:
@@ -197,7 +193,7 @@ class ARDRGGrouperVersionWindow:
 
 
 def _coerce_version_window(
-    value: ARDRGGrouperVersionWindow | Mapping[str, Any]
+    value: ARDRGGrouperVersionWindow | Mapping[str, Any],
 ) -> ARDRGGrouperVersionWindow:
     if isinstance(value, ARDRGGrouperVersionWindow):
         return value
@@ -299,8 +295,7 @@ class ARDRGGrouperReference:
             and self.reference_uri is None
         ):
             raise ARDRGGrouperError(
-                "file_exchange references require a local_path_hint "
-                "or reference_uri"
+                "file_exchange references require a local_path_hint or reference_uri"
             )
 
     def supported_years(self) -> tuple[str, ...]:
@@ -482,9 +477,7 @@ def _normalize_declared_versions(
     acs_version: str | None,
 ) -> dict[str, str | None]:
     return {
-        "ar_drg": _normalize_optional_version(
-            ar_drg_version, field="ar_drg_version"
-        ),
+        "ar_drg": _normalize_optional_version(ar_drg_version, field="ar_drg_version"),
         "icd_10_am": _normalize_optional_version(
             icd_10_am_version, field="icd_10_am_version"
         ),
@@ -584,9 +577,7 @@ def validate_ar_drg_grouper_compatibility(
             acs_version=acs_version,
         )
         missing = [
-            system
-            for system, value in declared_versions.items()
-            if value is None
+            system for system, value in declared_versions.items() if value is None
         ]
         if missing:
             return _compatibility_result(
@@ -594,9 +585,7 @@ def validate_ar_drg_grouper_compatibility(
                 declared_versions=declared_versions,
                 expected_versions=expected_versions,
                 record=record,
-                reason=(
-                    "missing declared version(s): " + ", ".join(sorted(missing))
-                ),
+                reason=("missing declared version(s): " + ", ".join(sorted(missing))),
             )
 
     mismatches = [

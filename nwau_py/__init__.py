@@ -665,7 +665,8 @@ _LAZY_ATTRS = {
     ),
     "classification_validation": (".classification_validation", None),
     "ClassificationRequirement": (
-        ".classification_validation", "ClassificationRequirement",
+        ".classification_validation",
+        "ClassificationRequirement",
     ),
     "ClassificationValidationError": (
         ".classification_validation",
@@ -680,7 +681,8 @@ _LAZY_ATTRS = {
         "build_classification_requirement",
     ),
     "get_classification_name": (
-        ".classification_validation", "get_classification_name",
+        ".classification_validation",
+        "get_classification_name",
     ),
     "get_classification_version": (
         ".classification_validation",

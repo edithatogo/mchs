@@ -1,0 +1,28 @@
+{
+  "track_id": "smithery_mcp_registry_readiness_20260517",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "publication",
+  "priority": "near-term",
+  "current_state": "published-to-smithery",
+  "primary_contract": "contracts/mcp/registry/smithery-readiness-contract.md",
+  "dependencies": [
+    "mcp_server_registry_submission_20260516",
+    "mcp_contract_20260513",
+    "canonical_contract_foundation_20260513"
+  ],
+  "completion_evidence": [
+    "nwau_py/mcp_http_server.py",
+    "pyproject.toml script mchs-mcp-http",
+    "contracts/mcp/registry/smithery/publish.md",
+    "contracts/mcp/registry/smithery/server-card.example.json",
+    "tests/test_mcp_server.py",
+    "contracts/mcp/registry/smithery/mcpb/manifest.json",
+    "Smithery release 73c5a62b-a82a-49bd-be46-7f26dca1ae12",
+    "https://smithery.ai/servers/edithatogo/mchs"
+  ],
+  "publication_status": "published",
+  "created_at": "2026-05-17T05:34:46Z",
+  "updated_at": "2026-05-24T07:57:00Z",
+  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery."
+}

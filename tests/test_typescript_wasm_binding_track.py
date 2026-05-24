@@ -87,8 +87,7 @@ def test_typescript_wasm_binding_track_docs_require_synthetic_fixtures_and_parit
 
     assert (
         "enable browser docs demos and node workflows from the shared rust core "
-        "with synthetic-data-only privacy boundaries"
-        in registry
+        "with synthetic-data-only privacy boundaries" in registry
     )
 
     for phrase in [

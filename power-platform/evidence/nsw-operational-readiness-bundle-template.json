@@ -1,0 +1,88 @@
+{
+  "release_id": "mchs-pp-nsw-dylan-operational-readiness",
+  "git_commit": "TBD",
+  "git_tag": "v0.2.2",
+  "packages": [
+    "nwau-py",
+    "mchs-power-platform-connector"
+  ],
+  "supported_scope": {
+    "jurisdiction": ["NSW"],
+    "surfaces": ["power-platform-managed-solution"],
+    "year": "2026"
+  },
+  "source_manifests": [
+    "power-platform/solution/solution-manifest.md"
+  ],
+  "schema_versions": {
+    "nwau_core": "0.2.2",
+    "evidence_bundle": "contracts/release/evidence-bundle.schema.json"
+  },
+  "fixture_results": [
+    {
+      "type": "managed-solution-import",
+      "environment": "nsw-dylan",
+      "status": "passed",
+      "evidence": "power-platform/evidence/nsw-managed-import-20260520.json"
+    },
+    {
+      "type": "runtime-app-flow-smoke",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/runtime-smoke-evidence-template.json",
+      "notes": "Blocked until real app and flow components, service endpoint, and connection reference values are configured."
+    },
+    {
+      "type": "real-power-automate-flow-smoke",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/flow-smoke-evidence-template.json",
+      "notes": "Blocked until each flow run can be executed against tenant with real connector values."
+    },
+    {
+      "type": "official-live-gate",
+      "environment": "nsw-dylan",
+      "status": "blocked",
+      "evidence_template": "power-platform/evidence/official-github-live-gate-evidence-template.json",
+      "notes": "Blocked until official Actions live gate executes against Power Platform environment."
+    },
+    {
+      "type": "standalone-subrepo-closure",
+      "status": "blocked",
+      "evidence_template": "power-platform/repository/standalone-subrepo-remote-or-waiver-closure-template.json",
+      "notes": "Blocked until standalone remote governance is provisioned or explicit waiver is recorded."
+    }
+  ],
+  "parity_reports": [],
+  "coverage": {
+    "threshold": 0.0,
+    "actual": 0.0
+  },
+  "sbom": {
+    "status": "planned"
+  },
+  "security": {
+    "tenant_credentials_status": "interactive-user-authenticated",
+    "secret_store": "pending-service-principal-or-approved-secret-store"
+  },
+  "provenance": {
+    "deploy_runbook": "power-platform/deployment/nsw-managed-solution-promotion-runbook.md",
+    "readiness_template": "power-platform/deployment/nsw-deployment-readiness-template.md"
+  },
+  "known_limitations": [
+    "Blocker: service_boundary_production_endpoint_missing",
+    "Blocker: connection_reference_values_missing",
+    "Blocker: real_dataverse_app_component_smoke_missing",
+    "Blocker: real_power_automate_flow_component_smoke_missing"
+  ],
+  "rollback": {
+    "status": "defined",
+    "artifact": "managed solution backup required before promotion"
+  },
+  "governance": {
+    "nsw_real_deployment_claim": false,
+    "managed_solution_import_claim": true,
+    "runtime_production_readiness_claim": false,
+    "notes": "Managed solution shell import is evidenced; runtime app/flow readiness remains blocked."
+  }
+}

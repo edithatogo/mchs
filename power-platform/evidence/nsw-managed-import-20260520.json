@@ -1,0 +1,54 @@
+{
+  "status": "managed_solution_imported",
+  "asOf": "2026-05-20",
+  "tenantId": "a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+  "tenantName": "NSW Health Department",
+  "user": "Dylan.Mordaunt@health.nsw.gov.au",
+  "pacProfile": "nsw-dylan",
+  "environmentName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+  "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+  "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+  "environmentUniqueName": "unq8b153003d5eaf01189f5002248942",
+  "solutionUniqueName": "mchs_alm_orchestration",
+  "solutionVersion": "0.2.2.0",
+  "managed": true,
+  "managedArtifact": {
+    "path": "dist/power-platform/mchs_alm_orchestration_managed.zip",
+    "sha256": "50bbe04a5b27907409c231f620d65b95867fbcb65912e9282d3b09c168528efa"
+  },
+  "unmanagedArtifact": {
+    "path": "dist/power-platform/mchs_alm_orchestration_unmanaged.zip",
+    "sha256": "5c100e252c5742715b0104e45ced103b489a46e16858cef3d01220c39b8f4d72"
+  },
+  "solutionChecker": {
+    "status": "Finished",
+    "correlationId": "a797a828-b297-420d-8372-686ce60de571",
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 0,
+    "resultArchive": "dist/power-platform/checker/202605191423060439_mchs_alm_orchestration_0a96.zip",
+    "resultArchiveSha256": "ec7d46649629826cefcca3c8a7f1ef1be2a787554261b07667eed4c484a7b5d8"
+  },
+  "importVerification": {
+    "command": "pac solution list",
+    "visible": true,
+    "listedUniqueName": "mchs_alm_orchestration",
+    "listedFriendlyName": "mchs_alm_orchestration",
+    "listedVersion": "0.2.2.0",
+    "listedManaged": true
+  },
+  "claimBoundary": {
+    "managedSolutionImported": true,
+    "appSmokeClaimed": false,
+    "flowSmokeClaimed": false,
+    "serviceConnectionConfigured": false,
+    "productionReadinessClaimed": false,
+    "notes": [
+      "The imported managed package is currently the ALM solution shell and source-controlled component payload.",
+      "Power Platform app and flow runtime smoke tests remain unclaimed until real Dataverse app/flow components are imported and connected to a production service boundary.",
+      "Connection reference values and service endpoint configuration remain pending."
+    ]
+  }
+}

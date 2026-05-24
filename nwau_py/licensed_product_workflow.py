@@ -176,7 +176,8 @@ def ensure_commit_safe_exclusion(path: str | Path) -> str:
     if not is_commit_safe_excluded_path(normalized):
         raise LicensedProductWorkflowError(
             "restricted licensed assets must live under commit-safe ignored storage "
-            "(expected a path under archive/ihacpa/raw/)")
+            "(expected a path under archive/ihacpa/raw/)"
+        )
     return normalized
 
 
@@ -199,15 +200,19 @@ def resolve_licensed_product_env_path(
             f"required licensed asset environment variable {name!r} is not set"
         )
     base = Path(_normalize_relative_path(value, field=f"env.{name}"))
-    resolved = base if subpath is None else base / _normalize_relative_path(
-        subpath,
-        field="subpath",
+    resolved = (
+        base
+        if subpath is None
+        else base
+        / _normalize_relative_path(
+            subpath,
+            field="subpath",
+        )
     )
     normalized = _normalize_relative_path(resolved, field=f"env.{name}")
     if not is_local_only_licensed_path(normalized):
         raise LicensedProductWorkflowError(
-            f"environment variable {name!r} must resolve to local-only "
-            "licensed storage"
+            f"environment variable {name!r} must resolve to local-only licensed storage"
         )
     return normalized
 
