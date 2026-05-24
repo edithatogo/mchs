@@ -58,6 +58,7 @@ docs = [
 [project.scripts]
 funding-calculator = "nwau_py.cli.main:cli"
 mchs-mcp = "nwau_py.mcp_server:main"
+mchs-mcp-http = "nwau_py.mcp_server:main_http"
 
 [tool.setuptools.packages.find]
 where = [".", "excel_calculator/src"]

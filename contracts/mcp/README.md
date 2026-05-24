@@ -30,10 +30,10 @@ When a server exists, use this registry order:
 
 | Target | Use when | Status for MCHS |
 | --- | --- | --- |
-| Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Candidate primary target; blocked until runnable server publication. |
-| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Candidate secondary target if the MCP server is containerized. |
+| Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Candidate primary target; held at the runnable server publication gate. |
+| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Prepared with Dockerfile and candidate registry files; publication pending upstream PR/review. |
 | Glama | The server is open source or publicly reachable and should be indexed, inspected, and tested through a public discovery layer. | Candidate secondary discovery target after primary metadata exists. |
-| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Candidate secondary target if the server transport and packaging match Smithery requirements. |
+| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Prepared with HTTP entry point, server card, and MCPB manifest; publication pending authenticated Smithery submission. |
 
 Private or restricted healthcare deployments should use a private registry or
 internal catalog instead of the public official MCP Registry.

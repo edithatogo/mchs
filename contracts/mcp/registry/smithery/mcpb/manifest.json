@@ -1,0 +1,31 @@
+{
+  "name": "mchs",
+  "display_name": "MCHS Health Services Microcosting",
+  "version": "0.2.2",
+  "description": "Synthetic-data-safe MCP tools for Australian health-services microcosting, NWAU pricing, and validation workflows.",
+  "author": {
+    "name": "edithatogo"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/edithatogo/mchs",
+  "server": {
+    "type": "stdio",
+    "command": "mchs-mcp",
+    "args": []
+  },
+  "tools": [
+    "mchs.list_calculators",
+    "mchs.get_schema",
+    "mchs.validate_input",
+    "mchs.calculate",
+    "mchs.explain_result",
+    "mchs.get_evidence"
+  ],
+  "keywords": [
+    "mcp",
+    "healthcare",
+    "microcosting",
+    "nwau",
+    "pricing"
+  ]
+}

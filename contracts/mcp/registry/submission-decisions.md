@@ -13,8 +13,8 @@ Docker is not required.
 | --- | --- | --- |
 | Official MCP Registry | Published. | `mcp-publisher` published `io.github.edithatogo/mchs` version `0.2.2` on 2026-05-17; registry search API returns active/latest metadata for `io.github.edithatogo/mchs`; `nwau-py 0.2.2` is visible on PyPI. |
 | Glama | Eligible through official-registry indexing; no separate authenticated submission completed from this environment. | Glama documentation states it is a superset of the official MCP Registry. Direct Glama API verification was blocked by its edge protection from this environment. |
-| Smithery | Deferred. | No Streamable HTTP endpoint or MCPB bundle exists in this track. |
-| Docker MCP Registry | Deferred. | No Docker image is required or produced for the first MCP release. |
+| Smithery | Prepared; submission pending authenticated Smithery publication. | `mchs-mcp-http`, static server-card metadata, and MCPB manifest candidate exist. A live Smithery listing is not claimed until a public HTTPS endpoint or MCPB bundle is submitted through an authenticated Smithery account. |
+| Docker MCP Registry | Prepared; upstream PR pending. | Dockerfile and Docker MCP Registry candidate files exist under `contracts/mcp/registry/docker/`. Docker Catalog publication is not claimed until the upstream Docker MCP Registry PR is opened, reviewed, and merged. |
 
 ## Official MCP Registry Basis
 
@@ -63,7 +63,10 @@ uv run mchs-mcp
 - MCP Registry publish workflow:
   `https://github.com/edithatogo/mchs/actions/runs/25981730256`
 
-## Remaining Submission Blockers
+## Secondary Registry Submission Preparation
 
-- Smithery and Docker registry submission require packaging surfaces that are
-  intentionally out of scope for the first stdio release.
+- Smithery preparation: `contracts/mcp/registry/smithery/submission.md`.
+- Docker MCP Registry preparation:
+  `contracts/mcp/registry/docker/submission.md`.
+- Secondary registry listing publication requires authenticated external
+  submission and registry review.

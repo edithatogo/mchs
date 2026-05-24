@@ -1,0 +1,35 @@
+{
+  "track_id": "docker_mcp_registry_readiness_20260517",
+  "type": "feature",
+  "status": "in-progress",
+  "track_class": "publication",
+  "priority": "near-term",
+  "current_state": "prepared-local-submission-artifacts",
+  "primary_contract": "contracts/mcp/registry/docker-mcp-registry-readiness-contract.md",
+  "dependencies": [
+    "mcp_server_registry_submission_20260516",
+    "mcp_contract_20260513",
+    "release_supply_chain_governance_20260504"
+  ],
+  "completion_evidence": [
+    "Dockerfile",
+    "requirements_notes.md",
+    "contracts/mcp/registry/docker/submission.md",
+    "container stdio smoke tests",
+    "Docker MCP Registry server.yaml candidate",
+    "Docker registry validation evidence",
+    "Docker MCP Registry PR or gate record"
+  ],
+  "publication_status": "not-ready",
+  "deferred": true,
+  "deferred_gate": "container_publication_evidence",
+  "unblock_criteria": [
+    "Current Docker MCP Registry requirements are confirmed.",
+    "Dockerfile-backed container path is implemented and smoke-tested.",
+    "Docker MCP Registry metadata validates in upstream tooling.",
+    "Docker MCP Registry PR, merge, or explicit gate record is captured."
+  ],
+  "created_at": "2026-05-17T05:34:46Z",
+  "updated_at": "2026-05-24T00:00:00Z",
+  "description": "Add the container, metadata, validation, and PR evidence required before submitting MCHS to the Docker MCP Registry. Deferred until container publication evidence exists."
+}

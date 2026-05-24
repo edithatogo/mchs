@@ -10,9 +10,12 @@ from __future__ import annotations
 import json
 import sys
 from dataclasses import dataclass
+from http import HTTPStatus
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from .contracts import CALCULATOR_IDENTIFIERS
 
@@ -428,6 +431,36 @@ def list_resources() -> list[dict[str, str]]:
     ]
 
 
+def server_card() -> dict[str, Any]:
+    """Return Smithery-compatible static server-card metadata."""
+    return {
+        "serverInfo": {
+            "name": SERVER_NAME,
+            "version": server_version(),
+            "title": "MCHS Health Services Microcosting",
+        },
+        "authentication": {
+            "required": False,
+            "schemes": [],
+        },
+        "tools": list_tools(),
+        "resources": list_resources(),
+        "prompts": [],
+        "metadata": {
+            "registryName": SERVER_REGISTRY_NAME,
+            "transport": "streamable-http",
+            "healthcareCaveat": (
+                "Synthetic/public-data-safe MCP tools only; do not submit PHI "
+                "or private institutional costing data."
+            ),
+            "formulaLogicPolicy": (
+                "The MCP adapter delegates to the canonical runtime and does "
+                "not duplicate calculator formula logic."
+            ),
+        },
+    }
+
+
 def read_resource(uri: str) -> dict[str, Any]:
     """Read an MCP resource by URI."""
     if uri == "mchs://schemas":
@@ -527,6 +560,80 @@ def main() -> None:
         if response is not None:
             sys.stdout.write(json.dumps(response, sort_keys=True) + "\n")
             sys.stdout.flush()
+
+
+class McpHttpHandler(BaseHTTPRequestHandler):
+    """Minimal Streamable HTTP-compatible JSON-RPC handler."""
+
+    server_version = "MCHSMCP/1.0"
+
+    def _send_json(self, status: HTTPStatus, payload: Any) -> None:
+        encoded = json.dumps(payload, sort_keys=True).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
+
+    def _send_status(self, status: HTTPStatus) -> None:
+        self.send_response(status)
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def do_GET(self) -> None:  # noqa: N802 - stdlib handler API
+        path = urlparse(self.path).path
+        if path == "/healthz":
+            self._send_json(
+                HTTPStatus.OK,
+                {
+                    "status": "ok",
+                    "server": SERVER_NAME,
+                    "version": server_version(),
+                    "transport": "streamable-http",
+                },
+            )
+        elif path == "/.well-known/mcp/server-card.json":
+            self._send_json(HTTPStatus.OK, server_card())
+        else:
+            self._send_status(HTTPStatus.NOT_FOUND)
+
+    def do_POST(self) -> None:  # noqa: N802 - stdlib handler API
+        path = urlparse(self.path).path
+        if path != "/mcp":
+            self._send_status(HTTPStatus.NOT_FOUND)
+            return
+        content_length = int(self.headers.get("Content-Length", "0"))
+        body = self.rfile.read(content_length)
+        try:
+            request = json.loads(body.decode("utf-8"))
+        except json.JSONDecodeError:
+            self._send_json(
+                HTTPStatus.BAD_REQUEST,
+                {
+                    "jsonrpc": "2.0",
+                    "id": None,
+                    "error": {"code": -32700, "message": "Parse error"},
+                },
+            )
+            return
+        response = handle_json_rpc(request)
+        if response is None:
+            self._send_status(HTTPStatus.ACCEPTED)
+            return
+        self._send_json(HTTPStatus.OK, response)
+
+    def log_message(self, format: str, *args: Any) -> None:
+        """Write HTTP logs to stderr so stdout remains clean for tooling."""
+        print(f"{self.address_string()} - {format % args}", file=sys.stderr)
+
+
+def main_http() -> None:
+    """Run the MCP server over HTTP for Smithery-compatible publication."""
+    host = "0.0.0.0"
+    port = 8000
+    server = ThreadingHTTPServer((host, port), McpHttpHandler)
+    print(f"mchs-mcp-http listening on http://{host}:{port}/mcp", file=sys.stderr)
+    server.serve_forever()
 
 
 if __name__ == "__main__":
