@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Optional tag to validate and publish
-        required: false
+        description: Release tag to validate and publish
+        required: true
 
 permissions:
   contents: read
@@ -25,8 +25,8 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     env:
-      RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
-      RELEASE_REF_TYPE: tag
+      RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.event_name == 'push' && github.ref_name || '' }}
+      RELEASE_REF_TYPE: ${{ github.event_name == 'release' && 'tag' || github.event_name == 'workflow_dispatch' && github.event.inputs.tag && 'tag' || github.ref_type }}
     steps:
       - name: Check out repository at tagged ref
         if: github.event_name == 'release'
@@ -39,7 +39,7 @@ jobs:
         if: github.event_name != 'release'
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.inputs.tag || github.ref }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag && format('refs/tags/{0}', github.event.inputs.tag) || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v6
@@ -51,8 +51,8 @@ jobs:
 
       - name: Validate release tag and package version metadata
         env:
-          RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event.inputs.tag || github.ref_name }}
-          RELEASE_REF_TYPE: tag
+          RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.event_name == 'push' && github.ref_name || '' }}
+          RELEASE_REF_TYPE: ${{ github.event_name == 'release' && 'tag' || github.event_name == 'workflow_dispatch' && github.event.inputs.tag && 'tag' || github.ref_type }}
         run: uv run python .github/scripts/validate_release_metadata.py
 
       - name: Download release artifacts
