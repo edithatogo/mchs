@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "blocked",
   "track_class": "power-platform-completion",
-  "current_state": "blocked-runtime-connector-flow-smoke",
+  "current_state": "local-evidence-governance-checkpoints-complete-blocked-runtime-connector-flow-smoke",
   "primary_contract": "power-platform/solution/README.md",
   "dependencies": [
     "power_platform_managed_solution_promotion_20260518"
@@ -13,11 +13,16 @@
     "power-platform/evidence/deployment-status.json",
     "power-platform/deployment/nsw/readiness.md",
     "power-platform/solution/src/Other/Solution.xml",
-    "scripts/power-platform-alm.sh"
+    "scripts/power-platform-alm.sh",
+    "power-platform/evidence/runtime-smoke-evidence-template.json",
+    "power-platform/evidence/flow-smoke-evidence-template.json",
+    "power-platform/evidence/connection-reference-evidence-template.json",
+    "power-platform/evidence/monitoring-dlp-evidence-template.json",
+    "scripts/validate_power_platform_operational_evidence.py"
   ],
   "publication_status": "not-deployed",
   "created_at": "2026-05-18T13:22:30Z",
-  "updated_at": "2026-05-20T00:00:00Z",
+  "updated_at": "2026-05-24T08:35:00Z",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
   "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app are published in NSW dylan. The optimized app launches with visual evidence. Production service-boundary endpoint and connection values, real connector execution, Power Automate flow smoke, and DLP/monitoring evidence are still pending."
 }

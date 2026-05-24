@@ -17,7 +17,7 @@
     - [x] Record real Power App visual review blocker
     - [x] Record real app and flow smoke blockers
     - [x] Record visual optimization checklist
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Evidence Bundle' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Evidence Bundle' (Protocol in workflow.md)
 
 ## Phase 2: Operational Governance
 
@@ -29,7 +29,7 @@
     - [x] Record data handling classification
     - [x] Record DLP policy compatibility evidence template
     - [x] Record no patient-level committed data evidence
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Operational Governance' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Operational Governance' (Protocol in workflow.md)
 
 ## External Blocker
 
