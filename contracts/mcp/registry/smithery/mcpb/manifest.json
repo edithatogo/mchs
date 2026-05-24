@@ -49,6 +49,7 @@
       "description": "Return a canonical schema for a calculator input or output.",
       "inputSchema": {
         "type": "object",
+        "additionalProperties": false,
         "required": [
           "calculatorId"
         ],
@@ -70,6 +71,7 @@
       "description": "Validate a calculator request at the MCP contract boundary.",
       "inputSchema": {
         "type": "object",
+        "additionalProperties": false,
         "required": [
           "calculatorId",
           "year",
@@ -93,6 +95,7 @@
       "description": "Validate and delegate a calculation request.",
       "inputSchema": {
         "type": "object",
+        "additionalProperties": false,
         "required": [
           "calculatorId",
           "year",
@@ -119,6 +122,7 @@
       "description": "Explain the MCP boundary steps for a calculation request.",
       "inputSchema": {
         "type": "object",
+        "additionalProperties": false,
         "required": [
           "calculatorId",
           "year",
@@ -142,6 +146,7 @@
       "description": "Return release and MCP registry evidence.",
       "inputSchema": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "bundleId": {
             "type": "string"
