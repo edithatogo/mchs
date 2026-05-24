@@ -8,14 +8,14 @@ patterns.
 
 ## Phase 1: Roadmap and Priority Freeze [sequential — coordinator must complete first]
 
-- [ ] Task: Create the dedicated Rust Core GA roadmap.
-    - [ ] Define phases from governance freeze to GA promotion.
-    - [ ] Define evidence gates for contracts, parity, release, docs, and security.
-    - [ ] Identify Scala/Spark, Swift, Stata, and MATLAB as deferred tracks.
-- [ ] Task: Update Conductor registry priorities.
-    - [ ] Add Rust Core GA as an immediate priority track.
-    - [ ] Mark current open language-interoperability tracks as deferred behind Rust Core GA.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Roadmap and Priority Freeze' (Protocol in workflow.md)
+- [x] Task: Create the dedicated Rust Core GA roadmap.
+    - [x] Define phases from governance freeze to GA promotion.
+    - [x] Define evidence gates for contracts, parity, release, docs, and security.
+    - [x] Identify Scala/Spark, Swift, Stata, and MATLAB as deferred tracks.
+- [x] Task: Update Conductor registry priorities.
+    - [x] Add Rust Core GA as an immediate priority track.
+    - [x] Mark current open language-interoperability tracks as deferred behind Rust Core GA.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Roadmap and Priority Freeze' (Protocol in workflow.md)
 
 ## Phase 2: Contract Foundation [sequential — coordinator verifies before fan-out]
 
