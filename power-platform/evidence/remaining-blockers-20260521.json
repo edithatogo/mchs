@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidenceType": "power_platform_remaining_blockers",
-  "asOf": "2026-05-21",
+  "asOf": "2026-05-24",
   "status": "blocked_with_remaining_blockers",
   "generatedFrom": {
     "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
@@ -62,6 +62,6 @@
     "This file records the current remaining blockers only.",
     "No external blocker is claimed to be resolved here.",
     "The blocker list is derived from the current hardBlockers entries in the repository scorecard.",
-    "The 2026-05-24 authenticated browser sweep confirms that the selected tenant session does not expose an MCHS canvas app, service-boundary connection, custom connector inventory, or flow run inventory sufficient to close the runtime blockers."
+    "The 2026-05-24 authenticated browser sweep confirms that the target tenant session exposes the documented MCHS app IDs, but does not expose a service-boundary connection, MCHS custom connector match, or MCHS flow run inventory sufficient to close the runtime blockers."
   ]
 }
