@@ -235,8 +235,14 @@ def _validate_live_gate_production_claim(data: dict, path: Path) -> None:
     )
 
     run = data.get("run", {})
-    _require(run.get("status") != "not_run", f"{path}: production readiness claim requires a workflow run")
-    _require(bool(run.get("runUrl")), f"{path}: production readiness claim requires a workflow run URL")
+    _require(
+        run.get("status") != "not_run",
+        f"{path}: production readiness claim requires a workflow run",
+    )
+    _require(
+        bool(run.get("runUrl")),
+        f"{path}: production readiness claim requires a workflow run URL",
+    )
     _require(
         run.get("solutionChecker", {}).get("result") not in (None, "not_run"),
         f"{path}: production readiness claim requires solution checker evidence",
@@ -250,7 +256,10 @@ def _validate_live_gate_production_claim(data: dict, path: Path) -> None:
         f"{path}: production readiness claim requires repository secrets evidence",
     )
     _require(
-        all(check.get("observed") is True for check in data.get("requiredSecretChecks", [])),
+        all(
+            check.get("observed") is True
+            for check in data.get("requiredSecretChecks", [])
+        ),
         f"{path}: production readiness claim requires all repository secrets to be observed",
     )
     _require(
@@ -296,7 +305,8 @@ def _validate_claim_boundary(data: dict, path: Path) -> None:
             f"{path}: officialLiveGatePassed must be a boolean",
         )
         _require(
-            claim_boundary.get("productionDeploymentSecretsConfigured") in (False, True),
+            claim_boundary.get("productionDeploymentSecretsConfigured")
+            in (False, True),
             f"{path}: productionDeploymentSecretsConfigured must be a boolean",
         )
 

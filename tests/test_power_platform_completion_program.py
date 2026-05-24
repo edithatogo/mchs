@@ -124,8 +124,7 @@ def test_power_platform_repo_health_and_subrepo_boundary() -> None:
     }
     assert (
         "record a fully populated standaloneRemote or explicitWaiver "
-        "closure record before any 9.9 claim"
-        in manifest["standaloneSplitRequirements"]
+        "closure record before any 9.9 claim" in manifest["standaloneSplitRequirements"]
     )
     assert closure["status"] == "blocked_pending_remote_or_explicit_waiver"
     assert closure["claimBoundary"]["subrepoClosureComplete"] is False

@@ -25,6 +25,7 @@ def test_conductor_status_matrix_does_not_overclaim_completion() -> None:
     assert boundary["allTracksImplemented"] is False
     assert boundary["allContractsProductionReady"] is False
     assert boundary["allExternalRuntimeOutcomesProven"] is False
-    assert "power_platform_operational_evidence_20260518" in matrix[
-        "incompleteTracksFromIndex"
-    ]
+    assert (
+        "power_platform_operational_evidence_20260518"
+        in matrix["incompleteTracksFromIndex"]
+    )

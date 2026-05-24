@@ -10,10 +10,7 @@ SCRIPT = ROOT / "scripts" / "bootstrap-power-platform-github-live-gate.sh"
 
 
 def _write_fake_gh(path: Path, log: Path) -> None:
-    repo_json = (
-        '{"nameWithOwner":"octo/example",'
-        '"defaultBranchRef":{"name":"main"}}'
-    )
+    repo_json = '{"nameWithOwner":"octo/example","defaultBranchRef":{"name":"main"}}'
     secret_json = (
         '[{"name":"POWER_PLATFORM_ENVIRONMENT_URL"},'
         '{"name":"POWER_PLATFORM_APPLICATION_ID"},'

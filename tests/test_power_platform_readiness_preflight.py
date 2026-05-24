@@ -58,4 +58,3 @@ def test_power_platform_readiness_preflight_emits_blocked_summary() -> None:
         assert check["expectedStatus"] == expected_statuses[name]
         assert check["observedExitCode"] == expected_exits[name]
         assert check["expectedExitCode"] == expected_exits[name]
-

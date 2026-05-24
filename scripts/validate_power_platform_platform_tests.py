@@ -59,20 +59,31 @@ def main() -> int:
             if not visual.get(required):
                 raise SystemExit(f"visual optimization evidence missing: {required}")
     if boundary["productionReadinessClaimed"]:
-        if any(checks[name]["status"] != "passed" for name in [
-            "pac-auth-and-solution-visibility",
-            "solution-checker",
-            "custom-connector-registration",
-            "generated-canvas-msapp",
-            "real-power-app-visual-review",
-        ]):
-            raise SystemExit("production readiness claim requires all core platform checks to be passed")
+        if any(
+            checks[name]["status"] != "passed"
+            for name in [
+                "pac-auth-and-solution-visibility",
+                "solution-checker",
+                "custom-connector-registration",
+                "generated-canvas-msapp",
+                "real-power-app-visual-review",
+            ]
+        ):
+            raise SystemExit(
+                "production readiness claim requires all core platform checks to be passed"
+            )
         if checks["real-power-app-runtime-smoke"]["status"] != "passed":
-            raise SystemExit("production readiness claim requires real Power App runtime smoke evidence")
+            raise SystemExit(
+                "production readiness claim requires real Power App runtime smoke evidence"
+            )
         if checks["real-power-automate-flow-smoke"]["status"] != "passed":
-            raise SystemExit("production readiness claim requires real Power Automate flow smoke evidence")
+            raise SystemExit(
+                "production readiness claim requires real Power Automate flow smoke evidence"
+            )
         if not visual.get("optimizedInTenant"):
-            raise SystemExit("production readiness claim requires tenant visual evidence")
+            raise SystemExit(
+                "production readiness claim requires tenant visual evidence"
+            )
     if "Power App visual review" not in plan["requiredOrder"]:
         raise SystemExit("platform test plan must require visual review")
 
