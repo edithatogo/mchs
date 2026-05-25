@@ -90,10 +90,13 @@ def test_stata_interop_track_metadata_docs_and_contract_bundle_are_conservative(
 
     for phrase in [
         "Define Stata interoperability for health economics and applied policy users.",
-        "Stata should use file, CLI, or service boundaries for costing studies and must not contain a separate formula implementation.",
+        "Stata should use file, CLI, or service boundaries for costing "
+        "studies and must not contain a separate formula implementation.",
         "Define CSV/Parquet/DTA exchange and CLI/service invocation patterns.",
-        "Preserve diagnostics, provenance, and validation status in Stata-readable outputs.",
-        "Document package publication only after fixture and reproducibility gates pass.",
+        "Preserve diagnostics, provenance, and validation status in "
+        "Stata-readable outputs.",
+        "Document package publication only after fixture and reproducibility "
+        "gates pass.",
         "Stata interop strategy is selected and documented.",
         "Examples validate against shared fixtures.",
         "Formula logic remains single-sourced outside Stata scripts.",

@@ -76,7 +76,8 @@ def test_matlab_interop_binding_metadata_docs_and_contract_bundle_are_conservati
     assert "MATLAB interoperability" in str(metadata["description"])
 
     for phrase in [
-        "Define MATLAB interoperability for numerical, simulation, teaching, and legacy",
+        "Define MATLAB interoperability for numerical, simulation, teaching, "
+        "and legacy",
         "MATLAB should consume file, CLI, service, or C ABI",
         "must not duplicate formula logic",
         "Compare MAT/CSV/Parquet, CLI/service, and C ABI interop",
@@ -120,9 +121,8 @@ def test_matlab_interop_binding_metadata_docs_and_contract_bundle_are_conservati
         "notes",
     ]
     assert matlab_module["status"] == "adapter-ready"
-    assert (
-        matlab_module["release_gate"]
-        == "toolbox publication, platform parity, and audience owner gates still deferred"
+    assert matlab_module["release_gate"] == (
+        "toolbox publication, platform parity, and audience owner gates still deferred"
     )
     assert live_contract["schema_version"] == "1.0"
     assert live_contract["privacy"]["classification"] == "synthetic"
