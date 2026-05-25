@@ -3,7 +3,7 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T01:45:00Z",
+  "updated_at": "2026-05-26T02:45:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
   "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
@@ -29,10 +29,13 @@
     "vcpkg_validation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx, installing header, release/debug libraries, usage text, and copyright.",
     "vcpkg_pr": "https://github.com/microsoft/vcpkg/pull/51965",
     "conan_center_pr": "https://github.com/conan-io/conan-center-index/pull/30262",
-    "conan_center_validation": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation."
+    "conan_center_validation": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
+    "conan_center_job_scheduler_state": "ACTION_REQUIRED; maintainer approval/scheduling requested.",
+    "conan_center_maintainer_job_request": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528"
   },
   "repo_side_readiness_blockers": {
-    "upstream_review": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication."
+    "upstream_review": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
+    "conan_center_job_scheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed."
   },
   "submission_url": "https://github.com/microsoft/vcpkg/pull/51965"
 }
