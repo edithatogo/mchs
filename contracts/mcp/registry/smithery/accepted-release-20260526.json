@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "evidence_type": "smithery_mcpb_republish_evidence",
-  "as_of": "2026-05-26T01:15:41+10:00",
+  "as_of": "2026-05-26T02:11:05+10:00",
   "qualified_name": "edithatogo/mchs",
   "status": "published_verified_public_api_and_page_cli_smoke_passed_runtime_not_hosted_search_stale",
   "publish_command": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
@@ -73,10 +73,10 @@
     "unauthenticated_initial_deployments_empty": true
   },
   "search_observation": {
-    "command": "smithery mcp search mchs",
-    "observed_at": "2026-05-26T01:41:21+10:00",
+    "command": "smithery mcp search mchs --json",
+    "observed_at": "2026-05-26T02:11:05+10:00",
     "returned_qualified_name": false,
-    "note": "Search still returned unrelated results after accepted republish; direct public API and public page remain authoritative discovery evidence."
+    "note": "Search still returned unrelated results and did not include edithatogo/mchs; direct public API, public page, and CLI connection smoke remain authoritative discovery evidence."
   },
   "claim_boundary": {
     "smithery_publish_accepted": true,
@@ -97,18 +97,26 @@
   },
   "tracking_issue": "https://github.com/edithatogo/mchs/issues/151 (closed as publication/discovery blocker resolved; stale legacy/runtime surfaces documented)",
   "connection_smoke_observation": {
-    "observed_at": "2026-05-26T01:06:00+10:00",
+    "observed_at": "2026-05-26T02:11:05+10:00",
     "connection_id": "mchs-ci-smoke",
     "namespace": "edithatogo",
-    "command_environment": "PATH=/tmp/mchs-smithery-evidence/.venv/bin:$PATH smithery mcp add edithatogo/mchs --id mchs-ci-smoke --namespace edithatogo --force --json",
+    "command_environment": "smithery mcp add --id mchs-ci-smoke --namespace edithatogo --force -- uv run python -m nwau_py.mcp_server",
     "mcp_url": "https://mcp.smithery.run/edithatogo/mchs-ci-smoke",
     "rest_url": "https://smithery.run/edithatogo/mchs-ci-smoke",
     "tool_list_command": "smithery tool list mchs-ci-smoke --namespace edithatogo --flat --limit 100",
     "tool_list_returned_tool_count": 6,
-    "tool_call_command": "smithery tool call mchs-ci-smoke mchs.list_calculators {\"year\":\"2026\"} --namespace edithatogo --json",
+    "tool_names": [
+      "mchs.list_calculators",
+      "mchs.get_schema",
+      "mchs.validate_input",
+      "mchs.calculate",
+      "mchs.explain_result",
+      "mchs.get_evidence"
+    ],
+    "tool_call_command": "smithery tool call mchs-ci-smoke mchs.list_calculators {\"year\":\"2026\"} --namespace edithatogo",
     "tool_call_result": "succeeded with empty calculator list payload []",
-    "cleanup": "temporary connection mchs-ci-smoke removed after smoke test",
-    "local_environment_note": "Initial attempt failed with the default conda Python due to a pydantic/pydantic_core import mismatch; using the project uv environment resolved the local command."
+    "cleanup": "temporary connection mchs-ci-smoke was absent after the foreground smoke process exited; no persistent connection remains to remove.",
+    "local_environment_note": "Initial default-command attempt failed because this machine defaulted to a conda Python with a pydantic/pydantic_core import mismatch; the project uv environment initialized the stdio MCP server successfully."
   },
   "public_api_observation": {
     "observed_at": "2026-05-26T01:41:21+10:00",
@@ -163,5 +171,12 @@
     "url": "https://github.com/smithery-ai/cli/issues/780",
     "opened_at": "2026-05-26T01:52:00+10:00",
     "scope": "Direct API/page discovery works for stdio MCPB release 355669d7-72a9-441e-87de-4682260335cc, but Smithery search does not return edithatogo/mchs and run.tools runtime returns server_not_found."
+  },
+  "connection_runtime_observation": {
+    "observed_at": "2026-05-26T02:11:05+10:00",
+    "url": "https://mcp.smithery.run/edithatogo/mchs-ci-smoke",
+    "http_get_status": 405,
+    "http_get_error": "method_not_allowed",
+    "interpretation": "GET returning method_not_allowed shows the connection URL resolves; functional validation is the Smithery tool list and tool call smoke, not a plain GET."
   }
 }
