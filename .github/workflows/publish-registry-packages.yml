@@ -33,7 +33,13 @@ jobs:
         working-directory: rust/crates/nwau-core
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        run: cargo publish --locked
+        run: |
+          set -euo pipefail
+          if curl -fsSL https://crates.io/api/v1/crates/nwau-core/0.1.0 >/dev/null; then
+            echo "nwau-core 0.1.0 is already published on crates.io; skipping duplicate publish."
+            exit 0
+          fi
+          cargo publish --locked
 
   publish-nuget:
     if: ${{ inputs.registry == 'nuget' }}
