@@ -35,3 +35,21 @@ registry recipes.
 - No crates.io publication blocker remains for `nwau-core`.
 - The remaining work is the missing upstream packaging submission flow and any
   validation those registries require.
+
+## Local validation commands
+
+Run these from the repository root when the external toolchains are available.
+They are intentionally non-publishing checks: they exercise the local recipe
+and port definitions without pushing anything upstream.
+
+- Conan recipe:
+  - `conan create packaging/conan --build=missing`
+- vcpkg port:
+  - `vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
+
+## Current validation blocker
+
+- `conan` is not installed in this environment.
+- `vcpkg` is not installed in this environment.
+- Because both tools are missing, I could not advance beyond the static review
+  of `packaging/conan/conanfile.py` and `packaging/vcpkg/ports/nwau-c-abi/`.
