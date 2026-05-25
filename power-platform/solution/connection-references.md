@@ -21,7 +21,7 @@ Canonical declaration:
   `power-platform/evidence/connection-reference-evidence-template.json` so the
   environment binding, connector connection ID placeholder, and PAC discovery
   checks stay machine-readable while the connection remains unconfigured.
-- As of the 2026-05-25 runtime evidence, `pac connection list` does not show a
+- As of the current runtime evidence, `pac connection list` does not show a
   live custom connector connection for `MCHS Service Boundary`; do not claim
   executable connector wiring until the connection and reference value are
   observed in the target environment.
