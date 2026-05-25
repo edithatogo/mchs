@@ -30,7 +30,7 @@ When a server exists, use this registry order:
 | Target | Use when | Status for MCHS |
 | --- | --- | --- |
 | Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Published as `io.github.edithatogo/mchs` version `0.2.2`. |
-| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Submitted to Docker MCP Registry in PR `https://github.com/docker/mcp-registry/pull/3595`; catalog publication remains unclaimed until merge or visible listing evidence exists. |
+| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Submitted to Docker MCP Registry in PR `https://github.com/docker/mcp-registry/pull/3799`; catalog publication remains unclaimed until merge or visible listing evidence exists. |
 | Glama | The server is open source or publicly reachable and should be indexed, inspected, and tested through a public discovery layer. | Eligible through official MCP Registry indexing; no separate authenticated submission is recorded. |
 | Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Readiness implementation exists through `mchs-mcp-http` and `contracts/mcp/registry/smithery/`; Smithery accepted the stdio MCPB listing, while public HTTPS hosting remains optional future work. |
 
@@ -97,6 +97,6 @@ The Docker-ready local server path is represented by:
 - `contracts/mcp/registry/docker/readme.md`
 
 Docker MCP Registry metadata validation passed and PR
-`https://github.com/docker/mcp-registry/pull/3595` is open. Docker MCP Catalog
+`https://github.com/docker/mcp-registry/pull/3799` is open. Docker MCP Catalog
 publication must not be claimed until merge or visible listing evidence is
 recorded.
