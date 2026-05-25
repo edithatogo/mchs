@@ -325,7 +325,7 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "pyproject.toml",
-            "current_status": "submitted_branch_updated_checks_rerunning_pending_review",
+            "current_status": "submitted_branch_updated_checks_passed_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
             "blocker": "conda-forge staged-recipes PR branch is updated at e6c8b9d632953263517de6a146783f3697fc450d; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed; maintainer review, merge, and feedstock publication remain pending.",
@@ -337,10 +337,10 @@
                 "sha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480",
                 "tooling": "conda is installed; conda-build/boa/rattler-build are not installed locally.",
                 "fixedLintFeedback": "Added recipe maintainers, tests, build number, license_file, setuptools build backend, noarch Python minimum pins, pypi.org source URL, runtime dependencies, and entry points.",
-                "remainingExternalBlocker": "conda-forge staged-recipes platform builds, maintainer review, merge, and feedstock publication remain pending.",
+                "remainingExternalBlocker": "conda-forge staged-recipes maintainer review, merge, and feedstock publication remain pending.",
                 "branchUpdateEvidence": "GitHub update-branch API accepted for conda-forge/staged-recipes PR 33452 on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1 observed after update.",
                 "postUpdateCheckState": "linter, aggregate staged-recipes, linux_64, osx_64, win_64, and check-skip all succeeded after branch update.",
-                "branchUpdate2": "GitHub PR update-branch accepted on 2026-05-26; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter passed and Azure platform builds rerunning."
+                "branchUpdate2": "GitHub PR update-branch accepted on 2026-05-26; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed."
             },
             "submissionEvidence": {
                 "type": "pull_request",
