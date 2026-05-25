@@ -1,0 +1,32 @@
+{
+  "track_id": "typescript_npm_registry_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T04:35:00+10:00",
+  "description": "TypeScript/WASM npm Registry Submission: discover, prepare, submit, and evidence npm publication for @edithatogo/mchs-wasm-binding.",
+  "registry_id": "typescript_npm",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "submission_url": "https://www.npmjs.com/package/@edithatogo/mchs-wasm-binding/v/0.1.0",
+  "publication_claimed": true,
+  "package_evidence": {
+    "package": "@edithatogo/mchs-wasm-binding",
+    "version": "0.1.0",
+    "ecosystem": "TypeScript/WASM",
+    "registry": "npm",
+    "local_surface": "wasm-binding/package.json",
+    "preparation_evidence": null,
+    "submission_evidence": null,
+    "publication_evidence": {
+      "registry": "https://registry.npmjs.org",
+      "tarball": "https://registry.npmjs.org/@edithatogo/mchs-wasm-binding/-/mchs-wasm-binding-0.1.0.tgz",
+      "integrity": "sha512-0GarRubfN7lucDSKVM4wMpIZCqKb1qn2oYQzx55SlCJs5O5kub5qDYUpGic+zCDB5Kl0l9oOxZwDwJims6bXug==",
+      "publishedAt": "2026-05-24T09:08:12.407Z",
+      "verifiedAt": "2026-05-24T09:09:37Z",
+      "publisher": "edithatogo"
+    }
+  }
+}

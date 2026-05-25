@@ -1,0 +1,43 @@
+{
+  "track_id": "jvm_maven_central_registry_submission_20260524",
+  "type": "chore",
+  "status": "blocked",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T04:35:00+10:00",
+  "description": "JVM Maven Central Registry Submission: discover, prepare, submit, and evidence Maven Central publication for io.github.edithatogo:mchs.",
+  "registry_id": "jvm_maven_central",
+  "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in and local build passed; namespace verification, signing key material, publish credentials, publish validation, and authenticated release remain pending.",
+  "submission_url": null,
+  "publication_claimed": false,
+  "package_evidence": {
+    "package": "io.github.edithatogo:mchs",
+    "version": "0.1.0",
+    "ecosystem": "Kotlin/Scala/JVM",
+    "registry": "Maven Central",
+    "local_surface": "bindings/jvm/build.gradle.kts",
+    "preparation_evidence": {
+      "discovery": "Maven Central search for g:io.github.edithatogo AND a:mchs returned numFound=0.",
+      "buildCommand": "gradle build",
+      "buildResult": "BUILD SUCCESSFUL",
+      "fixedLocalBlocker": "The JVM binding module is under bindings/jvm and uses a Java 11 toolchain for Maven Central readiness.",
+      "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, Gradle publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.",
+      "jvmModule": "bindings/jvm",
+      "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, required POM metadata, a single Central Portal deployment repository configured only when a deploy URL is explicitly provided, and in-memory PGP signing via Gradle properties or environment variables.",
+      "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
+      "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository only when -PcentralPortalDeployUrl or MAVEN_CENTRAL_DEPLOY_URL is present; publish tasks fail closed without URL, credentials, and signing key.",
+      "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
+      "failClosedPublishCredentials": "Gradle Central Portal repository URL and credentials are read from Gradle properties or environment variables and fail closed when absent.",
+      "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
+      "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
+      "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD.",
+      "workflowDryRunValidation": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run --console=plain succeeded without credentials after aligning Central Portal and signing properties.",
+      "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
+      "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false."
+    },
+    "submission_evidence": null,
+    "publication_evidence": null
+  }
+}
