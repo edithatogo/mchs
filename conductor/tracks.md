@@ -284,103 +284,103 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: Rust Core GA**
+- [ ] **Track: Rust Core GA**
 *Link: [./tracks/rust_core_ga_20260513/](./tracks/rust_core_ga_20260513/)*
 *Gate: Immediate priority. Promote the Rust calculator core to release-candidate and GA through versioned contracts, parity evidence, required delivery surfaces, strict CI/CD, security, and release automation before expanding lower-priority adapters.*
 
 ---
 
-- [x] **Track: Canonical Contract Foundation**
+- [ ] **Track: Canonical Contract Foundation**
 *Link: [./tracks/canonical_contract_foundation_20260513/](./tracks/canonical_contract_foundation_20260513/)*
 *Gate: Immediate priority after Rust Core GA planning. Define canonical JSON Schema/OpenAPI-compatible domain contracts for calculator requests, responses, diagnostics, errors, provenance, support status, and evidence before adding more surfaces.*
 
 ---
 
-- [x] **Track: Support Status Matrix**
+- [ ] **Track: Support Status Matrix**
 *Link: [./tracks/support_status_matrix_20260513/](./tracks/support_status_matrix_20260513/)*
 *Gate: Define machine-readable support statuses for stream, year, jurisdiction, surface, runtime, and language claims before public docs or release metadata can mark support as complete.*
 
 ---
 
-- [x] **Track: CLI/File Contracts**
+- [ ] **Track: CLI/File Contracts**
 *Link: [./tracks/cli_file_contracts_20260513/](./tracks/cli_file_contracts_20260513/)*
 *Gate: Define stable CLI commands, exit codes, stdin/stdout/stderr behavior, JSON manifests, Arrow/Parquet batch files, diagnostics, and provenance before promoting Rust execution surfaces.*
 
 ---
 
-- [x] **Track: HTTP API Contract**
+- [ ] **Track: HTTP API Contract**
 *Link: [./tracks/http_api_contract_20260513/](./tracks/http_api_contract_20260513/)*
 *Gate: Define a domain OpenAPI 3.1 contract for calculators, schemas, validation, calculations, async jobs, results, and evidence without pretending the calculator is an LLM endpoint.*
 
 ---
 
-- [x] **Track: MCP Contract**
+- [ ] **Track: MCP Contract**
 *Link: [./tracks/mcp_contract_20260513/](./tracks/mcp_contract_20260513/)*
 *Gate: Expose calculator tools and resources for agents through MCP over canonical schemas, preserving diagnostics and provenance without creating a separate formula contract.*
 
 ---
 
-- [x] **Track: OpenAI Tool Adapter**
+- [ ] **Track: OpenAI Tool Adapter**
 *Link: [./tracks/openai_tool_adapter_20260513/](./tracks/openai_tool_adapter_20260513/)*
 *Gate: Provide OpenAI-compatible tool definitions over the API/MCP contracts while keeping the domain API canonical and avoiding LLM endpoint emulation.*
 
 ---
 
-- [x] **Track: Audience Language Strategy**
+- [ ] **Track: Audience Language Strategy**
 *Link: [./tracks/audience_language_strategy_20260513/](./tracks/audience_language_strategy_20260513/)*
 *Gate: Prioritize language support around researchers and enterprise engineers, require audience/owner/evidence before new bindings, and prevent language sprawl before Rust Core GA.*
 
 ---
 
-- [x] **Track: HWAU Terminology Migration**
+- [ ] **Track: HWAU Terminology Migration**
 *Link: [./tracks/hwau_terminology_migration_20260513/](./tracks/hwau_terminology_migration_20260513/)*
 *Gate: Use HWAU as the generic healthcare weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias.*
 
 ---
 
-- [x] **Track: State and Local Price Registry**
+- [ ] **Track: State and Local Price Registry**
 *Link: [./tracks/state_local_price_registry_20260513/](./tracks/state_local_price_registry_20260513/)*
 *Gate: Source and version national, state, local, and discounted HWAU price schedules over time with provenance, licence status, and fail-closed support metadata.*
 
 ---
 
-- [x] **Track: Jurisdiction Price Source Index**
+- [ ] **Track: Jurisdiction Price Source Index**
 *Link: [./tracks/jurisdiction_price_source_index_20260513/](./tracks/jurisdiction_price_source_index_20260513/)*
 *Gate: Build a source index for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT before extracting or committing jurisdiction price values.*
 
 ---
 
-- [x] **Track: NSW Funding Model**
+- [ ] **Track: NSW Funding Model**
 *Link: [./tracks/nsw_funding_model_20260513/](./tracks/nsw_funding_model_20260513/)*
 *Gate: Model NSW State Price per NWAU/HWAU, LHD/SHN service agreement notes, adjustments, blocked years, and provenance before applying NSW-specific valuations.*
 
 ---
 
-- [x] **Track: Jurisdiction Funding Model Registry**
+- [ ] **Track: Jurisdiction Funding Model Registry**
 *Link: [./tracks/jurisdiction_funding_model_registry_20260513/](./tracks/jurisdiction_funding_model_registry_20260513/)*
 *Gate: Cover NSW, VIC, QLD, WA, SA, TAS, ACT, and NT funding model sources with jurisdiction-specific terminology, provenance, support status, and blocked-source handling.*
 
 ---
 
-- [x] **Track: Parallel Valuation Outputs**
+- [ ] **Track: Parallel Valuation Outputs**
 *Link: [./tracks/parallel_valuation_outputs_20260513/](./tracks/parallel_valuation_outputs_20260513/)*
 *Gate: Produce HWAU-only, national, state, local, and discounted valuation outputs in parallel from the same normalized activity result across CLI/file, API, MCP, and OpenAI adapter surfaces.*
 
 ---
 
-- [x] **Track: Rust Crate Boundaries and HWAU Rename**
+- [ ] **Track: Rust Crate Boundaries and HWAU Rename**
 *Link: [./tracks/rust_crate_boundary_rename_20260513/](./tracks/rust_crate_boundary_rename_20260513/)*
 *Gate: Plan crate boundaries and NWAU-to-HWAU migration with compatibility aliases before renaming active Rust implementation paths.*
 
 ---
 
-- [x] **Track: GitHub Pages API Architecture**
+- [ ] **Track: GitHub Pages API Architecture**
 *Link: [./tracks/github_pages_api_architecture_20260513/](./tracks/github_pages_api_architecture_20260513/)*
 *Gate: Document that GitHub Pages hosts docs/static WASM demos only, while API-backed demos require an external or local backend.*
 
 ---
 
-- [x] **Track: Release Evidence Bundle**
+- [ ] **Track: Release Evidence Bundle**
 *Link: [./tracks/release_evidence_bundle_20260513/](./tracks/release_evidence_bundle_20260513/)*
 *Gate: Define required release evidence bundles before any stream, jurisdiction, or surface can be promoted to release-candidate or GA.*
 
@@ -404,27 +404,28 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: Scala/Spark Binding**
+- [ ] **Track: Scala/Spark Binding**
 *Link: [./tracks/scala_spark_binding_20260513/](./tracks/scala_spark_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named enterprise audience, accountable owner, and post-GA Scala/Spark evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named enterprise audience, accountable owner, and post-GA Scala/Spark evidence case are recorded.*
 
 ---
 
-- [x] **Track: Swift Binding**
+- [ ] **Track: Swift Binding**
 *Link: [./tracks/swift_binding_20260513/](./tracks/swift_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named Apple-platform healthcare audience, accountable owner, and post-GA Swift evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named Apple-platform healthcare audience, accountable owner, and post-GA Swift evidence case are recorded.*
 
 ---
 
-- [x] **Track: Stata Interoperability**
+- [ ] **Track: Stata Interoperability**
 *Link: [./tracks/stata_interop_binding_20260513/](./tracks/stata_interop_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate and stable CLI/file contract readiness. Proceed only when a named health-economics owner and post-GA Stata evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate and stable CLI/file contract readiness. Proceed only when a named health-economics owner and post-GA Stata evidence case are recorded.*
+*Support boundary: Retain. Support health-economics Stata workflows through stable CLI/file interoperability rather than a new native formula implementation.*
 
 ---
 
-- [x] **Track: MATLAB Interoperability**
+- [ ] **Track: MATLAB Interoperability**
 *Link: [./tracks/matlab_interop_binding_20260513/](./tracks/matlab_interop_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named healthcare economics audience, accountable owner, and post-GA MATLAB evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named healthcare economics audience, accountable owner, and post-GA MATLAB evidence case are recorded.*
 
 ---
 
@@ -443,6 +444,18 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Power Platform Binding**
 *Link: [./tracks/power_platform_binding_20260512/](./tracks/power_platform_binding_20260512/)*
 *Gate: publish Power Platform orchestration as a managed solution/custom connector consumer of the shared calculator contract, never as a formula implementation.*
+
+---
+
+- [ ] **Track: Power Platform Operational Evidence**
+*Link: [./tracks/power_platform_operational_evidence_20260518/](./tracks/power_platform_operational_evidence_20260518/)*
+*Gate: capture real tenant app, connector, flow, DLP, and runtime smoke evidence before claiming Power Platform production readiness.*
+
+---
+
+- [ ] **Track: Repo Health 9.9 Power Platform Completion**
+*Link: [./tracks/repo_health_9_9_power_platform_completion_20260521/](./tracks/repo_health_9_9_power_platform_completion_20260521/)*
+*Gate: close remaining Power Platform repository-health blockers without claiming external runtime outcomes before they are proven.*
 
 ---
 
@@ -644,7 +657,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: Go Module Registry Submission**
+- [ ] **Track: Go Module Registry Submission**
 *Link: [./tracks/go_module_registry_submission_20260524/](./tracks/go_module_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Go module proxy/pkg.go.dev`, and capture immutable evidence before claiming publication.*
 
