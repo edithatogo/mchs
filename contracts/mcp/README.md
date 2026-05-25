@@ -79,10 +79,11 @@ Routes:
 | `GET /healthz` | Public readiness probe with no private healthcare data. |
 | `GET /.well-known/mcp/server-card.json` | Static server-card metadata for Smithery scanner fallback. |
 
-Smithery stdio MCPB publication is claimed through the accepted bundle evidence
-under `registry/smithery/`. URL-based Smithery publication through
-`mchs-mcp-http` remains optional future work and must not be claimed until this
-adapter is reachable through public HTTPS with Smithery scan/listing evidence.
+Smithery stdio MCPB publication is already claimed through the accepted bundle
+evidence under `registry/smithery/`; it does not require public HTTPS hosting.
+URL-based Smithery publication through `mchs-mcp-http` remains a separate,
+optional future path and must not be claimed until this adapter is reachable
+through public HTTPS with Smithery scan/listing evidence.
 
 ## Docker MCP Registry Candidate
 
