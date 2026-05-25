@@ -1,0 +1,42 @@
+{
+  "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+  "entry_id": "matlab-interop-diagnostics-fail",
+  "entry_type": "diagnostic_record",
+  "diagnostics": {
+    "status": "fail",
+    "checks": [
+      {
+        "id": "fixture_gate_blocked",
+        "status": "blocked",
+        "message": "The selected fixture gate is not open for release promotion."
+      },
+      {
+        "id": "module_not_ready",
+        "status": "fail",
+        "message": "The MATLAB file/CLI adapter is ready locally; public toolbox promotion remains deferred."
+      },
+      {
+        "id": "error_codes_present",
+        "status": "pass",
+        "message": "Failure conditions emit explicit machine-readable error codes."
+      }
+    ],
+    "summary": {"passed": 1, "failed": 1, "blocked": 1},
+    "notes": "Synthetic diagnostics failure example only."
+  },
+  "provenance": {
+    "command": "matlab-interop validate-diagnostics-fail",
+    "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+    "source_manifest_path": "contracts/matlab-interop-binding/examples/diagnostics.fail.json",
+    "source_url": "https://example.invalid/contracts/matlab-interop-binding",
+    "retrieved_on": "2026-05-13",
+    "sha256": "synthetic-sha256-matlab-interop-diagnostics-fail",
+    "bytes": 1710,
+    "checksum_algorithm": "sha256"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic diagnostics failure example only."
+  }
+}

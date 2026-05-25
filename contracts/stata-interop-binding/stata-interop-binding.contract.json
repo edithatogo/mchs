@@ -1,0 +1,631 @@
+{
+  "schema_version": "1.0",
+  "binding_bundle_id": "stata_interop_binding_contract_20260513",
+  "tool": {
+    "name": "mchs-stata-binding",
+    "package": "stata-interop-binding",
+    "entry_point": "contracts/stata-interop-binding"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Metadata-only Stata interop binding contract. It describes file-import, CLI-invocation, DTA-exchange, and service-fallback request and response structs, diagnostics, provenance, errors, fixture gates, and module readiness without committing calculator logic, licensed payloads, or Stata formula ports."
+  },
+  "public_calculator_contract": {
+    "source_path": "microcosting_healthservices/nwau_py/contracts.py",
+    "model_name": "CalculatorContract",
+    "fields": [
+      "schema_version",
+      "calculator_id",
+      "pricing_year",
+      "input_schema_version",
+      "output_schema_version",
+      "required_input_columns",
+      "required_output_columns"
+    ],
+    "supported_calculators": [
+      "acute",
+      "adjust",
+      "community_mh",
+      "ed",
+      "mh",
+      "outpatients",
+      "subacute"
+    ],
+    "notes": "The Stata interop request and response structs mirror the public calculator contract fields and only add transport metadata for file-import, CLI-invocation, DTA-exchange, and service-fallback handoff."
+  },
+  "transport_modes": [
+    {
+      "mode": "file-import",
+      "priority": "primary",
+      "notes": "Primary path for Stata users who import delimited CSV or Parquet output from the shared core."
+    },
+    {
+      "mode": "cli-invocation",
+      "priority": "primary",
+      "notes": "Primary path for Stata users who invoke the shared-core CLI via shell or winexec."
+    },
+    {
+      "mode": "dta-exchange",
+      "priority": "fallback",
+      "notes": "Fallback path for Stata-native .dta workflow after CSV/Parquet import."
+    },
+    {
+      "mode": "service",
+      "priority": "fallback",
+      "notes": "Fallback path for callers that need online request/response behavior when file or CLI paths are unavailable."
+    }
+  ],
+  "request_structs": [
+    {
+      "name": "StataInteropRequest",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Binding schema version for the request envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Public calculator identifier from the shared contract."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "IHACPA pricing year or edition label."
+        },
+        {
+          "name": "input_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Version of the declared input schema expected by the calculator."
+        },
+        {
+          "name": "output_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Version of the declared output schema returned by the calculator."
+        },
+        {
+          "name": "csv_input_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "Local path for CSV input when the binding uses a file boundary."
+        },
+        {
+          "name": "csv_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "Local path for CSV output when the binding uses a file boundary."
+        },
+        {
+          "name": "parquet_input_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "Local path for Parquet input when the binding uses a file boundary."
+        },
+        {
+          "name": "parquet_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "Local path for Parquet output when the binding uses a file boundary."
+        },
+        {
+          "name": "cli_command",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "cli-invocation"
+          ],
+          "notes": "The shell command string to invoke the shared-core CLI from Stata."
+        },
+        {
+          "name": "service_url",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "service"
+          ],
+          "notes": "Configured service endpoint for the fallback transport path."
+        },
+        {
+          "name": "correlation_id",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Traceable caller-provided request identifier."
+        },
+        {
+          "name": "metadata",
+          "type": "object",
+          "required": false,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Opaque caller metadata that must not carry calculator logic."
+        },
+        {
+          "name": "fixture_gate",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Declared fixture gate for synthetic-only or local-only payload handling."
+        },
+        {
+          "name": "dta_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "dta-exchange"
+          ],
+          "notes": "Local path for .dta output when the binding uses DTA exchange."
+        }
+      ],
+      "notes": "Single versioned Stata interop request envelope that mirrors the public calculator contract and adds only transport metadata."
+    }
+  ],
+  "response_structs": [
+    {
+      "name": "StataInteropResponse",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Binding schema version for the response envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Echoes the public calculator identifier."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Echoes the pricing year used during execution."
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Declares the transport path that produced the result."
+        },
+        {
+          "name": "success",
+          "type": "boolean",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "True only when the request completed without a blocking error."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Machine-readable execution state for the caller."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Short human-readable summary of the result."
+        },
+        {
+          "name": "warnings",
+          "type": "array",
+          "required": false,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Non-blocking warnings attached to the response."
+        },
+        {
+          "name": "errors",
+          "type": "array",
+          "required": false,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Machine-readable error records emitted when the response does not succeed."
+        },
+        {
+          "name": "diagnostics",
+          "type": "object",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Structured diagnostic record with pass, fail, and blocked checks."
+        },
+        {
+          "name": "provenance",
+          "type": "object",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Provenance record for the request and any generated artifact."
+        },
+        {
+          "name": "csv_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "CSV output path used by the file boundary."
+        },
+        {
+          "name": "parquet_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "file-import",
+            "dta-exchange"
+          ],
+          "notes": "Parquet output path used by the file boundary."
+        },
+        {
+          "name": "dta_output_path",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "dta-exchange"
+          ],
+          "notes": "DTA output path used by the DTA exchange boundary."
+        },
+        {
+          "name": "cli_stdout",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "cli-invocation"
+          ],
+          "notes": "Captured stdout from the CLI invocation."
+        },
+        {
+          "name": "service_url",
+          "type": "string",
+          "required": false,
+          "modes": [
+            "service"
+          ],
+          "notes": "Service endpoint used to complete the request."
+        },
+        {
+          "name": "fixture_gate_state",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Observed fixture-gate outcome for the request."
+        },
+        {
+          "name": "module_readiness_state",
+          "type": "string",
+          "required": true,
+          "modes": [
+            "file-import",
+            "cli-invocation",
+            "dta-exchange",
+            "service"
+          ],
+          "notes": "Observed Stata interop module readiness state for the binding bundle."
+        }
+      ],
+      "notes": "Single versioned Stata interop response envelope that captures success, diagnostics, provenance, and transport-specific outputs."
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "contract_alignment",
+      "status": "pass",
+      "notes": "The Stata interop request and response structs mirror the public calculator contract fields."
+    },
+    {
+      "id": "file_cli_primary",
+      "status": "pass",
+      "notes": "File-import and CLI-invocation are the primary transport boundaries for Stata."
+    },
+    {
+      "id": "dta_service_fallback",
+      "status": "pass",
+      "notes": "DTA-exchange and service fallback are explicitly declared for native Stata and online workflows."
+    },
+    {
+      "id": "fixture_gate_enforcement",
+      "status": "pass",
+      "notes": "Fixture gates remain synthetic-only or local-only and do not expose restricted payloads."
+    },
+    {
+      "id": "module_readiness_visibility",
+      "status": "pass",
+      "notes": "Module readiness is tracked as declarative metadata rather than implied implementation status."
+    }
+  ],
+  "provenance": [
+    {
+      "field": "command",
+      "required": true,
+      "notes": "Name of the contract or validation command that produced the artifact."
+    },
+    {
+      "field": "binding_bundle_id",
+      "required": true,
+      "notes": "Stable identifier for the Stata interop binding contract bundle."
+    },
+    {
+      "field": "source_manifest_path",
+      "required": true,
+      "notes": "Path to the source manifest or fixture record used to derive the example."
+    },
+    {
+      "field": "source_url",
+      "required": true,
+      "notes": "Public source URL or local reference used for provenance."
+    },
+    {
+      "field": "retrieved_on",
+      "required": true,
+      "notes": "Retrieval date in ISO-8601 date form."
+    },
+    {
+      "field": "sha256",
+      "required": true,
+      "notes": "Checksum for the committed example."
+    },
+    {
+      "field": "bytes",
+      "required": true,
+      "notes": "Example size in bytes."
+    },
+    {
+      "field": "checksum_algorithm",
+      "required": true,
+      "notes": "Checksum algorithm used by the bundle."
+    }
+  ],
+  "errors": [
+    {
+      "code": "STATA_BINDING_SCHEMA_MISMATCH",
+      "severity": "error",
+      "retryable": false,
+      "condition": "request or response fields do not match the published Stata interop binding schema",
+      "notes": "Use this when the envelope is structurally invalid."
+    },
+    {
+      "code": "STATA_BINDING_SERVICE_UNAVAILABLE",
+      "severity": "error",
+      "retryable": true,
+      "condition": "the fallback service boundary cannot be reached",
+      "notes": "The caller may retry or switch to a file or CLI boundary."
+    },
+    {
+      "code": "STATA_BINDING_CLI_EXECUTION_FAILED",
+      "severity": "error",
+      "retryable": true,
+      "condition": "CLI execution fails from Stata shell or winexec",
+      "notes": "The failure is transport-level, not calculator logic."
+    },
+    {
+      "code": "STATA_BINDING_FILE_IMPORT_FAILED",
+      "severity": "error",
+      "retryable": true,
+      "condition": "CSV or Parquet file cannot be read by Stata",
+      "notes": "Use for file-boundary errors in file-import or DTA-exchange."
+    },
+    {
+      "code": "STATA_BINDING_FIXTURE_GATE_BLOCKED",
+      "severity": "error",
+      "retryable": false,
+      "condition": "synthetic-only or local-only fixture gate is not satisfied",
+      "notes": "The request must stop before any restricted payload is handled."
+    },
+    {
+      "code": "STATA_BINDING_MODULE_NOT_READY",
+      "severity": "warning",
+      "retryable": false,
+      "condition": "the Stata adapter is unavailable or package promotion is deferred",
+      "notes": "Use this when local file/CLI transport is not available, or when a caller asks for SSC/package publication evidence that is not claimed."
+    }
+  ],
+  "fixture_gates": [
+    {
+      "id": "synthetic_only_examples",
+      "state": "pass",
+      "notes": "Committed examples must stay synthetic and metadata only."
+    },
+    {
+      "id": "local_only_licensed_assets",
+      "state": "pass",
+      "notes": "Any licensed payloads stay local-only and user-supplied outside the repository."
+    },
+    {
+      "id": "public_contract_pin",
+      "state": "pass",
+      "notes": "The binding must remain pinned to the public calculator contract field set."
+    }
+  ],
+  "module_readiness": [
+    {
+      "id": "stata_file_cli_adapter",
+      "state": "ready",
+      "notes": "The mchs.ado adapter exposes bounded file-import, CLI-invocation, and column-validation commands without calculator logic."
+    },
+    {
+      "id": "stata_package_publication",
+      "state": "deferred",
+      "notes": "The repository does not assert SSC or published Stata package readiness."
+    },
+    {
+      "id": "file_cli_boundary",
+      "state": "ready",
+      "notes": "File-import and CLI-invocation paths are declared as primary batch and interactive paths."
+    },
+    {
+      "id": "dta_service_fallback",
+      "state": "ready",
+      "notes": "DTA-exchange and service fallback boundaries are declared for native and online workflows."
+    }
+  ],
+  "rules": [
+    "Keep all examples synthetic and metadata only.",
+    "Mirror the public calculator contract fields explicitly.",
+    "Do not duplicate calculator math, thresholds, or adjustment logic in the Stata binding.",
+    "Prefer file-import or CLI-invocation first and use DTA-exchange or service boundary when native or online behavior is needed.",
+    "Keep diagnostics, provenance, and errors explicit and machine readable.",
+    "Keep fixture gates local-only and user-supplied for any licensed assets.",
+    "Treat package publication readiness as declarative metadata until an actual Stata package is introduced."
+  ],
+  "examples": [
+    {
+      "name": "service-pass",
+      "path": "contracts/stata-interop-binding/examples/service.pass.json",
+      "description": "Synthetic service-bound fallback request and response example that passes the public calculator contract checks."
+    },
+    {
+      "name": "csv-parquet-pass",
+      "path": "contracts/stata-interop-binding/examples/csv-parquet.pass.json",
+      "description": "Synthetic file-import primary example showing CSV/Parquet handoff that passes batch checks."
+    },
+    {
+      "name": "diagnostics-pass",
+      "path": "contracts/stata-interop-binding/examples/diagnostics.pass.json",
+      "description": "Synthetic diagnostics example showing aligned contract, fixture, and readiness checks."
+    },
+    {
+      "name": "binding-fail",
+      "path": "contracts/stata-interop-binding/examples/binding.fail.json",
+      "description": "Synthetic failure example showing a blocked module readiness or transport boundary."
+    },
+    {
+      "name": "diagnostics-fail",
+      "path": "contracts/stata-interop-binding/examples/diagnostics.fail.json",
+      "description": "Synthetic diagnostics example showing a blocked gate and explicit error codes."
+    }
+  ]
+}

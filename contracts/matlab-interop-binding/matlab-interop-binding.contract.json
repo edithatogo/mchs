@@ -1,0 +1,452 @@
+{
+  "schema_version": "1.0",
+  "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+  "tool": {
+    "name": "mchs-matlab-interop-binding",
+    "package": "matlab-interop-binding",
+    "entry_point": "contracts/matlab-interop-binding"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Metadata-only MATLAB interop binding contract. It describes request and response structs, transport modes (file-import, cli-invocation, mat-exchange, c-abi-mex), diagnostics, provenance, errors, fixture gates, and module readiness without committing calculator logic or licensed payloads."
+  },
+  "public_calculator_contract": {
+    "source_path": "microcosting_healthservices/nwau_py/contracts.py",
+    "model_name": "CalculatorContract",
+    "fields": [
+      "schema_version",
+      "calculator_id",
+      "pricing_year",
+      "input_schema_version",
+      "output_schema_version",
+      "required_input_columns",
+      "required_output_columns"
+    ],
+    "supported_calculators": [
+      "acute",
+      "adjust",
+      "community_mh",
+      "ed",
+      "mh",
+      "outpatients",
+      "subacute"
+    ],
+    "notes": "The MATLAB interop request and response structs mirror the public calculator contract fields and only add transport metadata for file import, CLI invocation, MAT exchange, and C ABI MEX handoff."
+  },
+  "transport_modes": [
+    {
+      "mode": "file-import",
+      "priority": "primary",
+      "notes": "Primary zero-build path for MATLAB consumers using readtable/parquetread on CSV and Parquet outputs from the shared core."
+    },
+    {
+      "mode": "cli-invocation",
+      "priority": "primary",
+      "notes": "Primary cross-platform path for MATLAB users invoking the shared-core CLI via system() or ! with JSON/CSV output."
+    },
+    {
+      "mode": "mat-exchange",
+      "priority": "fallback",
+      "notes": "Fallback path for existing MATLAB workflows using save/load on .mat files converted from shared-core CSV or Parquet."
+    },
+    {
+      "mode": "c-abi-mex",
+      "priority": "fallback",
+      "notes": "Future fallback path for in-process execution through loadlibrary/calllib requiring MATLAB compiler toolchain matching."
+    }
+  ],
+  "request_structs": [
+    {
+      "name": "MatlabInteropRequest",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Binding schema version for the request envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Public calculator identifier from the shared contract."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "IHACPA pricing year or edition label."
+        },
+        {
+          "name": "input_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Version of the declared input schema expected by the calculator."
+        },
+        {
+          "name": "output_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Version of the declared output schema returned by the calculator."
+        },
+        {
+          "name": "input_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange"],
+          "notes": "Local path for batch input when the binding uses a file boundary."
+        },
+        {
+          "name": "output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange"],
+          "notes": "Local path for batch output when the binding uses a file boundary."
+        },
+        {
+          "name": "csv_input_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import"],
+          "notes": "CSV-compatible input handoff path for the file-import primary mode."
+        },
+        {
+          "name": "csv_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import"],
+          "notes": "CSV-compatible output handoff path for the file-import primary mode."
+        },
+        {
+          "name": "cli_command",
+          "type": "string",
+          "required": false,
+          "modes": ["cli-invocation"],
+          "notes": "The shell command string to invoke the shared-core CLI from MATLAB."
+        },
+        {
+          "name": "mat_input_path",
+          "type": "string",
+          "required": false,
+          "modes": ["mat-exchange"],
+          "notes": ".mat input handoff path for the MAT-exchange fallback mode."
+        },
+        {
+          "name": "mat_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["mat-exchange"],
+          "notes": ".mat output handoff path for the MAT-exchange fallback mode."
+        },
+        {
+          "name": "correlation_id",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Traceable caller-provided request identifier."
+        },
+        {
+          "name": "metadata",
+          "type": "object",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Opaque caller metadata that must not carry calculator logic."
+        },
+        {
+          "name": "fixture_gate",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Declared fixture gate for synthetic-only or local-only payload handling."
+        }
+      ],
+      "notes": "Single versioned MATLAB interop request envelope that mirrors the public calculator contract and adds only transport metadata."
+    }
+  ],
+  "response_structs": [
+    {
+      "name": "MatlabInteropResponse",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Binding schema version for the response envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Echoes the public calculator identifier."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Echoes the pricing year used during execution."
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Declares the transport path that produced the result."
+        },
+        {
+          "name": "success",
+          "type": "boolean",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "True only when the request completed without a blocking error."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Machine-readable execution state for the caller."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Short human-readable summary of the result."
+        },
+        {
+          "name": "warnings",
+          "type": "array",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Non-blocking warnings attached to the response."
+        },
+        {
+          "name": "errors",
+          "type": "array",
+          "required": false,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Machine-readable error records emitted when the response does not succeed."
+        },
+        {
+          "name": "diagnostics",
+          "type": "object",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Structured diagnostic record with pass, fail, and blocked checks."
+        },
+        {
+          "name": "provenance",
+          "type": "object",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Provenance record for the request and any generated artifact."
+        },
+        {
+          "name": "csv_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-import"],
+          "notes": "CSV output path used by the file-import primary mode."
+        },
+        {
+          "name": "mat_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["mat-exchange"],
+          "notes": ".mat output path used by the MAT-exchange fallback mode."
+        },
+        {
+          "name": "cli_stdout",
+          "type": "string",
+          "required": false,
+          "modes": ["cli-invocation"],
+          "notes": "Captured CLI stdout output from a MATLAB system() invocation."
+        },
+        {
+          "name": "fixture_gate_state",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Observed fixture-gate outcome for the request."
+        },
+        {
+          "name": "module_readiness_state",
+          "type": "string",
+          "required": true,
+          "modes": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"],
+          "notes": "Observed MATLAB interop module readiness state for the binding bundle."
+        }
+      ],
+      "notes": "Single versioned MATLAB interop response envelope that captures success, diagnostics, provenance, and transport-specific outputs."
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "contract_alignment",
+      "status": "pass",
+      "notes": "The MATLAB interop request and response structs mirror the public calculator contract fields."
+    },
+    {
+      "id": "file_import_cli_primary",
+      "status": "pass",
+      "notes": "File-import and CLI-invocation are the primary transport boundaries for MATLAB consumers."
+    },
+    {
+      "id": "mat_exchange_mex_fallback",
+      "status": "pass",
+      "notes": "MAT-exchange and C ABI MEX are explicitly declared as fallback paths."
+    },
+    {
+      "id": "fixture_gate_enforcement",
+      "status": "pass",
+      "notes": "Fixture gates remain synthetic-only or local-only and do not expose restricted payloads."
+    },
+    {
+      "id": "module_readiness_visibility",
+      "status": "pass",
+      "notes": "Module readiness is tracked as declarative metadata rather than implied implementation status."
+    }
+  ],
+  "provenance": [
+    {"field": "command", "required": true, "notes": "Name of the contract or validation command that produced the artifact."},
+    {"field": "binding_bundle_id", "required": true, "notes": "Stable identifier for the MATLAB interop binding contract bundle."},
+    {"field": "source_manifest_path", "required": true, "notes": "Path to the source manifest or fixture record used to derive the example."},
+    {"field": "source_url", "required": true, "notes": "Public source URL or local reference used for provenance."},
+    {"field": "retrieved_on", "required": true, "notes": "Retrieval date in ISO-8601 date form."},
+    {"field": "sha256", "required": true, "notes": "Checksum for the committed example."},
+    {"field": "bytes", "required": true, "notes": "Example size in bytes."},
+    {"field": "checksum_algorithm", "required": true, "notes": "Checksum algorithm used by the bundle."}
+  ],
+  "errors": [
+    {
+      "code": "MATLAB_INTEROP_SCHEMA_MISMATCH",
+      "severity": "error",
+      "retryable": false,
+      "condition": "request or response fields do not match the published MATLAB interop binding schema",
+      "notes": "Use this when the envelope is structurally invalid."
+    },
+    {
+      "code": "MATLAB_INTEROP_CLI_UNAVAILABLE",
+      "severity": "error",
+      "retryable": true,
+      "condition": "the shared-core CLI cannot be found or executed from MATLAB",
+      "notes": "The caller may retry with a different CLI path or fall back to file-import."
+    },
+    {
+      "code": "MATLAB_INTEROP_FILE_IMPORT_FAILED",
+      "severity": "error",
+      "retryable": true,
+      "condition": "CSV or Parquet file cannot be read by MATLAB readtable or parquetread",
+      "notes": "The failure is transport-level, not calculator logic."
+    },
+    {
+      "code": "MATLAB_INTEROP_MAT_EXCHANGE_FAILED",
+      "severity": "error",
+      "retryable": true,
+      "condition": ".mat file cannot be loaded or saved by MATLAB load/save",
+      "notes": "Use for MAT-exchange boundary errors in native MATLAB workflows."
+    },
+    {
+      "code": "MATLAB_INTEROP_ABI_MEX_FAILED",
+      "severity": "error",
+      "retryable": true,
+      "condition": "C ABI MEX library cannot be loaded by loadlibrary or calllib",
+      "notes": "The failure is toolchain-level; requires Rust cdylib build and mex configuration."
+    },
+    {
+      "code": "MATLAB_INTEROP_FIXTURE_GATE_BLOCKED",
+      "severity": "error",
+      "retryable": false,
+      "condition": "synthetic-only or local-only fixture gate is not satisfied",
+      "notes": "The request must stop before any restricted payload is handled."
+    },
+    {
+      "code": "MATLAB_INTEROP_MODULE_NOT_READY",
+      "severity": "warning",
+      "retryable": false,
+      "condition": "the MATLAB file/CLI adapter is unavailable or toolbox promotion is deferred",
+      "notes": "Use this when local adapter transport is not available, or when a caller asks for MATLAB toolbox publication evidence that is not claimed."
+    }
+  ],
+  "fixture_gates": [
+    {
+      "id": "synthetic_only_examples",
+      "state": "pass",
+      "notes": "Committed examples must stay synthetic and metadata only."
+    },
+    {
+      "id": "local_only_licensed_assets",
+      "state": "pass",
+      "notes": "Any licensed payloads stay local-only and user-supplied outside the repository."
+    },
+    {
+      "id": "public_contract_pin",
+      "state": "pass",
+      "notes": "The binding must remain pinned to the public calculator contract field set."
+    }
+  ],
+  "module_readiness": [
+    {
+      "id": "matlab_file_cli_adapter",
+      "state": "adapter_ready",
+      "notes": "The workstream has a thin file/CLI MATLAB adapter but does not assert a published MATLAB toolbox."
+    },
+    {
+      "id": "file_import_boundary",
+      "state": "adapter_ready",
+      "notes": "The file-import boundary has MATLAB helpers for existence checks, CSV/Parquet import, column validation, diagnostics, and provenance."
+    },
+    {
+      "id": "cli_invocation_boundary",
+      "state": "adapter_ready",
+      "notes": "The CLI-invocation boundary has a MATLAB system() wrapper that builds a quoted command, captures stdout and exit status, and verifies an expected output file."
+    }
+  ],
+  "rules": [
+    "Keep all examples synthetic and metadata only.",
+    "Mirror the public calculator contract fields explicitly.",
+    "Do not duplicate calculator math, thresholds, or adjustment logic in the MATLAB interop binding.",
+    "Prefer file-import or CLI-invocation first and use MAT-exchange or C ABI MEX when native MATLAB workflows or in-process execution are needed.",
+    "Keep diagnostics, provenance, and errors explicit and machine readable.",
+    "Keep fixture gates local-only and user-supplied for any licensed assets.",
+    "Treat module readiness as declarative metadata until an actual MATLAB toolbox is introduced."
+  ],
+  "examples": [
+    {
+      "name": "file-import-pass",
+      "path": "contracts/matlab-interop-binding/examples/file-import.pass.json",
+      "description": "Synthetic file-import primary request and response example that passes the public calculator contract checks for MATLAB readtable/parquetread consumers."
+    },
+    {
+      "name": "cli-invocation-pass",
+      "path": "contracts/matlab-interop-binding/examples/cli-invocation.pass.json",
+      "description": "Synthetic CLI-invocation primary example that passes batch handoff checks for MATLAB system() users."
+    },
+    {
+      "name": "diagnostics-pass",
+      "path": "contracts/matlab-interop-binding/examples/diagnostics.pass.json",
+      "description": "Synthetic diagnostics example showing aligned contract, fixture, and readiness checks."
+    },
+    {
+      "name": "binding-fail",
+      "path": "contracts/matlab-interop-binding/examples/binding.fail.json",
+      "description": "Synthetic failure example showing a blocked module readiness or transport boundary."
+    },
+    {
+      "name": "diagnostics-fail",
+      "path": "contracts/matlab-interop-binding/examples/diagnostics.fail.json",
+      "description": "Synthetic diagnostics example showing a blocked gate and explicit error codes."
+    }
+  ]
+}

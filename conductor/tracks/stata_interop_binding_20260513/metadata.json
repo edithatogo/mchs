@@ -3,17 +3,29 @@
   "type": "feature",
   "status": "completed",
   "track_class": "binding",
-  "current_state": "design-complete",
-  "deferred_until": "rust_core_ga_20260513:release-candidate",
-  "deferred_reason": "Rust Core GA is the immediate priority; Stata remains a file, CLI, or service consumer until required GA surfaces are stable.",
+  "current_state": "file-cli-adapter-ready-with-publication-gates",
   "primary_contract": "contracts/stata-interop-binding/stata-interop-binding.contract.json",
   "dependencies": [
     "polyglot_rust_core_roadmap_20260512",
-    "cli_file_interoperability_binding_20260512"
+    "cli_file_interoperability_binding_20260512",
+    "rust_core_ga_20260513"
   ],
-  "completion_evidence": ["docs", "workflows", "tests"],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests",
+    "bounded-adapter"
+  ],
   "publication_status": "not-applicable",
+  "deferred": true,
+  "deferred_gate": "audience_owner_evidence",
+  "deferred_rationale": "The bounded Stata file/CLI adapter is implemented. Publication and owner-backed promotion remain deferred until CLI/file contracts are stable and a named health-economics owner is recorded.",
+  "unblock_criteria": [
+    "CLI/file contract surfaces are stable.",
+    "Named health-economics owner is recorded."
+  ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T12:00:00Z",
-  "description": "Add Stata interoperability for health economics and applied policy workflows through file, CLI, or service contracts."
+  "updated_at": "2026-05-26T00:00:00Z",
+  "description": "Add Stata interoperability for health economics and applied policy workflows through a bounded file/CLI adapter and service contract. Publication remains deferred until owner, CLI/file readiness, and evidence criteria are recorded.",
+  "no_stub_enforce": true
 }

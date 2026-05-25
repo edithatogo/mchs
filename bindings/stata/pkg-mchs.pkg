@@ -1,0 +1,5 @@
+v 0.1.0
+N mchs
+D MCHS Stata file/CLI interop adapter
+F mchs.ado
+F mchs.sthlp

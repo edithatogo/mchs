@@ -4,8 +4,9 @@
 
 Use a file-based exchange and CLI invocation strategy for Stata
 interoperability. Stata users read pre-computed calculator outputs as CSV or
-Parquet and invoke the shared-core CLI from Stata via the `shell` or `winexec`
-commands. No Stata formula port (`.do` files with calculator logic) is created.
+Parquet and invoke the shared-core CLI through the `mchs.ado` adapter, which
+uses Stata's `shell` boundary. No Stata formula port (`.do` files with
+calculator logic) is created.
 
 This follows the polyglot Rust core roadmap and reuses the CLI/file interop
 contract established by the shared core.
@@ -18,12 +19,12 @@ contract established by the shared core.
 - CSV and Parquet interchange is already supported by the CLI/file contract
   and is natively readable in Stata via `import delimited` or the `parquet`
   Stata package.
-- CLI invocation from Stata (`shell mchs-calc ...`) gives a zero-build path
-  for Stata users who already run the shared-core CLI.
+- CLI invocation from Stata (`mchs run ...`) gives a zero-build path for Stata
+  users who already run the shared-core CLI.
 - Stata's `frame` and `frames` commands can hold pre-computed results for
   comparison against existing Stata costing scripts.
-- No Stata ADO package or SSC publication is needed for design-only
-  validation.
+- No Stata SSC publication is needed for local adapter validation. Package
+  publication is a later registry decision.
 
 ## Contract shape
 
@@ -33,7 +34,7 @@ contract established by the shared core.
 |---------------|-----------------------------|-----------------|----------------------------------|
 | File import   | Stata `import delimited`    | CSV             | Primary mode; zero-dependency    |
 | File import   | Stata `parquet` package     | Parquet         | Requires `ssc install parquet`   |
-| CLI invocation| Stata `shell` / `winexec`   | CLI stdout/json | Cross-platform; no Stata add-on  |
+| CLI invocation| `mchs run` / Stata `shell`   | CLI stdout/json | Cross-platform; thin Stata adapter |
 | DTA exchange  | Stata `save`/`use`          | .dta            | Native format for Stata users    |
 
 ### CSV/Parquet schema contract
@@ -52,9 +53,8 @@ track:
 ### CLI invocation pattern (Stata)
 
 ```stata
-* Illustrative — not implemented here
-shell mchs-calc --calculator nwau --pricing-year 2026 --output results.csv
-import delimited using results.csv, clear
+mchs run using "acute_input.csv", calculator(acute) year(2025) output("results.csv") replace import clear
+mchs validate
 ```
 
 ### DTA export workflow
@@ -76,8 +76,9 @@ Stata. No Stata-specific calculator packaging is required.
   `winexec` command may need full binary paths.
 - The `parquet` Stata package is community-maintained and version-dependent.
   CSV is the recommended portable format.
-- No Stata `.ado` files, Mata functions, or SSC packages containing formula
-  logic are maintained in this repository.
+- The repository maintains only a thin Stata `.ado` adapter for file import,
+  CLI invocation, and boundary validation. No Stata `.ado` file, Mata
+  function, or SSC package contains formula logic.
 
 ## Versioning
 
@@ -118,8 +119,9 @@ Prefer CLI/file interop or native bindings when:
 
 ## Readiness bar
 
-- This track is design-only. No Stata code is being written.
+- This track remains transport-only: Stata code validates the file/CLI
+  boundary and delegates every calculation to the shared core.
 - Interop workflows are documented and validated against shared golden
-  fixtures.
-- Do not claim Stata integration as production-ready until a CSV-import or
-  CLI-invocation example has been validated against synthetic fixtures.
+  fixtures where those fixtures are available.
+- Do not claim Stata package publication until a CSV-import or CLI-invocation
+  example has registry-owner evidence beyond synthetic fixtures.

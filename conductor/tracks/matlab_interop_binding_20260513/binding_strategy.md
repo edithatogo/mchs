@@ -27,7 +27,7 @@ interop contracts established by the shared core.
 - `.mat` file exchange via MATLAB's `save`/`load` is a familiar workflow for
   existing MATLAB users.
 - No MATLAB toolbox publication or Add-On Explorer submission is needed for
-  design-only validation.
+  local adapter validation. Toolbox publication is a later packaging decision.
 
 ## Contract shape
 
@@ -126,8 +126,9 @@ Prefer CLI/file interop or native bindings when:
 
 ## Readiness bar
 
-- This track is design-only. No MATLAB code is being written.
+- This track is adapter-ready for file/CLI boundary helpers and remains
+  transport-only.
 - Interop workflows are documented and validated against shared golden
   fixtures.
-- Do not claim MATLAB integration as production-ready until a CSV-import or
-  CLI-invocation example has been validated against synthetic fixtures.
+- Do not claim MATLAB toolbox publication until a CSV-import or CLI-invocation
+  example has registry-owner evidence beyond synthetic fixtures.

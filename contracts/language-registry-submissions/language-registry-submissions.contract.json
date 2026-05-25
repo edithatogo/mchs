@@ -423,20 +423,20 @@
             "package": "mchs-matlab-interop",
             "version": "0.1.0",
             "local_surface": "contracts/matlab-interop-binding",
-            "current_status": "blocked_missing_repo_artifacts_pending_toolbox_packaging_and_file_exchange_upload",
+            "current_status": "prepared_pending_file_exchange_upload",
             "track": "matlab_file_exchange_submission_20260524",
             "submission_url": null,
-            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; the previously referenced MATLAB bundle and contract artifacts are not present in this commit tree, so repo-side readiness is not claimed.",
-            "localReadinessResolved": false,
+            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; repo-side source, contract, and bundle artifacts are present, but MATLAB/Octave runtime validation is not claimed.",
+            "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
                 "bundle": "bindings/matlab/mchs-matlab-interop-0.1.0.zip",
-                "bundlePresentInCommitTree": false,
-                "contractPresentInCommitTree": false,
-                "sha256": "3ab598b37a17e668d6c96b6352473b33410684ef49128cb3f876f21dae69d1e4",
-                "bundleContents": "mchs/README.md, mchs/validateInput.m, file-exchange-submission.json",
+                "bundlePresentInCommitTree": true,
+                "contractPresentInCommitTree": true,
+                "sha256": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c",
+                "bundleContents": "mchs/README.md, mchs/validateInput.m, mchs/importResultTable.m, mchs/invokeCli.m, examples/cli_invocation_demo.m, examples/file_import_demo.m, README.md, matlab-interop-notes.md, file-exchange-submission.json",
                 "tooling": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed.",
-                "remainingRepoBlocker": "Add the MATLAB bundle/contract artifacts or revise the track to artifact-free File Exchange preparation before claiming local readiness.",
+                "remainingRepoBlocker": "None. Repo-side source, contract, examples, and File Exchange bundle are present; MATLAB runtime validation is not claimed because MATLAB/Octave are unavailable locally.",
                 "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow."
             }
         },
@@ -448,20 +448,20 @@
             "package": "mchs-stata-interop",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
-            "current_status": "blocked_missing_repo_artifacts_pending_ado_package_review_and_ssc_submission",
+            "current_status": "prepared_pending_ssc_submission_review",
             "track": "stata_ssc_submission_20260524",
             "submission_url": null,
-            "blocker": "SSC distribution requires maintainer submission/review; the previously referenced Stata bundle and contract artifacts are not present in this commit tree, so repo-side readiness is not claimed.",
-            "localReadinessResolved": false,
+            "blocker": "SSC distribution requires maintainer submission/review; repo-side ado/help/pkg source, contract, and bundle artifacts are present, but Stata runtime validation is not claimed.",
+            "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
                 "bundle": "bindings/stata/mchs-stata-interop-0.1.0.zip",
-                "bundlePresentInCommitTree": false,
-                "contractPresentInCommitTree": false,
-                "sha256": "496ca01f9b39628b57df2f0de6be0fa7f99f4dd7c097b36245feeea6024ca82f",
+                "bundlePresentInCommitTree": true,
+                "contractPresentInCommitTree": true,
+                "sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
-                "remainingRepoBlocker": "Add the Stata ado/help bundle and contract artifacts or revise the track to artifact-free preparation before claiming local readiness.",
+                "remainingRepoBlocker": "None. Repo-side source, contract, examples, and SSC bundle are present; ado runtime validation is not claimed because Stata is unavailable locally.",
                 "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed."
             }
         },
@@ -473,10 +473,10 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "archive_based_conan_and_vcpkg_validated_pending_upstream_prs",
+            "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
-            "submission_url": null,
-            "blocker": "Archive-based Conan and vcpkg overlay validations pass locally; upstream vcpkg and ConanCenter PR/review workflows remain pending, including replacing draft vcpkg git-tree metadata in the upstream registry checkout.",
+            "submission_url": "https://github.com/microsoft/vcpkg/pull/51965",
+            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -510,11 +510,13 @@
                 "vcpkgVersionMetadataDraft": "packaging/vcpkg/versions/baseline.json and packaging/vcpkg/versions/n-/nwau-c-abi.json exist as draft registry metadata with placeholder git-tree pending upstream vcpkg PR preparation.",
                 "conanSourceStrategy": "conandata.yml points at the dedicated source-r2 archive and the recipe uses conan.tools.files.get(strip_root=True).",
                 "conanArchiveValidation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 using source-r2 archive and CMake test_package.",
-                "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0, installing header, release/debug static libraries, release/debug dylibs, usage text, and copyright."
+                "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0, installing header, release/debug static libraries, release/debug dylibs, usage text, and copyright.",
+                "vcpkgPullRequest": "https://github.com/microsoft/vcpkg/pull/51965",
+                "conanCenterPullRequest": "https://github.com/conan-io/conan-center-index/pull/30262",
+                "conanCenterValidationEvidence": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation."
             },
             "repoSideReadinessBlockers": {
-                "vcpkgUpstreamMetadata": "Replace draft git-tree placeholder during upstream vcpkg PR preparation.",
-                "upstreamReview": "Submit vcpkg and ConanCenter PRs and wait for registry review/merge before claiming publication."
+                "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication."
             }
         }
     ],

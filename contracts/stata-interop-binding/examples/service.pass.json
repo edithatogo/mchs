@@ -1,0 +1,77 @@
+{
+  "binding_bundle_id": "stata_interop_binding_contract_20260513",
+  "entry_id": "stata-interop-service-pass",
+  "entry_type": "stata_interop_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "service",
+    "service_url": "https://calculator.local/v1/execute",
+    "correlation_id": "stata-interop-service-pass",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "service"
+    },
+    "fixture_gate": "synthetic_only_examples"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "mode": "service",
+    "success": true,
+    "status": "pass",
+    "message": "Service-bound fallback request validated against the public calculator contract.",
+    "warnings": [
+      "Synthetic example only; no calculation output is committed."
+    ],
+    "errors": [],
+    "diagnostics": {
+      "status": "pass",
+      "checks": [
+        {
+          "id": "public_calculator_contract_aligned",
+          "status": "pass",
+          "message": "The request fields mirror the public calculator contract."
+        },
+        {
+          "id": "service_fallback_selected",
+          "status": "pass",
+          "message": "The fallback service boundary was used."
+        },
+        {
+          "id": "fixture_gate_synthetic_only",
+          "status": "pass",
+          "message": "The example remains synthetic and metadata only."
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 0,
+        "blocked": 0
+      },
+      "notes": "Synthetic diagnostics example only."
+    },
+    "provenance": {
+      "command": "stata-interop validate-service-pass",
+      "binding_bundle_id": "stata_interop_binding_contract_20260513",
+      "source_manifest_path": "contracts/stata-interop-binding/examples/service.pass.json",
+      "source_url": "https://example.invalid/contracts/stata-interop-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-stata-interop-service-pass",
+      "bytes": 2312,
+      "checksum_algorithm": "sha256"
+    },
+    "service_url": "https://calculator.local/v1/execute",
+    "fixture_gate_state": "pass",
+    "module_readiness_state": "ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic service-pass example only."
+  }
+}

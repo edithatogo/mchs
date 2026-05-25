@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "binding_id": "stata_interop_binding_20260513",
+  "surface": "stata",
+  "initial_strategy": "file-import cli-invocation interop",
+  "fallback_strategy": "dta-exchange service boundary",
+  "formula_logic_location": "rust core",
+  "stata_interop_status": "complete-with-gaps",
+  "diagnostics": {
+    "format": "json",
+    "includes": [
+      "contract_id",
+      "fixture_id",
+      "validation_status",
+      "strategy",
+      "fallback"
+    ]
+  },
+  "provenance": {
+    "checksum_algorithm": "sha256",
+    "preserve_fields": [
+      "source_basis",
+      "fixture_id",
+      "notes"
+    ]
+  },
+  "stata_interop_module": {
+    "status": "complete-with-gaps",
+    "release_gate": "contract and parity stable"
+  }
+}

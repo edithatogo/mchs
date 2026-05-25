@@ -1,0 +1,20 @@
+{
+  "track_id": "stata_ssc_submission_20260524",
+  "type": "chore",
+  "status": "blocked",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T01:20:00Z",
+  "description": "Stata SSC Submission: discover, prepare, submit, and evidence SSC / Stata package distribution publication for mchs-stata-interop.",
+  "registry_id": "stata_ssc",
+  "current_status": "prepared_pending_ssc_submission_review",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed and Stata runtime validation is not claimed.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip",
+    "bundle_sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
+    "bundle_contents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
+    "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed"
+  }
+}
