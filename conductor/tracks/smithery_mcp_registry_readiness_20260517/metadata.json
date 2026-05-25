@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "publication",
   "priority": "near-term",
-  "current_state": "published-to-smithery-cache-propagation-pending",
+  "current_state": "published-to-smithery-public-api-verified-search-runtime-not-claimed",
   "primary_contract": "contracts/mcp/registry/smithery-readiness-contract.md",
   "dependencies": [
     "mcp_server_registry_submission_20260516",
@@ -24,8 +24,8 @@
     "contracts/mcp/registry/smithery/accepted-release-20260525.json",
     "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb"
   ],
-  "publication_status": "published-stdio-bundle-public-api-cache-pending",
+  "publication_status": "published-stdio-bundle-public-api-verified-search-runtime-not-claimed",
   "created_at": "2026-05-17T05:34:46Z",
-  "updated_at": "2026-05-25T23:28:00+10:00",
-  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery. Latest stdio MCPB release is accepted; public registry API cache propagation remains pending."
+  "updated_at": "2026-05-26T01:41:21+10:00",
+  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery. Latest stdio MCPB release is accepted and public API discovery is verified; search indexing and hosted runtime are not claimed."
 }

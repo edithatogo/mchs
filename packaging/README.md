@@ -100,6 +100,9 @@ and port definitions without pushing anything upstream.
 - `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing`
   passed with Conan 2.28.1 on macOS armv8/apple-clang 21 and packaged the
   shared `.dylib` variant.
+- The ConanCenter fork branch includes commit `0e7d9052`, which changes the C
+  smoke test pointer comparison from `0` to `NULL`; local static and shared
+  Conan validations passed after mirroring that change.
 - `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
   passed for `nwau-c-abi:arm64-osx@0.1.0` using the dedicated `source-r2`
   archive, installing header, release/debug static libraries, generated CMake

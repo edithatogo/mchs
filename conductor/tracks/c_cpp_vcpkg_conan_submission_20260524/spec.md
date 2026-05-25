@@ -62,6 +62,7 @@ Remaining blockers:
 - Dedicated source archive SHA-512: `eda962cc2f2569f87b8c21f600e3f5abce0c46f98bf587b410e42d72c5ffe73ec717d6bc3a78ffa4009cf6c0f07edd532a86ddf54cf1eb5199c555980ddddabc`
 - ConanCenter validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing` passed from the ConanCenter fork branch.
 - ConanCenter shared validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the ConanCenter fork branch.
+- ConanCenter review cleanup: fork commit `0e7d9052` changes the C smoke test pointer comparison from `0` to `NULL`; static and shared `conan create` validations passed after the change.
 - Local Conan validation: `conan create packaging/conan --build=missing` and `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the MCHS clean push clone.
 - vcpkg overlay validation: `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` passed for `arm64-osx` after the target-aware/linkage-aware port update, installing the generated CMake config target plus release/debug static libraries.
 - vcpkg fork update: commit `58ff86fe` adds Rust target-triple mapping, honors `VCPKG_LIBRARY_LINKAGE`, installs `nwau-c-abi::nwau-c-abi`, excludes Android, and regenerates version metadata.
