@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_tenant_cli_observation",
+  "asOf": "2026-05-25T22:30:00+10:00",
+  "status": "blocked_with_connector_definition_observed",
+  "captureMethod": "pac CLI authenticated tenant commands",
+  "operator": {
+    "user": "Dylan.Mordaunt@health.nsw.gov.au",
+    "authProfile": "nsw-dylan"
+  },
+  "targetEnvironment": {
+    "displayName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+    "uniqueName": "unq8b153003d5eaf01189f5002248942",
+    "activeInPac": true
+  },
+  "commands": [
+    {
+      "command": "pac env list",
+      "result": "target environment active"
+    },
+    {
+      "command": "pac connector list",
+      "result": "MCHS Service Boundary custom connector definition observed"
+    },
+    {
+      "command": "pac connection list",
+      "result": "generic connected Dataverse/Office/SharePoint/Teams/Planner connections observed; no mchs-service-boundary custom connector connection observed"
+    },
+    {
+      "command": "pac admin dlp-policy list",
+      "result": "tenant DLP policy inventory visible to the authenticated operator"
+    }
+  ],
+  "connectorObservation": {
+    "customConnectorDefinitionObserved": true,
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "name": "new_mchs-20service-20boundary",
+    "displayName": "MCHS Service Boundary",
+    "connectorType": "CustomConnector",
+    "matchesExpectedServiceBoundaryConnector": true,
+    "customConnectorConnectionObserved": false,
+    "observedCustomConnectorConnectionId": null
+  },
+  "connectionObservation": {
+    "connectedGenericApisObserved": [
+      "/providers/Microsoft.PowerApps/apis/shared_commondataservice",
+      "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "/providers/Microsoft.PowerApps/apis/shared_dataverse",
+      "/providers/Microsoft.PowerApps/apis/shared_excel",
+      "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness",
+      "/providers/Microsoft.PowerApps/apis/shared_office365",
+      "/providers/Microsoft.PowerApps/apis/shared_office365users",
+      "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness",
+      "/providers/Microsoft.PowerApps/apis/shared_planner",
+      "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "/providers/Microsoft.PowerApps/apis/shared_teams"
+    ],
+    "targetEnvironmentDataverseConnectionObserved": true,
+    "targetEnvironmentDataverseConnectionNames": [
+      "orgefc9aa3e.crm6.dynamics.com",
+      "orgefc9aa3e.crm6.dynamics.com (2)",
+      "orgefc9aa3e.crm6.dynamics.com (3)"
+    ],
+    "serviceBoundaryConnectionReferenceResolved": false,
+    "serviceBoundaryConnectionReferenceValue": null
+  },
+  "dlpObservation": {
+    "policyInventoryVisible": true,
+    "policyCountLowerBound": 100,
+    "targetEnvironmentPolicyIdentified": false,
+    "serviceBoundaryConnectorPolicyIdentified": false,
+    "monitoringExportCaptured": false
+  },
+  "flowObservation": {
+    "pacFlowCommandAvailable": false,
+    "flowInventoryCaptured": false,
+    "flowRunEvidenceCaptured": false,
+    "requiredFlowRunFieldsCaptured": false
+  },
+  "remainingBlockers": [
+    "service-boundary HTTPS endpoint/base URL is still not recorded",
+    "mchs_service_boundary connection reference value is still not bound to an observed custom connector connection",
+    "Power Automate flow IDs and run URLs are still not captured",
+    "Power App runtime execution is still not proven after app-player authentication",
+    "DLP policy inventory is visible, but the target policy/connector policy and monitoring export are not captured"
+  ],
+  "claimBoundary": {
+    "targetEnvironmentAccessConfirmed": true,
+    "customConnectorDefinitionObserved": true,
+    "customConnectorConnectionObserved": false,
+    "serviceBoundaryEndpointConfigured": false,
+    "serviceBoundaryExecutionObserved": false,
+    "flowSmokePassed": false,
+    "dlpCompatible": false,
+    "monitoringOperational": false,
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}

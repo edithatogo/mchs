@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "evidenceType": "power_platform_remaining_blockers",
-  "asOf": "2026-05-24",
+  "asOf": "2026-05-25",
   "status": "blocked_with_remaining_blockers",
   "generatedFrom": {
     "repoHealthScorecard": "power-platform/repository/repo-health-scorecard.json",
@@ -21,7 +21,8 @@
       "supportingEvidence": [
         "power-platform/evidence/connection-reference-evidence-template.json",
         "power-platform/evidence/runtime-smoke-evidence-template.json",
-        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
+        "power-platform/evidence/tenant-cli-observation-20260525.json"
       ]
     },
     {
@@ -32,7 +33,8 @@
       "supportingEvidence": [
         "power-platform/evidence/flow-smoke-evidence-template.json",
         "power-platform/evidence/power-automate-flow-smoke-20260521.json",
-        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
+        "power-platform/evidence/tenant-cli-observation-20260525.json"
       ]
     },
     {
@@ -43,7 +45,8 @@
       "supportingEvidence": [
         "power-platform/evidence/live-service-boundary-smoke-20260521.json",
         "power-platform/evidence/runtime-smoke-evidence-template.json",
-        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
+        "power-platform/evidence/tenant-cli-observation-20260525.json"
       ]
     },
     {
@@ -63,6 +66,8 @@
     "This file records the current remaining blockers only.",
     "No external blocker is claimed to be resolved here.",
     "The blocker list is derived from the current hardBlockers entries in the repository scorecard.",
-    "The 2026-05-24 authenticated browser sweep confirms that the target tenant session exposes the documented MCHS app IDs, but does not expose a service-boundary connection, MCHS custom connector match, or MCHS flow run inventory sufficient to close the runtime blockers."
+    "The 2026-05-24 authenticated browser sweep confirms that the target tenant session exposes the documented MCHS app IDs, but does not expose a service-boundary connection, MCHS custom connector match, or MCHS flow run inventory sufficient to close the runtime blockers.",
+    "The 2026-05-25 PAC CLI observation confirms the target environment is active and the MCHS Service Boundary custom connector definition exists in Dataverse.",
+    "The same CLI observation did not find a live mchs-service-boundary custom connector connection, connection-reference value, flow run evidence, target DLP connector policy, monitoring export, or app runtime execution, so production readiness remains blocked."
   ]
 }
