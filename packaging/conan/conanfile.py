@@ -13,8 +13,17 @@ class NwauCAbiConan(ConanFile):
     description = "C ABI scaffold for MCHS/NWAU interoperability."
     topics = ("health-economics", "nwau", "c-abi", "rust")
     settings = "os", "arch", "compiler", "build_type"
-    exports_sources = "rust/*", "LICENSE"
     package_type = "library"
+
+    def export_sources(self):
+        repo_root = os.path.abspath(os.path.join(self.recipe_folder, "..", ".."))
+        copy(
+            self,
+            "*",
+            src=os.path.join(repo_root, "rust"),
+            dst=os.path.join(self.export_sources_folder, "rust"),
+        )
+        copy(self, "LICENSE", src=repo_root, dst=self.export_sources_folder)
 
     def build(self):
         self.run("cargo build --release --locked -p nwau-c-abi", cwd=os.path.join(self.source_folder, "rust"))

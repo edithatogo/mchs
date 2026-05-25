@@ -8,8 +8,8 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO edithatogo/mchs
-    REF v0.1.0
-    SHA512 0
+    REF 2f658d43be016116ae31b8bdccef9c0ab986fca5
+    SHA512 e3c533ac2bfdae49afd7da8a16cfe66d4a3dcf3d9f242015ff29540000e81f79c33df5ad1f92076538659b53429f2ba00e746f10d141d6cdcc0a8a291899eacd
     HEAD_REF master
 )
 
@@ -27,15 +27,18 @@ file(INSTALL
 if(VCPKG_TARGET_IS_WINDOWS)
     file(GLOB NWAU_LIBS
         "${SOURCE_PATH}/rust/target/release/*.lib"
+    )
+    file(GLOB NWAU_DLLS
         "${SOURCE_PATH}/rust/target/release/*.dll"
     )
+    file(INSTALL ${NWAU_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
+    file(INSTALL ${NWAU_DLLS} DESTINATION "${CURRENT_PACKAGES_DIR}/bin")
 else()
     file(GLOB NWAU_LIBS
         "${SOURCE_PATH}/rust/target/release/libnwau_c_abi.a"
         "${SOURCE_PATH}/rust/target/release/libnwau_c_abi.*.dylib"
         "${SOURCE_PATH}/rust/target/release/libnwau_c_abi.so"
     )
+    file(INSTALL ${NWAU_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
 endif()
-
-file(INSTALL ${NWAU_LIBS} DESTINATION "${CURRENT_PACKAGES_DIR}/lib")
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")
