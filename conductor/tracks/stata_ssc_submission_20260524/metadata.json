@@ -1,15 +1,15 @@
 {
   "track_id": "stata_ssc_submission_20260524",
   "type": "chore",
-  "status": "blocked",
+  "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-05-26T01:20:00Z",
   "description": "Stata SSC Submission: discover, prepare, submit, and evidence SSC / Stata package distribution publication for mchs-stata-interop.",
   "registry_id": "stata_ssc",
-  "current_status": "prepared_pending_ssc_submission_review",
+  "current_status": "submitted_pending_ssc_maintainer_review",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed and Stata runtime validation is not claimed.",
+  "blocker": "SSC submission email sent with the prepared mchs ado/help bundle; maintainer review and public SSC publication remain pending. Stata runtime validation is not claimed.",
   "publication_claimed": false,
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0-ssc.zip",
@@ -17,6 +17,7 @@
     "bundle_sha256": "ae0b0adf12aba71dc4e844282bbfcd88bd09b2fd2c2237f565cbc1cfe9d8f225",
     "bundle_contents": "mchs.ado, mchs.sthlp",
     "submission_email_draft": "conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md",
+    "submission_email_sent": "2026-05-26: Gmail sent message id 19e5ffd483ef5841 on thread 19e5ff9a74554b3a to baum@bc.edu with bindings/stata/mchs-stata-interop-0.1.0-ssc.zip attached",
     "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed"
   }
 }

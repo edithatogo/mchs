@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `mchs` (`mchs-stata-interop` bundle)
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/contracts/stata-interop-binding`
-- Current status: `prepared_pending_ado_package_review_and_ssc_submission`
+- Current status: `submitted_pending_ssc_maintainer_review`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No Stata executable is installed locally, so no ado runtime validation is claimed. The remaining blocker is external SSC maintainer submission and review.
+Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No Stata executable is installed locally, so no ado runtime validation is claimed. The SSC submission email has been sent with the prepared ado/help bundle. The remaining blocker is external SSC maintainer review and public archive publication.
 
 ## Preparation Evidence
 
@@ -35,7 +35,8 @@ Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No S
 - SSC package/install name: `mchs`
 - Submission draft: `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md`
 - Runtime note: no Stata executable is installed locally.
-- Remaining external blocker: SSC submission/review.
+- Submission evidence: Gmail sent message id `19e5ffd483ef5841` on thread `19e5ff9a74554b3a` to `baum@bc.edu` with `bindings/stata/mchs-stata-interop-0.1.0-ssc.zip` attached.
+- Remaining external blocker: SSC maintainer review and public archive publication.
 
 ## Acceptance Criteria
 
