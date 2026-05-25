@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-py`
 - Version candidate: `0.2.2`
 - Local surface: `microcosting_healthservices/pyproject.toml`
-- Current status: `submitted_pending_staged_recipes_review`
+- Current status: `submitted_checks_passing_pending_conda_forge_review`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The remaining blocker is external: rerun checks, conda-forge review, merge, and feedstock publication.
+Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The refreshed PR branch has linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks passing. The remaining blocker is external: conda-forge review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Preparation Evidence
 
@@ -34,7 +34,7 @@ Resolved locally and submitted upstream. A conda-forge recipe exists, its source
 - SHA256: `c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480`
 - Tooling note: `conda` is installed; `conda-build`, `boa`, and `rattler-build` are not installed locally.
 - Fixed lint feedback: added recipe maintainers, tests, build number, `license_file`, `setuptools` build backend, noarch Python minimum pins, `pypi.org` source URL, runtime dependencies, and entry points.
-- Remaining external blocker: staged-recipes rerun checks, review, merge, and feedstock publication.
+- Remaining external blocker: staged-recipes review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Submission Evidence
 

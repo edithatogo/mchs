@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T03:15:00+10:00",
+  "updated_at": "2026-05-26T04:00:00+10:00",
   "description": "conda-forge Feedstock Submission: discover, prepare, submit, and evidence conda-forge publication for nwau-py.",
   "registry_id": "conda_forge",
   "current_status": "submitted_branch_updated_checks_passed_pending_review",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Branch updated against upstream main again; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed; maintainer review/merge/feedstock publication pending.",
+  "blocker": "Branch updated against upstream main again; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed. Maintainer review, merge, feedstock creation, and public Anaconda package propagation remain pending.",
   "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
   "publication_claimed": false,
   "package_evidence": {
@@ -22,6 +22,6 @@
     "feedback_addressed_commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
     "feedback_addressed": "conda-forge-linter passed after adding recipe maintainers, tests, build number, license_file, setuptools build backend, noarch Python minimum pins, pypi.org source URL, runtime dependencies, and entry points.",
     "branch_update": "GitHub update-branch API accepted on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1; checks rerunning.",
-    "branch_update_20260526": "GitHub PR update-branch accepted; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed."
+    "branch_update_20260526": "GitHub PR update-branch accepted; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed after rerun."
   }
 }
