@@ -107,3 +107,25 @@ Cloudflare-cached to the old zero-tool bundle, and the CLI-reported
 legacy/runtime observations, but they no longer block stdio bundle publication
 or Smithery discovery because the public API, public page, and CLI connection
 smoke all passed.
+
+## Refreshed CLI Connection Smoke
+
+On 2026-05-26, Smithery authentication was rechecked for organization
+`org_01KNBP45KXPA0END8FASDT0PV1` and namespace `edithatogo`. A fresh
+connection smoke using the default published command first exposed a local
+machine issue: the shell resolved `python` to a conda interpreter with a
+mismatched `pydantic` / `pydantic_core` install. The same Smithery connection
+succeeded when the server was launched through the project environment:
+
+```bash
+smithery mcp add --id mchs-ci-smoke --namespace edithatogo --force -- uv run python -m nwau_py.mcp_server
+smithery tool list mchs-ci-smoke --namespace edithatogo --flat --limit 100
+smithery tool call mchs-ci-smoke mchs.list_calculators '{"year":"2026"}' --namespace edithatogo
+```
+
+The tool list returned all six MCHS tools, and the tool call succeeded with the
+expected empty calculator list payload for 2026. `smithery mcp search mchs
+--json` still returned unrelated results and did not include `edithatogo/mchs`,
+so search indexing remains the only Smithery discovery caveat. Public API
+discovery and direct CLI connection smoke remain the authoritative publication
+evidence for the stdio bundle.
