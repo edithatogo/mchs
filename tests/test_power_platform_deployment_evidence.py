@@ -353,8 +353,7 @@ def test_power_platform_operational_evidence_contracts_are_precise():
         == "power_platform_tenant_cli_observation"
     )
     assert (
-        tenant_cli_observation["status"]
-        == "blocked_with_connector_definition_observed"
+        tenant_cli_observation["status"] == "blocked_with_connector_definition_observed"
     )
     assert tenant_cli_observation["targetEnvironment"]["environmentId"] == (
         "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
@@ -391,9 +390,7 @@ def test_power_platform_operational_evidence_contracts_are_precise():
         tenant_cli_observation["dlpObservation"]["targetEnvironmentPolicyIdentified"]
         is False
     )
-    assert (
-        tenant_cli_observation["flowObservation"]["flowRunEvidenceCaptured"] is False
-    )
+    assert tenant_cli_observation["flowObservation"]["flowRunEvidenceCaptured"] is False
     assert tenant_cli_observation["claimBoundary"] == {
         "targetEnvironmentAccessConfirmed": True,
         "customConnectorDefinitionObserved": True,
