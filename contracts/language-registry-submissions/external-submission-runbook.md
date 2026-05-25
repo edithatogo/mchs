@@ -134,4 +134,6 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Dedicated source archive: `https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
 - Local validation: Conan `conan create packaging/conan --build=missing` passed against the dedicated archive; vcpkg overlay install passed for `nwau-c-abi:arm64-osx@0.1.0` with release/debug libraries, usage text, and copyright installed.
-- Required submission steps: replace draft vcpkg version `git-tree` metadata during upstream submission, adapt ConanCenter recipe layout if requested, then submit upstream PR/review workflows.
+- vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
+- ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
+- Required submission steps: wait for upstream vcpkg and ConanCenter review/merge workflows.

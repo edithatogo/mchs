@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T01:20:00Z",
+  "updated_at": "2026-05-26T01:45:00Z",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "archive_based_conan_and_vcpkg_validated_pending_upstream_prs",
+  "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Archive-based Conan and vcpkg overlay validations pass locally; upstream vcpkg and ConanCenter PR/review workflows remain pending, including replacing draft vcpkg git-tree metadata in the upstream registry checkout.",
+  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; upstream review/merge remain pending before publication can be claimed.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -26,10 +26,13 @@
     "vcpkg_version_metadata": "microcosting_healthservices/packaging/vcpkg/versions/n-/nwau-c-abi.json",
     "conan_validation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 using source-r2 archive and CMake test_package.",
     "source_archive_bytes": 9328,
-    "vcpkg_validation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx, installing header, release/debug libraries, usage text, and copyright."
+    "vcpkg_validation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx, installing header, release/debug libraries, usage text, and copyright.",
+    "vcpkg_pr": "https://github.com/microsoft/vcpkg/pull/51965",
+    "conan_center_pr": "https://github.com/conan-io/conan-center-index/pull/30262",
+    "conan_center_validation": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation."
   },
   "repo_side_readiness_blockers": {
-    "vcpkg_upstream_metadata": "Replace draft git-tree placeholder in packaging/vcpkg/versions/n-/nwau-c-abi.json during upstream vcpkg PR preparation.",
-    "upstream_review": "Submit upstream vcpkg and ConanCenter PRs and wait for registry review/merge before claiming publication."
-  }
+    "upstream_review": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication."
+  },
+  "submission_url": "https://github.com/microsoft/vcpkg/pull/51965"
 }
