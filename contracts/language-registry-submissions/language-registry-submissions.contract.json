@@ -164,45 +164,40 @@
             "title": "Julia General Registry Submission",
             "ecosystem": "Julia",
             "registry": "General registry",
-            "package": "NwauCore",
+            "package": "NationalWeightedActivityUnitWrapper",
             "version": "0.1.0",
-            "local_surface": "julia-binding/Project.toml",
-            "current_status": "submitted_pending_original_review_comment_noblock_clearance",
+            "local_surface": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/Project.toml",
+            "current_status": "submitted_pending_general_automerge_waiting_period",
             "track": "julia_general_registry_submission_20260524",
-            "submission_url": "https://github.com/JuliaRegistries/General/pull/156236",
-            "blocker": "Julia General checks pass, but AutoMerge still treats the original reviewer comment as blocking because that comment lacks [noblock]; a follow-up [noblock] clarification was posted asking the reviewer to clear or confirm.",
+            "submission_url": "https://github.com/JuliaRegistries/General/pull/156254",
+            "blocker": "Corrected NationalWeightedActivityUnitWrapper registration is open in Julia General; checks/waiting-period/automerge remain external, with the earliest automerge window around 2026-05-28T15:28:00Z.",
             "localReadinessResolved": true,
             "preparationEvidence": {
-                "discovery": "https://juliahub.com/api/packages/NwauCore returned 404 Not Found.",
-                "testCommand": "julia --project=julia-binding -e 'using Pkg; Pkg.instantiate(); Pkg.test()'",
-                "testResult": "NwauCore tests passed with 2 passing testsets.",
-                "remainingExternalBlocker": "General registry merge and public registry propagation remain pending. If reviewers require the registration payload itself to include the README update, a new tag/version or re-registration flow will be needed.",
-                "repository": "https://github.com/edithatogo/NwauCore.jl",
+                "discovery": "Earlier NWAUJulia, NWAU, and NwauCore registration attempts were superseded after reviewer feedback that NWAU/Core naming was misleading.",
+                "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
+                "projectToml": "name = \"NationalWeightedActivityUnitWrapper\", uuid = \"58dad789-f56a-4ab3-a66f-c15139bf9cbe\", version = \"0.1.0\".",
                 "tag": "v0.1.0",
+                "tagCommit": "56ddec5",
                 "license": "MIT",
-                "automergeFeedbackAddressed": "Original PR feedback on package name, repository URL, and top-level package license was addressed by renaming to NwauCore, moving the public repository to NwauCore.jl, adding an MIT license, and moving tag v0.1.0 to the corrected commit."
+                "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
+                "remainingExternalBlocker": "General registry checks, mandatory waiting period, and AutoMerge/maintainer processing remain pending."
             },
             "submissionEvidence": {
                 "type": "general_registry_pull_request",
-                "url": "https://github.com/JuliaRegistries/General/pull/156236",
-                "repository": "https://github.com/edithatogo/NwauCore.jl",
+                "url": "https://github.com/JuliaRegistries/General/pull/156254",
+                "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "tag": "v0.1.0",
-                "commit": "99da36f0b417fe89060d6dbc649783265303d563",
-                "state": "open_feedback_answered_pending_registry_review_or_automerge",
-                "triggerIssue": "https://github.com/edithatogo/NwauCore.jl/issues/1",
-                "checks": "Registry consistency checks for Julia 1.3, 1.6, 1.8, 1.9, 1.10, 1.11, and 1.12 passed; treecheck succeeded; initial automerge/decision passed, but human review feedback is now pending.",
-                "supersedesPr": "https://github.com/JuliaRegistries/General/pull/156235",
-                "priorFeedbackPr": "https://github.com/JuliaRegistries/General/pull/156200",
-                "feedback": "AutoMerge feedback on previous PRs was addressed before the replacement submission. Current reviewer feedback on README purpose/usage and NWAU/Core naming was answered with a [noblock] comment after adding README documentation to the package repo.",
-                "readmeUpdateCommit": "f42f440",
-                "reviewResponse": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4534757948",
-                "releaseNotesComment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533258242",
-                "registratorUpdatedComment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533259247",
-                "tagBotWorkflow": "https://github.com/edithatogo/NwauCore.jl/blob/main/.github/workflows/TagBot.yml",
-                "tagBotCommit": "10bb54102537eda42887266550f55a0941a95ad8",
-                "followUpReviewComment": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535094697",
-                "remainingBlocker": "Original reviewer comment must be edited to include [noblock], resolved by reviewer, or otherwise cleared for AutoMerge.",
-                "latestPoll": "2026-05-26: checks passed/skipped; PR open and mergeable, but label AutoMerge: last run blocked by comment remains because the original reviewer comment still lacks [noblock]."
+                "commit": "56ddec5",
+                "state": "open_pending_checks_waiting_period_or_automerge",
+                "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
+                "supersededPrs": [
+                    "https://github.com/JuliaRegistries/General/pull/156200",
+                    "https://github.com/JuliaRegistries/General/pull/156235",
+                    "https://github.com/JuliaRegistries/General/pull/156236"
+                ],
+                "reviewResponse": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535308690",
+                "earliestAutomergeWindow": "2026-05-28T15:28:00Z",
+                "remainingBlocker": "External Julia General waiting period, checks, and AutoMerge/maintainer processing."
             }
         },
         {
@@ -423,10 +418,10 @@
             "package": "mchs-matlab-interop",
             "version": "0.1.0",
             "local_surface": "contracts/matlab-interop-binding",
-            "current_status": "prepared_pending_file_exchange_upload",
+            "current_status": "release_asset_prepared_pending_file_exchange_upload_review",
             "track": "matlab_file_exchange_submission_20260524",
             "submission_url": null,
-            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; repo-side source, contract, and bundle artifacts are present, but MATLAB/Octave runtime validation is not claimed.",
+            "blocker": "GitHub release asset is published for File Exchange linking, but authenticated MathWorks File Exchange upload/linking and review remain external.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
@@ -437,7 +432,16 @@
                 "bundleContents": "mchs/README.md, mchs/validateInput.m, mchs/importResultTable.m, mchs/invokeCli.m, examples/cli_invocation_demo.m, examples/file_import_demo.m, README.md, matlab-interop-notes.md, file-exchange-submission.json",
                 "tooling": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and File Exchange bundle are present; MATLAB runtime validation is not claimed because MATLAB/Octave are unavailable locally.",
-                "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow."
+                "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow.",
+                "githubReleaseAsset": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0"
+            },
+            "submissionEvidence": {
+                "type": "github_release_asset_preparation",
+                "releaseUrl": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0",
+                "asset": "mchs-matlab-interop-0.1.0.zip",
+                "assetUrl": "https://github.com/edithatogo/mchs/releases/download/language-interop-v0.1.0/mchs-matlab-interop-0.1.0.zip",
+                "sha256": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c",
+                "state": "stable_release_asset_available_pending_mathworks_file_exchange_submission"
             }
         },
         {
@@ -448,10 +452,10 @@
             "package": "mchs-stata-interop",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
-            "current_status": "prepared_pending_ssc_submission_review",
+            "current_status": "release_asset_prepared_pending_ssc_email_review",
             "track": "stata_ssc_submission_20260524",
             "submission_url": null,
-            "blocker": "SSC distribution requires maintainer submission/review; repo-side ado/help/pkg source, contract, and bundle artifacts are present, but Stata runtime validation is not claimed.",
+            "blocker": "GitHub release asset is published for a stable SSC submission bundle, but SSC maintainer email submission/review remains external.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
@@ -462,7 +466,16 @@
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and SSC bundle are present; ado runtime validation is not claimed because Stata is unavailable locally.",
-                "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed."
+                "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed.",
+                "githubReleaseAsset": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0"
+            },
+            "submissionEvidence": {
+                "type": "github_release_asset_preparation",
+                "releaseUrl": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0",
+                "asset": "mchs-stata-interop-0.1.0.zip",
+                "assetUrl": "https://github.com/edithatogo/mchs/releases/download/language-interop-v0.1.0/mchs-stata-interop-0.1.0.zip",
+                "sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
+                "state": "stable_release_asset_available_pending_ssc_submission_email"
             }
         },
         {
