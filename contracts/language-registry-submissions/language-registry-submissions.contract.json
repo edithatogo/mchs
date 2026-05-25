@@ -166,21 +166,24 @@
             "registry": "General registry",
             "package": "NationalWeightedActivityUnitWrapper",
             "version": "0.1.0",
-            "local_surface": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
-            "current_status": "replacement_registration_submitted_pending_general_checks_review_and_automerge_wait",
+            "local_surface": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/Project.toml",
+            "current_status": "submitted_pending_general_automerge_waiting_period",
             "track": "julia_general_registry_submission_20260524",
             "submission_url": "https://github.com/JuliaRegistries/General/pull/156254",
-            "blocker": "NwauCore registration was abandoned after General reviewer naming feedback; replacement NationalWeightedActivityUnitWrapper PR is open with checks running and AutoMerge stopwatch/review pending.",
+            "blocker": "Corrected NationalWeightedActivityUnitWrapper registration is open in Julia General; checks/waiting-period/automerge remain external, with the earliest automerge window around 2026-05-28T15:28:00Z.",
             "localReadinessResolved": true,
             "preparationEvidence": {
-                "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper returned 404 Not Found before General merge.",
+                "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper returned 404 Not Found before General merge; earlier NWAUJulia, NWAU, and NwauCore registration attempts were superseded after reviewer feedback that NWAU/Core naming was misleading.",
                 "testCommand": "julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'",
                 "testResult": "NationalWeightedActivityUnitWrapper tests passed with 2 passing testsets.",
-                "remainingExternalBlocker": "General checks/review, AutoMerge waiting period, merge, and public registry propagation remain pending.",
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
+                "projectToml": "name = \"NationalWeightedActivityUnitWrapper\", uuid = \"58dad789-f56a-4ab3-a66f-c15139bf9cbe\", version = \"0.1.0\".",
                 "tag": "v0.1.0",
+                "tagCommit": "56ddec5ae29513e80717d4625f82c024a211c949",
                 "license": "MIT",
-                "automergeFeedbackAddressed": "General reviewers said NwauCore/Core naming was misleading and suggested NationalWeightedActivityUnitWrapper; replacement public repo and v0.1.0 tag were created and Registrator opened PR #156254."
+                "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
+                "automergeFeedbackAddressed": "General reviewers said NwauCore/Core naming was misleading and suggested NationalWeightedActivityUnitWrapper; replacement public repo and v0.1.0 tag were created and Registrator opened PR #156254.",
+                "remainingExternalBlocker": "General registry checks, mandatory waiting period, and AutoMerge/maintainer processing remain pending."
             },
             "submissionEvidence": {
                 "type": "general_registry_pull_request",
@@ -188,18 +191,20 @@
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "tag": "v0.1.0",
                 "commit": "56ddec5ae29513e80717d4625f82c024a211c949",
-                "state": "open_checks_running_automerge_stopwatch_waiting",
+                "state": "open_pending_checks_waiting_period_or_automerge",
                 "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
-                "checks": "General PR checks are running; AutoMerge stopwatch is waiting.",
-                "supersedesPr": "https://github.com/JuliaRegistries/General/pull/156236",
-                "priorFeedbackPr": "https://github.com/JuliaRegistries/General/pull/156200",
-                "feedback": "Reviewer feedback on NwauCore/Core naming was accepted; replacement package uses the descriptive NationalWeightedActivityUnitWrapper name.",
+                "checks": "Treecheck and registry consistency checks were in progress/passing; AutoMerge stopwatch is waiting.",
+                "supersededPrs": [
+                    "https://github.com/JuliaRegistries/General/pull/156200",
+                    "https://github.com/JuliaRegistries/General/pull/156235",
+                    "https://github.com/JuliaRegistries/General/pull/156236"
+                ],
                 "reviewResponse": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535308690",
                 "releaseNotesComment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457",
                 "registratorUpdatedComment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535378120",
                 "tagBotWorkflow": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/.github/workflows/TagBot.yml",
-                "followUpReviewComment": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535329944",
-                "remainingBlocker": "General checks/review, AutoMerge waiting period, merge, and public registry propagation.",
+                "earliestAutomergeWindow": "2026-05-28T15:28:00Z",
+                "remainingBlocker": "External Julia General waiting period, checks, and AutoMerge/maintainer processing.",
                 "latestPoll": "2026-05-26: replacement General PR #156254 open; checks running and AutoMerge stopwatch waiting."
             }
         },
@@ -421,10 +426,10 @@
             "package": "mchs-matlab-interop",
             "version": "0.1.0",
             "local_surface": "contracts/matlab-interop-binding",
-            "current_status": "prepared_pending_file_exchange_upload",
+            "current_status": "release_asset_prepared_pending_file_exchange_upload_review",
             "track": "matlab_file_exchange_submission_20260524",
             "submission_url": null,
-            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; repo-side source, contract, and bundle artifacts are present, but MATLAB/Octave runtime validation is not claimed.",
+            "blocker": "GitHub release asset is published for File Exchange linking, but authenticated MathWorks File Exchange upload/linking and review remain external.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
@@ -435,7 +440,16 @@
                 "bundleContents": "mchs/README.md, mchs/validateInput.m, mchs/importResultTable.m, mchs/invokeCli.m, examples/cli_invocation_demo.m, examples/file_import_demo.m, README.md, matlab-interop-notes.md, file-exchange-submission.json",
                 "tooling": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and File Exchange bundle are present; MATLAB runtime validation is not claimed because MATLAB/Octave are unavailable locally.",
-                "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow."
+                "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow.",
+                "githubReleaseAsset": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0"
+            },
+            "submissionEvidence": {
+                "type": "github_release_asset_preparation",
+                "releaseUrl": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0",
+                "asset": "mchs-matlab-interop-0.1.0.zip",
+                "assetUrl": "https://github.com/edithatogo/mchs/releases/download/language-interop-v0.1.0/mchs-matlab-interop-0.1.0.zip",
+                "sha256": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c",
+                "state": "stable_release_asset_available_pending_mathworks_file_exchange_submission"
             }
         },
         {
@@ -446,10 +460,10 @@
             "package": "mchs-stata-interop",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
-            "current_status": "prepared_pending_ssc_submission_review",
+            "current_status": "release_asset_prepared_pending_ssc_email_review",
             "track": "stata_ssc_submission_20260524",
             "submission_url": null,
-            "blocker": "SSC distribution requires maintainer submission/review; repo-side ado/help/pkg source, contract, and bundle artifacts are present, but Stata runtime validation is not claimed.",
+            "blocker": "GitHub release asset is published for a stable SSC submission bundle, but SSC maintainer email submission/review remains external.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
@@ -460,7 +474,16 @@
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and SSC bundle are present; ado runtime validation is not claimed because Stata is unavailable locally.",
-                "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed."
+                "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed.",
+                "githubReleaseAsset": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0"
+            },
+            "submissionEvidence": {
+                "type": "github_release_asset_preparation",
+                "releaseUrl": "https://github.com/edithatogo/mchs/releases/tag/language-interop-v0.1.0",
+                "asset": "mchs-stata-interop-0.1.0.zip",
+                "assetUrl": "https://github.com/edithatogo/mchs/releases/download/language-interop-v0.1.0/mchs-stata-interop-0.1.0.zip",
+                "sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
+                "state": "stable_release_asset_available_pending_ssc_submission_email"
             }
         },
         {
@@ -508,13 +531,15 @@
                 "vcpkgVersionMetadataDraft": "packaging/vcpkg/versions/baseline.json and packaging/vcpkg/versions/n-/nwau-c-abi.json exist as draft registry metadata with placeholder git-tree pending upstream vcpkg PR preparation.",
                 "conanSourceStrategy": "conandata.yml points at the dedicated source-r2 archive and the recipe uses conan.tools.files.get(strip_root=True).",
                 "conanArchiveValidation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 using source-r2 archive and CMake test_package.",
-                "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0, installing header, release/debug static libraries, release/debug dylibs, usage text, and copyright.",
+                "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0 after the target-aware/linkage-aware port update, installing header, release/debug static libraries, generated CMake config, usage text, and copyright.",
                 "vcpkgPullRequest": "https://github.com/microsoft/vcpkg/pull/51965",
                 "conanCenterPullRequest": "https://github.com/conan-io/conan-center-index/pull/30262",
                 "conanCenterValidationEvidence": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
                 "conanCenterVariantFix": "Commit d8cbc1de on fork branch add-nwau-c-abi fixes ConanCenter review issues: Release/Debug Cargo profile mapping, shared/static package artifact separation, and portable test_package execution.",
                 "conanCenterSharedValidation": "conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing passed from the ConanCenter fork branch.",
                 "localConanVariantValidation": "conan create packaging/conan --build=missing and conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing passed from the MCHS clean push clone after mirroring the ConanCenter recipe fixes.",
+                "vcpkgPortQualityFix": "Commit 58ff86fe on fork branch add-nwau-c-abi adds Rust target-triple mapping, honors VCPKG_LIBRARY_LINKAGE, installs a nwau-c-abi::nwau-c-abi CMake config target, excludes Android, and regenerates vcpkg version metadata.",
+                "vcpkgMaintainerGuidanceRequest": "Technical comment posted at https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4535415243 asking maintainers whether external cargo-on-PATH is acceptable or whether the port should wait for vcpkg-managed Rust toolchain infrastructure.",
                 "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
                 "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action."
             },
