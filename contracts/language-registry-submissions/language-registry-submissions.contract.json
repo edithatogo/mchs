@@ -482,7 +482,7 @@
             "current_status": "vcpkg_and_conancenter_prs_submitted_pending_upstream_review",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": "https://github.com/microsoft/vcpkg/pull/51965",
-            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed. vcpkg is additionally blocked by missing Cargo in CI and no first-class vcpkg Rust/Cargo acquisition helper; Microsoft CLA acceptance remains user/legal action only.",
+            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed. vcpkg is additionally blocked by missing Cargo in CI and Microsoft CLA acceptance; ConanCenter is now blocked by CLA acceptance and maintainer job scheduling.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
