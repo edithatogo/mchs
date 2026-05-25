@@ -472,7 +472,7 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "vcpkg_overlay_attempted_source_fetch_stalled_pending_retry"
+            "current_status": "vcpkg_overlay_attempted_source_fetch_stalled_pending_retry",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
             "blocker": "Conan recipe and test_package validate locally with Conan 2.28.1; vcpkg overlay validation is blocked at source archive download/fetch in this environment; upstream vcpkg version metadata, ConanCenter submission layout, and external PR/review workflows remain pending.",
