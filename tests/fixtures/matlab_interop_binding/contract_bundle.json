@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "binding_id": "matlab_interop_binding_20260513",
+  "surface": "matlab",
+  "initial_strategy": "file-import and cli-invocation interop",
+  "fallback_strategy": "mat-exchange and c-abi-mex boundary",
+  "formula_logic_location": "rust core",
+  "matlab_module_status": "adapter-ready",
+  "diagnostics": {
+    "format": "json",
+    "includes": [
+      "contract_id",
+      "fixture_id",
+      "validation_status",
+      "strategy",
+      "fallback"
+    ]
+  },
+  "provenance": {
+    "checksum_algorithm": "sha256",
+    "preserve_fields": [
+      "source_basis",
+      "fixture_id",
+      "notes"
+    ]
+  },
+  "matlab_module": {
+    "status": "adapter-ready",
+    "release_gate": "toolbox publication, platform parity, and audience owner gates still deferred"
+  }
+}

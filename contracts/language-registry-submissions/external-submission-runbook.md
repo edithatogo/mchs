@@ -115,20 +115,14 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 ### MATLAB File Exchange
 
 - Package: `mchs-matlab-interop@0.1.0`
-- Local status: not repo-ready. The MATLAB source tree and
-  `bindings/matlab/mchs-matlab-interop-0.1.0.zip` artifact are not present in
-  this checkout.
-- Required step: add the MATLAB package source and build artifact, then use a
-  MathWorks account upload and File Exchange review.
+- Local status: repo-ready for source/artifact preparation. The MATLAB source tree, contract surface, examples, and `bindings/matlab/mchs-matlab-interop-0.1.0.zip` bundle are present; MATLAB/Octave runtime validation is not claimed in this environment.
+- Required step: use a MathWorks account to upload the prepared bundle and complete File Exchange review.
 
 ### Stata SSC
 
 - Package: `mchs-stata-interop@0.1.0`
-- Local status: not repo-ready. The Stata source tree and
-  `bindings/stata/mchs-stata-interop-0.1.0.zip` artifact are not present in
-  this checkout.
-- Required step: add the Stata package source and release artifact, then submit
-  to the SSC maintainer workflow for review.
+- Local status: repo-ready for source/artifact preparation. The Stata ado/help/pkg source, contract surface, examples, and `bindings/stata/mchs-stata-interop-0.1.0.zip` bundle are present; Stata runtime validation is not claimed in this environment.
+- Required step: submit the prepared bundle to the SSC maintainer workflow for review.
 
 ### vcpkg / ConanCenter
 

@@ -1,0 +1,47 @@
+{
+  "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+  "entry_id": "matlab-interop-diagnostics-pass",
+  "entry_type": "diagnostic_record",
+  "diagnostics": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "contract_alignment",
+        "status": "pass",
+        "message": "MATLAB interop request and response fields align with the public calculator contract."
+      },
+      {
+        "id": "file_import_cli_primary",
+        "status": "pass",
+        "message": "File-import and CLI-invocation are the primary paths."
+      },
+      {
+        "id": "mat_exchange_mex_fallback",
+        "status": "pass",
+        "message": "MAT-exchange and C ABI MEX are declared as fallback paths."
+      },
+      {
+        "id": "fixture_gates_synthetic_only",
+        "status": "pass",
+        "message": "Committed fixtures stay synthetic and metadata only."
+      }
+    ],
+    "summary": {"passed": 4, "failed": 0, "blocked": 0},
+    "notes": "Synthetic diagnostics metadata only."
+  },
+  "provenance": {
+    "command": "matlab-interop validate-diagnostics-pass",
+    "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+    "source_manifest_path": "contracts/matlab-interop-binding/examples/diagnostics.pass.json",
+    "source_url": "https://example.invalid/contracts/matlab-interop-binding",
+    "retrieved_on": "2026-05-13",
+    "sha256": "synthetic-sha256-matlab-interop-diagnostics-pass",
+    "bytes": 1690,
+    "checksum_algorithm": "sha256"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic diagnostics pass example only."
+  }
+}
