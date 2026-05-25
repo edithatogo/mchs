@@ -16,7 +16,11 @@ required.
   dispatcher.
 - Static scanner fallback metadata is available at
   `/.well-known/mcp/server-card.json` when the HTTP adapter is hosted.
-- Smithery accepted the local stdio MCPB listing for `edithatogo/mchs`; a hosted public HTTPS Streamable HTTP endpoint is still not claimed.
+- Smithery accepted the local stdio MCPB listing for `edithatogo/mchs`; a
+  hosted public HTTPS Streamable HTTP endpoint is still not claimed.
+- The stdio MCPB path is complete once Smithery acceptance evidence is recorded.
+  The public HTTPS deliverables below still apply to URL-based Smithery
+  publication and hosted scanner workflows.
 
 ## Smithery Requirements Interpreted for MCHS
 
@@ -63,7 +67,9 @@ required.
 
 ## Acceptance Criteria
 
-- A Smithery listing or a public HTTPS Streamable HTTP endpoint exists and can be scanned, with any cache/propagation delay recorded explicitly.
+- A Smithery stdio MCPB listing exists, or a public HTTPS Streamable HTTP
+  endpoint exists and can be scanned, with any cache/propagation delay recorded
+  explicitly.
 - Smithery scan or static server-card metadata exposes the MCHS MCP capabilities
   accurately.
 - Authentication behavior is explicit and Smithery-compatible.

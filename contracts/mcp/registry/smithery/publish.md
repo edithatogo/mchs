@@ -27,8 +27,6 @@ Smithery accepted a local stdio MCPB bundle after authentication for namespace
 Release ID: 2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9
 MCP URL: https://mchs--edithatogo.run.tools
 Server Page: https://smithery.ai/servers/edithatogo/mchs
-Bundle SHA-256: `bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d`
-Evidence: `contracts/mcp/registry/smithery/accepted-release-20260525.json`
 ```
 
 The published bundle uses the Python MCPB runtime shape and explicit tool
@@ -36,4 +34,14 @@ The published bundle uses the Python MCPB runtime shape and explicit tool
 available for a future public HTTPS deployment, but Smithery publication is no
 longer blocked on hosting.
 
-As of 2026-05-25T23:28:00+10:00, Smithery accepted the refreshed MCPB release, but the unauthenticated public registry API still returned a Cloudflare-cached prior deployment. Do not claim public registry API propagation until a later observation shows deployment `2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9` or equivalent refreshed metadata.
+Bundle SHA-256:
+`bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d`
+
+Evidence:
+`contracts/mcp/registry/smithery/accepted-release-20260525.json`
+
+As of 2026-05-25T23:28:00+10:00, Smithery accepted the refreshed MCPB
+release, but the unauthenticated public registry API still returned a
+Cloudflare-cached prior deployment. Do not claim public registry API
+propagation until a later observation shows deployment
+`2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9` or equivalent refreshed metadata.

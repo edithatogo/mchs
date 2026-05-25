@@ -1,22 +1,22 @@
 {
-  "schemaVersion": 1,
-  "evidenceType": "smithery_mcpb_release_evidence",
-  "asOf": "2026-05-25T23:28:00+10:00",
-  "qualifiedName": "edithatogo/mchs",
+  "schema_version": 1,
+  "evidence_type": "smithery_mcpb_release_evidence",
+  "as_of": "2026-05-25T23:28:00+10:00",
+  "qualified_name": "edithatogo/mchs",
   "status": "accepted_registry_release_public_api_cache_pending",
-  "publishCommand": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
-  "acceptedRelease": {
-    "deploymentId": "2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9",
+  "publish_command": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
+  "accepted_release": {
+    "deployment_id": "2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9",
     "status": "SUCCESS",
-    "mcpUrl": "https://mchs--edithatogo.run.tools",
-    "statusUrl": "https://smithery.ai/servers/edithatogo/mchs/releases"
+    "mcp_url": "https://mchs--edithatogo.run.tools",
+    "status_url": "https://smithery.ai/servers/edithatogo/mchs/releases"
   },
   "bundle": {
     "path": "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb",
     "sha256": "bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d",
-    "manifestVersion": "0.4",
-    "toolCount": 6,
-    "toolNames": [
+    "manifest_version": "0.4",
+    "tool_count": 6,
+    "tool_names": [
       "mchs.list_calculators",
       "mchs.get_schema",
       "mchs.validate_input",
@@ -25,20 +25,20 @@
       "mchs.get_evidence"
     ]
   },
-  "publicRegistryObservation": {
+  "public_registry_observation": {
     "url": "https://registry.smithery.ai/servers/edithatogo/mchs",
-    "observedAt": "2026-05-25T23:28:00+10:00",
-    "httpCacheStatus": "HIT",
-    "cacheMaxAgeSeconds": 14400,
-    "stillReturnedDeploymentId": "200f2fd3-86c4-4122-b3bf-98abe5aa62f1",
-    "stillReturnedToolCount": 0,
-    "propagationComplete": false
+    "observed_at": "2026-05-25T23:28:00+10:00",
+    "http_cache_status": "HIT",
+    "cache_max_age_seconds": 14400,
+    "still_returned_deployment_id": "200f2fd3-86c4-4122-b3bf-98abe5aa62f1",
+    "still_returned_tool_count": 0,
+    "propagation_complete": false
   },
-  "claimBoundary": {
-    "smitheryPublishAccepted": true,
-    "publicRegistryApiUpdated": false,
-    "hostedStreamableHttpPublished": false,
-    "dockerCatalogPublished": false,
-    "allRegistryPublicationsCompleted": false
+  "claim_boundary": {
+    "smithery_publish_accepted": true,
+    "public_registry_api_updated": false,
+    "hosted_streamable_http_published": false,
+    "docker_catalog_published": false,
+    "all_registry_publications_completed": false
   }
 }
