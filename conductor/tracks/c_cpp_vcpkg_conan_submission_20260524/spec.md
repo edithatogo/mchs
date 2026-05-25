@@ -63,7 +63,8 @@ Remaining blockers:
 - ConanCenter validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing` passed from the ConanCenter fork branch.
 - ConanCenter shared validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the ConanCenter fork branch.
 - Local Conan validation: `conan create packaging/conan --build=missing` and `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the MCHS clean push clone.
-- vcpkg overlay validation: `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` passed for `arm64-osx`.
+- vcpkg overlay validation: `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` passed for `arm64-osx` after the target-aware/linkage-aware port update, installing the generated CMake config target plus release/debug static libraries.
+- vcpkg fork update: commit `58ff86fe` adds Rust target-triple mapping, honors `VCPKG_LIBRARY_LINKAGE`, installs `nwau-c-abi::nwau-c-abi`, excludes Android, and regenerates version metadata.
 - vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
 - Remaining external blocker: upstream review/merge and vcpkg Rust/Cargo

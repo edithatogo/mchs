@@ -138,5 +138,6 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
 - ConanCenter fork update: commit `d8cbc1de` fixes ConanCenter review risks for Cargo Release/Debug profile mapping, static/shared package separation, and portable `test_package` execution.
 - ConanCenter PR state: submitted and waiting on maintainer job-scheduler approval before upstream CI/publication can be claimed.
+- vcpkg fork update: commit `58ff86fe` adds Rust target-triple mapping, honors `VCPKG_LIBRARY_LINKAGE`, installs a `nwau-c-abi::nwau-c-abi` CMake config target, excludes Android, and regenerates vcpkg version metadata.
 - vcpkg PR state: submitted, but CI fails where `cargo` is unavailable; local investigation found no first-class vcpkg Rust/Cargo acquisition helper or Rust toolchain port.
 - Required submission steps: wait for upstream ConanCenter review/merge; resolve vcpkg Cargo/toolchain policy and Microsoft CLA legal acceptance before vcpkg publication can be claimed.

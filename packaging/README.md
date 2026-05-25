@@ -35,7 +35,9 @@ submission.
 - Current vcpkg and Conan files are local readiness scaffolds mirrored from the
   submitted upstream PRs where practical.
 - The vcpkg scaffold now uses `vcpkg_download_distfile` against the dedicated
-  `nwau-c-abi-v0.1.0` source archive instead of a full repository archive.
+  `nwau-c-abi-v0.1.0` source archive instead of a full repository archive,
+  maps vcpkg triplets to Rust targets, honors `VCPKG_LIBRARY_LINKAGE`, and
+  installs a `nwau-c-abi::nwau-c-abi` CMake config target.
 - The Conan scaffold uses `conandata.yml`, an archive-based `source()` flow,
   a native `test_package`, Release/Debug Cargo profile mapping, and
   static/shared artifact separation.
@@ -100,8 +102,11 @@ and port definitions without pushing anything upstream.
   shared `.dylib` variant.
 - `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
   passed for `nwau-c-abi:arm64-osx@0.1.0` using the dedicated `source-r2`
-  archive, installing header, release/debug static libraries, release/debug
-  dylibs, usage text, and copyright.
+  archive, installing header, release/debug static libraries, generated CMake
+  config, usage text, and copyright.
+- vcpkg fork commit `58ff86fe` updates the upstream PR branch with target-aware
+  Cargo invocation, linkage-aware artifact installation, generated CMake config
+  target, Android exclusion, and regenerated version metadata.
 - Upstream PRs are open at `https://github.com/microsoft/vcpkg/pull/51965`
   and `https://github.com/conan-io/conan-center-index/pull/30262`; no upstream
   publication is claimed until those registry workflows accept/merge.
