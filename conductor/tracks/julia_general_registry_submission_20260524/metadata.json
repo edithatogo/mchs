@@ -1,0 +1,35 @@
+{
+  "track_id": "julia_general_registry_submission_20260524",
+  "type": "chore",
+  "status": "submitted",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-25T13:45:00Z",
+  "description": "Julia General Registry Submission: discover, prepare, submit, and evidence General registry publication for NwauCore.",
+  "registry_id": "julia_general",
+  "current_status": "submitted_pending_general_review_feedback",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Julia General PR is open; README/naming feedback was answered with a [noblock] comment after adding README documentation to the package repo, but the open registration still points at the original v0.1.0 tag payload.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "discovery_url": "https://juliahub.com/api/packages/NwauCore",
+    "discovery_result": "404 Not Found/no existing public package listing",
+    "test_command": "julia --project=microcosting_healthservices/julia-binding -e 'using Pkg; Pkg.test()'",
+    "test_result": "NwauCore tests passed with 2 passing testsets"
+  },
+  "submission_url": "https://github.com/JuliaRegistries/General/pull/156236",
+  "submission_evidence": {
+    "commit": "99da36f0b417fe89060d6dbc649783265303d563",
+    "release_notes_comment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533258242",
+    "registrator_updated_comment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533259247",
+    "supersedes_pr": "https://github.com/JuliaRegistries/General/pull/156235",
+    "prior_feedback_pr": "https://github.com/JuliaRegistries/General/pull/156200",
+    "feedback_addressed": "Renamed package to NwauCore, moved repository to NwauCore.jl, added MIT license, and moved tag v0.1.0 to the corrected commit.",
+    "tagbot_workflow": "https://github.com/edithatogo/NwauCore.jl/blob/main/.github/workflows/TagBot.yml",
+    "submission_state": "open_feedback_answered_pending_registry_review_or_automerge",
+    "review_feedback": "Reviewer requested a README description/usage example and clarification of the NWAU acronym/Core suffix naming.",
+    "readme_update_commit": "f42f440",
+    "review_response": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4534757948",
+    "remaining_payload_note": "The General registration PR still points at the original v0.1.0 tag commit; if reviewers require the README update in the registration payload, a new tag/version or re-registration flow is needed."
+  }
+}

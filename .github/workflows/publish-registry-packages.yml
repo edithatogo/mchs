@@ -1,0 +1,64 @@
+name: Publish registry packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      registry:
+        description: Registry to publish
+        required: true
+        type: choice
+        default: nuget
+        options:
+          - cratesio
+          - nuget
+
+permissions:
+  contents: read
+
+jobs:
+  publish-cratesio:
+    if: ${{ inputs.registry == 'cratesio' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Publish nwau-core to crates.io
+        working-directory: rust/crates/nwau-core
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish --locked
+
+  publish-nuget:
+    if: ${{ inputs.registry == 'nuget' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Pack Mchs.Bindings.DotNet
+        working-directory: bindings/dotnet
+        run: dotnet pack --configuration Release
+
+      - name: Push Mchs.Bindings.DotNet to NuGet
+        working-directory: bindings/dotnet
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          set -euo pipefail
+          nupkg="$(
+            find bin/Release -maxdepth 1 -type f -name 'Mchs.Bindings.DotNet.*.nupkg' \
+              ! -name '*.symbols.nupkg' | sort | tail -n 1
+          )"
+          dotnet nuget push "$nupkg" \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key "$NUGET_API_KEY" \
+            --skip-duplicate

@@ -1,0 +1,24 @@
+{
+  "track_id": "dotnet_nuget_registry_submission_20260524",
+  "type": "chore",
+  "status": "blocked",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-25T13:45:00Z",
+  "description": ".NET NuGet Registry Submission: discover, prepare, submit, and evidence NuGet publication for Mchs.Bindings.DotNet.",
+  "registry_id": "dotnet_nuget",
+  "current_status": "workflow_ready_pending_nuget_push",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Manual GitHub Actions publish workflow exists and NUGET_API_KEY is configured, but NuGet push has not yet been dispatched and no public NuGet publication is claimed.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "discovery_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json",
+    "discovery_result": "404 BlobNotFound/no existing public package listing",
+    "package_command": "dotnet pack --configuration Release",
+    "package_artifact": "microcosting_healthservices/bindings/dotnet/bin/Release/Mchs.Bindings.DotNet.0.1.0.nupkg",
+    "package_sha256": "e6195abe5c49780b640844da12fb3eec756a963db8d14570de6bcc7901ceb211",
+    "auth_probe": "NUGET_API_KEY environment variable is missing",
+    "github_secret": "NUGET_API_KEY exists as of 2026-05-25T13:34:49Z",
+    "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=nuget"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "track_id": "vscode_openvsx_registry_submission_20260524",
+  "type": "chore",
+  "status": "blocked",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-25T13:45:00Z",
+  "description": "VS Code/Open VSX Extension Submission: discover, prepare, submit, and evidence Open VSX / Visual Studio Marketplace publication for mchs-tools.",
+  "registry_id": "vscode_openvsx",
+  "current_status": "prepared_pending_publisher_agreements_tokens_and_vsix_publish",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Open VSX token creation is blocked until the Eclipse Foundation Open VSX Publisher Agreement is signed; Visual Studio Marketplace publishing is blocked by missing publisher/PAT access.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix",
+    "artifact_sha256": "0ceb6611ed31ada0ee2058aea0bae9826091d872ff765180508b055ba86cb12a",
+    "discovery_result": "Open VSX extension not found",
+    "credential_attempt": "Open VSX GitHub login succeeded, but access token creation was refused until an Eclipse Foundation Open VSX Publisher Agreement is signed. Visual Studio Marketplace publisher page for edithatogo returned 404 under the current Microsoft session."
+  }
+}
