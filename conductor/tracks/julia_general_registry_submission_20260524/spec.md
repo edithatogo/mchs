@@ -8,10 +8,10 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 - Ecosystem: `Julia`
 - Registry: `General registry`
-- Package candidate: `NwauCore`
+- Package candidate: `NationalWeightedActivityUnitWrapper`
 - Version candidate: `0.1.0`
-- Local surface: `microcosting_healthservices/julia-binding/Project.toml`
-- Current status: `submitted_pending_general_merge`
+- Local surface: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl`
+- Current status: `replacement_registration_submitted_pending_general_checks_review_and_automerge_wait`
 
 ## Functional Requirements
 
@@ -24,28 +24,29 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally and resubmitted to Registrator after AutoMerge feedback on the previous PRs. `Pkg.instantiate()` and `Pkg.test()` passed for `NwauCore v0.1.0`, a dedicated public repository exists at `https://github.com/edithatogo/NwauCore.jl`, tag `v0.1.0` points to corrected commit `99da36f0b417fe89060d6dbc649783265303d563`, and a Registrator trigger issue is open. Registry consistency and treecheck now pass on the replacement General PR; the remaining blocker is merge and public registry propagation.
+The earlier `NwauCore` registration was abandoned after Julia General reviewer feedback that the `Core` suffix and acronym-style package name were misleading for a thin wrapper. A replacement public package repository now exists at `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl`, tag `v0.1.0` points at commit `56ddec5ae29513e80717d4625f82c024a211c949`, `Pkg.instantiate()` and `Pkg.test()` passed, and Registrator opened replacement General PR `https://github.com/JuliaRegistries/General/pull/156254`. The remaining blocker is external: General checks/review, AutoMerge waiting period, merge, and public registry propagation.
 
 ## Preparation Evidence
 
-- Public registry discovery: `https://juliahub.com/api/packages/NwauCore` returned `404 Not Found`.
-- Test command: `julia --project=microcosting_healthservices/julia-binding -e 'using Pkg; Pkg.instantiate(); Pkg.test()'`
-- Test result: `NwauCore tests passed`
+- Public registry discovery: `https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper` returned `404 Not Found` before General merge.
+- Test command: `julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'` in `/tmp/NationalWeightedActivityUnitWrapper.jl`.
+- Test result: `NationalWeightedActivityUnitWrapper tests passed` with two passing testsets.
 - License: MIT license present in the Julia package top-level folder.
-- Feedback addressed: package name is `NwauCore`, public repository is `NwauCore.jl`, and tag `v0.1.0` was moved to the corrected commit.
-- Remaining external blocker: General AutoMerge new-package stopwatch/review.
+- Feedback addressed: reviewers on General PR `https://github.com/JuliaRegistries/General/pull/156236` said `NwauCore` / `Core` was misleading; replacement package uses the descriptive `NationalWeightedActivityUnitWrapper` name.
+- Remaining external blocker: General checks/review, AutoMerge new-package stopwatch, merge, and public registry propagation.
 
 ## Submission Evidence
 
-- Repository: `https://github.com/edithatogo/NwauCore.jl`
+- Repository: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl`
 - Tag: `v0.1.0`
-- Registrator trigger issue: `https://github.com/edithatogo/NwauCore.jl/issues/1`
-- General registry PR: `https://github.com/JuliaRegistries/General/pull/156236`
-- Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156200`, `https://github.com/JuliaRegistries/General/pull/156235`
-- State: open, mergeable, registry consistency and treecheck passing, AutoMerge approved; waiting for merge and public registry propagation.
-- Release notes comment: `https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533258242`
-- Registrator update confirmation: `https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533259247`
-- TagBot workflow: `https://github.com/edithatogo/NwauCore.jl/blob/main/.github/workflows/TagBot.yml`
+- Commit: `56ddec5ae29513e80717d4625f82c024a211c949`
+- Registrator trigger issue: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1`
+- Registrator confirmation: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535378120`
+- Release notes comment: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457`
+- General registry PR: `https://github.com/JuliaRegistries/General/pull/156254`
+- Superseded naming PR: `https://github.com/JuliaRegistries/General/pull/156236`
+- State: open; checks running and AutoMerge stopwatch/review pending. Publication is not claimed.
+- TagBot workflow: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/.github/workflows/TagBot.yml`
 
 ## Acceptance Criteria
 

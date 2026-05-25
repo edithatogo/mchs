@@ -173,13 +173,16 @@
             "blocker": "Corrected NationalWeightedActivityUnitWrapper registration is open in Julia General; checks/waiting-period/automerge remain external, with the earliest automerge window around 2026-05-28T15:28:00Z.",
             "localReadinessResolved": true,
             "preparationEvidence": {
-                "discovery": "Earlier NWAUJulia, NWAU, and NwauCore registration attempts were superseded after reviewer feedback that NWAU/Core naming was misleading.",
+                "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper returned 404 Not Found before General merge; earlier NWAUJulia, NWAU, and NwauCore registration attempts were superseded after reviewer feedback that NWAU/Core naming was misleading.",
+                "testCommand": "julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'",
+                "testResult": "NationalWeightedActivityUnitWrapper tests passed with 2 passing testsets.",
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "projectToml": "name = \"NationalWeightedActivityUnitWrapper\", uuid = \"58dad789-f56a-4ab3-a66f-c15139bf9cbe\", version = \"0.1.0\".",
                 "tag": "v0.1.0",
-                "tagCommit": "56ddec5",
+                "tagCommit": "56ddec5ae29513e80717d4625f82c024a211c949",
                 "license": "MIT",
                 "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
+                "automergeFeedbackAddressed": "General reviewers said NwauCore/Core naming was misleading and suggested NationalWeightedActivityUnitWrapper; replacement public repo and v0.1.0 tag were created and Registrator opened PR #156254.",
                 "remainingExternalBlocker": "General registry checks, mandatory waiting period, and AutoMerge/maintainer processing remain pending."
             },
             "submissionEvidence": {
@@ -187,17 +190,22 @@
                 "url": "https://github.com/JuliaRegistries/General/pull/156254",
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "tag": "v0.1.0",
-                "commit": "56ddec5",
+                "commit": "56ddec5ae29513e80717d4625f82c024a211c949",
                 "state": "open_pending_checks_waiting_period_or_automerge",
                 "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
+                "checks": "Treecheck and registry consistency checks were in progress/passing; AutoMerge stopwatch is waiting.",
                 "supersededPrs": [
                     "https://github.com/JuliaRegistries/General/pull/156200",
                     "https://github.com/JuliaRegistries/General/pull/156235",
                     "https://github.com/JuliaRegistries/General/pull/156236"
                 ],
                 "reviewResponse": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535308690",
+                "releaseNotesComment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457",
+                "registratorUpdatedComment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535378120",
+                "tagBotWorkflow": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/.github/workflows/TagBot.yml",
                 "earliestAutomergeWindow": "2026-05-28T15:28:00Z",
-                "remainingBlocker": "External Julia General waiting period, checks, and AutoMerge/maintainer processing."
+                "remainingBlocker": "External Julia General waiting period, checks, and AutoMerge/maintainer processing.",
+                "latestPoll": "2026-05-26: replacement General PR #156254 open; checks running and AutoMerge stopwatch waiting."
             }
         },
         {
