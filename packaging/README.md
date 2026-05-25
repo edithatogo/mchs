@@ -8,9 +8,10 @@ submission.
 - `nwau-core` is published on crates.io, so vcpkg and ConanCenter readiness
   can treat the Rust core as an external dependency rather than an unpublished
   local-only crate.
-- `nwau-c-abi` is not yet vcpkg or ConanCenter review-ready. Upstream registry
-  submissions require an immutable source archive, coherent version metadata,
-  consumer usage examples, and registry-native validation.
+- `nwau-c-abi` is locally validated for archive-based Conan and vcpkg overlay
+  packaging, but not yet published to vcpkg or ConanCenter.
+- Upstream registry submissions still require PR preparation, registry-native
+  version metadata, and maintainer review/merge.
 
 ## Version and source-tag policy
 
@@ -18,30 +19,33 @@ submission.
   constants, Rust ABI constants, release notes, and registry manifests must
   either match exactly or document package-version versus ABI-version
   semantics.
-- Prefer a dedicated immutable release tag for C ABI packaging, such as
-  `nwau-c-abi-v0.1.0`, after version alignment.
+- The current package and ABI version are aligned at `0.1.0`.
+- Generate the minimal source archive with
+  `packaging/scripts/build-nwau-c-abi-source-archive.sh 0.1.0 dist`.
 - The source archive must contain `LICENSE`, `rust/Cargo.toml`,
-  `rust/Cargo.lock`, `rust/crates/nwau-core`, `rust/crates/nwau-c-abi`, and
-  `rust/crates/nwau-c-abi/include/nwau_abi.h`.
+  `rust/Cargo.lock`, `rust/crates/nwau-core`, `rust/crates/nwau-c-abi`,
+  `rust/crates/nwau-py`, and `rust/crates/nwau-c-abi/include/nwau_abi.h`.
 - Record archive checksums required by downstream registries: SHA512 for vcpkg
   and Conan `conandata.yml` checksums for ConanCenter.
 
 ## Overlay-to-archive roadmap
 
 - Current vcpkg and Conan files are local readiness scaffolds.
-- The vcpkg scaffold uses `vcpkg_from_github` with an immutable repository
-  commit and SHA512; upstream submission still requires registry version files
-  and review in the vcpkg repository.
-- The Conan scaffold now uses `conandata.yml` and an archive-based `source()`
-  flow with a native `test_package`; mirror or adapt that layout in the
-  upstream ConanCenter index repository before submission.
-- Do not submit upstream until archive-based builds pass from clean registry
-  checkouts.
+- The vcpkg scaffold now uses `vcpkg_download_distfile` against the dedicated
+  `nwau-c-abi-v0.1.0` source archive instead of a full repository archive.
+- The Conan scaffold uses `conandata.yml`, an archive-based `source()` flow,
+  and a native `test_package`; mirror or adapt that layout in the upstream
+  ConanCenter index repository before submission.
+- Do not claim upstream registry publication until review/merge evidence exists.
 
 ## Local scope
 
 - `packaging/vcpkg/ports/nwau-c-abi/vcpkg.json`
+- `packaging/vcpkg/ports/nwau-c-abi/usage`
+- `packaging/vcpkg/versions/baseline.json`
+- `packaging/vcpkg/versions/n-/nwau-c-abi.json`
 - `packaging/conan/conanfile.py`
+- `packaging/scripts/build-nwau-c-abi-source-archive.sh`
 
 These remain local scaffolds for the `nwau-c-abi` C ABI package. The checked-in
 vcpkg and Conan files are draft readiness artifacts, not accepted upstream
@@ -49,30 +53,23 @@ registry recipes.
 
 ## Remaining external submission steps
 
-- The vcpkg port pins an immutable repository commit and archive hash; add
-  vcpkg registry version metadata in the upstream vcpkg repository when it is
-  ready for submission.
-- ConanCenter `test_package` harness now exists under
-  `packaging/conan/test_package`; mirror or adapt it in the upstream
-  ConanCenter index repository as required by reviewer policy.
-- vcpkg usage guidance now exists under `packaging/vcpkg/ports/nwau-c-abi/usage`; add a complete CMake/pkg-config consumer story before upstream submission.
-- Run the required local and CI validation against the published
-  `nwau-core` crate and the C ABI surface.
+- Draft vcpkg registry version metadata exists under `packaging/vcpkg/versions`;
+  replace the placeholder git tree with the upstream vcpkg tree hash during
+  submission.
+- ConanCenter `test_package` harness exists under `packaging/conan/test_package`;
+  mirror or adapt it in the upstream ConanCenter index repository as required
+  by reviewer policy.
+- vcpkg usage guidance exists under `packaging/vcpkg/ports/nwau-c-abi/usage`.
 - Submit upstream PRs to vcpkg and ConanCenter, then wait for review and
   registry acceptance.
 
 ## Local blockers
 
 - No crates.io publication blocker remains for `nwau-core`.
-- Align or explicitly document package-version versus ABI-version semantics.
-- Conan `conandata.yml` now records the immutable source archive SHA512 used by
-  the vcpkg draft port, and the recipe verifies that checksum during `source()`.
-- The native C/C++ consumer smoke test exists in `packaging/conan/test_package`;
-  execute it with Conan before submission.
-- Record clean archive-based vcpkg and Conan validation before upstream
-  submissions.
-- The remaining work is the missing upstream packaging submission flow and any
-  validation those registries require.
+- Conan `conandata.yml` points at the minimal immutable source archive and
+  records its SHA256.
+- Archive-based Conan and vcpkg overlay validations pass locally; upstream
+  submission still requires registry PR preparation and review.
 
 ## Local validation commands
 
@@ -86,8 +83,15 @@ and port definitions without pushing anything upstream.
 - vcpkg port:
   - `vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
 
-## Current validation blocker
+## Current validation evidence
 
-- `conan create packaging/conan --build=missing` passed with Conan 2.28.1 on macOS armv8/apple-clang 21, including the CMake consumer `test_package`.
-- vcpkg was bootstrapped in `/tmp/vcpkg` and reached ABI computation plus GitHub source archive download for `nwau-c-abi:arm64-osx`.
-- The vcpkg run did not reach compile/package validation because the GitHub archive download remained silent for several minutes and was terminated with a partial `.tar.gz.part` download present under `/tmp/vcpkg/downloads`.
+- `conan create packaging/conan --build=missing` passed with Conan 2.28.1 on
+  macOS armv8/apple-clang 21, including download from the dedicated `source-r2`
+  archive and the CMake consumer `test_package`.
+- `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
+  passed for `nwau-c-abi:arm64-osx@0.1.0` using the dedicated `source-r2`
+  archive, installing header, release/debug static libraries, release/debug
+  dylibs, usage text, and copyright.
+- The remaining work is upstream PR preparation/review, including replacing
+  draft vcpkg `git-tree` metadata with the value generated in the upstream
+  vcpkg registry checkout.

@@ -135,10 +135,9 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Package: `nwau-c-abi@0.1.0`
 - Draft vcpkg port: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json`
 - Draft vcpkg portfile: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/portfile.cmake`
+- Draft vcpkg version metadata: `microcosting_healthservices/packaging/vcpkg/versions/n-/nwau-c-abi.json`
 - Draft Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
+- Dedicated source archive: `https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
-- Required submission steps: complete vcpkg version files and ConanCenter
-  recipe packaging in the target registry repositories, then submit upstream
-  PR/review workflows.
-- Current blocker: no vcpkg/Conan PR opened because upstream registry
-  PR/review workflows still need to be prepared.
+- Local validation: Conan `conan create packaging/conan --build=missing` passed against the dedicated archive; vcpkg overlay install passed for `nwau-c-abi:arm64-osx@0.1.0` with release/debug libraries, usage text, and copyright installed.
+- Required submission steps: replace draft vcpkg version `git-tree` metadata during upstream submission, adapt ConanCenter recipe layout if requested, then submit upstream PR/review workflows.

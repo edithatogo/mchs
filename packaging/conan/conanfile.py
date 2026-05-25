@@ -1,10 +1,7 @@
-import hashlib
 import os
-import tarfile
-from typing import ClassVar
 
 from conan import ConanFile
-from conan.tools.files import copy, download
+from conan.tools.files import copy, get
 
 
 class NwauCAbiConan(ConanFile):
@@ -17,11 +14,8 @@ class NwauCAbiConan(ConanFile):
     description = "C ABI scaffold for MCHS/NWAU interoperability."
     topics = ("health-economics", "nwau", "c-abi", "rust")
     settings = "os", "arch", "compiler", "build_type"
-    options: ClassVar[dict[str, list[bool]]] = {
-        "shared": [True, False],
-        "fPIC": [True, False],
-    }
-    default_options: ClassVar[dict[str, bool]] = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
     package_type = "library"
 
     def config_options(self):
@@ -33,26 +27,11 @@ class NwauCAbiConan(ConanFile):
             self.options.rm_safe("fPIC")
 
     def source(self):
-        source_data = self.conan_data["sources"][self.version]
-        archive_path = os.path.join(self.source_folder, "source.tar.gz")
-        download(self, source_data["url"], archive_path)
-        with open(archive_path, "rb") as archive_file:
-            digest = hashlib.sha512(archive_file.read()).hexdigest()
-        if digest != source_data["sha512"]:
-            raise ValueError(
-                f"Archive SHA512 mismatch for {source_data['url']}: {digest}"
-            )
-        destination = os.path.abspath(self.source_folder)
-        with tarfile.open(archive_path, "r:gz") as archive:
-            for member in archive.getmembers():
-                path_parts = member.name.split("/", 1)
-                if len(path_parts) != 2 or not path_parts[1]:
-                    continue
-                member.name = path_parts[1]
-                target = os.path.abspath(os.path.join(destination, member.name))
-                if not target.startswith(destination + os.sep):
-                    raise ValueError(f"Unsafe archive path: {member.name}")
-                archive.extract(member, destination)
+        get(
+            self,
+            **self.conan_data["sources"][self.version],
+            strip_root=True,
+        )
 
     def build(self):
         self.run(

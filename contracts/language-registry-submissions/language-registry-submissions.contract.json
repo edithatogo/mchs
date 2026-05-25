@@ -307,7 +307,8 @@
                 "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
                 "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD.",
                 "workflowDryRunValidation": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run --console=plain succeeded without credentials after aligning Central Portal and signing properties.",
-                "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false."
+                "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
+                "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false."
             }
         },
         {
@@ -472,11 +473,11 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "vcpkg_overlay_attempted_source_fetch_stalled_pending_retry",
+            "current_status": "archive_based_conan_and_vcpkg_validated_pending_upstream_prs",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
-            "blocker": "Conan recipe and test_package validate locally with Conan 2.28.1; vcpkg overlay validation is blocked at source archive download/fetch in this environment; upstream vcpkg version metadata, ConanCenter submission layout, and external PR/review workflows remain pending.",
-            "localReadinessResolved": false,
+            "blocker": "Archive-based Conan and vcpkg overlay validations pass locally; upstream vcpkg and ConanCenter PR/review workflows remain pending, including replacing draft vcpkg git-tree metadata in the upstream registry checkout.",
+            "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
                 "conanDiscovery": "ConanCenter endpoint https://center2.conan.io/v1/ping returned HTTP 200; no authenticated package publication evidence was found.",
@@ -496,19 +497,24 @@
                 "vcpkgPortfilePin": "vcpkg portfile now pins an immutable source commit and real SHA512 instead of placeholder source metadata.",
                 "conanRecipeLayout": "Conan recipe now exports the repository rust tree and LICENSE so self.source_folder/rust is valid during build.",
                 "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f.",
-                "toolAvailability": "Conan 2.28.1 is installed through pipx and validated; vcpkg was bootstrapped under /tmp/vcpkg, but overlay validation did not reach build because source archive download stalled.",
+                "toolAvailability": "Conan 2.28.1 and vcpkg are available in this environment; archive-based Conan and vcpkg overlay validations passed on macOS armv8.",
                 "validationCommandDocumentation": "packaging/README.md records exact non-publishing validation commands for Conan and vcpkg once toolchains are available.",
                 "conanTestPackage": "packaging/conan/test_package contains a minimal CMake consumer harness for ConanCenter-style package validation.",
                 "conanValidation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 on macOS armv8/apple-clang 21, including CMakeDeps/CMakeToolchain test_package configure, build, link, and execution.",
-                "vcpkgValidationAttempt": "vcpkg was bootstrapped under /tmp/vcpkg and `vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` reached ABI computation/source download for arm64-osx; run was terminated after a long silent GitHub archive download with a partial .tar.gz.part file present, so no compile/package failure was observed."
+                "vcpkgValidationAttempt": "Earlier full-repo archive validation stalled; after switching to source-r2, `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` passed for arm64-osx.",
+                "dedicatedSourceArchive": "https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz",
+                "dedicatedSourceArchiveBytes": 9328,
+                "dedicatedSourceArchiveSha256": "e42c7948828a7ea8b581782817a342db577588d9398ba683b34c45ca49ef2bf1",
+                "dedicatedSourceArchiveSha512": "eda962cc2f2569f87b8c21f600e3f5abce0c46f98bf587b410e42d72c5ffe73ec717d6bc3a78ffa4009cf6c0f07edd532a86ddf54cf1eb5199c555980ddddabc",
+                "vcpkgSourceStrategy": "portfile uses vcpkg_download_distfile plus vcpkg_extract_source_archive against the dedicated source-r2 archive instead of full-repo vcpkg_from_github.",
+                "vcpkgVersionMetadataDraft": "packaging/vcpkg/versions/baseline.json and packaging/vcpkg/versions/n-/nwau-c-abi.json exist as draft registry metadata with placeholder git-tree pending upstream vcpkg PR preparation.",
+                "conanSourceStrategy": "conandata.yml points at the dedicated source-r2 archive and the recipe uses conan.tools.files.get(strip_root=True).",
+                "conanArchiveValidation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 using source-r2 archive and CMake test_package.",
+                "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0, installing header, release/debug static libraries, release/debug dylibs, usage text, and copyright."
             },
             "repoSideReadinessBlockers": {
-                "versionPolicy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
-                "sourceArchive": "vcpkg source archive download for the pinned repository commit stalled in this environment; retry or use a smaller dedicated C ABI source archive/tag before upstream submission.",
-                "vcpkg": "vcpkg REF/SHA512 and draft usage metadata exist; overlay install validation remains blocked at source archive download and upstream registry version metadata is not yet prepared.",
-                "conan": "Local ConanCenter-style test_package harness exists and conan create passed; adapt conandata/source layout as needed during ConanCenter review.",
-                "validation": "Conan create/test_package is validated locally; vcpkg overlay install validation reached source download but stalled before build.",
-                "toolValidation": "vcpkg CLI was bootstrapped, but overlay validation did not reach build because source archive download stalled; retry on a stable network or switch the port source strategy if repeated."
+                "vcpkgUpstreamMetadata": "Replace draft git-tree placeholder during upstream vcpkg PR preparation.",
+                "upstreamReview": "Submit vcpkg and ConanCenter PRs and wait for registry review/merge before claiming publication."
             }
         }
     ],

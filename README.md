@@ -43,20 +43,20 @@ tagged source.
 
 ### Maven Central readiness
 
-The JVM/Kotlin/Scala binding workstreams remain roadmap-only. Before any
-Maven Central Portal publication can be claimed for those surfaces, this repo
-still needs:
+The JVM binding has repo-side Maven publishing metadata and a manual GitHub
+Actions workflow. Maven Central publication is still not claimed because the
+external Central Portal account gates remain open:
 
 - a registered Central Portal namespace for the publishable JVM coordinates;
-- signing credentials provisioned in the release secret store;
-- repo-side Gradle publishing metadata for each publishable module, including
-  `maven-publish`, `signing`, and the required POM coordinate metadata.
+- `CENTRAL_PORTAL_DEPLOY_URL`, `CENTRAL_PORTAL_USERNAME`, and
+  `CENTRAL_PORTAL_PASSWORD` provisioned in the release secret store;
+- `MAVEN_SIGNING_KEY` and `MAVEN_SIGNING_PASSWORD` provisioned in the release
+  secret store.
 - Local JVM readiness checks use exact Gradle commands:
   - `gradle -p bindings/jvm tasks --all`
-  - `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run`
-- Real publish attempts must fail closed unless `-PcentralPortalUsername` and
-  `-PcentralPortalPassword` are supplied; missing credentials are blockers, not
-  a fallback to anonymous publication.
+  - `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run --console=plain`
+- Real publish attempts fail closed unless deploy URL, credentials, and signing
+  secrets are supplied; dry-runs are intentionally credential-free.
 
 ## Package registry status
 

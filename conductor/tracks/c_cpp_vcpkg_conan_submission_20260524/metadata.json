@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-25T14:08:00Z",
+  "updated_at": "2026-05-26T01:20:00Z",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "blocked_repo_side_c_abi_packaging_readiness",
+  "current_status": "archive_based_conan_and_vcpkg_validated_pending_upstream_prs",
   "publication_status": "not_published",
-  "local_readiness_resolved": false,
-  "blocker": "nwau-core is published, but vcpkg and ConanCenter submissions are blocked by repo-side C ABI packaging readiness: placeholder immutable source metadata, no immutable C ABI archive/tag policy, package/ABI version policy still unresolved, no vcpkg usage story, and no ConanCenter test_package.",
+  "local_readiness_resolved": true,
+  "blocker": "Archive-based Conan and vcpkg overlay validations pass locally; upstream vcpkg and ConanCenter PR/review workflows remain pending, including replacing draft vcpkg git-tree metadata in the upstream registry checkout.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -19,13 +19,17 @@
     "cargo_package_result": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
     "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
     "remaining_external_blocker": "vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, local/CI validation, and upstream PR/review workflows.",
-    "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io."
+    "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io.",
+    "source_archive": "https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz",
+    "source_archive_sha256": "e42c7948828a7ea8b581782817a342db577588d9398ba683b34c45ca49ef2bf1",
+    "source_archive_sha512": "eda962cc2f2569f87b8c21f600e3f5abce0c46f98bf587b410e42d72c5ffe73ec717d6bc3a78ffa4009cf6c0f07edd532a86ddf54cf1eb5199c555980ddddabc",
+    "vcpkg_version_metadata": "microcosting_healthservices/packaging/vcpkg/versions/n-/nwau-c-abi.json",
+    "conan_validation": "conan create packaging/conan --build=missing passed with Conan 2.28.1 using source-r2 archive and CMake test_package.",
+    "source_archive_bytes": 9328,
+    "vcpkg_validation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx, installing header, release/debug libraries, usage text, and copyright."
   },
   "repo_side_readiness_blockers": {
-    "version_policy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
-    "source_archive": "Define immutable C ABI source tag and archive checksum policy.",
-    "vcpkg": "Replace placeholder vcpkg REF/SHA512 with immutable source metadata and add usage/support expectations.",
-    "conan": "Define ConanCenter layout with conandata.yml and test_package native consumer smoke test.",
-    "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions."
+    "vcpkg_upstream_metadata": "Replace draft git-tree placeholder in packaging/vcpkg/versions/n-/nwau-c-abi.json during upstream vcpkg PR preparation.",
+    "upstream_review": "Submit upstream vcpkg and ConanCenter PRs and wait for registry review/merge before claiming publication."
   }
 }

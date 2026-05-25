@@ -65,13 +65,16 @@ jobs:
             -p bindings/jvm
             publishAllPublicationsToCentralPortalRepository
             --console=plain
-            -PcentralPortalDeployUrl="$CENTRAL_PORTAL_DEPLOY_URL"
-            -PcentralPortalUsername="$CENTRAL_PORTAL_USERNAME"
-            -PcentralPortalPassword="$CENTRAL_PORTAL_PASSWORD"
-            -PmavenSigningKey="$MAVEN_SIGNING_KEY"
-            -PmavenSigningPassword="$MAVEN_SIGNING_PASSWORD"
           )
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             args+=(--dry-run)
+          else
+            args+=(
+              -PcentralPortalDeployUrl="$CENTRAL_PORTAL_DEPLOY_URL"
+              -PcentralPortalUsername="$CENTRAL_PORTAL_USERNAME"
+              -PcentralPortalPassword="$CENTRAL_PORTAL_PASSWORD"
+              -PmavenSigningKey="$MAVEN_SIGNING_KEY"
+              -PmavenSigningPassword="$MAVEN_SIGNING_PASSWORD"
+            )
           fi
           gradle "${args[@]}"
