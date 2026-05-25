@@ -6,10 +6,10 @@
   "updated_at": "2026-05-25T14:08:00Z",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "prepared_pending_vcpkg_conan_submission_prs_crates_dependency_resolved",
+  "current_status": "blocked_repo_side_c_abi_packaging_readiness",
   "publication_status": "not_published",
-  "local_readiness_resolved": true,
-  "blocker": "nwau-core is now published to crates.io; complete vcpkg/Conan packaging validation and upstream PR/review workflows remain pending.",
+  "local_readiness_resolved": false,
+  "blocker": "nwau-core is published, but vcpkg and ConanCenter submissions are blocked by repo-side C ABI packaging readiness: placeholder immutable source metadata, no immutable C ABI archive/tag policy, package/ABI version policy still unresolved, no vcpkg usage story, and no ConanCenter test_package.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -20,5 +20,12 @@
     "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
     "remaining_external_blocker": "vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, local/CI validation, and upstream PR/review workflows.",
     "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io."
+  },
+  "repo_side_readiness_blockers": {
+    "version_policy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
+    "source_archive": "Define immutable C ABI source tag and archive checksum policy.",
+    "vcpkg": "Replace placeholder vcpkg REF/SHA512 with immutable source metadata and add usage/support expectations.",
+    "conan": "Define ConanCenter layout with conandata.yml and test_package native consumer smoke test.",
+    "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions."
   }
 }

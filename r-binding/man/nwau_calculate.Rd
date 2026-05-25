@@ -38,3 +38,10 @@ validation remain in the shared Python implementation.
 returns a list containing command status, command arguments, output, and error
 message fields.
 }
+\examples{
+\dontrun{
+input <- data.frame(DRG = "801A", LOS = 1)
+diagnostic <- nwau_diagnose(input, stream = "acute", year = 2025)
+diagnostic$ok
+}
+}
