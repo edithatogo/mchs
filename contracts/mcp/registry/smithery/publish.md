@@ -1,8 +1,10 @@
 # Smithery Publication Runbook
 
 Status: accepted as stdio MCPB release
-`9eb5d712-5258-4d91-8eff-a0245bd40826` on 2026-05-26, with public
-registry/runtime propagation still unresolved.
+`9eb5d712-5258-4d91-8eff-a0245bd40826` on 2026-05-26. A later
+cache-bypassed registry probe returned release
+`4824a436-6bb3-4fe7-bcd4-671d956924db` with all six tools, while the plain
+CDN-cached registry URL and Smithery runtime URL still required caution.
 
 ## Endpoint
 
@@ -55,8 +57,11 @@ Additional authenticated republish attempts on 2026-05-26 were also accepted:
 
 - `54be0e8b-a018-4fb1-b76f-3b89ff3e6ccd`
 - `06472680-7f3b-4a68-a56c-ed5a909e06be`
+- `4824a436-6bb3-4fe7-bcd4-671d956924db`
 
-Post-republish probes still showed unresolved public surfaces: the plain
-registry endpoint remained cached to an older zero-tool bundle, CLI search did
-not return `edithatogo/mchs`, and `https://mchs--edithatogo.run.tools` still
-returned `404` with `x-smithery-error: server_not_found`.
+After release `4824a436-6bb3-4fe7-bcd4-671d956924db`, a cache-bypassed
+registry request returned bundle URL
+`bc30c556-4078-4961-9d71-077bf535225f/4824a436-6bb3-4fe7-bcd4-671d956924db/server.mcpb`
+and all six tools. Remaining unresolved surfaces are the plain CDN-cached
+registry endpoint and `https://mchs--edithatogo.run.tools`, which still returned
+`404` with `x-smithery-error: server_not_found`.

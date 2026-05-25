@@ -17,7 +17,7 @@ required.
 - Static scanner fallback metadata is available at
   `/.well-known/mcp/server-card.json` when the HTTP adapter is hosted.
 - Smithery accepted local stdio MCPB releases for `edithatogo/mchs`; deployment ID `200f2fd3-86c4-4122-b3bf-98abe5aa62f1` and MCPB SHA256 `de353472d4a88848a9cb69fe1376f3d22deca97c72ca264d49eba1f09c056456` are recorded.
-- Public registry propagation and Smithery runtime URL resolution remain unresolved. The stdio MCPB path has release-acceptance evidence, but listing/runtime completion must not be claimed until the public registry and Smithery runtime surfaces reflect the accepted release. The public HTTPS deliverables below still apply to URL-based Smithery publication and hosted scanner workflows.
+- Public registry backend propagation is partially verified: a cache-bypassed registry request returned release `4824a436-6bb3-4fe7-bcd4-671d956924db` with all six MCHS tools. The plain CDN-cached registry endpoint and Smithery runtime URL resolution remain unresolved, so listing/runtime completion must not be overclaimed. The public HTTPS deliverables below still apply to URL-based Smithery publication and hosted scanner workflows.
 
 ## Smithery Requirements Interpreted for MCHS
 
