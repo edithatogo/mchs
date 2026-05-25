@@ -1,6 +1,7 @@
+import os
+
 from conan import ConanFile
 from conan.tools.files import copy
-import os
 
 
 class NwauCAbiConan(ConanFile):
@@ -26,13 +27,18 @@ class NwauCAbiConan(ConanFile):
         copy(self, "LICENSE", src=repo_root, dst=self.export_sources_folder)
 
     def build(self):
-        self.run("cargo build --release --locked -p nwau-c-abi", cwd=os.path.join(self.source_folder, "rust"))
+        self.run(
+            "cargo build --release --locked -p nwau-c-abi",
+            cwd=os.path.join(self.source_folder, "rust"),
+        )
 
     def package(self):
         copy(
             self,
             "nwau_abi.h",
-            src=os.path.join(self.source_folder, "rust", "crates", "nwau-c-abi", "include"),
+            src=os.path.join(
+                self.source_folder, "rust", "crates", "nwau-c-abi", "include"
+            ),
             dst=os.path.join(self.package_folder, "include"),
         )
         copy(
@@ -70,7 +76,12 @@ class NwauCAbiConan(ConanFile):
             dst=os.path.join(self.package_folder, "bin"),
             keep_path=False,
         )
-        copy(self, "LICENSE", src=self.source_folder, dst=os.path.join(self.package_folder, "licenses"))
+        copy(
+            self,
+            "LICENSE",
+            src=self.source_folder,
+            dst=os.path.join(self.package_folder, "licenses"),
+        )
 
     def package_info(self):
         self.cpp_info.libs = ["nwau_c_abi"]
