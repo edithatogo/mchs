@@ -473,10 +473,10 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
+            "current_status": "vcpkg_and_conancenter_prs_submitted_pending_upstream_review",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": "https://github.com/microsoft/vcpkg/pull/51965",
-            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed.",
+            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed. vcpkg is additionally blocked by missing Cargo in CI and no first-class vcpkg Rust/Cargo acquisition helper; Microsoft CLA acceptance remains user/legal action only.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -486,7 +486,7 @@
                 "buildCommand": "cargo build",
                 "buildResult": "Finished dev profile for nwau-c-abi v0.1.0.",
                 "fixedLocalBlocker": "Added version=0.1.0 to the nwau-core path dependency for publishable Cargo metadata.",
-                "remainingExternalBlocker": "Run actual Conan/vcpkg package builds, add ConanCenter test_package, add upstream vcpkg registry version metadata, then submit upstream PRs for review.",
+                "remainingExternalBlocker": "Upstream vcpkg and ConanCenter review/merge workflows remain pending. vcpkg also requires a Cargo/toolchain policy resolution because its CI images do not provide cargo on tested triplets and vcpkg has no first-class Rust/Cargo acquisition helper.",
                 "cargoPackageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
                 "cargoPackageResult": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
                 "fixedDependencyBlocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
@@ -513,10 +513,17 @@
                 "vcpkgOverlayValidation": "/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports passed for arm64-osx@0.1.0, installing header, release/debug static libraries, release/debug dylibs, usage text, and copyright.",
                 "vcpkgPullRequest": "https://github.com/microsoft/vcpkg/pull/51965",
                 "conanCenterPullRequest": "https://github.com/conan-io/conan-center-index/pull/30262",
-                "conanCenterValidationEvidence": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation."
+                "conanCenterValidationEvidence": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
+                "conanCenterVariantFix": "Commit d8cbc1de on fork branch add-nwau-c-abi fixes ConanCenter review issues: Release/Debug Cargo profile mapping, shared/static package artifact separation, and portable test_package execution.",
+                "conanCenterSharedValidation": "conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing passed from the ConanCenter fork branch.",
+                "localConanVariantValidation": "conan create packaging/conan --build=missing and conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing passed from the MCHS clean push clone after mirroring the ConanCenter recipe fixes.",
+                "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
+                "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action."
             },
             "repoSideReadinessBlockers": {
-                "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication."
+                "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
+                "vcpkgCargoPolicy": "Resolve vcpkg Rust/Cargo toolchain policy or change to an accepted self-contained artifact strategy before vcpkg merge is realistic.",
+                "microsoftCla": "Microsoft CLA acceptance is a legal contributor action and is not performed by automation."
             }
         }
     ],

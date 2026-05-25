@@ -10,8 +10,10 @@ submission.
   local-only crate.
 - `nwau-c-abi` is locally validated for archive-based Conan and vcpkg overlay
   packaging, but not yet published to vcpkg or ConanCenter.
-- Upstream registry submissions still require PR preparation, registry-native
-  version metadata, and maintainer review/merge.
+- Upstream registry submissions are open. Publication still requires
+  maintainer review/merge, ConanCenter job approval, vcpkg Rust/Cargo
+  toolchain policy resolution, and Microsoft CLA acceptance by the authorized
+  contributor.
 
 ## Version and source-tag policy
 
@@ -30,12 +32,13 @@ submission.
 
 ## Overlay-to-archive roadmap
 
-- Current vcpkg and Conan files are local readiness scaffolds.
+- Current vcpkg and Conan files are local readiness scaffolds mirrored from the
+  submitted upstream PRs where practical.
 - The vcpkg scaffold now uses `vcpkg_download_distfile` against the dedicated
   `nwau-c-abi-v0.1.0` source archive instead of a full repository archive.
 - The Conan scaffold uses `conandata.yml`, an archive-based `source()` flow,
-  and a native `test_package`; mirror or adapt that layout in the upstream
-  ConanCenter index repository before submission.
+  a native `test_package`, Release/Debug Cargo profile mapping, and
+  static/shared artifact separation.
 - Do not claim upstream registry publication until review/merge evidence exists.
 
 ## Local scope
@@ -54,14 +57,18 @@ registry recipes.
 ## Remaining external submission steps
 
 - Draft vcpkg registry version metadata exists under `packaging/vcpkg/versions`;
-  replace the placeholder git tree with the upstream vcpkg tree hash during
-  submission.
-- ConanCenter `test_package` harness exists under `packaging/conan/test_package`;
-  mirror or adapt it in the upstream ConanCenter index repository as required
-  by reviewer policy.
+  the submitted upstream PR has registry version metadata generated in the
+  vcpkg checkout.
+- ConanCenter `test_package` harness exists under `packaging/conan/test_package`
+  and has been mirrored to the upstream ConanCenter PR branch.
 - vcpkg usage guidance exists under `packaging/vcpkg/ports/nwau-c-abi/usage`.
-- Submit upstream PRs to vcpkg and ConanCenter, then wait for review and
-  registry acceptance.
+- Wait for ConanCenter maintainer job approval and review.
+- Resolve vcpkg Rust/Cargo toolchain policy or move to an accepted
+  self-contained artifact strategy; current vcpkg CI images do not provide
+  `cargo` for all tested triplets and vcpkg has no first-class Rust/Cargo
+  acquisition helper.
+- Microsoft CLA acceptance is a legal contributor action and is not performed
+  by automation.
 
 ## Local blockers
 
@@ -69,7 +76,7 @@ registry recipes.
 - Conan `conandata.yml` points at the minimal immutable source archive and
   records its SHA256.
 - Archive-based Conan and vcpkg overlay validations pass locally; upstream
-  submission still requires registry PR preparation and review.
+  publication still requires registry review/merge.
 
 ## Local validation commands
 
@@ -79,7 +86,7 @@ and port definitions without pushing anything upstream.
 
 - Conan recipe:
   - `conan create packaging/conan --build=missing`
-  - `conan test packaging/conan/test_package nwau-c-abi/0.1.0`
+  - `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing`
 - vcpkg port:
   - `vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
 
@@ -88,10 +95,13 @@ and port definitions without pushing anything upstream.
 - `conan create packaging/conan --build=missing` passed with Conan 2.28.1 on
   macOS armv8/apple-clang 21, including download from the dedicated `source-r2`
   archive and the CMake consumer `test_package`.
+- `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing`
+  passed with Conan 2.28.1 on macOS armv8/apple-clang 21 and packaged the
+  shared `.dylib` variant.
 - `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
   passed for `nwau-c-abi:arm64-osx@0.1.0` using the dedicated `source-r2`
   archive, installing header, release/debug static libraries, release/debug
   dylibs, usage text, and copyright.
-- The remaining work is upstream PR preparation/review, including replacing
-  draft vcpkg `git-tree` metadata with the value generated in the upstream
-  vcpkg registry checkout.
+- Upstream PRs are open at `https://github.com/microsoft/vcpkg/pull/51965`
+  and `https://github.com/conan-io/conan-center-index/pull/30262`; no upstream
+  publication is claimed until those registry workflows accept/merge.

@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-c-abi`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml`
-- Current status: `blocked_repo_side_c_abi_packaging_readiness`
+- Current status: `submitted_pending_upstream_review_and_vcpkg_rust_toolchain_policy`
 
 ## Functional Requirements
 
@@ -24,24 +24,27 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Not review-ready. The crates.io dependency blocker is resolved, the C ABI crate
-builds locally, and `cargo package --allow-dirty --locked --manifest-path
+Repo-side readiness is resolved for the submitted archive-based package
+artifacts. The crates.io dependency blocker is resolved, the C ABI crate builds
+locally, and `cargo package --allow-dirty --locked --manifest-path
 rust/crates/nwau-c-abi/Cargo.toml` verifies by downloading `nwau-core v0.1.0`
-from crates.io. vcpkg and ConanCenter submissions still require repo-side
-packaging hardening before any upstream PR is credible.
+from crates.io. The dedicated C ABI source archive, vcpkg overlay port,
+ConanCenter recipe layout, and native consumer smoke tests have all been
+validated locally.
 
-Repo-side blockers:
+Remaining blockers:
 
-- The vcpkg port still has placeholder immutable source metadata and checksum
-  values.
-- The Conan recipe exports local source instead of consuming an immutable
-  release archive through ConanCenter layout.
-- C ABI package versioning and exported ABI constants need an explicit policy
-  before tagging.
-- No dedicated C ABI source tag/checksum policy is recorded.
-- No vcpkg usage file or ConanCenter `test_package` validates a native
-  consumer.
-- No archive-based clean-checkout validation is recorded.
+- vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` is submitted, but
+  vcpkg CI fails on platforms where `cargo` is absent. Current vcpkg
+  infrastructure has no first-class Rust/Cargo acquisition helper for ports, so
+  the upstream path is blocked on vcpkg Rust toolchain policy or a decision to
+  accept Cargo as an external host prerequisite.
+- vcpkg also has a Microsoft CLA check queued. The CLA is a legal acceptance
+  step and must be completed by the authorized contributor, not by automation.
+- ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262`
+  is submitted. Local static and shared validations pass; upstream CI is
+  waiting on maintainer job-scheduler approval before publication can be
+  claimed.
 
 ## Preparation Evidence
 
@@ -54,10 +57,17 @@ Repo-side blockers:
 - Local fix: added `version = "0.1.0"` to the `nwau-core` path dependency.
 - Cargo package command: `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml`
 - Cargo package result: packaged 6 files, downloaded `nwau-core v0.1.0` from crates.io during verification, and compiled `nwau-c-abi v0.1.0`.
-- Remaining repo-side blocker: complete archive-based vcpkg and ConanCenter
-  packaging hardening, then validate from clean registry checkouts.
-- Remaining external blocker: submit vcpkg/ConanCenter PRs for review only
-  after repo-side packaging readiness is resolved.
+- Dedicated source archive: `https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz`
+- Dedicated source archive SHA-256: `e42c7948828a7ea8b581782817a342db577588d9398ba683b34c45ca49ef2bf1`
+- Dedicated source archive SHA-512: `eda962cc2f2569f87b8c21f600e3f5abce0c46f98bf587b410e42d72c5ffe73ec717d6bc3a78ffa4009cf6c0f07edd532a86ddf54cf1eb5199c555980ddddabc`
+- ConanCenter validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing` passed from the ConanCenter fork branch.
+- ConanCenter shared validation: `conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the ConanCenter fork branch.
+- Local Conan validation: `conan create packaging/conan --build=missing` and `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing` passed from the MCHS clean push clone.
+- vcpkg overlay validation: `/tmp/vcpkg/vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports` passed for `arm64-osx`.
+- vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
+- ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
+- Remaining external blocker: upstream review/merge and vcpkg Rust/Cargo
+  toolchain policy; no public vcpkg or ConanCenter publication is claimed yet.
 
 ## Acceptance Criteria
 

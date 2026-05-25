@@ -20,30 +20,30 @@
 
 ## Phase 2.5: C ABI packaging readiness hardening
 
-- [ ] Task: Align C ABI version/source policy.
-    - [ ] Decide whether package version and ABI version must match for `0.1.0`, or document package-version versus ABI-version semantics.
-    - [ ] Align `Cargo.toml`, `nwau_abi.h`, Rust ABI constants, registry manifests, and release notes before tagging.
-    - [ ] Create or nominate an immutable C ABI source tag and record required archive contents.
-- [ ] Task: Convert local vcpkg scaffold into archive-ready port design.
-    - [ ] Replace placeholder `REF` and `SHA512` values with immutable source metadata.
-    - [ ] Add `supports` and usage expectations.
-    - [ ] Define clean vcpkg validation commands and expected artifacts.
-- [ ] Task: Convert local Conan scaffold into ConanCenter-ready recipe design.
-    - [ ] Add `conandata.yml` source/checksum plan.
-    - [ ] Add `test_package` expectation for a native C/C++ consumer.
-    - [ ] Define CCI layout and local `conan create` validation expectations.
-- [ ] Task: Document shared native consumer smoke test.
-    - [ ] Include or link `nwau_abi.h`.
-    - [ ] Link `nwau_c_abi`.
-    - [ ] Call `nwau_abi_version_*` and `nwau_abi_status_message`.
-    - [ ] Avoid clinical/private data fixtures.
+- [x] Task: Align C ABI version/source policy.
+    - [x] Decide whether package version and ABI version must match for `0.1.0`, or document package-version versus ABI-version semantics.
+    - [x] Align `Cargo.toml`, `nwau_abi.h`, Rust ABI constants, registry manifests, and release notes before tagging.
+    - [x] Create or nominate an immutable C ABI source tag and record required archive contents.
+- [x] Task: Convert local vcpkg scaffold into archive-ready port design.
+    - [x] Replace placeholder `REF` and `SHA512` values with immutable source metadata.
+    - [x] Add `supports` and usage expectations.
+    - [x] Define clean vcpkg validation commands and expected artifacts.
+- [x] Task: Convert local Conan scaffold into ConanCenter-ready recipe design.
+    - [x] Add `conandata.yml` source/checksum plan.
+    - [x] Add `test_package` expectation for a native C/C++ consumer.
+    - [x] Define CCI layout and local `conan create` validation expectations.
+- [x] Task: Document shared native consumer smoke test.
+    - [x] Include or link `nwau_abi.h`.
+    - [x] Link `nwau_c_abi`.
+    - [x] Call `nwau_abi_version_*` and `nwau_abi_status_message`.
+    - [x] Avoid clinical/private data fixtures.
 
 ## Phase 3: Submission
 
-- [ ] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; portfile/recipe packaging remains.
-    - [ ] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR.
-    - [ ] Capture submission URL, version, owner, and review state.
+- [x] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; upstream review remains.
+    - [x] Use dry-run or validation mode first where available.
+    - [x] Publish or open the required upstream PR.
+    - [x] Capture submission URL, version, owner, and review state.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence

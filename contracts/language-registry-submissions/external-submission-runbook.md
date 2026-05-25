@@ -133,7 +133,10 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Draft Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
 - Dedicated source archive: `https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
-- Local validation: Conan `conan create packaging/conan --build=missing` passed against the dedicated archive; vcpkg overlay install passed for `nwau-c-abi:arm64-osx@0.1.0` with release/debug libraries, usage text, and copyright installed.
+- Local validation: Conan `conan create packaging/conan --build=missing` and `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing` passed against the dedicated archive; vcpkg overlay install passed for `nwau-c-abi:arm64-osx@0.1.0` with release/debug libraries, usage text, and copyright installed.
 - vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
-- Required submission steps: wait for upstream vcpkg and ConanCenter review/merge workflows.
+- ConanCenter fork update: commit `d8cbc1de` fixes ConanCenter review risks for Cargo Release/Debug profile mapping, static/shared package separation, and portable `test_package` execution.
+- ConanCenter PR state: submitted and waiting on maintainer job-scheduler approval before upstream CI/publication can be claimed.
+- vcpkg PR state: submitted, but CI fails where `cargo` is unavailable; local investigation found no first-class vcpkg Rust/Cargo acquisition helper or Rust toolchain port.
+- Required submission steps: wait for upstream ConanCenter review/merge; resolve vcpkg Cargo/toolchain policy and Microsoft CLA legal acceptance before vcpkg publication can be claimed.
