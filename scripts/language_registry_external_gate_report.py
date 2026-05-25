@@ -51,7 +51,7 @@ def fetch(url: str) -> dict[str, Any]:
     except urllib.error.HTTPError as exc:
         body = exc.read(2_000).decode("utf-8", errors="replace")
         return {"url": url, "http_status": exc.code, "body": body}
-    except Exception as exc:  # noqa: BLE001 - report probe errors without failing the deterministic report.
+    except Exception as exc:
         return {"url": url, "error": type(exc).__name__, "message": str(exc)}
 
 
@@ -143,9 +143,9 @@ def print_text(report: dict[str, Any]) -> None:
         for item in items:
             blocker = f" blocker={item['blocker']}" if item.get("blocker") else ""
             url = f" url={item['submission_url']}" if item.get("submission_url") else ""
-            print(
-                f"- {item['id']}: {item['package']} {item['version']} status={item['status']}{url}{blocker}"
-            )
+            line = f"- {item['id']}: {item['package']} {item['version']}"
+            line += f" status={item['status']}{url}{blocker}"
+            print(line)
         print()
 
 
