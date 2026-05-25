@@ -406,25 +406,26 @@ content alone is not sufficient evidence for marking a track complete.
 
 - [x] **Track: Scala/Spark Binding**
 *Link: [./tracks/scala_spark_binding_20260513/](./tracks/scala_spark_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named enterprise audience, accountable owner, and post-GA Scala/Spark evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named enterprise audience, accountable owner, and post-GA Scala/Spark evidence case are recorded.*
 
 ---
 
 - [x] **Track: Swift Binding**
 *Link: [./tracks/swift_binding_20260513/](./tracks/swift_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named Apple-platform healthcare audience, accountable owner, and post-GA Swift evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named Apple-platform healthcare audience, accountable owner, and post-GA Swift evidence case are recorded.*
 
 ---
 
 - [x] **Track: Stata Interoperability**
 *Link: [./tracks/stata_interop_binding_20260513/](./tracks/stata_interop_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate and stable CLI/file contract readiness. Proceed only when a named health-economics owner and post-GA Stata evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate and stable CLI/file contract readiness. Proceed only when a named health-economics owner and post-GA Stata evidence case are recorded.*
+*Support boundary: Retain. Support health-economics Stata workflows through stable CLI/file interoperability rather than a new native formula implementation.*
 
 ---
 
 - [x] **Track: MATLAB Interoperability**
 *Link: [./tracks/matlab_interop_binding_20260513/](./tracks/matlab_interop_binding_20260513/)*
-*Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named healthcare economics audience, accountable owner, and post-GA MATLAB evidence case are recorded.*
+*Gate: No new development. Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named healthcare economics audience, accountable owner, and post-GA MATLAB evidence case are recorded.*
 
 ---
 
@@ -443,6 +444,12 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Power Platform Binding**
 *Link: [./tracks/power_platform_binding_20260512/](./tracks/power_platform_binding_20260512/)*
 *Gate: publish Power Platform orchestration as a managed solution/custom connector consumer of the shared calculator contract, never as a formula implementation.*
+
+---
+
+- [~] **Track: Power Platform Operational Evidence**
+*Link: [./tracks/power_platform_operational_evidence_20260518/](./tracks/power_platform_operational_evidence_20260518/)*
+*Gate: remains blocked until a real service endpoint, deployed connector host, custom connector connection, and smoke-run evidence are captured.*
 
 ---
 
