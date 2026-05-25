@@ -87,3 +87,19 @@ Successful smoke evidence:
 This confirms Smithery can connect to and execute the stdio bundle through the
 CLI when the local Python environment is healthy. It does not close the separate
 plain CDN cache or `https://mchs--edithatogo.run.tools` runtime URL issue.
+
+## Public Discovery Closure
+
+On 2026-05-26T01:15+10:00, unauthenticated public discovery was verified through
+`https://api.smithery.ai/servers/edithatogo/mchs`. The response returned release
+`4824a436-6bb3-4fe7-bcd4-671d956924db`, the refreshed MCPB bundle URL, and all
+six MCHS tool schemas. The public Smithery page
+`https://smithery.ai/servers/edithatogo/mchs` also included all six tool names.
+
+The older `https://registry.smithery.ai/servers/edithatogo/mchs` path remained
+Cloudflare-cached to the old zero-tool bundle, and the CLI-reported
+`https://mchs--edithatogo.run.tools` URL still returned `404` with
+`x-smithery-error: server_not_found`. Those surfaces are retained as stale
+legacy/runtime observations, but they no longer block stdio bundle publication
+or Smithery discovery because the public API, public page, and CLI connection
+smoke all passed.

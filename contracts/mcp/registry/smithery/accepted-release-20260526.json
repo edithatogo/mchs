@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "evidence_type": "smithery_mcpb_republish_evidence",
-  "as_of": "2026-05-26T01:06:00+10:00",
+  "as_of": "2026-05-26T01:15:41+10:00",
   "qualified_name": "edithatogo/mchs",
-  "status": "accepted_registry_backend_updated_connection_smoke_passed_runtime_url_unresolved",
+  "status": "published_verified_public_api_and_page_cli_smoke_passed_legacy_runtime_stale",
   "publish_command": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
   "accepted_release": {
     "deployment_id": "9eb5d712-5258-4d91-8eff-a0245bd40826",
@@ -85,9 +85,13 @@
     "docker_catalog_published": false,
     "all_registry_publications_completed": false,
     "smithery_connection_smoke_passed": true,
-    "temporary_connection_removed": true
+    "temporary_connection_removed": true,
+    "public_api_discovery_verified": true,
+    "public_page_discovery_verified": true,
+    "smithery_stdio_publication_verified": true,
+    "legacy_registry_url_stale_non_blocking": true
   },
-  "tracking_issue": "https://github.com/edithatogo/mchs/issues/151",
+  "tracking_issue": "https://github.com/edithatogo/mchs/issues/151 (closed as publication/discovery blocker resolved; stale legacy/runtime surfaces documented)",
   "connection_smoke_observation": {
     "observed_at": "2026-05-26T01:06:00+10:00",
     "connection_id": "mchs-ci-smoke",
@@ -101,5 +105,51 @@
     "tool_call_result": "succeeded with empty calculator list payload []",
     "cleanup": "temporary connection mchs-ci-smoke removed after smoke test",
     "local_environment_note": "Initial attempt failed with the default conda Python due to a pydantic/pydantic_core import mismatch; using the project uv environment resolved the local command."
+  },
+  "public_api_observation": {
+    "observed_at": "2026-05-26T01:15:16+10:00",
+    "url": "https://api.smithery.ai/servers/edithatogo/mchs",
+    "authenticated": false,
+    "http_status": 200,
+    "cf_cache_status": "HIT",
+    "cache_age_seconds": 390,
+    "last_modified": "Mon, 25 May 2026 15:08:46 GMT",
+    "returned_bundle_url": "bc30c556-4078-4961-9d71-077bf535225f/4824a436-6bb3-4fe7-bcd4-671d956924db/server.mcpb",
+    "returned_tool_count": 6,
+    "tool_names": [
+      "mchs.list_calculators",
+      "mchs.get_schema",
+      "mchs.validate_input",
+      "mchs.calculate",
+      "mchs.explain_result",
+      "mchs.get_evidence"
+    ],
+    "public_discovery_updated": true
+  },
+  "public_page_observation": {
+    "observed_at": "2026-05-26T01:15:41+10:00",
+    "url": "https://smithery.ai/servers/edithatogo/mchs",
+    "http_status": 200,
+    "page_included_all_tool_names": true,
+    "tool_names": [
+      "mchs.list_calculators",
+      "mchs.get_schema",
+      "mchs.validate_input",
+      "mchs.calculate",
+      "mchs.explain_result",
+      "mchs.get_evidence"
+    ]
+  },
+  "legacy_surface_observation": {
+    "observed_at": "2026-05-26T01:15:17+10:00",
+    "registry_url_stale": true,
+    "registry_url": "https://registry.smithery.ai/servers/edithatogo/mchs",
+    "registry_cache_age_seconds": 6644,
+    "registry_returned_old_zero_tool_bundle": true,
+    "runtime_url_stale": true,
+    "runtime_url": "https://mchs--edithatogo.run.tools",
+    "runtime_http_status": 404,
+    "runtime_smithery_error": "server_not_found",
+    "closure_note": "These stale legacy/runtime surfaces are recorded as non-blocking for stdio bundle publication because unauthenticated api.smithery.ai discovery, Smithery page discovery, and Smithery CLI connection smoke all passed."
   }
 }

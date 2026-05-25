@@ -83,3 +83,13 @@ environment. Tool listing returned all six MCHS tools and a read-only
 after the test. This narrows Smithery readiness risk to the plain CDN-cached
 registry URL and the CLI-reported `run.tools` runtime URL; it no longer indicates
 a bundle/tool-schema execution failure.
+
+## 2026-05-26 Public Discovery Closure
+
+Unauthenticated public discovery is verified through
+`https://api.smithery.ai/servers/edithatogo/mchs`, which returns the refreshed
+release and all six MCHS tools. The public Smithery page also exposes the tool
+names. The legacy `registry.smithery.ai` endpoint and the CLI-reported
+`run.tools` URL remain stale, but they are no longer treated as blocking for the
+stdio MCPB publication path because public API discovery, page discovery, and
+CLI connection smoke all passed.
