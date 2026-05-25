@@ -15,3 +15,6 @@ must not duplicate formula logic.
 - Scala/Spark strategy is selected and documented.
 - Examples validate against shared fixtures.
 - Formula logic remains single-sourced outside Scala/Spark adapters.
+- Publication readiness is not claimed until a Central Portal namespace,
+  signing credentials, and the repo-side Gradle publishing metadata needed for
+  the publishable module are present.

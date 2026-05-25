@@ -41,6 +41,17 @@ unpublished until that registry record exists.
 All release claims still depend on the CI and validation gates passing for the
 tagged source.
 
+### Maven Central readiness
+
+The JVM/Kotlin/Scala binding workstreams remain roadmap-only. Before any
+Maven Central Portal publication can be claimed for those surfaces, this repo
+still needs:
+
+- a registered Central Portal namespace for the publishable JVM coordinates;
+- signing credentials provisioned in the release secret store;
+- repo-side Gradle publishing metadata for each publishable module, including
+  `maven-publish`, `signing`, and the required POM coordinate metadata.
+
 ## Package registry status
 
 As of 2026-05-17:

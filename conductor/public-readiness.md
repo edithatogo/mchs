@@ -33,3 +33,13 @@ must remain true for public publication and future Rust expansion.
   governance files are not yet present.
 - Treat `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `CITATION.cff`,
   and `SECURITY.md` as readiness items even when they are still missing.
+
+## Maven Central Readiness
+
+- Do not claim Maven Central readiness for JVM/Kotlin/Scala surfaces until the
+  Central Portal namespace is registered, signing credentials are provisioned,
+  and the repository contains the required Gradle publishing metadata.
+- Required Gradle metadata includes `maven-publish`, `signing`, and the POM
+  coordinates and descriptor fields needed for a publishable module.
+- If those inputs are still absent, record the gap as a remaining blocker
+  rather than as an implied publishing claim.
