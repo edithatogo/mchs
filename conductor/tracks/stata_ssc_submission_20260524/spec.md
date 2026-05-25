@@ -8,7 +8,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 - Ecosystem: `Stata`
 - Registry: `SSC / Stata package distribution`
-- Package candidate: `mchs-stata-interop`
+- Package candidate: `mchs` (`mchs-stata-interop` bundle)
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/contracts/stata-interop-binding`
 - Current status: `prepared_pending_ado_package_review_and_ssc_submission`
@@ -32,6 +32,8 @@ Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No S
 - Bundle: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
 - SHA256: `ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2`
 - Contents: `mchs.ado`, `mchs.sthlp`, `pkg-mchs.pkg`
+- SSC package/install name: `mchs`
+- Submission draft: `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md`
 - Runtime note: no Stata executable is installed locally.
 - Remaining external blocker: SSC submission/review.
 

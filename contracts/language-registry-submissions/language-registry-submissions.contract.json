@@ -452,7 +452,7 @@
             "title": "Stata SSC Submission",
             "ecosystem": "Stata",
             "registry": "SSC / Stata package distribution",
-            "package": "mchs-stata-interop",
+            "package": "mchs",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
             "current_status": "prepared_pending_ssc_submission_review",
@@ -463,10 +463,12 @@
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
                 "bundle": "bindings/stata/mchs-stata-interop-0.1.0.zip",
+                "sscPackageName": "mchs",
                 "bundlePresentInCommitTree": true,
                 "contractPresentInCommitTree": true,
                 "sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
+                "submissionEmailDraft": "conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and SSC bundle are present; ado runtime validation is not claimed because Stata is unavailable locally.",
                 "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed."
