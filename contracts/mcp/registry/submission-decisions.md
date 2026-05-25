@@ -1,7 +1,7 @@
 # MCP Registry Submission Decisions
 
 Date created: 2026-05-17
-Last updated: 2026-05-25
+Last updated: 2026-05-26
 
 ## Current Artifact
 
@@ -14,7 +14,7 @@ Docker is not required.
 | --- | --- | --- |
 | Official MCP Registry | Published. | `mcp-publisher` published `io.github.edithatogo/mchs` version `0.2.2` on 2026-05-17; registry search API returns active/latest metadata for `io.github.edithatogo/mchs`; `nwau-py 0.2.2` is visible on PyPI. |
 | Glama | Eligible through official-registry indexing; no separate authenticated submission completed from this environment. | Glama documentation states it is a superset of the official MCP Registry. Direct Glama API verification was blocked by its edge protection from this environment. |
-| Smithery | Published. | Smithery accepted stdio MCPB release `2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9` on 2026-05-25; public registry API cache propagation remains pending as recorded in `contracts/mcp/registry/smithery/accepted-release-20260525.json`. MCP URL: `https://mchs--edithatogo.run.tools`; server page: `https://smithery.ai/servers/edithatogo/mchs`. |
+| Smithery | Accepted release, public surfaces unresolved. | Smithery accepted stdio MCPB release `9eb5d712-5258-4d91-8eff-a0245bd40826` on 2026-05-26; public registry API still serves a stale zero-tool bundle and the MCP URL returns `server_not_found`, as recorded in `contracts/mcp/registry/smithery/accepted-release-20260526.json` and issue `https://github.com/edithatogo/mchs/issues/151`. |
 | Docker MCP Registry | Submitted by PR, not yet catalog-published. | `Dockerfile`, `scripts/smoke_mcp_container.py`, and `contracts/mcp/registry/docker/` provide the local containerized server candidate. Docker Registry metadata validation passed and PR `https://github.com/docker/mcp-registry/pull/3799` is open. Review feedback on `tools.json` was addressed in fork commit `f5fa706`. |
 
 ## Official MCP Registry Basis
@@ -72,7 +72,10 @@ uv run mchs-mcp
 
 ## Remaining Submission Blockers
 
-- Smithery publication is complete for `edithatogo/mchs`; do not overclaim production healthcare hosting or PHI-safe operation beyond the published synthetic/public-data-safe MCPB release.
+- Smithery release acceptance is complete for `edithatogo/mchs`, but public
+  registry propagation and runtime URL resolution remain unresolved. Do not
+  claim public Smithery listing/runtime completion until issue
+  `https://github.com/edithatogo/mchs/issues/151` is closed with evidence.
 - Docker MCP Registry PR `https://github.com/docker/mcp-registry/pull/3799`
   must merge, or the catalog listing must be visible, before Docker MCP Catalog
   publication can be claimed.

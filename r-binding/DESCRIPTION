@@ -13,4 +13,4 @@ Encoding: UTF-8
 LazyData: false
 Depends: R (>= 4.1.0)
 Suggests: testthat
-SystemRequirements: Python (>= 3.9) and the 'nwau-py' Python package
+SystemRequirements: Python (>= 3.10) and the 'nwau-py' Python package

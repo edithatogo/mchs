@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "evidence_type": "smithery_mcpb_republish_evidence",
+  "as_of": "2026-05-26T00:32:00+10:00",
+  "qualified_name": "edithatogo/mchs",
+  "status": "accepted_registry_release_public_surfaces_unresolved",
+  "publish_command": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
+  "accepted_release": {
+    "deployment_id": "9eb5d712-5258-4d91-8eff-a0245bd40826",
+    "status": "SUCCESS",
+    "mcp_url": "https://mchs--edithatogo.run.tools",
+    "status_url": "https://smithery.ai/servers/edithatogo/mchs/releases"
+  },
+  "bundle": {
+    "path": "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb",
+    "sha256": "bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d",
+    "manifest_version": "0.4",
+    "tool_count": 6,
+    "tool_names": [
+      "mchs.list_calculators",
+      "mchs.get_schema",
+      "mchs.validate_input",
+      "mchs.calculate",
+      "mchs.explain_result",
+      "mchs.get_evidence"
+    ]
+  },
+  "public_registry_observation": {
+    "url": "https://registry.smithery.ai/servers/edithatogo/mchs",
+    "observed_at": "2026-05-26T00:32:00+10:00",
+    "http_cache_status": "HIT",
+    "cache_age_seconds": 4075,
+    "cache_max_age_seconds": 14400,
+    "still_returned_bundle_url": "bc30c556-4078-4961-9d71-077bf535225f/200f2fd3-86c4-4122-b3bf-98abe5aa62f1/server.mcpb",
+    "still_returned_tool_count": 0,
+    "propagation_complete": false
+  },
+  "runtime_url_observation": {
+    "url": "https://mchs--edithatogo.run.tools",
+    "observed_at": "2026-05-26T00:32:00+10:00",
+    "http_status": 404,
+    "smithery_error": "server_not_found",
+    "runtime_resolved": false
+  },
+  "smithery_web_observation": {
+    "url": "https://smithery.ai/servers/edithatogo/mchs/releases",
+    "observed_at": "2026-05-26T00:30:00+10:00",
+    "http_status": 200,
+    "unauthenticated_initial_deployments_empty": true
+  },
+  "search_observation": {
+    "command": "smithery mcp search edithatogo/mchs --json",
+    "observed_at": "2026-05-26T00:30:00+10:00",
+    "returned_qualified_name": false
+  },
+  "claim_boundary": {
+    "smithery_publish_accepted": true,
+    "public_registry_api_updated": false,
+    "runtime_mcp_url_resolved": false,
+    "search_listing_visible": false,
+    "hosted_streamable_http_published": false,
+    "docker_catalog_published": false,
+    "all_registry_publications_completed": false
+  },
+  "tracking_issue": "https://github.com/edithatogo/mchs/issues/151"
+}
