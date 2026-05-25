@@ -7,7 +7,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | crates.io | `nwau-core` | published and verified at `https://crates.io/crates/nwau-core/0.1.0`; checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547` | complete; browser-created crates token revoked and stale GitHub secret deleted |
 | NuGet | `Mchs.Bindings.DotNet` | NuGet flat-container exposes `0.1.0` after workflow push in run `26404217645` | complete |
 | CRAN | `nwauR` | `R CMD build` and `R CMD check` passed | CRAN maintainer submission and review |
-| Julia General | `NwauCore` | `Pkg.test()` passed; registry consistency and treecheck passed; README/naming feedback answered with `[noblock]` comment after package repo README update | General PR #156236 merge and JuliaHub/registry propagation; re-register if reviewers require updated README in the tagged payload |
+| Julia General | `NwauCore` | checks passed; README/naming feedback answered; follow-up `[noblock]` clarification posted | original reviewer comment must be cleared/marked `[noblock]`, then General PR #156236 merge and propagation |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed | public SPI listing/version evidence still pending |
 | Maven Central | `io.github.edithatogo:mchs` | JVM module builds locally; Maven publishing metadata and Central Portal repository wiring present; exact local checks are `gradle -p bindings/jvm tasks --all` and `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run` | namespace verification, signing credentials, publish credentials, Central Portal release |

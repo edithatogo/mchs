@@ -64,7 +64,7 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156200`, `https://github.com/JuliaRegistries/General/pull/156235`
 - Feedback addressed: package renamed to `NwauCore`, repository moved to `NwauCore.jl`, and MIT license added to the package top-level folder.
 - Current state: open; registry consistency and treecheck checks passed. README purpose/usage documentation was added to the package repo in commit `f42f440`, and the review feedback was answered on the General PR with a `[noblock]` comment.
-- Remaining step: wait for General automerge/review and merge. If reviewers require the registration payload itself to include the README update, create a new tag/version or re-registration flow.
+- Remaining step: reviewer must clear or mark the original review comment `[noblock]`; follow-up clarification posted at `https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535094697`. If reviewers require the registration payload itself to include the README update, create a new tag/version or re-registration flow.
 
 ### Go module proxy / pkg.go.dev
 
@@ -90,7 +90,7 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
 - Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
-- Required steps: Central Portal namespace verification, signing key setup, publishing credentials, authenticated publish/release, and public Maven Central verification.
+- Required steps: Central Portal namespace verification, signing key setup, publish credentials via `-PcentralPortalUsername`/`-PcentralPortalPassword`, dry-run/task verification, authenticated publish/release, and public Maven Central verification.
 
 ### conda-forge
 

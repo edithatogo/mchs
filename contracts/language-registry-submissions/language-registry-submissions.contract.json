@@ -167,10 +167,10 @@
             "package": "NwauCore",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/julia-binding/Project.toml",
-            "current_status": "submitted_pending_general_review_feedback",
+            "current_status": "submitted_pending_original_review_comment_noblock_clearance",
             "track": "julia_general_registry_submission_20260524",
             "submission_url": "https://github.com/JuliaRegistries/General/pull/156236",
-            "blocker": "Julia General PR is open; README/naming feedback was answered with a [noblock] comment after adding README documentation to the package repo, but the open registration still points at the original v0.1.0 tag payload.",
+            "blocker": "Julia General checks pass, but AutoMerge still treats the original reviewer comment as blocking because that comment lacks [noblock]; a follow-up [noblock] clarification was posted asking the reviewer to clear or confirm.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://juliahub.com/api/packages/NwauCore returned 404 Not Found.",
@@ -199,7 +199,9 @@
                 "releaseNotesComment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533258242",
                 "registratorUpdatedComment": "https://github.com/edithatogo/NwauCore.jl/issues/1#issuecomment-4533259247",
                 "tagBotWorkflow": "https://github.com/edithatogo/NwauCore.jl/blob/main/.github/workflows/TagBot.yml",
-                "tagBotCommit": "10bb54102537eda42887266550f55a0941a95ad8"
+                "tagBotCommit": "10bb54102537eda42887266550f55a0941a95ad8",
+                "followUpReviewComment": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535094697",
+                "remainingBlocker": "Original reviewer comment must be edited to include [noblock], resolved by reviewer, or otherwise cleared for AutoMerge."
             }
         },
         {
@@ -298,7 +300,10 @@
                 "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, and required POM metadata.",
                 "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
                 "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository wired with PasswordCredentials and fails closed without credentials.",
-                "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository."
+                "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
+                "failClosedPublishCredentials": "Gradle Central Portal repository credentials are read from -PcentralPortalUsername and -PcentralPortalPassword and fail closed when absent.",
+                "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
+                "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all"
             }
         },
         {
@@ -477,7 +482,9 @@
                 "draftPackagingFiles": "Draft vcpkg portfile, vcpkg manifest, and Conan recipe were added as repo-side readiness artifacts.",
                 "vcpkgPortfilePin": "vcpkg portfile now pins an immutable source commit and real SHA512 instead of placeholder source metadata.",
                 "conanRecipeLayout": "Conan recipe now exports the repository rust tree and LICENSE so self.source_folder/rust is valid during build.",
-                "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f."
+                "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f.",
+                "toolAvailability": "conan and vcpkg are not installed in the current environment, so full local package validation could not be run.",
+                "validationCommandDocumentation": "packaging/README.md records exact non-publishing validation commands for Conan and vcpkg once toolchains are available."
             }
         }
     ],
