@@ -51,6 +51,12 @@ still needs:
 - signing credentials provisioned in the release secret store;
 - repo-side Gradle publishing metadata for each publishable module, including
   `maven-publish`, `signing`, and the required POM coordinate metadata.
+- Local JVM readiness checks use exact Gradle commands:
+  - `gradle -p bindings/jvm tasks --all`
+  - `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run`
+- Real publish attempts must fail closed unless `-PcentralPortalUsername` and
+  `-PcentralPortalPassword` are supplied; missing credentials are blockers, not
+  a fallback to anonymous publication.
 
 ## Package registry status
 

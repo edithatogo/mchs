@@ -43,3 +43,8 @@ must remain true for public publication and future Rust expansion.
   coordinates and descriptor fields needed for a publishable module.
 - If those inputs are still absent, record the gap as a remaining blocker
   rather than as an implied publishing claim.
+- Local JVM readiness checks are exact and non-publishing:
+  - `gradle -p bindings/jvm tasks --all`
+  - `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run`
+- Real publish attempts must fail closed unless `-PcentralPortalUsername` and
+  `-PcentralPortalPassword` are supplied.

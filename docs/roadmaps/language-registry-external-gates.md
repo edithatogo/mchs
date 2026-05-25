@@ -10,7 +10,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Julia General | `NwauCore` | `Pkg.test()` passed; registry consistency and treecheck passed; README/naming feedback answered with `[noblock]` comment after package repo README update | General PR #156236 merge and JuliaHub/registry propagation; re-register if reviewers require updated README in the tagged payload |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed | public SPI listing/version evidence still pending |
-| Maven Central | `io.github.edithatogo:mchs` | JVM module builds locally; Maven publishing metadata and Central Portal repository wiring present | namespace verification, signing credentials, publish credentials, Central Portal release |
+| Maven Central | `io.github.edithatogo:mchs` | JVM module builds locally; Maven publishing metadata and Central Portal repository wiring present; exact local checks are `gradle -p bindings/jvm tasks --all` and `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run` | namespace verification, signing credentials, publish credentials, Central Portal release |
 | conda-forge | `nwau-py` | branch updated; linter and linux/osx/win platform builds passing on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | maintainer review, merge, and feedstock publication |
 | Homebrew | `nwau-py` | personal tap published; audit, source install, and `brew test` pass with Click resource plus lazy CLI patch | optional Homebrew/core PR/review |
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | extension source scaffold committed; manifest is publisher-ready; generated `.vsix` intentionally not committed | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, package, then publish |
@@ -31,3 +31,7 @@ Add `--output <path>` to any mode to persist the report as a release or CI artif
 The PR CI workflow writes non-live JSON artifacts only, so pull requests remain deterministic. The scheduled/manual `.github/workflows/language-registry-live.yml` monitor runs the live report commands and uploads `language-registry-live` artifacts for registry drift review.
 
 The Go row is intentionally split: the Go proxy submission URL verifies the tagged module, while the public package probe checks `https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go`. Once pkg.go.dev exposes the target version, the Go track can be completed.
+
+The Maven Central row is intentionally fail-closed: a real publish attempt must
+provide `-PcentralPortalUsername` and `-PcentralPortalPassword`, and missing
+credentials stop the publish path instead of falling back to anonymous access.

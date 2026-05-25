@@ -9,6 +9,9 @@ import org.gradle.api.credentials.PasswordCredentials
 group = "io.github.edithatogo"
 version = "0.1.0"
 
+val centralPortalUsername = providers.gradleProperty("centralPortalUsername")
+val centralPortalPassword = providers.gradleProperty("centralPortalPassword")
+
 java {
     withJavadocJar()
     withSourcesJar()
@@ -22,7 +25,10 @@ publishing {
         maven {
             name = "centralPortal"
             url = uri("https://central.sonatype.com/api/v1/publisher")
-            credentials(PasswordCredentials::class)
+            credentials(PasswordCredentials::class) {
+                username = centralPortalUsername.orNull
+                password = centralPortalPassword.orNull
+            }
         }
     }
 
@@ -62,4 +68,15 @@ signing {
         gradle.taskGraph.hasTask("publish")
     }
     sign(publishing.publications["mavenJava"])
+}
+
+gradle.taskGraph.whenReady {
+    if (hasTask("publish") ||
+        hasTask("publishAllPublicationsToCentralPortalRepository") ||
+        hasTask("publishMavenJavaPublicationToCentralPortalRepository")
+    ) {
+        require(centralPortalUsername.isPresent && centralPortalPassword.isPresent) {
+            "Central Portal publish tasks require -PcentralPortalUsername and -PcentralPortalPassword. The publish path fails closed when either credential is missing."
+        }
+    }
 }
