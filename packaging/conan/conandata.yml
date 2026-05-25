@@ -1,5 +1,5 @@
 sources:
   "0.1.0":
     url: "https://github.com/edithatogo/mchs/archive/2f658d43be016116ae31b8bdccef9c0ab986fca5.tar.gz"
-    sha256: null
-    note: "Repo-local readiness placeholder. Replace null with the archive SHA256 before any ConanCenter PR."
+    sha512: "e3c533ac2bfdae49afd7da8a16cfe66d4a3dcf3d9f242015ff29540000e81f79c33df5ad1f92076538659b53429f2ba00e746f10d141d6cdcc0a8a291899eacd"
+    note: "Matches the immutable archive checksum used by the vcpkg draft port."

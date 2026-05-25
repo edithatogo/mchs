@@ -1,7 +1,9 @@
+import hashlib
 import os
+import tarfile
 
 from conan import ConanFile
-from conan.tools.files import copy
+from conan.tools.files import copy, download
 
 
 class NwauCAbiConan(ConanFile):
@@ -26,15 +28,27 @@ class NwauCAbiConan(ConanFile):
         if self.options.shared:
             self.options.rm_safe("fPIC")
 
-    def export_sources(self):
-        repo_root = os.path.abspath(os.path.join(self.recipe_folder, "..", ".."))
-        copy(
-            self,
-            "*",
-            src=os.path.join(repo_root, "rust"),
-            dst=os.path.join(self.export_sources_folder, "rust"),
-        )
-        copy(self, "LICENSE", src=repo_root, dst=self.export_sources_folder)
+    def source(self):
+        source_data = self.conan_data["sources"][self.version]
+        archive_path = os.path.join(self.source_folder, "source.tar.gz")
+        download(self, source_data["url"], archive_path)
+        with open(archive_path, "rb") as archive_file:
+            digest = hashlib.sha512(archive_file.read()).hexdigest()
+        if digest != source_data["sha512"]:
+            raise ValueError(
+                f"Archive SHA512 mismatch for {source_data['url']}: {digest}"
+            )
+        destination = os.path.abspath(self.source_folder)
+        with tarfile.open(archive_path, "r:gz") as archive:
+            for member in archive.getmembers():
+                path_parts = member.name.split("/", 1)
+                if len(path_parts) != 2 or not path_parts[1]:
+                    continue
+                member.name = path_parts[1]
+                target = os.path.abspath(os.path.join(destination, member.name))
+                if not target.startswith(destination + os.sep):
+                    raise ValueError(f"Unsafe archive path: {member.name}")
+                archive.extract(member, destination)
 
     def build(self):
         self.run(

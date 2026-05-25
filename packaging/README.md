@@ -24,17 +24,17 @@ submission.
   `rust/Cargo.lock`, `rust/crates/nwau-core`, `rust/crates/nwau-c-abi`, and
   `rust/crates/nwau-c-abi/include/nwau_abi.h`.
 - Record archive checksums required by downstream registries: SHA512 for vcpkg
-  and SHA256 or Conan `conandata.yml` checksums for ConanCenter.
+  and Conan `conandata.yml` checksums for ConanCenter.
 
 ## Overlay-to-archive roadmap
 
 - Current vcpkg and Conan files are local readiness scaffolds.
-- The vcpkg scaffold uses `vcpkg_from_github`, but the source reference and
-  checksum still need to be replaced with reviewable immutable release
-  metadata.
-- The Conan scaffold still exports local source. `conandata.yml` and
-  `test_package` are present as review-prep artifacts, but the recipe must be
-  converted to full ConanCenter layout before submission.
+- The vcpkg scaffold uses `vcpkg_from_github` with an immutable repository
+  commit and SHA512; upstream submission still requires registry version files
+  and review in the vcpkg repository.
+- The Conan scaffold now uses `conandata.yml` and an archive-based `source()`
+  flow with a native `test_package`; mirror or adapt that layout in the
+  upstream ConanCenter index repository before submission.
 - Do not submit upstream until archive-based builds pass from clean registry
   checkouts.
 
@@ -52,7 +52,9 @@ registry recipes.
 - The vcpkg port pins an immutable repository commit and archive hash; add
   vcpkg registry version metadata in the upstream vcpkg repository when it is
   ready for submission.
-- ConanCenter `test_package` harness now exists under `packaging/conan/test_package`; mirror or adapt it in the upstream ConanCenter index repository as required by reviewer policy.
+- ConanCenter `test_package` harness now exists under
+  `packaging/conan/test_package`; mirror or adapt it in the upstream
+  ConanCenter index repository as required by reviewer policy.
 - vcpkg usage guidance now exists under `packaging/vcpkg/ports/nwau-c-abi/usage`; add a complete CMake/pkg-config consumer story before upstream submission.
 - Run the required local and CI validation against the published
   `nwau-core` crate and the C ABI surface.
@@ -63,8 +65,8 @@ registry recipes.
 
 - No crates.io publication blocker remains for `nwau-core`.
 - Align or explicitly document package-version versus ABI-version semantics.
-- Replace the placeholder Conan `conandata.yml` checksum with a real immutable
-  source archive SHA256.
+- Conan `conandata.yml` now records the immutable source archive SHA512 used by
+  the vcpkg draft port, and the recipe verifies that checksum during `source()`.
 - The native C/C++ consumer smoke test exists in `packaging/conan/test_package`;
   execute it with Conan before submission.
 - Record clean archive-based vcpkg and Conan validation before upstream

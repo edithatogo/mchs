@@ -115,14 +115,20 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 ### MATLAB File Exchange
 
 - Package: `mchs-matlab-interop@0.1.0`
-- Prepared artifact: `microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip`
-- Required step: MathWorks account upload and File Exchange review.
+- Local status: not repo-ready. The MATLAB source tree and
+  `bindings/matlab/mchs-matlab-interop-0.1.0.zip` artifact are not present in
+  this checkout.
+- Required step: add the MATLAB package source and build artifact, then use a
+  MathWorks account upload and File Exchange review.
 
 ### Stata SSC
 
 - Package: `mchs-stata-interop@0.1.0`
-- Prepared artifact: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
-- Required step: SSC maintainer submission/review.
+- Local status: not repo-ready. The Stata source tree and
+  `bindings/stata/mchs-stata-interop-0.1.0.zip` artifact are not present in
+  this checkout.
+- Required step: add the Stata package source and release artifact, then submit
+  to the SSC maintainer workflow for review.
 
 ### vcpkg / ConanCenter
 
@@ -131,5 +137,8 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Draft vcpkg portfile: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/portfile.cmake`
 - Draft Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
-- Required submission steps: complete vcpkg `portfile.cmake`/version files and ConanCenter recipe packaging, then submit upstream PR/review workflows.
-- Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and upstream registry PR/review workflows still need to be prepared.
+- Required submission steps: complete vcpkg version files and ConanCenter
+  recipe packaging in the target registry repositories, then submit upstream
+  PR/review workflows.
+- Current blocker: no vcpkg/Conan PR opened because upstream registry
+  PR/review workflows still need to be prepared.
