@@ -471,13 +471,8 @@
             "registry": "vcpkg / ConanCenter",
             "package": "nwau-c-abi",
             "version": "0.1.0",
-<<<<<<< HEAD
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "draft_packaging_static_checked_with_conan_test_package_pending_full_validation_and_upstream_prs",
-=======
-            "local_surface": "microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "conan_recipe_validated_pending_vcpkg_validation_and_upstream_prs",
->>>>>>> e4b8668 (chore(registry): validate Conan and Maven publish dry-run)
+            "current_status": "vcpkg_overlay_attempted_source_fetch_stalled_pending_retry"
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
             "blocker": "Conan recipe and test_package validate locally with Conan 2.28.1; vcpkg overlay validation is blocked at source archive download/fetch in this environment; upstream vcpkg version metadata, ConanCenter submission layout, and external PR/review workflows remain pending.",
@@ -509,19 +504,11 @@
             },
             "repoSideReadinessBlockers": {
                 "versionPolicy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
-<<<<<<< HEAD
-                "sourceArchive": "Define immutable C ABI source tag and archive checksum policy.",
-                "vcpkg": "vcpkg REF/SHA512 and a draft usage file exist; upstream vcpkg version metadata and full overlay validation remain pending.",
-                "conan": "Local conandata.yml and test_package harness exist; replace the placeholder source checksum and adapt to ConanCenter layout during review.",
-                "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions.",
-                "toolValidation": "Still pending: conan and vcpkg CLIs are unavailable in this environment, so package builds and overlay installs have not been executed."
-=======
                 "sourceArchive": "vcpkg source archive download for the pinned repository commit stalled in this environment; retry or use a smaller dedicated C ABI source archive/tag before upstream submission.",
-                "vcpkg": "vcpkg port pins immutable source metadata and has an overlay port shape; overlay install validation remains blocked at source archive download and upstream registry version metadata is not yet prepared.",
-                "conan": "ConanCenter layout now has a local test_package harness; upstream ConanCenter may still require conandata.yml and recipe-layout changes during review.",
-                "validation": "Conan create/test_package is validated locally; vcpkg overlay install validation remains pending.",
+                "vcpkg": "vcpkg REF/SHA512 and draft usage metadata exist; overlay install validation remains blocked at source archive download and upstream registry version metadata is not yet prepared.",
+                "conan": "Local ConanCenter-style test_package harness exists and conan create passed; adapt conandata/source layout as needed during ConanCenter review.",
+                "validation": "Conan create/test_package is validated locally; vcpkg overlay install validation reached source download but stalled before build.",
                 "toolValidation": "vcpkg CLI was bootstrapped, but overlay validation did not reach build because source archive download stalled; retry on a stable network or switch the port source strategy if repeated."
->>>>>>> e4b8668 (chore(registry): validate Conan and Maven publish dry-run)
             }
         }
     ],
