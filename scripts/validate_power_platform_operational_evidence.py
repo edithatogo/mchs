@@ -14,6 +14,7 @@ CONNECTION_REFERENCES = (
 FLOW_SMOKE_TEMPLATE = EVIDENCE / "flow-smoke-evidence-template.json"
 FLOW_SMOKE_EVIDENCE = EVIDENCE / "power-automate-flow-smoke-20260521.json"
 POWERAPP_RUNTIME_LAUNCH = EVIDENCE / "powerapp-runtime-launch-20260525.json"
+TENANT_CLI_OBSERVATION = EVIDENCE / "tenant-cli-observation-20260525.json"
 FLOW_ROOT = ROOT / "power-platform" / "flows"
 REQUIRED_MONITORING_FIELDS = (
     ("monitoring", "owner"),
@@ -441,12 +442,94 @@ def _validate_powerapp_runtime_launch(
         _require_false(data, claim, path)
 
 
+def _validate_tenant_cli_observation(
+    data: dict,
+    path: Path,
+    deployment: dict,
+    expected_connector_id: str,
+) -> None:
+    _require(
+        data["evidenceType"] == "power_platform_tenant_cli_observation",
+        f"{path}: unexpected evidenceType",
+    )
+    _require(
+        data["status"] == "blocked_with_connector_definition_observed",
+        f"{path}: tenant CLI observation must stay blocked",
+    )
+    _require(
+        data["targetEnvironment"]["environmentId"] == deployment["environmentId"],
+        f"{path}: target environment must match deployment-status environmentId",
+    )
+    _require(
+        data["targetEnvironment"]["environmentUrl"] == deployment["environmentUrl"],
+        f"{path}: target environment URL must match deployment-status environmentUrl",
+    )
+    _require(
+        data["targetEnvironment"]["activeInPac"] is True,
+        f"{path}: target environment must be marked active in PAC",
+    )
+    connector = data["connectorObservation"]
+    _require(
+        connector["customConnectorDefinitionObserved"] is True,
+        f"{path}: custom connector definition must be observed",
+    )
+    _require(
+        connector["connectorId"] == expected_connector_id,
+        f"{path}: connector id must match the expected service-boundary connector",
+    )
+    _require(
+        connector["displayName"] == "MCHS Service Boundary",
+        f"{path}: connector display name must remain explicit",
+    )
+    _require(
+        connector["matchesExpectedServiceBoundaryConnector"] is True,
+        f"{path}: connector must match the expected service-boundary connector",
+    )
+    _require(
+        connector["customConnectorConnectionObserved"] is False,
+        f"{path}: custom connector connection must remain false until observed",
+    )
+    _require(
+        data["connectionObservation"]["serviceBoundaryConnectionReferenceResolved"]
+        is False,
+        f"{path}: connection reference must remain unresolved",
+    )
+    _require(
+        data["dlpObservation"]["policyInventoryVisible"] is True,
+        f"{path}: DLP policy inventory visibility must be recorded",
+    )
+    _require(
+        data["dlpObservation"]["targetEnvironmentPolicyIdentified"] is False,
+        f"{path}: target DLP policy must remain unidentified until captured",
+    )
+    _require(
+        data["dlpObservation"]["serviceBoundaryConnectorPolicyIdentified"] is False,
+        f"{path}: service-boundary connector policy must remain unidentified",
+    )
+    _require(
+        data["flowObservation"]["flowRunEvidenceCaptured"] is False,
+        f"{path}: flow run evidence must remain false until captured",
+    )
+    for claim in (
+        "customConnectorConnectionObserved",
+        "serviceBoundaryEndpointConfigured",
+        "serviceBoundaryExecutionObserved",
+        "flowSmokePassed",
+        "dlpCompatible",
+        "monitoringOperational",
+        "runtimeSmokePassed",
+        "productionReadinessClaimed",
+    ):
+        _require_false(data, claim, path)
+
+
 def main() -> int:
     publication = _json(CANVAS_APP_PUBLICATION)
     deployment = _json(EVIDENCE / "deployment-status.json")
     bundle = _json(EVIDENCE / "nsw-operational-readiness-bundle-template.json")
     runtime = _json(EVIDENCE / "runtime-smoke-evidence-template.json")
     powerapp_runtime_launch = _json(POWERAPP_RUNTIME_LAUNCH)
+    tenant_cli_observation = _json(TENANT_CLI_OBSERVATION)
     connections = _json(EVIDENCE / "connection-reference-evidence-template.json")
     endpoint = _json(EVIDENCE / "service-boundary-endpoint-template.json")
     monitoring = _json(EVIDENCE / "monitoring-dlp-evidence-template.json")
@@ -506,6 +589,13 @@ def main() -> int:
         POWERAPP_RUNTIME_LAUNCH,
         publication,
         deployment,
+    )
+    expected_connector = connections["requiredConnectionReferences"][0]["connectorId"]
+    _validate_tenant_cli_observation(
+        tenant_cli_observation,
+        TENANT_CLI_OBSERVATION,
+        deployment,
+        expected_connector,
     )
     _require_list_contains(
         publication,

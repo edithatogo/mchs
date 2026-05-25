@@ -114,6 +114,12 @@ recorded here.
   app-player route redirected to Microsoft sign-in before the app runtime was
   reached, so connector-backed screen execution and service-boundary runtime
   smoke remain blocked.
+- `tenant-cli-observation-20260525.json`: PAC CLI observation against the
+  active target environment. It confirms the MCHS Service Boundary custom
+  connector definition is now visible in Dataverse, but keeps the runtime
+  blocker active because no live custom connector connection, connection
+  reference value, flow run evidence, target DLP connector policy, monitoring
+  export, or app runtime execution is captured.
 
 ## Evidence import mapping
 
@@ -138,7 +144,7 @@ values with guesses. Secret bodies are intentionally omitted.
 | `scripts/capture_power_platform_pac_observations.py` | Capture `appId`, `playUrl`, and `connectionId` from the live tenant. |
 | `power-platform/evidence/canvas-app-publication-20260520.json` | Published app values: `appId=ff64f58a-73de-42ee-b92d-f65503619c49`, `playUrl=https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/ff64f58a-73de-42ee-b92d-f65503619c49?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2`. Optimized publication values: `optimizedPublication.appId=669d0089-8abe-4e94-ab50-aa69513a6cc4`, `optimizedPublication.playUrl=https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2`. |
 | `power-platform/evidence/connection-reference-evidence-template.json` | `logicalName=mchs_service_boundary`, `connector=mchs-service-boundary`, `connectorId=0f3d6edc-9653-f111-bec6-00224893a0e1`, `baseUrlEnvironmentVariable=mchs_api_base_url`, `apiKeySecretName=mchs_service_boundary_api_key`, `valueStatus=missing`, `pacObservedConnections.customConnectorConnectionId=null`. |
-| Current PAC state | `connectionId` is still blocked pending a real observed connection. |
+| Current PAC state | The custom connector definition is now observed in `tenant-cli-observation-20260525.json`; `connectionId` is still blocked pending a real observed custom connector connection. |
 
 ### Public HTTPS endpoint capture
 
@@ -167,7 +173,7 @@ values with guesses. Secret bodies are intentionally omitted.
 | `scripts/update_power_platform_monitoring_dlp_evidence.py` | Consumes the monitoring, DLP, connector policy, and support capture input. |
 | `power-platform/evidence/monitoring-dlp-capture-sample.json` | `monitoring.owner=TBD`, all monitoring failure metrics are required, `dlp.policyId=TBD`, `dlp.policyName=TBD`, `dlp.policyClassification=TBD`, `dlp.policyCaptureState=blocked_pending_policy_capture`, `connectorPolicy.connectorName=mchs-service-boundary`, `connectorPolicy.connectorId=0f3d6edc-9653-f111-bec6-00224893a0e1`, `connectorPolicy.policyId=TBD`, `connectorPolicy.policyName=TBD`, `connectorPolicy.connectorAllowState=blocked_pending_policy_capture`, `support.owner=TBD`, `support.escalationOwner=TBD`, `support.escalationPath=TBD`, `support.escalationContact=TBD`. |
 | `power-platform/evidence/dlp-monitoring-policy-evidence-20260521.json` | `tenantName=NSW Health Department`, `status=blocked_pending_nsw_admin_policy_capture`, `claimBoundary.dlpCompatible=false`, `claimBoundary.monitoringOperational=false`, `claimBoundary.productionReadinessClaimed=false`. |
-| Current DLP state | No real DLP policy or monitoring export is recorded yet. |
+| Current DLP state | Tenant DLP policy inventory is visible in `tenant-cli-observation-20260525.json`, but no target policy mapping, service-boundary connector policy, or monitoring export is recorded yet. |
 
 ### Subrepo closure capture
 

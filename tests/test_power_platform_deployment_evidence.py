@@ -52,6 +52,9 @@ FLOW_SMOKE_EVIDENCE = (
 POWERAPP_RUNTIME_LAUNCH = (
     ROOT / "power-platform" / "evidence" / "powerapp-runtime-launch-20260525.json"
 )
+TENANT_CLI_OBSERVATION = (
+    ROOT / "power-platform" / "evidence" / "tenant-cli-observation-20260525.json"
+)
 ENDPOINT = (
     ROOT / "power-platform" / "evidence" / ("service-boundary-endpoint-template.json")
 )
@@ -158,6 +161,7 @@ def test_power_platform_evidence_templates_exist():
         FLOW_SMOKE_SAMPLE_CAPTURE,
         FLOW_SMOKE_EVIDENCE,
         POWERAPP_RUNTIME_LAUNCH,
+        TENANT_CLI_OBSERVATION,
         ENDPOINT,
         GITHUB_LIVE_GATE_TEMPLATE,
         GITHUB_LIVE_GATE,
@@ -168,6 +172,7 @@ def test_power_platform_evidence_templates_exist():
 def test_power_platform_operational_evidence_contracts_are_precise():
     runtime = _json(RUNTIME_SMOKE)
     powerapp_runtime_launch = _json(POWERAPP_RUNTIME_LAUNCH)
+    tenant_cli_observation = _json(TENANT_CLI_OBSERVATION)
     connections = _json(CONNECTIONS)
     pac_package = _json(PAC_OPERATOR_PACKAGE)
     monitoring = _json(MONITORING)
@@ -340,6 +345,64 @@ def test_power_platform_operational_evidence_contracts_are_precise():
         "appRuntimeReached": False,
         "connectorBackedScreenExecuted": False,
         "serviceBoundaryExecutionObserved": False,
+        "runtimeSmokePassed": False,
+        "productionReadinessClaimed": False,
+    }
+    assert (
+        tenant_cli_observation["evidenceType"]
+        == "power_platform_tenant_cli_observation"
+    )
+    assert (
+        tenant_cli_observation["status"]
+        == "blocked_with_connector_definition_observed"
+    )
+    assert tenant_cli_observation["targetEnvironment"]["environmentId"] == (
+        "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
+    )
+    assert tenant_cli_observation["targetEnvironment"]["activeInPac"] is True
+    assert (
+        tenant_cli_observation["connectorObservation"]["connectorId"]
+        == "0f3d6edc-9653-f111-bec6-00224893a0e1"
+    )
+    assert (
+        tenant_cli_observation["connectorObservation"]["displayName"]
+        == "MCHS Service Boundary"
+    )
+    assert (
+        tenant_cli_observation["connectorObservation"][
+            "customConnectorDefinitionObserved"
+        ]
+        is True
+    )
+    assert (
+        tenant_cli_observation["connectorObservation"][
+            "customConnectorConnectionObserved"
+        ]
+        is False
+    )
+    assert (
+        tenant_cli_observation["connectionObservation"][
+            "serviceBoundaryConnectionReferenceResolved"
+        ]
+        is False
+    )
+    assert tenant_cli_observation["dlpObservation"]["policyInventoryVisible"] is True
+    assert (
+        tenant_cli_observation["dlpObservation"]["targetEnvironmentPolicyIdentified"]
+        is False
+    )
+    assert (
+        tenant_cli_observation["flowObservation"]["flowRunEvidenceCaptured"] is False
+    )
+    assert tenant_cli_observation["claimBoundary"] == {
+        "targetEnvironmentAccessConfirmed": True,
+        "customConnectorDefinitionObserved": True,
+        "customConnectorConnectionObserved": False,
+        "serviceBoundaryEndpointConfigured": False,
+        "serviceBoundaryExecutionObserved": False,
+        "flowSmokePassed": False,
+        "dlpCompatible": False,
+        "monitoringOperational": False,
         "runtimeSmokePassed": False,
         "productionReadinessClaimed": False,
     }
