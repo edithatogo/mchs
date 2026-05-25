@@ -6,6 +6,7 @@ small public HTTP probes for known registry/submission URLs, but it does not
 promote a registry to complete unless the public response contains the expected
 package version.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,7 +18,12 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / "contracts" / "language-registry-submissions" / "language-registry-submissions.contract.json"
+CONTRACT = (
+    ROOT
+    / "contracts"
+    / "language-registry-submissions"
+    / "language-registry-submissions.contract.json"
+)
 
 COMPLETE_STATUSES = {"published_verified", "complete", "completed", "verified"}
 SUBMITTED_MARKERS = ("submitted", "open", "pending_review", "review")
@@ -35,7 +41,9 @@ PUBLIC_PROBES = {
 
 
 def fetch(url: str) -> dict[str, Any]:
-    request = urllib.request.Request(url, headers={"User-Agent": "mchs-registry-gate-report/1.0"})
+    request = urllib.request.Request(
+        url, headers={"User-Agent": "mchs-registry-gate-report/1.0"}
+    )
     try:
         with urllib.request.urlopen(request, timeout=20) as response:
             body = response.read(2_000_000).decode("utf-8", errors="replace")
@@ -64,7 +72,9 @@ def classify(registry: dict[str, Any], live: dict[str, Any] | None = None) -> st
         return "completion_candidates"
     if registry.get("publicationEvidence"):
         return "partial_publications"
-    if registry.get("submission_url") or any(marker in status for marker in SUBMITTED_MARKERS):
+    if registry.get("submission_url") or any(
+        marker in status for marker in SUBMITTED_MARKERS
+    ):
         return "submitted_review_items"
     if blocker or any(marker in status for marker in BLOCK_MARKERS):
         return "external_blocks"
@@ -88,9 +98,13 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
         if live:
             if registry_id in PUBLIC_PROBES:
                 observation["public_probe"] = fetch(PUBLIC_PROBES[registry_id])
-                observation["target_version_visible"] = version_visible(registry, observation["public_probe"])
+                observation["target_version_visible"] = version_visible(
+                    registry, observation["public_probe"]
+                )
             submission_url = registry.get("submission_url")
-            if isinstance(submission_url, str) and submission_url.startswith("https://github.com/"):
+            if isinstance(submission_url, str) and submission_url.startswith(
+                "https://github.com/"
+            ):
                 observation["submission_probe"] = fetch(submission_url)
             if observation:
                 live_observations[str(registry_id)] = observation
@@ -119,7 +133,9 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
 
 
 def print_text(report: dict[str, Any]) -> None:
-    print(f"Language registry gate report (contract as of {report.get('contractAsOf')})")
+    print(
+        f"Language registry gate report (contract as of {report.get('contractAsOf')})"
+    )
     print(f"Source: {report.get('source')}")
     print()
     for name, items in report["groups"].items():
@@ -127,16 +143,28 @@ def print_text(report: dict[str, Any]) -> None:
         for item in items:
             blocker = f" blocker={item['blocker']}" if item.get("blocker") else ""
             url = f" url={item['submission_url']}" if item.get("submission_url") else ""
-            print(f"- {item['id']}: {item['package']} {item['version']} status={item['status']}{url}{blocker}")
+            print(
+                f"- {item['id']}: {item['package']} {item['version']} status={item['status']}{url}{blocker}"
+            )
         print()
 
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--promotion", action="store_true", help="Group registries by promotion state. Kept for runbook compatibility.")
-    parser.add_argument("--live", action="store_true", help="Add public HTTP probes for known registries and submission URLs.")
+    parser.add_argument(
+        "--promotion",
+        action="store_true",
+        help="Group registries by promotion state. Kept for runbook compatibility.",
+    )
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Add public HTTP probes for known registries and submission URLs.",
+    )
     parser.add_argument("--output", type=Path, help="Write JSON report to this path.")
-    parser.add_argument("--json", action="store_true", help="Print JSON instead of text.")
+    parser.add_argument(
+        "--json", action="store_true", help="Print JSON instead of text."
+    )
     args = parser.parse_args(argv)
 
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
@@ -144,7 +172,9 @@ def main(argv: list[str]) -> int:
 
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        args.output.write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
 
     if args.json or args.output:
         print(json.dumps(report, indent=2, sort_keys=True))
