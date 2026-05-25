@@ -1,6 +1,6 @@
 # External Submission Runbook
 
-As of 2026-05-25, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, and the Go module are externally published and verified. The remaining items require publish automation, direct authenticated publish, public listing evidence, legal/publisher agreement completion, or upstream maintainer review.
+As of 2026-05-26, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, and the Go module are externally published and verified. The remaining items require publish automation, direct authenticated publish, public listing evidence, legal/publisher agreement completion, or upstream maintainer review.
 
 ## Already published and verified
 
@@ -90,7 +90,7 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
 - Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
-- Required steps: Central Portal namespace verification, signing key setup, publish credentials via `-PcentralPortalUsername`/`-PcentralPortalPassword`, dry-run/task verification, authenticated publish/release, and public Maven Central verification.
+- Required steps: Central Portal namespace verification, signing key setup, GitHub secrets `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD`, manual workflow `Publish Maven Central package` dry-run, authenticated publish/release, and public Maven Central verification.
 
 ### conda-forge
 
@@ -98,7 +98,7 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Prepared recipe: `microcosting_healthservices/packaging/conda-forge/meta.yaml`
 - Submitted PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points.
-- Branch update: GitHub accepted an update-branch request on 2026-05-26; linter, aggregate staged-recipes, linux_64, osx_64, win_64, and check-skip all succeeded on head `e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1`.
+- Branch update: GitHub accepted an update-branch request on 2026-05-26. Latest poll: PR head `e6c8b9d632953263517de6a146783f3697fc450d`; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all succeeded.
 - Remaining step: conda-forge staged-recipes review, merge, and feedstock publication.
 
 ### Homebrew

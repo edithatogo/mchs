@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "asOf": "2026-05-25",
+    "asOf": "2026-05-26",
     "purpose": "Track every language/package registry through discovery, preparation, submission, and evidence capture without overclaiming publication.",
     "registries": [
         {
@@ -201,7 +201,8 @@
                 "tagBotWorkflow": "https://github.com/edithatogo/NwauCore.jl/blob/main/.github/workflows/TagBot.yml",
                 "tagBotCommit": "10bb54102537eda42887266550f55a0941a95ad8",
                 "followUpReviewComment": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535094697",
-                "remainingBlocker": "Original reviewer comment must be edited to include [noblock], resolved by reviewer, or otherwise cleared for AutoMerge."
+                "remainingBlocker": "Original reviewer comment must be edited to include [noblock], resolved by reviewer, or otherwise cleared for AutoMerge.",
+                "latestPoll": "2026-05-26: checks passed/skipped; PR open and mergeable, but label AutoMerge: last run blocked by comment remains because the original reviewer comment still lacks [noblock]."
             }
         },
         {
@@ -303,7 +304,8 @@
                 "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
                 "failClosedPublishCredentials": "Gradle Central Portal repository credentials are read from MAVEN_CENTRAL_USERNAME and MAVEN_CENTRAL_PASSWORD and fail closed when absent.",
                 "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
-                "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all"
+                "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
+                "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD."
             }
         },
         {
@@ -317,7 +319,7 @@
             "current_status": "submitted_branch_updated_checks_passing_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
-            "blocker": "conda-forge staged-recipes PR branch is updated and all linter/platform checks are passing; maintainer review, merge, and feedstock publication remain pending.",
+            "blocker": "conda-forge staged-recipes PR branch is updated at e6c8b9d632953263517de6a146783f3697fc450d; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed; maintainer review, merge, and feedstock publication remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://api.anaconda.org/package/conda-forge/nwau-py returned package not found.",
@@ -338,7 +340,8 @@
                 "commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
                 "state": "open_branch_updated_checks_passing_pending_review",
                 "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
-                "branchUpdate": "GitHub update-branch API accepted on 2026-05-26."
+                "branchUpdate": "GitHub update-branch API accepted on 2026-05-26.",
+                "latestPoll": "2026-05-26: PR #33452 open, mergeable, mergeStateStatus BLOCKED pending review; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed on head e6c8b9d632953263517de6a146783f3697fc450d."
             }
         },
         {
@@ -404,7 +407,9 @@
                 "credentialAttemptEvidence": "Open VSX login with GitHub succeeded, but token creation was refused until the Eclipse Foundation Open VSX Publisher Agreement is signed. Visual Studio Marketplace publisher page for edithatogo returned 404 under the current Microsoft session.",
                 "remainingExternalBlocker": "Open VSX requires Eclipse/Open VSX publisher agreement/token setup; Visual Studio Marketplace requires publisher identity and PAT.",
                 "repoPublicationEvidence": "integrations/vscode source scaffold committed to the public repository without the generated .vsix artifact.",
-                "manifestPolish": "package.json includes repository, homepage, bugs, keywords, files allowlist, and license file reference."
+                "manifestPolish": "package.json includes repository, homepage, bugs, keywords, files allowlist, and license file reference.",
+                "sourceScaffold": "integrations/vscode contains the extension source scaffold and publisher-ready metadata; generated .vsix remains intentionally uncommitted and must be produced during the authenticated publish step.",
+                "cleanPackaging": "integrations/vscode/package.json declares @vscode/vsce and ovsx devDependencies so npm install can provision packaging/publish CLIs from a clean checkout."
             }
         },
         {
@@ -459,10 +464,10 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "blocked_repo_side_c_abi_packaging_readiness",
+            "current_status": "draft_packaging_static_checked_with_conan_test_package_pending_full_validation_and_upstream_prs",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
-            "blocker": "nwau-core is published, but vcpkg and ConanCenter submissions are blocked by repo-side C ABI packaging readiness: placeholder immutable source metadata, no immutable C ABI archive/tag policy, unresolved package/ABI version policy, no vcpkg usage story, and no ConanCenter test_package.",
+            "blocker": "Draft vcpkg and Conan packaging files plus a Conan test_package harness are checked in and static-reviewed, but full vcpkg/Conan package builds, upstream vcpkg version metadata, and external PR/review workflows remain pending.",
             "localReadinessResolved": false,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -484,14 +489,16 @@
                 "conanRecipeLayout": "Conan recipe now exports the repository rust tree and LICENSE so self.source_folder/rust is valid during build.",
                 "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f.",
                 "toolAvailability": "conan and vcpkg are not installed in the current environment, so full local package validation could not be run.",
-                "validationCommandDocumentation": "packaging/README.md records exact non-publishing validation commands for Conan and vcpkg once toolchains are available."
+                "validationCommandDocumentation": "packaging/README.md records exact non-publishing validation commands for Conan and vcpkg once toolchains are available.",
+                "conanTestPackage": "packaging/conan/test_package contains a minimal CMake consumer harness for ConanCenter-style package validation."
             },
             "repoSideReadinessBlockers": {
                 "versionPolicy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
                 "sourceArchive": "Define immutable C ABI source tag and archive checksum policy.",
                 "vcpkg": "Replace placeholder vcpkg REF/SHA512 with immutable source metadata and add usage/support expectations.",
-                "conan": "Define ConanCenter layout with conandata.yml and test_package native consumer smoke test.",
-                "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions."
+                "conan": "ConanCenter layout now has a local test_package harness; upstream ConanCenter may still require conandata.yml and recipe-layout changes during review.",
+                "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions.",
+                "toolValidation": "Still pending: conan and vcpkg CLIs are unavailable in this environment, so package builds and overlay installs have not been executed."
             }
         }
     ],

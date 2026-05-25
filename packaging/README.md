@@ -51,8 +51,7 @@ registry recipes.
 - The vcpkg port pins an immutable repository commit and archive hash; add
   vcpkg registry version metadata in the upstream vcpkg repository when it is
   ready for submission.
-- Add the ConanCenter `test_package` harness and any required recipe layout
-  changes in the upstream ConanCenter index repository.
+- ConanCenter `test_package` harness now exists under `packaging/conan/test_package`; mirror or adapt it in the upstream ConanCenter index repository as required by reviewer policy.
 - Add a vcpkg usage file or CMake/pkg-config consumer story.
 - Run the required local and CI validation against the published
   `nwau-core` crate and the C ABI surface.
@@ -79,6 +78,7 @@ and port definitions without pushing anything upstream.
 
 - Conan recipe:
   - `conan create packaging/conan --build=missing`
+  - `conan test packaging/conan/test_package nwau-c-abi/0.1.0`
 - vcpkg port:
   - `vcpkg install nwau-c-abi --overlay-ports=packaging/vcpkg/ports`
 
@@ -86,5 +86,4 @@ and port definitions without pushing anything upstream.
 
 - `conan` is not installed in this environment.
 - `vcpkg` is not installed in this environment.
-- Because both tools are missing, I could not advance beyond the static review
-  of `packaging/conan/conanfile.py` and `packaging/vcpkg/ports/nwau-c-abi/`.
+- Because both tools are missing, I could not run the Conan recipe/test_package or the vcpkg overlay build in this environment.
