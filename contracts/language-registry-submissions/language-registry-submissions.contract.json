@@ -325,7 +325,7 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "pyproject.toml",
-            "current_status": "submitted_checks_passing_pending_conda_forge_review",
+            "current_status": "submitted_branch_updated_checks_passed_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
             "blocker": "conda-forge staged-recipes PR #33452 is open and mergeable; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed on the refreshed branch. Maintainer review, merge, feedstock creation, and public Anaconda package propagation remain pending.",
@@ -340,7 +340,7 @@
                 "remainingExternalBlocker": "conda-forge maintainer review, merge, feedstock creation, and public Anaconda package propagation remain pending.",
                 "branchUpdateEvidence": "GitHub update-branch API accepted for conda-forge/staged-recipes PR 33452 on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1 observed after update.",
                 "postUpdateCheckState": "linter, aggregate staged-recipes, linux_64, osx_64, win_64, and check-skip all succeeded after branch update.",
-                "branchUpdate2": "GitHub PR update-branch accepted on 2026-05-26; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all succeeded after rerun."
+                "branchUpdate2": "GitHub PR update-branch accepted on 2026-05-26; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed after rerun."
             },
             "submissionEvidence": {
                 "type": "pull_request",
