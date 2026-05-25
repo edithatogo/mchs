@@ -65,8 +65,8 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - General registry PR: `https://github.com/JuliaRegistries/General/pull/156254`
 - Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156236`, `https://github.com/JuliaRegistries/General/pull/156235`, `https://github.com/JuliaRegistries/General/pull/156200`
 - Feedback addressed: reviewers agreed `NwauCore` was misleading and recommended a wrapper name; the active replacement uses `NationalWeightedActivityUnitWrapper`, README purpose/usage documentation, MIT license, and matching repo name.
-- Current state: open; registry consistency and treecheck checks passed; AutoMerge stopwatch is pending.
-- Remaining step: wait for General PR `#156254` AutoMerge/merge and public registry propagation. Closing superseded PRs was denied by GitHub permissions, so `[noblock]` superseded comments were posted at `#156236`, `#156235`, and `#156200`.
+- Current state: open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed.
+- Remaining step: wait for General PR `#156254` merge and public registry propagation. Closing superseded PRs was denied by GitHub permissions, so `[noblock]` superseded comments were posted at `#156236`, `#156235`, and `#156200`.
 
 ### Go module proxy / pkg.go.dev
 
@@ -138,9 +138,10 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Local validation: Conan `conan create packaging/conan --build=missing` and `conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing` passed against the dedicated archive; vcpkg overlay install passed for `nwau-c-abi:arm64-osx@0.1.0` with release/debug libraries, usage text, and copyright installed.
 - vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
-- ConanCenter fork update: commit `d8cbc1de` fixes ConanCenter review risks for Cargo Release/Debug profile mapping, static/shared package separation, and portable `test_package` execution.
-- ConanCenter PR state: submitted and waiting on maintainer job-scheduler approval before upstream CI/publication can be claimed. Maintainer job request posted at `https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528`.
+- ConanCenter fork updates: commit `d8cbc1de` fixes ConanCenter review risks for Cargo Release/Debug profile mapping, static/shared package separation, and portable `test_package` execution; commit `0e7d9052` changes the C smoke test pointer comparison from `0` to `NULL`.
+- ConanCenter validation after `0e7d9052`: `conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing` and `conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing` both passed.
+- ConanCenter PR state: submitted and waiting on maintainer job-scheduler approval plus CLA Assistant legal acceptance before upstream CI/publication can be claimed. Maintainer job request posted at `https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528`.
 - vcpkg fork update: commit `58ff86fe` adds Rust target-triple mapping, honors `VCPKG_LIBRARY_LINKAGE`, installs a `nwau-c-abi::nwau-c-abi` CMake config target, excludes Android, and regenerates vcpkg version metadata.
 - vcpkg maintainer guidance request: `https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4535415243`.
-- vcpkg PR state: submitted, but CI fails where `cargo` is unavailable; local investigation found no first-class vcpkg Rust/Cargo acquisition helper or Rust toolchain port.
+- vcpkg PR state: submitted, but CI fails where `cargo` is unavailable on macOS, Linux, and Windows triplets; Android lanes succeeded and are not the blocker. Local investigation found no first-class vcpkg Rust/Cargo acquisition helper or Rust toolchain port.
 - Required submission steps: wait for upstream ConanCenter review/merge; resolve vcpkg Cargo/toolchain policy and Microsoft CLA legal acceptance before vcpkg publication can be claimed.

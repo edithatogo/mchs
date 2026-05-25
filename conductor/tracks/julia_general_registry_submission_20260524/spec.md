@@ -31,9 +31,9 @@ was misleading for a thin wrapper. The active replacement package is
 `Pkg.instantiate()` and `Pkg.test()` passed locally, tag `v0.1.0` points to
 commit `56ddec5ae29513e80717d4625f82c024a211c949`, and Registrator opened
 General PR `https://github.com/JuliaRegistries/General/pull/156254`.
-Registry consistency and treecheck pass on the replacement General PR; the
-remaining blocker is AutoMerge stopwatch, merge, and public registry
-propagation.
+Registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks pass
+on the replacement General PR; the remaining blocker is General merge and
+public registry propagation.
 
 The superseded PRs `#156236`, `#156235`, and `#156200` could not be closed by
 this account because GitHub denied `ClosePullRequest`; `[noblock]` superseded
@@ -46,7 +46,7 @@ comments were posted instead.
 - Test result: `NationalWeightedActivityUnitWrapper` tests passed with command assembly and missing input guard testsets.
 - License: MIT license present in the Julia package top-level folder.
 - Feedback addressed: package name is `NationalWeightedActivityUnitWrapper`, public repository is `NationalWeightedActivityUnitWrapper.jl`, and tag `v0.1.0` points to `56ddec5ae29513e80717d4625f82c024a211c949`.
-- Remaining external blocker: General AutoMerge stopwatch, merge, and public registry propagation.
+- Remaining external blocker: General merge and public registry propagation.
 
 ## Submission Evidence
 
@@ -57,7 +57,7 @@ comments were posted instead.
 - Registrator trigger issue: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1`
 - General registry PR: `https://github.com/JuliaRegistries/General/pull/156254`
 - Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156236`, `https://github.com/JuliaRegistries/General/pull/156235`, `https://github.com/JuliaRegistries/General/pull/156200`
-- State: open, registry consistency and treecheck passing; AutoMerge stopwatch pending.
+- State: open, registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; merge and propagation pending.
 - Release notes comment: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457`
 - Registrator update confirmation: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535381791`
 - TagBot workflow: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/.github/workflows/TagBot.yml`
