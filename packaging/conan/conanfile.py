@@ -1,4 +1,5 @@
 import os
+from typing import ClassVar
 
 from conan import ConanFile
 from conan.tools.files import copy, get
@@ -14,8 +15,11 @@ class NwauCAbiConan(ConanFile):
     description = "C ABI scaffold for MCHS/NWAU interoperability."
     topics = ("health-economics", "nwau", "c-abi", "rust")
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options: ClassVar[dict[str, list[bool]]] = {
+        "shared": [True, False],
+        "fPIC": [True, False],
+    }
+    default_options: ClassVar[dict[str, bool]] = {"shared": False, "fPIC": True}
     package_type = "library"
 
     def config_options(self):
