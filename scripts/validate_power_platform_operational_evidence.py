@@ -468,10 +468,18 @@ def _validate_tenant_cli_observation(
         data["targetEnvironment"]["activeInPac"] is True,
         f"{path}: target environment must be marked active in PAC",
     )
+    _require(
+        data["claimBoundary"]["targetEnvironmentAccessConfirmed"] is True,
+        f"{path}: target environment access claim must be explicit",
+    )
     connector = data["connectorObservation"]
     _require(
         connector["customConnectorDefinitionObserved"] is True,
         f"{path}: custom connector definition must be observed",
+    )
+    _require(
+        data["claimBoundary"]["customConnectorDefinitionObserved"] is True,
+        f"{path}: custom connector definition claim must be explicit",
     )
     _require(
         connector["connectorId"] == expected_connector_id,
@@ -486,8 +494,17 @@ def _validate_tenant_cli_observation(
         f"{path}: connector must match the expected service-boundary connector",
     )
     _require(
+        connector["connectorType"] == "CustomConnector",
+        f"{path}: connector type must be CustomConnector",
+    )
+    _require(
         connector["customConnectorConnectionObserved"] is False,
         f"{path}: custom connector connection must remain false until observed",
+    )
+    _require(
+        data["connectionObservation"]["targetEnvironmentDataverseConnectionObserved"]
+        is True,
+        f"{path}: target environment Dataverse connection must be observed",
     )
     _require(
         data["connectionObservation"]["serviceBoundaryConnectionReferenceResolved"]
@@ -590,7 +607,11 @@ def main() -> int:
         publication,
         deployment,
     )
-    expected_connector = connections["requiredConnectionReferences"][0]["connectorId"]
+    expected_connector = next(
+        ref["connectorId"]
+        for ref in connections["requiredConnectionReferences"]
+        if ref["logicalName"] == "mchs_service_boundary"
+    )
     _validate_tenant_cli_observation(
         tenant_cli_observation,
         TENANT_CLI_OBSERVATION,
