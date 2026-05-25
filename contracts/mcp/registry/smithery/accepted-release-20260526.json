@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "evidence_type": "smithery_mcpb_republish_evidence",
-  "as_of": "2026-05-26T00:59:22+10:00",
+  "as_of": "2026-05-26T01:06:00+10:00",
   "qualified_name": "edithatogo/mchs",
-  "status": "accepted_registry_release_backend_updated_runtime_unresolved",
+  "status": "accepted_registry_backend_updated_connection_smoke_passed_runtime_url_unresolved",
   "publish_command": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
   "accepted_release": {
     "deployment_id": "9eb5d712-5258-4d91-8eff-a0245bd40826",
@@ -83,7 +83,23 @@
     "search_listing_visible": false,
     "hosted_streamable_http_published": false,
     "docker_catalog_published": false,
-    "all_registry_publications_completed": false
+    "all_registry_publications_completed": false,
+    "smithery_connection_smoke_passed": true,
+    "temporary_connection_removed": true
   },
-  "tracking_issue": "https://github.com/edithatogo/mchs/issues/151"
+  "tracking_issue": "https://github.com/edithatogo/mchs/issues/151",
+  "connection_smoke_observation": {
+    "observed_at": "2026-05-26T01:06:00+10:00",
+    "connection_id": "mchs-ci-smoke",
+    "namespace": "edithatogo",
+    "command_environment": "PATH=/tmp/mchs-smithery-evidence/.venv/bin:$PATH smithery mcp add edithatogo/mchs --id mchs-ci-smoke --namespace edithatogo --force --json",
+    "mcp_url": "https://mcp.smithery.run/edithatogo/mchs-ci-smoke",
+    "rest_url": "https://smithery.run/edithatogo/mchs-ci-smoke",
+    "tool_list_command": "smithery tool list mchs-ci-smoke --namespace edithatogo --flat --limit 100",
+    "tool_list_returned_tool_count": 6,
+    "tool_call_command": "smithery tool call mchs-ci-smoke mchs.list_calculators {\"year\":\"2026\"} --namespace edithatogo --json",
+    "tool_call_result": "succeeded with empty calculator list payload []",
+    "cleanup": "temporary connection mchs-ci-smoke removed after smoke test",
+    "local_environment_note": "Initial attempt failed with the default conda Python due to a pydantic/pydantic_core import mismatch; using the project uv environment resolved the local command."
+  }
 }
