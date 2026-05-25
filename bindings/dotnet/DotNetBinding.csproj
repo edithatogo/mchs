@@ -4,7 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <PackageId>Mchs.Bindings.DotNet</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>MCHS</Authors>
+    <Description>DotNet binding command-line adapter for the MCHS microcosting health services toolkit.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/edithatogo/mchs</RepositoryUrl>
     <RootNamespace>Mchs.Bindings.DotNet</RootNamespace>
     <AssemblyName>Mchs.Bindings.DotNet</AssemblyName>
   </PropertyGroup>
