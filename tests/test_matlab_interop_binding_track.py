@@ -152,7 +152,6 @@ def test_matlab_interop_binding_metadata_docs_and_contract_bundle_are_conservati
     }
 
 
-
 def test_matlab_interop_binding_preserves_provenance_without_formula_logic():
     bundle = _load_json(CONTRACT_BUNDLE)
     diagnostics = _as_mapping(bundle["diagnostics"])
@@ -208,8 +207,7 @@ def test_matlab_interop_binding_adapter_is_concrete_file_cli_boundary_only():
             and "vendor" not in path.parts
             and "node_modules" not in path.parts
             and "target" not in path.parts
-            and path.suffix
-            in {".md", ".txt", ".json", ".m", ".mat", ".yaml", ".yml"}
+            and path.suffix in {".md", ".txt", ".json", ".m", ".mat", ".yaml", ".yml"}
         )
     ).lower()
 

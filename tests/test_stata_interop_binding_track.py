@@ -198,7 +198,7 @@ def test_stata_ado_exposes_concrete_transport_adapter_without_formula_logic():
         "program define _mchs_validate, rclass",
         "syntax using/ [, clear saveas(string asis) replace]",
         "syntax using/ , calculator(string) year(string) output(string asis)",
-        "local cli \"funding-calculator\"",
+        'local cli "funding-calculator"',
         "shell `cmd'",
         "import delimited using",
         "confirm file",
@@ -244,8 +244,7 @@ def test_stata_interop_scaffold_is_thin_and_non_formula():
             and "vendor" not in path.parts
             and "node_modules" not in path.parts
             and "target" not in path.parts
-            and path.suffix
-            in {".md", ".txt", ".json", ".do", ".ado", ".yaml", ".yml"}
+            and path.suffix in {".md", ".txt", ".json", ".do", ".ado", ".yaml", ".yml"}
         )
     ).lower()
 
