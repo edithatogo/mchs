@@ -73,3 +73,13 @@ required.
 - No formula logic is implemented in the HTTP adapter.
 - No Smithery publication is claimed until a Smithery listing or submission
   record exists.
+
+## 2026-05-26 Connection Smoke Update
+
+A temporary Smithery connection smoke test passed for the published
+`edithatogo/mchs` stdio bundle when the local command used the project `uv`
+environment. Tool listing returned all six MCHS tools and a read-only
+`mchs.list_calculators` call succeeded. The temporary connection was removed
+after the test. This narrows Smithery readiness risk to the plain CDN-cached
+registry URL and the CLI-reported `run.tools` runtime URL; it no longer indicates
+a bundle/tool-schema execution failure.

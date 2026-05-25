@@ -65,3 +65,25 @@ registry request returned bundle URL
 and all six tools. Remaining unresolved surfaces are the plain CDN-cached
 registry endpoint and `https://mchs--edithatogo.run.tools`, which still returned
 `404` with `x-smithery-error: server_not_found`.
+
+## Connection Smoke Evidence
+
+On 2026-05-26T01:06:00+10:00, a temporary Smithery connection
+`mchs-ci-smoke` was created in namespace `edithatogo` using the published
+`edithatogo/mchs` bundle. The first attempt exposed a local shell issue: the
+machine default conda Python had a mismatched `pydantic` / `pydantic_core`
+install. Retrying with the project `uv` environment first on `PATH` initialized
+successfully.
+
+Successful smoke evidence:
+
+- `smithery tool list mchs-ci-smoke --namespace edithatogo --flat --limit 100`
+  returned all six MCHS tools.
+- `smithery tool call mchs-ci-smoke mchs.list_calculators '{"year":"2026"}'
+  --namespace edithatogo --json` succeeded with the expected empty list payload
+  for that year.
+- The temporary connection `mchs-ci-smoke` was removed after the smoke test.
+
+This confirms Smithery can connect to and execute the stdio bundle through the
+CLI when the local Python environment is healthy. It does not close the separate
+plain CDN cache or `https://mchs--edithatogo.run.tools` runtime URL issue.
