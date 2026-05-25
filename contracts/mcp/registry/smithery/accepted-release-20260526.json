@@ -11,6 +11,10 @@
     "mcp_url": "https://mchs--edithatogo.run.tools",
     "status_url": "https://smithery.ai/servers/edithatogo/mchs/releases"
   },
+  "additional_accepted_republish_releases": [
+    "54be0e8b-a018-4fb1-b76f-3b89ff3e6ccd",
+    "06472680-7f3b-4a68-a56c-ed5a909e06be"
+  ],
   "bundle": {
     "path": "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb",
     "sha256": "bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d",

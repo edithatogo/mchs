@@ -298,11 +298,11 @@
                 "fixedLocalBlocker": "The JVM binding module is under bindings/jvm and uses a Java 11 toolchain for Maven Central readiness.",
                 "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, Gradle publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.",
                 "jvmModule": "bindings/jvm",
-                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, required POM metadata, Central Portal repository configuration via environment variables, and in-memory PGP signing via environment variables.",
+                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, required POM metadata, a single Central Portal deployment repository configured only when a deploy URL is explicitly provided, and in-memory PGP signing via Gradle properties or environment variables.",
                 "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
-                "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository wired with PasswordCredentials and fails closed without credentials.",
+                "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository only when -PcentralPortalDeployUrl or MAVEN_CENTRAL_DEPLOY_URL is present; publish tasks fail closed without URL, credentials, and signing key.",
                 "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
-                "failClosedPublishCredentials": "Gradle Central Portal repository credentials are read from MAVEN_CENTRAL_USERNAME and MAVEN_CENTRAL_PASSWORD and fail closed when absent.",
+                "failClosedPublishCredentials": "Gradle Central Portal repository URL and credentials are read from Gradle properties or environment variables and fail closed when absent.",
                 "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
                 "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
                 "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD."
@@ -420,17 +420,20 @@
             "package": "mchs-matlab-interop",
             "version": "0.1.0",
             "local_surface": "contracts/matlab-interop-binding",
-            "current_status": "prepared_pending_toolbox_packaging_and_file_exchange_upload",
+            "current_status": "blocked_missing_repo_artifacts_pending_toolbox_packaging_and_file_exchange_upload",
             "track": "matlab_file_exchange_submission_20260524",
             "submission_url": null,
-            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow.",
-            "localReadinessResolved": true,
+            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; the previously referenced MATLAB bundle and contract artifacts are not present in this commit tree, so repo-side readiness is not claimed.",
+            "localReadinessResolved": false,
             "preparationEvidence": {
                 "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
                 "bundle": "bindings/matlab/mchs-matlab-interop-0.1.0.zip",
+                "bundlePresentInCommitTree": false,
+                "contractPresentInCommitTree": false,
                 "sha256": "3ab598b37a17e668d6c96b6352473b33410684ef49128cb3f876f21dae69d1e4",
                 "bundleContents": "mchs/README.md, mchs/validateInput.m, file-exchange-submission.json",
                 "tooling": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed.",
+                "remainingRepoBlocker": "Add the MATLAB bundle/contract artifacts or revise the track to artifact-free File Exchange preparation before claiming local readiness.",
                 "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow."
             }
         },
@@ -442,17 +445,20 @@
             "package": "mchs-stata-interop",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
-            "current_status": "prepared_pending_ado_package_review_and_ssc_submission",
+            "current_status": "blocked_missing_repo_artifacts_pending_ado_package_review_and_ssc_submission",
             "track": "stata_ssc_submission_20260524",
             "submission_url": null,
-            "blocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed.",
-            "localReadinessResolved": true,
+            "blocker": "SSC distribution requires maintainer submission/review; the previously referenced Stata bundle and contract artifacts are not present in this commit tree, so repo-side readiness is not claimed.",
+            "localReadinessResolved": false,
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
                 "bundle": "bindings/stata/mchs-stata-interop-0.1.0.zip",
+                "bundlePresentInCommitTree": false,
+                "contractPresentInCommitTree": false,
                 "sha256": "496ca01f9b39628b57df2f0de6be0fa7f99f4dd7c097b36245feeea6024ca82f",
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
+                "remainingRepoBlocker": "Add the Stata ado/help bundle and contract artifacts or revise the track to artifact-free preparation before claiming local readiness.",
                 "remainingExternalBlocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed."
             }
         },
@@ -495,8 +501,8 @@
             "repoSideReadinessBlockers": {
                 "versionPolicy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
                 "sourceArchive": "Define immutable C ABI source tag and archive checksum policy.",
-                "vcpkg": "Replace placeholder vcpkg REF/SHA512 with immutable source metadata and add usage/support expectations.",
-                "conan": "ConanCenter layout now has a local test_package harness; upstream ConanCenter may still require conandata.yml and recipe-layout changes during review.",
+                "vcpkg": "vcpkg REF/SHA512 and a draft usage file exist; upstream vcpkg version metadata and full overlay validation remain pending.",
+                "conan": "Local conandata.yml and test_package harness exist; replace the placeholder source checksum and adapt to ConanCenter layout during review.",
                 "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions.",
                 "toolValidation": "Still pending: conan and vcpkg CLIs are unavailable in this environment, so package builds and overlay installs have not been executed."
             }

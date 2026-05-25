@@ -32,8 +32,9 @@ submission.
 - The vcpkg scaffold uses `vcpkg_from_github`, but the source reference and
   checksum still need to be replaced with reviewable immutable release
   metadata.
-- The Conan scaffold still exports local source and must be converted to
-  ConanCenter layout before submission.
+- The Conan scaffold still exports local source. `conandata.yml` and
+  `test_package` are present as review-prep artifacts, but the recipe must be
+  converted to full ConanCenter layout before submission.
 - Do not submit upstream until archive-based builds pass from clean registry
   checkouts.
 
@@ -52,7 +53,7 @@ registry recipes.
   vcpkg registry version metadata in the upstream vcpkg repository when it is
   ready for submission.
 - ConanCenter `test_package` harness now exists under `packaging/conan/test_package`; mirror or adapt it in the upstream ConanCenter index repository as required by reviewer policy.
-- Add a vcpkg usage file or CMake/pkg-config consumer story.
+- vcpkg usage guidance now exists under `packaging/vcpkg/ports/nwau-c-abi/usage`; add a complete CMake/pkg-config consumer story before upstream submission.
 - Run the required local and CI validation against the published
   `nwau-core` crate and the C ABI surface.
 - Submit upstream PRs to vcpkg and ConanCenter, then wait for review and
@@ -62,9 +63,10 @@ registry recipes.
 
 - No crates.io publication blocker remains for `nwau-core`.
 - Align or explicitly document package-version versus ABI-version semantics.
-- Define the immutable C ABI source tag and archive checksum policy.
-- Add a native C/C++ consumer smoke test that includes `nwau_abi.h`, links
-  `nwau_c_abi`, and calls harmless version/status functions.
+- Replace the placeholder Conan `conandata.yml` checksum with a real immutable
+  source archive SHA256.
+- The native C/C++ consumer smoke test exists in `packaging/conan/test_package`;
+  execute it with Conan before submission.
 - Record clean archive-based vcpkg and Conan validation before upstream
   submissions.
 - The remaining work is the missing upstream packaging submission flow and any

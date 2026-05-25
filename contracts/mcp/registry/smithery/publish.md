@@ -50,3 +50,13 @@ API propagation or runtime URL readiness until a later observation shows
 release `9eb5d712-5258-4d91-8eff-a0245bd40826` or equivalent refreshed
 metadata and a resolvable runtime surface. External tracking issue:
 `https://github.com/edithatogo/mchs/issues/151`.
+
+Additional authenticated republish attempts on 2026-05-26 were also accepted:
+
+- `54be0e8b-a018-4fb1-b76f-3b89ff3e6ccd`
+- `06472680-7f3b-4a68-a56c-ed5a909e06be`
+
+Post-republish probes still showed unresolved public surfaces: the plain
+registry endpoint remained cached to an older zero-tool bundle, CLI search did
+not return `edithatogo/mchs`, and `https://mchs--edithatogo.run.tools` still
+returned `404` with `x-smithery-error: server_not_found`.

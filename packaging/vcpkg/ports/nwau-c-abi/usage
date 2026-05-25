@@ -1,0 +1,11 @@
+nwau-c-abi provides the C ABI header and native library for MCHS/NWAU interop.
+
+In C or C++ consumers, include the header and link the generated library:
+
+  #include <nwau_abi.h>
+
+  int major = nwau_abi_version_major();
+
+CMake package metadata is not yet installed by this draft port. Until that is
+added, vcpkg consumers should treat this as a local overlay-readiness artifact,
+not a complete upstream vcpkg port.

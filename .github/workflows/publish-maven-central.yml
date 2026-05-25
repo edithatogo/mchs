@@ -32,12 +32,13 @@ jobs:
         env:
           CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
           CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
+          CENTRAL_PORTAL_DEPLOY_URL: ${{ secrets.CENTRAL_PORTAL_DEPLOY_URL }}
           SIGNING_KEY: ${{ secrets.MAVEN_SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
         run: |
           set -euo pipefail
           missing=0
-          for name in CENTRAL_PORTAL_USERNAME CENTRAL_PORTAL_PASSWORD SIGNING_KEY SIGNING_PASSWORD; do
+          for name in CENTRAL_PORTAL_USERNAME CENTRAL_PORTAL_PASSWORD CENTRAL_PORTAL_DEPLOY_URL SIGNING_KEY SIGNING_PASSWORD; do
             if [ -z "${!name}" ]; then
               echo "Missing required secret: $name" >&2
               missing=1
@@ -54,6 +55,7 @@ jobs:
         env:
           CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
           CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
+          CENTRAL_PORTAL_DEPLOY_URL: ${{ secrets.CENTRAL_PORTAL_DEPLOY_URL }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.MAVEN_SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
         run: |
@@ -62,6 +64,7 @@ jobs:
             -p bindings/jvm
             publishAllPublicationsToCentralPortalRepository
             --console=plain
+            -PcentralPortalDeployUrl="$CENTRAL_PORTAL_DEPLOY_URL"
             -PcentralPortalUsername="$CENTRAL_PORTAL_USERNAME"
             -PcentralPortalPassword="$CENTRAL_PORTAL_PASSWORD"
           )
