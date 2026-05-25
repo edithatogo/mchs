@@ -16,6 +16,7 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTRACT = (
@@ -41,11 +42,13 @@ PUBLIC_PROBES = {
 
 
 def fetch(url: str) -> dict[str, Any]:
+    if urlparse(url).scheme != "https":
+        return {"url": url, "error": "unsupported_scheme"}
     request = urllib.request.Request(
         url, headers={"User-Agent": "mchs-registry-gate-report/1.0"}
     )
     try:
-        with urllib.request.urlopen(request, timeout=20) as response:
+        with urllib.request.urlopen(request, timeout=20) as response:  # nosec B310
             body = response.read(2_000_000).decode("utf-8", errors="replace")
             return {"url": url, "http_status": response.status, "body": body[:10_000]}
     except urllib.error.HTTPError as exc:
