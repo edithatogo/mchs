@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "publication",
   "priority": "near-term",
-  "current_state": "published-to-smithery-public-api-and-cli-smoke-verified-search-runtime-not-claimed",
+  "current_state": "published-to-smithery-public-api-metadata-and-cli-smoke-verified-search-runtime-not-claimed",
   "primary_contract": "contracts/mcp/registry/smithery-readiness-contract.md",
   "dependencies": [
     "mcp_server_registry_submission_20260516",
@@ -25,8 +25,8 @@
     "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb",
     "contracts/mcp/registry/smithery/accepted-release-20260526.json"
   ],
-  "publication_status": "published-stdio-bundle-public-api-and-cli-smoke-verified-search-runtime-not-claimed",
+  "publication_status": "published-stdio-bundle-public-api-metadata-and-cli-smoke-verified-search-runtime-not-claimed",
   "created_at": "2026-05-17T05:34:46Z",
-  "updated_at": "2026-05-26T02:11:05+10:00",
-  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery. Latest stdio MCPB release is accepted, public API discovery is verified, and a refreshed uv-backed Smithery CLI connection smoke passed; search indexing and hosted runtime are not claimed."
+  "updated_at": "2026-05-26T02:42:54+10:00",
+  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery. Latest stdio MCPB release is accepted, public API discovery and listing metadata are verified, and a refreshed uv-backed Smithery CLI connection smoke passed; search indexing and hosted runtime are not claimed."
 }

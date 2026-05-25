@@ -5,7 +5,7 @@ Status: accepted as stdio MCPB release
 republish is `355669d7-72a9-441e-87de-4682260335cc`; unauthenticated public API
 and cache-bypassed registry probes return that release with all six tools.
 Search indexing remains stale and the hosted runtime URL is not claimed because
-the Smithery listing is a stdio bundle (`remote=false`, `deploymentUrl=null`). Upstream tracking: `https://github.com/smithery-ai/cli/issues/780`.
+the Smithery listing is a stdio bundle (`remote=false`, `deploymentUrl=null`). Public metadata was refreshed on 2026-05-26 so the direct Smithery API record now has display name `MCHS`, an MCHS/NWAU description, homepage `https://github.com/edithatogo/mchs`, and license `MIT`. Upstream tracking: `https://github.com/smithery-ai/cli/issues/780`.
 
 ## Endpoint
 
@@ -129,3 +129,19 @@ expected empty calculator list payload for 2026. `smithery mcp search mchs
 so search indexing remains the only Smithery discovery caveat. Public API
 discovery and direct CLI connection smoke remain the authoritative publication
 evidence for the stdio bundle.
+
+## Metadata Refresh
+
+On 2026-05-26T02:42:54+10:00, the Smithery server metadata was updated through
+`PATCH https://api.smithery.ai/servers/edithatogo%2Fmchs`. The direct server API
+record now returns:
+
+- Display name: `MCHS`
+- Description: `Model Context Protocol server for MCHS/NWAU calculator discovery, schema lookup, request validation, calculation delegation, result explanation, and registry evidence.`
+- Homepage: `https://github.com/edithatogo/mchs`
+- License: `MIT`
+
+This addresses the empty-description metadata defect on the direct listing.
+`smithery mcp search mchs --json` still did not return `edithatogo/mchs`
+immediately after the metadata refresh, so search indexing remains an upstream
+or asynchronous Smithery surface rather than a local publication defect.
