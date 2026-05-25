@@ -32,7 +32,7 @@ When a server exists, use this registry order:
 | Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Published as `io.github.edithatogo/mchs` version `0.2.2`. |
 | Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Submitted to Docker MCP Registry in PR `https://github.com/docker/mcp-registry/pull/3595`; catalog publication remains unclaimed until merge or visible listing evidence exists. |
 | Glama | The server is open source or publicly reachable and should be indexed, inspected, and tested through a public discovery layer. | Eligible through official MCP Registry indexing; no separate authenticated submission is recorded. |
-| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Readiness implementation exists through `mchs-mcp-http` and `contracts/mcp/registry/smithery/`; submission remains unclaimed until public HTTPS hosting and Smithery scan/listing evidence exist. |
+| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Readiness implementation exists through `mchs-mcp-http` and `contracts/mcp/registry/smithery/`; Smithery accepted the stdio MCPB listing, while public HTTPS hosting remains optional future work. |
 
 Private or restricted healthcare deployments should use a private registry or
 internal catalog instead of the public official MCP Registry.
@@ -79,8 +79,11 @@ Routes:
 | `GET /healthz` | Public readiness probe with no private healthcare data. |
 | `GET /.well-known/mcp/server-card.json` | Static server-card metadata for Smithery scanner fallback. |
 
-Smithery publication must not be claimed until this adapter is reachable through
-public HTTPS and Smithery scan/listing evidence is recorded.
+Smithery stdio MCPB publication is already claimed through the accepted bundle
+evidence under `registry/smithery/`; it does not require public HTTPS hosting.
+URL-based Smithery publication through `mchs-mcp-http` remains a separate,
+optional future path and must not be claimed until this adapter is reachable
+through public HTTPS with Smithery scan/listing evidence.
 
 ## Docker MCP Registry Candidate
 
