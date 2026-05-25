@@ -89,8 +89,8 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 ### Maven Central
 
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
-- Local scaffold: `bindings/jvm` now contains a minimal JVM module with Gradle `maven-publish` and `signing` metadata for `io.github.edithatogo:mchs:0.1.0`.
-- Required steps: Central Portal namespace verification, signing key setup, publishing credentials, Gradle publish validation, staged release.
+- Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
+- Required steps: Central Portal namespace verification, signing key setup, publishing credentials, authenticated publish/release, and public Maven Central verification.
 
 ### conda-forge
 

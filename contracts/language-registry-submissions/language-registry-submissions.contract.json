@@ -283,19 +283,22 @@
             "package": "io.github.edithatogo:mchs",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/contracts/kotlin-native-binding microcosting_healthservices/contracts/scala-spark-binding",
-            "current_status": "jvm_module_scaffolded_pending_central_namespace_signing_and_release",
+            "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
             "track": "jvm_maven_central_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "Minimal JVM module and Maven publishing metadata are checked in, but Central Portal namespace, signing credentials, and authenticated release remain pending.",
+            "blocker": "Minimal JVM module, Maven publishing metadata, and Central Portal repository wiring are checked in and local build passed; namespace verification, signing credentials, publish credentials, and authenticated release remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "Maven Central search for g:io.github.edithatogo AND a:mchs returned numFound=0.",
                 "buildCommand": "gradle build",
                 "buildResult": "BUILD SUCCESSFUL",
                 "fixedLocalBlocker": "Adjusted Kotlin JVM toolchain from 17 to 11 to match the installed local JDK.",
-                "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, release credentials, local Gradle publish validation, and authenticated Central Portal release remain pending.",
+                "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, Gradle publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.",
                 "jvmModule": "microcosting_healthservices/bindings/jvm",
-                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, and required POM metadata."
+                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, and required POM metadata.",
+                "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
+                "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository wired with PasswordCredentials and fails closed without credentials.",
+                "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository."
             }
         },
         {
@@ -451,10 +454,10 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "draft_packaging_files_added_pending_validation_and_upstream_prs",
+            "current_status": "draft_packaging_static_checked_pending_full_validation_and_upstream_prs",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
-            "blocker": "Draft vcpkg and Conan packaging files are checked in, but upstream-ready validation, vcpkg version metadata, ConanCenter test_package, and external PR/review workflows remain pending.",
+            "blocker": "Draft vcpkg and Conan packaging files are checked in and static-checked, but full vcpkg/Conan package builds, ConanCenter test_package, upstream vcpkg version metadata, and external PR/review workflows remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -464,14 +467,17 @@
                 "buildCommand": "cargo build",
                 "buildResult": "Finished dev profile for nwau-c-abi v0.1.0.",
                 "fixedLocalBlocker": "Added version=0.1.0 to the nwau-core path dependency for publishable Cargo metadata.",
-                "remainingExternalBlocker": "Validate draft packaging files, replace draft vcpkg source metadata with immutable upstream values, add vcpkg registry version metadata, add ConanCenter test_package, then submit upstream PRs for review.",
+                "remainingExternalBlocker": "Run actual Conan/vcpkg package builds, add ConanCenter test_package, add upstream vcpkg registry version metadata, then submit upstream PRs for review.",
                 "cargoPackageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
                 "cargoPackageResult": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
                 "fixedDependencyBlocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
                 "resolvedExternalBlocker": "nwau-core@0.1.0 is published and verified on crates.io, so the prior crates.io dependency blocker is closed.",
                 "packagingReadinessDoc": "microcosting_healthservices/packaging/README.md records the remaining vcpkg and ConanCenter submission flow.",
                 "vcpkgPortfile": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/portfile.cmake",
-                "draftPackagingFiles": "Draft vcpkg portfile, vcpkg manifest, and Conan recipe were added as repo-side readiness artifacts."
+                "draftPackagingFiles": "Draft vcpkg portfile, vcpkg manifest, and Conan recipe were added as repo-side readiness artifacts.",
+                "vcpkgPortfilePin": "vcpkg portfile now pins an immutable source commit and real SHA512 instead of placeholder source metadata.",
+                "conanRecipeLayout": "Conan recipe now exports the repository rust tree and LICENSE so self.source_folder/rust is valid during build.",
+                "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f."
             }
         }
     ],
