@@ -1,6 +1,7 @@
+import os
+
 from conan import ConanFile
 from conan.tools.files import copy
-import os
 
 
 class NwauCAbiConan(ConanFile):
