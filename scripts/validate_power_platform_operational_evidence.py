@@ -13,6 +13,7 @@ CONNECTION_REFERENCES = (
 )
 FLOW_SMOKE_TEMPLATE = EVIDENCE / "flow-smoke-evidence-template.json"
 FLOW_SMOKE_EVIDENCE = EVIDENCE / "power-automate-flow-smoke-20260521.json"
+POWERAPP_RUNTIME_LAUNCH = EVIDENCE / "powerapp-runtime-launch-20260525.json"
 FLOW_ROOT = ROOT / "power-platform" / "flows"
 REQUIRED_MONITORING_FIELDS = (
     ("monitoring", "owner"),
@@ -389,11 +390,63 @@ def _validate_flow_smoke_contract(
         )
 
 
+def _validate_powerapp_runtime_launch(
+    data: dict,
+    path: Path,
+    publication: dict,
+    deployment: dict,
+) -> None:
+    _require(
+        data["evidenceType"] == "power_platform_powerapp_runtime_launch_attempt",
+        f"{path}: unexpected evidenceType",
+    )
+    _require(
+        data["status"].startswith("blocked"),
+        f"{path}: status must remain blocked until app runtime is reached",
+    )
+    _require(
+        data["targetEnvironment"]["environmentId"] == deployment["environmentId"],
+        f"{path}: target environment must match deployment-status environmentId",
+    )
+    optimized = publication["optimizedPublication"]
+    _require(
+        data["targetApp"]["appId"] == optimized["appId"],
+        f"{path}: target app must match optimized publication appId",
+    )
+    _require(
+        data["targetApp"]["playUrl"] == optimized["playUrl"],
+        f"{path}: target playUrl must match optimized publication playUrl",
+    )
+    runtime_state = data["observedRuntimeState"]
+    screenshot = ROOT / runtime_state["screenshot"]
+    _require(
+        screenshot.is_file() and screenshot.stat().st_size > 0,
+        f"{path}: runtime screenshot is missing or empty: {screenshot}",
+    )
+    _require(
+        runtime_state["finalTitle"] == "Sign in to your account",
+        f"{path}: blocked launch evidence must capture the sign-in title",
+    )
+    _require(
+        runtime_state["finalUrlHost"] == "login.microsoftonline.com",
+        f"{path}: blocked launch evidence must capture Microsoft sign-in host",
+    )
+    for claim in (
+        "appRuntimeReached",
+        "connectorBackedScreenExecuted",
+        "serviceBoundaryExecutionObserved",
+        "runtimeSmokePassed",
+        "productionReadinessClaimed",
+    ):
+        _require_false(data, claim, path)
+
+
 def main() -> int:
     publication = _json(CANVAS_APP_PUBLICATION)
     deployment = _json(EVIDENCE / "deployment-status.json")
     bundle = _json(EVIDENCE / "nsw-operational-readiness-bundle-template.json")
     runtime = _json(EVIDENCE / "runtime-smoke-evidence-template.json")
+    powerapp_runtime_launch = _json(POWERAPP_RUNTIME_LAUNCH)
     connections = _json(EVIDENCE / "connection-reference-evidence-template.json")
     endpoint = _json(EVIDENCE / "service-boundary-endpoint-template.json")
     monitoring = _json(EVIDENCE / "monitoring-dlp-evidence-template.json")
@@ -447,6 +500,12 @@ def main() -> int:
     _require(
         publication["claimBoundary"].get("productionReadinessClaimed") in (False, True),
         "canvas app publication evidence production readiness claim must be boolean",
+    )
+    _validate_powerapp_runtime_launch(
+        powerapp_runtime_launch,
+        POWERAPP_RUNTIME_LAUNCH,
+        publication,
+        deployment,
     )
     _require_list_contains(
         publication,

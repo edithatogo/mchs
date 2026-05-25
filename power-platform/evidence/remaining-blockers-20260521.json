@@ -54,7 +54,8 @@
       "supportingEvidence": [
         "power-platform/evidence/canvas-app-publication-20260520.json",
         "power-platform/evidence/deployment-status.json",
-        "power-platform/evidence/live-tenant-browser-sweep-20260524.json"
+        "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
+        "power-platform/evidence/powerapp-runtime-launch-20260525.json"
       ]
     }
   ],

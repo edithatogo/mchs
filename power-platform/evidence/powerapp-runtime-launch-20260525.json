@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_powerapp_runtime_launch_attempt",
+  "asOf": "2026-05-25T22:16:00+10:00",
+  "status": "blocked_app_player_auth_required",
+  "targetEnvironment": {
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "tenantId": "a687a7bf-02db-43df-bcbb-e7a8bda611a2"
+  },
+  "targetApp": {
+    "appId": "669d0089-8abe-4e94-ab50-aa69513a6cc4",
+    "source": "power-platform/evidence/canvas-app-publication-20260520.json optimizedPublication.appId",
+    "playUrl": "https://apps.powerapps.com/play/e/611bca65-0b2a-eaa1-9e74-23bbba8eeec4/a/669d0089-8abe-4e94-ab50-aa69513a6cc4?tenantId=a687a7bf-02db-43df-bcbb-e7a8bda611a2"
+  },
+  "captureMethod": {
+    "tool": "Playwright persistent Chrome profile launched from terminal",
+    "profile": "/tmp/mchs-playwright-chrome",
+    "tokenHandling": "no tokens were exported or written to disk; response URLs were host-redacted"
+  },
+  "observedRuntimeState": {
+    "initialPlayUrlStatus": 200,
+    "finalTitle": "Sign in to your account",
+    "finalUrlHost": "login.microsoftonline.com",
+    "authenticationTenant": "a687a7bf-02db-43df-bcbb-e7a8bda611a2",
+    "bodyTextCaptured": "",
+    "screenshot": "power-platform/evidence/screenshots/mchs-powerapp-runtime-auth-required-20260525.png"
+  },
+  "claimBoundary": {
+    "appRuntimeReached": false,
+    "connectorBackedScreenExecuted": false,
+    "serviceBoundaryExecutionObserved": false,
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  },
+  "blockerImpact": "The Power Apps player route accepts the optimized MCHS app URL but redirects to Microsoft sign-in before the app runtime is reached. No connector-backed screen execution or service-boundary request/response evidence can be claimed from this launch attempt.",
+  "remainingActions": [
+    "Authenticate the Power Apps player session for tenant a687a7bf-02db-43df-bcbb-e7a8bda611a2.",
+    "Relaunch the optimized MCHS app URL after player authentication completes.",
+    "Capture app runtime screen state and execute connector-backed operations once the app runtime is visible.",
+    "Bind or create the mchs-service-boundary connection before claiming service-boundary runtime smoke."
+  ]
+}
