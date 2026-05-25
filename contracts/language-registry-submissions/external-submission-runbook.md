@@ -14,13 +14,11 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 ### crates.io
 
 - Package: `nwau-core@0.1.0`
-- Required credential: crates.io API token via `cargo login` or `CARGO_REGISTRY_TOKEN`.
-- Credential/workflow status: `CARGO_REGISTRY_TOKEN` exists as a GitHub repository secret, and `.github/workflows/publish-registry-packages.yml` has a manual `workflow_dispatch` `cratesio` path that runs `cargo publish`.
-- Prepared command: `cargo publish --dry-run --allow-dirty --locked --manifest-path microcosting_healthservices/rust/crates/nwau-core/Cargo.toml`
-- Clean workflow note: commit and push the Rust crate state before dispatch; `cargo package --locked` without `--allow-dirty` fails in the current dirty worktree.
-- After publishing: verify `https://crates.io/api/v1/crates/nwau-core`.
-- Dependency note: publish `nwau-core` before attempting `nwau-c-abi` packaging/submission.
-- Safety note: rotate the crates.io token before publication because the original token was created through browser automation. After committing/pushing the Rust crate state and rotating the token, dispatch the `Publish registry packages` workflow with `registry=cratesio`.
+- Publication status: published and verified at `https://crates.io/crates/nwau-core/0.1.0`.
+- Public evidence: crates.io version API reports `created_at=2026-05-25T13:59:23.536614Z`, checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547`, and `yanked=false`.
+- Credential/workflow status: `.github/workflows/publish-registry-packages.yml` has a manual `workflow_dispatch` `cratesio` path. Dispatch run `https://github.com/edithatogo/mchs/actions/runs/26404356667` reported the version already existed on crates.io.
+- Dependency note: `nwau-core` is now available before `nwau-c-abi` packaging/submission.
+- Safety note: revoke or rotate the crates.io token now that publication is complete, because the original token was created through browser automation.
 
 ### NuGet
 
@@ -31,7 +29,8 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Prepared command: `dotnet nuget push microcosting_healthservices/bindings/dotnet/bin/Release/Mchs.Bindings.DotNet.0.1.0.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json`
 - Workflow dispatch: run the `Publish registry packages` workflow with `registry=nuget`.
 - Submission evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/26404217645` completed successfully and NuGet returned `Created` / `Your package was pushed`.
-- After publishing: verify `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json`. The endpoint still returned 404 after the initial propagation wait, so public listing evidence is pending.
+- Publication evidence: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json` returned HTTP 200 with version `0.1.0`.
+- Package page: `https://www.nuget.org/packages/Mchs.Bindings.DotNet/0.1.0`
 
 ### Open VSX / Visual Studio Marketplace
 
@@ -128,4 +127,4 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Prepared Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
 - Required first step: publish `nwau-core` to crates.io so `nwau-c-abi` can package with registry-resolvable dependencies.
 - Required submission steps: complete vcpkg `portfile.cmake`/version files and ConanCenter recipe packaging, then submit upstream PR/review workflows.
-- Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and `cargo package` for `nwau-c-abi` remains blocked until `nwau-core` is on crates.io.
+- Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and upstream registry PR/review workflows still need to be prepared now that `nwau-core` is available on crates.io.

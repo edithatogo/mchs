@@ -4,8 +4,8 @@ Language registry work is locally prepared where possible. Publication is intent
 
 | Registry | Package | Local state | External gate |
 | --- | --- | --- | --- |
-| crates.io | `nwau-core` | `cargo publish --dry-run --allow-dirty --locked` passed; `CARGO_REGISTRY_TOKEN` exists as GitHub secret; manual publish workflow exists | commit/push Rust crate state, rotate token before use, dispatch workflow with `registry=cratesio`, then verify public registry |
-| NuGet | `Mchs.Bindings.DotNet` | NuGet API accepted workflow push in run `26404217645`; public listing still 404 after initial propagation wait | wait for NuGet validation/indexing, then verify public flat-container/package page |
+| crates.io | `nwau-core` | published and verified at `https://crates.io/crates/nwau-core/0.1.0`; checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547` | complete; revoke or rotate the previously exposed crates token |
+| NuGet | `Mchs.Bindings.DotNet` | NuGet flat-container exposes `0.1.0` after workflow push in run `26404217645` | complete |
 | CRAN | `nwauR` | `R CMD build` and `R CMD check` passed | CRAN maintainer submission and review |
 | Julia General | `NwauCore` | `Pkg.test()` passed; registry consistency and treecheck passed; README/naming feedback answered with `[noblock]` comment after package repo README update | General PR #156236 merge and JuliaHub/registry propagation; re-register if reviewers require updated README in the tagged payload |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
@@ -16,7 +16,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | `.vsix` package exists | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
 | SSC / Stata package distribution | `mchs-stata-interop` | ado/help/pkg bundle exists | SSC maintainer submission and review |
-| vcpkg / ConanCenter | `nwau-c-abi` | vcpkg and Conan metadata exists | `nwau-core` crates.io publish, then registry PRs/review |
+| vcpkg / ConanCenter | `nwau-c-abi` | vcpkg and Conan metadata exists; `nwau-core` is now published on crates.io | complete portfile/recipe packaging, then registry PRs/review |
 
 Run `python scripts/language_registry_external_gate_report.py` from `microcosting_healthservices/` for the current gate list.
 
