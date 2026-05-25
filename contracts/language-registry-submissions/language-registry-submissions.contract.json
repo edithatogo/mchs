@@ -526,12 +526,15 @@
                 "vcpkgPortQualityFix": "Commit 58ff86fe on fork branch add-nwau-c-abi adds Rust target-triple mapping, honors VCPKG_LIBRARY_LINKAGE, installs a nwau-c-abi::nwau-c-abi CMake config target, excludes Android, and regenerates vcpkg version metadata.",
                 "vcpkgMaintainerGuidanceRequest": "Technical comment posted at https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4535415243 asking maintainers whether external cargo-on-PATH is acceptable or whether the port should wait for vcpkg-managed Rust toolchain infrastructure.",
                 "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
-                "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action."
+                "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action.",
+                "conanCenterMaintainerJobRequest": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
+                "conanCenterJobSchedulerState": "Job scheduler reports ACTION_REQUIRED; maintainer approval/scheduling requested after confirming local static/shared validations passed."
             },
             "repoSideReadinessBlockers": {
                 "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
                 "vcpkgCargoPolicy": "Resolve vcpkg Rust/Cargo toolchain policy or change to an accepted self-contained artifact strategy before vcpkg merge is realistic.",
-                "microsoftCla": "Microsoft CLA acceptance is a legal contributor action and is not performed by automation."
+                "microsoftCla": "Microsoft CLA acceptance is a legal contributor action and is not performed by automation.",
+                "conanCenterJobScheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed."
             }
         }
     ],
