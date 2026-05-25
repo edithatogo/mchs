@@ -85,3 +85,5 @@ class NwauCAbiConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["nwau_c_abi"]
+        self.cpp_info.set_property("cmake_file_name", "nwau-c-abi")
+        self.cpp_info.set_property("cmake_target_name", "nwau-c-abi::nwau-c-abi")
