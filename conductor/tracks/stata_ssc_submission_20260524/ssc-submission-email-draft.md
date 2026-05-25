@@ -40,7 +40,7 @@ Runtime note:
 The package has been prepared from the repository ado/help/pkg sources, but the repository environment used for packaging did not include a Stata executable, so no Stata runtime validation is claimed in the repository evidence.
 
 Best regards,
-[submitter name]
+Dylan Mordaunt
 ```
 
 Attachment:

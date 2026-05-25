@@ -532,6 +532,7 @@
                 "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
                 "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx, linux, and Windows triplets with cargo unavailable; Android jobs succeeded or were not the blocker; license/cla remains queued pending authorized contributor action.",
                 "conanCenterMaintainerJobRequest": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
+                "conanCenterPortableRunnerFollowUp": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535716273",
                 "conanCenterJobSchedulerState": "Job scheduler reports ACTION_REQUIRED; maintainer approval/scheduling requested after confirming local static/shared validations passed.",
                 "conanCenterClaPending": "ConanCenter PR #30262 head d3a07060 has CLA Assistant status pending; this is a legal contributor action and is not performed by automation."
             },
