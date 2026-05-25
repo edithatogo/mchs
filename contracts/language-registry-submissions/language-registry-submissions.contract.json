@@ -518,6 +518,7 @@
                 "conanCenterSharedValidation": "conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing passed from the ConanCenter fork branch.",
                 "localConanVariantValidation": "conan create packaging/conan --build=missing and conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing passed from the MCHS clean push clone after mirroring the ConanCenter recipe fixes.",
                 "vcpkgPortQualityFix": "Commit 58ff86fe on fork branch add-nwau-c-abi adds Rust target-triple mapping, honors VCPKG_LIBRARY_LINKAGE, installs a nwau-c-abi::nwau-c-abi CMake config target, excludes Android, and regenerates vcpkg version metadata.",
+                "vcpkgMaintainerGuidanceRequest": "Technical comment posted at https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4535415243 asking maintainers whether external cargo-on-PATH is acceptable or whether the port should wait for vcpkg-managed Rust toolchain infrastructure.",
                 "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
                 "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action."
             },
