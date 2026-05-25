@@ -16,7 +16,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | extension source scaffold committed; manifest is publisher-ready; generated `.vsix` intentionally not committed | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, package, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
 | SSC / Stata package distribution | `mchs-stata-interop` | ado/help/pkg bundle exists | SSC maintainer submission and review |
-| vcpkg / ConanCenter | `nwau-c-abi` | dedicated source archive exists; Conan static/shared builds and native `test_package` pass; vcpkg overlay install passes locally with CMake config target and linkage-aware artifacts; upstream vcpkg and ConanCenter PRs are open | ConanCenter maintainer job approval/review after job request comment; vcpkg Rust/Cargo toolchain policy plus Microsoft CLA before publication can be claimed |
+| vcpkg / ConanCenter | `nwau-c-abi` | dedicated source archive exists; Conan static/shared builds and native `test_package` pass; vcpkg overlay install passes locally with CMake config target and linkage-aware artifacts; upstream vcpkg and ConanCenter PRs are open | ConanCenter CLA plus maintainer job approval/review after job request comment; vcpkg Rust/Cargo toolchain policy plus Microsoft CLA before publication can be claimed |
 
 Run `python scripts/language_registry_external_gate_report.py` from `microcosting_healthservices/` for the current gate list.
 

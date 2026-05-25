@@ -482,7 +482,7 @@
             "current_status": "vcpkg_and_conancenter_prs_submitted_pending_upstream_review",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": "https://github.com/microsoft/vcpkg/pull/51965",
-            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed. vcpkg is additionally blocked by missing Cargo in CI and no first-class vcpkg Rust/Cargo acquisition helper; Microsoft CLA acceptance remains user/legal action only.",
+            "blocker": "vcpkg and ConanCenter PRs are submitted and archive-based validations pass locally; upstream review/merge workflows remain pending before publication can be claimed. vcpkg is additionally blocked by missing Cargo in CI and Microsoft CLA acceptance; ConanCenter is now blocked by CLA acceptance and maintainer job scheduling.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -528,13 +528,15 @@
                 "vcpkgRustToolchainFinding": "vcpkg_find_acquire_program has no CARGO/RUST/RUSTC helper, no rust/cargo toolchain port exists in the vcpkg ports tree, and microsoft/vcpkg#51965 CI fails where cargo is absent; a self-contained upstream vcpkg package requires vcpkg Rust toolchain support or a different artifact strategy.",
                 "vcpkgCiFailure": "microsoft.vcpkg.pr failed on arm64_osx and multiple Windows triplets with cargo unavailable; license/cla remains queued pending authorized contributor action.",
                 "conanCenterMaintainerJobRequest": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
-                "conanCenterJobSchedulerState": "Job scheduler reports ACTION_REQUIRED; maintainer approval/scheduling requested after confirming local static/shared validations passed."
+                "conanCenterJobSchedulerState": "Job scheduler reports ACTION_REQUIRED; maintainer approval/scheduling requested after confirming local static/shared validations passed.",
+                "conanCenterClaState": "CLAassistant reports not_signed/pending on conan-io/conan-center-index#30262; legal acceptance must be completed by the authorized contributor."
             },
             "repoSideReadinessBlockers": {
                 "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
                 "vcpkgCargoPolicy": "Resolve vcpkg Rust/Cargo toolchain policy or change to an accepted self-contained artifact strategy before vcpkg merge is realistic.",
                 "microsoftCla": "Microsoft CLA acceptance is a legal contributor action and is not performed by automation.",
-                "conanCenterJobScheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed."
+                "conanCenterJobScheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed.",
+                "conanCenterCla": "Complete ConanCenter CLA legal acceptance for conan-io/conan-center-index#30262 before the recipe can be accepted."
             }
         }
     ],

@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T02:45:00+10:00",
+  "updated_at": "2026-05-26T02:55:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
   "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; upstream review/merge remain pending before publication can be claimed.",
+  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; upstream review/merge remain pending, with ConanCenter now blocked by CLA acceptance plus job scheduling and vcpkg blocked by Rust toolchain policy plus Microsoft CLA.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -31,11 +31,13 @@
     "conan_center_pr": "https://github.com/conan-io/conan-center-index/pull/30262",
     "conan_center_validation": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
     "conan_center_job_scheduler_state": "ACTION_REQUIRED; maintainer approval/scheduling requested.",
-    "conan_center_maintainer_job_request": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528"
+    "conan_center_maintainer_job_request": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
+    "conan_center_cla_state": "CLAassistant reports not_signed/pending on conan-io/conan-center-index#30262; legal acceptance must be completed by the authorized contributor."
   },
   "repo_side_readiness_blockers": {
     "upstream_review": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
-    "conan_center_job_scheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed."
+    "conan_center_job_scheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed.",
+    "conan_center_cla": "Complete ConanCenter CLA legal acceptance before recipe acceptance can proceed."
   },
   "submission_url": "https://github.com/microsoft/vcpkg/pull/51965"
 }
