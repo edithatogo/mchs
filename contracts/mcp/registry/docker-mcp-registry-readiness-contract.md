@@ -12,8 +12,8 @@ before MCHS can be submitted to the Docker MCP Registry and Docker MCP Catalog.
 - `mchs-mcp` is published through `nwau-py` as a local stdio server.
 - `Dockerfile` provides a containerized stdio runtime candidate.
 - `contracts/mcp/registry/docker/` contains candidate Docker Registry metadata.
-- No Docker MCP Registry PR, Docker Catalog listing, or Docker Hub `mcp` image is
-  currently claimed.
+- Docker MCP Registry PR `https://github.com/docker/mcp-registry/pull/3799` is open, mergeable, and blocked on Docker maintainer review (`reviewDecision=REVIEW_REQUIRED`).
+- No Docker Catalog listing or Docker Hub `mcp` image publication is currently claimed.
 
 ## Docker MCP Registry Requirements Interpreted for MCHS
 
@@ -68,6 +68,6 @@ because the existing artifact is a local stdio MCP server.
   calls.
 - Docker Registry submission files exist and are validated against Docker's
   current tooling.
-- The Docker MCP Registry PR is opened or an explicit blocker is recorded.
+- The Docker MCP Registry PR is opened or an explicit blocker is recorded; current blocker is maintainer review on PR #3799.
 - No Docker MCP Catalog or Docker Hub `mcp` namespace publication is claimed
   until Docker review/merge evidence exists.

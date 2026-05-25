@@ -11,12 +11,12 @@ Language registry work is locally prepared where possible. Publication is intent
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed | public SPI listing/version evidence still pending |
 | Maven Central | `io.github.edithatogo:mchs` | JVM module builds locally; Maven publishing metadata and Central Portal repository wiring present; exact local checks are `gradle -p bindings/jvm tasks --all` and `gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run` | namespace verification, signing credentials, publish credentials, Central Portal release |
-| conda-forge | `nwau-py` | branch updated; linter and linux/osx/win platform builds passing on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | maintainer review, merge, and feedstock publication |
+| conda-forge | `nwau-py` | branch updated on PR `https://github.com/conda-forge/staged-recipes/pull/33452`; latest head `e6c8b9d632953263517de6a146783f3697fc450d` has linter/check-skip/linux passing while osx/win/aggregate checks are still running or queued | finish platform checks, maintainer review, merge, and feedstock publication |
 | Homebrew | `nwau-py` | personal tap published; audit, source install, and `brew test` pass with Click resource plus lazy CLI patch | optional Homebrew/core PR/review |
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | extension source scaffold committed; manifest is publisher-ready; generated `.vsix` intentionally not committed | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, package, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
 | SSC / Stata package distribution | `mchs-stata-interop` | ado/help/pkg bundle exists | SSC maintainer submission and review |
-| vcpkg / ConanCenter | `nwau-c-abi` | `cargo package --allow-dirty --locked` now resolves published `nwau-core`; vcpkg and Conan metadata exists | complete portfile/recipe packaging, then registry PRs/review |
+| vcpkg / ConanCenter | `nwau-c-abi` | `cargo package --allow-dirty --locked` now resolves published `nwau-core`; vcpkg and Conan metadata exists; static checks passed, but local `conan`/`vcpkg` CLIs were unavailable | full package builds, ConanCenter `test_package`, upstream vcpkg version metadata, then registry PRs/review |
 
 Run `python scripts/language_registry_external_gate_report.py` from `microcosting_healthservices/` for the current gate list.
 
