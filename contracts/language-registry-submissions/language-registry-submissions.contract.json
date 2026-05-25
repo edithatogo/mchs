@@ -316,10 +316,10 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "microcosting_healthservices/pyproject.toml",
-            "current_status": "submitted_branch_updated_platform_checks_in_progress_pending_review",
+            "current_status": "submitted_branch_updated_checks_passing_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
-            "blocker": "conda-forge staged-recipes PR branch is updated at e6c8b9d632953263517de6a146783f3697fc450d; linter, check-skip, and linux_64 passed, osx_64/win_64/aggregate staged-recipes were still running or queued at the latest poll; maintainer review, merge, and feedstock publication remain pending.",
+            "blocker": "conda-forge staged-recipes PR branch is updated at e6c8b9d632953263517de6a146783f3697fc450d; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed; maintainer review, merge, and feedstock publication remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://api.anaconda.org/package/conda-forge/nwau-py returned package not found.",
@@ -341,7 +341,7 @@
                 "state": "open_branch_updated_checks_passing_pending_review",
                 "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
                 "branchUpdate": "GitHub update-branch API accepted on 2026-05-26.",
-                "latestPoll": "2026-05-26: PR #33452 open, mergeable, mergeStateStatus BLOCKED while osx_64/win_64 and aggregate staged-recipes checks remain pending on head e6c8b9d632953263517de6a146783f3697fc450d."
+                "latestPoll": "2026-05-26: PR #33452 open, mergeable, mergeStateStatus BLOCKED pending review; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed on head e6c8b9d632953263517de6a146783f3697fc450d."
             }
         },
         {
