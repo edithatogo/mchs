@@ -1,10 +1,11 @@
 # Smithery Publication Runbook
 
 Status: accepted as stdio MCPB release
-`9eb5d712-5258-4d91-8eff-a0245bd40826` on 2026-05-26. A later
-cache-bypassed registry probe returned release
-`4824a436-6bb3-4fe7-bcd4-671d956924db` with all six tools, while the plain
-CDN-cached registry URL and Smithery runtime URL still required caution.
+`9eb5d712-5258-4d91-8eff-a0245bd40826` on 2026-05-26. The latest accepted
+republish is `355669d7-72a9-441e-87de-4682260335cc`; unauthenticated public API
+and cache-bypassed registry probes return that release with all six tools.
+Search indexing remains stale and the hosted runtime URL is not claimed because
+the Smithery listing is a stdio bundle (`remote=false`, `deploymentUrl=null`).
 
 ## Endpoint
 
@@ -58,13 +59,16 @@ Additional authenticated republish attempts on 2026-05-26 were also accepted:
 - `54be0e8b-a018-4fb1-b76f-3b89ff3e6ccd`
 - `06472680-7f3b-4a68-a56c-ed5a909e06be`
 - `4824a436-6bb3-4fe7-bcd4-671d956924db`
+- `355669d7-72a9-441e-87de-4682260335cc`
 
-After release `4824a436-6bb3-4fe7-bcd4-671d956924db`, a cache-bypassed
-registry request returned bundle URL
-`bc30c556-4078-4961-9d71-077bf535225f/4824a436-6bb3-4fe7-bcd4-671d956924db/server.mcpb`
-and all six tools. Remaining unresolved surfaces are the plain CDN-cached
-registry endpoint and `https://mchs--edithatogo.run.tools`, which still returned
-`404` with `x-smithery-error: server_not_found`.
+After release `355669d7-72a9-441e-87de-4682260335cc`, the public API and a
+cache-bypassed registry request returned bundle URL
+`bc30c556-4078-4961-9d71-077bf535225f/355669d7-72a9-441e-87de-4682260335cc/server.mcpb`
+and all six tools. Remaining unresolved surfaces are Smithery search indexing
+and `https://mchs--edithatogo.run.tools`, which still returned `404` with
+`x-smithery-error: server_not_found`; that runtime URL is expected to remain
+unavailable for stdio bundle publication unless a hosted remote deployment is
+configured.
 
 ## Connection Smoke Evidence
 
@@ -90,10 +94,10 @@ plain CDN cache or `https://mchs--edithatogo.run.tools` runtime URL issue.
 
 ## Public Discovery Closure
 
-On 2026-05-26T01:15+10:00, unauthenticated public discovery was verified through
-`https://api.smithery.ai/servers/edithatogo/mchs`. The response returned release
-`4824a436-6bb3-4fe7-bcd4-671d956924db`, the refreshed MCPB bundle URL, and all
-six MCHS tool schemas. The public Smithery page
+On 2026-05-26T01:41+10:00, unauthenticated public discovery was verified through
+`https://api.smithery.ai/servers/edithatogo/mchs`. The response returned latest
+release `355669d7-72a9-441e-87de-4682260335cc`, the refreshed MCPB bundle URL,
+and all six MCHS tool schemas. The public Smithery page
 `https://smithery.ai/servers/edithatogo/mchs` also included all six tool names.
 
 The older `https://registry.smithery.ai/servers/edithatogo/mchs` path remained

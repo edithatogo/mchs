@@ -17,7 +17,7 @@ required.
 - Static scanner fallback metadata is available at
   `/.well-known/mcp/server-card.json` when the HTTP adapter is hosted.
 - Smithery accepted local stdio MCPB releases for `edithatogo/mchs`; deployment ID `200f2fd3-86c4-4122-b3bf-98abe5aa62f1` and MCPB SHA256 `de353472d4a88848a9cb69fe1376f3d22deca97c72ca264d49eba1f09c056456` are recorded.
-- Public registry backend propagation is partially verified: a cache-bypassed registry request returned release `4824a436-6bb3-4fe7-bcd4-671d956924db` with all six MCHS tools. The plain CDN-cached registry endpoint and Smithery runtime URL resolution remain unresolved, so listing/runtime completion must not be overclaimed. The public HTTPS deliverables below still apply to URL-based Smithery publication and hosted scanner workflows.
+- Public registry backend propagation is verified through unauthenticated public API and cache-bypassed registry requests returning release `355669d7-72a9-441e-87de-4682260335cc` with all six MCHS tools. Smithery search indexing and hosted runtime URL resolution remain unresolved/not claimed for the stdio bundle, so search/runtime completion must not be overclaimed. The public HTTPS deliverables below still apply to URL-based Smithery publication and hosted scanner workflows.
 
 ## Smithery Requirements Interpreted for MCHS
 
@@ -87,8 +87,8 @@ a bundle/tool-schema execution failure.
 ## 2026-05-26 Public Discovery Closure
 
 Unauthenticated public discovery is verified through
-`https://api.smithery.ai/servers/edithatogo/mchs`, which returns the refreshed
-release and all six MCHS tools. The public Smithery page also exposes the tool
+`https://api.smithery.ai/servers/edithatogo/mchs`, which returns latest release
+`355669d7-72a9-441e-87de-4682260335cc` and all six MCHS tools. The public Smithery page also exposes the tool
 names. The legacy `registry.smithery.ai` endpoint and the CLI-reported
 `run.tools` URL remain stale, but they are no longer treated as blocking for the
 stdio MCPB publication path because public API discovery, page discovery, and
