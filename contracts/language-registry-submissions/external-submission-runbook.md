@@ -97,8 +97,9 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Package: `nwau-py==0.2.2`
 - Prepared recipe: `microcosting_healthservices/packaging/conda-forge/meta.yaml`
 - Submitted PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
-- Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points. The latest lint and platform build checks are passing.
-- Remaining step: pass conda-forge staged-recipes review, merge, and feedstock publication.
+- Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points.
+- Branch update: GitHub accepted an update-branch request on 2026-05-26; the linter is passing and platform builds are rerunning on head `e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1`.
+- Remaining step: wait for rerun platform builds, conda-forge staged-recipes review, merge, and feedstock publication.
 
 ### Homebrew
 
@@ -128,6 +129,6 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Package: `nwau-c-abi@0.1.0`
 - Prepared vcpkg port: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json`
 - Prepared Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
-- Required first step: publish `nwau-core` to crates.io so `nwau-c-abi` can package with registry-resolvable dependencies.
+- Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
 - Required submission steps: complete vcpkg `portfile.cmake`/version files and ConanCenter recipe packaging, then submit upstream PR/review workflows.
-- Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and upstream registry PR/review workflows still need to be prepared now that `nwau-core` is available on crates.io.
+- Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and upstream registry PR/review workflows still need to be prepared.

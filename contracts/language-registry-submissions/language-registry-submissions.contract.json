@@ -132,7 +132,8 @@
                 },
                 "packagePageNote": "NuGet HTML package page returned 404 from this environment during verification, so API and package blob evidence are authoritative.",
                 "packageBlobUrl": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg",
-                "registrationUrl": "https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json"
+                "registrationUrl": "https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json",
+                "flatContainerUrl": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json"
             }
         },
         {
@@ -303,10 +304,10 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "microcosting_healthservices/pyproject.toml",
-            "current_status": "submitted_pending_staged_recipes_review",
+            "current_status": "submitted_branch_updated_checks_rerunning_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
-            "blocker": "conda-forge staged-recipes linter and platform builds pass after feedback fixes; maintainer review, merge, and feedstock publication remain pending.",
+            "blocker": "conda-forge staged-recipes PR branch was updated against upstream main; linter is passing and platform builds are rerunning, with maintainer review/merge/feedstock publication still pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://api.anaconda.org/package/conda-forge/nwau-py returned package not found.",
@@ -315,7 +316,9 @@
                 "sha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480",
                 "tooling": "conda is installed; conda-build/boa/rattler-build are not installed locally.",
                 "fixedLintFeedback": "Added recipe maintainers, tests, build number, license_file, setuptools build backend, noarch Python minimum pins, pypi.org source URL, runtime dependencies, and entry points.",
-                "remainingExternalBlocker": "conda-forge staged-recipes maintainer review, merge, and feedstock publication remain pending."
+                "remainingExternalBlocker": "Platform build completion, maintainer review, merge, and feedstock publication remain pending.",
+                "branchUpdateEvidence": "GitHub update-branch API accepted for conda-forge/staged-recipes PR 33452 on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1 observed after update.",
+                "postUpdateCheckState": "linter SUCCESS and check-skip SUCCESS; linux_64, osx_64, and win_64 staged-recipes builds were in progress after branch update."
             },
             "submissionEvidence": {
                 "type": "pull_request",
@@ -323,8 +326,9 @@
                 "sourceFork": "edithatogo/staged-recipes",
                 "branch": "add-nwau-py-0.2.2",
                 "commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
-                "state": "open_checks_passing_pending_review",
-                "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623"
+                "state": "open_branch_updated_checks_rerunning_pending_review",
+                "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
+                "branchUpdate": "GitHub update-branch API accepted on 2026-05-26."
             }
         },
         {
@@ -443,10 +447,10 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "prepared_pending_vcpkg_conan_submission_prs",
+            "current_status": "prepared_pending_vcpkg_conan_submission_prs_crates_dependency_resolved",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
-            "blocker": "nwau-core is now published to crates.io; vcpkg and ConanCenter submissions still require complete portfile/recipe packaging and upstream PR/review workflows.",
+            "blocker": "nwau-core is now published to crates.io; vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, validation, and upstream PR/review workflows.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -456,7 +460,12 @@
                 "buildCommand": "cargo build",
                 "buildResult": "Finished dev profile for nwau-c-abi v0.1.0.",
                 "fixedLocalBlocker": "Added version=0.1.0 to the nwau-core path dependency for publishable Cargo metadata.",
-                "remainingExternalBlocker": "nwau-core is now published to crates.io; vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, local/CI validation, and upstream PR/review workflows."
+                "remainingExternalBlocker": "Complete vcpkg portfile/version packaging and ConanCenter recipe packaging, validate locally/CI, then submit upstream PRs for review.",
+                "cargoPackageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
+                "cargoPackageResult": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
+                "fixedDependencyBlocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
+                "resolvedExternalBlocker": "nwau-core@0.1.0 is published and verified on crates.io, so the prior crates.io dependency blocker is closed.",
+                "packagingReadinessDoc": "microcosting_healthservices/packaging/README.md records the remaining vcpkg and ConanCenter submission flow."
             }
         }
     ],

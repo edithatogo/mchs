@@ -1,0 +1,24 @@
+{
+  "track_id": "c_cpp_vcpkg_conan_submission_20260524",
+  "type": "chore",
+  "status": "blocked",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-25T14:08:00Z",
+  "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
+  "registry_id": "c_cpp_vcpkg_conan",
+  "current_status": "prepared_pending_vcpkg_conan_submission_prs_crates_dependency_resolved",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "nwau-core is now published to crates.io; complete vcpkg/Conan packaging validation and upstream PR/review workflows remain pending.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
+    "conan_recipe": "microcosting_healthservices/packaging/conan/conanfile.py",
+    "build_result": "Finished dev profile for nwau-c-abi v0.1.0",
+    "cargo_package_command": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
+    "cargo_package_result": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
+    "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
+    "remaining_external_blocker": "vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, local/CI validation, and upstream PR/review workflows.",
+    "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io."
+  }
+}
