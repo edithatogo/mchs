@@ -39,7 +39,18 @@
     "stata_interop_binding_20260513",
     "matlab_interop_binding_20260513",
     "power_platform_operational_evidence_20260518",
-    "repo_health_9_9_power_platform_completion_20260521"
+    "repo_health_9_9_power_platform_completion_20260521",
+    "r_cran_registry_submission_20260524",
+    "julia_general_registry_submission_20260524",
+    "go_module_registry_submission_20260524",
+    "swift_package_index_submission_20260524",
+    "jvm_maven_central_registry_submission_20260524",
+    "conda_forge_feedstock_submission_20260524",
+    "homebrew_formula_submission_20260524",
+    "vscode_openvsx_registry_submission_20260524",
+    "matlab_file_exchange_submission_20260524",
+    "stata_ssc_submission_20260524",
+    "c_cpp_vcpkg_conan_submission_20260524"
   ],
   "recommendedNextTracks": [
     "canonical_contract_foundation_20260513",
