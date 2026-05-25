@@ -89,8 +89,8 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 ### Maven Central
 
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
-- Local check: `gradle build` passed.
-- Required steps: Central Portal namespace verification, signing key setup, publishing credentials, staged release.
+- Local scaffold: `bindings/jvm` now contains a minimal JVM module with Gradle `maven-publish` and `signing` metadata for `io.github.edithatogo:mchs:0.1.0`.
+- Required steps: Central Portal namespace verification, signing key setup, publishing credentials, Gradle publish validation, staged release.
 
 ### conda-forge
 
@@ -127,8 +127,9 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 ### vcpkg / ConanCenter
 
 - Package: `nwau-c-abi@0.1.0`
-- Prepared vcpkg port: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json`
-- Prepared Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
+- Draft vcpkg port: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json`
+- Draft vcpkg portfile: `microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/portfile.cmake`
+- Draft Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
 - Required submission steps: complete vcpkg `portfile.cmake`/version files and ConanCenter recipe packaging, then submit upstream PR/review workflows.
 - Current blocker: no vcpkg/Conan PR opened because the local vcpkg port is manifest-only and upstream registry PR/review workflows still need to be prepared.
