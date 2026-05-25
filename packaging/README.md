@@ -86,6 +86,6 @@ and port definitions without pushing anything upstream.
 
 ## Current validation blocker
 
-- `conan` is not installed in this environment.
-- `vcpkg` is not installed in this environment.
-- Because both tools are missing, I could not run the Conan recipe/test_package or the vcpkg overlay build in this environment.
+- `conan create packaging/conan --build=missing` passed with Conan 2.28.1 on macOS armv8/apple-clang 21, including the CMake consumer `test_package`.
+- vcpkg was bootstrapped in `/tmp/vcpkg` and reached ABI computation plus GitHub source archive download for `nwau-c-abi:arm64-osx`.
+- The vcpkg run did not reach compile/package validation because the GitHub archive download remained silent for several minutes and was terminated with a partial `.tar.gz.part` download present under `/tmp/vcpkg/downloads`.

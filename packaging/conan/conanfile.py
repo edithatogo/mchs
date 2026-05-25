@@ -14,7 +14,17 @@ class NwauCAbiConan(ConanFile):
     description = "C ABI scaffold for MCHS/NWAU interoperability."
     topics = ("health-economics", "nwau", "c-abi", "rust")
     settings = "os", "arch", "compiler", "build_type"
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
     package_type = "library"
+
+    def config_options(self):
+        if self.settings.os == "Windows":
+            self.options.rm_safe("fPIC")
+
+    def configure(self):
+        if self.options.shared:
+            self.options.rm_safe("fPIC")
 
     def export_sources(self):
         repo_root = os.path.abspath(os.path.join(self.recipe_folder, "..", ".."))
