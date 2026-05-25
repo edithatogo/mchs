@@ -9,7 +9,7 @@
   "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; upstream review/merge remain pending, with ConanCenter now blocked by CLA acceptance plus job scheduling and vcpkg blocked by Rust toolchain policy plus Microsoft CLA.",
+  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; ConanCenter Copilot technical review cleanup is current through fork commit 657c7a31, but upstream review/merge remain pending with ConanCenter blocked by CLA acceptance plus job scheduling and vcpkg blocked by Rust toolchain policy plus Microsoft CLA.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -32,6 +32,8 @@
     "conan_center_validation": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
     "conan_center_job_scheduler_state": "ACTION_REQUIRED; maintainer approval/scheduling requested.",
     "conan_center_maintainer_job_request": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
+    "conan_center_profile_library_follow_up": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535839977",
+    "conan_center_latest_head": "657c7a31",
     "conan_center_cla_state": "CLAassistant reports not_signed/pending on conan-io/conan-center-index#30262; legal acceptance must be completed by the authorized contributor."
   },
   "repo_side_readiness_blockers": {
