@@ -17,7 +17,7 @@ single source of truth for the calculation logic.
 ## Requirements
 
 - R 4.1 or newer
-- Python 3 with the `nwau-py` package available on the selected interpreter
+- Python 3.10 or newer with the `nwau-py` package available on the selected interpreter
 - Calculator reference data supplied separately through the Python package or
   the `params` argument. Licensed source data is not bundled with this R
   package.

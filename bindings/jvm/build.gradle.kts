@@ -4,13 +4,17 @@ plugins {
     signing
 }
 
-import org.gradle.api.credentials.PasswordCredentials
+import org.gradle.api.artifacts.repositories.PasswordCredentials
 
 group = "io.github.edithatogo"
 version = "0.1.0"
 
-val centralPortalUsername = providers.gradleProperty("centralPortalUsername")
-val centralPortalPassword = providers.gradleProperty("centralPortalPassword")
+val centralPortalRepositoryUrl = providers.environmentVariable("MAVEN_CENTRAL_PORTAL_URL")
+    .orElse("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+val centralPortalUsername = providers.environmentVariable("MAVEN_CENTRAL_USERNAME")
+val centralPortalPassword = providers.environmentVariable("MAVEN_CENTRAL_PASSWORD")
+val signingKey = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_KEY")
+val signingPassword = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_PASSWORD")
 
 java {
     withJavadocJar()
@@ -21,17 +25,6 @@ java {
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "centralPortal"
-            url = uri("https://central.sonatype.com/api/v1/publisher")
-            credentials(PasswordCredentials::class) {
-                username = centralPortalUsername.orNull
-                password = centralPortalPassword.orNull
-            }
-        }
-    }
-
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
@@ -65,25 +58,22 @@ publishing {
     repositories {
         maven {
             name = "centralPortal"
-            url = uri(
-                providers.environmentVariable("MAVEN_CENTRAL_PORTAL_URL")
-                    .orElse("https://central.sonatype.com/api/v1/publisher")
-                    .get()
-            )
-            credentials {
-                username = providers.environmentVariable("MAVEN_CENTRAL_USERNAME").orNull
-                password = providers.environmentVariable("MAVEN_CENTRAL_PASSWORD").orNull
+            url = uri(centralPortalRepositoryUrl.get())
+            credentials(PasswordCredentials::class) {
+                username = centralPortalUsername.orNull
+                password = centralPortalPassword.orNull
             }
         }
     }
 }
 
 signing {
-    val signingKey = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_KEY")
-    val signingPassword = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_PASSWORD")
-
     setRequired {
-        gradle.taskGraph.allTasks.any { it.name.startsWith("publish") } &&
+        gradle.taskGraph.allTasks.any {
+            it.project == project &&
+                it.name.startsWith("publish") &&
+                it.name.contains("CentralPortalRepository", ignoreCase = true)
+        } &&
             !version.toString().endsWith("SNAPSHOT")
     }
 
@@ -95,12 +85,18 @@ signing {
 }
 
 gradle.taskGraph.whenReady {
-    if (hasTask("publish") ||
-        hasTask("publishAllPublicationsToCentralPortalRepository") ||
-        hasTask("publishMavenJavaPublicationToCentralPortalRepository")
-    ) {
+    val centralPortalPublishRequested = allTasks.any {
+        it.project == project &&
+            it.name.startsWith("publish") &&
+            it.name.contains("CentralPortalRepository", ignoreCase = true)
+    }
+
+    if (centralPortalPublishRequested) {
         require(centralPortalUsername.isPresent && centralPortalPassword.isPresent) {
-            "Central Portal publish tasks require -PcentralPortalUsername and -PcentralPortalPassword. The publish path fails closed when either credential is missing."
+            "Central Portal publish tasks require MAVEN_CENTRAL_USERNAME and MAVEN_CENTRAL_PASSWORD. The publish path fails closed when either credential is missing."
+        }
+        require(signingKey.isPresent) {
+            "Central Portal publish tasks require MAVEN_CENTRAL_SIGNING_KEY. The publish path fails closed when signing material is missing."
         }
     }
 }

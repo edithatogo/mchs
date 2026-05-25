@@ -126,6 +126,7 @@ def test_kotlin_native_contract_and_fixtures_reject_runtime_overclaiming():
 
 def test_kotlin_native_scaffold_has_no_jvm_build_or_formula_logic():
     assert BINDING_ROOT.exists()
+    assert BINDING_ROOT != ROOT / "bindings" / "jvm"
     assert not (BINDING_ROOT / "build.gradle.kts").exists()
     assert not (BINDING_ROOT / "pom.xml").exists()
 
