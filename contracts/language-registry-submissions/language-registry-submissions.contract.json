@@ -34,13 +34,14 @@
                 "discovery": "https://crates.io/api/v1/crates/nwau-core returned crate `nwau-core` does not exist.",
                 "packageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml",
                 "packageVerification": "Packaged 16 files, 107.8KiB (25.2KiB compressed); verification compiled nwau-core v0.1.0 successfully.",
-                "credentialEvidence": "GitHub repository secret CARGO_REGISTRY_TOKEN exists as of 2026-05-25T13:04:00Z.",
+                "credentialEvidence": "CARGO_REGISTRY_TOKEN was configured for publication, then deleted from GitHub Actions secrets after `nwau-core@0.1.0` was verified and the browser-created crates.io token was revoked.",
                 "workflowEvidence": ".github/workflows/publish-registry-packages.yml includes a manual workflow_dispatch `cratesio` path that runs cargo publish for microcosting_healthservices/rust/crates/nwau-core using CARGO_REGISTRY_TOKEN.",
                 "remainingExternalBlocker": null,
                 "publishDryRunCommand": "cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml",
                 "publishDryRunResult": "Packaged and verified nwau-core v0.1.0, reached upload step, then aborted upload because this was a dry run.",
                 "workflowCleanCheckoutNote": "cargo package --locked without --allow-dirty fails in the current dirty worktree; the GitHub workflow can publish only after the Rust crate state is committed and pushed to the workflow ref.",
-                "publicationVerification": "https://crates.io/api/v1/crates/nwau-core/0.1.0 returned version 0.1.0, created_at 2026-05-25T13:59:23.536614Z, checksum c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547, yanked=false."
+                "publicationVerification": "https://crates.io/api/v1/crates/nwau-core/0.1.0 returned version 0.1.0, created_at 2026-05-25T13:59:23.536614Z, checksum c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547, yanked=false.",
+                "credentialCleanup": "crates.io token `mchs-github-actions-publish` was revoked after publication; GitHub Actions secret CARGO_REGISTRY_TOKEN was deleted."
             },
             "submissionEvidence": {
                 "type": "crates_io_public_registry",
@@ -60,7 +61,8 @@
                 "version": "0.1.0",
                 "checksum": "c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547",
                 "createdAt": "2026-05-25T13:59:23.536614Z",
-                "verifiedAt": "2026-05-25T14:02:00Z"
+                "verifiedAt": "2026-05-25T14:02:00Z",
+                "credentialCleanup": "crates.io token `mchs-github-actions-publish` revoked; GitHub Actions secret CARGO_REGISTRY_TOKEN deleted."
             }
         },
         {
@@ -128,7 +130,9 @@
                         "0.1.0"
                     ]
                 },
-                "packagePageNote": "NuGet flat-container verifies package resolution; human package page may lag CDN/search propagation."
+                "packagePageNote": "NuGet HTML package page returned 404 from this environment during verification, so API and package blob evidence are authoritative.",
+                "packageBlobUrl": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg",
+                "registrationUrl": "https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json"
             }
         },
         {

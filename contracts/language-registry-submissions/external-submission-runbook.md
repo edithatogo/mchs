@@ -1,11 +1,12 @@
 # External Submission Runbook
 
-As of 2026-05-25, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, the Homebrew personal tap, and the Go module are externally published and verified. The remaining items require publish automation, direct authenticated publish, public listing evidence, legal/publisher agreement completion, or upstream maintainer review.
+As of 2026-05-25, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, and the Go module are externally published and verified. The remaining items require publish automation, direct authenticated publish, public listing evidence, legal/publisher agreement completion, or upstream maintainer review.
 
 ## Already published and verified
 
 - PyPI: `nwau-py==0.2.2`
 - npm: `@edithatogo/mchs-wasm-binding@0.1.0`
+- NuGet: `Mchs.Bindings.DotNet@0.1.0`
 - Homebrew personal tap: `https://github.com/edithatogo/homebrew-mchs`
 - Go module proxy/pkg.go.dev: `github.com/edithatogo/mchs/bindings/go@v0.1.0`
 
@@ -18,7 +19,7 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Public evidence: crates.io version API reports `created_at=2026-05-25T13:59:23.536614Z`, checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547`, and `yanked=false`.
 - Credential/workflow status: `.github/workflows/publish-registry-packages.yml` has a manual `workflow_dispatch` `cratesio` path. Dispatch run `https://github.com/edithatogo/mchs/actions/runs/26404356667` reported the version already existed on crates.io.
 - Dependency note: `nwau-core` is now available before `nwau-c-abi` packaging/submission.
-- Safety note: revoke or rotate the crates.io token now that publication is complete, because the original token was created through browser automation.
+- Safety note: credential cleanup is complete: the browser-created crates.io token was revoked and the stale GitHub Actions secret was deleted.
 
 ### NuGet
 
@@ -30,7 +31,9 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Workflow dispatch: run the `Publish registry packages` workflow with `registry=nuget`.
 - Submission evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/26404217645` completed successfully and NuGet returned `Created` / `Your package was pushed`.
 - Publication evidence: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json` returned HTTP 200 with version `0.1.0`.
-- Package page: `https://www.nuget.org/packages/Mchs.Bindings.DotNet/0.1.0`
+- Package blob: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg` returned HTTP 200.
+- Registration API: `https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json` returned HTTP 200 with `listed: true`.
+- Note: the NuGet HTML package page returned 404 from this environment during verification, so API and package blob evidence are authoritative.
 
 ### Open VSX / Visual Studio Marketplace
 

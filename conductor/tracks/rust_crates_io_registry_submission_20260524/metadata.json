@@ -18,9 +18,9 @@
     "package_result": "Packaged 16 files, 107.8KiB (25.2KiB compressed); verification compiled nwau-core v0.1.0 successfully.",
     "auth_probe_command": "cargo owner --list nwau-core",
     "auth_probe_result": "no token found, please run cargo login",
-    "github_secret": "CARGO_REGISTRY_TOKEN exists as of 2026-05-25T13:04:00Z",
+    "github_secret": "CARGO_REGISTRY_TOKEN was deleted after publication verification.",
     "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=cratesio",
-    "secret_safety_note": "Revoke or rotate now that publication is complete because the token passed through browser automation during setup.",
+    "secret_safety_note": "Credential cleanup complete for the browser-created publish token.",
     "publish_dry_run_command": "cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml",
     "publish_dry_run_result": "Packaged and verified nwau-core v0.1.0, reached upload step, then aborted upload because this was a dry run.",
     "workflow_clean_checkout_note": "cargo package --locked without --allow-dirty fails in the current dirty worktree; the GitHub workflow can publish only after the Rust crate state is committed and pushed to the workflow ref.",
@@ -31,6 +31,7 @@
     "checksum": "c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547",
     "yanked": false,
     "duplicate_publish_run": "https://github.com/edithatogo/mchs/actions/runs/26404356667",
-    "duplicate_publish_result": "crate nwau-core@0.1.0 already exists on crates.io index"
+    "duplicate_publish_result": "crate nwau-core@0.1.0 already exists on crates.io index",
+    "credential_cleanup": "crates.io token `mchs-github-actions-publish` was revoked after publication; GitHub Actions secret CARGO_REGISTRY_TOKEN was deleted."
   }
 }
