@@ -5,7 +5,7 @@
   "status": "blocked_with_connector_definition_observed",
   "captureMethod": "pac CLI authenticated tenant commands",
   "operator": {
-    "user": "Dylan.Mordaunt@health.nsw.gov.au",
+    "user": "<redacted-nsw-operator-email>",
     "authProfile": "nsw-dylan"
   },
   "targetEnvironment": {

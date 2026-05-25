@@ -30,7 +30,7 @@ open, flow smoke, and environment-specific evidence.
 
 ## Authenticated Target Evidence
 
-- Azure CLI user: `Dylan.Mordaunt@health.nsw.gov.au`
+- Azure CLI user: `<redacted-nsw-operator-email>`
 - Tenant: `NSW Health Department` (`a687a7bf-02db-43df-bcbb-e7a8bda611a2`)
 - PAC profile: `nsw-dylan`
 - Environment: `Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment`
