@@ -75,7 +75,7 @@ uv run mchs-mcp
 - Smithery stdio release acceptance and public API/page discovery are complete
   for `edithatogo/mchs`. Do not claim search-index visibility or hosted
   `run.tools` runtime readiness unless Smithery later exposes those surfaces for
-  this bundle.
+  this bundle. Upstream tracking: `https://github.com/smithery-ai/cli/issues/780`.
 - Docker MCP Registry PR `https://github.com/docker/mcp-registry/pull/3799`
   must merge, or the catalog listing must be visible, before Docker MCP Catalog
   publication can be claimed.

@@ -92,7 +92,8 @@
     "public_api_discovery_verified": true,
     "public_page_discovery_verified": true,
     "smithery_stdio_publication_verified": true,
-    "legacy_registry_url_stale_non_blocking": true
+    "legacy_registry_url_stale_non_blocking": true,
+    "smithery_support_issue_opened": true
   },
   "tracking_issue": "https://github.com/edithatogo/mchs/issues/151 (closed as publication/discovery blocker resolved; stale legacy/runtime surfaces documented)",
   "connection_smoke_observation": {
@@ -157,5 +158,10 @@
     "status_url": "https://smithery.ai/servers/edithatogo/mchs/releases",
     "observed_at": "2026-05-26T01:41:21+10:00",
     "publish_command": "smithery mcp publish contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb -n edithatogo/mchs"
+  },
+  "smithery_support_issue": {
+    "url": "https://github.com/smithery-ai/cli/issues/780",
+    "opened_at": "2026-05-26T01:52:00+10:00",
+    "scope": "Direct API/page discovery works for stdio MCPB release 355669d7-72a9-441e-87de-4682260335cc, but Smithery search does not return edithatogo/mchs and run.tools runtime returns server_not_found."
   }
 }

@@ -5,7 +5,7 @@ Status: accepted as stdio MCPB release
 republish is `355669d7-72a9-441e-87de-4682260335cc`; unauthenticated public API
 and cache-bypassed registry probes return that release with all six tools.
 Search indexing remains stale and the hosted runtime URL is not claimed because
-the Smithery listing is a stdio bundle (`remote=false`, `deploymentUrl=null`).
+the Smithery listing is a stdio bundle (`remote=false`, `deploymentUrl=null`). Upstream tracking: `https://github.com/smithery-ai/cli/issues/780`.
 
 ## Endpoint
 
