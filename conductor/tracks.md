@@ -714,3 +714,10 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Rust Core Continuation**
 *Link: [./tracks/rust_core_continuation_20260524/](./tracks/rust_core_continuation_20260524/)*
 *Gate: Continue stream-by-stream promotion from Python-first calculators to a validated Rust core with parity, binding, CLI/file, support-status, and release evidence before GA claims.*
+
+## Historical/deprioritized adapter guardrails
+
+- **Scala/Spark Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **Swift Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **MATLAB Interoperability** - No new development outside already-scoped interop and File Exchange submission evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.

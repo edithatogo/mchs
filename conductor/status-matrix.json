@@ -1,46 +1,46 @@
 {
-    "schemaVersion": 1,
-    "asOf": "2026-05-21",
-    "statusVocabulary": [
-        "complete",
-        "in_progress",
-        "planned",
-        "blocked_external",
-        "prototype",
-        "roadmap_only",
-        "published",
-        "not_ready",
-    ],
-    "portfolioClaimBoundary": {
-        "allTracksImplemented": false,
-        "allContractsProductionReady": false,
-        "allExternalRuntimeOutcomesProven": false,
-    },
-    "incompleteTracksFromIndex": [
-        "c_cpp_vcpkg_conan_submission_20260524",
-        "conda_forge_feedstock_submission_20260524",
-        "homebrew_formula_submission_20260524",
-        "julia_general_registry_submission_20260524",
-        "jvm_maven_central_registry_submission_20260524",
-        "matlab_file_exchange_submission_20260524",
-        "power_platform_operational_evidence_20260518",
-        "r_cran_registry_submission_20260524",
-        "stata_ssc_submission_20260524",
-        "swift_package_index_submission_20260524",
-        "vscode_openvsx_registry_submission_20260524",
-    ],
-    "recommendedNextTracks": [
-        "canonical_contract_foundation_20260513",
-        "support_status_matrix_20260513",
-        "mcp_contract_20260513",
-        "http_api_contract_20260513",
-        "power_platform_operational_evidence_20260518",
-        "repo_health_9_9_power_platform_completion_20260521",
-    ],
-    "powerPlatformRuntimeBlockers": [
-        "service boundary production endpoint and connection reference values",
-        "real Dataverse app component smoke evidence",
-        "real Power Automate flow component smoke evidence",
-        "Power App operation pages are not UX-complete or runtime-proven",
-    ],
+  "schemaVersion": 1,
+  "asOf": "2026-05-21",
+  "statusVocabulary": [
+    "complete",
+    "in_progress",
+    "planned",
+    "blocked_external",
+    "prototype",
+    "roadmap_only",
+    "published",
+    "not_ready"
+  ],
+  "portfolioClaimBoundary": {
+    "allTracksImplemented": false,
+    "allContractsProductionReady": false,
+    "allExternalRuntimeOutcomesProven": false
+  },
+  "incompleteTracksFromIndex": [
+    "c_cpp_vcpkg_conan_submission_20260524",
+    "conda_forge_feedstock_submission_20260524",
+    "homebrew_formula_submission_20260524",
+    "julia_general_registry_submission_20260524",
+    "jvm_maven_central_registry_submission_20260524",
+    "matlab_file_exchange_submission_20260524",
+    "power_platform_operational_evidence_20260518",
+    "r_cran_registry_submission_20260524",
+    "stata_ssc_submission_20260524",
+    "swift_package_index_submission_20260524",
+    "vscode_openvsx_registry_submission_20260524"
+  ],
+  "recommendedNextTracks": [
+    "canonical_contract_foundation_20260513",
+    "support_status_matrix_20260513",
+    "mcp_contract_20260513",
+    "http_api_contract_20260513",
+    "power_platform_operational_evidence_20260518",
+    "repo_health_9_9_power_platform_completion_20260521"
+  ],
+  "powerPlatformRuntimeBlockers": [
+    "service boundary production endpoint and connection reference values",
+    "real Dataverse app component smoke evidence",
+    "real Power Automate flow component smoke evidence",
+    "Power App operation pages are not UX-complete or runtime-proven"
+  ]
 }
