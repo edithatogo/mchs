@@ -104,11 +104,16 @@ recorded here.
   that the Power App has not yet been viewed, smoke-tested, or visually
   optimized in the tenant.
 - `live-tenant-browser-sweep-20260524.json`: authenticated Playwright browser
-  sweep of the NSW Health Department default environment. It records that the
-  selected tenant session returned zero editable classic canvas apps, visible
-  connected generic connections but no MCHS service-boundary connection, and no
-  usable MCHS flow/custom connector inventory. This is blocker evidence only;
+  sweep of the target NSW deployment environment. It records that the selected
+  tenant session exposed the documented MCHS app IDs, visible connected generic
+  connections but no MCHS service-boundary connection, no MCHS custom connector
+  match, and zero visible Power Automate flows. This is blocker evidence only;
   it does not claim runtime readiness.
+- `powerapp-runtime-launch-20260525.json`: authenticated-browser follow-up
+  launch attempt against the optimized MCHS app play URL. It records that the
+  app-player route redirected to Microsoft sign-in before the app runtime was
+  reached, so connector-backed screen execution and service-boundary runtime
+  smoke remain blocked.
 
 ## Evidence import mapping
 
