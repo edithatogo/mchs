@@ -25,6 +25,15 @@ Machine-readable root manifest:
 - Flow definition: `flows/mchs-submit-calculation.json`.
 - Custom connector/service-boundary binding captured in connection references.
 
+## Observed Deployed State
+
+- Target environment observed through PAC:
+  `611bca65-0b2a-eaa1-9e74-23bbba8eeec4`.
+- Deployed solution observed: `mchs_alm_orchestration` version `0.2.2.0`.
+- Deployed solution is managed, so PAC export is blocked in this environment.
+- Runtime evidence and remaining blockers are recorded in
+  `runtime-evidence-20260525.md`.
+
 ## Exclusions
 
 - Calculator formulas.

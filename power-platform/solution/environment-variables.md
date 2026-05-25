@@ -18,3 +18,7 @@ Canonical declaration:
 - Values are environment-specific.
 - No secrets are stored in source control.
 - Sensitive endpoints are injected through deployment-time configuration.
+- As of the 2026-05-25 runtime evidence, the deployed custom connector still
+  points to `https://example.invalid/`; do not claim a runnable service-boundary
+  endpoint until `mchs_api_base_url` and the connector host are configured for a
+  real target environment.

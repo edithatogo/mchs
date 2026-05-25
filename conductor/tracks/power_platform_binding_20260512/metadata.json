@@ -3,16 +3,17 @@
   "type": "feature",
   "status": "design-complete",
   "track_class": "binding",
-  "current_state": "design-complete",
+  "current_state": "runtime-evidence-recorded-with-blockers",
   "primary_contract": "Track power_platform_binding_20260512 contract",
   "dependencies": [],
   "completion_evidence": [
     "docs",
     "workflows",
-    "tests"
+    "tests",
+    "power-platform/solution/runtime-evidence-20260525.md"
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Finalize the Power Platform binding roadmap as an orchestration-only consumer of the shared calculator service or CLI/file contract."
+  "updated_at": "2026-05-25T23:59:00+10:00",
+  "description": "Finalize the Power Platform binding roadmap as an orchestration-only consumer of the shared calculator service or CLI/file contract; runtime evidence now records the deployed managed solution, custom connector, and remaining endpoint/connection/runtime blockers."
 }

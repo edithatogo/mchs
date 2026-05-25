@@ -15,6 +15,8 @@ This directory is the tracked source-control home for the Power Platform ALM app
 - `environment-variables.md`: environment variable names and default semantics.
 - `connection-references.md`: connector and service connection references.
 - `app-surface.md`: app orchestration responsibilities and non-responsibilities.
+- `runtime-evidence-20260525.md`: observed tenant, connector, DLP, and runtime
+  blocker evidence for the deployed managed solution.
 
 ## Source-Control Rule
 
