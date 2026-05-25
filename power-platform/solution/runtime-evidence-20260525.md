@@ -7,7 +7,7 @@ claim that the runtime path is production-ready.
 ## Environment
 
 - Active PAC profile: `nsw-dylan`
-- User: `Dylan.Mordaunt@health.nsw.gov.au`
+- User: `<authenticated_user>`
 - Environment ID: `611bca65-0b2a-eaa1-9e74-23bbba8eeec4`
 - Dataverse URL: `https://orgefc9aa3e.crm6.dynamics.com/`
 - Organization ID: `8b153003-d5ea-f011-89f5-0022489424c0`
