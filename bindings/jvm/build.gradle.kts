@@ -4,6 +4,8 @@ plugins {
     signing
 }
 
+import org.gradle.api.credentials.PasswordCredentials
+
 group = "io.github.edithatogo"
 version = "0.1.0"
 
@@ -11,11 +13,19 @@ java {
     withJavadocJar()
     withSourcesJar()
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "centralPortal"
+            url = uri("https://central.sonatype.com/api/v1/publisher")
+            credentials(PasswordCredentials::class)
+        }
+    }
+
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
