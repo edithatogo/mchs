@@ -49,6 +49,9 @@ FLOW_SMOKE_SAMPLE_CAPTURE = (
 FLOW_SMOKE_EVIDENCE = (
     ROOT / "power-platform" / "evidence" / "power-automate-flow-smoke-20260521.json"
 )
+POWERAPP_RUNTIME_LAUNCH = (
+    ROOT / "power-platform" / "evidence" / "powerapp-runtime-launch-20260525.json"
+)
 ENDPOINT = (
     ROOT / "power-platform" / "evidence" / ("service-boundary-endpoint-template.json")
 )
@@ -154,6 +157,7 @@ def test_power_platform_evidence_templates_exist():
         FLOW_SMOKE_RUNBOOK,
         FLOW_SMOKE_SAMPLE_CAPTURE,
         FLOW_SMOKE_EVIDENCE,
+        POWERAPP_RUNTIME_LAUNCH,
         ENDPOINT,
         GITHUB_LIVE_GATE_TEMPLATE,
         GITHUB_LIVE_GATE,
@@ -163,6 +167,7 @@ def test_power_platform_evidence_templates_exist():
 
 def test_power_platform_operational_evidence_contracts_are_precise():
     runtime = _json(RUNTIME_SMOKE)
+    powerapp_runtime_launch = _json(POWERAPP_RUNTIME_LAUNCH)
     connections = _json(CONNECTIONS)
     pac_package = _json(PAC_OPERATOR_PACKAGE)
     monitoring = _json(MONITORING)
@@ -307,6 +312,37 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     assert "update_power_platform_flow_smoke_evidence.py" in flow_smoke_runbook
     assert flow_smoke_sample["status"] == "template_placeholder_only"
     assert flow_smoke_sample["captureType"] == "power_automate_flow_smoke_capture"
+    assert (
+        powerapp_runtime_launch["evidenceType"]
+        == "power_platform_powerapp_runtime_launch_attempt"
+    )
+    assert powerapp_runtime_launch["status"] == "blocked_app_player_auth_required"
+    assert powerapp_runtime_launch["targetEnvironment"]["environmentId"] == (
+        "611bca65-0b2a-eaa1-9e74-23bbba8eeec4"
+    )
+    assert powerapp_runtime_launch["targetApp"]["appId"] == (
+        "669d0089-8abe-4e94-ab50-aa69513a6cc4"
+    )
+    assert (
+        powerapp_runtime_launch["observedRuntimeState"]["finalUrlHost"]
+        == "login.microsoftonline.com"
+    )
+    assert (
+        powerapp_runtime_launch["observedRuntimeState"]["finalTitle"]
+        == "Sign in to your account"
+    )
+    runtime_screenshot = (
+        ROOT / powerapp_runtime_launch["observedRuntimeState"]["screenshot"]
+    )
+    assert runtime_screenshot.exists()
+    assert runtime_screenshot.stat().st_size > 0
+    assert powerapp_runtime_launch["claimBoundary"] == {
+        "appRuntimeReached": False,
+        "connectorBackedScreenExecuted": False,
+        "serviceBoundaryExecutionObserved": False,
+        "runtimeSmokePassed": False,
+        "productionReadinessClaimed": False,
+    }
     assert len(flow_smoke_sample["flowRuns"]) == 4
     assert all(entry["flowId"] is None for entry in flow_smoke_sample["flowRuns"])
     assert all(entry["runId"] is None for entry in flow_smoke_sample["flowRuns"])
