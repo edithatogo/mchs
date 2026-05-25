@@ -16,10 +16,11 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Package: `nwau-core@0.1.0`
 - Required credential: crates.io API token via `cargo login` or `CARGO_REGISTRY_TOKEN`.
 - Credential/workflow status: `CARGO_REGISTRY_TOKEN` exists as a GitHub repository secret, and `.github/workflows/publish-registry-packages.yml` has a manual `workflow_dispatch` `cratesio` path that runs `cargo publish`.
-- Prepared command: `cargo publish --manifest-path microcosting_healthservices/rust/crates/nwau-core/Cargo.toml`
+- Prepared command: `cargo publish --dry-run --allow-dirty --locked --manifest-path microcosting_healthservices/rust/crates/nwau-core/Cargo.toml`
+- Clean workflow note: commit and push the Rust crate state before dispatch; `cargo package --locked` without `--allow-dirty` fails in the current dirty worktree.
 - After publishing: verify `https://crates.io/api/v1/crates/nwau-core`.
 - Dependency note: publish `nwau-core` before attempting `nwau-c-abi` packaging/submission.
-- Safety note: rotate the crates.io token before publication because the original token was created through browser automation. After rotation, dispatch the `Publish registry packages` workflow with `registry=cratesio`.
+- Safety note: rotate the crates.io token before publication because the original token was created through browser automation. After committing/pushing the Rust crate state and rotating the token, dispatch the `Publish registry packages` workflow with `registry=cratesio`.
 
 ### NuGet
 
@@ -29,7 +30,8 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Prepared artifact: `microcosting_healthservices/bindings/dotnet/bin/Release/Mchs.Bindings.DotNet.0.1.0.nupkg`
 - Prepared command: `dotnet nuget push microcosting_healthservices/bindings/dotnet/bin/Release/Mchs.Bindings.DotNet.0.1.0.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json`
 - Workflow dispatch: run the `Publish registry packages` workflow with `registry=nuget`.
-- After publishing: verify `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json`.
+- Submission evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/26404217645` completed successfully and NuGet returned `Created` / `Your package was pushed`.
+- After publishing: verify `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json`. The endpoint still returned 404 after the initial propagation wait, so public listing evidence is pending.
 
 ### Open VSX / Visual Studio Marketplace
 
@@ -103,9 +105,9 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Published personal tap: `https://github.com/edithatogo/homebrew-mchs`
 - Formula URL: `https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb`
 - Audit: `brew audit --strict --online edithatogo/mchs/nwau-py` passed.
-- Install/test: build-from-source install succeeds; `brew test` fails until Python runtime dependencies are vendored as Homebrew resources.
-- Local fix prepared: root `funding-calculator --help` no longer eagerly imports pandas, numpy, pydantic, or pyreadstat.
-- Remaining step: publish or patch the lazy CLI import fix, add Click as a runtime resource/dependency, then optional Homebrew/core PR/review if core distribution is required.
+- Install/test: `brew install --build-from-source edithatogo/mchs/nwau-py` and `brew test edithatogo/mchs/nwau-py` pass.
+- Local fix prepared: root `funding-calculator --help` no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the tap carries an equivalent temporary patch plus a Click PyPI resource.
+- Remaining step: optional Homebrew/core PR/review if core distribution is required.
 
 ### MATLAB File Exchange
 

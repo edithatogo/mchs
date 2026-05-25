@@ -6,10 +6,10 @@
   "updated_at": "2026-05-25T13:45:00Z",
   "description": ".NET NuGet Registry Submission: discover, prepare, submit, and evidence NuGet publication for Mchs.Bindings.DotNet.",
   "registry_id": "dotnet_nuget",
-  "current_status": "workflow_ready_pending_nuget_push",
+  "current_status": "submitted_pending_nuget_validation_and_public_listing",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Manual GitHub Actions publish workflow exists and NUGET_API_KEY is configured, but NuGet push has not yet been dispatched and no public NuGet publication is claimed.",
+  "blocker": "NuGet accepted the package upload, but the public flat-container/package listing still returned 404 after the initial propagation wait; public publication verification remains pending.",
   "publication_claimed": false,
   "package_evidence": {
     "discovery_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json",
@@ -19,6 +19,9 @@
     "package_sha256": "e6195abe5c49780b640844da12fb3eec756a963db8d14570de6bcc7901ceb211",
     "auth_probe": "NUGET_API_KEY environment variable is missing",
     "github_secret": "NUGET_API_KEY exists as of 2026-05-25T13:34:49Z",
-    "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=nuget"
+    "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=nuget",
+    "submission_run": "https://github.com/edithatogo/mchs/actions/runs/26404217645",
+    "push_result": "Created https://www.nuget.org/api/v2/package/; Your package was pushed.",
+    "public_probe_result": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json returned 404 after initial propagation wait"
   }
 }

@@ -28,15 +28,18 @@
             "current_status": "workflow_ready_pending_crates_token_rotation_and_cargo_publish",
             "track": "rust_crates_io_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "Manual GitHub Actions publish workflow exists and CARGO_REGISTRY_TOKEN is configured, but the crates.io token should be rotated before dispatch and no public crates.io publication is claimed.",
+            "blocker": "Manual GitHub Actions publish workflow exists and CARGO_REGISTRY_TOKEN is configured, but the Rust crate state must be committed/pushed and the crates.io token should be rotated before dispatch; no public crates.io publication is claimed.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://crates.io/api/v1/crates/nwau-core returned crate `nwau-core` does not exist.",
-                "packageCommand": "cargo package --allow-dirty",
+                "packageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml",
                 "packageVerification": "Packaged 16 files, 107.8KiB (25.2KiB compressed); verification compiled nwau-core v0.1.0 successfully.",
                 "credentialEvidence": "GitHub repository secret CARGO_REGISTRY_TOKEN exists as of 2026-05-25T13:04:00Z.",
                 "workflowEvidence": ".github/workflows/publish-registry-packages.yml includes a manual workflow_dispatch `cratesio` path that runs cargo publish for microcosting_healthservices/rust/crates/nwau-core using CARGO_REGISTRY_TOKEN.",
-                "remainingExternalBlocker": "Publish is still pending manual workflow dispatch and public registry verification. The crates.io token should be rotated before use because it passed through browser automation during setup."
+                "remainingExternalBlocker": "Publish is pending commit/push of the Rust crate state, crates.io token rotation, manual workflow dispatch with registry=cratesio, and public registry verification.",
+                "publishDryRunCommand": "cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml",
+                "publishDryRunResult": "Packaged and verified nwau-core v0.1.0, reached upload step, then aborted upload because this was a dry run.",
+                "workflowCleanCheckoutNote": "cargo package --locked without --allow-dirty fails in the current dirty worktree; the GitHub workflow can publish only after the Rust crate state is committed and pushed to the workflow ref."
             }
         },
         {
@@ -69,10 +72,10 @@
             "package": "Mchs.Bindings.DotNet",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/bindings/dotnet/DotNetBinding.csproj",
-            "current_status": "workflow_ready_pending_nuget_push",
+            "current_status": "submitted_pending_nuget_validation_and_public_listing",
             "track": "dotnet_nuget_registry_submission_20260524",
-            "submission_url": null,
-            "blocker": "Manual GitHub Actions publish workflow exists and NUGET_API_KEY is configured, but NuGet push has not yet been dispatched and no public NuGet publication is claimed.",
+            "submission_url": "https://github.com/edithatogo/mchs/actions/runs/26404217645",
+            "blocker": "NuGet accepted the package upload, but the public flat-container/package listing still returned 404 after the initial propagation wait; public publication verification remains pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json returned BlobNotFound, indicating no existing public package/version listing.",
@@ -81,7 +84,17 @@
                 "packageVerification": "dotnet pack restored, built net8.0, and successfully created the nupkg with SHA-256 e6195abe5c49780b640844da12fb3eec756a963db8d14570de6bcc7901ceb211.",
                 "credentialEvidence": "GitHub repository secret NUGET_API_KEY exists as of 2026-05-25T13:34:49Z.",
                 "workflowEvidence": ".github/workflows/publish-registry-packages.yml includes a manual workflow_dispatch `nuget` path that packs and pushes Mchs.Bindings.DotNet using NUGET_API_KEY.",
-                "remainingExternalBlocker": "Push is still pending manual workflow dispatch and public registry verification."
+                "pushEvidence": "GitHub Actions run 26404217645 completed successfully; NuGet API returned Created and `Your package was pushed` for Mchs.Bindings.DotNet.0.1.0.nupkg.",
+                "remainingExternalBlocker": "Public NuGet flat-container and package page verification remain pending while NuGet validation/indexing propagates."
+            },
+            "submissionEvidence": {
+                "type": "github_actions_workflow_dispatch",
+                "url": "https://github.com/edithatogo/mchs/actions/runs/26404217645",
+                "workflow": "Publish registry packages",
+                "registryInput": "nuget",
+                "state": "succeeded_push_accepted_public_listing_pending",
+                "pushResult": "Created https://www.nuget.org/api/v2/package/; Your package was pushed.",
+                "publicProbe": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json returned 404 after initial propagation wait."
             }
         },
         {
@@ -287,33 +300,34 @@
             "current_status": "submitted_pending_homebrew_core_review_tap_verified",
             "track": "homebrew_formula_submission_20260524",
             "submission_url": "https://github.com/edithatogo/homebrew-mchs",
-            "blocker": "Personal Homebrew tap is published and verified; Homebrew/core publication still requires upstream PR/review.",
+            "blocker": "Personal Homebrew tap is published and verified with audit, source install, and brew test passing; Homebrew/core publication still requires upstream PR/review.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "brew info nwau-py --json=v2 returned `No available formula with the name nwau-py`.",
                 "formula": "microcosting_healthservices/packaging/homebrew/nwau-py.rb",
                 "sourceDistribution": "https://files.pythonhosted.org/packages/90/5f/b64f960d692ac550af6ac05239f34c61f40093cc41d7d9f529c434bb204b/nwau_py-0.2.2.tar.gz",
                 "sha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480",
-                "fixedLocalBlocker": "Added Language::Python::Virtualenv include, exact PyPI source URL, sdist sha256, and explicit python@3.13 virtualenv dependency.",
-                "auditResult": "brew audit --strict --online edithatogo/mchs/nwau-py passed.",
-                "installTestBlocker": "brew install --build-from-source succeeds, but brew test fails because Python runtime dependencies are not vendored as Homebrew resources.",
-                "fixedFutureReleaseBlocker": "Changed the local CLI so root --help no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the Homebrew test can pass after a new PyPI release or tap patch that includes this CLI import fix plus a Click runtime resource/dependency.",
-                "remainingExternalBlocker": "Homebrew/core publication requires a new PyPI release or tap patch with the lazy CLI import fix, a Click runtime resource/dependency, then upstream PR/review."
+                "fixedLocalBlocker": "Added Language::Python::Virtualenv include, exact PyPI source URL, sdist sha256, explicit python@3.13 dependency, Click PyPI resource, and a temporary lazy CLI import patch for the published 0.2.2 sdist.",
+                "auditResult": "brew audit --strict --online edithatogo/mchs/nwau-py passed after adding the Click resource and lazy CLI inreplace patch.",
+                "fixedFutureReleaseBlocker": "Changed the local CLI so root --help no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the tap carries an equivalent temporary inreplace patch until a new PyPI release includes the fix.",
+                "remainingExternalBlocker": "Homebrew/core publication requires upstream PR/review; the personal tap formula is verified.",
+                "installTestResult": "brew install --build-from-source edithatogo/mchs/nwau-py and brew test edithatogo/mchs/nwau-py passed."
             },
             "submissionEvidence": {
                 "type": "homebrew_tap",
                 "url": "https://github.com/edithatogo/homebrew-mchs",
                 "formulaUrl": "https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb",
-                "state": "published_to_personal_tap_audit_passing_install_test_blocked",
-                "commit": "c2d587dd60916c7e65bd8ff8b3a40755d005de21"
+                "state": "published_to_personal_tap_audit_install_test_passing",
+                "commit": "fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823"
             },
             "publicationEvidence": {
                 "scope": "personal_tap",
                 "url": "https://github.com/edithatogo/homebrew-mchs",
                 "formulaHttpStatus": 200,
-                "formulaSha256": "7ffe28c7451c8274a9302f43db0bfd859de486f71ba18085f4cacf6627a72a1c",
+                "formulaSha256": "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3",
                 "audit": "passed",
-                "installTest": "install_succeeds_test_fails_missing_python_resources"
+                "installTest": "passed",
+                "sourceInstall": "passed"
             }
         },
         {

@@ -12,8 +12,8 @@ Current claim boundary as of 2026-05-25:
 - Tracks created: yes.
 - Discovery completed: yes, using public registry/API/page evidence where available.
 - Local preparation completed: yes, with explicit runtime/tooling limitations recorded per registry.
-- Submissions completed: no.
+- Submissions completed: partially. NuGet upload was accepted by the registry API, but public NuGet listing verification is still pending.
 - Publications verified: no, except PyPI `nwau-py`, npm `@edithatogo/mchs-wasm-binding`, Homebrew personal tap, Go module proxy/pkg.go.dev, and the official MCP/Smithery MCP registry submissions tracked outside this language-registry contract.
 - Credential and automation setup updated: GitHub repository secrets `CARGO_REGISTRY_TOKEN` and `NUGET_API_KEY` exist, and `.github/workflows/publish-registry-packages.yml` provides manual `workflow_dispatch` paths for crates.io and NuGet. Publication is still not claimed until those paths are dispatched and public registry evidence is captured.
 
-Remaining blockers are token rotation/manual dispatch for crates.io, manual dispatch for NuGet, publisher agreement/account setup for Open VSX and Visual Studio Marketplace, Central Portal namespace/signing for Maven Central, upstream maintainer review workflows, public semantic tags/indexing, or unavailable local proprietary runtimes such as MATLAB/Stata.
+Remaining blockers are token rotation/manual dispatch for crates.io, NuGet validation/indexing propagation, publisher agreement/account setup for Open VSX and Visual Studio Marketplace, Central Portal namespace/signing for Maven Central, upstream maintainer review workflows, public semantic tags/indexing, or unavailable local proprietary runtimes such as MATLAB/Stata.

@@ -4,15 +4,15 @@ Language registry work is locally prepared where possible. Publication is intent
 
 | Registry | Package | Local state | External gate |
 | --- | --- | --- | --- |
-| crates.io | `nwau-core` | `cargo package --allow-dirty` passed; `CARGO_REGISTRY_TOKEN` exists as GitHub secret; manual publish workflow exists | rotate token before use, dispatch workflow with `registry=cratesio`, then verify public registry |
-| NuGet | `Mchs.Bindings.DotNet` | `.nupkg` created with SHA-256 evidence; `NUGET_API_KEY` exists as GitHub secret; manual publish workflow exists | dispatch workflow with `registry=nuget`, then verify public registry |
+| crates.io | `nwau-core` | `cargo publish --dry-run --allow-dirty --locked` passed; `CARGO_REGISTRY_TOKEN` exists as GitHub secret; manual publish workflow exists | commit/push Rust crate state, rotate token before use, dispatch workflow with `registry=cratesio`, then verify public registry |
+| NuGet | `Mchs.Bindings.DotNet` | NuGet API accepted workflow push in run `26404217645`; public listing still 404 after initial propagation wait | wait for NuGet validation/indexing, then verify public flat-container/package page |
 | CRAN | `nwauR` | `R CMD build` and `R CMD check` passed | CRAN maintainer submission and review |
 | Julia General | `NwauCore` | `Pkg.test()` passed; registry consistency and treecheck passed; README/naming feedback answered with `[noblock]` comment after package repo README update | General PR #156236 merge and JuliaHub/registry propagation; re-register if reviewers require updated README in the tagged payload |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed | public SPI listing/version evidence still pending |
 | Maven Central | `io.github.edithatogo:mchs` | Gradle build passed | namespace verification, signing, Central Portal release |
 | conda-forge | `nwau-py` | staged-recipes lint and platform builds passing on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | maintainer review, merge, and feedstock publication |
-| Homebrew | `nwau-py` | personal tap published and audit passing; install succeeds but test needs vendored Python resources | vendor resources before Homebrew/core PR |
+| Homebrew | `nwau-py` | personal tap published; audit, source install, and `brew test` pass with Click resource plus lazy CLI patch | optional Homebrew/core PR/review |
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | `.vsix` package exists | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
 | SSC / Stata package distribution | `mchs-stata-interop` | ado/help/pkg bundle exists | SSC maintainer submission and review |
