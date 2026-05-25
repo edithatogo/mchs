@@ -56,15 +56,17 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 ### Julia General
 
 - Package: `NationalWeightedActivityUnitWrapper@0.1.0`
-- Current status: replacement registration submitted; publication not yet claimed.
-- Local check: `Pkg.test()` passed.
+- Local check: `julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'` passed.
 - Dedicated package repo: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl`
-- Tag: `v0.1.0` at commit `56ddec5ae29513e80717d4625f82c024a211c949`
+- Tag: `v0.1.0`
+- Commit: `56ddec5ae29513e80717d4625f82c024a211c949`
+- UUID: `58dad789-f56a-4ab3-a66f-c15139bf9cbe`
 - Registrator trigger issue: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1`
 - General registry PR: `https://github.com/JuliaRegistries/General/pull/156254`
-- Release notes: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457`
-- Superseded naming PR: `https://github.com/JuliaRegistries/General/pull/156236`
-- Remaining step: wait for General checks/review, AutoMerge waiting period, merge, and public registry propagation.
+- Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156236`, `https://github.com/JuliaRegistries/General/pull/156235`, `https://github.com/JuliaRegistries/General/pull/156200`
+- Feedback addressed: reviewers agreed `NwauCore` was misleading and recommended a wrapper name; the active replacement uses `NationalWeightedActivityUnitWrapper`, README purpose/usage documentation, MIT license, and matching repo name.
+- Current state: open; registry consistency and treecheck checks passed; AutoMerge stopwatch is pending.
+- Remaining step: wait for General PR `#156254` AutoMerge/merge and public registry propagation. Closing superseded PRs was denied by GitHub permissions, so `[noblock]` superseded comments were posted at `#156236`, `#156235`, and `#156200`.
 
 ### Go module proxy / pkg.go.dev
 

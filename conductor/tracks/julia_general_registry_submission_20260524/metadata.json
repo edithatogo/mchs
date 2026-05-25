@@ -3,32 +3,40 @@
   "type": "chore",
   "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T02:30:00+10:00",
+  "updated_at": "2026-05-25T13:45:00Z",
   "description": "Julia General Registry Submission: discover, prepare, submit, and evidence General registry publication for NationalWeightedActivityUnitWrapper.",
   "registry_id": "julia_general",
-  "current_status": "replacement_registration_submitted_pending_general_checks_review_and_automerge_wait",
+  "current_status": "replacement_submitted_pending_general_automerge_stopwatch",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "NwauCore registration was abandoned after General reviewer naming feedback; replacement NationalWeightedActivityUnitWrapper PR is open with checks running and AutoMerge stopwatch/review pending.",
+  "blocker": "Replacement Julia General PR #156254 is open for NationalWeightedActivityUnitWrapper with registry consistency and treecheck passing; AutoMerge stopwatch, merge, and public registry propagation remain pending. Superseded PRs could not be closed by this account due to ClosePullRequest permission denial, so [noblock] superseded comments were posted.",
   "publication_claimed": false,
   "package_evidence": {
     "discovery_url": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper",
-    "discovery_result": "404 Not Found/no existing public package listing before General merge",
+    "discovery_result": "404 Not Found/no existing public package listing",
     "test_command": "julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'",
     "test_result": "NationalWeightedActivityUnitWrapper tests passed with 2 passing testsets"
   },
   "submission_url": "https://github.com/JuliaRegistries/General/pull/156254",
   "submission_evidence": {
-    "commit": "56ddec5ae29513e80717d4625f82c024a211c949",
     "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
-    "tag": "v0.1.0",
-    "trigger_issue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
-    "registrator_created_pr_comment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535378120",
+    "package": "NationalWeightedActivityUnitWrapper",
+    "uuid": "58dad789-f56a-4ab3-a66f-c15139bf9cbe",
+    "commit": "56ddec5ae29513e80717d4625f82c024a211c949",
     "release_notes_comment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457",
-    "general_pr": "https://github.com/JuliaRegistries/General/pull/156254",
+    "registrator_updated_comment": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535381791",
     "supersedes_pr": "https://github.com/JuliaRegistries/General/pull/156236",
-    "naming_feedback": "General reviewers said NwauCore/Core naming was misleading; replacement package uses the suggested descriptive NationalWeightedActivityUnitWrapper name.",
-    "submission_state": "open_checks_running_automerge_stopwatch_waiting",
-    "publication_status": "not_published"
+    "prior_feedback_pr": "https://github.com/JuliaRegistries/General/pull/156200",
+    "prior_duplicate_pr": "https://github.com/JuliaRegistries/General/pull/156235",
+    "feedback_addressed": "Renamed package to NationalWeightedActivityUnitWrapper after reviewer feedback that NwauCore/Core was misleading for a thin wrapper.",
+    "tagbot_workflow": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/blob/main/.github/workflows/TagBot.yml",
+    "submission_state": "open_checks_passing_pending_automerge_stopwatch",
+    "review_feedback": "Reviewer requested a clearer Wrapper name and closure of duplicate attempts.",
+    "superseded_comments": {
+      "nwau_core": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535434508",
+      "nwau": "https://github.com/JuliaRegistries/General/pull/156235#issuecomment-4535434498",
+      "nwau_julia": "https://github.com/JuliaRegistries/General/pull/156200#issuecomment-4535434519"
+    },
+    "remaining_payload_note": "Replacement General PR #156254 points at the renamed package/tag payload and is pending AutoMerge stopwatch."
   }
 }
