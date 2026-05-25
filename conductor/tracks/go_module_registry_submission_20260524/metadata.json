@@ -1,0 +1,45 @@
+{
+  "track_id": "go_module_registry_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T04:35:00+10:00",
+  "description": "Go Module Registry Submission: discover, prepare, submit, and evidence Go module proxy/pkg.go.dev publication for github.com/edithatogo/mchs/bindings/go.",
+  "registry_id": "go_module_proxy",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "submission_url": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info",
+  "publication_claimed": true,
+  "package_evidence": {
+    "package": "github.com/edithatogo/mchs/bindings/go",
+    "version": "0.1.0",
+    "ecosystem": "Go",
+    "registry": "Go module proxy/pkg.go.dev",
+    "local_surface": "bindings/go/go.mod",
+    "preparation_evidence": {
+      "discovery": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/list initially returned no matching versions.",
+      "testCommand": "go test ./...",
+      "testResult": "All Go packages passed with no test files.",
+      "fixedLocalBlocker": "Replaced stale example.com/mchs-bindings-go imports with the real public GitHub module path.",
+      "remainingExternalBlocker": null
+    },
+    "submission_evidence": {
+      "type": "go_module_tag",
+      "tag": "bindings/go/v0.1.0",
+      "commit": "48a658adeb882033147b1fdd4c6b9c0eafcdf727",
+      "proxyInfoUrl": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info",
+      "proxyHttpStatus": 200,
+      "pkgGoDevStatus": 200
+    },
+    "publication_evidence": {
+      "scope": "go_module_proxy_and_pkg_go_dev",
+      "versionInfoUrl": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info",
+      "version": "v0.1.0",
+      "commit": "48a658adeb882033147b1fdd4c6b9c0eafcdf727",
+      "pkgGoDevUrl": "https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go",
+      "pkgGoDevStatus": "indexed version 0.1.0 verified by live probe on 2026-05-24"
+    }
+  }
+}

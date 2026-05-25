@@ -1,0 +1,45 @@
+{
+  "track_id": "swift_package_index_submission_20260524",
+  "type": "chore",
+  "status": "submitted",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T04:35:00+10:00",
+  "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",
+  "registry_id": "swift_package_index",
+  "current_status": "submitted_accepted_pending_spi_public_probe",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Swift Package Index PackageList issue is closed as completed, repository publication metadata is fixed, but SPI public listing/version evidence is still blocked by public probe visibility.",
+  "submission_url": "https://github.com/SwiftPackageIndex/PackageList/issues/13717",
+  "publication_claimed": false,
+  "package_evidence": {
+    "package": "MCHSBind",
+    "version": "0.1.0",
+    "ecosystem": "Swift",
+    "registry": "Swift Package Index",
+    "local_surface": "bindings/swift/Package.swift",
+    "preparation_evidence": {
+      "discovery": "https://swiftpackageindex.com/edithatogo/mchs-swift returned Cloudflare challenge/HTTP 403 from this environment after the PackageList issue was closed as completed, so public listing could not be verified.",
+      "buildCommand": "swift build",
+      "buildResult": "Build complete.",
+      "testAttempt": "swift test exits with no tests found because the package has no Tests target; package readiness is gated by swift build.",
+      "fixedPublicationMetadata": "Added MIT LICENSE to the public package repo, set Swift package topics, and created GitHub release v0.1.0.",
+      "remainingExternalBlocker": "Swift Package Index public listing/version evidence remains unavailable from this environment.",
+      "repository": "https://github.com/edithatogo/mchs-swift.git",
+      "tag": "v0.1.0",
+      "release": "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0",
+      "metadataCommit": "02b12bd6667fae762cdf26833514dbbce5c05476",
+      "dumpPackage": "swift package dump-package returned package name MCHSBind and tools version 5.9.0."
+    },
+    "submission_evidence": {
+      "type": "github_issue",
+      "url": "https://github.com/SwiftPackageIndex/PackageList/issues/13717",
+      "repository": "https://github.com/edithatogo/mchs-swift.git",
+      "tag": "v0.1.0",
+      "state": "closed_completed_public_probe_blocked",
+      "closedAt": "2026-05-24T11:07:11Z",
+      "stateReason": "completed"
+    },
+    "publication_evidence": null
+  }
+}
