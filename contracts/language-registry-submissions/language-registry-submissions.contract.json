@@ -288,7 +288,7 @@
             "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
             "track": "jvm_maven_central_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "Minimal JVM module, Maven publishing metadata, and Central Portal repository wiring are checked in and local build passed; namespace verification, signing credentials, publish credentials, and authenticated release remain pending.",
+            "blocker": "Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in and local build passed; namespace verification, signing key material, publish credentials, publish validation, and authenticated release remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "Maven Central search for g:io.github.edithatogo AND a:mchs returned numFound=0.",
@@ -297,7 +297,7 @@
                 "fixedLocalBlocker": "Adjusted Kotlin JVM toolchain from 17 to 11 to match the installed local JDK.",
                 "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, Gradle publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.",
                 "jvmModule": "microcosting_healthservices/bindings/jvm",
-                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, and required POM metadata.",
+                "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, required POM metadata, Central Portal repository configuration via environment variables, and in-memory PGP signing via environment variables.",
                 "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
                 "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository wired with PasswordCredentials and fails closed without credentials.",
                 "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
@@ -459,11 +459,11 @@
             "package": "nwau-c-abi",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml",
-            "current_status": "draft_packaging_static_checked_pending_full_validation_and_upstream_prs",
+            "current_status": "blocked_repo_side_c_abi_packaging_readiness",
             "track": "c_cpp_vcpkg_conan_submission_20260524",
             "submission_url": null,
-            "blocker": "Draft vcpkg and Conan packaging files are checked in and static-checked, but full vcpkg/Conan package builds, ConanCenter test_package, upstream vcpkg version metadata, and external PR/review workflows remain pending.",
-            "localReadinessResolved": true,
+            "blocker": "nwau-core is published, but vcpkg and ConanCenter submissions are blocked by repo-side C ABI packaging readiness: placeholder immutable source metadata, no immutable C ABI archive/tag policy, unresolved package/ABI version policy, no vcpkg usage story, and no ConanCenter test_package.",
+            "localReadinessResolved": false,
             "preparationEvidence": {
                 "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
                 "conanDiscovery": "ConanCenter endpoint https://center2.conan.io/v1/ping returned HTTP 200; no authenticated package publication evidence was found.",
@@ -485,6 +485,13 @@
                 "staticCheckEvidence": "python3 -m py_compile packaging/conan/conanfile.py, vcpkg.json JSON parse, and git diff --check passed in commit 1d0e28f.",
                 "toolAvailability": "conan and vcpkg are not installed in the current environment, so full local package validation could not be run.",
                 "validationCommandDocumentation": "packaging/README.md records exact non-publishing validation commands for Conan and vcpkg once toolchains are available."
+            },
+            "repoSideReadinessBlockers": {
+                "versionPolicy": "Align or explicitly document package version 0.1.0 versus ABI constants before tagging.",
+                "sourceArchive": "Define immutable C ABI source tag and archive checksum policy.",
+                "vcpkg": "Replace placeholder vcpkg REF/SHA512 with immutable source metadata and add usage/support expectations.",
+                "conan": "Define ConanCenter layout with conandata.yml and test_package native consumer smoke test.",
+                "validation": "Record clean archive-based vcpkg and conan create validation before upstream submissions."
             }
         }
     ],

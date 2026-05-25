@@ -1,15 +1,16 @@
 Package: nwauR
 Type: Package
-Title: Thin R Wrapper for the NWAU Python CLI
+Title: R Wrapper for the 'NWAU' Python Command Line Interface
 Version: 0.1.0
 Authors@R: person("MCHS", role = c("aut", "cre"), email = "opensource@example.com")
 Author: MCHS [aut, cre]
 Maintainer: MCHS <opensource@example.com>
-Description: Minimal R prototype that shells out to the authoritative nwau_py CLI
-    and uses CSV interchange so formula logic stays single-sourced in Python.
+Description: Provides a lightweight R interface to the separately distributed
+    'nwau-py' Python command line interface. The package exchanges CSV files
+    with Python so calculation logic remains in the Python implementation.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: false
 Depends: R (>= 4.1.0)
 Suggests: testthat
-SystemRequirements: Python 3
+SystemRequirements: Python (>= 3.9) and the 'nwau-py' Python package

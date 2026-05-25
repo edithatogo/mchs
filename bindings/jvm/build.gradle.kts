@@ -61,12 +61,36 @@ publishing {
             }
         }
     }
+
+    repositories {
+        maven {
+            name = "centralPortal"
+            url = uri(
+                providers.environmentVariable("MAVEN_CENTRAL_PORTAL_URL")
+                    .orElse("https://central.sonatype.com/api/v1/publisher")
+                    .get()
+            )
+            credentials {
+                username = providers.environmentVariable("MAVEN_CENTRAL_USERNAME").orNull
+                password = providers.environmentVariable("MAVEN_CENTRAL_PASSWORD").orNull
+            }
+        }
+    }
 }
 
 signing {
+    val signingKey = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_KEY")
+    val signingPassword = providers.environmentVariable("MAVEN_CENTRAL_SIGNING_PASSWORD")
+
     setRequired {
-        gradle.taskGraph.hasTask("publish")
+        gradle.taskGraph.allTasks.any { it.name.startsWith("publish") } &&
+            !version.toString().endsWith("SNAPSHOT")
     }
+
+    if (signingKey.isPresent) {
+        useInMemoryPgpKeys(signingKey.get(), signingPassword.orNull)
+    }
+
     sign(publishing.publications["mavenJava"])
 }
 

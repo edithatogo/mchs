@@ -3,11 +3,39 @@
 This directory tracks the local readiness state for downstream package
 submission.
 
-## Current assumption
+## C ABI registry readiness policy
 
 - `nwau-core` is published on crates.io, so vcpkg and ConanCenter readiness
   can treat the Rust core as an external dependency rather than an unpublished
   local-only crate.
+- `nwau-c-abi` is not yet vcpkg or ConanCenter review-ready. Upstream registry
+  submissions require an immutable source archive, coherent version metadata,
+  consumer usage examples, and registry-native validation.
+
+## Version and source-tag policy
+
+- `rust/crates/nwau-c-abi/Cargo.toml` package version, `nwau_abi.h` ABI
+  constants, Rust ABI constants, release notes, and registry manifests must
+  either match exactly or document package-version versus ABI-version
+  semantics.
+- Prefer a dedicated immutable release tag for C ABI packaging, such as
+  `nwau-c-abi-v0.1.0`, after version alignment.
+- The source archive must contain `LICENSE`, `rust/Cargo.toml`,
+  `rust/Cargo.lock`, `rust/crates/nwau-core`, `rust/crates/nwau-c-abi`, and
+  `rust/crates/nwau-c-abi/include/nwau_abi.h`.
+- Record archive checksums required by downstream registries: SHA512 for vcpkg
+  and SHA256 or Conan `conandata.yml` checksums for ConanCenter.
+
+## Overlay-to-archive roadmap
+
+- Current vcpkg and Conan files are local readiness scaffolds.
+- The vcpkg scaffold uses `vcpkg_from_github`, but the source reference and
+  checksum still need to be replaced with reviewable immutable release
+  metadata.
+- The Conan scaffold still exports local source and must be converted to
+  ConanCenter layout before submission.
+- Do not submit upstream until archive-based builds pass from clean registry
+  checkouts.
 
 ## Local scope
 
@@ -25,6 +53,7 @@ registry recipes.
   ready for submission.
 - Add the ConanCenter `test_package` harness and any required recipe layout
   changes in the upstream ConanCenter index repository.
+- Add a vcpkg usage file or CMake/pkg-config consumer story.
 - Run the required local and CI validation against the published
   `nwau-core` crate and the C ABI surface.
 - Submit upstream PRs to vcpkg and ConanCenter, then wait for review and
@@ -33,6 +62,12 @@ registry recipes.
 ## Local blockers
 
 - No crates.io publication blocker remains for `nwau-core`.
+- Align or explicitly document package-version versus ABI-version semantics.
+- Define the immutable C ABI source tag and archive checksum policy.
+- Add a native C/C++ consumer smoke test that includes `nwau_abi.h`, links
+  `nwau_c_abi`, and calls harmless version/status functions.
+- Record clean archive-based vcpkg and Conan validation before upstream
+  submissions.
 - The remaining work is the missing upstream packaging submission flow and any
   validation those registries require.
 

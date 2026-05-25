@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-c-abi`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml`
-- Current status: `prepared_pending_vcpkg_conan_submission_prs`
+- Current status: `blocked_repo_side_c_abi_packaging_readiness`
 
 ## Functional Requirements
 
@@ -24,7 +24,24 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally with caveat. A vcpkg port manifest and Conan recipe exist, the C ABI crate builds locally, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now verifies successfully by downloading `nwau-core v0.1.0` from crates.io. The remaining blockers are complete vcpkg portfile/Conan recipe packaging, local or CI validation for those registry formats, and upstream PR/review workflows.
+Not review-ready. The crates.io dependency blocker is resolved, the C ABI crate
+builds locally, and `cargo package --allow-dirty --locked --manifest-path
+rust/crates/nwau-c-abi/Cargo.toml` verifies by downloading `nwau-core v0.1.0`
+from crates.io. vcpkg and ConanCenter submissions still require repo-side
+packaging hardening before any upstream PR is credible.
+
+Repo-side blockers:
+
+- The vcpkg port still has placeholder immutable source metadata and checksum
+  values.
+- The Conan recipe exports local source instead of consuming an immutable
+  release archive through ConanCenter layout.
+- C ABI package versioning and exported ABI constants need an explicit policy
+  before tagging.
+- No dedicated C ABI source tag/checksum policy is recorded.
+- No vcpkg usage file or ConanCenter `test_package` validates a native
+  consumer.
+- No archive-based clean-checkout validation is recorded.
 
 ## Preparation Evidence
 
@@ -37,7 +54,10 @@ Resolved locally with caveat. A vcpkg port manifest and Conan recipe exist, the 
 - Local fix: added `version = "0.1.0"` to the `nwau-core` path dependency.
 - Cargo package command: `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml`
 - Cargo package result: packaged 6 files, downloaded `nwau-core v0.1.0` from crates.io during verification, and compiled `nwau-c-abi v0.1.0`.
-- Remaining external blocker: complete vcpkg portfile/Conan recipe packaging and submit vcpkg/ConanCenter PRs for review.
+- Remaining repo-side blocker: complete archive-based vcpkg and ConanCenter
+  packaging hardening, then validate from clean registry checkouts.
+- Remaining external blocker: submit vcpkg/ConanCenter PRs for review only
+  after repo-side packaging readiness is resolved.
 
 ## Acceptance Criteria
 
