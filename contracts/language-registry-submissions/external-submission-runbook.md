@@ -98,8 +98,8 @@ As of 2026-05-25, all language/distribution registry tracks have discovery and l
 - Prepared recipe: `microcosting_healthservices/packaging/conda-forge/meta.yaml`
 - Submitted PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points.
-- Branch update: GitHub accepted an update-branch request on 2026-05-26; the linter is passing and platform builds are rerunning on head `e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1`.
-- Remaining step: wait for rerun platform builds, conda-forge staged-recipes review, merge, and feedstock publication.
+- Branch update: GitHub accepted an update-branch request on 2026-05-26; linter, aggregate staged-recipes, linux_64, osx_64, win_64, and check-skip all succeeded on head `e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1`.
+- Remaining step: conda-forge staged-recipes review, merge, and feedstock publication.
 
 ### Homebrew
 

@@ -306,10 +306,10 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "microcosting_healthservices/pyproject.toml",
-            "current_status": "submitted_branch_updated_checks_rerunning_pending_review",
+            "current_status": "submitted_branch_updated_checks_passing_pending_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
-            "blocker": "conda-forge staged-recipes PR branch was updated against upstream main; linter is passing and platform builds are rerunning, with maintainer review/merge/feedstock publication still pending.",
+            "blocker": "conda-forge staged-recipes PR branch is updated and all linter/platform checks are passing; maintainer review, merge, and feedstock publication remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://api.anaconda.org/package/conda-forge/nwau-py returned package not found.",
@@ -318,9 +318,9 @@
                 "sha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480",
                 "tooling": "conda is installed; conda-build/boa/rattler-build are not installed locally.",
                 "fixedLintFeedback": "Added recipe maintainers, tests, build number, license_file, setuptools build backend, noarch Python minimum pins, pypi.org source URL, runtime dependencies, and entry points.",
-                "remainingExternalBlocker": "Platform build completion, maintainer review, merge, and feedstock publication remain pending.",
+                "remainingExternalBlocker": "Maintainer review, merge, and feedstock publication remain pending.",
                 "branchUpdateEvidence": "GitHub update-branch API accepted for conda-forge/staged-recipes PR 33452 on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1 observed after update.",
-                "postUpdateCheckState": "linter SUCCESS and check-skip SUCCESS; linux_64, osx_64, and win_64 staged-recipes builds were in progress after branch update."
+                "postUpdateCheckState": "linter, aggregate staged-recipes, linux_64, osx_64, win_64, and check-skip all succeeded after branch update."
             },
             "submissionEvidence": {
                 "type": "pull_request",
@@ -328,7 +328,7 @@
                 "sourceFork": "edithatogo/staged-recipes",
                 "branch": "add-nwau-py-0.2.2",
                 "commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
-                "state": "open_branch_updated_checks_rerunning_pending_review",
+                "state": "open_branch_updated_checks_passing_pending_review",
                 "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
                 "branchUpdate": "GitHub update-branch API accepted on 2026-05-26."
             }

@@ -11,7 +11,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed | public SPI listing/version evidence still pending |
 | Maven Central | `io.github.edithatogo:mchs` | minimal JVM module and Maven publishing metadata scaffolded in `bindings/jvm` | namespace verification, signing credentials, Gradle publish validation, Central Portal release |
-| conda-forge | `nwau-py` | branch updated against upstream `main`; linter passing; platform builds rerunning on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | wait for platform builds, maintainer review, merge, and feedstock publication |
+| conda-forge | `nwau-py` | branch updated; linter and linux/osx/win platform builds passing on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | maintainer review, merge, and feedstock publication |
 | Homebrew | `nwau-py` | personal tap published; audit, source install, and `brew test` pass with Click resource plus lazy CLI patch | optional Homebrew/core PR/review |
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | extension source scaffold committed; manifest is publisher-ready; generated `.vsix` intentionally not committed | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, package, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
