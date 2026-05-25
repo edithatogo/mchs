@@ -123,7 +123,7 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 ### Stata SSC
 
 - Package: `mchs@0.1.0` (`mchs-stata-interop` bundle)
-- Local status: repo-ready for source/artifact preparation. The Stata ado/help/pkg source, contract surface, examples, `bindings/stata/mchs-stata-interop-0.1.0.zip` bundle, and `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md` are present; Stata runtime validation is not claimed in this environment.
+- Local status: repo-ready for source/artifact preparation. The Stata ado/help/pkg source, contract surface, examples, `bindings/stata/mchs-stata-interop-0.1.0-ssc.zip` bundle, and `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md` are present; Stata runtime validation is not claimed in this environment.
 - Required step: submit the prepared bundle to the SSC maintainer workflow for review.
 
 ### vcpkg / ConanCenter

@@ -12,10 +12,10 @@
   "blocker": "SSC distribution requires maintainer submission/review; no authenticated submission was performed and Stata runtime validation is not claimed.",
   "publication_claimed": false,
   "package_evidence": {
-    "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip",
+    "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0-ssc.zip",
     "ssc_package_name": "mchs",
-    "bundle_sha256": "ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2",
-    "bundle_contents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg",
+    "bundle_sha256": "ae0b0adf12aba71dc4e844282bbfcd88bd09b2fd2c2237f565cbc1cfe9d8f225",
+    "bundle_contents": "mchs.ado, mchs.sthlp",
     "submission_email_draft": "conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md",
     "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed"
   }

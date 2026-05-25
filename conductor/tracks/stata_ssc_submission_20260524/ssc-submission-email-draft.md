@@ -26,16 +26,15 @@ Version: 0.1.0
 Files included in the attached zip:
 - mchs.ado
 - mchs.sthlp
-- pkg-mchs.pkg
 
 Repository:
 https://github.com/edithatogo/mchs
 
 Prepared bundle:
-bindings/stata/mchs-stata-interop-0.1.0.zip
+bindings/stata/mchs-stata-interop-0.1.0-ssc.zip
 
 SHA-256:
-ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2
+ae0b0adf12aba71dc4e844282bbfcd88bd09b2fd2c2237f565cbc1cfe9d8f225
 
 Runtime note:
 The package has been prepared from the repository ado/help/pkg sources, but the repository environment used for packaging did not include a Stata executable, so no Stata runtime validation is claimed in the repository evidence.
@@ -46,4 +45,4 @@ Best regards,
 
 Attachment:
 
-- `bindings/stata/mchs-stata-interop-0.1.0.zip`
+- `bindings/stata/mchs-stata-interop-0.1.0-ssc.zip`

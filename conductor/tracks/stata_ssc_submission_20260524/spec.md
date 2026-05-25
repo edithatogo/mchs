@@ -29,9 +29,9 @@ Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No S
 ## Preparation Evidence
 
 - Discovery: IDEAS/RePEc search page for `mchs-stata-interop` was reachable from CLI, but no clean machine-readable SSC publication proof was available.
-- Bundle: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
-- SHA256: `ba2bb2b43b92c8eda0b20ee7f7de888e69be8e2a0abd3480100db6a216ec6bb2`
-- Contents: `mchs.ado`, `mchs.sthlp`, `pkg-mchs.pkg`
+- Bundle: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0-ssc.zip`
+- SHA256: `ae0b0adf12aba71dc4e844282bbfcd88bd09b2fd2c2237f565cbc1cfe9d8f225`
+- Contents: `mchs.ado`, `mchs.sthlp`
 - SSC package/install name: `mchs`
 - Submission draft: `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md`
 - Runtime note: no Stata executable is installed locally.
