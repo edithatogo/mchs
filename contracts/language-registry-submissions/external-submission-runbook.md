@@ -55,16 +55,16 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 
 ### Julia General
 
-- Package: `NwauCore@0.1.0`
+- Package: `NationalWeightedActivityUnitWrapper@0.1.0`
+- Current status: replacement registration submitted; publication not yet claimed.
 - Local check: `Pkg.test()` passed.
-- Dedicated package repo: `https://github.com/edithatogo/NwauCore.jl`
-- Tag: `v0.1.0`
-- Registrator trigger issue: `https://github.com/edithatogo/NwauCore.jl/issues/1`
-- General registry PR: `https://github.com/JuliaRegistries/General/pull/156236`
-- Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156200`, `https://github.com/JuliaRegistries/General/pull/156235`
-- Feedback addressed: package renamed to `NwauCore`, repository moved to `NwauCore.jl`, and MIT license added to the package top-level folder.
-- Current state: open; registry consistency and treecheck checks passed. README purpose/usage documentation was added to the package repo in commit `f42f440`, and the review feedback was answered on the General PR with a `[noblock]` comment.
-- Remaining step: reviewer must clear or mark the original review comment `[noblock]`; follow-up clarification posted at `https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4535094697`. If reviewers require the registration payload itself to include the README update, create a new tag/version or re-registration flow.
+- Dedicated package repo: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl`
+- Tag: `v0.1.0` at commit `56ddec5ae29513e80717d4625f82c024a211c949`
+- Registrator trigger issue: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1`
+- General registry PR: `https://github.com/JuliaRegistries/General/pull/156254`
+- Release notes: `https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1#issuecomment-4535380457`
+- Superseded naming PR: `https://github.com/JuliaRegistries/General/pull/156236`
+- Remaining step: wait for General checks/review, AutoMerge waiting period, merge, and public registry propagation.
 
 ### Go module proxy / pkg.go.dev
 
