@@ -1,4 +1,5 @@
 {
+  "manifest_version": "0.4",
   "name": "mchs",
   "display_name": "MCHS Health Services Microcosting",
   "version": "0.2.2",

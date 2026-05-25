@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "smithery_mcpb_release_evidence",
+  "asOf": "2026-05-25T23:28:00+10:00",
+  "qualifiedName": "edithatogo/mchs",
+  "status": "accepted_registry_release_public_api_cache_pending",
+  "publishCommand": "smithery mcp publish /tmp/mchs-smithery-smithery-compatible.mcpb -n edithatogo/mchs --json",
+  "acceptedRelease": {
+    "deploymentId": "2a0fd6ee-fe03-4c28-9ad0-b4665c71adc9",
+    "status": "SUCCESS",
+    "mcpUrl": "https://mchs--edithatogo.run.tools",
+    "statusUrl": "https://smithery.ai/servers/edithatogo/mchs/releases"
+  },
+  "bundle": {
+    "path": "contracts/mcp/registry/smithery/mchs-0.2.2-smithery-20260525.mcpb",
+    "sha256": "bfb8a18041fdc7a601165ecef3f2dfe15280450777dd732b05516b4b88c3a38d",
+    "manifestVersion": "0.4",
+    "toolCount": 6,
+    "toolNames": [
+      "mchs.list_calculators",
+      "mchs.get_schema",
+      "mchs.validate_input",
+      "mchs.calculate",
+      "mchs.explain_result",
+      "mchs.get_evidence"
+    ]
+  },
+  "publicRegistryObservation": {
+    "url": "https://registry.smithery.ai/servers/edithatogo/mchs",
+    "observedAt": "2026-05-25T23:28:00+10:00",
+    "httpCacheStatus": "HIT",
+    "cacheMaxAgeSeconds": 14400,
+    "stillReturnedDeploymentId": "200f2fd3-86c4-4122-b3bf-98abe5aa62f1",
+    "stillReturnedToolCount": 0,
+    "propagationComplete": false
+  },
+  "claimBoundary": {
+    "smitheryPublishAccepted": true,
+    "publicRegistryApiUpdated": false,
+    "hostedStreamableHttpPublished": false,
+    "dockerCatalogPublished": false,
+    "allRegistryPublicationsCompleted": false
+  }
+}
