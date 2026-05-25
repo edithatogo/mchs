@@ -1,0 +1,53 @@
+{
+  "name": "mchs-tools",
+  "displayName": "MCHS Tools",
+  "description": "VS Code helper extension scaffold for MCHS contract, MCP, and CLI workflows.",
+  "version": "0.1.0",
+  "publisher": "edithatogo",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edithatogo/mchs.git"
+  },
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:mchs.showRegistryStatus"
+  ],
+  "main": "./extension.js",
+  "files": [
+    "extension.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "mchs.showRegistryStatus",
+        "title": "MCHS: Show Registry Status"
+      }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package --no-dependencies",
+    "publish:openvsx": "ovsx publish",
+    "publish:vsmarketplace": "vsce publish"
+  },
+  "devDependencies": {},
+  "homepage": "https://github.com/edithatogo/mchs#readme",
+  "bugs": {
+    "url": "https://github.com/edithatogo/mchs/issues"
+  },
+  "keywords": [
+    "mchs",
+    "nwau",
+    "health-economics",
+    "mcp",
+    "registry"
+  ],
+  "qna": "marketplace"
+}

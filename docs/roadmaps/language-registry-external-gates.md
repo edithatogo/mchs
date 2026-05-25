@@ -13,7 +13,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Maven Central | `io.github.edithatogo:mchs` | Gradle build passed | namespace verification, signing, Central Portal release |
 | conda-forge | `nwau-py` | branch updated against upstream `main`; linter passing; platform builds rerunning on PR `https://github.com/conda-forge/staged-recipes/pull/33452` | wait for platform builds, maintainer review, merge, and feedstock publication |
 | Homebrew | `nwau-py` | personal tap published; audit, source install, and `brew test` pass with Click resource plus lazy CLI patch | optional Homebrew/core PR/review |
-| Open VSX / Visual Studio Marketplace | `mchs-tools` | `.vsix` package exists | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, then publish |
+| Open VSX / Visual Studio Marketplace | `mchs-tools` | extension source scaffold committed; manifest is publisher-ready; generated `.vsix` intentionally not committed | Eclipse Open VSX Publisher Agreement, Visual Studio Marketplace publisher/PAT access, package, then publish |
 | MATLAB File Exchange | `mchs-matlab-interop` | upload bundle exists | MathWorks account upload and review |
 | SSC / Stata package distribution | `mchs-stata-interop` | ado/help/pkg bundle exists | SSC maintainer submission and review |
 | vcpkg / ConanCenter | `nwau-c-abi` | `cargo package --allow-dirty --locked` now resolves published `nwau-core`; vcpkg and Conan metadata exists | complete portfile/recipe packaging, then registry PRs/review |

@@ -380,10 +380,10 @@
             "package": "mchs-tools",
             "version": "0.1.0",
             "local_surface": "microcosting_healthservices/integrations/vscode/package.json",
-            "current_status": "prepared_pending_publisher_agreements_tokens_and_vsix_publish",
+            "current_status": "repo_scaffold_published_pending_publisher_agreements_tokens_and_vsix_publish",
             "track": "vscode_openvsx_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "Open VSX token creation is blocked until the Eclipse Foundation Open VSX Publisher Agreement is signed through an Eclipse account; Visual Studio Marketplace publishing is blocked by missing publisher/PAT access.",
+            "blocker": "VS Code extension source scaffold is now committed to the public repo; Open VSX remains blocked by Eclipse Publisher Agreement/token setup and Visual Studio Marketplace remains blocked by publisher/PAT setup.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://open-vsx.org/api/edithatogo/mchs-tools returned Extension not found.",
@@ -392,7 +392,9 @@
                 "packageResult": "Packaged 6 files, 2.56 KB, without prior LICENSE/files warnings after local fixes.",
                 "fixedLocalBlocker": "Added local LICENSE and files allowlist to package.json.",
                 "credentialAttemptEvidence": "Open VSX login with GitHub succeeded, but token creation was refused until the Eclipse Foundation Open VSX Publisher Agreement is signed. Visual Studio Marketplace publisher page for edithatogo returned 404 under the current Microsoft session.",
-                "remainingExternalBlocker": "Open VSX requires Eclipse account login and publisher agreement acceptance. Visual Studio Marketplace requires a publisher identity and publisher PAT before vsix publish."
+                "remainingExternalBlocker": "Open VSX requires Eclipse/Open VSX publisher agreement/token setup; Visual Studio Marketplace requires publisher identity and PAT.",
+                "repoPublicationEvidence": "integrations/vscode source scaffold committed to the public repository without the generated .vsix artifact.",
+                "manifestPolish": "package.json includes repository, homepage, bugs, keywords, files allowlist, and license file reference."
             }
         },
         {
