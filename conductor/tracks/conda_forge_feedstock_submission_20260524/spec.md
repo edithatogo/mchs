@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-py`
 - Version candidate: `0.2.2`
 - Local surface: `microcosting_healthservices/pyproject.toml`
-- Current status: `submitted_checks_passing_pending_conda_forge_review`
+- Current status: `submitted_branch_refreshed_checks_rerunning_pending_conda_forge_review`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The refreshed PR branch has linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks passing. The remaining blocker is external: conda-forge review, merge, feedstock publication, and public Anaconda propagation.
+Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. GitHub branch update succeeded on 2026-05-26, moving the PR head to `8e479175a4e9feffcd4e5313ef149abb485f1343`; conda-forge linter/check jobs are rerunning after the update. The remaining blocker is external: checks returning green, conda-forge review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Preparation Evidence
 
@@ -40,7 +40,7 @@ Resolved locally and submitted upstream. A conda-forge recipe exists, its source
 
 - PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Fork branch: `edithatogo/staged-recipes:add-nwau-py-0.2.2`
-- State: open, linter and Azure platform builds passing, pending review/merge.
+- State: open, branch refreshed to head `8e479175a4e9feffcd4e5313ef149abb485f1343`, linter/check jobs rerunning, pending review/merge.
 
 ## Acceptance Criteria
 
