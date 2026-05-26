@@ -170,7 +170,7 @@
             "current_status": "replacement_submitted_checks_green_pending_general_waiting_period_merge",
             "track": "julia_general_registry_submission_20260524",
             "submission_url": "https://github.com/JuliaRegistries/General/pull/156254",
-            "blocker": "Reviewer feedback converged on abandoning NwauCore and re-registering with a clearer wrapper name. Replacement General PR #156254 for NationalWeightedActivityUnitWrapper has registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; General merge and public registry propagation remain pending. Superseded PRs #156236, #156235, and #156200 could not be closed by this account due to missing ClosePullRequest permission, so [noblock] superseded comments were posted.",
+            "blocker": "Reviewer feedback converged on abandoning NwauCore and re-registering with a clearer wrapper name. Replacement General PR #156254 for NationalWeightedActivityUnitWrapper has registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; General merge and public registry propagation remain pending. Superseded PRs #156236, #156235, and #156200 are closed, and the reviewer [noblock] nation-scope clarification was answered for Australia's NWAU context.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper has no confirmed public listing before General PR merge.",
@@ -206,9 +206,10 @@
                     "nwau": "https://github.com/JuliaRegistries/General/pull/156235#issuecomment-4535434498",
                     "nwauJulia": "https://github.com/JuliaRegistries/General/pull/156200#issuecomment-4535434519"
                 },
-                "closeAttemptResult": "Closing superseded Julia General PRs failed with GraphQL ClosePullRequest permission denied, so maintainer closure remains external.",
+                "closeAttemptResult": "Initial direct close attempt failed with GraphQL ClosePullRequest permission denied; superseded Julia General PRs #156236, #156235, and #156200 are now closed after [noblock] superseded comments.",
+                "nationScopeClarification": "Reviewer [noblock] question answered at https://github.com/JuliaRegistries/General/pull/156254#issuecomment-4540952348: National refers to Australia and the National Weighted Activity Unit context.",
                 "remainingBlocker": "General merge and public registry propagation for PR #156254.",
-                "latestPoll": "2026-05-26: replacement PR #156254 open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed; merge/public propagation pending."
+                "latestPoll": "2026-05-26: replacement PR #156254 open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed; superseded PRs closed; reviewer [noblock] nation-scope clarification answered; merge/public propagation pending."
             }
         },
         {
@@ -525,9 +526,10 @@
                 "conanCenterPullRequest": "https://github.com/conan-io/conan-center-index/pull/30262",
                 "conanCenterValidationEvidence": "conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing passed from the conan-center-index branch before PR creation.",
                 "conanCenterVariantFix": "Commit d8cbc1de on fork branch add-nwau-c-abi fixes ConanCenter review issues: Release/Debug Cargo profile mapping, shared/static package artifact separation, and portable test_package execution.",
-                "conanCenterNullCheckFix": "Commit 0e7d9052 on fork branch add-nwau-c-abi changes the C smoke test pointer comparison from 0 to NULL, addressing the remaining live review nit.",
-                "conanCenterSharedValidation": "After the NULL check fix, conan create recipes/nwau-c-abi/all --version=0.1.0 --build=missing and conan create recipes/nwau-c-abi/all --version=0.1.0 -o 'nwau-c-abi/*:shared=True' --build=missing both passed from the ConanCenter fork branch. Commit d3a07060 was syntax-checked with python3 -m py_compile and git diff --check before pushing.",
-                "conanCenterExplicitProfileAndLibrarySelection": "Commit 657c7a31 on fork branch add-nwau-c-abi adds _cargo_profile() and _library_patterns() helpers so Cargo release/debug profile selection and shared/static package artifact selection are explicit for the remaining live Copilot review threads. The follow-up was posted at https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535839977.",
+                "conanCenterNullCheckFix": "Commit 0e7d9052 on fork branch add-nwau-c-abi changes the C smoke test pointer comparison from 0 to NULL, addressing the earlier review nit.",
+                "conanCenterTestRunnerFix": "Commit d3a07060 switches test_package execution to self.cpp.build.bindir for Windows and multi-config portability.",
+                "conanCenterProfileArtifactFix": "Commit 657c7a31 adds explicit Cargo profile mapping and option/OS-specific library artifact selection.",
+                "conanCenterSharedValidation": "After syncing ConanCenter fork head 657c7a31 into the MCHS mirror, conan create packaging/conan --build=missing and conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing both passed.",
                 "localConanVariantValidation": "After mirroring the NULL check fix, conan create packaging/conan --build=missing and conan create packaging/conan -o 'nwau-c-abi/*:shared=True' --build=missing both passed from the MCHS clean push clone.",
                 "vcpkgPortQualityFix": "Commit 58ff86fe on fork branch add-nwau-c-abi adds Rust target-triple mapping, honors VCPKG_LIBRARY_LINKAGE, installs a nwau-c-abi::nwau-c-abi CMake config target, excludes Android, and regenerates vcpkg version metadata.",
                 "vcpkgMaintainerGuidanceRequest": "Technical comment posted at https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4535415243 asking maintainers whether external cargo-on-PATH is acceptable or whether the port should wait for vcpkg-managed Rust toolchain infrastructure.",
@@ -537,7 +539,8 @@
                 "conanCenterPortableRunnerFollowUp": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535716273",
                 "conanCenterProfileLibraryFollowUp": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535839977",
                 "conanCenterJobSchedulerState": "Job scheduler reports ACTION_REQUIRED; maintainer approval/scheduling requested after confirming local static/shared validations passed.",
-                "conanCenterClaPending": "ConanCenter PR #30262 head 657c7a31 has CLA Assistant status pending; this is a legal contributor action and is not performed by automation."
+                "conanCenterClaPending": "ConanCenter PR #30262 has CLA Assistant status pending at head 657c7a31; this is a legal contributor action and is not performed by automation.",
+                "conanCenterLatestHead": "ConanCenter PR #30262 head 657c7a318665cdfa68440681a2b2bfe9e6be798d is open and blocked by Job scheduler ACTION_REQUIRED plus CLA Assistant."
             },
             "repoSideReadinessBlockers": {
                 "upstreamReview": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",

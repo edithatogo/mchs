@@ -1,5 +1,4 @@
 import os
-from typing import ClassVar
 
 from conan import ConanFile
 from conan.errors import ConanInvalidConfiguration
@@ -16,11 +15,8 @@ class NwauCAbiConan(ConanFile):
     description = "C ABI scaffold for MCHS/NWAU interoperability."
     topics = ("health-economics", "nwau", "c-abi", "rust")
     settings = "os", "arch", "compiler", "build_type"
-    options: ClassVar[dict[str, list[bool]]] = {
-        "shared": [True, False],
-        "fPIC": [True, False],
-    }
-    default_options: ClassVar[dict[str, bool]] = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False]}
+    default_options = {"shared": False, "fPIC": True}
     package_type = "library"
 
     def config_options(self):
@@ -37,6 +33,25 @@ class NwauCAbiConan(ConanFile):
                 f"{self.ref} supports Linux, Macos, and Windows only."
             )
 
+    def _cargo_profile(self):
+        return (
+            "release"
+            if str(self.settings.build_type) in ["Release", "RelWithDebInfo", "MinSizeRel"]
+            else "debug"
+        )
+
+    def _library_patterns(self):
+        os_name = str(self.settings.os)
+        if self.options.shared:
+            if os_name == "Windows":
+                return [("nwau_c_abi.dll", "bin"), ("nwau_c_abi.lib", "lib")]
+            if os_name == "Macos":
+                return [("libnwau_c_abi*.dylib", "lib")]
+            return [("libnwau_c_abi.so*", "lib")]
+        if os_name == "Windows":
+            return [("nwau_c_abi.lib", "lib")]
+        return [("libnwau_c_abi.a", "lib")]
+
     def source(self):
         get(
             self,
@@ -46,7 +61,7 @@ class NwauCAbiConan(ConanFile):
 
     def build(self):
         profile_args = []
-        if self.settings.build_type == "Release":
+        if self._cargo_profile() == "release":
             profile_args.append("--release")
 
         self.run(
@@ -55,10 +70,9 @@ class NwauCAbiConan(ConanFile):
         )
 
     def package(self):
-        profile_dir = "debug"
-        if self.settings.build_type == "Release":
-            profile_dir = "release"
-        artifact_dir = os.path.join(self.source_folder, "rust", "target", profile_dir)
+        artifact_dir = os.path.join(
+            self.source_folder, "rust", "target", self._cargo_profile()
+        )
 
         copy(
             self,
@@ -68,48 +82,12 @@ class NwauCAbiConan(ConanFile):
             ),
             dst=os.path.join(self.package_folder, "include"),
         )
-        if self.options.shared:
+        for pattern, folder in self._library_patterns():
             copy(
                 self,
-                "libnwau_c_abi.so*",
+                pattern,
                 src=artifact_dir,
-                dst=os.path.join(self.package_folder, "lib"),
-                keep_path=False,
-            )
-            copy(
-                self,
-                "libnwau_c_abi*.dylib",
-                src=artifact_dir,
-                dst=os.path.join(self.package_folder, "lib"),
-                keep_path=False,
-            )
-            copy(
-                self,
-                "nwau_c_abi.dll",
-                src=artifact_dir,
-                dst=os.path.join(self.package_folder, "bin"),
-                keep_path=False,
-            )
-            copy(
-                self,
-                "nwau_c_abi.lib",
-                src=artifact_dir,
-                dst=os.path.join(self.package_folder, "lib"),
-                keep_path=False,
-            )
-        else:
-            copy(
-                self,
-                "libnwau_c_abi.a",
-                src=artifact_dir,
-                dst=os.path.join(self.package_folder, "lib"),
-                keep_path=False,
-            )
-            copy(
-                self,
-                "nwau_c_abi.lib",
-                src=artifact_dir,
-                dst=os.path.join(self.package_folder, "lib"),
+                dst=os.path.join(self.package_folder, folder),
                 keep_path=False,
             )
         copy(
