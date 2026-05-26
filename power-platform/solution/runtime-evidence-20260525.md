@@ -114,3 +114,32 @@ The current Power Platform claim does not include:
 - app-player runtime execution,
 - DLP placement confirmation for the MCHS connector,
 - monitoring or App Insights export.
+
+## Recheck - 2026-05-26
+
+Authenticated PAC was rechecked against environment
+`611bca65-0b2a-eaa1-9e74-23bbba8eeec4`. The target environment is active and
+`pac connector list` still shows custom connector
+`0f3d6edc-9653-f111-bec6-00224893a0e1` / `new_mchs-20service-20boundary` /
+`MCHS Service Boundary`.
+
+This dated file is retained as the cumulative PAC runtime-evidence log for the
+current blocker thread; later rechecks are appended here to keep the connector
+observation history in one place.
+
+`pac connection list` still does not show a connection for
+`/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary`; only
+generic Microsoft, Dataverse, Office, SharePoint, Planner, and Teams
+connections were visible.
+
+`pac connector download` succeeded for the MCHS connector. The downloaded
+`apiDefinition.json` still has `host: example.invalid`, `basePath: /`, and
+`schemes: [https]`. The downloaded `apiProperties.json` did not expose populated
+connection parameters.
+
+Fresh evidence is recorded in
+`power-platform/evidence/tenant-cli-observation-20260526.json`. The blocker is
+unchanged: the connector shape exists, but runtime closure still requires a real
+reachable HTTPS service-boundary URL, API key/custom connector connection, and
+connection-reference binding before app, flow, DLP, or monitoring readiness can
+be claimed.
