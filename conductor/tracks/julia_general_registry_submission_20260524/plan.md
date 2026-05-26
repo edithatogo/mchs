@@ -22,7 +22,7 @@
 - [x] Task: Submit to `General registry` using an authenticated publisher workflow. Replacement registry PR submitted; review feedback addressed with renamed wrapper package.
     - [x] Use dry-run or validation mode first where available.
     - [x] Publish or open the required upstream PR. Registrator opened replacement General PR `https://github.com/JuliaRegistries/General/pull/156254`.
-    - [x] Capture submission URL, version, owner, and review state. PR is open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed. Superseded PRs could not be closed by this account, so `[noblock]` superseded comments were posted.
+    - [x] Capture submission URL, version, owner, and review state. PR is open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed. Superseded PRs are closed, and the reviewer `[noblock]` nation-scope clarification was answered for Australia's NWAU context.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Pending General merge and public propagation.
 
 ## Phase 4: Publication Evidence

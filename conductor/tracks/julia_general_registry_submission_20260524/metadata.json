@@ -9,7 +9,7 @@
   "current_status": "replacement_submitted_checks_green_pending_general_merge",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Replacement Julia General PR #156254 is open for NationalWeightedActivityUnitWrapper with registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; merge and public registry propagation remain pending. Superseded PRs could not be closed by this account due to ClosePullRequest permission denial, so [noblock] superseded comments were posted.",
+  "blocker": "Replacement Julia General PR #156254 is open for NationalWeightedActivityUnitWrapper with registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; merge and public registry propagation remain pending. Superseded PRs #156236, #156235, and #156200 are closed, and the reviewer [noblock] nation-scope clarification was answered for Australia's NWAU context.",
   "publication_claimed": false,
   "package_evidence": {
     "discovery_url": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper",
@@ -37,6 +37,6 @@
       "nwau": "https://github.com/JuliaRegistries/General/pull/156235#issuecomment-4535434498",
       "nwau_julia": "https://github.com/JuliaRegistries/General/pull/156200#issuecomment-4535434519"
     },
-    "remaining_payload_note": "Replacement General PR #156254 points at the renamed package/tag payload; all visible checks are green and merge/public propagation remain pending."
+    "remaining_payload_note": "Replacement General PR #156254 points at the renamed package/tag payload; all visible checks are green, the reviewer nation-scope clarification has a [noblock] answer, and merge/public propagation remain pending."
   }
 }

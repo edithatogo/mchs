@@ -35,9 +35,9 @@ Registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks pass
 on the replacement General PR; the remaining blocker is General merge and
 public registry propagation.
 
-The superseded PRs `#156236`, `#156235`, and `#156200` could not be closed by
-this account because GitHub denied `ClosePullRequest`; `[noblock]` superseded
-comments were posted instead.
+The superseded PRs `#156236`, `#156235`, and `#156200` are closed. Reviewer
+clarification on the replacement PR was answered with `[noblock]`, confirming
+that "National" refers to Australia's National Weighted Activity Unit context.
 
 ## Preparation Evidence
 
