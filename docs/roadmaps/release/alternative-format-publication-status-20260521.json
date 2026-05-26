@@ -113,9 +113,9 @@
     {
       "surface": "MCP server",
       "registry": "Official MCP Registry",
-      "status": "metadata_prepared_not_published",
-      "published": false,
-      "blockingEvidence": "registry publication waits for a package release that includes mchs-mcp"
+      "status": "published_verified",
+      "published": true,
+      "publicationEvidence": "Official MCP Registry search returns active/latest io.github.edithatogo/mchs version 0.2.2 backed by PyPI package nwau-py 0.2.2"
     },
     {
       "surface": "SAS interop",
