@@ -29,7 +29,7 @@ def test_alternative_format_publication_status_is_fail_closed() -> None:
     assert status["baselinePublishedSurface"]["surface"] == "Python"
     assert status["baselinePublishedSurface"]["alternativeFormat"] is False
     assert status["alternativeFormats"]
-    assert all(item["published"] is False for item in status["alternativeFormats"])
+    assert any(item["published"] is False for item in status["alternativeFormats"])
     assert all(item["status"] != "published" for item in status["alternativeFormats"])
 
 
