@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_tenant_cli_observation",
+  "asOf": "2026-05-26T16:16:01+10:00",
+  "status": "blocked_with_connector_definition_observed_placeholder_host_no_connection",
+  "captureMethod": "pac CLI authenticated tenant commands plus connector download",
+  "operator": {
+    "user": "<redacted-nsw-operator-email>",
+    "authProfile": "nsw-dylan"
+  },
+  "targetEnvironment": {
+    "displayName": "Dylan Mordaunt (Illawarra Shoalhaven LHD)'s Environment",
+    "environmentId": "611bca65-0b2a-eaa1-9e74-23bbba8eeec4",
+    "environmentUrl": "https://orgefc9aa3e.crm6.dynamics.com/",
+    "uniqueName": "unq8b153003d5eaf01189f5002248942",
+    "activeInPac": true
+  },
+  "commands": [
+    {
+      "command": "pac env list",
+      "result": "target environment active"
+    },
+    {
+      "command": "pac connector list",
+      "result": "MCHS Service Boundary custom connector definition observed"
+    },
+    {
+      "command": "pac connection list",
+      "result": "generic Microsoft, Dataverse, Office, SharePoint, Planner, and Teams connections observed; no MCHS custom connector connection observed"
+    },
+    {
+      "command": "pac connector download --connector-id 0f3d6edc-9653-f111-bec6-00224893a0e1 --outputDirectory /tmp/mchs-pac-connector-live",
+      "result": "downloaded apiDefinition.json and apiProperties.json for deployed MCHS Service Boundary connector"
+    }
+  ],
+  "connectorObservation": {
+    "customConnectorDefinitionObserved": true,
+    "connectorId": "0f3d6edc-9653-f111-bec6-00224893a0e1",
+    "name": "new_mchs-20service-20boundary",
+    "displayName": "MCHS Service Boundary",
+    "connectorType": "CustomConnector",
+    "matchesExpectedServiceBoundaryConnector": true,
+    "downloadedDefinitionObserved": true,
+    "downloadedHost": "example.invalid",
+    "downloadedBasePath": "/",
+    "downloadedSchemes": [
+      "https"
+    ],
+    "downloadedConnectionParameters": [],
+    "customConnectorConnectionObserved": false,
+    "observedCustomConnectorConnectionId": null
+  },
+  "connectionObservation": {
+    "customConnectorApiId": "/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary",
+    "customConnectorConnectionObserved": false,
+    "genericConnectionInventoryVisible": true,
+    "serviceBoundaryConnectionReferenceResolved": false,
+    "serviceBoundaryConnectionReferenceValue": null
+  },
+  "remainingBlockers": [
+    "deployed connector host still points to example.invalid",
+    "real service-boundary HTTPS base URL is not recorded",
+    "MCHS Service Boundary custom connector connection is not present in pac connection list",
+    "mchs_service_boundary connection reference value is not bound to an observed custom connector connection",
+    "Power Automate flow IDs and run URLs are still not captured",
+    "Power App runtime execution is still not proven",
+    "target DLP connector policy and monitoring export remain uncaptured"
+  ],
+  "claimBoundary": {
+    "targetEnvironmentAccessConfirmed": true,
+    "customConnectorDefinitionObserved": true,
+    "connectorDefinitionDownloaded": true,
+    "serviceBoundaryEndpointConfigured": false,
+    "customConnectorConnectionObserved": false,
+    "serviceBoundaryConnectionReferenceResolved": false,
+    "serviceBoundaryExecutionObserved": false,
+    "flowSmokePassed": false,
+    "runtimeSmokePassed": false,
+    "productionReadinessClaimed": false
+  }
+}
