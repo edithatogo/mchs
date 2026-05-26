@@ -36,7 +36,8 @@ class NwauCAbiConan(ConanFile):
     def _cargo_profile(self):
         return (
             "release"
-            if str(self.settings.build_type) in ["Release", "RelWithDebInfo", "MinSizeRel"]
+            if str(self.settings.build_type)
+            in ["Release", "RelWithDebInfo", "MinSizeRel"]
             else "debug"
         )
 
