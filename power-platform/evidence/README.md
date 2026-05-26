@@ -272,8 +272,10 @@ surface or the adjacent runbooks:
 - `production_service_boundary_execution_evidence`
 - `power_app_operation_pages_are_source_ux_complete_but_not_live_runtime_proven`
 
-- `power-platform/evidence/tenant-cli-observation-20260526.json`: Fresh PAC
-  recheck: target environment active, MCHS Service Boundary custom connector
-  present and downloadable, deployed connector host still `example.invalid`,
-  and no `/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary`
-  custom connector connection observed.
+- `service_boundary_production_endpoint_and_connection_reference_values`:
+  `power-platform/evidence/tenant-cli-observation-20260526.json` records a
+  fresh PAC recheck: target environment active, MCHS Service Boundary custom
+  connector present and downloadable, deployed connector host still
+  `example.invalid`, and no
+  `/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary` custom
+  connector connection observed.

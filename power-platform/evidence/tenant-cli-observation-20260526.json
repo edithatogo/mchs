@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "evidenceType": "power_platform_tenant_cli_observation",
   "asOf": "2026-05-26T16:16:01+10:00",
-  "status": "blocked_with_connector_definition_observed_placeholder_host_no_connection",
+  "status": "blocked_with_connector_definition_observed",
   "captureMethod": "pac CLI authenticated tenant commands plus connector download",
   "operator": {
     "user": "<redacted-nsw-operator-email>",
@@ -53,6 +53,7 @@
   "connectionObservation": {
     "customConnectorApiId": "/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary",
     "customConnectorConnectionObserved": false,
+    "targetEnvironmentDataverseConnectionObserved": true,
     "genericConnectionInventoryVisible": true,
     "serviceBoundaryConnectionReferenceResolved": false,
     "serviceBoundaryConnectionReferenceValue": null
