@@ -123,6 +123,10 @@ Authenticated PAC was rechecked against environment
 `0f3d6edc-9653-f111-bec6-00224893a0e1` / `new_mchs-20service-20boundary` /
 `MCHS Service Boundary`.
 
+This dated file is retained as the cumulative PAC runtime-evidence log for the
+current blocker thread; later rechecks are appended here to keep the connector
+observation history in one place.
+
 `pac connection list` still does not show a connection for
 `/providers/Microsoft.PowerApps/apis/new_mchs-20service-20boundary`; only
 generic Microsoft, Dataverse, Office, SharePoint, Planner, and Teams
