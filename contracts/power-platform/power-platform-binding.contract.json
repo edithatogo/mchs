@@ -1,0 +1,251 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "power_platform_binding_20260512",
+  "contract_version": "1.0.0",
+  "bundle_type": "synthetic",
+  "surface": {
+    "platform": "Power Platform",
+    "solution_name": "MCHS Orchestration",
+    "publisher_prefix": "mchs",
+    "mode": "orchestration-only",
+    "formula_logic_location": "shared-service-boundary"
+  },
+  "public_calculator_contract": {
+    "version": "1.0",
+    "source": "conductor/public-api-contract.md",
+    "alignment_mode": "request-response-compatible"
+  },
+  "openapi": {
+    "path": "contracts/power-platform/custom-connector.openapi.yaml",
+    "operation_ids": [
+      "listMchsCalculatorCapabilities",
+      "validateMchsCalculatorInput",
+      "runMchsCalculation"
+    ]
+  },
+  "capability_matrix": {
+    "path": "contracts/power-platform/calculator-capability-matrix.json",
+    "operation_id": "listMchsCalculatorCapabilities",
+    "selector_policy": "Power Apps must render calculator and pricing-year selectors from the service capability matrix, not from hardcoded app formulas or default environment variables.",
+    "enabled_states": [
+      "implemented",
+      "helper"
+    ],
+    "disabled_states": [
+      "source_available",
+      "shadow",
+      "planned",
+      "blocked",
+      "not_available"
+    ]
+  },
+  "environment_variables": [
+    {
+      "name": "mchs_api_base_url",
+      "type": "text",
+      "required": true,
+      "secret": false,
+      "purpose": "Base URL for the secured shared calculator service boundary."
+    },
+    {
+      "name": "mchs_api_contract_version",
+      "type": "text",
+      "required": true,
+      "secret": false,
+      "purpose": "Pinned public calculator contract version."
+    },
+    {
+      "name": "mchs_api_default_calculator_id",
+      "type": "text",
+      "required": true,
+      "secret": false,
+      "purpose": "Default calculator selector used by app screens and flows."
+    },
+    {
+      "name": "mchs_api_default_pricing_year",
+      "type": "text",
+      "required": true,
+      "secret": false,
+      "purpose": "Default four-digit pricing year label passed to the service."
+    },
+    {
+      "name": "mchs_fixture_gate",
+      "type": "text",
+      "required": true,
+      "secret": false,
+      "purpose": "Synthetic/local-only payload gate passed through diagnostics."
+    }
+  ],
+  "connection_references": [
+    {
+      "logical_name": "mchs_shared_calculator_connector",
+      "connector_id": "mchs-shared-calculator",
+      "authentication": "apiKey",
+      "credential_source": "environment-connection-reference",
+      "secret_in_source_control": false
+    }
+  ],
+  "operations": [
+    {
+      "operation_id": "listMchsCalculatorCapabilities",
+      "transport": "https",
+      "path": "/capabilities",
+      "power_platform_role": "calculator and pricing-year discovery",
+      "executes_calculation": false,
+      "required_request_fields": [],
+      "response_fields": [
+        "schema_version",
+        "pricing_years",
+        "calculators",
+        "status_vocabulary",
+        "app_rules"
+      ]
+    },
+    {
+      "operation_id": "validateMchsCalculatorInput",
+      "transport": "https",
+      "path": "/validate",
+      "power_platform_role": "pre-submit validation",
+      "executes_calculation": false,
+      "required_request_fields": [
+        "contract_version",
+        "calculator_id",
+        "pricing_year",
+        "fixture_gate",
+        "correlation_id",
+        "input"
+      ],
+      "response_fields": [
+        "status",
+        "diagnostics",
+        "provenance",
+        "correlation_id"
+      ]
+    },
+    {
+      "operation_id": "runMchsCalculation",
+      "transport": "https",
+      "path": "/calculations",
+      "power_platform_role": "submit orchestration request",
+      "executes_calculation": true,
+      "execution_owner": "shared calculator service",
+      "required_request_fields": [
+        "contract_version",
+        "calculator_id",
+        "pricing_year",
+        "fixture_gate",
+        "correlation_id",
+        "input"
+      ],
+      "response_fields": [
+        "status",
+        "result",
+        "diagnostics",
+        "provenance",
+        "correlation_id"
+      ]
+    }
+  ],
+  "flow_actions": [
+    {
+      "name": "Validate calculator payload",
+      "trigger": "manual-or-dataverse-submit",
+      "connector_operation_id": "validateMchsCalculatorInput",
+      "allowed_logic": [
+        "field mapping",
+        "correlation id generation",
+        "error routing"
+      ],
+      "blocked_logic": [
+        "calculator support matrix hardcoding",
+        "pricing-year support matrix hardcoding",
+        "pricing-year validation rules",
+        "classification grouping rules",
+        "NWAU formula constants",
+        "output recomputation"
+      ]
+    },
+    {
+      "name": "Submit calculator request",
+      "trigger": "validation-pass",
+      "connector_operation_id": "runMchsCalculation",
+      "allowed_logic": [
+        "service call",
+        "status persistence",
+        "diagnostic notification"
+      ],
+      "blocked_logic": [
+        "Power Fx calculation",
+        "Dataverse plugin calculation",
+        "DAX or Power Query recalculation"
+      ]
+    }
+  ],
+  "alm_gates": [
+    {
+      "name": "pack",
+      "tool": "pac solution pack",
+      "requires_credentials": false,
+      "evidence": "source-controlled solution manifest and connector contract parse locally"
+    },
+    {
+      "name": "solution-checker",
+      "tool": "pac solution check",
+      "requires_credentials": true,
+      "evidence": "documented as external tenant gate, not required for local CI"
+    },
+    {
+      "name": "contract-validation",
+      "tool": "pytest tests/test_power_platform_binding_track.py && python scripts/validate_power_platform_capabilities.py",
+      "requires_credentials": false,
+      "evidence": "validates JSON/YAML artifacts, operation IDs, capability matrix coverage, env vars, and no-formula policy"
+    }
+  ],
+  "diagnostics": {
+    "format": "json",
+    "required_codes": [
+      "PP-BND-001",
+      "PP-BND-002",
+      "PP-BND-003"
+    ],
+    "categories": [
+      "contract-alignment",
+      "service-boundary",
+      "fixture-gate",
+      "provenance"
+    ]
+  },
+  "provenance": {
+    "correlation_id_required": true,
+    "preserve_fields": [
+      "contract_version",
+      "calculator_id",
+      "pricing_year",
+      "fixture_gate",
+      "correlation_id"
+    ],
+    "audit_sink": "Power Platform orchestration log table or flow run history"
+  },
+  "formula_logic_policy": {
+    "allowed_in_power_platform": false,
+    "blocked_assets": [
+      "canvas app formulas",
+      "Power Automate expressions",
+      "Dataverse plugins",
+      "custom connector policy templates",
+      "Power BI DAX or Power Query"
+    ],
+    "blocked_terms": [
+      "NWAU formula constants",
+      "pricing-year mapping rules",
+      "classification grouping rules",
+      "source-bundle lookup rules"
+    ],
+    "runtime_owner": "shared calculator service"
+  },
+  "examples": {
+    "capabilities": "contracts/power-platform/examples/capabilities.pass.json",
+    "pass": "contracts/power-platform/examples/validation.pass.json",
+    "fail": "contracts/power-platform/examples/validation.fail.json"
+  }
+}

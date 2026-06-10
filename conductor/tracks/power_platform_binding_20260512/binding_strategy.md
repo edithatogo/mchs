@@ -36,6 +36,22 @@ tracks.
 | Service API          | Azure Function / App   | HTTPS              | Secured execution boundary    |
 | CLI/file boundary    | File drop or process   | Parquet / CSV      | Offline or bulk handoff       |
 
+### Concrete contract artifacts
+
+The binding now has credential-free, source-controlled service-boundary
+artifacts:
+
+- `contracts/power-platform/power-platform-binding.schema.json`
+- `contracts/power-platform/power-platform-binding.contract.json`
+- `contracts/power-platform/calculator-capability-matrix.json`
+- `contracts/power-platform/custom-connector.openapi.yaml`
+- `contracts/power-platform/examples/validation.pass.json`
+- `contracts/power-platform/examples/validation.fail.json`
+
+These artifacts define the custom connector operations, environment variables,
+connection references, flow action boundaries, ALM gates, diagnostics, and
+provenance fields without requiring Power Platform credentials.
+
 ### Request/response schema
 
 The custom connector request and response schema mirrors the public
@@ -53,6 +69,23 @@ Response fields from the calculator contract are surfaced as structured
 outputs for workflow apps: success/fail status, computed values,
 diagnostics, and provenance.
 
+### Connector operations
+
+- `listMchsCalculatorCapabilities` returns the calculator and pricing-year
+  capability matrix used by Power Apps selectors. This prevents the app from
+  hardcoding a single default calculator/year or silently hiding
+  source-available, planned, blocked, shadow, or unavailable combinations.
+- `validateMchsCalculatorInput` validates request shape and fixture gates
+  through the service boundary without executing a calculation.
+- `runMchsCalculation` submits the request to the shared calculator service and
+  returns `status`, `result`, `diagnostics`, `provenance`, and
+  `correlation_id`.
+
+Power Platform owns mapping, submission, status persistence, notifications, and
+presentation only. The shared service boundary owns contract validation,
+pricing-year semantics, classification rules, source-bundle lookup, and
+calculation execution.
+
 ### ALM requirements
 
 - Power Platform solution assets are packaged as managed solutions using
@@ -65,9 +98,20 @@ diagnostics, and provenance.
 
 ## Supported calculators
 
-All calculators exposed through the shared service API or CLI/file boundary
-are accessible from Power Platform. The custom connector or flow action
-selects the target calculator via `calculator_id` and `pricing_year`.
+All calculator selectors exposed to Power Platform are declared in
+`contracts/power-platform/calculator-capability-matrix.json`. The matrix covers
+acute, ED, admitted mental health, community mental health, subacute,
+outpatients, adjusted NWAU, HAC, and AHR across the declared pricing-year
+window. The source-controlled window spans the archived IHACPA evidence horizon
+from 2013 through 2026. Power Apps may enable only `implemented` and `helper`
+states by default; `source_available`, `shadow`, `planned`, `blocked`, and
+`not_available` combinations must be displayed as disabled or informational
+options until the shared service boundary reports support. Historical SAS and
+raw-workbook cells remain visible as source-available coverage rather than
+being hidden as unavailable or enabled without parity evidence.
+Historical substreams that do not have separate runnable service operations,
+including ED UDG, ED AECC, and emergency-service URG/ES, are represented as
+disabled `variant_surfaces` metadata under the `ed` selector.
 
 ## Limitations
 
@@ -119,10 +163,10 @@ Prefer CLI/file interop or native bindings when:
 
 ## Readiness bar
 
-- This track is design-only. No Power Platform connector code or solution
-  artifacts are being committed to the binding strategy.
-- The managed solution publication path is documented but not implemented
-  here.
+- This track includes local, credential-free contract and custom connector
+  boundary artifacts, but no tenant-exported managed solution zip.
+- The managed solution publication path is documented and remains gated by
+  external `pac` solution checker/import validation.
 - Do not claim Power Platform integration as production-ready until the
   shared service API is stable, the custom connector exists, and solution
   checker passes for the managed solution.

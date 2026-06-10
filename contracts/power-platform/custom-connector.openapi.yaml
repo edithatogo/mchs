@@ -1,0 +1,309 @@
+openapi: "3.0.1"
+info:
+  title: MCHS Shared Calculator Power Platform Connector
+  version: "1.0.0"
+  description: |
+    Custom connector boundary for Power Platform orchestration surfaces.
+    The connector validates and submits calculator payloads to the shared
+    service boundary. It does not implement calculator formulas.
+servers:
+  - url: https://mchs-api.example.invalid/v1
+    description: Placeholder base URL replaced by mchs_api_base_url per environment.
+paths:
+  /capabilities:
+    get:
+      operationId: listMchsCalculatorCapabilities
+      summary: List calculator capabilities
+      x-ms-summary: List calculator capabilities
+      description: Return the calculator and pricing-year capability matrix used by Power Apps selectors.
+      responses:
+        "200":
+          description: Calculator and pricing-year capability matrix
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PowerPlatformCapabilityMatrix"
+  /validate:
+    post:
+      operationId: validateMchsCalculatorInput
+      summary: Validate calculator input
+      x-ms-summary: Validate calculator input
+      description: Validate request shape and fixture gate before a calculation is submitted.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PowerPlatformCalculationRequest"
+      responses:
+        "200":
+          description: Validation diagnostics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PowerPlatformValidationResponse"
+  /calculations:
+    post:
+      operationId: runMchsCalculation
+      summary: Run calculator through service boundary
+      x-ms-summary: Run MCHS calculation
+      description: Submit an orchestration request to the shared calculator service.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PowerPlatformCalculationRequest"
+      responses:
+        "200":
+          description: Calculation response from the shared service boundary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PowerPlatformCalculationResponse"
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Provided by the environment connection reference, never by source-controlled files.
+  schemas:
+    PowerPlatformCalculationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - contract_version
+        - calculator_id
+        - pricing_year
+        - fixture_gate
+        - correlation_id
+        - input
+      properties:
+        contract_version:
+          type: string
+          example: "1.0"
+        calculator_id:
+          type: string
+          example: acute
+        pricing_year:
+          type: string
+          pattern: "^[0-9]{4}$"
+          example: "2025"
+        fixture_gate:
+          type: string
+          enum:
+            - synthetic
+            - local-only
+          example: synthetic
+        correlation_id:
+          type: string
+          minLength: 8
+          example: pp-20260512-0001
+        input:
+          type: object
+          additionalProperties: true
+          description: Payload matching the public calculator contract.
+    PowerPlatformCapabilityMatrix:
+      type: object
+      additionalProperties: false
+      required:
+        - schema_version
+        - pricing_years
+        - status_vocabulary
+        - calculators
+        - app_rules
+      properties:
+        schema_version:
+          type: string
+        pricing_years:
+          type: array
+          items:
+            type: string
+            pattern: "^[0-9]{4}$"
+        status_vocabulary:
+          type: object
+          additionalProperties:
+            type: string
+        calculators:
+          type: array
+          items:
+            $ref: "#/components/schemas/PowerPlatformCalculatorCapability"
+        app_rules:
+          type: array
+          items:
+            type: string
+    PowerPlatformCalculatorCapability:
+      type: object
+      additionalProperties: false
+      required:
+        - calculator_id
+        - display_name
+        - stream
+        - app_surface
+        - service_operation
+        - year_states
+        - source_evidence
+        - default_enabled_year
+        - notes
+      properties:
+        calculator_id:
+          type: string
+        display_name:
+          type: string
+        stream:
+          type: string
+        app_surface:
+          type: string
+          enum:
+            - calculator
+            - helper
+        service_operation:
+          type: string
+        year_states:
+          type: object
+          additionalProperties:
+            type: string
+            enum:
+              - implemented
+              - helper
+              - source_available
+              - shadow
+              - planned
+              - blocked
+              - not_available
+        source_evidence:
+          type: object
+          additionalProperties:
+            type: string
+          description: Source-controlled evidence path by pricing year.
+        variant_surfaces:
+          type: array
+          description: Optional historical source substreams displayed under one service calculator row.
+          items:
+            $ref: "#/components/schemas/PowerPlatformCalculatorVariant"
+        default_enabled_year:
+          type: string
+        notes:
+          type: string
+    PowerPlatformCalculatorVariant:
+      type: object
+      additionalProperties: false
+      required:
+        - variant_id
+        - display_name
+        - state
+        - pricing_years
+        - source_evidence
+      properties:
+        variant_id:
+          type: string
+        display_name:
+          type: string
+        state:
+          type: string
+          enum:
+            - source_available
+            - shadow
+            - planned
+            - blocked
+            - not_available
+        pricing_years:
+          type: array
+          items:
+            type: string
+            pattern: "^[0-9]{4}$"
+        source_evidence:
+          type: object
+          additionalProperties:
+            type: string
+    PowerPlatformValidationResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - diagnostics
+        - provenance
+        - correlation_id
+      properties:
+        status:
+          type: string
+          enum:
+            - pass
+            - fail
+        diagnostics:
+          type: array
+          items:
+            $ref: "#/components/schemas/PowerPlatformDiagnostic"
+        provenance:
+          $ref: "#/components/schemas/PowerPlatformProvenance"
+        correlation_id:
+          type: string
+    PowerPlatformCalculationResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+        - result
+        - diagnostics
+        - provenance
+        - correlation_id
+      properties:
+        status:
+          type: string
+          enum:
+            - success
+            - failed
+        result:
+          type: object
+          additionalProperties: true
+          description: Result payload returned by the shared service boundary.
+        diagnostics:
+          type: array
+          items:
+            $ref: "#/components/schemas/PowerPlatformDiagnostic"
+        provenance:
+          $ref: "#/components/schemas/PowerPlatformProvenance"
+        correlation_id:
+          type: string
+    PowerPlatformDiagnostic:
+      type: object
+      additionalProperties: false
+      required:
+        - code
+        - severity
+        - message
+      properties:
+        code:
+          type: string
+          example: PP-BND-001
+        severity:
+          type: string
+          enum:
+            - info
+            - warning
+            - error
+        message:
+          type: string
+    PowerPlatformProvenance:
+      type: object
+      additionalProperties: false
+      required:
+        - contract_version
+        - calculator_id
+        - pricing_year
+        - fixture_gate
+        - service_boundary
+      properties:
+        contract_version:
+          type: string
+        calculator_id:
+          type: string
+        pricing_year:
+          type: string
+        fixture_gate:
+          type: string
+        service_boundary:
+          type: string
+security:
+  - apiKeyHeader: []

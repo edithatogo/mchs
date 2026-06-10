@@ -1,18 +1,22 @@
 {
   "track_id": "power_platform_binding_20260512",
   "type": "feature",
-  "status": "design-complete",
+  "status": "completed",
   "track_class": "binding",
-  "current_state": "design-complete",
-  "primary_contract": "Track power_platform_binding_20260512 contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "contracts/power-platform/power-platform-binding.contract.json",
   "dependencies": [],
   "completion_evidence": [
     "docs",
     "workflows",
-    "tests"
+    "tests",
+    "calculator-capability-matrix",
+    "app-surface-model",
+    "capability-validator"
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Finalize the Power Platform binding roadmap as an orchestration-only consumer of the shared calculator service or CLI/file contract."
+  "updated_at": "2026-05-26T00:00:00Z",
+  "description": "Finalize the Power Platform binding as an orchestration-only consumer of the shared calculator service or CLI/file contract with local contract and connector-boundary validation.",
+  "no_stub_enforce": true
 }
