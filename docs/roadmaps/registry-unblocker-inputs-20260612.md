@@ -61,13 +61,12 @@ Completion evidence required:
 
 ### Open VSX / Visual Studio Marketplace `mchs-tools`
 
-Current state: VSIX is buildable; Open VSX token creation remains blocked by
-publisher agreement/PAT state; Visual Studio Marketplace publisher/PAT access is
-not configured.
+Current state: VSIX is buildable; Open VSX CLI still prompts for a namespace
+PAT instead of publishing; Visual Studio Marketplace publisher/PAT access is not
+configured.
 
 Required external inputs:
 
-- Eclipse Open VSX Publisher Agreement attached to the logged-in publisher.
 - Valid `OVSX_PAT` for namespace `edithatogo`.
 - Visual Studio Marketplace publisher identity.
 - Visual Studio Marketplace PAT with extension publish permissions.
