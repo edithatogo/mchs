@@ -86,6 +86,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - GitHub release: `https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0`
 - PackageList issue: `https://github.com/SwiftPackageIndex/PackageList/issues/13717`, closed as completed on 2026-05-24.
 - Fixed publication metadata: added MIT license, Swift package topics, and GitHub release `v0.1.0`.
+- Latest probe on 2026-06-12: PackageList issue returned HTTP 200 and closed/completed; GitHub release `v0.1.0` returned HTTP 200 and was published on 2026-05-25; SPI public probes still failed with API HTTP 401, badge/page Cloudflare HTTP 403, and `packages.swift.org` DNS resolution failure from this environment.
 - Remaining step: verify public SPI listing/version evidence at `https://swiftpackageindex.com/edithatogo/mchs-swift`.
 
 ### Maven Central

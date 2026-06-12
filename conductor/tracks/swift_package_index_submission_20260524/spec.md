@@ -23,7 +23,7 @@ Track discovery, local preparation, submission, and publication evidence for the
 
 ## Current Blocker
 
-Swift Package Index PackageList issue is closed as completed, repository publication metadata is fixed, but SPI public listing/version evidence is still blocked by public probe visibility.
+Swift Package Index PackageList issue is closed as completed and the GitHub release exists, but SPI public listing/version evidence is still blocked by public probe visibility: the SPI API returned 401, SPI badge/page probes returned Cloudflare 403, and packages.swift.org did not resolve from this environment.
 
 ## Evidence
 
