@@ -363,7 +363,7 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "pyproject.toml",
-            "current_status": "submitted_branch_refreshed_checks_rerunning_pending_review",
+            "current_status": "submitted_checks_green_pending_conda_forge_review",
             "track": "conda_forge_feedstock_submission_20260524",
             "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
             "blocker": "conda-forge staged-recipes PR #33452 is open at head bffc5bf1a85389dc695adfd96c87bf2413f4db25 with conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks all green. Maintainer review, merge, feedstock creation, and public Anaconda package propagation remain pending.",
@@ -388,7 +388,7 @@
                 "sourceFork": "edithatogo/staged-recipes",
                 "branch": "add-nwau-py-0.2.2",
                 "commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
-                "state": "open_branch_refreshed_checks_rerunning_pending_review",
+                "state": "open_checks_green_pending_conda_forge_review",
                 "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
                 "branchUpdate": "GitHub update-branch API accepted on 2026-05-26.",
                 "latestPoll": "2026-06-12: PR #33452 open; headRefOid bffc5bf1a85389dc695adfd96c87bf2413f4db25; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks all green. Remaining blocker is conda-forge maintainer review/merge and feedstock publication."
