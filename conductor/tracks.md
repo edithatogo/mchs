@@ -693,7 +693,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Stata SSC Submission**
+- [x] **Track: Stata SSC Submission**
 *Link: [./tracks/stata_ssc_submission_20260524/](./tracks/stata_ssc_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `SSC / Stata package distribution`, and capture immutable evidence before claiming publication.*
 

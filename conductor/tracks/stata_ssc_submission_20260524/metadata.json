@@ -1,16 +1,16 @@
 {
   "track_id": "stata_ssc_submission_20260524",
   "type": "chore",
-  "status": "submitted",
+  "status": "completed",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T01:20:00Z",
+  "updated_at": "2026-06-12T09:52:00Z",
   "description": "Stata SSC Submission: discover, prepare, submit, and evidence SSC / Stata package distribution publication for mchs-stata-interop.",
   "registry_id": "stata_ssc",
-  "current_status": "submitted_pending_ssc_maintainer_review",
-  "publication_status": "not_published",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
   "local_readiness_resolved": true,
-  "blocker": "SSC submission email sent with the prepared mchs ado/help bundle; maintainer review and public SSC publication remain pending. Stata runtime validation is not claimed.",
-  "publication_claimed": false,
+  "blocker": null,
+  "publication_claimed": true,
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0-ssc.zip",
     "ssc_package_name": "mchs",
@@ -18,6 +18,14 @@
     "bundle_contents": "mchs.ado, mchs.sthlp",
     "submission_email_draft": "conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md",
     "submission_email_sent": "2026-05-26: Gmail sent message id 19e5ffd483ef5841 on thread 19e5ff9a74554b3a to baum@bc.edu with bindings/stata/mchs-stata-interop-0.1.0-ssc.zip attached",
-    "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed"
+    "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed",
+    "publication_evidence": {
+      "pkg_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg",
+      "ado_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.ado",
+      "help_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp",
+      "http_status": 200,
+      "distribution_date": "20260526",
+      "latest_probe": "2026-06-12: mchs.pkg, mchs.ado, and mchs.sthlp returned HTTP 200 from fmwww.bc.edu/repec/bocode/m/."
+    }
   }
 }

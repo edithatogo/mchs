@@ -462,13 +462,13 @@
             "package": "mchs",
             "version": "0.1.0",
             "local_surface": "contracts/stata-interop-binding",
-            "current_status": "submitted_pending_ssc_maintainer_review",
+            "current_status": "published_verified",
             "track": "stata_ssc_submission_20260524",
-            "submission_url": null,
-            "blocker": "SSC submission email sent with the prepared mchs ado/help bundle; maintainer review and public SSC publication remain pending. Stata runtime validation is not claimed.",
+            "submission_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg",
+            "blocker": null,
             "localReadinessResolved": true,
             "preparationEvidence": {
-                "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI, but no clean machine-readable SSC publication proof was available.",
+                "discovery": "IDEAS/RePEc search page for mchs-stata-interop was reachable from CLI. 2026-06-12 public archive probes verified mchs.pkg, mchs.ado, and mchs.sthlp under http://fmwww.bc.edu/repec/bocode/m/.",
                 "bundle": "bindings/stata/mchs-stata-interop-0.1.0-ssc.zip",
                 "sscPackageName": "mchs",
                 "bundlePresentInCommitTree": true,
@@ -479,7 +479,15 @@
                 "submissionEmailSent": "2026-05-26: Gmail sent message id 19e5ffd483ef5841 on thread 19e5ff9a74554b3a to baum@bc.edu with bindings/stata/mchs-stata-interop-0.1.0-ssc.zip attached",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and SSC bundle are present; ado runtime validation is not claimed because Stata is unavailable locally.",
-                "remainingExternalBlocker": "SSC maintainer review and public archive publication remain pending after email submission."
+                "remainingExternalBlocker": "None for public SSC archive publication. Stata runtime validation remains unclaimed because no Stata executable is installed locally.",
+                "publicationEvidence": {
+                    "pkgUrl": "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg",
+                    "adoUrl": "http://fmwww.bc.edu/repec/bocode/m/mchs.ado",
+                    "helpUrl": "http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp",
+                    "httpStatus": 200,
+                    "distributionDate": "20260526",
+                    "latestProbe": "2026-06-12: mchs.pkg, mchs.ado, and mchs.sthlp returned HTTP 200 from fmwww.bc.edu/repec/bocode/m/."
+                }
             }
         },
         {

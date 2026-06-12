@@ -124,8 +124,7 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 ### Stata SSC
 
 - Package: `mchs@0.1.0` (`mchs-stata-interop` bundle)
-- Submission status: Gmail sent message id `19e5ffd483ef5841` on thread `19e5ff9a74554b3a` to `baum@bc.edu` with `bindings/stata/mchs-stata-interop-0.1.0-ssc.zip` attached; Stata runtime validation is not claimed in this environment.
-- Remaining step: wait for SSC maintainer review and public archive publication evidence.
+- Publication status: published and verified. Public SSC/RePEc archive files `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg`, `mchs.ado`, and `mchs.sthlp` returned HTTP 200 on 2026-06-12; `mchs.pkg` records Distribution-Date `20260526`. Stata runtime validation is not claimed in this environment.
 
 ### vcpkg / ConanCenter
 

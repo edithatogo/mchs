@@ -19,16 +19,16 @@
 
 ## Phase 3: Submission
 
-- [ ] Task: Submit to `SSC / Stata package distribution` using an authenticated publisher workflow.
+- [x] Task: Submit to `SSC / Stata package distribution` using an authenticated publisher workflow.
     - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR.
+    - [x] Publish or open the required upstream PR. Public SSC/RePEc archive files are now present at `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg`, `mchs.ado`, and `mchs.sthlp`.
     - [x] Capture submission URL, version, owner, and review state.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication.
-    - [ ] Query public registry after propagation.
-    - [ ] Record immutable URL/API response/checksum.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)
+- [x] Task: Verify external publication.
+    - [x] Query public registry after propagation.
+    - [x] Record immutable URL/API response/checksum. 2026-06-12: `mchs.pkg`, `mchs.ado`, and `mchs.sthlp` returned HTTP 200 from `fmwww.bc.edu/repec/bocode/m/`; `mchs.pkg` records Distribution-Date `20260526`.
+    - [x] Mark track complete only if publication or accepted-review evidence exists.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)

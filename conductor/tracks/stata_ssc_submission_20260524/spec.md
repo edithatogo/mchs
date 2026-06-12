@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `mchs` (`mchs-stata-interop` bundle)
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/contracts/stata-interop-binding`
-- Current status: `submitted_pending_ssc_maintainer_review`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,11 +24,11 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No Stata executable is installed locally, so no ado runtime validation is claimed. The SSC submission email has been sent with the prepared ado/help bundle. The remaining blocker is external SSC maintainer review and public archive publication.
+Resolved and published. A Stata ado/help/pkg bundle exists and public SSC/RePEc archive files are now available at `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg`, `mchs.ado`, and `mchs.sthlp`; all returned HTTP 200 on 2026-06-12, and `mchs.pkg` records Distribution-Date `20260526`. No Stata executable is installed locally, so no ado runtime validation is claimed.
 
 ## Preparation Evidence
 
-- Discovery: IDEAS/RePEc search page for `mchs-stata-interop` was reachable from CLI, but no clean machine-readable SSC publication proof was available.
+- Discovery: IDEAS/RePEc search page for `mchs-stata-interop` was reachable from CLI. 2026-06-12 public archive probes verified `mchs.pkg`, `mchs.ado`, and `mchs.sthlp` under `http://fmwww.bc.edu/repec/bocode/m/`.
 - Bundle: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0-ssc.zip`
 - SHA256: `ae0b0adf12aba71dc4e844282bbfcd88bd09b2fd2c2237f565cbc1cfe9d8f225`
 - Contents: `mchs.ado`, `mchs.sthlp`
@@ -36,7 +36,7 @@ Resolved locally. A Stata ado/help/pkg bundle exists and has been packaged. No S
 - Submission draft: `conductor/tracks/stata_ssc_submission_20260524/ssc-submission-email-draft.md`
 - Runtime note: no Stata executable is installed locally.
 - Submission evidence: Gmail sent message id `19e5ffd483ef5841` on thread `19e5ff9a74554b3a` to `baum@bc.edu` with `bindings/stata/mchs-stata-interop-0.1.0-ssc.zip` attached.
-- Remaining external blocker: SSC maintainer review and public archive publication.
+- Remaining external blocker: none for public SSC archive publication. Stata runtime validation remains unclaimed because no Stata executable is installed locally.
 
 ## Acceptance Criteria
 
