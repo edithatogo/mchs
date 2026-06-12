@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T10:05:00Z",
+  "updated_at": "2026-06-12T11:45:00Z",
   "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",
   "registry_id": "swift_package_index",
-  "current_status": "submitted_accepted_pending_spi_public_probe",
+  "current_status": "submitted_completed_issue_raw_packagelist_missing_followup_posted",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Swift Package Index PackageList issue is closed as completed and the GitHub release exists, but SPI public listing/version evidence is still blocked by public probe visibility: the SPI API returned 401, SPI badge/page probes returned Cloudflare 403, and packages.swift.org did not resolve from this environment.",
+  "blocker": "Swift Package Index PackageList issue is closed as completed and the GitHub release exists, but public package evidence is still missing: the canonical PackageList packages.json has zero matches for edithatogo, mchs-swift, or MCHSBind. A follow-up comment was posted on the completed issue requesting recheck.",
   "submission_url": "https://github.com/SwiftPackageIndex/PackageList/issues/13717",
   "publication_claimed": false,
   "package_evidence": {
@@ -24,7 +24,7 @@
       "buildResult": "Build complete.",
       "testAttempt": "swift test exits with no tests found because the package has no Tests target; package readiness is gated by swift build.",
       "fixedPublicationMetadata": "Added MIT LICENSE to the public package repo, set Swift package topics, and created GitHub release v0.1.0.",
-      "remainingExternalBlocker": "Swift Package Index public listing/version evidence remains unavailable from this environment.",
+      "remainingExternalBlocker": "Swift Package Index public listing/version evidence remains unavailable; raw PackageList packages.json still has zero matches for edithatogo, mchs-swift, or MCHSBind.",
       "repository": "https://github.com/edithatogo/mchs-swift.git",
       "tag": "v0.1.0",
       "release": "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0",
@@ -44,6 +44,11 @@
           "publishedAt": "2026-05-25T13:03:45Z"
         },
         "spiPublicProbes": [
+          {
+            "url": "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json",
+            "httpStatus": 200,
+            "result": "zero matches for edithatogo, mchs-swift, or MCHSBind"
+          },
           {
             "url": "https://packages.swift.org/api/packages/edithatogo/mchs-swift",
             "result": "curl could not resolve host packages.swift.org; HTTP status 000"
@@ -73,7 +78,9 @@
       "tag": "v0.1.0",
       "state": "closed_completed_public_probe_blocked",
       "closedAt": "2026-05-24T11:07:11Z",
-      "stateReason": "completed"
+      "stateReason": "completed",
+      "followUpComment": "https://github.com/SwiftPackageIndex/PackageList/issues/13717#issuecomment-4690679058",
+      "followUpCommentedAt": "2026-06-12"
     },
     "publication_evidence": null
   }
