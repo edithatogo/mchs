@@ -92,7 +92,8 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
 - Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
-- Required steps: Central Portal namespace verification, signing key setup, GitHub secrets `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD`, manual workflow `Publish Maven Central package` dry-run, authenticated publish/release, and public Maven Central verification.
+- Dry-run evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/27407884659` succeeded with `dry_run=true` on 2026-06-12 after commit `cde0439` moved the workflow runtime JDK to 17 for Gradle 9. The binding module remains Java 11-targeted via Gradle configuration.
+- Required steps: Central Portal namespace verification, signing key setup, GitHub secrets `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD`, authenticated publish/release, and public Maven Central verification.
 
 ### conda-forge
 

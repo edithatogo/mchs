@@ -297,7 +297,7 @@
             "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
             "track": "jvm_maven_central_registry_submission_20260524",
             "submission_url": "gmail:19e5ffd483ef5841",
-            "blocker": "Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in and local build passed; namespace verification, signing key material, publish credentials, publish validation, and authenticated release remain pending.",
+            "blocker": "Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in. GitHub Actions Maven Central dry-run now passes after moving the workflow runtime JDK to 17 for Gradle 9 while retaining the Java 11 target/toolchain. Namespace verification, signing key material, publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "Maven Central search for g:io.github.edithatogo AND a:mchs returned numFound=0.",
@@ -314,9 +314,10 @@
                 "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
                 "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
                 "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD.",
-                "workflowDryRunValidation": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run --console=plain succeeded without credentials after aligning Central Portal and signing properties.",
+                "workflowDryRunValidation": "GitHub Actions run https://github.com/edithatogo/mchs/actions/runs/27407884659 succeeded with dry_run=true on 2026-06-12 after setting workflow JDK to 17 for Gradle 9. Local Gradle dry-run also succeeded without credentials after aligning Central Portal and signing properties.",
                 "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
-                "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false."
+                "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false.",
+                "workflowRuntimeFix": "Commit cde0439 sets the Maven Central publish workflow JDK to 17 so Gradle 9 can run; the binding module remains Java 11-targeted via Gradle configuration."
             }
         },
         {
