@@ -95,7 +95,7 @@ jobs:
         run: uv run bandit -r nwau_py scripts -x tests
 
       - name: Run dependency audit
-        run: uv run pip-audit
+        run: uv run --with pip-audit --with pip==26.1.2 pip-audit
 
   tests:
     name: Phase 2 tests (Python ${{ matrix.python-version }})
