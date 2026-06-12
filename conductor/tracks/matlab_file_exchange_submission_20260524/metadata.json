@@ -3,26 +3,30 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T12:05:00Z",
+  "updated_at": "2026-06-12T12:18:08Z",
   "description": "MATLAB File Exchange Submission: discover, prepare, submit, and evidence MATLAB File Exchange publication for mchs-matlab-interop.",
   "registry_id": "matlab_file_exchange",
   "current_status": "prepared_pending_file_exchange_upload",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; MATLAB/Octave runtime validation is not claimed. A 2026-06-12 public File Exchange search for mchs-matlab-interop returned HTTP 200 but only unrelated results, so no public listing is claimed.",
+  "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; MATLAB/Octave runtime validation is not claimed because neither matlab nor octave is available on PATH. A 2026-06-12T12:18:08Z public File Exchange search for mchs-matlab-interop returned HTTP 200 but no exact listing match, so no public listing is claimed.",
   "publication_claimed": false,
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip",
     "bundle_sha256": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c",
-    "runtime_note": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed",
+    "runtime_note": "MATLAB and Octave are not installed locally or available on PATH, so no MATLAB runtime validation is claimed",
     "bundle_contents": "mchs/README.md, mchs/validateInput.m, mchs/importResultTable.m, mchs/invokeCli.m, examples/cli_invocation_demo.m, examples/file_import_demo.m, README.md, matlab-interop-notes.md, file-exchange-submission.json",
     "latest_public_probe_20260612": {
+      "asOf": "2026-06-12T12:18:08Z",
       "exactSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs-matlab-interop",
       "exactSearchHttpStatus": 200,
-      "exactSearchResult": "Search page reachable, but visible/search-result links were unrelated MathWorks File Exchange entries such as MATLAB support for MinGW, Terminal in MATLAB, and Mathematica Symbolic Toolbox; no mchs-matlab-interop listing was found.",
+      "exactSearchResult": "Search page reachable, but no exact mchs-matlab-interop listing match was found.",
       "broadSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs",
       "broadSearchHttpStatus": 200,
-      "broadSearchResult": "Search page reachable and reports File Exchange results, but the result set did not verify mchs-matlab-interop."
+      "broadSearchResult": "Search page reachable and reports File Exchange results, but the result set did not verify mchs-matlab-interop.",
+      "matlabCliAvailable": false,
+      "octaveCliAvailable": false,
+      "bundleSha256Rechecked": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c"
     }
   }
 }

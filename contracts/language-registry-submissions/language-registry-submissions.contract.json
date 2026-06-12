@@ -147,7 +147,7 @@
             "current_status": "prepared_pending_cran_maintainer_submission",
             "track": "r_cran_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12 public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive.",
+            "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12T12:18:08Z public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive. Local R is available, but the generated nwauR_0.1.0.tar.gz artifact is not committed in the repository checkout.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://crandb.r-pkg.org/nwauR returned not_found/document not found.",
@@ -158,13 +158,16 @@
                 "checkResult": "Status: OK",
                 "remainingExternalBlocker": "CRAN maintainer submission/review is required; no automated authenticated CRAN submission was performed.",
                 "latestPublicProbe20260612": {
+                    "asOf": "2026-06-12T12:18:08Z",
                     "crandbUrl": "https://crandb.r-pkg.org/nwauR",
                     "crandbHttpStatus": 404,
                     "cranPackageUrl": "https://cran.r-project.org/package=nwauR",
                     "cranPackageHttpStatus": 404,
                     "cranArchiveUrl": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
                     "cranArchiveHttpStatus": 404,
-                    "result": "nwauR is not publicly listed on CRAN or CRAN archive."
+                    "result": "nwauR is not publicly listed on CRAN or CRAN archive.",
+                    "localRPath": "/opt/homebrew/bin/R",
+                    "generatedTarballPresentInCheckout": false
                 }
             }
         },
@@ -502,7 +505,7 @@
             "current_status": "prepared_pending_file_exchange_upload",
             "track": "matlab_file_exchange_submission_20260524",
             "submission_url": null,
-            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; repo-side source, contract, and bundle artifacts are present, but MATLAB/Octave runtime validation is not claimed. A 2026-06-12 public File Exchange search for mchs-matlab-interop returned HTTP 200 but only unrelated results, so no public listing is claimed.",
+            "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; repo-side source, contract, and bundle artifacts are present, but MATLAB/Octave runtime validation is not claimed because neither matlab nor octave is available on PATH. A 2026-06-12T12:18:08Z public File Exchange search for mchs-matlab-interop returned HTTP 200 but no exact listing match, so no public listing is claimed.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
@@ -515,12 +518,16 @@
                 "remainingRepoBlocker": "None. Repo-side source, contract, examples, and File Exchange bundle are present; MATLAB runtime validation is not claimed because MATLAB/Octave are unavailable locally.",
                 "remainingExternalBlocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow.",
                 "latestPublicProbe20260612": {
+                    "asOf": "2026-06-12T12:18:08Z",
                     "exactSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs-matlab-interop",
                     "exactSearchHttpStatus": 200,
-                    "exactSearchResult": "Search page reachable, but visible/search-result links were unrelated MathWorks File Exchange entries such as MATLAB support for MinGW, Terminal in MATLAB, and Mathematica Symbolic Toolbox; no mchs-matlab-interop listing was found.",
+                    "exactSearchResult": "Search page reachable, but no exact mchs-matlab-interop listing match was found.",
                     "broadSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs",
                     "broadSearchHttpStatus": 200,
-                    "broadSearchResult": "Search page reachable and reports File Exchange results, but the result set did not verify mchs-matlab-interop."
+                    "broadSearchResult": "Search page reachable and reports File Exchange results, but the result set did not verify mchs-matlab-interop.",
+                    "matlabCliAvailable": false,
+                    "octaveCliAvailable": false,
+                    "bundleSha256Rechecked": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c"
                 }
             }
         },

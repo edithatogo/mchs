@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T11:55:00Z",
+  "updated_at": "2026-06-12T12:18:08Z",
   "description": "R CRAN Registry Submission: discover, prepare, submit, and evidence CRAN publication for nwauR.",
   "registry_id": "r_cran",
   "current_status": "prepared_pending_cran_maintainer_submission",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12 public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive.",
+  "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12T12:18:08Z public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive. Local R is available, but the generated nwauR_0.1.0.tar.gz artifact is not committed in the repository checkout.",
   "submission_url": null,
   "publication_claimed": false,
   "package_evidence": {
@@ -27,13 +27,16 @@
       "checkResult": "Status: OK",
       "remainingExternalBlocker": "CRAN maintainer submission/review is required; no automated authenticated CRAN submission was performed.",
       "latestPublicProbe20260612": {
+        "asOf": "2026-06-12T12:18:08Z",
         "crandbUrl": "https://crandb.r-pkg.org/nwauR",
         "crandbHttpStatus": 404,
         "cranPackageUrl": "https://cran.r-project.org/package=nwauR",
         "cranPackageHttpStatus": 404,
         "cranArchiveUrl": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
         "cranArchiveHttpStatus": 404,
-        "result": "nwauR is not publicly listed on CRAN or CRAN archive."
+        "result": "nwauR is not publicly listed on CRAN or CRAN archive.",
+        "localRPath": "/opt/homebrew/bin/R",
+        "generatedTarballPresentInCheckout": false
       }
     },
     "submission_evidence": null,
