@@ -2,14 +2,21 @@
 
 * local macOS aarch64, R 4.6.0
 * 2026-06-12 temp-directory `R CMD build` and `R CMD check --no-manual`: OK
+* 2026-06-12 temp-directory `R CMD build` and `R CMD check --as-cran`: 2 NOTEs
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 0 notes for `R CMD check --no-manual`.
 
-Latest checked artifact SHA-256:
+`R CMD check --as-cran` produced 2 NOTEs:
 
-`12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2`
+* CRAN incoming feasibility reports this as a new submission.
+* Local HTML validation was skipped because the installed `tidy` is not recent
+  enough for HTML validation.
+
+Latest `--as-cran` checked artifact SHA-256:
+
+`a081781f26e2652bc085e0e852399a180ac6a2187684e8c0cec5d8448b80e9cc`
 
 ## Submission notes
 
