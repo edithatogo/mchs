@@ -68,3 +68,15 @@ Do not claim app or flow runtime readiness yet. The imported package establishes
 the managed ALM solution shell and evidence chain. Runtime app/flow smoke remains
 pending until real app/flow components are imported, connection references are
 configured, and the production service boundary endpoint is reachable.
+
+## Current Audit - 2026-06-12
+
+- Local `pac auth list` still shows active profile `nsw-dylan` for the target
+  NSW `dylan` environment at `https://orgefc9aa3e.crm6.dynamics.com/`.
+- GitHub repository secret audit currently shows only `NUGET_API_KEY`; the
+  official Power Platform live-gate secrets `POWER_PLATFORM_ENVIRONMENT_URL`,
+  `POWER_PLATFORM_APPLICATION_ID`, `POWER_PLATFORM_CLIENT_SECRET`, and
+  `POWER_PLATFORM_TENANT_ID` are not configured.
+- Runtime smoke remains blocked until the custom connector connection, service
+  boundary endpoint, app/flow smoke runs, DLP policy mapping, monitoring export,
+  and live-gate secrets are captured.

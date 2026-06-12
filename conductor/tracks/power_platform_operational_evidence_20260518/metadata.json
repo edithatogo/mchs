@@ -21,11 +21,12 @@
     "power-platform/evidence/live-tenant-browser-sweep-20260524.json",
     "power-platform/evidence/powerapp-runtime-launch-20260525.json",
     "power-platform/evidence/tenant-cli-observation-20260525.json",
+    "power-platform/evidence/tenant-cli-and-secret-audit-20260612.json",
     "scripts/validate_power_platform_operational_evidence.py"
   ],
   "publication_status": "not-deployed",
   "created_at": "2026-05-18T13:22:30Z",
-  "updated_at": "2026-05-25T22:30:00+10:00",
+  "updated_at": "2026-06-12T12:25:00Z",
   "description": "Create the evidence, monitoring, support, privacy, and governance trail required before claiming Power Platform completion.",
-  "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app were previously evidenced in NSW dylan. The 2026-05-24 authenticated browser sweep of the target NSW deployment environment found the documented MCHS app IDs, but no MCHS service-boundary connection, no MCHS custom connector match, and zero visible Power Automate flows. A 2026-05-25 optimized app launch attempt reached the Power Apps player route but redirected to Microsoft sign-in before app runtime. A later 2026-05-25 PAC CLI observation confirmed the target environment is active and the MCHS Service Boundary custom connector definition exists, while the live custom connector connection, connection-reference value, Power Automate flow run evidence, app runtime execution, target DLP connector policy, and monitoring export remain pending."
+  "external_blocker": "Managed solution shell, custom connector, generated canvas app, and optimized canvas app were previously evidenced in NSW dylan. The 2026-05-24 authenticated browser sweep of the target NSW deployment environment found the documented MCHS app IDs, but no MCHS service-boundary connection, no MCHS custom connector match, and zero visible Power Automate flows. A 2026-05-25 optimized app launch attempt reached the Power Apps player route but redirected to Microsoft sign-in before app runtime. A later 2026-05-25 PAC CLI observation confirmed the target environment is active and the MCHS Service Boundary custom connector definition exists. A 2026-06-12 audit confirmed the local pac auth profile nsw-dylan is still present, but GitHub repository secrets for the official Power Platform live gate are absent; only NUGET_API_KEY is configured. The live custom connector connection, connection-reference value, Power Automate flow run evidence, app runtime execution, target DLP connector policy, monitoring export, and GitHub live-gate secrets remain pending."
 }

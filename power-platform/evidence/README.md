@@ -120,6 +120,10 @@ recorded here.
   blocker active because no live custom connector connection, connection
   reference value, flow run evidence, target DLP connector policy, monitoring
   export, or app runtime execution is captured.
+- `tenant-cli-and-secret-audit-20260612.json`: current local audit showing the
+  `pac` auth profile `nsw-dylan` is available for the target NSW environment,
+  while the official GitHub live-gate secrets are absent. This is blocker
+  evidence only; it does not claim runtime readiness.
 
 ## Evidence import mapping
 
