@@ -1,11 +1,15 @@
 ## Test environments
 
 * local macOS aarch64, R 4.6.0
-* R CMD check --no-manual: OK
+* 2026-06-12 temp-directory `R CMD build` and `R CMD check --no-manual`: OK
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
+
+Latest checked artifact SHA-256:
+
+`12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2`
 
 ## Submission notes
 

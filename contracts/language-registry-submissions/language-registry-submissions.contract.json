@@ -147,13 +147,13 @@
             "current_status": "prepared_pending_cran_maintainer_submission",
             "track": "r_cran_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12T12:18:08Z public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive. Local R is available, but the generated nwauR_0.1.0.tar.gz artifact is not committed in the repository checkout.",
+            "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12T12:18:08Z public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive. A fresh 2026-06-12T12:29:29Z temp-directory build/check produced nwauR_0.1.0.tar.gz with SHA-256 12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2 and R CMD check --no-manual Status: OK.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://crandb.r-pkg.org/nwauR returned not_found/document not found.",
                 "buildCommand": "R CMD build r-binding",
                 "packageArtifact": "nwauR_0.1.0.tar.gz",
-                "packageSha256": "f6e87cddd4e498eea53d710ef649e200cb21985f725577cd707bf49237700e15",
+                "packageSha256": "12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2",
                 "checkCommand": "R CMD check --no-manual nwauR_0.1.0.tar.gz",
                 "checkResult": "Status: OK",
                 "remainingExternalBlocker": "CRAN maintainer submission/review is required; no automated authenticated CRAN submission was performed.",
@@ -168,6 +168,17 @@
                     "result": "nwauR is not publicly listed on CRAN or CRAN archive.",
                     "localRPath": "/opt/homebrew/bin/R",
                     "generatedTarballPresentInCheckout": false
+                },
+                "latestBuildCheck20260612": {
+                    "asOf": "2026-06-12T12:29:29Z",
+                    "buildCommand": "cd /tmp/mchs-cran-928JNZ && R CMD build /tmp/mchs-pr167/r-binding",
+                    "checkCommand": "R CMD check --no-manual /tmp/mchs-cran-928JNZ/nwauR_0.1.0.tar.gz --output=/tmp/mchs-cran-928JNZ",
+                    "rVersion": "4.6.0",
+                    "platform": "aarch64-apple-darwin25.4.0",
+                    "result": "Status: OK",
+                    "packageArtifact": "/tmp/mchs-cran-928JNZ/nwauR_0.1.0.tar.gz",
+                    "packageSha256": "12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2",
+                    "committedGeneratedArtifact": false
                 }
             }
         },
