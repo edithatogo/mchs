@@ -68,6 +68,49 @@ def _load_weights(*_, **__):
     }
 
 
+def test_mh_reference_loader_decodes_all_tables(monkeypatch):
+    expected_names = [
+        "mh_adm_price_weights",
+        "mh_cmty_price_weights",
+        "mh_ppsa",
+        "mh_adj_priv_acc",
+        "mh_adj_specpaed",
+        "aa_mh_sa_na_ed_adj_ind",
+        "aa_mh_sa_na_adj_rem",
+        "aa_mh_sa_na_adj_treat_rem",
+    ]
+    calls: list[str] = []
+
+    def fake_read_sas(path):
+        name = Path(path).name
+        calls.append(name)
+        return pd.DataFrame({"code": [b"A"], "value": [1.0]})
+
+    monkeypatch.setattr(pd, "read_sas", fake_read_sas)
+
+    spec = importlib.util.spec_from_file_location(
+        "mh_loader_test",
+        Path(__file__).resolve().parents[1] / "nwau_py" / "calculators" / "mh.py",
+    )
+    assert spec is not None and spec.loader is not None
+    fresh_mh = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fresh_mh)
+    tables = fresh_mh._load_weights(Path("ref"), "2025")
+
+    assert set(tables) == {
+        "adm",
+        "cmty",
+        "ppsa",
+        "priv_acc",
+        "specpaed",
+        "adj_ind",
+        "adj_rem",
+        "adj_treat",
+    }
+    assert all(table["code"].tolist() == ["A"] for table in tables.values())
+    assert all(any(expected in call for call in calls) for expected in expected_names)
+
+
 DATA = pd.DataFrame(
     {
         "AMHCC": ["1001", "1001", "1001", "2001"],

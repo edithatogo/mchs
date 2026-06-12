@@ -19,16 +19,16 @@
 
 ## Phase 3: Submission
 
-- [ ] Task: Submit to `NuGet` using an authenticated publisher workflow. Manual workflow exists; blocked by dispatch.
+- [x] Task: Submit to `NuGet` using an authenticated publisher workflow. Workflow dispatch succeeded and public listing is verified.
     - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR. Pending dispatch of `.github/workflows/publish-registry-packages.yml` with `registry=nuget`.
-    - [x] Capture submission URL, version, owner, and review state. The flat-container URL returned 404 and no public version exists; GitHub secret `NUGET_API_KEY` exists as of 2026-05-25T13:34:49Z; manual workflow exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Blocked until NuGet workflow dispatch.
+    - [x] Publish or open the required upstream PR. `.github/workflows/publish-registry-packages.yml` was dispatched with `registry=nuget` in run `https://github.com/edithatogo/mchs/actions/runs/26404217645`.
+    - [x] Capture submission URL, version, owner, and review state. NuGet returned `Created` and `Your package was pushed`; public flat-container now returns HTTP 200 with `0.1.0`.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Submission completed and public listing is verified.
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication. Pending authenticated NuGet push.
-    - [ ] Query public registry after propagation. Current flat-container query returns 404.
-    - [ ] Record immutable URL/API response/checksum. Pending publication.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists. Publication is not claimed.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md). Pending publication evidence.
+- [x] Task: Verify external publication.
+    - [x] Query public registry after propagation. `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json` returned HTTP 200 with `0.1.0`.
+    - [x] Record immutable URL/API response/checksum. Workflow run `26404217645` succeeded and NuGet API accepted the package upload.
+    - [x] Mark track complete only if publication or accepted-review evidence exists. Publication is claimed from public NuGet flat-container evidence.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md).

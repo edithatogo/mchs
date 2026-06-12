@@ -1,0 +1,128 @@
+name: Coverage Gates
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  rust_coverage:
+    name: Rust coverage (>90% GA crates)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview, clippy
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+
+      - name: Generate coverage report (GA crates)
+        run: |
+          cargo llvm-cov \
+            --package nwau-core \
+            --all-features \
+            --workspace \
+            --lcov \
+            --output-path lcov.info
+
+      - name: Enforce >90% coverage threshold
+        run: |
+          set -euo pipefail
+          report_json="$(mktemp)"
+          cargo llvm-cov \
+            --package nwau-core \
+            --all-features \
+            --json \
+            --output-path "${report_json}"
+          coverage_pct="$(python3 - "${report_json}" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], "r", encoding="utf-8") as handle:
+              payload = json.load(handle)
+          totals = payload.get("data", [{}])[0].get("totals", {})
+          print(float(totals.get("percent_covered", 0)))
+          PY
+          )"
+          rm -f "${report_json}"
+          echo "Coverage: ${coverage_pct}%"
+          if python3 - "${coverage_pct}" <<'PY'
+          import sys
+
+          if float(sys.argv[1]) < 90.0:
+              raise SystemExit(1)
+          PY
+          then
+            echo "PASS: Coverage ${coverage_pct}% meets threshold 90.0%"
+          else
+            echo "FAIL: Coverage ${coverage_pct}% is below threshold 90.0%"
+            exit 1
+          fi
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./rust/lcov.info
+          flags: rust
+          fail_ci_if_error: true
+          use_oidc: true
+
+  python_coverage:
+    name: Python coverage (>90% GA crates)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build Rust acute binding extension
+        run: |
+          cd rust/crates/nwau-py
+          uv run --with maturin maturin develop --release
+
+      - name: Sync environment
+        run: uv sync --locked --group test --group coverage
+
+      - name: Run coverage with gate
+        run: uv run pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=90
+
+      - name: Upload Python coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage.xml
+          flags: python
+          fail_ci_if_error: true
+          use_oidc: true

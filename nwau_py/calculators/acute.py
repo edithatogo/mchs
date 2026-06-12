@@ -213,14 +213,21 @@ def _resolve_acute_reference_bundle(
 
 def _acute_reference_row_from_weights(row: pd.Series) -> dict[str, object]:
     """Build the Rust kernel reference-row contract from a resolved weight row."""
+    same_day_list = bool(float(row.get("drg_samedaylist_flag", 0) or 0.0))
+    patient_same_day = bool(float(row.get("PAT_SAMEDAY_FLAG", 0) or 0.0))
+    same_day_base_weight = (
+        float(row.get("drg_pw_sd", 0.0) or 0.0)
+        if patient_same_day and same_day_list
+        else float(row.get("drg_pw_sso_base", 0.0) or 0.0)
+    )
     return {
         "drg": str(row["DRG"]),
         "inlier_lower_bound": float(row.get("drg_inlier_lb", 0.0) or 0.0),
         "inlier_upper_bound": float(row.get("drg_inlier_ub", 0.0) or 0.0),
         "paediatric_multiplier": float(row.get("drg_adj_paed", 1.0) or 1.0),
-        "same_day_list_flag": bool(float(row.get("drg_samedaylist_flag", 0) or 0.0)),
+        "same_day_list_flag": same_day_list,
         "bundled_icu_flag": bool(float(row.get("drg_bundled_icu_flag", 0) or 0.0)),
-        "same_day_base_weight": float(row.get("drg_pw_sso_base", 0.0) or 0.0),
+        "same_day_base_weight": same_day_base_weight,
         "same_day_per_diem": float(row.get("drg_pw_sso_perdiem", 0.0) or 0.0),
         "inlier_weight": float(row.get("drg_pw_inlier", 0.0) or 0.0),
         "long_stay_per_diem": float(row.get("drg_pw_lso_perdiem", 0.0) or 0.0),
@@ -279,12 +286,112 @@ def calculate_acute_rust_2025(
     )
 
     merged = df.merge(weights, on="DRG", how="left")
+    try:
+        if contract.params.ppservadj == 1:
+            ppsa = load_sas_table(
+                sas_table(
+                    "nep{suffix}_aa_adj_privpat_serv_nat.sas7bdat",
+                    year=contract.year,
+                    base_dir=reference_bundle.ref_dir,
+                )
+            )
+        else:
+            ppsa = load_sas_table(
+                sas_table(
+                    "nep{suffix}_aa_adj_privpat_serv_jur.sas7bdat",
+                    year=contract.year,
+                    base_dir=reference_bundle.ref_dir,
+                )
+            )
+        merged = merged.merge(ppsa, on="DRG", how="left")
+    except (
+        FileNotFoundError,
+        pyreadstat.ReadstatError,
+        pyreadstat._readstat_parser.PyreadstatError,
+        KeyError,
+        ValueError,
+    ):
+        if contract.params.ppservadj == 1:
+            merged["drg_adj_privpat_serv"] = merged.get(
+                "drg_adj_privpat_serv", pd.Series(0, index=merged.index)
+            )
+
+    if contract.params.ppservadj == 2 and "STATE" in merged.columns:
+        mapping = {
+            1: "NSW",
+            2: "VIC",
+            3: "QLD",
+            4: "SA",
+            5: "WA",
+            6: "TAS",
+            7: "NT",
+            8: "ACT",
+        }
+        merged["drg_adj_privpat_serv"] = merged.get(
+            "drg_adj_privpat_serv", pd.Series(0, index=merged.index)
+        )
+        for idx, st in mapping.items():
+            col = f"drg_adj_privpat_serv_{st}"
+            if col in merged.columns:
+                merged.loc[merged["STATE"] == idx, "drg_adj_privpat_serv"] = merged.loc[
+                    merged["STATE"] == idx, col
+                ]
+    if "drg_adj_privpat_serv" not in merged.columns:
+        merged["drg_adj_privpat_serv"] = pd.Series(0, index=merged.index)
+        for candidate in ("drg_adj_privpat_serv_y", "drg_adj_privpat_serv_x"):
+            if candidate in merged.columns:
+                merged["drg_adj_privpat_serv"] = merged[candidate]
+                break
+    merged["drg_adj_privpat_serv"] = merged["drg_adj_privpat_serv"].fillna(0)
+
+    try:
+        icu_df = load_sas_table(
+            sas_table(
+                "nep{suffix}_aa_adj_icu.sas7bdat",
+                year=contract.year,
+                base_dir=reference_bundle.ref_dir,
+            )
+        )
+        rust_icu_rate = float(icu_df.iloc[0, 0])
+    except (
+        FileNotFoundError,
+        pyreadstat.ReadstatError,
+        pyreadstat._readstat_parser.PyreadstatError,
+        KeyError,
+        ValueError,
+    ):
+        rust_icu_rate = 0.0
+
     nwau_col = f"NWAU{str(contract.year)[-2:]}"
     rust_adjustments = _acute_rust_adjustments(contract.params)
+    rust_adjustments["icu_rate"] = rust_icu_rate
     output = df.copy()
     output[nwau_col] = 0.0
 
     for idx, row in merged.iterrows():
+        row_adjustments = dict(rust_adjustments)
+        row_adjustments["covid_adjustment"] = float(row.get("adj_covid", 0.0) or 0.0)
+        row_adjustments["indigenous_adjustment"] = float(
+            row.get("adj_indigenous", 0.0) or 0.0
+        )
+        row_adjustments["remoteness_adjustment"] = float(
+            row.get("adj_remoteness", 0.0) or 0.0
+        )
+        row_adjustments["treatment_remoteness_adjustment"] = float(
+            row.get("adj_treat_remoteness", 0.0) or 0.0
+        )
+        row_adjustments["radiotherapy_adjustment"] = float(
+            row.get("adj_radiotherapy", 0.0) or 0.0
+        )
+        row_adjustments["dialysis_adjustment"] = float(
+            row.get("adj_dialysis", 0.0) or 0.0
+        )
+        row_adjustments["private_accommodation_same_day"] = float(
+            row.get("state_adj_privpat_accomm_sd", 0.0) or 0.0
+        )
+        row_adjustments["private_accommodation_overnight"] = float(
+            row.get("state_adj_privpat_accomm_on", 0.0) or 0.0
+        )
         rust_output = _rust_calculate_acute_2025_row(
             row[
                 [
@@ -298,7 +405,7 @@ def calculate_acute_rust_2025(
                 ]
             ].to_dict(),
             _acute_reference_row_from_weights(row),
-            rust_adjustments,
+            row_adjustments,
         )
         output.at[idx, nwau_col] = float(rust_output["NWAU25"])
 
@@ -663,7 +770,9 @@ def calculate_acute(
         KeyError,
         ValueError,
     ):
-        pass
+        merged["adj_radiotherapy"] = merged.get(
+            "adj_radiotherapy", pd.Series(0, index=merged.index)
+        )
     if "adj_radiotherapy_y" in merged.columns:
         merged["adj_radiotherapy"] = merged["adj_radiotherapy_y"]
     elif "adj_radiotherapy_x" in merged.columns:
@@ -693,7 +802,9 @@ def calculate_acute(
         KeyError,
         ValueError,
     ):
-        pass
+        merged["adj_dialysis"] = merged.get(
+            "adj_dialysis", pd.Series(0, index=merged.index)
+        )
     if "adj_dialysis_y" in merged.columns:
         merged["adj_dialysis"] = merged["adj_dialysis_y"]
     elif "adj_dialysis_x" in merged.columns:
@@ -824,8 +935,6 @@ def calculate_acute(
             merged["drg_adj_privpat_serv"] = merged.get(
                 "drg_adj_privpat_serv", pd.Series(0, index=merged.index)
             )
-        else:
-            pass
 
     if params.ppservadj == 2 and "STATE" in merged.columns:
         mapping = {

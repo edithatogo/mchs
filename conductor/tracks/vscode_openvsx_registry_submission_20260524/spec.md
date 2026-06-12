@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `mchs-tools`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/integrations/vscode/package.json`
-- Current status: `prepared_pending_publisher_tokens_and_vsix_publish`
+- Current status: `prepared_pending_publisher_agreements_tokens_and_vsix_publish`
 
 ## Functional Requirements
 
@@ -24,15 +24,15 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A VS Code extension project exists and packages into `mchs-tools-0.1.0.vsix` using `vsce`. The remaining blocker is external: Open VSX and Visual Studio Marketplace require publisher accounts/tokens for authenticated publishing.
+Resolved locally. A concrete VS Code helper extension project exists and packages into `mchs-tools-0.1.0.vsix` using `vsce`. The helper exposes commands to inspect the checked-in VS Code/Open VSX registry gate, open the registry contract, open the external-gates roadmap, and copy the gated Open VSX publish command. The remaining blocker is external: Open VSX and Visual Studio Marketplace require publisher accounts/tokens for authenticated publishing.
 
 ## Preparation Evidence
 
-- Public registry discovery: `https://open-vsx.org/api/edithatogo/mchs-tools` returned `Extension not found`.
+- Public registry discovery: `https://open-vsx.org/api/edithatogo/mchs-tools` returned HTTP 404 `Extension not found` with `Accept: application/json` on 2026-05-26. The Visual Studio Marketplace item page returned HTTP 404, and the Gallery `extensionquery` API returned 0 extensions for `edithatogo.mchs-tools`. The earlier Open VSX HTTP 406 was caused by sending a GitHub vendor `Accept` header to Open VSX; the live probe now uses registry-neutral JSON headers for Open VSX.
 - Package command: `npx --yes @vscode/vsce package --no-dependencies`
 - Artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
-- Package result: packaged 6 files, 2.56 KB.
-- Local fix: added local `LICENSE` and package `files` allowlist.
+- Package result: packaged 6 files, 4.33 KB.
+- Local fix: added local `LICENSE`, package `files` allowlist, and a concrete registry-gate helper command surface.
 - Remaining external blocker: publisher tokens for Open VSX and Visual Studio Marketplace.
 
 ## Acceptance Criteria

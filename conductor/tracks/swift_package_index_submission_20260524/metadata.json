@@ -1,0 +1,28 @@
+{
+  "track_id": "swift_package_index_submission_20260524",
+  "type": "chore",
+  "status": "submitted",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-06-12T00:00:00+10:00",
+  "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",
+  "registry_id": "swift_package_index",
+  "current_status": "submitted_accepted_pending_spi_public_probe",
+  "publication_status": "not_published",
+  "local_readiness_resolved": true,
+  "blocker": "Swift Package Index PackageList issue is closed as completed, repository publication metadata is fixed, but SPI public listing/version evidence is still blocked by public probe visibility.",
+  "publication_claimed": false,
+  "package_evidence": {
+    "discovery_url": "https://swiftpackageindex.com/edithatogo/mchs-swift",
+    "discovery_result": "Live probes on 2026-06-12 found the PackageList issue still closed as completed and the GitHub release v0.1.0 still published, but the Swift Package Index package URL returned HTTP 403 Cloudflare challenge without visible MCHSBind or 0.1.0 version evidence.",
+    "submission_issue_live_result": "GitHub API returned state=closed state_reason=completed closed_at=2026-05-24T11:07:11Z",
+    "build_command": "swift build",
+    "build_result": "Build complete",
+    "test_note": "swift test exits with no tests found because the package has no Tests target",
+    "fixed_publication_metadata": "Added MIT LICENSE to the public package repo, set Swift package topics, and created GitHub release v0.1.0.",
+    "metadata_commit": "02b12bd6667fae762cdf26833514dbbce5c05476",
+    "release_url": "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0",
+    "release_probe_result": "GitHub release API returned tag_name=v0.1.0, name=MCHSBind v0.1.0, draft=false, prerelease=false, published_at=2026-05-25T13:03:45Z.",
+    "latest_public_probe": "https://swiftpackageindex.com/edithatogo/mchs-swift returned HTTP 403 with a Cloudflare 'Just a moment...' challenge on 2026-06-12; no public SPI package/version evidence was visible."
+  },
+  "submission_url": "https://github.com/SwiftPackageIndex/PackageList/issues/13717"
+}

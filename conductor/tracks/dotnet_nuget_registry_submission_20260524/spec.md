@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `Mchs.Bindings.DotNet`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/bindings/dotnet/DotNetBinding.csproj`
-- Current status: `prepared_pending_nuget_api_key_and_push`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. `DotNetBinding.csproj` is now packable and `dotnet pack --configuration Release` created `Mchs.Bindings.DotNet.0.1.0.nupkg`. The remaining blocker is external credentials: `NUGET_API_KEY` is not configured locally.
+Published and verified. `DotNetBinding.csproj` is packable, the GitHub Actions publish workflow pushed `Mchs.Bindings.DotNet.0.1.0.nupkg` in run `26404217645`, NuGet accepted the upload, and the public flat-container endpoint now returns HTTP 200 with version `0.1.0`.
 
 ## Preparation Evidence
 
@@ -32,14 +32,18 @@ Resolved locally. `DotNetBinding.csproj` is now packable and `dotnet pack --conf
 - Local package command: `dotnet pack --configuration Release`
 - Package artifact: `microcosting_healthservices/bindings/dotnet/bin/Release/Mchs.Bindings.DotNet.0.1.0.nupkg`
 - Verification result: restore, build, and package creation completed successfully.
-- Remaining external blocker: NuGet API key/login required.
+- Submission evidence: `https://github.com/edithatogo/mchs/actions/runs/26404217645` completed successfully and NuGet returned `Created` / `Your package was pushed`.
+- Publication evidence: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json` returned HTTP 200 with `0.1.0`.
+- Publication URL: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json`
+- Package blob URL: `https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg`
+- Registration API URL: `https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json`
 
 ## Acceptance Criteria
 
 - Discovery evidence exists and is linked from this track.
 - Preparation evidence exists for package metadata, artifact integrity, and registry policy checks.
-- Submission evidence exists, or the track remains blocked with a concrete reason.
-- Publication is not claimed unless a public registry URL or accepted upstream PR/merge evidence exists.
+- Submission evidence exists.
+- Publication is claimed only because public NuGet flat-container evidence includes version `0.1.0`.
 
 ## Out of Scope
 

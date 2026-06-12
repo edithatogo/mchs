@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-core`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-core/Cargo.toml`
-- Current status: `prepared_pending_crates_token_and_cargo_publish`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,15 +24,20 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. `nwau-core` is package-ready and `cargo package --allow-dirty` verified successfully. The remaining blocker is external credentials: no crates.io token is available locally, and `cargo owner --list nwau-core` returned `no token found, please run cargo login`.
+Published and verified. `nwau-core` is package-ready, `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml` verified successfully, `cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml` reached the dry-run upload abort, and the public crates.io API verifies `nwau-core@0.1.0`. The browser-created publish token was revoked and the GitHub Actions `CARGO_REGISTRY_TOKEN` secret was deleted after verification.
 
 ## Preparation Evidence
 
 - Public registry discovery: `https://crates.io/api/v1/crates/nwau-core` returned crate absence evidence.
-- Local package command: `cargo package --allow-dirty`
+- Local package command: `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml`
 - Package result: `Packaged 16 files, 107.8KiB (25.2KiB compressed)`
 - Verification result: `Compiling nwau-core v0.1.0` and `Finished dev profile`
-- Remaining external blocker: crates.io authentication token is not configured.
+- Publish dry-run command: `cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml`
+- Publish dry-run result: packaged and verified `nwau-core v0.1.0`, reached upload, then aborted because this was a dry run.
+- Workflow clean-checkout note: `cargo package --locked` without `--allow-dirty` fails in the dirty worktree; the GitHub workflow can publish only after the Rust crate state is committed and pushed to the workflow ref.
+- Publication evidence: `https://crates.io/api/v1/crates/nwau-core/0.1.0` returned version `0.1.0`, checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547`, and `yanked=false`.
+- Credential cleanup: crates.io token `mchs-github-actions-publish` was revoked and GitHub Actions secret `CARGO_REGISTRY_TOKEN` was deleted after verification.
+- Remaining external blocker: none for crates.io.
 
 ## Acceptance Criteria
 

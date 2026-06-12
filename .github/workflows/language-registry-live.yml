@@ -1,0 +1,50 @@
+name: Language registry live monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 3 * * *"
+
+concurrency:
+  group: language-registry-live-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  live:
+    name: Live language registry probes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Sync environment
+        run: uv sync --locked --group test
+
+      - name: Generate live language registry reports
+        run: |
+          mkdir -p dist
+          uv run python scripts/validate_language_registry_submission_tracks.py
+          uv run python scripts/language_registry_external_gate_report.py --live --output dist/language-registry-live.md
+          uv run python scripts/language_registry_external_gate_report.py --promotion --live --output dist/language-registry-live-promotion-groups.json
+
+      - name: Upload live language registry reports
+        uses: actions/upload-artifact@v6
+        with:
+          name: language-registry-live
+          path: |
+            dist/language-registry-live.md
+            dist/language-registry-live-promotion-groups.json

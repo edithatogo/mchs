@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-06-12",
+  "purpose": "Define strict CI, code quality, coverage, versioning, and validation gates for every public library, package, and language surface without claiming proprietary-runtime execution where no runtime is available.",
+  "minimumCoveragePercent": 90,
+  "requiredGateClasses": [
+    "unit",
+    "integration",
+    "end_to_end",
+    "smoke",
+    "edge",
+    "property_based",
+    "mutation",
+    "profiling",
+    "load_or_load_balancing",
+    "security",
+    "versioning"
+  ],
+  "globalCriteria": {
+    "coverage": {
+      "thresholdPercent": 90,
+      "pythonGate": ".github/workflows/pr-ci.yml coverage job and .github/workflows/coverage.yml python_coverage job use --cov-fail-under=90.",
+      "rustGate": ".github/workflows/rust-ci.yml and .github/workflows/coverage.yml enforce >=90% coverage for nwau-core."
+    },
+    "quality": {
+      "python": "ruff format --check, ruff check, docstring lint, ty --error all",
+      "rust": "cargo fmt --check, cargo clippy -D warnings, cargo doc with RUSTDOCFLAGS=-D warnings",
+      "security": "bandit, pip-audit, cargo audit, cargo deny, CodeQL, Trivy high/critical scan"
+    },
+    "dependencyAutomation": {
+      "renovate": "renovate.json covers Python, GitHub Actions, Cargo, npm, Go modules, Gradle, NuGet, and Dockerfile managers.",
+      "dependencyReview": ".github/dependency-review-config.yml fails high severity dependency review findings."
+    },
+    "versioning": {
+      "repo": "Git tags and release workflows are the repository version source of truth.",
+      "modelAndPackages": "Package manifests must carry explicit versions and release evidence must bind package versions to source commit/tag/checksum."
+    }
+  },
+  "surfaces": [
+    {
+      "id": "python",
+      "package": "nwau-py",
+      "manifest": "pyproject.toml",
+      "versionField": "project.version",
+      "gateEvidence": [
+        ".github/workflows/pr-ci.yml",
+        ".github/workflows/coverage.yml",
+        ".github/workflows/security.yml",
+        ".github/workflows/slow-validation.yml"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "rust",
+      "package": "nwau-core / nwau-c-abi / nwau-py",
+      "manifest": "rust/Cargo.toml",
+      "versionField": "workspace/package or crate package.version",
+      "gateEvidence": [
+        ".github/workflows/rust-ci.yml",
+        ".github/workflows/coverage.yml",
+        ".github/workflows/release-rust.yml"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "r",
+      "package": "nwauR",
+      "manifest": "r-binding/DESCRIPTION",
+      "versionField": "Version",
+      "gateEvidence": [
+        "conductor/tracks/r_cran_registry_submission_20260524",
+        "r-binding/tests/testthat"
+      ],
+      "runtimeConstraint": "R runtime checks are package-native and CRAN-gated; CRAN publication remains external-review gated.",
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "typescript_wasm",
+      "package": "@edithatogo/mchs-wasm-binding",
+      "manifest": "wasm-binding/package.json",
+      "versionField": "version",
+      "gateEvidence": [
+        "wasm-binding/test",
+        "conductor/tracks/typescript_npm_registry_submission_20260524"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "go",
+      "package": "github.com/edithatogo/mchs/bindings/go",
+      "manifest": "bindings/go/go.mod",
+      "versionField": "git tag bindings/go/v*",
+      "gateEvidence": [
+        "bindings/go",
+        "conductor/tracks/go_module_registry_submission_20260524"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "dotnet",
+      "package": "Mchs.Bindings.DotNet",
+      "manifest": "bindings/dotnet/DotNetBinding.csproj",
+      "versionField": "Version",
+      "gateEvidence": [
+        "bindings/dotnet",
+        "conductor/tracks/dotnet_nuget_registry_submission_20260524"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "jvm",
+      "package": "io.github.edithatogo:mchs-jvm-bindings",
+      "manifest": "bindings/jvm/build.gradle.kts",
+      "versionField": "version",
+      "gateEvidence": [
+        "bindings/jvm",
+        "conductor/tracks/jvm_maven_central_registry_submission_20260524"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "julia",
+      "package": "NationalWeightedActivityUnitWrapper",
+      "manifest": "julia-binding/Project.toml",
+      "versionField": "version",
+      "gateEvidence": [
+        "julia-binding/test",
+        "conductor/tracks/julia_general_registry_submission_20260524"
+      ],
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    },
+    {
+      "id": "matlab_stata_swift_scala_kotlin",
+      "package": "Boundary adapters",
+      "manifest": "contracts/*-binding/*.contract.json",
+      "versionField": "track/package metadata",
+      "gateEvidence": [
+        "contracts/matlab-interop-binding",
+        "contracts/stata-interop-binding",
+        "contracts/swift-binding",
+        "contracts/scala-spark-binding",
+        "contracts/kotlin-native-binding"
+      ],
+      "runtimeConstraint": "Some proprietary/runtime-specific validation remains limited by unavailable MATLAB/Stata/Apple/Spark/native runtime surfaces; contract gates must preserve that limitation explicitly and must not claim runtime execution without evidence.",
+      "requiredGateClasses": [
+        "unit",
+        "integration",
+        "end_to_end",
+        "smoke",
+        "edge",
+        "property_based",
+        "mutation",
+        "profiling",
+        "load_or_load_balancing",
+        "security",
+        "versioning"
+      ]
+    }
+  ]
+}

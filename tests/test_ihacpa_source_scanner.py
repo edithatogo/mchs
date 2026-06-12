@@ -12,8 +12,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import nwau_py.provenance as provenance
 import nwau_py.reference_manifest as reference_manifest
+import nwau_py.source_scanner as source_scanner
 from nwau_py.cli.main import cli
-from nwau_py.source_scanner import scan_sources_dry_run
+from nwau_py.source_scanner import (
+    SourceDocument,
+    SourceDraftManifest,
+    SourceGapRecord,
+    manifest_to_json,
+    render_dry_run,
+    scan_sources,
+    scan_sources_dry_run,
+)
 from scripts import archive_ihacpa_sources as scanner
 
 FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "source_scanner"
@@ -264,8 +273,168 @@ def test_source_scanner_track_is_marked_complete_and_conservative():
     ).read_text(encoding="utf-8")
 
     assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "prototype"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "- [x] **Track: IHACPA Source Scanner**" in registry
     assert "funding-calculator sources scan" in spec
     assert "does not claim calculator parity" in spec
+
+
+def test_source_scanner_text_urls_and_explicit_urls_cover_source_categories():
+    manifest = scan_sources(
+        text_documents=(
+            "Technical specification https://example.invalid/nwau-2026-specification.pdf\n"
+            "Price weights https://example.invalid/price-weights-2026.xlsx\n"
+            "Calculator https://example.invalid/calculator-2026.zip\n"
+            "SAS package https://example.invalid/ra2026-sas-package\n"
+            ,
+        ),
+        urls=("https://box.com/shared-folder",),
+        source_page_url="https://www.ihacpa.gov.au/",
+        pricing_year="2026",
+        scan_id="unit-scan",
+    )
+
+    categories = {item.source_category for item in manifest.discoveries}
+    artifact_kinds = {item.artifact_kind for item in manifest.discoveries}
+
+    assert "discovery" in categories
+    assert {"documentation", "excel", "support", "sas"} <= artifact_kinds
+    assert any(item.review_required for item in manifest.discoveries)
+    assert any(gap.kind == "license_unclear" for gap in manifest.gaps)
+    assert manifest.unresolved_gaps() == manifest.gaps
+    assert "unit-scan" in render_dry_run(manifest)
+    assert json.loads(manifest_to_json(manifest))["scan_id"] == "unit-scan"
+
+
+def test_source_scanner_records_missing_and_filename_scope_gaps():
+    missing = scan_sources(source_page_url="https://example.invalid/source")
+    assert missing.validation_status == "source-discovered"
+    assert missing.discoveries == ()
+    assert missing.gaps[0].kind == "source_missing"
+    assert "none" in render_dry_run(missing)
+
+    filename_gap = scan_sources(urls=("https://example.invalid",), pricing_year="2026")
+    assert filename_gap.discoveries[0].filename == ""
+    assert filename_gap.discoveries[0].year_label == "2026"
+    assert any(gap.kind == "scope_unknown" for gap in filename_gap.gaps)
+
+    resolved_gap = SourceGapRecord(
+        gap_id="gap-resolved",
+        kind="review_required",
+        scope="unit",
+        reason="reviewed",
+        expected_resolution="none",
+        status="resolved",
+        notes=("closed",),
+    )
+    assert resolved_gap.to_dict()["status"] == "resolved"
+
+
+def test_source_scanner_html_headings_and_duplicate_merging_use_best_label():
+    html = """
+    <h2>2026-27 Acute calculator resources</h2>
+    <a href="/downloads/calculator.xlsx">short</a>
+    <a href="/downloads/calculator.xlsx">A much longer calculator label</a>
+    <a href="/downloads/no-year.xlsx">Workbook</a>
+    <a>No href</a>
+    """
+    manifest = scan_sources(
+        html_documents=(html,),
+        source_page_url="https://example.invalid/base/",
+        pricing_year="2026",
+    )
+
+    labels = {item.source_url: item.label for item in manifest.discoveries}
+    assert labels["https://example.invalid/downloads/calculator.xlsx"].endswith(
+        "A much longer calculator label"
+    )
+    assert any("2026-27 Acute calculator resources" in label for label in labels.values())
+    assert all(item.source_kind == "html-link" for item in manifest.discoveries)
+
+    document = SourceDocument(
+        kind="urls",
+        name="explicit",
+        content="https://example.invalid/a.pdf",
+        source_url="https://example.invalid/source",
+    )
+    assert document.to_dict()["kind"] == "urls"
+
+
+def test_source_scanner_file_inputs_result_dict_and_resolved_gap_filter(tmp_path):
+    html_path = tmp_path / "listing.html"
+    text_path = tmp_path / "listing.txt"
+    html_path.write_text(
+        "<a href='/no-year.pdf'>No heading and no year</a>"
+        "<h2>2026 Reports</h2><a href='/annual-report.html'>Annual report</a>",
+        encoding="utf-8",
+    )
+    text_path.write_text(
+        "Classification resource https://example.invalid/classification-resource-2026.html",
+        encoding="utf-8",
+    )
+
+    result = scan_sources_dry_run(
+        html_documents=(html_path,),
+        text_documents=(text_path,),
+        source_page_url="https://example.invalid/base/",
+        pricing_year="2026",
+        scan_id="file-input-scan",
+    )
+    payload = result.to_dict()
+
+    assert payload["manifest"]["scan_id"] == "file-input-scan"
+    assert "IHACPA source scanner dry-run" in payload["dry_run_output"]
+    assert any(
+        item.source_category in {"classification-resource", "report"}
+        for item in result.manifest.discoveries
+    )
+
+    resolved_gap = SourceGapRecord(
+        gap_id="gap-resolved",
+        kind="review_required",
+        scope="unit",
+        reason="reviewed",
+        expected_resolution="none",
+        status="resolved",
+    )
+    manifest = SourceDraftManifest(
+        schema_version="1",
+        generated_at="2026-06-12T00:00:00+00:00",
+        scan_id="resolved-gap",
+        source_page_url=None,
+        pricing_year=None,
+        validation_status="gap-explicit",
+        dry_run=True,
+        documents=(),
+        discoveries=(),
+        gaps=(resolved_gap,),
+    )
+    assert manifest.unresolved_gaps() == ()
+
+
+def test_source_scanner_private_inference_helpers_cover_edge_categories():
+    assert source_scanner._extract_year("https://example.invalid/2026-27/report", "") == (
+        "2026-27",
+        2026,
+    )
+    assert source_scanner._extract_year("https://example.invalid/2026-25/report", "") == (
+        "2026-25",
+        2026,
+    )
+    assert source_scanner._infer_artifact_kind("https://example.invalid/page.html", "") == (
+        provenance.ArtifactKind.DOCUMENTATION.value
+    )
+    assert source_scanner._infer_source_category(
+        "Classification resource",
+        "https://example.invalid/resource",
+    ) == "classification-resource"
+    assert source_scanner._infer_source_category(
+        "Annual reports",
+        "https://example.invalid/report",
+    ) == "report"
+    assert source_scanner._discover_text(
+        SourceDocument(kind="text", name="empty", content="no links here"),
+        base_url=None,
+        pricing_year=None,
+    ) == []

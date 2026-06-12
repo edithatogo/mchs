@@ -60,7 +60,7 @@ def test_track_metadata_spec_and_contract_are_mapping_pipeline_scoped() -> None:
     assert metadata["track_id"] == "emergency_code_mapping_pipeline_20260512"
     assert metadata["current_state"] in {
         "roadmap-only",
-        "implemented-metadata-pipeline",
+        "complete-with-gaps",
     }
     primary_contract = metadata["primary_contract"]
     assert isinstance(primary_contract, str)
@@ -71,6 +71,17 @@ def test_track_metadata_spec_and_contract_are_mapping_pipeline_scoped() -> None:
     assert _as_mapping(contract["privacy"])["contains_phi"] is False
     assert "Do not invent" in spec
     assert "mapping-bundle schema" in spec
+
+
+def test_local_external_mapping_placeholder_is_not_implementation_evidence() -> None:
+    placeholder = _read_json(
+        CONTRACT / "examples" / "local-only-external-mapping-placeholder.json"
+    )
+
+    assert placeholder["access_mode"] == "local-only"
+    assert placeholder["implementation_evidence"] is False
+    assert "placeholder-only" in str(placeholder["evidence_status"])
+    assert "executable mapping logic" in str(placeholder["evidence_status"])
 
 
 def test_registered_mapping_bundles_cover_udg_and_aecc_eras() -> None:
@@ -227,3 +238,176 @@ def test_public_exports_include_mapping_pipeline_and_transition_api() -> None:
         "aecc",
         "2026",
     ) == "valid"
+
+
+def test_mapping_asset_references_reject_unsafe_shapes() -> None:
+    valid_window_asset = build_emergency_code_mapping_asset_reference(
+        asset_id="synthetic_fixture",
+        kind="derived-validation-fixture",
+        source_refs=("tests/fixtures/derived/emergency/mapping.json",),
+        local_path_hint="tests/fixtures/derived/emergency/mapping.json",
+        restricted=False,
+        notes=(),
+    )
+    assert valid_window_asset.license_boundary == "metadata-only"
+    assert valid_window_asset.to_dict()["asset_id"] == "synthetic_fixture"
+
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="lowercase snake_case"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="BadAsset",
+            kind="public-metadata",
+            source_refs=("https://example.invalid",),
+            local_path_hint=None,
+            restricted=False,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="local_path_hint"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_public_path",
+            kind="public-metadata",
+            source_refs=("https://example.invalid",),
+            local_path_hint="archive/ihacpa/raw/mapping.yaml",
+            restricted=False,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="must not be restricted"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_public_restricted",
+            kind="public-metadata",
+            source_refs=("https://example.invalid",),
+            local_path_hint=None,
+            restricted=True,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="require a local_path_hint"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_local_missing",
+            kind="local-only-external-reference",
+            source_refs=("reference-data/2026/emergency/aecc/mapping.yaml",),
+            local_path_hint=None,
+            restricted=True,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="must be restricted"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_local_unrestricted",
+            kind="local-only-external-reference",
+            source_refs=("reference-data/2026/emergency/aecc/mapping.yaml",),
+            local_path_hint="archive/ihacpa/raw/2026/emergency/aecc/mapping.yaml",
+            restricted=False,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="local source_refs"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_local_url",
+            kind="local-only-external-reference",
+            source_refs=("https://example.invalid/mapping.yaml",),
+            local_path_hint="archive/ihacpa/raw/2026/emergency/aecc/mapping.yaml",
+            restricted=True,
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="parent traversal"):
+        build_emergency_code_mapping_asset_reference(
+            asset_id="bad_source_ref",
+            kind="derived-validation-fixture",
+            source_refs=("../mapping.yaml",),
+            local_path_hint="tests/fixtures/derived/emergency/mapping.json",
+            restricted=False,
+        )
+
+
+def test_mapping_bundle_builders_reject_inconsistent_metadata() -> None:
+    asset = build_emergency_code_mapping_asset_reference(
+        asset_id="synthetic_fixture",
+        kind="derived-validation-fixture",
+        source_refs=("tests/fixtures/derived/emergency/mapping.json",),
+        local_path_hint="tests/fixtures/derived/emergency/mapping.json",
+        restricted=False,
+    )
+
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="system or target_system"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="missing_system",
+            pricing_year="2026",
+            stream="emergency_department",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="same emergency"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="mismatched_system",
+            pricing_year="2026",
+            stream="emergency_department",
+            system="aecc",
+            target_system="udg",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="stream must be"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="bad_stream",
+            pricing_year="2026",
+            stream="ward",
+            target_system="aecc",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="display_name"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="bad_display_name",
+            pricing_year="2026",
+            stream="emergency_department",
+            target_system="aecc",
+            display_name="UDG",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="not available"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="unavailable_aecc",
+            pricing_year="2019",
+            stream="emergency_department",
+            target_system="aecc",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="must include"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="missing_output_field",
+            pricing_year="2026",
+            stream="emergency_department",
+            target_system="aecc",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("COMPENSABLE_STATUS",),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="target classification output"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="target_in_source",
+            pricing_year="2026",
+            stream="emergency_department",
+            target_system="aecc",
+            source_fields=("AECC",),
+            output_fields=("AECC",),
+            assets=(asset,),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="duplicate asset_id"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="duplicate_assets",
+            pricing_year="2026",
+            stream="emergency_department",
+            target_system="aecc",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset, asset),
+        )
+    with pytest.raises(EmergencyCodeMappingPipelineError, match="validation_status"):
+        build_emergency_code_mapping_bundle_record(
+            bundle_id="bad_status",
+            pricing_year="2026",
+            stream="emergency_department",
+            target_system="aecc",
+            source_fields=("COMPENSABLE_STATUS",),
+            output_fields=("AECC", "COMPENSABLE_STATUS"),
+            assets=(asset,),
+            validation_status="complete",
+        )

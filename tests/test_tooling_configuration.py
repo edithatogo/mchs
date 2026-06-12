@@ -12,6 +12,9 @@ PROJECT_FILE = ROOT / "pyproject.toml"
 LOCK_FILE = ROOT / "uv.lock"
 CODECOV_FILE = ROOT / ".github" / "codecov.yml"
 PR_CI_WORKFLOW_FILE = ROOT / ".github" / "workflows" / "pr-ci.yml"
+LANGUAGE_REGISTRY_LIVE_WORKFLOW_FILE = (
+    ROOT / ".github" / "workflows" / "language-registry-live.yml"
+)
 PRE_COMMIT_FILE = ROOT / ".pre-commit-config.yaml"
 SLOW_VALIDATION_WORKFLOW_FILE = ROOT / ".github" / "workflows" / "slow-validation.yml"
 RELEASE_DRAFTER_FILE = ROOT / ".github" / "release-drafter.yml"
@@ -24,6 +27,7 @@ ROOT_README_FILE = ROOT / "README.md"
 DEVELOPMENT_FILE = ROOT / "DEVELOPMENT.md"
 PACKAGE_README_FILE = ROOT / "nwau_py" / "README.md"
 CONDUCTOR_WORKFLOW_FILE = ROOT / "conductor" / "workflow.md"
+CONDUCTOR_STUB_DETECTOR_FILE = ROOT / "conductor" / "scripts" / "stub_detector.py"
 
 EXPECTED_GROUP_PACKAGES = {
     "dev": {"ruff"},
@@ -137,6 +141,36 @@ def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
     assert "Phase 2 tests (Python ${{ matrix.python-version }})" in workflow
     assert "Phase 3 coverage and Codecov (Python 3.11)" in workflow
     assert "Phase 3 Rust checks" in workflow
+    assert "Language registry gate report" in workflow
+    assert "mkdir -p dist" in workflow
+    assert "scripts/validate_language_registry_submission_tracks.py" in workflow
+    assert "../scripts/validate_language_registry_submission_tracks.py" not in workflow
+    assert (
+        "scripts/language_registry_external_gate_report.py --json --output" in workflow
+    )
+    assert (
+        "scripts/language_registry_external_gate_report.py --promotion --output"
+        in workflow
+    )
+    assert "tests/test_remaining_language_registry_submission_tracks.py" in workflow
+    expected_registry_tests = {
+        "tests/test_external_followup_checklists.py",
+        "tests/test_conda_forge_feedstock_submission_track.py",
+        "tests/test_dotnet_nuget_registry_submission_track.py",
+        "tests/test_go_module_registry_submission_track.py",
+        "tests/test_homebrew_formula_submission_track.py",
+        "tests/test_julia_general_registry_submission_track.py",
+        "tests/test_jvm_maven_central_registry_submission_track.py",
+        "tests/test_r_cran_registry_submission_track.py",
+        "tests/test_rust_crates_io_registry_submission_track.py",
+        "tests/test_swift_package_index_submission_track.py",
+        "tests/test_typescript_npm_registry_submission_track.py",
+    }
+    for test_path in expected_registry_tests:
+        assert test_path in workflow
+    assert "name: language-registry-gates" in workflow
+    assert "dist/language-registry-external-gates.json" in workflow
+    assert "dist/language-registry-promotion-groups.json" in workflow
     assert "run: uv run ruff format --check ." in workflow
     assert "run: uv run ruff check ." in workflow
     assert "run: uv run ty check" in workflow
@@ -155,6 +189,31 @@ def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
     assert workflow.index("Run lint") < workflow.index("Run type check")
     assert workflow.index("Run type check") < workflow.index("Run tests")
     assert workflow.index("Run tests") < workflow.index("Run coverage")
+
+
+def test_language_registry_live_workflow_is_scheduled_and_artifact_only():
+    workflow = _read_text(LANGUAGE_REGISTRY_LIVE_WORKFLOW_FILE)
+
+    assert "Language registry live monitor" in workflow
+    assert "workflow_dispatch:" in workflow
+    assert "schedule:" in workflow
+    assert '    - cron: "30 3 * * *"' in workflow
+    assert "permissions:" in workflow
+    assert "contents: read" in workflow
+    assert "uv sync --locked --group test" in workflow
+    assert "scripts/validate_language_registry_submission_tracks.py" in workflow
+    assert (
+        "scripts/language_registry_external_gate_report.py --live --output" in workflow
+    )
+    assert (
+        "scripts/language_registry_external_gate_report.py --promotion --live --output"
+        in workflow
+    )
+    assert "actions/upload-artifact@v6" in workflow
+    assert "name: language-registry-live" in workflow
+    assert "dist/language-registry-live.md" in workflow
+    assert "dist/language-registry-live-promotion-groups.json" in workflow
+    assert "pull_request:" not in workflow
 
 
 def test_pre_commit_configuration_matches_the_current_python_quality_gate():
@@ -176,8 +235,9 @@ def test_pre_commit_configuration_matches_the_current_python_quality_gate():
 def test_slow_validation_workflow_uses_the_expected_uv_group_commands():
     workflow = _read_text(SLOW_VALIDATION_WORKFLOW_FILE)
     scalene_command = (
-        "run: mkdir -p .cache/validation/scalene && uv run scalene --cli "
-        "--outfile .cache/validation/scalene/scalene.out --html python -m pytest"
+        "run: mkdir -p .cache/validation/scalene && uv run scalene run --cpu-only "
+        "--outfile .cache/validation/scalene/scalene.json .venv/bin/pytest "
+        "tests/test_validation_tooling.py tests/test_tooling_configuration.py"
     )
 
     assert "schedule:" in workflow
@@ -194,6 +254,16 @@ def test_slow_validation_workflow_uses_the_expected_uv_group_commands():
     )
     assert workflow.index("Mutation checks") < workflow.index("Run mutmut")
     assert workflow.index("Profiling checks") < workflow.index("Run Scalene profiling")
+
+
+def test_conductor_workflow_stub_detector_command_is_executable_from_repo_root():
+    workflow = _read_text(CONDUCTOR_WORKFLOW_FILE)
+    detector = _read_text(CONDUCTOR_STUB_DETECTOR_FILE)
+
+    assert CONDUCTOR_STUB_DETECTOR_FILE.exists()
+    assert "python conductor/scripts/stub_detector.py --root . --json" in workflow
+    assert "runpy.run_path" in detector
+    assert "parents[3]" in detector
 
 
 def test_release_drafter_configuration_defines_tagged_release_notes():
@@ -232,7 +302,10 @@ def test_publish_workflow_builds_and_pushes_the_python_distribution():
     workflow = _read_text(PUBLISH_WORKFLOW_FILE)
 
     assert "Publish Python package" in workflow
-    assert '      - "v*"' in workflow
+    assert "release:" in workflow
+    assert "types:" in workflow
+    assert "      - published" in workflow
+    assert "workflow_dispatch:" in workflow
     assert "id-token: write" in workflow
     assert "uv build" in workflow
     assert "pypa/gh-action-pypi-publish@release/v1" in workflow
@@ -254,8 +327,8 @@ def test_conductor_workflow_documents_the_target_uv_command_sequence():
     assert "user confirmation" not in workflow.lower()
     assert "Do not pause for manual confirmation" in workflow
     assert (
-        "automatically continue with the next incomplete task or next track"
-        in normalized
+        "automatically continue with the next incomplete task, "
+        "next phase, or next track" in normalized
     )
     assert "uv run ruff format --check ." in workflow
     assert "uv run ruff check ." in workflow

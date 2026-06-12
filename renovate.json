@@ -3,7 +3,17 @@
   "extends": ["config:recommended"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Dependency update dashboard",
-  "enabledManagers": ["pep621", "pip_requirements", "github-actions", "cargo"],
+  "enabledManagers": [
+    "pep621",
+    "pip_requirements",
+    "github-actions",
+    "cargo",
+    "npm",
+    "gomod",
+    "gradle",
+    "nuget",
+    "dockerfile"
+  ],
   "labels": ["dependencies"],
   "rangeStrategy": "pin",
   "schedule": ["after 6am and before 9am on monday"],
@@ -51,6 +61,36 @@
     {
       "matchManagers": ["cargo"],
       "groupName": "Rust dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["npm"],
+      "groupName": "Node and VS Code extension dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["gomod"],
+      "groupName": "Go dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["gradle"],
+      "groupName": "JVM dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["nuget"],
+      "groupName": ".NET dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "groupName": "Container base images",
       "dependencyDashboardApproval": true,
       "separateMinorPatch": true
     }

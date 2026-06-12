@@ -3,17 +3,32 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import pyreadstat
+
+try:  # pragma: no cover - optional dependency
+    import pyreadstat
+except Exception:  # pragma: no cover - pyreadstat is optional for CSV-backed tests
+    pyreadstat = None
 
 from nwau_py.classification_validation import (
     get_classification_version,
     validate_tier_2_input,
 )
-from nwau_py.data.loader import load_sas_table
+from nwau_py.data.loader import clear_reference_cache, load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import impute_adjustment, ra_suffix, sas_ref_dir
 
 _DEFAULT_YEAR = "2025"
+_READSTAT_ERRORS: tuple[type[BaseException], ...] = ()
+if pyreadstat is not None:  # pragma: no branch - import-time optional dependency guard
+    _READSTAT_ERRORS = tuple(
+        error_type
+        for error_type in (
+            getattr(pyreadstat, "ReadstatError", None),
+            getattr(getattr(pyreadstat, "_readstat_parser", None), "PyreadstatError", None),
+        )
+        if isinstance(error_type, type)
+    )
+_OPTIONAL_REFERENCE_ERRORS = (FileNotFoundError, KeyError, ValueError) + _READSTAT_ERRORS
 
 
 @dataclass
@@ -113,14 +128,7 @@ def _load_multi_prov_adj(ref_dir: Path, year: str) -> float:
         for col in df.select_dtypes(include="object").columns:
             df[col] = df[col].str.decode("ascii")
         return float(df.loc[0, "adj_multiprov"])
-    except (
-        FileNotFoundError,
-        pyreadstat.ReadstatError,
-        pyreadstat._readstat_parser.PyreadstatError,
-        getattr(pyreadstat, "ReadstatError", Exception),
-        KeyError,
-        ValueError,
-    ):
+    except _OPTIONAL_REFERENCE_ERRORS:
         return 0.0
     except Exception:
         return 0.0
@@ -137,14 +145,7 @@ def _load_ind_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         for col in df.select_dtypes(include="object").columns:
             df[col] = df[col].str.decode("ascii")
         return df
-    except (
-        FileNotFoundError,
-        pyreadstat.ReadstatError,
-        pyreadstat._readstat_parser.PyreadstatError,
-        getattr(pyreadstat, "ReadstatError", Exception),
-        KeyError,
-        ValueError,
-    ):
+    except _OPTIONAL_REFERENCE_ERRORS:
         return pd.DataFrame()
     except Exception:
         return pd.DataFrame()
@@ -161,14 +162,7 @@ def _load_pat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         for col in df.select_dtypes(include="object").columns:
             df[col] = df[col].str.decode("ascii")
         return df
-    except (
-        FileNotFoundError,
-        pyreadstat.ReadstatError,
-        pyreadstat._readstat_parser.PyreadstatError,
-        getattr(pyreadstat, "ReadstatError", Exception),
-        KeyError,
-        ValueError,
-    ):
+    except _OPTIONAL_REFERENCE_ERRORS:
         return pd.DataFrame()
     except Exception:
         return pd.DataFrame()
@@ -185,14 +179,7 @@ def _load_treat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         for col in df.select_dtypes(include="object").columns:
             df[col] = df[col].str.decode("ascii")
         return df
-    except (
-        FileNotFoundError,
-        pyreadstat.ReadstatError,
-        pyreadstat._readstat_parser.PyreadstatError,
-        getattr(pyreadstat, "ReadstatError", Exception),
-        KeyError,
-        ValueError,
-    ):
+    except _OPTIONAL_REFERENCE_ERRORS:
         return pd.DataFrame()
     except Exception:
         return pd.DataFrame()
@@ -373,9 +360,15 @@ def calculate_outpatients(
     if not treat_rem.empty:
         merged = merged.merge(treat_rem, on="_treat_remoteness", how="left")
 
-    merged["adj_indigenous"] = merged.get("adj_indigenous", 0).fillna(0)
-    merged["adj_remoteness"] = merged.get("adj_remoteness", 0).fillna(0)
-    merged["adj_treat_remoteness"] = merged.get("adj_treat_remoteness", 0).fillna(0)
+    merged["adj_indigenous"] = merged.get(
+        "adj_indigenous", pd.Series(0, index=merged.index)
+    ).fillna(0)
+    merged["adj_remoteness"] = merged.get(
+        "adj_remoteness", pd.Series(0, index=merged.index)
+    ).fillna(0)
+    merged["adj_treat_remoteness"] = merged.get(
+        "adj_treat_remoteness", pd.Series(0, index=merged.index)
+    ).fillna(0)
     if params.data_type == 1:
         try:
             ind_adj = _load_ind_adj(ref_dir, year)
@@ -524,8 +517,6 @@ def calculate_outpatients(
     if not params.debug_mode:
         result = result.drop(columns=[c for c in result.columns if c.startswith("_")])
     if params.clear_data:
-        import shutil
-
-        shutil.rmtree(".cache", ignore_errors=True)
+        clear_reference_cache()
 
     return result

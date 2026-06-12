@@ -1,16 +1,22 @@
 {
   "track_id": "dotnet_nuget_registry_submission_20260524",
   "type": "chore",
-  "status": "blocked",
+  "status": "completed",
+  "current_state": "complete",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-25T13:45:00Z",
+  "updated_at": "2026-05-25T14:02:23Z",
   "description": ".NET NuGet Registry Submission: discover, prepare, submit, and evidence NuGet publication for Mchs.Bindings.DotNet.",
   "registry_id": "dotnet_nuget",
-  "current_status": "workflow_ready_pending_nuget_push",
-  "publication_status": "not_published",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
   "local_readiness_resolved": true,
-  "blocker": "Manual GitHub Actions publish workflow exists and NUGET_API_KEY is configured, but NuGet push has not yet been dispatched and no public NuGet publication is claimed.",
-  "publication_claimed": false,
+  "blocker": null,
+  "publication_claimed": true,
+  "completion_evidence": [
+    "bindings/dotnet/DotNetBinding.csproj",
+    "bindings/dotnet/src/Program.cs",
+    "tests/test_dotnet_nuget_registry_submission_track.py"
+  ],
   "package_evidence": {
     "discovery_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json",
     "discovery_result": "404 BlobNotFound/no existing public package listing",
@@ -19,6 +25,18 @@
     "package_sha256": "e6195abe5c49780b640844da12fb3eec756a963db8d14570de6bcc7901ceb211",
     "auth_probe": "NUGET_API_KEY environment variable is missing",
     "github_secret": "NUGET_API_KEY exists as of 2026-05-25T13:34:49Z",
-    "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=nuget"
-  }
+    "publish_workflow": ".github/workflows/publish-registry-packages.yml workflow_dispatch registry=nuget",
+    "submission_run": "https://github.com/edithatogo/mchs/actions/runs/26404217645",
+    "push_result": "Created https://www.nuget.org/api/v2/package/; Your package was pushed.",
+    "public_probe_result": "HTTP 200 with version 0.1.0",
+    "publication_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json",
+    "verified_at": "2026-05-25T14:02:23Z",
+    "public_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json",
+    "public_version": "0.1.0",
+    "package_blob_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg",
+    "registration_url": "https://api.nuget.org/v3/registration5-semver1/mchs.bindings.dotnet/index.json",
+    "package_page_note": "NuGet HTML package page returned 404 from this environment during verification, so API and package blob evidence are authoritative.",
+    "flat_container_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json"
+  },
+  "submission_url": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json"
 }

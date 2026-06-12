@@ -60,6 +60,30 @@ def test_calculate_ed_matches_sas_weights(monkeypatch, year):
 CALC_DIR = Path("archive/sas/NEP25_SAS_NWAU_calculator/calculators")
 
 
+def test_ed_reference_loaders_decode_classification_tables(monkeypatch):
+    calls: list[Path] = []
+
+    def fake_read_sas(path):
+        calls.append(Path(path))
+        name = Path(path).name
+        if "edudg" in name:
+            return pd.DataFrame({"UDG": [b"UDG01"], "udg_pw": [0.5]})
+        if "edaecc" in name:
+            return pd.DataFrame({"AECC": [b"E0110A"], "AECC_pw": [0.75]})
+        return pd.DataFrame({"UDG": [b"UDG02"], "map": [1]})
+
+    monkeypatch.setattr(pd, "read_sas", fake_read_sas)
+
+    udg = ed._load_weights(Path("ref"), classification_option=2, year="2025")
+    aecc = ed._load_weights(Path("ref"), classification_option=3, year="2025")
+    mapping = ed._load_udg_map(Path("ref"))
+
+    assert udg.to_dict("records") == [{"UDG": "UDG01", "udg_pw": 0.5}]
+    assert aecc.to_dict("records") == [{"AECC": "E0110A", "AECC_pw": 0.75}]
+    assert mapping.to_dict("records") == [{"UDG": "UDG02", "map": 1}]
+    assert len(calls) == 3
+
+
 @pytest.mark.parametrize("year", YEARS)
 def test_calculate_ed_aecc_basic(monkeypatch, year):
     weights = pd.read_sas(CALC_DIR / "nep25_edaecc_price_weights.sas7bdat")

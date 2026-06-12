@@ -236,6 +236,57 @@ jobs:
       - name: Run tests
         run: cargo test
 
+  language_registry_gates:
+    name: Language registry gate report
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Sync environment
+        run: uv sync --locked --group test
+
+      - name: Validate language registry submission tracks
+        run: |
+          mkdir -p dist
+          uv run python scripts/validate_language_registry_submission_tracks.py
+          uv run python scripts/language_registry_external_gate_report.py --json --output dist/language-registry-external-gates.json
+          uv run python scripts/language_registry_external_gate_report.py --promotion --output dist/language-registry-promotion-groups.json
+
+      - name: Run language registry gate tests
+        run: |
+          uv run pytest \
+            tests/test_external_followup_checklists.py \
+            tests/test_remaining_language_registry_submission_tracks.py \
+            tests/test_rust_crates_io_registry_submission_track.py \
+            tests/test_typescript_npm_registry_submission_track.py \
+            tests/test_dotnet_nuget_registry_submission_track.py \
+            tests/test_r_cran_registry_submission_track.py \
+            tests/test_julia_general_registry_submission_track.py \
+            tests/test_go_module_registry_submission_track.py \
+            tests/test_swift_package_index_submission_track.py \
+            tests/test_jvm_maven_central_registry_submission_track.py \
+            tests/test_conda_forge_feedstock_submission_track.py \
+            tests/test_homebrew_formula_submission_track.py \
+            tests/test_tracks_registry.py
+
+      - name: Upload language registry gate reports
+        uses: actions/upload-artifact@v6
+        with:
+          name: language-registry-gates
+          path: |
+            dist/language-registry-external-gates.json
+            dist/language-registry-promotion-groups.json
+
   coverage:
     name: Phase 3 coverage and Codecov (Python 3.11)
     runs-on: ubuntu-latest
@@ -244,6 +295,7 @@ jobs:
       - tests
       - rust
       - security
+      - language_registry_gates
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
@@ -268,7 +320,7 @@ jobs:
         run: uv sync --locked --group test --group coverage
 
       - name: Run coverage
-        run: uv run pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+        run: uv run pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=90
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

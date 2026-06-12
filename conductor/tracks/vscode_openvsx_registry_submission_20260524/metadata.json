@@ -3,18 +3,20 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-25T13:45:00Z",
+  "updated_at": "2026-06-12T06:35:00Z",
   "description": "VS Code/Open VSX Extension Submission: discover, prepare, submit, and evidence Open VSX / Visual Studio Marketplace publication for mchs-tools.",
   "registry_id": "vscode_openvsx",
-  "current_status": "prepared_pending_publisher_agreements_tokens_and_vsix_publish",
+  "current_status": "prepared_eclipse_github_linked_pending_eclipse_agreement_login_tokens_and_vsix_publish",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Open VSX token creation is blocked until the Eclipse Foundation Open VSX Publisher Agreement is signed; Visual Studio Marketplace publishing is blocked by missing publisher/PAT access.",
+  "blocker": "Open VSX login via GitHub now succeeds and Eclipse account edithatogo is linked to GitHub edithatogo, but Open VSX still reports no signed Publisher Agreement and redirects to an Eclipse password login before token creation; Visual Studio Marketplace publisher edithatogo exists and the signed-in account is Owner, but Marketplace PAT creation and authenticated VSIX publish remain pending.",
   "publication_claimed": false,
   "package_evidence": {
     "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix",
-    "artifact_sha256": "0ceb6611ed31ada0ee2058aea0bae9826091d872ff765180508b055ba86cb12a",
-    "discovery_result": "Open VSX extension not found",
-    "credential_attempt": "Open VSX GitHub login succeeded, but access token creation was refused until an Eclipse Foundation Open VSX Publisher Agreement is signed. Visual Studio Marketplace publisher page for edithatogo returned 404 under the current Microsoft session."
+    "artifact_sha256": "0fde076ddf60d5d5d9d83dc1deb75c1ce4eebf820b0a1030ca564297b0986125",
+    "discovery_result": "Open VSX returned HTTP 404 Extension not found from https://open-vsx.org/api/edithatogo/mchs-tools with Accept: application/json on 2026-05-26; Visual Studio Marketplace returned HTTP 404 for the item page and 0 extensions from Gallery extensionquery; the earlier Open VSX HTTP 406 was caused by an incorrect GitHub vendor Accept header.",
+    "credential_attempt": "The user reports the Eclipse Foundation Open VSX Publisher Agreement is completed. Eclipse account edithatogo is now connected with GitHub account edithatogo, and Open VSX GitHub login succeeds. Open VSX Access Tokens still reports that no Eclipse Foundation Open VSX Publisher Agreement is signed and the Profile page redirects to Eclipse Foundation password login for the openvsx_publisher_agreement scope. Visual Studio Marketplace publisher edithatogo is visible in the publishing portal under the signed-in account with Owner role; Marketplace PAT creation and authenticated VSIX publish remain pending.",
+    "live_browser_setup_probe": "2026-06-12: Eclipse linked-account page shows 'Account successfully connected with Github Account' and 'Connected as edithatogo'. Open VSX settings login with GitHub succeeds, but Access Tokens still blocks token creation pending Publisher Agreement recognition and Log in with Eclipse reaches an Eclipse Foundation username/password prompt. Visual Studio Marketplace manage page shows publisher edithatogo with Owner role and no uploaded extensions.",
+    "local_surface": "Concrete VS Code commands read the registry-gate contract, open the language registry contract and external-gates roadmap, and copy the gated Open VSX publish command."
   }
 }

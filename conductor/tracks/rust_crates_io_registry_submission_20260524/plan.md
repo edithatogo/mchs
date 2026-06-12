@@ -19,16 +19,16 @@
 
 ## Phase 3: Submission
 
-- [ ] Task: Submit to `crates.io` using an authenticated publisher workflow. Manual workflow exists; blocked by token rotation and dispatch.
-    - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR. Pending dispatch of `.github/workflows/publish-registry-packages.yml` with `registry=cratesio` after token rotation.
-    - [x] Capture submission URL, version, owner, and review state. `https://crates.io/api/v1/crates/nwau-core` returned crate absence; `cargo owner --list nwau-core` returned `no token found, please run cargo login`; GitHub secret `CARGO_REGISTRY_TOKEN` exists as of 2026-05-25T13:04:00Z; manual workflow exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Blocked until token rotation and crates.io workflow dispatch.
+- [x] Task: Submit to `crates.io` using an authenticated publisher workflow.
+    - [x] Use dry-run or validation mode first where available. `cargo publish --dry-run --allow-dirty --locked --manifest-path rust/crates/nwau-core/Cargo.toml` packaged and verified `nwau-core v0.1.0`, reached upload, then aborted because this was a dry run.
+    - [x] Publish or open the required upstream PR. Public crates.io API verifies `nwau-core@0.1.0`.
+    - [x] Capture submission URL, version, owner, and review state. `https://crates.io/api/v1/crates/nwau-core/0.1.0` reports version `0.1.0`, created `2026-05-25T13:59:23.536614Z`, checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547`, and `yanked=false`.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md).
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication. Pending authenticated publication.
-    - [ ] Query public registry after propagation. Current query returns no crate.
-    - [ ] Record immutable URL/API response/checksum. Pending publication.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists. Publication is not claimed. Rotate the crates.io token before use because it passed through browser automation during setup.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md). Pending publication evidence.
+- [x] Task: Verify external publication.
+    - [x] Query public registry after propagation. `https://crates.io/api/v1/crates/nwau-core` reports newest version `0.1.0`.
+    - [x] Record immutable URL/API response/checksum. Version API checksum is `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547`.
+    - [x] Mark track complete only if publication or accepted-review evidence exists. Publication is verified. Revoke or rotate the crates.io token because it passed through browser automation during setup.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md).

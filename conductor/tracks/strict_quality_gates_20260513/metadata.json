@@ -1,0 +1,22 @@
+{
+  "track_id": "strict_quality_gates_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "validator",
+  "current_state": "complete-with-gaps",
+  "primary_contract": ">=90% coverage, strict CI, typing, linting, docs, security, release gates",
+  "dependencies": [
+    "python_tooling_ci_20260504",
+    "rust_ci_supply_chain_hardening_20260510",
+    "release_workflow_validation_20260513"
+  ],
+  "completion_evidence": [
+    "conductor/workflow.md (quality gates section)",
+    "conductor/requirements.md (MUST-004, MUST-005)"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-15T00:00:00Z",
+  "description": "Raise and enforce repository quality gates to SOTA expectations for calculator-core, binding, docs, and release work.",
+  "no_stub_enforce": true
+}

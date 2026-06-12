@@ -94,3 +94,18 @@ convention = "google"
 
 [tool.pytest.ini_options]
 testpaths = ["tests", "excel_calculator/tests"]
+
+[tool.mutmut]
+paths_to_mutate = [
+    "nwau_py/calculators/adjust.py",
+    "nwau_py/calculators/funding_formula.py",
+    "nwau_py/utils.py",
+]
+also_copy = [
+    "nwau_py/data",
+]
+tests_dir = [
+    "tests/test_adjust.py",
+    "tests/test_helpers_and_formula.py",
+    "tests/test_utils.py",
+]

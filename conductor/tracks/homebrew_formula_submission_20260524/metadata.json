@@ -1,0 +1,37 @@
+{
+  "track_id": "homebrew_formula_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "current_state": "complete",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-05-26T00:30:00+10:00",
+  "description": "Homebrew Formula Submission: discover, prepare, submit, and evidence Homebrew tap/core publication for nwau-py.",
+  "registry_id": "homebrew",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "submission_url": "https://github.com/edithatogo/homebrew-mchs",
+  "publication_claimed": true,
+  "completion_evidence": [
+    "packaging/homebrew/nwau-py.rb",
+    "tests/test_homebrew_formula_submission_track.py",
+    "contracts/language-registry-submissions/language-registry-submissions.contract.json"
+  ],
+  "package_evidence": {
+    "discovery_command": "brew info nwau-py",
+    "discovery_result": "No available formula with the name nwau-py",
+    "core_formula_api_result": "https://formulae.brew.sh/api/formula/nwau-py.json returned HTTP 404 on 2026-05-26",
+    "tap_repository_api_result": "https://api.github.com/repos/edithatogo/homebrew-mchs returned HTTP 200 default_branch=main archived=False",
+    "formula": "microcosting_healthservices/packaging/homebrew/nwau-py.rb",
+    "source_sha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480",
+    "audit_note": "brew audit --strict --online edithatogo/mchs/nwau-py passed after adding the Click resource and lazy CLI inreplace patch",
+    "install_test_note": "brew install --build-from-source edithatogo/mchs/nwau-py and brew test edithatogo/mchs/nwau-py passed",
+    "future_release_fix": "Changed the local CLI so root --help no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the tap carries an equivalent temporary inreplace patch until a new PyPI release includes the fix.",
+    "tap_commit": "fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823",
+    "tap_url": "https://github.com/edithatogo/homebrew-mchs",
+    "formula_url": "https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb",
+    "formula_sha256": "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3",
+    "tap_state": "published_to_personal_tap_audit_install_test_passing"
+  }
+}

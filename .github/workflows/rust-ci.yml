@@ -1,0 +1,237 @@
+name: Rust CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: rust-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  fmt:
+    name: Formatting (cargo fmt)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Check formatting
+        run: cargo fmt --all --check
+
+  clippy:
+    name: Linting (cargo clippy)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Run clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
+
+  docs:
+    name: Documentation (cargo doc)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build documentation
+        run: cargo doc --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: "-D warnings"
+
+  coverage:
+    name: Coverage (>90% GA crates)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    needs: [fmt, clippy, docs]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-llvm-cov
+
+      - name: Generate Rust coverage report
+        run: |
+          set -euo pipefail
+          report_json="$(mktemp)"
+          cargo llvm-cov \
+            --package nwau-core \
+            --all-features \
+            --workspace \
+            --json \
+            --output-path "${report_json}"
+          coverage_pct="$(python3 - "${report_json}" <<'PY'
+          import json
+          import sys
+          path = sys.argv[1]
+          with open(path, "r", encoding="utf-8") as f:
+              payload = json.load(f)
+          totals = payload.get("data", [{}])[0].get("totals", {})
+          coverage = float(totals.get("percent_covered", 0))
+          print(coverage)
+          PY
+          )"
+          echo "Coverage: ${coverage_pct}%"
+          rm -f "${report_json}"
+          if python3 - "${coverage_pct}" <<'PY'
+          import sys
+          coverage = float(sys.argv[1])
+          if coverage < 90.0:
+              raise SystemExit(1)
+          PY
+          then
+            echo "PASS: Coverage ${coverage_pct}% meets threshold 90.0%"
+          else
+            echo "FAIL: Coverage ${coverage_pct}% is below threshold 90.0%"
+            exit 1
+          fi
+
+      - name: Generate LCOV for upload
+        run: |
+          cargo llvm-cov \
+            --package nwau-core \
+            --all-features \
+            --workspace \
+            --lcov \
+            --output-path lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./rust/lcov.info
+          flags: rust
+          fail_ci_if_error: true
+          use_oidc: true
+
+  rust_security:
+    name: Security (Rust dependencies and advisories)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    needs: [fmt, clippy, docs]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install cargo-audit
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-audit
+
+      - name: Install cargo-deny
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deny
+
+      - name: Run cargo audit
+        run: cargo audit
+
+      - name: Run cargo deny (advisory check)
+        run: cargo deny check advisories
+
+  test:
+    name: Tests (cargo test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    needs: [fmt, clippy, docs]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run tests
+        run: cargo test --all-features
+
+  build:
+    name: Build (release)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    needs: [fmt, clippy, docs]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release
+        run: cargo build --release --all-features
+
+      - name: Verify binary
+        run: |
+          if [ -f target/release/nwau-cli ]; then
+            echo "Binary found: target/release/nwau-cli"
+            file target/release/nwau-cli
+          else
+            echo "No standalone binary; library crates built successfully"
+          fi
+
+  gate:
+    name: Rust GA gates (fmt/lint/doc/test/coverage/security/build)
+    runs-on: ubuntu-latest
+    needs:
+      - fmt
+      - clippy
+      - docs
+      - coverage
+      - rust_security
+      - test
+      - build
+    steps:
+      - name: Gate complete
+        run: |
+          echo "All Rust GA gate checks passed."
