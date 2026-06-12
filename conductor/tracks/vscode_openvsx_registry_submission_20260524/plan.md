@@ -21,8 +21,8 @@
 
 - [ ] Task: Submit to `Open VSX / Visual Studio Marketplace` using an authenticated publisher workflow.
     - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR. Open VSX is blocked by Eclipse account login and Publisher Agreement acceptance; Visual Studio Marketplace is blocked by publisher/PAT access.
-    - [x] Capture submission URL, version, owner, and review state. Open VSX reports that access tokens cannot be created until the Eclipse Foundation Open VSX Publisher Agreement is signed. Visual Studio Marketplace publisher page for `edithatogo` returned 404 in the current Microsoft session.
+    - [ ] Publish or open the required upstream PR. Open VSX remains blocked by Eclipse OAuth Publisher Agreement completion and PAT creation; Visual Studio Marketplace is blocked by publisher/PAT access.
+    - [x] Capture submission URL, version, owner, and review state. 2026-06-12 recheck rebuilt `integrations/vscode/mchs-tools-0.1.0.vsix` with SHA-256 `5ffcc870020787438e31e035e3a12fbea131f744d8647cd7d6367be7e05a717b`; `npx ovsx publish mchs-tools-0.1.0.vsix` reached the namespace PAT prompt for `edithatogo`; Open VSX still reports no Eclipse Foundation Open VSX Publisher Agreement attached. Eclipse account GitHub linking is present as `edithatogo`, but Open VSX requires Eclipse OAuth login to complete/sign the Publisher Agreement.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence
