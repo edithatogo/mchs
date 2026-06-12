@@ -123,6 +123,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 - Package: `mchs-matlab-interop@0.1.0`
 - Local status: repo-ready for source/artifact preparation. The MATLAB source tree, contract surface, examples, and `bindings/matlab/mchs-matlab-interop-0.1.0.zip` bundle are present; MATLAB/Octave runtime validation is not claimed in this environment.
+- Latest public probe on 2026-06-12: MathWorks File Exchange search for `mchs-matlab-interop` returned HTTP 200 but only unrelated search results, so no public listing is claimed.
 - Required step: use a MathWorks account to upload the prepared bundle and complete File Exchange review.
 
 ### Stata SSC
