@@ -1,6 +1,6 @@
 # External Submission Runbook
 
-As of 2026-05-26, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, and the Go module are externally published and verified. The remaining items require publish automation, direct authenticated publish, public listing evidence, legal/publisher agreement completion, or upstream maintainer review.
+As of 2026-06-12, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, Julia General, Stata SSC, and the Go module are externally published and verified. The remaining items require direct authenticated publish, public listing evidence, legal/publisher agreement completion, upstream maintainer review, or registry policy changes.
 
 ## Already published and verified
 
