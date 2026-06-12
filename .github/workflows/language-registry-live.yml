@@ -1,0 +1,42 @@
+name: Language Registry Live Monitor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  live-registry-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Generate live registry report
+        run: |
+          set -euo pipefail
+          python scripts/language_registry_external_gate_report.py \
+            --promotion \
+            --live \
+            --output language-registry-live.json \
+            | tee language-registry-live.txt
+
+      - name: Upload live registry report
+        uses: actions/upload-artifact@v5
+        with:
+          name: language-registry-live
+          path: |
+            language-registry-live.json
+            language-registry-live.txt
+          if-no-files-found: error

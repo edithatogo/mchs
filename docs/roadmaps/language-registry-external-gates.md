@@ -29,10 +29,10 @@ Use `python scripts/language_registry_external_gate_report.py --promotion --live
 Add `--output <path>` to any mode to persist the report as a release or CI artifact.
 
 The PR CI workflow writes non-live JSON artifacts only, so pull requests remain
-deterministic. Live registry drift checks are currently operator-run with
-`python scripts/language_registry_external_gate_report.py --promotion --live`;
-the available registry GitHub workflows are publish workflows and should not be
-used as passive monitors.
+deterministic. The scheduled/manual
+`.github/workflows/language-registry-live.yml` monitor runs
+`python scripts/language_registry_external_gate_report.py --promotion --live`
+and uploads `language-registry-live` artifacts for registry drift review.
 
 The Go row is intentionally split: the Go proxy submission URL verifies the tagged module, while the public package probe checks `https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go`. Once pkg.go.dev exposes the target version, the Go track can be completed.
 
