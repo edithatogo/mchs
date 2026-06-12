@@ -1,0 +1,76 @@
+name: Publish VS Code extension
+
+on:
+  workflow_dispatch:
+    inputs:
+      registry:
+        description: Registry to publish
+        required: true
+        type: choice
+        default: openvsx
+        options:
+          - openvsx
+          - vsmarketplace
+          - all
+      dry_run:
+        description: Package only; do not publish
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  publish-vscode-extension:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/vscode
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Validate publish credentials
+        if: ${{ inputs.dry_run == false }}
+        env:
+          REGISTRY: ${{ inputs.registry }}
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          set -euo pipefail
+          missing=0
+          if { [ "$REGISTRY" = "openvsx" ] || [ "$REGISTRY" = "all" ]; } && [ -z "$OVSX_PAT" ]; then
+            echo "Missing required secret: OVSX_PAT" >&2
+            missing=1
+          fi
+          if { [ "$REGISTRY" = "vsmarketplace" ] || [ "$REGISTRY" = "all" ]; } && [ -z "$VSCE_PAT" ]; then
+            echo "Missing required secret: VSCE_PAT" >&2
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Package VSIX
+        run: npx --yes --package @vscode/vsce vsce package --no-dependencies
+
+      - name: Publish to Open VSX
+        if: ${{ inputs.dry_run == false && (inputs.registry == 'openvsx' || inputs.registry == 'all') }}
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx --yes --package ovsx ovsx publish mchs-tools-0.1.0.vsix --pat "$OVSX_PAT"
+
+      - name: Publish to Visual Studio Marketplace
+        if: ${{ inputs.dry_run == false && (inputs.registry == 'vsmarketplace' || inputs.registry == 'all') }}
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools-0.1.0.vsix --pat "$VSCE_PAT"
