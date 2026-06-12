@@ -8,6 +8,7 @@ import pytest
 
 import nwau_py
 import nwau_py.calculators as calculators
+import nwau_py.emergency_transition_registry as emergency_registry
 from nwau_py import (
     ClassificationValidationError,
     ClassificationValidationResult,
@@ -23,10 +24,21 @@ from nwau_py import (
     validate_emergency_input,
     validate_udg_input,
 )
+from nwau_py.emergency_transition_registry import (
+    EmergencyClassificationRecord,
+    EmergencyClassificationRegistryError,
+    EmergencyClassificationVersion,
+    EmergencyTransitionPeriod,
+    ensure_emergency_classification_compatibility,
+    validate_emergency_classification_compatibility,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = (
-    ROOT / "conductor" / "tracks" / "emergency_udg_aecc_transition_registry_20260512"
+    ROOT
+    / "conductor"
+    / "tracks"
+    / "emergency_udg_aecc_transition_registry_20260512"
 )
 
 AECC_FIELDS = ("AECC", "COMPENSABLE_STATUS", "DVA_STATUS")
@@ -48,7 +60,10 @@ def test_track_metadata_and_spec_record_the_transition_registry_contract():
     spec = _read_text(TRACK / "spec.md")
 
     assert metadata["track_id"] == "emergency_udg_aecc_transition_registry_20260512"
-    assert metadata["current_state"] == "implemented-metadata-registry"
+    assert metadata["current_state"] in {
+        "implemented-metadata-registry",
+        "complete-with-gaps",
+    }
     assert metadata["description"] == (
         "Document and validate emergency classification transition registry "
         "semantics for UDG and AECC versions, pricing-year applicability, "
@@ -228,3 +243,185 @@ def test_public_api_exports_include_the_emergency_registry_surface():
 
     for name in expected_calculator_exports:
         assert getattr(calculators, name) is not None
+
+
+def test_emergency_registry_dataclasses_reject_inconsistent_records() -> None:
+    assert emergency_registry.normalize_emergency_classification_system("AECC") == "aecc"
+
+    with pytest.raises(EmergencyClassificationRegistryError, match="must be a string"):
+        emergency_registry.normalize_emergency_classification_system(1)  # type: ignore[arg-type]
+    with pytest.raises(EmergencyClassificationRegistryError, match="supported four-digit"):
+        EmergencyClassificationVersion(
+            year="2027",
+            version="v1.1",
+            acceptance_state="valid",
+            source_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="deterministic"):
+        EmergencyClassificationVersion(
+            year="2026",
+            version="v1.1!",
+            acceptance_state="valid",
+            source_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="unsupported streams"):
+        EmergencyClassificationVersion(
+            year="2026",
+            version="v1.1",
+            acceptance_state="valid",
+            source_fields=("AECC",),
+            stream_compatibility=("ward",),
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="must not contain duplicates"):
+        EmergencyClassificationVersion(
+            year="2026",
+            version="v1.1",
+            acceptance_state="valid",
+            source_fields=("AECC", "AECC"),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="must not declare"):
+        EmergencyClassificationVersion(
+            year="2026",
+            version="v1.1",
+            acceptance_state="unavailable",
+            source_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="require a version"):
+        EmergencyClassificationVersion(
+            year="2026",
+            version=None,
+            acceptance_state="valid",
+            source_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+        )
+
+
+def test_emergency_registry_period_record_and_result_edges() -> None:
+    version_2025 = EmergencyClassificationVersion(
+        year="2025",
+        version="v1",
+        acceptance_state="valid",
+        source_fields=("AECC",),
+        stream_compatibility=("emergency_department",),
+        source_refs=("https://example.invalid",),
+    )
+    version_2026 = EmergencyClassificationVersion(
+        year="2026",
+        version="v2",
+        acceptance_state="transition",
+        source_fields=("AECC",),
+        stream_compatibility=("emergency_department",),
+        source_refs=("https://example.invalid",),
+        notes=(),
+    )
+    record = EmergencyClassificationRecord(
+        system="aecc",
+        display_name="AECC test",
+        aliases=("aecc-test",),
+        required_fields=("AECC",),
+        stream_compatibility=("emergency_department",),
+        source_refs=("https://example.invalid",),
+        notes=(),
+        versions=(version_2025, version_2026),
+    )
+    period = EmergencyTransitionPeriod(
+        system="AECC",
+        start_year="2025",
+        end_year="2026",
+        acceptance_state="transition",
+        source_refs=("https://example.invalid",),
+    )
+
+    assert period.covers("2025") is True
+    assert period.covers("2024") is False
+    assert period.to_dict()["system"] == "aecc"
+    assert record.version_for_year("2024") is None
+    assert record.acceptance_state_for_year("2024") == "unavailable"
+    assert record.transition_years() == ("2026",)
+    assert record.to_dict()["supported_years"] == ["2025", "2026"]
+
+    with pytest.raises(EmergencyClassificationRegistryError, match="later than end_year"):
+        EmergencyTransitionPeriod(
+            system="aecc",
+            start_year="2026",
+            end_year="2025",
+            acceptance_state="transition",
+            source_refs=("https://example.invalid",),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="must not be empty"):
+        EmergencyClassificationRecord(
+            system="aecc",
+            display_name="AECC test",
+            aliases=("aecc-test",),
+            required_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+            notes=(),
+            versions=(),
+        )
+    with pytest.raises(EmergencyClassificationRegistryError, match="duplicate pricing years"):
+        EmergencyClassificationRecord(
+            system="aecc",
+            display_name="AECC test",
+            aliases=("aecc-test",),
+            required_fields=("AECC",),
+            stream_compatibility=("emergency_department",),
+            source_refs=("https://example.invalid",),
+            notes=(),
+            versions=(version_2025, version_2025),
+        )
+
+
+def test_emergency_registry_direct_validation_edges_are_fail_closed() -> None:
+    unavailable = validate_emergency_classification_compatibility(
+        "aecc",
+        "2019",
+        None,
+    )
+    missing = validate_emergency_classification_compatibility("aecc", "2026", None)
+    mismatch = validate_emergency_classification_compatibility(
+        "aecc",
+        "2026",
+        "v1.0",
+    )
+    valid = validate_emergency_classification_compatibility(
+        "udg",
+        "2026",
+        "UDG_v1.3",
+        stream="emergency_service",
+    )
+
+    assert unavailable.compatible is False
+    assert unavailable.expected_version is None
+    assert "not available" in (unavailable.reason or "")
+    assert missing.compatibility_state == "missing"
+    assert "requires an explicit" in (missing.reason or "")
+    assert mismatch.compatibility_state == "incompatible"
+    assert mismatch.to_dict()["declared_version"] == "v1.0"
+    assert valid.compatible is True
+    assert valid.compatibility_state == "transition"
+
+    with pytest.raises(EmergencyClassificationRegistryError, match="observed_fields"):
+        validate_emergency_input("aecc", "2026", "AECC", version="v1.1")
+    with pytest.raises(EmergencyClassificationRegistryError, match="expects v1.1"):
+        ensure_emergency_classification_compatibility("aecc", "2026", "v1.0")
+
+    missing_fields = validate_emergency_input(
+        "aecc",
+        "2026",
+        ("UDG",),
+        version="v1.1",
+    )
+    assert missing_fields.compatibility_state == "missing"
+    assert missing_fields.observed_fields == ("UDG",)
+    assert missing_fields.missing_fields == ("AECC",)

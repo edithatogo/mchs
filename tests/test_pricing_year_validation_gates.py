@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from copy import deepcopy
 from pathlib import Path
 from typing import Any, cast
@@ -10,6 +11,10 @@ import yaml
 from click.testing import CliRunner
 
 from nwau_py.reference_manifest import ReferenceManifestError, parse_reference_manifest
+from nwau_py.pricing_year_validation import (
+    format_pricing_year_validation_report,
+    validate_pricing_year,
+)
 
 _cli: Any | None = None
 try:
@@ -100,6 +105,63 @@ def test_pricing_year_validation_cli_json_is_machine_readable_when_available():
         "validated",
         "deprecated",
     }
+
+
+def test_pricing_year_validation_rejects_bad_year_labels() -> None:
+    with pytest.raises(ValueError, match="leading or trailing"):
+        validate_pricing_year(" 2025")
+    with pytest.raises(ValueError, match="four-digit"):
+        validate_pricing_year("25")
+
+
+def test_pricing_year_validation_reports_missing_local_evidence(tmp_path: Path) -> None:
+    report = validate_pricing_year("2027", repo_root=tmp_path)
+    payload = report.to_dict()
+    rendered = format_pricing_year_validation_report(report)
+
+    assert report.passed is False
+    assert payload["pricing_year"] == "2027"
+    assert payload["validation_status"] == "missing"
+    assert payload["fixture_evidence"] == []
+    assert any("missing reference-data manifest" in error for error in report.errors)
+    assert any("missing fixture evidence" in error for error in report.errors)
+    assert "reference-data unresolved gaps: none" in rendered
+    assert "fixture evidence packs: none" in rendered
+    assert "local validation gate: failed" in rendered
+    assert "support claim: not asserted" in rendered
+
+
+def test_pricing_year_validation_surfaces_fixture_year_mismatches(
+    tmp_path: Path,
+) -> None:
+    fixture_root = tmp_path / "tests" / "fixtures" / "golden"
+    fixture_root.mkdir(parents=True)
+    shutil.copytree(ROOT / "tests" / "fixtures" / "golden" / "acute_2025", fixture_root / "acute_2027")
+
+    report = validate_pricing_year("2027", repo_root=tmp_path)
+
+    assert report.passed is False
+    assert any("declares pricing_year '2025'" in error for error in report.errors)
+    assert any("missing fixture evidence" in error for error in report.errors)
+
+
+def test_pricing_year_validation_records_valid_fixture_evidence_without_support_claim(
+    tmp_path: Path,
+) -> None:
+    fixture_root = tmp_path / "tests" / "fixtures" / "golden"
+    fixture_root.mkdir(parents=True)
+    shutil.copytree(ROOT / "tests" / "fixtures" / "golden" / "acute_2025", fixture_root / "acute_2025")
+
+    report = validate_pricing_year("2025", repo_root=tmp_path)
+    payload = report.to_dict()
+    rendered = format_pricing_year_validation_report(report)
+
+    assert report.passed is False
+    assert payload["fixture_evidence"][0]["pack_type"] == "golden"
+    assert payload["fixture_evidence"][0]["fixture_id"] == "acute_2025"
+    assert payload["support_claim"] == "not asserted"
+    assert any("fixture evidence:" in warning for warning in report.warnings)
+    assert "fixture evidence packs: golden:acute_2025" in rendered
 
 
 def test_pricing_year_validation_track_metadata_and_registry_are_explicit():

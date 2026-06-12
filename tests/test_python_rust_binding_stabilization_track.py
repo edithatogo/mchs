@@ -103,6 +103,11 @@ def test_default_acute_execution_stays_on_the_pure_python_path(monkeypatch):
 
 
 def test_rust_opt_in_execution_matches_the_acute_golden_fixture_pack(monkeypatch):
+    try:
+        rust_bridge.load_rust_extension()
+    except ImportError as exc:
+        pytest.skip(f"optional Rust extension unavailable: {exc}")
+
     pack, case = _fixture_case()
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 

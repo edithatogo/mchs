@@ -34,6 +34,31 @@ def _basic_weights(ref_dir: Path, year: str = "2025") -> pd.DataFrame:
     return df
 
 
+def test_subacute_weight_loader_decodes_and_normalizes_ansnap_columns(monkeypatch):
+    frames = [
+        pd.DataFrame({"ansnap": [b"5AZ1"], "weight": [1.0]}),
+        pd.DataFrame({"snap": [b"5AZ2"], "weight": [2.0]}),
+    ]
+
+    def fake_read_sas(_path):
+        return frames.pop(0)
+
+    monkeypatch.setattr(pd, "read_sas", fake_read_sas)
+
+    spec = importlib.util.spec_from_file_location(
+        "subacute_loader_test",
+        Path(__file__).resolve().parents[1] / "nwau_py" / "calculators" / "subacute.py",
+    )
+    assert spec is not None and spec.loader is not None
+    fresh_subacute = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fresh_subacute)
+    ansnap = fresh_subacute._load_weights(Path("ref"), "2025")
+    snap = fresh_subacute._load_weights(Path("ref"), "2025")
+
+    assert ansnap.to_dict("records") == [{"ANSNAP": "5AZ1", "weight": 1.0}]
+    assert snap.to_dict("records") == [{"ANSNAP": "5AZ2", "weight": 2.0}]
+
+
 def _fake_load(path: Path, *_, **__):
     name = path.name
     match = re.search(r"ra\d{4}", name)
