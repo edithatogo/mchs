@@ -465,7 +465,7 @@
             "current_status": "repo_scaffold_published_vsix_rebuilt_pending_eclipse_agreement_attachment_and_ovsx_pat",
             "track": "vscode_openvsx_registry_submission_20260524",
             "submission_url": null,
-            "blocker": "VS Code extension source scaffold is committed and a fresh VSIX can be built. Open VSX token creation is still blocked: GitHub login works for edithatogo, but the Access Tokens page still reports no Eclipse Foundation Open VSX Publisher Agreement signed. The Profile page requires Eclipse OAuth login; the 2026-06-12 Eclipse OAuth attempt returned to Open VSX without attaching agreement state and left the session logged out. CLI publish with the rebuilt VSIX reaches the namespace PAT prompt and fails without a valid OVSX_PAT. Visual Studio Marketplace remains blocked by publisher/PAT setup.",
+            "blocker": "VS Code extension source scaffold is committed and a fresh VSIX can be built. Open VSX token creation is still blocked: GitHub login works for edithatogo, but the Access Tokens page still reports no Eclipse Foundation Open VSX Publisher Agreement signed. The Profile page requires Eclipse OAuth login; the 2026-06-12 Eclipse OAuth attempt returned to Open VSX without attaching agreement state and left the session logged out. CLI publish with the rebuilt VSIX reaches the namespace PAT prompt and fails without a valid OVSX_PAT. Visual Studio Marketplace remains blocked by publisher/PAT setup. A 2026-06-12 public probe found no listing in Open VSX or Visual Studio Marketplace.",
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "https://open-vsx.org/api/edithatogo/mchs-tools returned Extension not found.",
@@ -478,7 +478,17 @@
                 "repoPublicationEvidence": "integrations/vscode source scaffold committed to the public repository without the generated .vsix artifact.",
                 "manifestPolish": "package.json includes repository, homepage, bugs, keywords, files allowlist, and license file reference.",
                 "sourceScaffold": "integrations/vscode contains the extension source scaffold and publisher-ready metadata; generated .vsix remains intentionally uncommitted and must be produced during the authenticated publish step.",
-                "cleanPackaging": "integrations/vscode/package.json declares @vscode/vsce and ovsx devDependencies so npm install can provision packaging/publish CLIs from a clean checkout."
+                "cleanPackaging": "integrations/vscode/package.json declares @vscode/vsce and ovsx devDependencies so npm install can provision packaging/publish CLIs from a clean checkout.",
+                "latestPublicProbe20260612": {
+                    "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
+                    "openVsxApiHttpStatus": 404,
+                    "openVsxApiResult": "Extension not found: edithatogo.mchs-tools",
+                    "openVsxPageUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
+                    "openVsxPageHttpStatus": 200,
+                    "visualStudioMarketplaceQuery": "publisher.extensionName = edithatogo.mchs-tools",
+                    "visualStudioMarketplaceHttpStatus": 200,
+                    "visualStudioMarketplaceTotalCount": 0
+                }
             }
         },
         {
