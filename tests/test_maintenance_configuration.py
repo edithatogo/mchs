@@ -17,6 +17,7 @@ def test_renovate_package_rules_pin_the_phase_4_maintenance_contract():
     renovate = json.loads(_read_text(RENOVATE_FILE))
 
     assert "cargo" in renovate["enabledManagers"]
+    assert "npm" in renovate["enabledManagers"]
 
     expected_package_rules = [
         {
@@ -61,6 +62,12 @@ def test_renovate_package_rules_pin_the_phase_4_maintenance_contract():
         {
             "matchManagers": ["cargo"],
             "groupName": "Rust dependencies",
+            "dependencyDashboardApproval": True,
+            "separateMinorPatch": True,
+        },
+        {
+            "matchManagers": ["npm"],
+            "groupName": "Node package dependencies",
             "dependencyDashboardApproval": True,
             "separateMinorPatch": True,
         },
