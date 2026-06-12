@@ -94,9 +94,12 @@ def test_codecov_configuration_pins_the_current_coverage_contract():
     codecov = _read_text(CODECOV_FILE)
 
     assert "coverage:" in codecov
-    assert "range: 80..100" in codecov
+    assert "range: 90..100" in codecov
     assert "round: down" in codecov
     assert "precision: 2" in codecov
+    assert "target: 90%" in codecov
+    assert "threshold: 0%" in codecov
+    assert "if_ci_failed: error" in codecov
 
 
 def test_ty_toml_matches_the_current_top_level_shape():
