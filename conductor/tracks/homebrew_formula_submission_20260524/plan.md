@@ -12,11 +12,11 @@
 
 ## Phase 3: Submission or Publication
 
-- [ ] Verify target-version publication in the public registry.
+- [x] Verify target-version publication in the public personal tap registry.
 - [x] Record upstream submission URL or external gate.
 - [x] Record remaining blocker explicitly.
 
 ## Phase 4: Closure
 
-- [ ] Mark publication complete only after public target-version evidence exists.
+- [x] Mark publication complete only after public target-version evidence exists. Personal tap publication is verified; Homebrew/core remains optional and is not claimed.
 - [x] Maintain this Conductor track so contract references resolve to a real track directory.

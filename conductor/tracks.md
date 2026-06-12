@@ -675,7 +675,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Homebrew Formula Submission**
+- [x] **Track: Homebrew Formula Submission**
 *Link: [./tracks/homebrew_formula_submission_20260524/](./tracks/homebrew_formula_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Homebrew tap/core`, and capture immutable evidence before claiming publication.*
 

@@ -366,10 +366,10 @@
             "package": "nwau-py",
             "version": "0.2.2",
             "local_surface": "pyproject.toml",
-            "current_status": "submitted_pending_homebrew_core_review_tap_verified",
+            "current_status": "personal_tap_published_verified_homebrew_core_optional",
             "track": "homebrew_formula_submission_20260524",
             "submission_url": "https://github.com/edithatogo/homebrew-mchs",
-            "blocker": "Personal Homebrew tap is published and verified with audit, source install, and brew test passing; Homebrew/core publication still requires upstream PR/review.",
+            "blocker": null,
             "localReadinessResolved": true,
             "preparationEvidence": {
                 "discovery": "brew info nwau-py --json=v2 returned `No available formula with the name nwau-py`.",
@@ -379,14 +379,15 @@
                 "fixedLocalBlocker": "Added Language::Python::Virtualenv include, exact PyPI source URL, sdist sha256, explicit python@3.13 dependency, Click PyPI resource, and a temporary lazy CLI import patch for the published 0.2.2 sdist.",
                 "auditResult": "brew audit --strict --online edithatogo/mchs/nwau-py passed after adding the Click resource and lazy CLI inreplace patch.",
                 "fixedFutureReleaseBlocker": "Changed the local CLI so root --help no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the tap carries an equivalent temporary inreplace patch until a new PyPI release includes the fix.",
-                "remainingExternalBlocker": "Homebrew/core publication requires upstream PR/review; the personal tap formula is verified.",
-                "installTestResult": "brew install --build-from-source edithatogo/mchs/nwau-py and brew test edithatogo/mchs/nwau-py passed."
+                "remainingExternalBlocker": "None for personal tap publication. Homebrew/core remains optional and would require upstream PR/review if core distribution is required.",
+                "installTestResult": "brew install --build-from-source edithatogo/mchs/nwau-py and brew test edithatogo/mchs/nwau-py passed.",
+                "latestVerification": "2026-06-12: brew info edithatogo/mchs/nwau-py --json=v2 verified stable version 0.2.2, tap edithatogo/mchs, tap_git_head fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823, formula SHA-256 6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3, installed linked_keg 0.2.2, and outdated=false."
             },
             "submissionEvidence": {
                 "type": "homebrew_tap",
                 "url": "https://github.com/edithatogo/homebrew-mchs",
                 "formulaUrl": "https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb",
-                "state": "published_to_personal_tap_audit_install_test_passing",
+                "state": "published_verified_personal_tap",
                 "commit": "fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823"
             },
             "publicationEvidence": {
@@ -396,7 +397,8 @@
                 "formulaSha256": "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3",
                 "audit": "passed",
                 "installTest": "passed",
-                "sourceInstall": "passed"
+                "sourceInstall": "passed",
+                "latestBrewInfo": "2026-06-12 brew info JSON verified stable 0.2.2 and linked_keg 0.2.2 from edithatogo/mchs."
             }
         },
         {

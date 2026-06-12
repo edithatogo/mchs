@@ -112,7 +112,7 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Audit: `brew audit --strict --online edithatogo/mchs/nwau-py` passed.
 - Install/test: `brew install --build-from-source edithatogo/mchs/nwau-py` and `brew test edithatogo/mchs/nwau-py` pass.
 - Local fix prepared: root `funding-calculator --help` no longer eagerly imports pandas, numpy, pydantic, or pyreadstat; the tap carries an equivalent temporary patch plus a Click PyPI resource.
-- Remaining step: optional Homebrew/core PR/review if core distribution is required.
+- Publication status: personal tap is published and verified. A 2026-06-12 `brew info edithatogo/mchs/nwau-py --json=v2` probe verified stable version `0.2.2`, tap head `fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823`, formula SHA-256 `6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3`, and linked keg `0.2.2`. Optional Homebrew/core PR/review remains available only if core distribution is required.
 
 ### MATLAB File Exchange
 
