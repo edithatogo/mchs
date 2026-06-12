@@ -20,6 +20,7 @@ sys.modules.setdefault("pyreadstat", PYREADSTAT)
 
 import nwau_py.calculators.acute as acute  # noqa: E402
 import nwau_py.fixtures as fixtures  # noqa: E402
+from nwau_py import rust_bridge  # noqa: E402
 
 
 FIXTURE_ROOT = Path(__file__).resolve().parent / "fixtures" / "golden" / "acute_2025"
@@ -43,7 +44,15 @@ def _fixture_case() -> tuple[fixtures.FixturePack, fixtures.FixtureCase]:
     return pack, case
 
 
+def _require_rust_extension() -> None:
+    try:
+        rust_bridge.load_rust_extension()
+    except ImportError as exc:
+        pytest.skip(f"optional Rust extension unavailable: {exc}")
+
+
 def test_rust_and_python_match_the_acute_fixture_pack(monkeypatch):
+    _require_rust_extension()
     pack, case = _fixture_case()
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 
@@ -73,6 +82,7 @@ def test_rust_and_python_match_the_acute_fixture_pack(monkeypatch):
 
 
 def test_rust_failure_reports_include_provenance_and_tolerance(monkeypatch):
+    _require_rust_extension()
     pack, case = _fixture_case()
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 

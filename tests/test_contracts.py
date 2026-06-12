@@ -81,3 +81,44 @@ def test_calculator_contract_rejects_blank_and_duplicate_columns():
             required_input_columns=("DRG", "DRG"),
             required_output_columns=("NWAU25",),
         )
+
+
+def test_calculator_contract_reports_column_normalization_edges():
+    with pytest.raises(ContractValidationError, match="iterable of column names"):
+        validate_required_input_columns("DRG", ("DRG",))
+    with pytest.raises(ContractValidationError, match="only strings"):
+        validate_required_input_columns(["DRG", object()], ("DRG",))
+    with pytest.raises(ContractValidationError, match="blank names"):
+        validate_required_input_columns(["DRG", " "], ("DRG",))
+    with pytest.raises(ContractValidationError, match="duplicate names"):
+        validate_required_input_columns(["DRG", "DRG"], ("DRG",))
+    with pytest.raises(ContractValidationError, match="must not be empty"):
+        validate_required_output_columns([], ("NWAU25",))
+
+
+def test_calculator_contract_exposes_missing_columns_without_raising():
+    contract = CalculatorContract(
+        calculator_id="acute",
+        pricing_year=PricingYear(year="2025"),
+        schema_version="1.2.3",
+        input_schema_version="2",
+        output_schema_version="2.1",
+        required_input_columns=("DRG", "LOS"),
+        required_output_columns=("NWAU25", "EXTRA"),
+    )
+
+    assert contract.missing_input_columns(["DRG"]) == ("LOS",)
+    assert contract.missing_output_columns(["NWAU25"]) == ("EXTRA",)
+    with pytest.raises(ContractValidationError, match="missing required input"):
+        contract.validate_input_columns(["DRG"])
+    with pytest.raises(ContractValidationError, match="missing required output"):
+        contract.validate_output_columns(["NWAU25"])
+
+    with pytest.raises(ValueError, match="dotted numeric"):
+        CalculatorContract(
+            calculator_id="acute",
+            pricing_year=PricingYear(year="2025"),
+            schema_version="v1",
+            required_input_columns=("DRG",),
+            required_output_columns=("NWAU25",),
+        )

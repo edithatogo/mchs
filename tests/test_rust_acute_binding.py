@@ -32,11 +32,20 @@ def _load_weights(*_args, **_kwargs) -> pd.DataFrame:
     return weights
 
 
+def _require_rust_extension() -> None:
+    try:
+        rust_bridge.load_rust_extension()
+    except ImportError as exc:
+        pytest.skip(f"optional Rust extension unavailable: {exc}")
+
+
 def test_rust_bridge_loads_the_acute_kernel_label():
+    _require_rust_extension()
     assert rust_bridge.kernel_label() == "acute 2025"
 
 
 def test_rust_opt_in_wrapper_matches_the_acute_golden_fixture(monkeypatch):
+    _require_rust_extension()
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 
     input_df = pd.read_csv(INPUT_CSV)
@@ -54,6 +63,7 @@ def test_rust_opt_in_wrapper_matches_the_acute_golden_fixture(monkeypatch):
 
 
 def test_rust_opt_in_wrapper_preserves_the_default_python_path(monkeypatch):
+    _require_rust_extension()
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 
     input_df = pd.read_csv(INPUT_CSV)

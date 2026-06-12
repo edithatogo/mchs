@@ -268,7 +268,7 @@ jobs:
         run: uv sync --locked --group test --group coverage
 
       - name: Run coverage
-        run: uv run pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+        run: uv run pytest --cov=nwau_py --cov-report=term-missing --cov-report=xml --cov-fail-under=90
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

@@ -10,9 +10,12 @@ import nwau_py
 from nwau_py import emergency_grouper
 from nwau_py.emergency_grouper import (
     EmergencyGrouperError,
+    EmergencyGrouperOutputRecord,
+    EmergencyGrouperVersionWindow,
     build_emergency_external_reference,
     build_emergency_output_record_from_reference,
     build_emergency_precomputed_output_record,
+    build_emergency_provenance,
     ensure_emergency_grouper_compatibility,
     validate_emergency_grouper_compatibility,
 )
@@ -65,6 +68,7 @@ def test_track_and_contract_target_the_emergency_grouper_surface() -> None:
     assert metadata["current_state"] in {
         "roadmap-only",
         "implemented-metadata-integration",
+        "complete-with-gaps",
     }
     primary_contract = metadata["primary_contract"]
     assert isinstance(primary_contract, str)
@@ -76,6 +80,26 @@ def test_track_and_contract_target_the_emergency_grouper_surface() -> None:
     assert "service integration" in spec
     assert "file-exchange integration" in spec
     assert "Never silently convert between UDG and AECC" in spec
+
+
+def test_emergency_grouper_placeholders_are_not_implementation_evidence() -> None:
+    reference = _read_json(
+        CONTRACT / "examples" / "external-local-grouper-service-reference.json"
+    )
+    precomputed = _read_json(CONTRACT / "examples" / "precomputed-output-manifest.json")
+
+    assert reference["access_mode"] == "local-only"
+    assert reference.get("implementation_evidence", False) is False
+    assert "placeholder-only" in str(
+        reference.get("evidence_status", "placeholder-only")
+    )
+    assert precomputed["output_status"] == "synthetic"
+    assert precomputed.get("implementation_evidence", False) is False
+    assert "synthetic" in str(precomputed.get("evidence_status", "synthetic"))
+    assert _as_mapping(precomputed["provenance"])["classification_basis"] in {
+        "precomputed_official_classification",
+        "synthetic_precomputed_placeholder",
+    }
 
 
 def test_precomputed_outputs_validate_strictly_and_record_provenance() -> None:
@@ -216,3 +240,205 @@ def test_public_exports_include_emergency_grouper_surface() -> None:
 
     for name in expected:
         assert getattr(nwau_py, name) is not None
+
+
+def test_emergency_grouper_reference_and_window_validation_edges() -> None:
+    window = EmergencyGrouperVersionWindow(
+        system="AECC",
+        pricing_year="2026",
+        emergency_classification_version="v1.1",
+        stream_compatibility=("emergency_department",),
+        source_refs=("contracts/emergency-grouper-integration/spec.md",),
+    )
+    assert window.to_dict()["system"] == "aecc"
+
+    with pytest.raises(EmergencyGrouperError, match="lowercase snake_case"):
+        build_emergency_external_reference(
+            reference_id="BadReference",
+            reference_type="local_command",
+            command="run-aecc",
+            supported_versions=(window,),
+        )
+    with pytest.raises(EmergencyGrouperError, match="require a command"):
+        build_emergency_external_reference(
+            reference_id="missing_command",
+            reference_type="local_command",
+            supported_versions=(window,),
+        )
+    with pytest.raises(EmergencyGrouperError, match="require a reference_uri"):
+        build_emergency_external_reference(
+            reference_id="missing_uri",
+            reference_type="local_service",
+            supported_versions=(window,),
+        )
+    with pytest.raises(EmergencyGrouperError, match="local_path_hint or reference_uri"):
+        build_emergency_external_reference(
+            reference_id="missing_file",
+            reference_type="file_exchange",
+            supported_versions=(window,),
+        )
+    with pytest.raises(EmergencyGrouperError, match="local host"):
+        build_emergency_external_reference(
+            reference_id="remote_http",
+            reference_type="local_service",
+            reference_uri="https://example.invalid/aecc",
+            supported_versions=(window,),
+        )
+    with pytest.raises(EmergencyGrouperError, match="duplicate system/year"):
+        build_emergency_external_reference(
+            reference_id="duplicate_window",
+            reference_type="local_command",
+            command="run-aecc",
+            supported_versions=(window, window),
+        )
+
+
+def test_emergency_grouper_external_reference_fail_closed_edges() -> None:
+    unresolved = build_emergency_external_reference(
+        reference_id="unresolved_aecc_service",
+        reference_type="local_service",
+        status="unresolved",
+        reference_uri="http://127.0.0.1:8765/aecc",
+        supported_versions=_reference().supported_versions,
+    )
+    stream_limited = build_emergency_external_reference(
+        reference_id="stream_limited_aecc_service",
+        reference_type="local_service",
+        status="resolved",
+        reference_uri="file://localhost/tmp/aecc",
+        supported_versions=(
+            {
+                "system": "aecc",
+                "pricing_year": "2026",
+                "emergency_classification_version": "v1.1",
+                "stream_compatibility": ("emergency_department",),
+                "source_refs": ("contracts/emergency-grouper-integration/spec.md",),
+            },
+        ),
+    )
+
+    unresolved_result = validate_emergency_grouper_compatibility(
+        "aecc",
+        "2026",
+        None,
+        stream="emergency_department",
+        source_mode="external-reference",
+        reference=unresolved,
+    )
+    stream_result = validate_emergency_grouper_compatibility(
+        "aecc",
+        "2026",
+        None,
+        stream="emergency_service",
+        source_mode="external-reference",
+        reference=stream_limited,
+    )
+    version_result = validate_emergency_grouper_compatibility(
+        "aecc",
+        "2026",
+        "v1.0",
+        stream="emergency_department",
+        source_mode="external-reference",
+        reference=stream_limited,
+    )
+    invalid_stream = validate_emergency_grouper_compatibility(
+        "aecc",
+        "2026",
+        "v1.1",
+        stream="ward",
+    )
+
+    assert unresolved_result.compatible is False
+    assert "not resolved" in (unresolved_result.reason or "")
+    assert stream_result.compatible is False
+    assert "not compatible with stream" in (stream_result.reason or "")
+    assert version_result.compatible is False
+    assert "explicit version must match" in (version_result.reason or "")
+    assert invalid_stream.compatible is False
+    assert invalid_stream.compatibility_state == "incompatible"
+
+
+def test_emergency_grouper_provenance_and_output_records_fail_closed() -> None:
+    with pytest.raises(EmergencyGrouperError, match="sha256"):
+        build_emergency_provenance(
+            system="aecc",
+            year="2026",
+            stream="emergency_department",
+            emergency_classification_version="v1.1",
+            input_sha256="not-a-sha",
+        )
+    with pytest.raises(EmergencyGrouperError, match="tool_id, tool_version"):
+        build_emergency_provenance(
+            system="aecc",
+            year="2026",
+            stream="emergency_department",
+            emergency_classification_version="v1.1",
+            input_sha256=SHA,
+            source_mode="external-reference",
+        )
+    with pytest.raises(EmergencyGrouperError, match="must not declare"):
+        build_emergency_provenance(
+            system="aecc",
+            year="2026",
+            stream="emergency_department",
+            emergency_classification_version="v1.1",
+            input_sha256=SHA,
+            external_reference_id="local_aecc_service",
+        )
+    with pytest.raises(EmergencyGrouperError, match="table_version"):
+        build_emergency_provenance(
+            system="aecc",
+            year="2026",
+            stream="emergency_department",
+            emergency_classification_version="v1.1",
+            input_sha256=SHA,
+            table_version="v1.0",
+        )
+    with pytest.raises(EmergencyGrouperError, match="mapping_stage"):
+        build_emergency_provenance(
+            system="aecc",
+            year="2026",
+            stream="emergency_department",
+            emergency_classification_version="v1.1",
+            input_sha256=SHA,
+            mapping_stage="converted",  # type: ignore[arg-type]
+        )
+    with pytest.raises(EmergencyGrouperError, match="provenance"):
+        EmergencyGrouperOutputRecord(
+            classification_code="AECC-01",
+            provenance=object(),  # type: ignore[arg-type]
+        )
+
+
+def test_emergency_grouper_private_normalizers_fail_closed() -> None:
+    with pytest.raises(EmergencyGrouperError, match="field must be a string"):
+        emergency_grouper._normalize_non_blank(1, field="field")
+    with pytest.raises(EmergencyGrouperError, match="must not be blank"):
+        emergency_grouper._normalize_non_blank("", field="field")
+    with pytest.raises(EmergencyGrouperError, match="leading or trailing"):
+        emergency_grouper._normalize_non_blank(" value ", field="field")
+    with pytest.raises(EmergencyGrouperError, match="supported four-digit"):
+        emergency_grouper._normalize_year("2027")
+    with pytest.raises(EmergencyGrouperError, match="deterministic version"):
+        emergency_grouper._normalize_version("v1!", field="version")
+    with pytest.raises(EmergencyGrouperError, match="tuple or list"):
+        emergency_grouper._normalize_str_tuple("abc", field="items")
+    with pytest.raises(EmergencyGrouperError, match="duplicates"):
+        emergency_grouper._normalize_str_tuple(("a", "a"), field="items")
+    with pytest.raises(EmergencyGrouperError, match="must not be empty"):
+        emergency_grouper._normalize_str_tuple((), field="items")
+    with pytest.raises(EmergencyGrouperError, match="unsupported streams"):
+        emergency_grouper._normalize_streams(("ward",))
+    with pytest.raises(EmergencyGrouperError, match="one of"):
+        emergency_grouper._normalize_local_reference_uri(
+            "ftp://localhost/aecc",
+            field="reference_uri",
+        )
+    with pytest.raises(EmergencyGrouperError, match="parent traversal"):
+        emergency_grouper._normalize_local_reference_uri(
+            "../aecc",
+            field="reference_uri",
+        )
+
+    checksum = emergency_grouper._compute_checksum({"b": 2, "a": 1})
+    assert len(checksum) == 64

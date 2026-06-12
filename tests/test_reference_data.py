@@ -158,3 +158,78 @@ def test_reference_bundle_root_returns_expected_directory():
         year="2025",
         calculator="acute",
     ) == Path("data/reference/2025/acute")
+
+
+def test_reference_bundle_root_rejects_bad_year_and_calculator_labels():
+    with pytest.raises(ValueError, match="leading or trailing whitespace"):
+        reference_bundle_root(Path("data/reference"), year=" 2025", calculator="acute")
+    with pytest.raises(ValueError, match="must not be blank"):
+        reference_bundle_root(Path("data/reference"), year="2025", calculator="")
+
+
+def test_reference_bundle_resolver_rejects_missing_explicit_bundle_id(tmp_path):
+    root = tmp_path / "2025" / "acute"
+    root.mkdir(parents=True)
+
+    with pytest.raises(FileNotFoundError, match="bundle_id='missing'"):
+        resolve_reference_bundle(
+            tmp_path,
+            year="2025",
+            calculator="acute",
+            bundle_id="missing",
+        )
+
+
+def test_reference_bundle_resolver_rejects_non_object_manifest(tmp_path):
+    bundle_dir = tmp_path / "2025" / "acute" / "bad"
+    bundle_dir.mkdir(parents=True)
+    (bundle_dir / "manifest.json").write_text("[]", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="must be a JSON object"):
+        resolve_reference_bundle(
+            tmp_path,
+            year="2025",
+            calculator="acute",
+            bundle_id="bad",
+        )
+
+
+def test_reference_bundle_resolver_rejects_manifest_identity_mismatches(tmp_path):
+    manifest_path = _write_bundle(
+        tmp_path,
+        year="2025",
+        calculator="acute",
+        bundle_id="acute-2025-v1",
+        source_artifact_id="ihacpa-acute-2025-sas",
+        source_page_url=SOURCE_PAGE_URL,
+        checksum="0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    )
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    for key, value, match in [
+        ("pricing_year", "2024", "year does not match"),
+        ("calculator", "ed", "calculator does not match"),
+        ("bundle_id", "other", "id does not match"),
+    ]:
+        candidate = dict(manifest)
+        candidate[key] = value
+        manifest_path.write_text(json.dumps(candidate), encoding="utf-8")
+
+        with pytest.raises(ValueError, match=match):
+            resolve_reference_bundle(
+                tmp_path,
+                year="2025",
+                calculator="acute",
+                bundle_id="acute-2025-v1",
+            )
+
+    candidate = dict(manifest)
+    candidate["checksum"] = "not-a-sha"
+    manifest_path.write_text(json.dumps(candidate), encoding="utf-8")
+    with pytest.raises(ValueError, match="checksum"):
+        resolve_reference_bundle(
+            tmp_path,
+            year="2025",
+            calculator="acute",
+            bundle_id="acute-2025-v1",
+        )

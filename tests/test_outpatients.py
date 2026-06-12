@@ -169,3 +169,103 @@ def test_calculate_outpatients_data_type_two(monkeypatch):
 
     assert result["Error_Code"].iloc[0] == 0
     assert result["NWAU25"].iloc[0] > 0
+
+
+def test_outpatient_reference_loaders_decode_and_normalize_tables(monkeypatch):
+    read_sas_calls: list[Path] = []
+    load_sas_calls: list[Path] = []
+
+    def fake_read_sas(path):
+        read_sas_calls.append(Path(path))
+        name = Path(path).name
+        if "price_weights" in name:
+            return pd.DataFrame(
+                {
+                    "clinic_code": [b"20.48"],
+                    "description": [b"Synthetic clinic"],
+                    "clinic_pw": [1.0],
+                }
+            )
+        return pd.DataFrame(
+            {
+                "APCID_VALUE": [b"A1"],
+                "_est_eligible_paed_flag": [1],
+            }
+        )
+
+    def fake_load_sas_table(path):
+        load_sas_calls.append(Path(path))
+        name = Path(path).name
+        if "hospital" in name:
+            return pd.DataFrame({"APCID_CODE": [b"A1"], "RA2021": [2]})
+        if "postcode" in name:
+            return pd.DataFrame({"POSTCODE": [b"2000"], "RA2021": [1]})
+        if "sa2_to" in name:
+            raise FileNotFoundError(path)
+        if "asgs_to" in name:
+            return pd.DataFrame({"ASGS": [100], "RA2021": [3]})
+        if "multi_prov" in name:
+            return pd.DataFrame({"adj_multiprov": [0.25], "note": [b"ok"]})
+        if "adj_ind" in name:
+            return pd.DataFrame({"_pat_ind_flag": [1], "adj_indigenous": [0.2]})
+        if "adj_rem" in name:
+            return pd.DataFrame({"_pat_remoteness": [1], "adj_remoteness": [0.1]})
+        if "treat_rem" in name:
+            return pd.DataFrame(
+                {"_treat_remoteness": [1], "adj_treat_remoteness": [0.05]}
+            )
+        raise AssertionError(f"unexpected path: {path}")
+
+    monkeypatch.setattr(pd, "read_sas", fake_read_sas)
+    monkeypatch.setattr(outpatients, "load_sas_table", fake_load_sas_table)
+
+    weights = outpatients._load_weights(Path("ref"), "2025")
+    hospital = outpatients._load_hospital_ra(Path("ref"), "2025")
+    postcode = outpatients._load_postcode_ra(Path("ref"), "2025")
+    sa2 = outpatients._load_sa2_ra(Path("ref"), "2025")
+    icu = outpatients._load_icu_list(Path("ref"), "2025")
+
+    assert weights["TIER2_CLINIC"].tolist() == ["20.48"]
+    assert weights["description"].tolist() == ["Synthetic clinic"]
+    assert hospital.to_dict("records") == [{"APCID": "A1", "_hosp_ra_2021": 2}]
+    assert postcode[["POSTCODE", "ra2021"]].to_dict("records") == [
+        {"POSTCODE": "2000", "ra2021": 1}
+    ]
+    assert sa2.to_dict("records") == [{"SA2": 100, "ra2021": 3}]
+    assert icu.to_dict("records") == [{"APCID": "A1", "_est_eligible_paed_flag": 1}]
+    assert outpatients._load_multi_prov_adj(Path("ref"), "2025") == 0.25
+    assert (
+        outpatients._load_ind_adj(Path("ref"), "2025")["adj_indigenous"].iloc[0] == 0.2
+    )
+    assert (
+        outpatients._load_pat_rem_adj(Path("ref"), "2025")["adj_remoteness"].iloc[0]
+        == 0.1
+    )
+    assert (
+        outpatients._load_treat_rem_adj(Path("ref"), "2025")[
+            "adj_treat_remoteness"
+        ].iloc[0]
+        == 0.05
+    )
+    assert read_sas_calls
+    assert load_sas_calls
+
+
+def test_outpatient_optional_reference_loaders_fail_closed(monkeypatch):
+    def missing(*_args, **_kwargs):
+        raise FileNotFoundError("missing")
+
+    def broken(*_args, **_kwargs):
+        raise RuntimeError("broken")
+
+    monkeypatch.setattr(outpatients, "load_sas_table", missing)
+    assert outpatients._load_multi_prov_adj(Path("ref"), "2025") == 0.0
+    assert outpatients._load_ind_adj(Path("ref"), "2025").empty
+    assert outpatients._load_pat_rem_adj(Path("ref"), "2025").empty
+    assert outpatients._load_treat_rem_adj(Path("ref"), "2025").empty
+
+    monkeypatch.setattr(outpatients, "load_sas_table", broken)
+    assert outpatients._load_multi_prov_adj(Path("ref"), "2025") == 0.0
+    assert outpatients._load_ind_adj(Path("ref"), "2025").empty
+    assert outpatients._load_pat_rem_adj(Path("ref"), "2025").empty
+    assert outpatients._load_treat_rem_adj(Path("ref"), "2025").empty
