@@ -122,7 +122,10 @@ recorded here.
   export, or app runtime execution is captured.
 - `tenant-cli-and-secret-audit-20260612.json`: current local audit showing the
   `pac` auth profile `nsw-dylan` is available for the target NSW environment,
-  while the official GitHub live-gate secrets are absent. This is blocker
+  the managed `mchs_alm_orchestration` solution and MCHS Service Boundary
+  custom connector definition are visible in PAC, the MCHS service-boundary
+  custom connector connection is still absent from the connection inventory,
+  and the official GitHub live-gate secrets are absent. This is blocker
   evidence only; it does not claim runtime readiness.
 
 ## Evidence import mapping

@@ -73,6 +73,20 @@ configured, and the production service boundary endpoint is reachable.
 
 - Local `pac auth list` still shows active profile `nsw-dylan` for the target
   NSW `dylan` environment at `https://orgefc9aa3e.crm6.dynamics.com/`.
+- Live PAC refresh confirms the target environment ID
+  `611bca65-0b2a-eaa1-9e74-23bbba8eeec4`, tenant ID
+  `a687a7bf-02db-43df-bcbb-e7a8bda611a2`, and organization unique name
+  `unq8b153003d5eaf01189f5002248942`.
+- `pac solution list` confirms the managed `mchs_alm_orchestration` solution is
+  still present at version `0.2.2.0`.
+- `pac connector list` confirms the MCHS Service Boundary custom connector
+  definition is present with connector ID
+  `0f3d6edc-9653-f111-bec6-00224893a0e1`.
+- `pac connection list` shows live connection inventory access and generic
+  platform connections, but no MCHS service-boundary custom connector
+  connection.
+- `pac admin dlp-policy list` shows tenant DLP policy inventory is visible, but
+  the target MCHS connector policy mapping has not been identified or captured.
 - GitHub repository secret audit currently shows only `NUGET_API_KEY`; the
   official Power Platform live-gate secrets `POWER_PLATFORM_ENVIRONMENT_URL`,
   `POWER_PLATFORM_APPLICATION_ID`, `POWER_PLATFORM_CLIENT_SECRET`, and
