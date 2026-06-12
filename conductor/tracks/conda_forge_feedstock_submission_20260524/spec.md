@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-py`
 - Version candidate: `0.2.2`
 - Local surface: `microcosting_healthservices/pyproject.toml`
-- Current status: `submitted_branch_refreshed_checks_rerunning_pending_conda_forge_review`
+- Current status: `submitted_checks_green_pending_conda_forge_review`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. GitHub branch update succeeded on 2026-05-26, moving the PR head to `8e479175a4e9feffcd4e5313ef149abb485f1343`; conda-forge linter/check jobs are rerunning after the update. The remaining blocker is external: checks returning green, conda-forge review, merge, feedstock publication, and public Anaconda propagation.
+Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The latest live poll on 2026-06-12 shows PR #33452 open at head `bffc5bf1a85389dc695adfd96c87bf2413f4db25` with conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks all green. The remaining blocker is external: conda-forge review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Preparation Evidence
 
@@ -34,13 +34,13 @@ Resolved locally and submitted upstream. A conda-forge recipe exists, its source
 - SHA256: `c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480`
 - Tooling note: `conda` is installed; `conda-build`, `boa`, and `rattler-build` are not installed locally.
 - Fixed lint feedback: added recipe maintainers, tests, build number, `license_file`, `setuptools` build backend, noarch Python minimum pins, `pypi.org` source URL, runtime dependencies, and entry points.
-- Remaining external blocker: staged-recipes review, merge, feedstock publication, and public Anaconda propagation.
+- Remaining external blocker: staged-recipes maintainer review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Submission Evidence
 
 - PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Fork branch: `edithatogo/staged-recipes:add-nwau-py-0.2.2`
-- State: open, branch refreshed to head `8e479175a4e9feffcd4e5313ef149abb485f1343`, linter/check jobs rerunning, pending review/merge.
+- State: open, current head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`, all visible linter/build/check jobs green, pending review/merge.
 
 ## Acceptance Criteria
 

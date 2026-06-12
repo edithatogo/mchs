@@ -100,8 +100,8 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Prepared recipe: `microcosting_healthservices/packaging/conda-forge/meta.yaml`
 - Submitted PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points.
-- Branch update: GitHub accepted another update-branch request on 2026-05-26. Latest poll: PR head `8e479175a4e9feffcd4e5313ef149abb485f1343`; conda-forge linter/check jobs are rerunning after the update.
-- Remaining step: checks returning green, conda-forge staged-recipes maintainer review, merge, feedstock publication, and public Anaconda propagation.
+- Branch/update status: latest live poll on 2026-06-12 shows PR head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks are all green.
+- Remaining step: conda-forge staged-recipes maintainer review, merge, feedstock publication, and public Anaconda propagation. Anaconda API still returns 404 for `conda-forge/nwau-py`, so publication is not claimed.
 
 ### Homebrew
 
