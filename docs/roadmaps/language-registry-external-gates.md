@@ -45,3 +45,10 @@ credentials stop the publish path instead of falling back to anonymous access.
 The account, maintainer-review, and live-environment inputs needed to move the
 remaining blocked registries are listed in
 `docs/roadmaps/registry-unblocker-inputs-20260612.md`.
+
+## Latest live monitor artifact
+
+The first passive monitor run after adding `.github/workflows/language-registry-live.yml`
+completed successfully at `https://github.com/edithatogo/mchs/actions/runs/27420156173`
+and uploaded the `language-registry-live` artifact. See
+`docs/roadmaps/language-registry-live-monitor-20260612.md`.
