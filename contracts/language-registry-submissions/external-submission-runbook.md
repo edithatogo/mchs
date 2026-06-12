@@ -52,6 +52,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Package: `nwauR@0.1.0`
 - Prepared artifact: `microcosting_healthservices/nwauR_0.1.0.tar.gz`
 - Local check: `R CMD check --no-manual nwauR_0.1.0.tar.gz` returned `Status: OK`.
+- Latest public probe on 2026-06-12: CRANDB, `https://cran.r-project.org/package=nwauR`, and `https://cran.r-project.org/src/contrib/Archive/nwauR/` all returned HTTP 404, so no public CRAN publication is claimed.
 - Submit through CRAN maintainer upload/review workflow.
 
 ### Julia General

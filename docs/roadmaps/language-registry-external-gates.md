@@ -6,7 +6,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | --- | --- | --- | --- |
 | crates.io | `nwau-core` | published and verified at `https://crates.io/crates/nwau-core/0.1.0`; checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547` | complete; browser-created crates token revoked and stale GitHub secret deleted |
 | NuGet | `Mchs.Bindings.DotNet` | NuGet flat-container exposes `0.1.0` after workflow push in run `26404217645` | complete |
-| CRAN | `nwauR` | `R CMD build` and `R CMD check` passed | CRAN maintainer submission and review |
+| CRAN | `nwauR` | `R CMD build` and `R CMD check` passed; 2026-06-12 CRANDB, CRAN package page, and CRAN archive probes all returned 404 | CRAN maintainer submission and review |
 | Julia General | `NationalWeightedActivityUnitWrapper` | General PR #156254 merged on 2026-05-28; raw General registry files verify `v0.1.0`, UUID `58dad789-f56a-4ab3-a66f-c15139bf9cbe`, and git-tree-sha1 `bb22d4bd44689549064bd441092fd540b5d852cf` | complete; JuliaHub may lag but raw General registry evidence is authoritative |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed; 2026-06-12 raw PackageList probe still found zero matches and follow-up comment `https://github.com/SwiftPackageIndex/PackageList/issues/13717#issuecomment-4690679058` was posted | public SPI listing/version evidence still pending |
