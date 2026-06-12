@@ -1,4 +1,4 @@
-fail-on-severity: high
+fail-on-severity: moderate
 
 # Reviewed advisory exceptions (GHSA IDs).
 allow-ghsas: []

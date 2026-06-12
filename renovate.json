@@ -3,7 +3,7 @@
   "extends": ["config:recommended"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Dependency update dashboard",
-  "enabledManagers": ["pep621", "pip_requirements", "github-actions", "cargo"],
+  "enabledManagers": ["pep621", "pip_requirements", "github-actions", "cargo", "npm"],
   "labels": ["dependencies"],
   "rangeStrategy": "pin",
   "schedule": ["after 6am and before 9am on monday"],
@@ -51,6 +51,12 @@
     {
       "matchManagers": ["cargo"],
       "groupName": "Rust dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["npm"],
+      "groupName": "Node package dependencies",
       "dependencyDashboardApproval": true,
       "separateMinorPatch": true
     }
