@@ -167,16 +167,17 @@
             "package": "NationalWeightedActivityUnitWrapper",
             "version": "0.1.0",
             "local_surface": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/Project.toml",
-            "current_status": "replacement_submitted_checks_green_pending_general_waiting_period_merge",
+            "current_status": "published_verified",
             "track": "julia_general_registry_submission_20260524",
             "submission_url": "https://github.com/JuliaRegistries/General/pull/156254",
-            "blocker": "Reviewer feedback converged on abandoning NwauCore and re-registering with a clearer wrapper name. Replacement General PR #156254 for NationalWeightedActivityUnitWrapper has registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passing; General merge and public registry propagation remain pending. Superseded PRs #156236, #156235, and #156200 are closed, and the reviewer [noblock] nation-scope clarification was answered for Australia's NWAU context.",
+            "blocker": null,
             "localReadinessResolved": true,
             "preparationEvidence": {
-                "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper has no confirmed public listing before General PR merge.",
+                "discovery": "https://juliahub.com/api/packages/NationalWeightedActivityUnitWrapper still returns 404, but Julia General raw registry files verify the package publication.",
                 "testCommand": "julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.test()'",
                 "testResult": "NationalWeightedActivityUnitWrapper tests passed locally with command assembly and missing input guard testsets.",
-                "remainingExternalBlocker": "General registry merge and public registry propagation remain pending after replacement PR #156254 checks passed.",
+                "remainingExternalBlocker": null,
+                "publicationVerification": "General PR #156254 merged on 2026-05-28T15:34:44Z. Raw General registry files under https://raw.githubusercontent.com/JuliaRegistries/General/master/N/NationalWeightedActivityUnitWrapper/ returned HTTP 200 for Package.toml, Versions.toml, Compat.toml, and Deps.toml on 2026-06-12. Versions.toml contains 0.1.0 with git-tree-sha1 bb22d4bd44689549064bd441092fd540b5d852cf.",
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "tag": "v0.1.0",
                 "license": "MIT",
@@ -189,7 +190,7 @@
                 "repository": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl",
                 "tag": "v0.1.0",
                 "commit": "56ddec5ae29513e80717d4625f82c024a211c949",
-                "state": "open_checks_passing_pending_automerge_stopwatch",
+                "state": "merged_published_verified",
                 "triggerIssue": "https://github.com/edithatogo/NationalWeightedActivityUnitWrapper.jl/issues/1",
                 "checks": "Registry consistency checks for Julia 1.3, 1.6, 1.8, 1.9, 1.10, 1.11, and 1.12 passed; treecheck, AutoMerge, and AutoMerge-stopwatch succeeded.",
                 "supersedesPr": "https://github.com/JuliaRegistries/General/pull/156236",
@@ -208,8 +209,8 @@
                 },
                 "closeAttemptResult": "Initial direct close attempt failed with GraphQL ClosePullRequest permission denied; superseded Julia General PRs #156236, #156235, and #156200 are now closed after [noblock] superseded comments.",
                 "nationScopeClarification": "Reviewer [noblock] question answered at https://github.com/JuliaRegistries/General/pull/156254#issuecomment-4540952348: National refers to Australia and the National Weighted Activity Unit context.",
-                "remainingBlocker": "General merge and public registry propagation for PR #156254.",
-                "latestPoll": "2026-05-26: replacement PR #156254 open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed; superseded PRs closed; reviewer [noblock] nation-scope clarification answered; merge/public propagation pending."
+                "remainingBlocker": null,
+                "latestPoll": "2026-06-12: replacement PR #156254 is merged; General raw registry files verify NationalWeightedActivityUnitWrapper v0.1.0 with UUID 58dad789-f56a-4ab3-a66f-c15139bf9cbe and git-tree-sha1 bb22d4bd44689549064bd441092fd540b5d852cf."
             }
         },
         {

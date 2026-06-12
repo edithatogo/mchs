@@ -66,7 +66,7 @@ As of 2026-05-26, all language/distribution registry tracks have discovery and l
 - Superseded feedback PRs: `https://github.com/JuliaRegistries/General/pull/156236`, `https://github.com/JuliaRegistries/General/pull/156235`, `https://github.com/JuliaRegistries/General/pull/156200`
 - Feedback addressed: reviewers agreed `NwauCore` was misleading and recommended a wrapper name; the active replacement uses `NationalWeightedActivityUnitWrapper`, README purpose/usage documentation, MIT license, and matching repo name.
 - Current state: open; registry consistency, treecheck, AutoMerge, and AutoMerge-stopwatch checks passed.
-- Remaining step: wait for General PR `#156254` merge and public registry propagation. The superseded PRs `#156236`, `#156235`, and `#156200` are now closed after `[noblock]` superseded comments were posted. Reviewer clarification was answered at `https://github.com/JuliaRegistries/General/pull/156254#issuecomment-4540952348`, confirming that "National" refers to Australia's National Weighted Activity Unit.
+- Publication status: General PR `#156254` merged on 2026-05-28T15:34:44Z. Public General registry raw files verify `NationalWeightedActivityUnitWrapper v0.1.0`, UUID `58dad789-f56a-4ab3-a66f-c15139bf9cbe`, and git-tree-sha1 `bb22d4bd44689549064bd441092fd540b5d852cf`. JuliaHub still returns 404, so General registry raw files are the publication source of truth.
 
 ### Go module proxy / pkg.go.dev
 

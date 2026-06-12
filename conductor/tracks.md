@@ -645,7 +645,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Julia General Registry Submission**
+- [x] **Track: Julia General Registry Submission**
 *Link: [./tracks/julia_general_registry_submission_20260524/](./tracks/julia_general_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `General registry`, and capture immutable evidence before claiming publication.*
 
