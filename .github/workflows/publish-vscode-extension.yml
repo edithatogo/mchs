@@ -61,16 +61,16 @@ jobs:
           fi
 
       - name: Package VSIX
-        run: npx --yes --package @vscode/vsce vsce package --no-dependencies
+        run: npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix
 
       - name: Publish to Open VSX
         if: ${{ inputs.dry_run == false && (inputs.registry == 'openvsx' || inputs.registry == 'all') }}
         env:
           OVSX_PAT: ${{ secrets.OVSX_PAT }}
-        run: npx --yes --package ovsx ovsx publish mchs-tools-0.1.0.vsix --pat "$OVSX_PAT"
+        run: npx --yes --package ovsx ovsx publish mchs-tools.vsix --pat "$OVSX_PAT"
 
       - name: Publish to Visual Studio Marketplace
         if: ${{ inputs.dry_run == false && (inputs.registry == 'vsmarketplace' || inputs.registry == 'all') }}
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-        run: npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools-0.1.0.vsix --pat "$VSCE_PAT"
+        run: npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools.vsix --pat "$VSCE_PAT"

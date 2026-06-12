@@ -25,6 +25,6 @@ def test_vscode_extension_publish_workflow_packages_before_publish() -> None:
 
     assert package_step < openvsx_step
     assert package_step < marketplace_step
-    assert "vsce package --no-dependencies" in text
-    assert "ovsx publish mchs-tools-0.1.0.vsix --pat" in text
-    assert "vsce publish --packagePath mchs-tools-0.1.0.vsix --pat" in text
+    assert "vsce package --no-dependencies --out mchs-tools.vsix" in text
+    assert "ovsx publish mchs-tools.vsix --pat" in text
+    assert "vsce publish --packagePath mchs-tools.vsix --pat" in text
