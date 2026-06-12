@@ -10,11 +10,11 @@ import pytest
 import yaml
 from click.testing import CliRunner
 
-from nwau_py.reference_manifest import ReferenceManifestError, parse_reference_manifest
 from nwau_py.pricing_year_validation import (
     format_pricing_year_validation_report,
     validate_pricing_year,
 )
+from nwau_py.reference_manifest import ReferenceManifestError, parse_reference_manifest
 
 _cli: Any | None = None
 try:

@@ -14,8 +14,8 @@ from nwau_py.licensed_product_workflow import (
     build_licensed_product_asset_reference,
     build_licensed_product_manifest_record,
     diagnose_missing_licensed_assets,
-    ensure_licensed_product_compatibility,
     ensure_commit_safe_exclusion,
+    ensure_licensed_product_compatibility,
     get_licensed_product_manifest_record,
     is_commit_safe_excluded_path,
     is_local_only_licensed_path,
@@ -432,7 +432,7 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"asset_role": "metadata"},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="metadata.source_refs"):
+    with pytest.raises(LicensedProductWorkflowError, match=r"metadata\.source_refs"):
         build_licensed_product_asset_reference(
             asset_id="bad-metadata-list",
             kind="public-metadata",
@@ -442,7 +442,7 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"source_refs": ["duplicate", "duplicate"]},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="metadata.asset_role"):
+    with pytest.raises(LicensedProductWorkflowError, match=r"metadata\.asset_role"):
         build_licensed_product_asset_reference(
             asset_id="bad-metadata-value",
             kind="public-metadata",

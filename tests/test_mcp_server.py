@@ -21,16 +21,16 @@ class _FakeHttpHandler(mcp_http_server.McpHttpHandler):
         self.responses = []
         self.sent_headers = []
 
-    def send_response(self, status):  # noqa: D401
+    def send_response(self, status):
         self.responses.append(status)
 
-    def send_header(self, key, value):  # noqa: D401
+    def send_header(self, key, value):
         self.sent_headers.append((key, value))
 
-    def end_headers(self):  # noqa: D401
+    def end_headers(self):
         self.sent_headers.append(("__end__", ""))
 
-    def address_string(self):  # noqa: D401
+    def address_string(self):
         return "127.0.0.1"
 
 

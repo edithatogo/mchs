@@ -422,7 +422,7 @@ def test_emergency_registry_direct_validation_edges_are_fail_closed() -> None:
 
     with pytest.raises(EmergencyClassificationRegistryError, match="observed_fields"):
         validate_emergency_input("aecc", "2026", "AECC", version="v1.1")
-    with pytest.raises(EmergencyClassificationRegistryError, match="expects v1.1"):
+    with pytest.raises(EmergencyClassificationRegistryError, match=r"expects v1\.1"):
         ensure_emergency_classification_compatibility("aecc", "2026", "v1.0")
 
     missing_fields = validate_emergency_input(
