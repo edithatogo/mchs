@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-c-abi`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml`
-- Current status: `submitted_pending_upstream_review_and_vcpkg_rust_toolchain_policy`
+- Current status: `conancenter_cla_signed_pending_job_scheduler_vcpkg_closed_policy_unsupported`
 
 ## Functional Requirements
 
@@ -34,17 +34,16 @@ validated locally.
 
 Remaining blockers:
 
-- vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` is submitted, but
-  vcpkg CI fails on platforms where `cargo` is absent. Current vcpkg
-  infrastructure has no first-class Rust/Cargo acquisition helper for ports, so
-  the upstream path is blocked on vcpkg Rust toolchain policy or a decision to
-  accept Cargo as an external host prerequisite.
-- vcpkg also has a Microsoft CLA check queued. The CLA is a legal acceptance
-  step and must be completed by the authorized contributor, not by automation.
+- vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` is closed after
+  maintainer guidance that vcpkg does not currently support building Rust
+  libraries. Current vcpkg infrastructure has no first-class Rust/Cargo
+  acquisition helper for ports, so the upstream path is policy-blocked unless
+  vcpkg Rust support or a different accepted artifact strategy becomes
+  available.
 - ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262`
-  is submitted. Local static and shared validations pass; upstream CI is
-  waiting on maintainer job-scheduler approval before publication can be
-  claimed.
+  is submitted and mergeable. CLA Assistant reports all committers have signed;
+  local static and shared validations pass; upstream CI is waiting on maintainer
+  job-scheduler approval before publication can be claimed.
 
 ## Preparation Evidence
 
@@ -68,8 +67,9 @@ Remaining blockers:
 - vcpkg fork update: commit `58ff86fe` adds Rust target-triple mapping, honors `VCPKG_LIBRARY_LINKAGE`, installs `nwau-c-abi::nwau-c-abi`, excludes Android, and regenerates version metadata.
 - vcpkg upstream PR: `https://github.com/microsoft/vcpkg/pull/51965`.
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
-- Remaining external blocker: upstream review/merge and vcpkg Rust/Cargo
-  toolchain policy; no public vcpkg or ConanCenter publication is claimed yet.
+- Remaining external blocker: ConanCenter maintainer job scheduling/review and
+  vcpkg Rust-library support policy; no public vcpkg or ConanCenter publication
+  is claimed yet.
 
 ## Acceptance Criteria
 

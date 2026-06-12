@@ -40,10 +40,10 @@
 
 ## Phase 3: Submission
 
-- [x] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; upstream review remains.
+- [x] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; ConanCenter CLA is signed and job scheduling remains; vcpkg was closed by upstream Rust-library support policy.
     - [x] Use dry-run or validation mode first where available.
     - [x] Publish or open the required upstream PR.
-    - [x] Capture submission URL, version, owner, and review state.
+    - [x] Capture submission URL, version, owner, and review state. ConanCenter PR #30262 is open/mergeable at head `c635b0f9d2f1619d9149e4fa964185658c063f5d` with CLA signed and Job scheduler ACTION_REQUIRED; vcpkg PR #51965 is closed after maintainer guidance that vcpkg does not currently support building Rust libraries.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence

@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-05-26T02:55:00+10:00",
+  "updated_at": "2026-06-12T09:34:00Z",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare, submit, and evidence vcpkg / ConanCenter publication for nwau-c-abi.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "vcpkg_and_conancenter_prs_submitted_pending_review",
+  "current_status": "conancenter_cla_signed_pending_job_scheduler_vcpkg_closed_policy_unsupported",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "vcpkg and ConanCenter PRs are submitted and local archive-based validations pass; ConanCenter Copilot technical review cleanup is current through fork commit 657c7a31, but upstream review/merge remain pending with ConanCenter blocked by CLA acceptance plus job scheduling and vcpkg blocked by Rust toolchain policy plus Microsoft CLA.",
+  "blocker": "ConanCenter PR #30262 is open and mergeable at head c635b0f9d2f1619d9149e4fa964185658c063f5d; CLA Assistant reports all committers signed, but Job scheduler remains ACTION_REQUIRED pending maintainer approval/scheduling. vcpkg PR #51965 is closed after maintainer guidance that vcpkg does not currently support building Rust libraries, so vcpkg publication remains policy-blocked unless vcpkg Rust support or a different accepted artifact strategy becomes available.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -18,7 +18,7 @@
     "cargo_package_command": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
     "cargo_package_result": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
     "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
-    "remaining_external_blocker": "vcpkg and ConanCenter submissions still require complete portfile/recipe packaging, local/CI validation, and upstream PR/review workflows.",
+    "remaining_external_blocker": "ConanCenter maintainer job scheduling/review remains pending; vcpkg is closed/policy-blocked because vcpkg does not currently support building Rust libraries.",
     "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io.",
     "source_archive": "https://github.com/edithatogo/mchs/releases/download/nwau-c-abi-v0.1.0/nwau-c-abi-0.1.0-source-r2.tar.gz",
     "source_archive_sha256": "e42c7948828a7ea8b581782817a342db577588d9398ba683b34c45ca49ef2bf1",
@@ -33,13 +33,15 @@
     "conan_center_job_scheduler_state": "ACTION_REQUIRED; maintainer approval/scheduling requested.",
     "conan_center_maintainer_job_request": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535445528",
     "conan_center_profile_library_follow_up": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4535839977",
-    "conan_center_latest_head": "657c7a31",
-    "conan_center_cla_state": "CLAassistant reports not_signed/pending on conan-io/conan-center-index#30262; legal acceptance must be completed by the authorized contributor."
+    "conan_center_latest_head": "c635b0f9d2f1619d9149e4fa964185658c063f5d",
+    "conan_center_cla_state": "CLAassistant reports all committers have signed the CLA on conan-io/conan-center-index#30262.",
+    "conan_center_latest_follow_up": "https://github.com/conan-io/conan-center-index/pull/30262#issuecomment-4688059783",
+    "vcpkg_policy_state": "microsoft/vcpkg#51965 is closed; maintainer comment https://github.com/microsoft/vcpkg/pull/51965#issuecomment-4550011838 says vcpkg does not currently support building Rust libraries."
   },
   "repo_side_readiness_blockers": {
-    "upstream_review": "Wait for vcpkg and ConanCenter registry review/merge before claiming publication.",
+    "upstream_review": "Wait for ConanCenter registry review/merge before claiming publication.",
     "conan_center_job_scheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed.",
-    "conan_center_cla": "Complete ConanCenter CLA legal acceptance before recipe acceptance can proceed."
+    "vcpkg_rust_policy": "vcpkg PR #51965 is closed because vcpkg does not currently support building Rust libraries; publication needs upstream Rust support or a different accepted artifact strategy."
   },
   "submission_url": "https://github.com/microsoft/vcpkg/pull/51965"
 }
