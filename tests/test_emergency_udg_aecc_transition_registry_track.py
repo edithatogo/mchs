@@ -35,10 +35,7 @@ from nwau_py.emergency_transition_registry import (
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = (
-    ROOT
-    / "conductor"
-    / "tracks"
-    / "emergency_udg_aecc_transition_registry_20260512"
+    ROOT / "conductor" / "tracks" / "emergency_udg_aecc_transition_registry_20260512"
 )
 
 AECC_FIELDS = ("AECC", "COMPENSABLE_STATUS", "DVA_STATUS")
@@ -246,11 +243,15 @@ def test_public_api_exports_include_the_emergency_registry_surface():
 
 
 def test_emergency_registry_dataclasses_reject_inconsistent_records() -> None:
-    assert emergency_registry.normalize_emergency_classification_system("AECC") == "aecc"
+    assert (
+        emergency_registry.normalize_emergency_classification_system("AECC") == "aecc"
+    )
 
     with pytest.raises(EmergencyClassificationRegistryError, match="must be a string"):
         emergency_registry.normalize_emergency_classification_system(1)  # type: ignore[arg-type]
-    with pytest.raises(EmergencyClassificationRegistryError, match="supported four-digit"):
+    with pytest.raises(
+        EmergencyClassificationRegistryError, match="supported four-digit"
+    ):
         EmergencyClassificationVersion(
             year="2027",
             version="v1.1",
@@ -268,7 +269,9 @@ def test_emergency_registry_dataclasses_reject_inconsistent_records() -> None:
             stream_compatibility=("emergency_department",),
             source_refs=("https://example.invalid",),
         )
-    with pytest.raises(EmergencyClassificationRegistryError, match="unsupported streams"):
+    with pytest.raises(
+        EmergencyClassificationRegistryError, match="unsupported streams"
+    ):
         EmergencyClassificationVersion(
             year="2026",
             version="v1.1",
@@ -277,7 +280,9 @@ def test_emergency_registry_dataclasses_reject_inconsistent_records() -> None:
             stream_compatibility=("ward",),
             source_refs=("https://example.invalid",),
         )
-    with pytest.raises(EmergencyClassificationRegistryError, match="must not contain duplicates"):
+    with pytest.raises(
+        EmergencyClassificationRegistryError, match="must not contain duplicates"
+    ):
         EmergencyClassificationVersion(
             year="2026",
             version="v1.1",
@@ -350,7 +355,9 @@ def test_emergency_registry_period_record_and_result_edges() -> None:
     assert record.transition_years() == ("2026",)
     assert record.to_dict()["supported_years"] == ["2025", "2026"]
 
-    with pytest.raises(EmergencyClassificationRegistryError, match="later than end_year"):
+    with pytest.raises(
+        EmergencyClassificationRegistryError, match="later than end_year"
+    ):
         EmergencyTransitionPeriod(
             system="aecc",
             start_year="2026",
@@ -369,7 +376,9 @@ def test_emergency_registry_period_record_and_result_edges() -> None:
             notes=(),
             versions=(),
         )
-    with pytest.raises(EmergencyClassificationRegistryError, match="duplicate pricing years"):
+    with pytest.raises(
+        EmergencyClassificationRegistryError, match="duplicate pricing years"
+    ):
         EmergencyClassificationRecord(
             system="aecc",
             display_name="AECC test",

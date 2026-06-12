@@ -136,7 +136,10 @@ def test_pricing_year_validation_surfaces_fixture_year_mismatches(
 ) -> None:
     fixture_root = tmp_path / "tests" / "fixtures" / "golden"
     fixture_root.mkdir(parents=True)
-    shutil.copytree(ROOT / "tests" / "fixtures" / "golden" / "acute_2025", fixture_root / "acute_2027")
+    shutil.copytree(
+        ROOT / "tests" / "fixtures" / "golden" / "acute_2025",
+        fixture_root / "acute_2027",
+    )
 
     report = validate_pricing_year("2027", repo_root=tmp_path)
 
@@ -150,7 +153,10 @@ def test_pricing_year_validation_records_valid_fixture_evidence_without_support_
 ) -> None:
     fixture_root = tmp_path / "tests" / "fixtures" / "golden"
     fixture_root.mkdir(parents=True)
-    shutil.copytree(ROOT / "tests" / "fixtures" / "golden" / "acute_2025", fixture_root / "acute_2025")
+    shutil.copytree(
+        ROOT / "tests" / "fixtures" / "golden" / "acute_2025",
+        fixture_root / "acute_2025",
+    )
 
     report = validate_pricing_year("2025", repo_root=tmp_path)
     payload = report.to_dict()

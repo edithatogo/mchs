@@ -268,9 +268,9 @@ def test_source_scanner_track_is_marked_complete_and_conservative():
         "conductor/tracks/ihacpa_source_scanner_20260512/metadata.json"
     )
     registry = Path("conductor/tracks.md").read_text(encoding="utf-8")
-    spec = Path(
-        "conductor/tracks/ihacpa_source_scanner_20260512/spec.md"
-    ).read_text(encoding="utf-8")
+    spec = Path("conductor/tracks/ihacpa_source_scanner_20260512/spec.md").read_text(
+        encoding="utf-8"
+    )
 
     assert metadata["status"] == "complete"
     assert metadata["current_state"] in {"prototype", "complete-with-gaps"}
@@ -286,8 +286,7 @@ def test_source_scanner_text_urls_and_explicit_urls_cover_source_categories():
             "Technical specification https://example.invalid/nwau-2026-specification.pdf\n"
             "Price weights https://example.invalid/price-weights-2026.xlsx\n"
             "Calculator https://example.invalid/calculator-2026.zip\n"
-            "SAS package https://example.invalid/ra2026-sas-package\n"
-            ,
+            "SAS package https://example.invalid/ra2026-sas-package\n",
         ),
         urls=("https://box.com/shared-folder",),
         source_page_url="https://www.ihacpa.gov.au/",
@@ -349,7 +348,9 @@ def test_source_scanner_html_headings_and_duplicate_merging_use_best_label():
     assert labels["https://example.invalid/downloads/calculator.xlsx"].endswith(
         "A much longer calculator label"
     )
-    assert any("2026-27 Acute calculator resources" in label for label in labels.values())
+    assert any(
+        "2026-27 Acute calculator resources" in label for label in labels.values()
+    )
     assert all(item.source_kind == "html-link" for item in manifest.discoveries)
 
     document = SourceDocument(
@@ -414,27 +415,40 @@ def test_source_scanner_file_inputs_result_dict_and_resolved_gap_filter(tmp_path
 
 
 def test_source_scanner_private_inference_helpers_cover_edge_categories():
-    assert source_scanner._extract_year("https://example.invalid/2026-27/report", "") == (
+    assert source_scanner._extract_year(
+        "https://example.invalid/2026-27/report", ""
+    ) == (
         "2026-27",
         2026,
     )
-    assert source_scanner._extract_year("https://example.invalid/2026-25/report", "") == (
+    assert source_scanner._extract_year(
+        "https://example.invalid/2026-25/report", ""
+    ) == (
         "2026-25",
         2026,
     )
-    assert source_scanner._infer_artifact_kind("https://example.invalid/page.html", "") == (
-        provenance.ArtifactKind.DOCUMENTATION.value
+    assert source_scanner._infer_artifact_kind(
+        "https://example.invalid/page.html", ""
+    ) == (provenance.ArtifactKind.DOCUMENTATION.value)
+    assert (
+        source_scanner._infer_source_category(
+            "Classification resource",
+            "https://example.invalid/resource",
+        )
+        == "classification-resource"
     )
-    assert source_scanner._infer_source_category(
-        "Classification resource",
-        "https://example.invalid/resource",
-    ) == "classification-resource"
-    assert source_scanner._infer_source_category(
-        "Annual reports",
-        "https://example.invalid/report",
-    ) == "report"
-    assert source_scanner._discover_text(
-        SourceDocument(kind="text", name="empty", content="no links here"),
-        base_url=None,
-        pricing_year=None,
-    ) == []
+    assert (
+        source_scanner._infer_source_category(
+            "Annual reports",
+            "https://example.invalid/report",
+        )
+        == "report"
+    )
+    assert (
+        source_scanner._discover_text(
+            SourceDocument(kind="text", name="empty", content="no links here"),
+            base_url=None,
+            pricing_year=None,
+        )
+        == []
+    )

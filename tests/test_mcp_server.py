@@ -76,8 +76,14 @@ def test_mcp_validate_input_reports_year_and_shape_errors():
         {"calculatorId": "acute", "year": "2025", "inputs": []},
     )
 
-    assert _structured(unsupported_year)["diagnostics"]["diagnostics"][0]["code"] == "MCHS-ERR-SCOPE-001"
-    assert _structured(bad_inputs)["diagnostics"]["diagnostics"][0]["code"] == "MCHS-ERR-VAL-001"
+    assert (
+        _structured(unsupported_year)["diagnostics"]["diagnostics"][0]["code"]
+        == "MCHS-ERR-SCOPE-001"
+    )
+    assert (
+        _structured(bad_inputs)["diagnostics"]["diagnostics"][0]["code"]
+        == "MCHS-ERR-VAL-001"
+    )
 
 
 def test_mcp_calculate_does_not_duplicate_formula_logic():
@@ -136,7 +142,9 @@ def test_mcp_schema_resource_returns_canonical_packaged_schema():
 
 
 def test_mcp_schema_index_calculators_evidence_and_unknown_resource_paths():
-    schemas = json.loads(mcp_server.read_resource("mchs://schemas")["contents"][0]["text"])
+    schemas = json.loads(
+        mcp_server.read_resource("mchs://schemas")["contents"][0]["text"]
+    )
     calculators = json.loads(
         mcp_server.read_resource("mchs://calculators")["contents"][0]["text"]
     )
@@ -203,7 +211,10 @@ def test_mcp_json_rpc_lists_reads_notifications_and_errors():
 
     assert tools is not None and tools["result"]["tools"]
     assert resources is not None and resources["result"]["resources"]
-    assert read is not None and read["result"]["contents"][0]["uri"] == "mchs://support/status"
+    assert (
+        read is not None
+        and read["result"]["contents"][0]["uri"] == "mchs://support/status"
+    )
     assert notification is None
     assert unknown is not None and unknown["error"]["code"] == -32000
 

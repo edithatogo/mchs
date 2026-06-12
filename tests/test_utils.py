@@ -22,11 +22,7 @@ def test_sas_ref_dir_discovers_calculator_subdirectory_and_fails_closed(
 ):
     monkeypatch.chdir(tmp_path)
     calculator = (
-        tmp_path
-        / "archive"
-        / "sas"
-        / "NEP25_SAS_NWAU_calculator"
-        / "01 Calculators"
+        tmp_path / "archive" / "sas" / "NEP25_SAS_NWAU_calculator" / "01 Calculators"
     )
     calculator.mkdir(parents=True)
 

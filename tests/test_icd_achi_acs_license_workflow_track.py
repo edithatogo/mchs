@@ -150,11 +150,14 @@ def test_missing_local_asset_diagnostics_are_safe_and_non_disclosing() -> None:
         for asset in record.assets
         if asset.restricted and asset.local_path_hint is not None
     ]
-    assert diagnose_missing_licensed_assets(
-        "ICD-10-AM",
-        "2026",
-        existing_paths=existing,
-    ) == ()
+    assert (
+        diagnose_missing_licensed_assets(
+            "ICD-10-AM",
+            "2026",
+            existing_paths=existing,
+        )
+        == ()
+    )
 
 
 def test_licensed_product_compatibility_fails_closed() -> None:
@@ -187,9 +190,7 @@ def test_licensed_product_compatibility_fails_closed() -> None:
 
 
 def test_contract_examples_are_synthetic_and_local_only() -> None:
-    manifest = _read_json(
-        CONTRACT / "examples" / "local-licensed-asset-manifest.json"
-    )
+    manifest = _read_json(CONTRACT / "examples" / "local-licensed-asset-manifest.json")
     boundary = _read_json(CONTRACT / "examples" / "license-boundary.json")
     guard = _read_json(CONTRACT / "examples" / "commit-guard-diagnostics.json")
 
@@ -386,7 +387,9 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"asset_role": "metadata"},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="asset_id must not be blank"):
+    with pytest.raises(
+        LicensedProductWorkflowError, match="asset_id must not be blank"
+    ):
         LicensedProductAssetReference(
             asset_id="",
             kind="public-metadata",

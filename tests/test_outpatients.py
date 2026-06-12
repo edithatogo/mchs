@@ -234,8 +234,13 @@ def test_outpatient_reference_loaders_decode_and_normalize_tables(monkeypatch):
     assert sa2.to_dict("records") == [{"SA2": 100, "ra2021": 3}]
     assert icu.to_dict("records") == [{"APCID": "A1", "_est_eligible_paed_flag": 1}]
     assert outpatients._load_multi_prov_adj(Path("ref"), "2025") == 0.25
-    assert outpatients._load_ind_adj(Path("ref"), "2025")["adj_indigenous"].iloc[0] == 0.2
-    assert outpatients._load_pat_rem_adj(Path("ref"), "2025")["adj_remoteness"].iloc[0] == 0.1
+    assert (
+        outpatients._load_ind_adj(Path("ref"), "2025")["adj_indigenous"].iloc[0] == 0.2
+    )
+    assert (
+        outpatients._load_pat_rem_adj(Path("ref"), "2025")["adj_remoteness"].iloc[0]
+        == 0.1
+    )
     assert (
         outpatients._load_treat_rem_adj(Path("ref"), "2025")[
             "adj_treat_remoteness"

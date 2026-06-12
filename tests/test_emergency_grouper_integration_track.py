@@ -90,7 +90,9 @@ def test_emergency_grouper_placeholders_are_not_implementation_evidence() -> Non
 
     assert reference["access_mode"] == "local-only"
     assert reference.get("implementation_evidence", False) is False
-    assert "placeholder-only" in str(reference.get("evidence_status", "placeholder-only"))
+    assert "placeholder-only" in str(
+        reference.get("evidence_status", "placeholder-only")
+    )
     assert precomputed["output_status"] == "synthetic"
     assert precomputed.get("implementation_evidence", False) is False
     assert "synthetic" in str(precomputed.get("evidence_status", "synthetic"))
