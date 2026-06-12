@@ -39,8 +39,9 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 - Extension: `edithatogo.mchs-tools@0.1.0`
 - Required credentials: Open VSX token and Visual Studio Marketplace publisher token.
-- Credential status: Open VSX GitHub login succeeded, but token creation is blocked until the Eclipse Foundation Open VSX Publisher Agreement is signed via an Eclipse account. The Visual Studio Marketplace publisher page for `edithatogo` returned 404 in the current Microsoft session, so publisher/PAT access remains unresolved.
+- Credential status: Open VSX GitHub login succeeds as `edithatogo`, but token creation remains blocked because the Access Tokens page still reports no Eclipse Foundation Open VSX Publisher Agreement signed. The Profile page requires Eclipse OAuth login; the 2026-06-12 Eclipse OAuth attempt returned to Open VSX without attaching agreement state and left the session logged out. CLI publish reaches the namespace PAT prompt and fails without a valid `OVSX_PAT`. The Visual Studio Marketplace publisher page for `edithatogo` returned 404 in the current Microsoft session, so publisher/PAT access remains unresolved.
 - Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
+- Latest artifact checksum: `73db22882af022750ce7846ecd687dea0b7d383a12f6e9767a7eadbd63f1e4ef`
 - Open VSX command: `npx --yes ovsx publish microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$OVSX_PAT"`
 - Marketplace command: `npx --yes @vscode/vsce publish --packagePath microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$VSCE_PAT"`
 
