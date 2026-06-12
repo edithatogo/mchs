@@ -3,7 +3,7 @@
   "type": "chore",
   "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T11:56:04Z",
+  "updated_at": "2026-06-12T12:38:52Z",
   "description": "conda-forge Feedstock Submission: discover, prepare, submit, and evidence conda-forge publication for nwau-py.",
   "registry_id": "conda_forge",
   "current_status": "submitted_checks_green_pending_conda_forge_review",
@@ -24,6 +24,6 @@
     "branch_update": "GitHub update-branch API accepted on 2026-05-26; headRefOid e65bf3d5eeee2d1ea3cf4b8cbde4f9e3e32bfac1; checks rerunning.",
     "branch_update_20260526": "GitHub PR update-branch accepted; headRefOid 04452d8f9b839493acedbabf198140b562648ac9; linter, check-skip, aggregate staged-recipes, linux_64, osx_64, and win_64 checks all passed after rerun.",
     "branch_update_20260526_latest": "GitHub PR update-branch accepted again; headRefOid 8e479175a4e9feffcd4e5313ef149abb485f1343; linter/check jobs queued after refresh.",
-    "latest_poll_20260612": "2026-06-12T11:56:04Z live check: GitHub PR #33452 remains open at head bffc5bf1a85389dc695adfd96c87bf2413f4db25; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks are all green. Publication remains pending maintainer review, merge, feedstock creation, and Anaconda propagation."
+    "latest_poll_20260612": "2026-06-12T12:38:52Z live check: GitHub PR #33452 remains open and mergeable at head bffc5bf1a85389dc695adfd96c87bf2413f4db25; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks are all green. Publication remains pending maintainer review, merge, feedstock creation, and Anaconda propagation."
   }
 }
