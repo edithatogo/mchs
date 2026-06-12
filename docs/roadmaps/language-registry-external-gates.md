@@ -35,3 +35,9 @@ The Go row is intentionally split: the Go proxy submission URL verifies the tagg
 The Maven Central row is intentionally fail-closed: a real publish attempt must
 provide `-PcentralPortalUsername` and `-PcentralPortalPassword`, and missing
 credentials stop the publish path instead of falling back to anonymous access.
+
+## Operator unblocker checklist
+
+The account, maintainer-review, and live-environment inputs needed to move the
+remaining blocked registries are listed in
+`docs/roadmaps/registry-unblocker-inputs-20260612.md`.
