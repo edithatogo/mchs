@@ -94,3 +94,12 @@ configured, and the production service boundary endpoint is reachable.
 - Runtime smoke remains blocked until the custom connector connection, service
   boundary endpoint, app/flow smoke runs, DLP policy mapping, monitoring export,
   and live-gate secrets are captured.
+
+## Aggregate Preflight - 2026-06-12T12:34:19Z
+
+`scripts/preflight_power_platform_readiness.py` was rerun and all six checks
+remained blocked but contract-valid: endpoint, GitHub live gate, PAC
+app/connection observations, flow smoke, DLP/monitoring, and subrepo closure.
+The compact evidence record is
+`power-platform/evidence/preflight-readiness-20260612.json`. No production
+readiness, runtime smoke, or live tenant completion claim is made.
