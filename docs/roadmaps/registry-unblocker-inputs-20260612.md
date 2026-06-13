@@ -85,7 +85,7 @@ temporary build directory; no public CRAN listing exists.
 
 Required external action:
 
-- Replace placeholder maintainer `MCHS <opensource@example.com>` in `r-binding/DESCRIPTION` with the real CRAN-confirmable maintainer name and email.
+- Maintainer metadata now uses `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; submit to CRAN with that maintainer address and complete CRAN email confirmation/review.
 - CRAN maintainer submission using the generated `nwauR_0.1.0.tar.gz` artifact.
 - CRAN review response and acceptance.
 

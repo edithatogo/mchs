@@ -10,8 +10,9 @@
 
 `R CMD check --as-cran` produced 1 NOTE:
 
-* CRAN incoming feasibility reports this as a new submission and shows the
-  current maintainer as `MCHS <opensource@example.com>`.
+* CRAN incoming feasibility reports this as a new submission. The maintainer
+  metadata has since been updated to `Dylan Mordaunt <d.a.mordaunt@gmail.com>`
+  for CRAN confirmation.
 
 Latest `--as-cran` checked artifact SHA-256:
 

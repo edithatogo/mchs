@@ -2,9 +2,9 @@ Package: nwauR
 Type: Package
 Title: R Wrapper for the 'NWAU' Python Command Line Interface
 Version: 0.1.0
-Authors@R: person("MCHS", role = c("aut", "cre"), email = "opensource@example.com")
-Author: MCHS [aut, cre]
-Maintainer: MCHS <opensource@example.com>
+Authors@R: person("Dylan", "Mordaunt", role = c("aut", "cre"), email = "d.a.mordaunt@gmail.com")
+Author: Dylan Mordaunt [aut, cre]
+Maintainer: Dylan Mordaunt <d.a.mordaunt@gmail.com>
 Description: Provides a lightweight R interface to the separately distributed
     'nwau-py' Python command line interface. The package exchanges CSV files
     with Python so calculation logic remains in the Python implementation.
