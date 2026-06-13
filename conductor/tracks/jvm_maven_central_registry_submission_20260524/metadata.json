@@ -57,6 +57,14 @@
         "localMavenSettingsPresent": false,
         "localGradlePropertiesPresent": false,
         "result": "Maven Central publication remains blocked on Central Portal credentials and exported in-memory signing key/password secrets."
+      },
+      "latestAdjacentArtifactProbe20260614": {
+        "asOf": "2026-06-14T01:08:00+10:00",
+        "url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml",
+        "groupId": "io.github.edithatogo",
+        "artifactId": "mchs-jvm-bindings",
+        "latest": "0.1.0",
+        "result": "Adjacent JVM binding artifact is public, but this track target remains io.github.edithatogo:mchs and publication is not claimed for that coordinate."
       }
     },
     "submission_evidence": null,
