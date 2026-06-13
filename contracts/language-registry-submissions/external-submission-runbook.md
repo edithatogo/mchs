@@ -37,14 +37,15 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 ### Open VSX / Visual Studio Marketplace
 
-- Extension: `edithatogo.mchs-tools@0.1.0`
-- Required credentials: `OVSX_PAT` is configured for Open VSX publication; Visual Studio Marketplace publication is already complete.
-- Credential status: Open VSX Access Tokens became available after the Eclipse publisher agreement was accepted; `OVSX_PAT` was created and stored as a GitHub secret on 2026-06-13. The first authenticated publish failed until namespace `edithatogo` was created, then workflow run `https://github.com/edithatogo/mchs/actions/runs/27455601114` published `edithatogo.mchs-tools v0.1.0`. Visual Studio Marketplace is publicly listed for `edithatogo.mchs-tools@0.1.0`.
+- Extension: `edithatogo.mchs-tools`
+- Required credentials: `OVSX_PAT` is configured for Open VSX publication; `VSCE_PAT` is still required before Visual Studio Marketplace can be synchronized to `0.1.1`.
+- Credential status: Open VSX Access Tokens became available after the Eclipse publisher agreement was accepted; `OVSX_PAT` was created and stored as a GitHub secret on 2026-06-13. The first authenticated publish failed until namespace `edithatogo` was created, then workflow run `https://github.com/edithatogo/mchs/actions/runs/27455601114` published `edithatogo.mchs-tools v0.1.0`. Workflow run `https://github.com/edithatogo/mchs/actions/runs/27457810800` later published `edithatogo.mchs-tools v0.1.1` to Open VSX. Visual Studio Marketplace is publicly listed for `edithatogo.mchs-tools@0.1.0`; `0.1.1` is not claimed there until `VSCE_PAT` is configured and the Marketplace publish succeeds.
 - Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools.vsix` when packaged with the workflow command `npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix`; plain `vsce package` defaults to the versioned filename `mchs-tools-0.1.0.vsix`.
 - Latest artifact evidence: merged workflow dry-run `https://github.com/edithatogo/mchs/actions/runs/27455041574` packaged the VSIX successfully on 2026-06-13; publish workflow `https://github.com/edithatogo/mchs/actions/runs/27455601114` packaged and published the same extension to Open VSX.
-- Latest public probe on 2026-06-13: Open VSX extension page `https://open-vsx.org/extension/edithatogo/mchs-tools` returned HTTP 200 after workflow publication; Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` still returned HTTP 404 immediately after publish, so API propagation is not used as the completion signal. Visual Studio Marketplace extension query for `edithatogo.mchs-tools` returned publisher `edithatogo`, extension `mchs-tools`, display name `MCHS Tools`, and version `0.1.0`.
+- Latest public probe on 2026-06-14: Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` returns `edithatogo.mchs-tools` version `0.1.1`; Visual Studio Marketplace extension query for `edithatogo.mchs-tools` returns publisher `edithatogo`, extension `mchs-tools`, display name `MCHS Tools`, and version `0.1.0`.
 - Open VSX command: `cd microcosting_healthservices/integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package ovsx ovsx publish mchs-tools.vsix --pat "$OVSX_PAT"`
 - Marketplace command for future updates: `cd microcosting_healthservices/integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools.vsix --pat "$VSCE_PAT"`
+- Remaining step: configure `VSCE_PAT` or manually upload the `0.1.1` VSIX in the Visual Studio Marketplace publisher portal, then re-run the live monitor and verify both Open VSX and Marketplace expose `0.1.1`.
 
 ## Maintainer-review or PR-gated submissions
 
