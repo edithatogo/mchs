@@ -108,7 +108,7 @@
       "visualStudioMarketplaceVersion": "0.1.0",
       "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z"
     },
-    "latest_marketplace_probe_20260613_follow_up": {
+    "latestMarketplaceProbe20260613FollowUp": {
       "asOf": "2026-06-13T06:00:00Z",
       "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
       "openVsxApiHttpStatus": 200,

@@ -90,7 +90,7 @@
           }
         ]
       },
-      "latestProbe20260613FollowUp": {
+      "latestPublicProbe20260613FollowUp": {
         "asOf": "2026-06-13T06:00:00Z",
         "packageListUrl": "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json",
         "packageListHttpStatus": 200,

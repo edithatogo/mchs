@@ -28,7 +28,7 @@
       "octaveCliAvailable": false,
       "bundleSha256Rechecked": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c"
     },
-    "latest_public_probe_20260613_follow_up": {
+    "latestPublicProbe20260613FollowUp": {
       "asOf": "2026-06-13T06:00:00Z",
       "exactSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs-matlab-interop",
       "exactSearchHttpStatus": 200,
