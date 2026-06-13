@@ -152,6 +152,7 @@ def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
         not in workflow
     )
     assert "run: uv run pytest --cov=nwau_py --cov-report=term-missing" in workflow
+    assert "override_pr: ${{ github.event.pull_request.number }}" in workflow
 
     assert workflow.index("Sync environment") < workflow.index("Check formatting")
     assert workflow.index("Check formatting") < workflow.index("Run lint")
@@ -226,7 +227,10 @@ def test_release_workflow_builds_and_publishes_tagged_releases():
     assert '      - "v*"' in workflow
     assert "contents: write" in workflow
     assert "uv build" in workflow
-    assert "actions/upload-artifact@v6" in workflow
+    assert (
+        "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7"
+        in workflow
+    )
     assert "softprops/action-gh-release@v3" in workflow
     assert "generate_release_notes: true" in workflow
 
