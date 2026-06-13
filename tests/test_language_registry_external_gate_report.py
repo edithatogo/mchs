@@ -58,3 +58,22 @@ def test_vscode_live_probe_requires_target_version_on_both_registries():
         )
         is True
     )
+
+
+def test_classify_uses_multi_probe_target_version_visibility():
+    module = _module()
+    registry = {
+        "id": "vscode_openvsx",
+        "current_status": "openvsx_0_1_1_verified_marketplace_republish_blocked",
+        "version": "0.1.1",
+        "publicationEvidence": {"type": "partial_publication_verified"},
+    }
+
+    assert (
+        module.classify(registry, {"target_version_visible": True})
+        == "completion_candidates"
+    )
+    assert (
+        module.classify(registry, {"target_version_visible": False})
+        == "partial_publications"
+    )

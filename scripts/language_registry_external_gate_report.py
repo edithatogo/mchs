@@ -85,7 +85,7 @@ def fetch_post_json(url: str, payload: dict[str, Any]) -> dict[str, Any]:
             return {
                 "url": url,
                 "http_status": response.status,
-                "body": response_body[:10_000],
+                "body": response_body[:100_000],
             }
     except urllib.error.HTTPError as exc:
         response_body = exc.read(2_000).decode("utf-8", errors="replace")
@@ -136,7 +136,10 @@ def classify(registry: dict[str, Any], live: dict[str, Any] | None = None) -> st
     blocker = registry.get("blocker")
     if status in COMPLETE_STATUSES or status.endswith("published_verified"):
         return "completed"
-    if live and version_visible(registry, live.get("public_probe", {})):
+    if live and (
+        live.get("target_version_visible") is True
+        or version_visible(registry, live.get("public_probe", {}))
+    ):
         return "completion_candidates"
     if registry.get("publicationEvidence"):
         return "partial_publications"
