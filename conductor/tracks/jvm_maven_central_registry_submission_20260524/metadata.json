@@ -37,7 +37,7 @@
       "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
       "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false.",
       "workflowRuntimeFix": "Commit cde0439 sets the Maven Central publish workflow JDK to 17 so Gradle 9 can run; the binding module remains Java 11-targeted via Gradle configuration.",
-      "secretAudit20260613": "2026-06-13T04:41:31Z audit: no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names were present; GitHub repository secret list contains NUGET_API_KEY and OVSX_PAT only; CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are absent."
+      "secretAudit": "2026-06-13T04:41:31Z audit: no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names were present; GitHub repository secret list contains NUGET_API_KEY and OVSX_PAT only; CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are absent."
     },
     "submission_evidence": null,
     "publication_evidence": null
