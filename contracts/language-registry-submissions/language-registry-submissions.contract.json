@@ -528,8 +528,12 @@
         "cleanPackaging": "integrations/vscode/package.json declares @vscode/vsce and ovsx devDependencies so npm install can provision packaging/publish CLIs from a clean checkout.",
         "latestPublicProbe20260613": {
           "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
-          "openVsxApiHttpStatus": 404,
-          "openVsxApiResult": "Extension API still returned 404 immediately after successful workflow publication, consistent with propagation lag; not used as the completion signal.",
+          "openVsxApiHttpStatus": 200,
+          "openVsxApiResult": "Open VSX API returned edithatogo.mchs-tools version 0.1.0.",
+          "openVsxNamespace": "edithatogo",
+          "openVsxExtensionName": "mchs-tools",
+          "openVsxVersion": "0.1.0",
+          "openVsxTimestamp": "2026-06-13T03:46:01.067824Z",
           "openVsxPageUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
           "openVsxPageHttpStatus": 200,
           "openVsxPublishWorkflow": "https://github.com/edithatogo/mchs/actions/runs/27455601114",
@@ -539,8 +543,20 @@
           "visualStudioMarketplacePublisher": "edithatogo",
           "visualStudioMarketplaceExtensionName": "mchs-tools",
           "visualStudioMarketplaceDisplayName": "MCHS Tools",
-          "visualStudioMarketplaceVersion": "0.1.0"
+          "visualStudioMarketplaceVersion": "0.1.0",
+          "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z"
         }
+      },
+      "publication_claimed": true,
+      "publicationEvidence": {
+        "type": "public_registry_probe",
+        "asOf": "2026-06-13T05:17:42Z",
+        "openVsxUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
+        "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
+        "openVsxVersion": "0.1.0",
+        "visualStudioMarketplacePublisher": "edithatogo",
+        "visualStudioMarketplaceExtensionName": "mchs-tools",
+        "visualStudioMarketplaceVersion": "0.1.0"
       }
     },
     {
