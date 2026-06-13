@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-13T04:58:00Z",
+  "updated_at": "2026-06-13T06:00:00Z",
   "description": "R CRAN Registry Submission: discover, prepare, submit, and evidence CRAN publication for nwauR.",
   "registry_id": "r_cran",
   "current_status": "submitted_pending_cran_maintainer_confirmation",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "CRAN upload was submitted on 2026-06-13 through the CRAN submission service as package id 344701, which sent the maintainer confirmation email to Dylan Mordaunt <d.a.mordaunt@gmail.com>. No public CRAN publication is claimed. Public CRAN publication remains pending maintainer email confirmation, CRAN review, acceptance, and propagation.",
+  "blocker": "CRAN upload package id 344701 remains pending external confirmation/review. Follow-up public probes on 2026-06-13 still show CRAN DB 404, CRAN package page 404, CRAN archive 404, and no Gmail-visible confirmation email.",
   "submission_url": "cran-submit:344701",
   "publication_claimed": false,
   "package_evidence": {
@@ -61,6 +61,18 @@
         "packageArtifact": "nwauR_0.1.0.tar.gz",
         "packageSha256": "1a5aa4fa0b9ab39fbfface0ebb78c9b36cbb3a03944059c6823d8aaf0b2f932f",
         "committedGeneratedArtifact": false
+      },
+      "latestPublicProbe20260613FollowUp": {
+        "asOf": "2026-06-13T06:00:00Z",
+        "crandbUrl": "https://crandb.r-pkg.org/nwauR",
+        "crandbHttpStatus": 404,
+        "crandbResult": "not_found",
+        "cranPackageUrl": "https://cran.r-project.org/web/packages/nwauR/index.html",
+        "cranPackageHttpStatus": 404,
+        "cranArchiveUrl": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
+        "cranArchiveHttpStatus": 404,
+        "gmailSearch": "No Gmail messages matched CRAN/cransubmit/nwauR confirmation terms in the last 3 days using in:anywhere search.",
+        "result": "nwauR remains unpublished on public CRAN and CRAN archive; maintainer email confirmation/review remains pending."
       }
     },
     "submission_evidence": null,
