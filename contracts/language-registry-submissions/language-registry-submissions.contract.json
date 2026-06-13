@@ -182,7 +182,7 @@
         },
         "latestAsCranCheck20260613": {
           "asOf": "2026-06-13T04:55:49Z",
-          "buildCommand": "PATH=/opt/homebrew/bin:$PATH R CMD build /tmp/mchs-pr167/r-binding from /tmp/mchs-cran-ascran-f2UVoj",
+          "buildCommand": "R CMD build nwauR",
           "checkCommand": "R CMD check --as-cran nwauR_0.1.0.tar.gz",
           "result": "Status: 1 NOTE",
           "notes": [

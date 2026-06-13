@@ -51,13 +51,13 @@
       },
       "latestAsCranCheck20260613": {
         "asOf": "2026-06-13T04:55:49Z",
-        "buildCommand": "PATH=/opt/homebrew/bin:$PATH R CMD build /tmp/mchs-pr167/r-binding from /tmp/mchs-cran-ascran-f2UVoj",
+        "buildCommand": "R CMD build nwauR",
         "checkCommand": "R CMD check --as-cran nwauR_0.1.0.tar.gz",
         "result": "Status: 1 NOTE",
         "notes": [
           "CRAN incoming feasibility: new submission; upload submitted as CRAN package id 344701 pending maintainer confirmation."
         ],
-        "fixedSincePreviousCheck": "Installed Homebrew tidy-html5 and added r-binding/.Rbuildignore so HTML validation passes and cran-comments.md is not included as a non-standard top-level file.",
+        "fixedSincePreviousCheck": "Installed Homebrew tidy-html5 and added r-binding/.Rbuildignore so HTML validation passes and cran-comments.md is not included as a non-standard top-level file. Replaced placeholder CRAN maintainer metadata with Dylan Mordaunt <d.a.mordaunt.com> on 2026-06-13, then submitted CRAN upload package id 344701 and triggered the maintainer confirmation email.",
         "packageArtifact": "nwauR_0.1.0.tar.gz",
         "packageSha256": "1a5aa4fa0b9ab39fbfface0ebb78c9b36cbb3a03944059c6823d8aaf0b2f932f",
         "committedGeneratedArtifact": false
