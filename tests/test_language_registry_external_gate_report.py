@@ -26,30 +26,36 @@ def test_vscode_live_probe_requires_target_version_on_both_registries():
         "version": "0.1.1",
     }
 
-    assert module.vscode_target_version_visible(
-        registry,
-        {
-            "openvsx_probe": {
-                "http_status": 200,
-                "body": '"version":"0.1.1"',
+    assert (
+        module.vscode_target_version_visible(
+            registry,
+            {
+                "openvsx_probe": {
+                    "http_status": 200,
+                    "body": '"version":"0.1.1"',
+                },
+                "marketplace_probe": {
+                    "http_status": 200,
+                    "body": '"version":"0.1.0"',
+                },
             },
-            "marketplace_probe": {
-                "http_status": 200,
-                "body": '"version":"0.1.0"',
-            },
-        },
-    ) is False
+        )
+        is False
+    )
 
-    assert module.vscode_target_version_visible(
-        registry,
-        {
-            "openvsx_probe": {
-                "http_status": 200,
-                "body": '"version":"0.1.1"',
+    assert (
+        module.vscode_target_version_visible(
+            registry,
+            {
+                "openvsx_probe": {
+                    "http_status": 200,
+                    "body": '"version":"0.1.1"',
+                },
+                "marketplace_probe": {
+                    "http_status": 200,
+                    "body": '"version":"0.1.1"',
+                },
             },
-            "marketplace_probe": {
-                "http_status": 200,
-                "body": '"version":"0.1.1"',
-            },
-        },
-    ) is True
+        )
+        is True
+    )
