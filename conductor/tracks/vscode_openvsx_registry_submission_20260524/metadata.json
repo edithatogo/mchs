@@ -1,20 +1,20 @@
 {
   "track_id": "vscode_openvsx_registry_submission_20260524",
   "type": "chore",
-  "status": "completed",
+  "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-13T05:17:42Z",
+  "updated_at": "2026-06-13T05:28:00Z",
   "description": "VS Code/Open VSX Extension Submission: discover, prepare, submit, and evidence Open VSX / Visual Studio Marketplace publication for mchs-tools.",
   "registry_id": "vscode_openvsx",
-  "current_status": "published_verified",
-  "publication_status": "published",
+  "current_status": "published_verified_openvsx_marketplace_republish_blocked",
+  "publication_status": "partially_published",
   "local_readiness_resolved": true,
-  "blocker": null,
-  "publication_claimed": true,
+  "blocker": "Repository README/package metadata have been bumped to mchs-tools 0.1.1 to remove stale publisher-gated text from the packaged VSIX. Open VSX can be republished with configured OVSX_PAT; Visual Studio Marketplace republish is blocked until VSCE_PAT is configured. Existing Visual Studio Marketplace 0.1.0 publication remains verified, but 0.1.1 Marketplace propagation is not claimed.",
+  "publication_claimed": false,
   "package_evidence": {
-    "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix",
+    "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix",
     "artifact_sha256": "73db22882af022750ce7846ecd687dea0b7d383a12f6e9767a7eadbd63f1e4ef",
-    "discovery_result": "Open VSX and Visual Studio Marketplace both publish edithatogo.mchs-tools version 0.1.0.",
+    "discovery_result": "Open VSX and Visual Studio Marketplace both publish edithatogo.mchs-tools version 0.1.0. Version 0.1.1 is prepared to refresh stale README text; Open VSX republish is credential-ready, Visual Studio Marketplace republish requires VSCE_PAT.",
     "credential_attempt": "Resolved on 2026-06-13: Eclipse publisher agreement accepted, OVSX_PAT created and stored as a GitHub secret, Open VSX namespace edithatogo created, and workflow run https://github.com/edithatogo/mchs/actions/runs/27455601114 published edithatogo.mchs-tools v0.1.0.",
     "latest_public_probe_20260612": {
       "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
@@ -47,12 +47,22 @@
       "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z"
     },
     "publication_evidence": {
+      "type": "partial_public_registry_probe",
+      "asOf": "2026-06-13T05:28:00Z",
       "openVsxUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
       "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
+      "openVsxVerifiedVersionBeforeReadmeRefresh": "0.1.0",
       "visualStudioMarketplacePublisher": "edithatogo",
       "visualStudioMarketplaceExtensionName": "mchs-tools",
-      "version": "0.1.0",
-      "asOf": "2026-06-13T05:17:42Z"
+      "visualStudioMarketplaceVerifiedVersionBeforeReadmeRefresh": "0.1.0",
+      "followUp": "Publish and verify 0.1.1 after README refresh; Marketplace requires VSCE_PAT."
+    },
+    "readme_refresh_20260613": {
+      "asOf": "2026-06-13T05:28:00Z",
+      "packageVersion": "0.1.1",
+      "reason": "Remove stale publication-gated README text from the packaged extension before closing the publication track.",
+      "openVsxCredentialState": "OVSX_PAT configured as a GitHub secret.",
+      "visualStudioMarketplaceCredentialState": "VSCE_PAT is not configured as a GitHub secret, so Marketplace 0.1.1 republish remains blocked."
     }
   },
   "submission_url": "https://open-vsx.org/extension/edithatogo/mchs-tools"

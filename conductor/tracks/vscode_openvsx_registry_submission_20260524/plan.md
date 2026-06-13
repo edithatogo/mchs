@@ -21,14 +21,14 @@
 
 - [x] Task: Submit to `Open VSX / Visual Studio Marketplace` using an authenticated publisher workflow.
     - [x] Use dry-run or validation mode first where available.
-    - [x] Publish to Open VSX and Visual Studio Marketplace. Open VSX workflow run https://github.com/edithatogo/mchs/actions/runs/27455601114 published `edithatogo.mchs-tools` v0.1.0 after namespace creation and OVSX_PAT configuration; Visual Studio Marketplace public gallery query returns `edithatogo.mchs-tools` v0.1.0.
+    - [~] Publish refreshed extension packages after README correction. Open VSX workflow run https://github.com/edithatogo/mchs/actions/runs/27455601114 published `edithatogo.mchs-tools` v0.1.0 after namespace creation and OVSX_PAT configuration; Visual Studio Marketplace public gallery query returns `edithatogo.mchs-tools` v0.1.0. Version `0.1.1` now updates the packaged README; Open VSX republish can use configured `OVSX_PAT`, while Visual Studio Marketplace `0.1.1` republish is blocked until `VSCE_PAT` is configured.
     - [x] Capture submission URL, version, owner, and review state. Open VSX URL: https://open-vsx.org/extension/edithatogo/mchs-tools; Open VSX API returned version `0.1.0` with timestamp `2026-06-13T03:46:01.067824Z`; Visual Studio Marketplace returned publisher `edithatogo`, extension `mchs-tools`, version `0.1.0`, last updated `2026-06-12T12:04:06.657Z`.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Evidence-only closure: public registry probes confirm publication; no generated VSIX artifact is committed.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md). Pending refreshed `0.1.1` publication evidence after README correction.
 
 ## Phase 4: Publication Evidence
 
-- [x] Task: Verify external publication.
-    - [x] Query public registry after propagation.
-    - [x] Record immutable URL/API response/checksum.
-    - [x] Mark track complete only if publication or accepted-review evidence exists.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md).
+- [~] Task: Verify external publication.
+    - [~] Query public registry after propagation. Open VSX and Visual Studio Marketplace both verify `0.1.0`; refreshed `0.1.1` verification is pending.
+    - [x] Record immutable URL/API response/checksum for `0.1.0`; record `0.1.1` after republish.
+    - [ ] Mark track complete only after refreshed `0.1.1` publication evidence exists for the claimed registry surfaces.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md). Pending refreshed publication evidence.

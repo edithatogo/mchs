@@ -8,7 +8,7 @@ VS Code helper extension scaffold for MCHS contract, MCP, and CLI workflows.
 
 ## Publication status
 
-The extension source is repo-ready for Open VSX and Visual Studio Marketplace packaging. External publication remains gated by publisher account setup, publisher agreement acceptance, and registry access tokens.
+The extension is published as `edithatogo.mchs-tools` on Open VSX and Visual Studio Marketplace. Version `0.1.1` refreshes this README so the packaged extension no longer describes already-completed publisher setup as a remaining user-facing blocker.
 
 ## Local packaging
 
