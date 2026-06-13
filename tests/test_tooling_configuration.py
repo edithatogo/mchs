@@ -227,7 +227,7 @@ def test_release_workflow_builds_and_publishes_tagged_releases():
     assert '      - "v*"' in workflow
     assert "contents: write" in workflow
     assert "uv build" in workflow
-    assert "actions/upload-artifact@v7" in workflow
+    assert "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7" in workflow
     assert "softprops/action-gh-release@v3" in workflow
     assert "generate_release_notes: true" in workflow
 
