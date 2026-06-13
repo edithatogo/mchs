@@ -517,8 +517,8 @@
       "preparationEvidence": {
         "discovery": "https://open-vsx.org/api/edithatogo/mchs-tools returned Extension not found.",
         "packageCommand": "npx --yes @vscode/vsce package --no-dependencies",
-        "artifact": "integrations/vscode/mchs-tools.vsix",
-        "packageResult": "2026-06-13 merged workflow dry-run https://github.com/edithatogo/mchs/actions/runs/27455041574 packaged integrations/vscode/mchs-tools.vsix successfully.",
+        "artifact": "integrations/vscode/mchs-tools.vsix via explicit vsce --out; plain vsce package defaults to mchs-tools-0.1.0.vsix.",
+        "packageResult": "2026-06-13 merged workflow dry-run https://github.com/edithatogo/mchs/actions/runs/27455041574 packaged integrations/vscode/mchs-tools.vsix successfully using the explicit --out workflow command.",
         "fixedLocalBlocker": "Added local LICENSE and files allowlist to package.json.",
         "credentialAttemptEvidence": "2026-06-12 recheck: `npx ovsx publish mchs-tools-0.1.0.vsix` prompted for a Personal Access Token for namespace `edithatogo` and failed with `Invalid access token` because no OVSX_PAT is available. In Chrome, GitHub login succeeded as `edithatogo`; Open VSX Access Tokens still refused token creation because no Eclipse Foundation Open VSX Publisher Agreement is attached. The Profile page asked for Eclipse OAuth login; the OAuth attempt returned to Open VSX without attaching agreement state and left the session logged out. 2026-06-12T12:12:06Z credential audit found no local OVSX, VSCE, or AZURE_DEVOPS environment variable names, no installed ovsx or vsce CLI binaries, and GitHub repository secrets still show only NUGET_API_KEY.",
         "remainingExternalBlocker": "Open VSX requires Eclipse OAuth Publisher Agreement completion and PAT creation. Visual Studio Marketplace is public for version 0.1.0.",

@@ -40,11 +40,11 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Extension: `edithatogo.mchs-tools@0.1.0`
 - Required credentials: Open VSX token for remaining Open VSX publication.
 - Credential status: Open VSX GitHub login succeeds as `edithatogo`, but token creation remains blocked because the Access Tokens page still reports no Eclipse Foundation Open VSX Publisher Agreement signed. The Profile page requires Eclipse OAuth login; the 2026-06-12 Eclipse OAuth attempt returned to Open VSX without attaching agreement state and left the session logged out. CLI publish reaches the namespace PAT prompt and fails without a valid `OVSX_PAT`. Visual Studio Marketplace is publicly listed for `edithatogo.mchs-tools@0.1.0`.
-- Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools.vsix`
+- Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools.vsix` when packaged with the workflow command `npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix`; plain `vsce package` defaults to the versioned filename `mchs-tools-0.1.0.vsix`.
 - Latest artifact evidence: merged workflow dry-run `https://github.com/edithatogo/mchs/actions/runs/27455041574` packaged the VSIX successfully on 2026-06-13.
 - Latest public probe on 2026-06-13: Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` returned HTTP 404; Visual Studio Marketplace extension query for `edithatogo.mchs-tools` returned publisher `edithatogo`, extension `mchs-tools`, display name `MCHS Tools`, and version `0.1.0`.
-- Open VSX command: `npx --yes ovsx publish microcosting_healthservices/integrations/vscode/mchs-tools.vsix --pat "$OVSX_PAT"`
-- Marketplace command for future updates: `npx --yes @vscode/vsce publish --packagePath microcosting_healthservices/integrations/vscode/mchs-tools.vsix --pat "$VSCE_PAT"`
+- Open VSX command: `cd microcosting_healthservices/integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package ovsx ovsx publish mchs-tools.vsix --pat "$OVSX_PAT"`
+- Marketplace command for future updates: `cd microcosting_healthservices/integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools.vsix --pat "$VSCE_PAT"`
 
 ## Maintainer-review or PR-gated submissions
 
