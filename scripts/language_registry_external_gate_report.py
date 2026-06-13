@@ -40,6 +40,13 @@ PUBLIC_PROBES = {
     "julia_general": "https://juliahub.com/ui/Packages/General/NationalWeightedActivityUnitWrapper",
 }
 
+OPEN_VSX_API = "https://open-vsx.org/api/edithatogo/mchs-tools"
+VSCODE_MARKETPLACE_QUERY_URL = (
+    "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery"
+    "?api-version=7.2-preview.1"
+)
+VSCODE_MARKETPLACE_EXTENSION_ID = "edithatogo.mchs-tools"
+
 
 def fetch(url: str) -> dict[str, Any]:
     if urlparse(url).scheme != "https":
@@ -58,6 +65,35 @@ def fetch(url: str) -> dict[str, Any]:
         return {"url": url, "error": type(exc).__name__, "message": str(exc)}
 
 
+def fetch_post_json(url: str, payload: dict[str, Any]) -> dict[str, Any]:
+    if urlparse(url).scheme != "https":
+        return {"url": url, "error": "unsupported_scheme"}
+    body = json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "mchs-registry-gate-report/1.0",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:  # nosec B310
+            response_body = response.read(2_000_000).decode("utf-8", errors="replace")
+            return {
+                "url": url,
+                "http_status": response.status,
+                "body": response_body[:100_000],
+            }
+    except urllib.error.HTTPError as exc:
+        response_body = exc.read(2_000).decode("utf-8", errors="replace")
+        return {"url": url, "http_status": exc.code, "body": response_body}
+    except Exception as exc:
+        return {"url": url, "error": type(exc).__name__, "message": str(exc)}
+
+
 def version_visible(registry: dict[str, Any], probe: dict[str, Any]) -> bool:
     if probe.get("http_status") != 200:
         return False
@@ -66,12 +102,44 @@ def version_visible(registry: dict[str, Any], probe: dict[str, Any]) -> bool:
     return bool(version and version in body)
 
 
+def vscode_marketplace_payload() -> dict[str, Any]:
+    return {
+        "filters": [
+            {
+                "criteria": [
+                    {
+                        "filterType": 7,
+                        "value": VSCODE_MARKETPLACE_EXTENSION_ID,
+                    }
+                ],
+                "pageNumber": 1,
+                "pageSize": 1,
+                "sortBy": 0,
+                "sortOrder": 0,
+            }
+        ],
+        "assetTypes": [],
+        "flags": 914,
+    }
+
+
+def vscode_target_version_visible(
+    registry: dict[str, Any], observation: dict[str, Any]
+) -> bool:
+    return version_visible(registry, observation.get("openvsx_probe", {})) and (
+        version_visible(registry, observation.get("marketplace_probe", {}))
+    )
+
+
 def classify(registry: dict[str, Any], live: dict[str, Any] | None = None) -> str:
     status = str(registry.get("current_status") or "").lower()
     blocker = registry.get("blocker")
     if status in COMPLETE_STATUSES or status.endswith("published_verified"):
         return "completed"
-    if live and version_visible(registry, live.get("public_probe", {})):
+    if live and (
+        live.get("target_version_visible") is True
+        or version_visible(registry, live.get("public_probe", {}))
+    ):
         return "completion_candidates"
     if registry.get("publicationEvidence"):
         return "partial_publications"
@@ -99,7 +167,16 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
         registry_id = registry.get("id")
         observation: dict[str, Any] = {}
         if live:
-            if registry_id in PUBLIC_PROBES:
+            if registry_id == "vscode_openvsx":
+                observation["openvsx_probe"] = fetch(OPEN_VSX_API)
+                observation["marketplace_probe"] = fetch_post_json(
+                    VSCODE_MARKETPLACE_QUERY_URL,
+                    vscode_marketplace_payload(),
+                )
+                observation["target_version_visible"] = vscode_target_version_visible(
+                    registry, observation
+                )
+            elif registry_id in PUBLIC_PROBES:
                 observation["public_probe"] = fetch(PUBLIC_PROBES[registry_id])
                 observation["target_version_visible"] = version_visible(
                     registry, observation["public_probe"]
