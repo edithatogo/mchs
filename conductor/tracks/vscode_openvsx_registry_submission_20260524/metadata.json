@@ -27,24 +27,26 @@
       "visualStudioMarketplaceTotalCount": 0
     },
     "latest_public_probe_20260613": {
+      "asOf": "2026-06-13T05:43:00Z",
       "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
       "openVsxApiHttpStatus": 200,
-      "openVsxApiResult": "Open VSX API returned edithatogo.mchs-tools version 0.1.0.",
+      "openVsxApiResult": "Open VSX API returned edithatogo.mchs-tools version 0.1.1 after README refresh publication.",
       "openVsxNamespace": "edithatogo",
       "openVsxExtensionName": "mchs-tools",
-      "openVsxVersion": "0.1.0",
-      "openVsxTimestamp": "2026-06-13T03:46:01.067824Z",
+      "openVsxVersion": "0.1.1",
+      "openVsxTimestamp": "2026-06-13T05:28:35.187880Z",
       "openVsxPageUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
       "openVsxPageHttpStatus": 200,
-      "openVsxPublishWorkflow": "https://github.com/edithatogo/mchs/actions/runs/27455601114",
-      "openVsxPublishResult": "Published edithatogo.mchs-tools v0.1.0",
+      "openVsxPublishWorkflow": "https://github.com/edithatogo/mchs/actions/runs/27457810800",
+      "openVsxPublishResult": "Published edithatogo.mchs-tools v0.1.1",
       "visualStudioMarketplaceQuery": "publisher.extensionName = edithatogo.mchs-tools",
       "visualStudioMarketplaceHttpStatus": 200,
       "visualStudioMarketplacePublisher": "edithatogo",
       "visualStudioMarketplaceExtensionName": "mchs-tools",
       "visualStudioMarketplaceDisplayName": "MCHS Tools",
       "visualStudioMarketplaceVersion": "0.1.0",
-      "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z"
+      "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z",
+      "visualStudioMarketplaceBlocker": "VSCE_PAT is not configured as a GitHub secret, so v0.1.1 Marketplace publication is not claimed."
     },
     "publication_evidence": {
       "type": "partial_publication_verified",
@@ -85,6 +87,26 @@
       "openVsxPublishResult": "Published edithatogo.mchs-tools v0.1.1",
       "visualStudioMarketplaceVersion": "0.1.0",
       "visualStudioMarketplaceBlocker": "VSCE_PAT is not configured as a GitHub secret."
+    },
+    "previous_public_probe_20260613": {
+      "openVsxApiUrl": "https://open-vsx.org/api/edithatogo/mchs-tools",
+      "openVsxApiHttpStatus": 200,
+      "openVsxApiResult": "Open VSX API returned edithatogo.mchs-tools version 0.1.0.",
+      "openVsxNamespace": "edithatogo",
+      "openVsxExtensionName": "mchs-tools",
+      "openVsxVersion": "0.1.0",
+      "openVsxTimestamp": "2026-06-13T03:46:01.067824Z",
+      "openVsxPageUrl": "https://open-vsx.org/extension/edithatogo/mchs-tools",
+      "openVsxPageHttpStatus": 200,
+      "openVsxPublishWorkflow": "https://github.com/edithatogo/mchs/actions/runs/27455601114",
+      "openVsxPublishResult": "Published edithatogo.mchs-tools v0.1.0",
+      "visualStudioMarketplaceQuery": "publisher.extensionName = edithatogo.mchs-tools",
+      "visualStudioMarketplaceHttpStatus": 200,
+      "visualStudioMarketplacePublisher": "edithatogo",
+      "visualStudioMarketplaceExtensionName": "mchs-tools",
+      "visualStudioMarketplaceDisplayName": "MCHS Tools",
+      "visualStudioMarketplaceVersion": "0.1.0",
+      "visualStudioMarketplaceLastUpdated": "2026-06-12T12:04:06.657Z"
     }
   },
   "submission_url": "https://open-vsx.org/extension/edithatogo/mchs-tools"
