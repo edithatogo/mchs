@@ -144,19 +144,19 @@
       "package": "nwauR",
       "version": "0.1.0",
       "local_surface": "r-binding/DESCRIPTION",
-      "current_status": "prepared_pending_cran_submission",
+      "current_status": "submitted_pending_cran_maintainer_confirmation",
       "track": "r_cran_registry_submission_20260524",
-      "submission_url": null,
-      "blocker": "CRAN maintainer submission and review are required; no public CRAN publication is claimed. A 2026-06-12T12:18:08Z public probe still found nwauR absent from CRANDB, the CRAN package page, and the CRAN archive. A fresh 2026-06-12T13:40:27Z temp-directory R CMD check --as-cran produced nwauR_0.1.0.tar.gz with SHA-256 13e4f96f1e75908cd6b255d9eb4daa610afd546d19b4d65f750eeedff26d09ad and Status: 1 NOTE after installing current Homebrew tidy-html5 and excluding cran-comments.md via r-binding/.Rbuildignore. The repo-side placeholder maintainer blocker was resolved on 2026-06-13 by setting the CRAN maintainer to Dylan Mordaunt <d.a.mordaunt@gmail.com>; maintainer submission, CRAN email confirmation, review, and public CRAN publication remain pending.",
+      "submission_url": "cran-submit:344701",
+      "blocker": "CRAN upload was submitted on 2026-06-13 through the CRAN submission service as package id 344701, which sent the maintainer confirmation email to Dylan Mordaunt <d.a.mordaunt@gmail.com>. No public CRAN publication is claimed. Public CRAN publication remains pending maintainer email confirmation, CRAN review, acceptance, and propagation.",
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "https://crandb.r-pkg.org/nwauR returned not_found/document not found.",
         "buildCommand": "R CMD build r-binding",
         "packageArtifact": "nwauR_0.1.0.tar.gz",
-        "packageSha256": "13e4f96f1e75908cd6b255d9eb4daa610afd546d19b4d65f750eeedff26d09ad",
+        "packageSha256": "1a5aa4fa0b9ab39fbfface0ebb78c9b36cbb3a03944059c6823d8aaf0b2f932f",
         "checkCommand": "R CMD check --no-manual nwauR_0.1.0.tar.gz",
         "checkResult": "Status: OK",
-        "remainingExternalBlocker": "CRAN maintainer submission/review is required; maintainer metadata now uses Dylan Mordaunt <d.a.mordaunt@gmail.com>, but CRAN submission, email confirmation, review, and public publication remain pending.",
+        "remainingExternalBlocker": "CRAN upload package id 344701 has been submitted and the maintainer confirmation email was sent to Dylan Mordaunt <d.a.mordaunt@gmail.com>; maintainer email confirmation, CRAN review, acceptance, and public publication remain pending.",
         "latestPublicProbe20260612": {
           "asOf": "2026-06-12T12:18:08Z",
           "crandbUrl": "https://crandb.r-pkg.org/nwauR",
@@ -180,17 +180,17 @@
           "packageSha256": "12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2",
           "committedGeneratedArtifact": false
         },
-        "latestAsCranCheck20260612": {
-          "asOf": "2026-06-12T13:40:27Z",
-          "buildCommand": "PATH=/opt/homebrew/bin:$PATH R CMD build /tmp/mchs-pr167/r-binding from /tmp/mchs-cran-ascran-f2UVoj",
-          "checkCommand": "PATH=/opt/homebrew/bin:$PATH R CMD check --as-cran /tmp/mchs-cran-ascran-f2UVoj/nwauR_0.1.0.tar.gz --output=/tmp/mchs-cran-ascran-f2UVoj",
+        "latestAsCranCheck20260613": {
+          "asOf": "2026-06-13T04:55:49Z",
+          "buildCommand": "R CMD build nwauR",
+          "checkCommand": "R CMD check --as-cran nwauR_0.1.0.tar.gz",
           "result": "Status: 1 NOTE",
           "notes": [
-            "CRAN incoming feasibility: Maintainer was previously placeholder metadata; new submission."
+            "CRAN incoming feasibility: new submission; upload submitted as CRAN package id 344701 pending maintainer confirmation."
           ],
-          "fixedSincePreviousCheck": "Installed Homebrew tidy-html5 and added r-binding/.Rbuildignore so HTML validation passes and cran-comments.md is not included as a non-standard top-level file. Replaced placeholder CRAN maintainer metadata with Dylan Mordaunt <d.a.mordaunt@gmail.com> on 2026-06-13.",
-          "packageArtifact": "/tmp/mchs-cran-ascran-f2UVoj/nwauR_0.1.0.tar.gz",
-          "packageSha256": "13e4f96f1e75908cd6b255d9eb4daa610afd546d19b4d65f750eeedff26d09ad",
+          "fixedSincePreviousCheck": "Installed Homebrew tidy-html5 and added r-binding/.Rbuildignore so HTML validation passes and cran-comments.md is not included as a non-standard top-level file. Replaced placeholder CRAN maintainer metadata with Dylan Mordaunt <d.a.mordaunt@gmail.com> on 2026-06-13, then submitted CRAN upload package id 344701 and triggered the maintainer confirmation email.",
+          "packageArtifact": "nwauR_0.1.0.tar.gz",
+          "packageSha256": "1a5aa4fa0b9ab39fbfface0ebb78c9b36cbb3a03944059c6823d8aaf0b2f932f",
           "committedGeneratedArtifact": false
         }
       }
