@@ -2,7 +2,7 @@
   "name": "mchs-tools",
   "displayName": "MCHS Tools",
   "description": "VS Code helper extension scaffold for MCHS contract, MCP, and CLI workflows.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "edithatogo",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
