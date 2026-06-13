@@ -180,8 +180,8 @@
           "packageSha256": "12d6fd831a202ed9a480a36e64ac01f7410296d0bc3a5aae75dccdebaadd19d2",
           "committedGeneratedArtifact": false
         },
-        "latestAsCranCheck20260612": {
-          "asOf": "2026-06-12T13:40:27Z",
+        "latestAsCranCheck20260613": {
+          "asOf": "2026-06-13T04:55:49Z",
           "buildCommand": "PATH=/opt/homebrew/bin:$PATH R CMD build /tmp/mchs-pr167/r-binding from /tmp/mchs-cran-ascran-f2UVoj",
           "checkCommand": "R CMD check --as-cran nwauR_0.1.0.tar.gz",
           "result": "Status: 1 NOTE",
