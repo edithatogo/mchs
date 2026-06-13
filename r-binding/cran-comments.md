@@ -1,8 +1,7 @@
 ## Test environments
 
 * local macOS aarch64, R 4.6.0
-* 2026-06-12 temp-directory `R CMD build` and `R CMD check --no-manual`: OK
-* 2026-06-12 temp-directory `R CMD build` and `R CMD check --as-cran`: 1 NOTE
+* 2026-06-13 temp-directory `R CMD build` and `R CMD check --as-cran`: 1 NOTE
 
 ## R CMD check results
 
@@ -10,13 +9,9 @@
 
 `R CMD check --as-cran` produced 1 NOTE:
 
-* CRAN incoming feasibility reports this as a new submission. The maintainer
-  metadata has since been updated to `Dylan Mordaunt <d.a.mordaunt@gmail.com>`
-  for CRAN confirmation.
+* CRAN incoming feasibility reports this as a new submission. Maintainer is `Dylan Mordaunt <d.a.mordaunt@gmail.com>` for CRAN confirmation.
 
-Latest `--as-cran` checked artifact SHA-256:
-
-`13e4f96f1e75908cd6b255d9eb4daa610afd546d19b4d65f750eeedff26d09ad`
+Latest `--as-cran` checked artifact was built from `r-binding` on 2026-06-13.
 
 ## Submission notes
 

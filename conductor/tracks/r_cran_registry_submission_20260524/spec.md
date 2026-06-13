@@ -23,7 +23,7 @@ Track discovery, local preparation, submission, and publication evidence for the
 
 ## Current Blocker
 
-CRAN maintainer submission and review are required; no public CRAN publication is claimed.
+CRAN upload was submitted on 2026-06-13 as package id 344701 and is pending maintainer email confirmation; no public CRAN publication is claimed.
 
 ## Evidence
 
