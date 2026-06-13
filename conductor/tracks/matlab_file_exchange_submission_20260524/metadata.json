@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T12:18:08Z",
+  "updated_at": "2026-06-13T06:00:00Z",
   "description": "MATLAB File Exchange Submission: discover, prepare, submit, and evidence MATLAB File Exchange publication for mchs-matlab-interop.",
   "registry_id": "matlab_file_exchange",
   "current_status": "prepared_pending_file_exchange_upload",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "MATLAB File Exchange upload requires a MathWorks account/session and manual submission/review workflow; MATLAB/Octave runtime validation is not claimed because neither matlab nor octave is available on PATH. A 2026-06-12T12:18:08Z public File Exchange search for mchs-matlab-interop returned HTTP 200 but no exact listing match, so no public listing is claimed.",
+  "blocker": "MATLAB File Exchange search remains reachable but no exact mchs-matlab-interop listing is verified; upload/review remains MathWorks-account gated.",
   "publication_claimed": false,
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip",
@@ -27,6 +27,18 @@
       "matlabCliAvailable": false,
       "octaveCliAvailable": false,
       "bundleSha256Rechecked": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c"
+    },
+    "latestPublicProbe20260613FollowUp": {
+      "asOf": "2026-06-13T06:00:00Z",
+      "exactSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs-matlab-interop",
+      "exactSearchHttpStatus": 200,
+      "exactSearchResult": "Search page reachable; no exact mchs-matlab-interop listing match verified.",
+      "broadSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs",
+      "broadSearchHttpStatus": 200,
+      "broadSearchResult": "Search page reachable; no exact mchs-matlab-interop listing verified.",
+      "matlabCliAvailable": false,
+      "octaveCliAvailable": false,
+      "result": "MATLAB File Exchange remains unpublished/unverified and upload remains MathWorks-account gated."
     }
   }
 }

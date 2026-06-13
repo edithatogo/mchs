@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-13T04:41:31Z",
+  "updated_at": "2026-06-13T06:00:00Z",
   "description": "JVM Maven Central Registry Submission: discover, prepare, submit, and evidence Maven Central publication for io.github.edithatogo:mchs.",
   "registry_id": "jvm_maven_central",
   "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in. GitHub Actions Maven Central dry-run passes. A 2026-06-13T04:41:31Z credential audit found no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names and GitHub repository secrets show NUGET_API_KEY and OVSX_PAT only; required Maven Central secrets CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are not configured. Namespace verification, signing key material, authenticated Central Portal release, and public Maven Central verification remain pending.",
+  "blocker": "Maven Central remains unpublished. A local GPG secret key exists, but no Central Portal URL/credentials, Maven settings, Gradle properties, or GitHub Central/signing secrets are configured.",
   "submission_url": null,
   "publication_claimed": false,
   "package_evidence": {
@@ -37,7 +37,27 @@
       "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
       "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false.",
       "workflowRuntimeFix": "Commit cde0439 sets the Maven Central publish workflow JDK to 17 so Gradle 9 can run; the binding module remains Java 11-targeted via Gradle configuration.",
-      "secretAudit": "2026-06-13T04:41:31Z audit: no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names were present; GitHub repository secret list contains NUGET_API_KEY and OVSX_PAT only; CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are absent."
+      "secretAudit": "2026-06-13T04:41:31Z audit: no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names were present; GitHub repository secret list contains NUGET_API_KEY and OVSX_PAT only; CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are absent.",
+      "latestPublicProbe20260613FollowUp": {
+        "asOf": "2026-06-13T06:00:00Z",
+        "searchUrl": "https://search.maven.org/solrsearch/select?q=g:%22io.github.edithatogo%22%20AND%20a:%22mchs%22&rows=20&wt=json",
+        "numFound": 0,
+        "githubSecretsPresent": [
+          "NUGET_API_KEY",
+          "OVSX_PAT"
+        ],
+        "missingSecrets": [
+          "CENTRAL_PORTAL_DEPLOY_URL",
+          "CENTRAL_PORTAL_USERNAME",
+          "CENTRAL_PORTAL_PASSWORD",
+          "MAVEN_SIGNING_KEY",
+          "MAVEN_SIGNING_PASSWORD"
+        ],
+        "localGpgSecretKeyObserved": true,
+        "localMavenSettingsPresent": false,
+        "localGradlePropertiesPresent": false,
+        "result": "Maven Central publication remains blocked on Central Portal credentials and exported in-memory signing key/password secrets."
+      }
     },
     "submission_evidence": null,
     "publication_evidence": null
