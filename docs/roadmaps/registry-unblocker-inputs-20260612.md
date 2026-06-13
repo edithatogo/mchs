@@ -59,23 +59,20 @@ Completion evidence required:
 - Authenticated Central Portal publish workflow run with `dry_run=false`.
 - Public Maven Central metadata for `io.github.edithatogo:mchs:0.1.0`.
 
-### Open VSX / Visual Studio Marketplace `mchs-tools`
+### Open VSX `mchs-tools`
 
-Current state: VSIX is buildable; Open VSX CLI still prompts for a namespace
-PAT instead of publishing; Visual Studio Marketplace publisher/PAT access is not
-configured.
+Current state: VSIX is buildable; the merged VS Code extension publish workflow
+dry-run packages successfully; Visual Studio Marketplace now exposes
+`edithatogo.mchs-tools` version `0.1.0` publicly; Open VSX CLI still prompts for
+a namespace PAT instead of publishing and the public Open VSX API returns 404.
 
 Required external inputs:
 
 - Valid `OVSX_PAT` for namespace `edithatogo`.
-- Visual Studio Marketplace publisher identity.
-- Visual Studio Marketplace PAT with extension publish permissions.
 
 Completion evidence required:
 
 - Successful Open VSX publish or public Open VSX API/listing response.
-- Successful Visual Studio Marketplace publish or marketplace extension query
-  returning `edithatogo.mchs-tools`.
 
 ### CRAN `nwauR`
 
