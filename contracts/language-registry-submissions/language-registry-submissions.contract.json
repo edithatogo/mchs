@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-06-13",
+  "asOf": "2026-06-14T01:08:00+10:00",
   "purpose": "Track every language/package registry through discovery, preparation, submission, and evidence capture without overclaiming publication.",
   "registries": [
     {

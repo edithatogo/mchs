@@ -1,7 +1,7 @@
 # MCP Registry Submission Decisions
 
 Date created: 2026-05-17
-Last updated: 2026-05-26
+Last updated: 2026-06-14
 
 ## Current Artifact
 
