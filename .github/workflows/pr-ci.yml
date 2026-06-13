@@ -275,6 +275,7 @@ jobs:
         with:
           files: ./coverage.xml
           fail_ci_if_error: true
+          override_pr: ${{ github.event.pull_request.number }}
           use_oidc: true
 
   slow_validation:

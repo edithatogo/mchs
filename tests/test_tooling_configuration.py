@@ -152,6 +152,7 @@ def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
         not in workflow
     )
     assert "run: uv run pytest --cov=nwau_py --cov-report=term-missing" in workflow
+    assert "override_pr: ${{ github.event.pull_request.number }}" in workflow
 
     assert workflow.index("Sync environment") < workflow.index("Check formatting")
     assert workflow.index("Check formatting") < workflow.index("Run lint")
