@@ -49,14 +49,14 @@
       "matlabCliAvailable": false,
       "octaveCliAvailable": false,
       "runtimeValidationClaimed": false
-    },
-    "publication_evidence": {
-      "type": "public_registry_page",
-      "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
-      "version": "0.1.0",
-      "verifiedAt": "2026-06-14T01:08:00+10:00",
-      "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central"
     }
+  },
+  "publication_evidence": {
+    "type": "public_registry_page",
+    "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+    "version": "0.1.0",
+    "verifiedAt": "2026-06-14T01:08:00+10:00",
+    "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central"
   },
   "submission_url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop"
 }
