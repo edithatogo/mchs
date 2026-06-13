@@ -62,17 +62,21 @@ Completion evidence required:
 ### Open VSX `mchs-tools`
 
 Current state: VSIX is buildable; the merged VS Code extension publish workflow
-dry-run packages successfully; Visual Studio Marketplace now exposes
-`edithatogo.mchs-tools` version `0.1.0` publicly; Open VSX CLI still prompts for
-a namespace PAT instead of publishing and the public Open VSX API returns 404.
+dry-run packages successfully; Visual Studio Marketplace exposes
+`edithatogo.mchs-tools` version `0.1.0` publicly; Open VSX Access Tokens became
+available after the Eclipse publisher agreement was accepted; namespace
+`edithatogo` was created; workflow run
+`https://github.com/edithatogo/mchs/actions/runs/27455601114` published
+`edithatogo.mchs-tools v0.1.0`; the Open VSX extension page returns HTTP 200,
+while the API endpoint may still be propagating.
 
 Required external inputs:
 
-- Valid `OVSX_PAT` for namespace `edithatogo`.
+- None for initial `0.1.0` publication.
 
 Completion evidence required:
 
-- Successful Open VSX publish or public Open VSX API/listing response.
+- Successful Open VSX publish workflow and public Open VSX listing response.
 
 ### CRAN `nwauR`
 
