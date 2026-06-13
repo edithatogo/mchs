@@ -45,8 +45,8 @@ jobs:
   static-validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - run: python scripts/validate_power_platform_static.py
@@ -61,8 +61,8 @@ jobs:
     name: Aggregate readiness preflight (local-only)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - run: python scripts/validate_power_platform_repo_health.py
@@ -77,8 +77,8 @@ jobs:
       matrix:
         gate: [pack, check, import]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.11'
       - run: bash scripts/power-platform-alm-lifecycle-gates.sh --gate ${{ matrix.gate }}
@@ -88,5 +88,5 @@ jobs:
     runs-on: ubuntu-latest
     environment: nsw-power-platform
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: echo "Deployment is intentionally environment-gated and requires pac auth/secrets."

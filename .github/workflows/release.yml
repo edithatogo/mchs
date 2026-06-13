@@ -119,7 +119,7 @@ jobs:
           subject-path: dist/*
 
       - name: Upload source distribution
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-artifacts
           path: dist/*
