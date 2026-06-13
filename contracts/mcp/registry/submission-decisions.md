@@ -1,7 +1,7 @@
 # MCP Registry Submission Decisions
 
 Date created: 2026-05-17
-Last updated: 2026-05-26
+Last updated: 2026-06-14
 
 ## Current Artifact
 
@@ -15,7 +15,7 @@ Docker is not required.
 | Official MCP Registry | Published. | `mcp-publisher` published `io.github.edithatogo/mchs` version `0.2.2` on 2026-05-17; registry search API returns active/latest metadata for `io.github.edithatogo/mchs`; `nwau-py 0.2.2` is visible on PyPI. |
 | Glama | Eligible through official-registry indexing; no separate authenticated submission completed from this environment. | Glama documentation states it is a superset of the official MCP Registry. Direct Glama API verification was blocked by its edge protection from this environment. |
 | Smithery | Accepted stdio release; public API and metadata verified; search/runtime not claimed. | Smithery accepted stdio MCPB release `355669d7-72a9-441e-87de-4682260335cc` on 2026-05-26; unauthenticated public API and cache-bypassed registry discovery return all six tools, and direct listing metadata was refreshed with display name, description, homepage, and license. Search indexing and hosted `run.tools` runtime are not claimed for the stdio bundle, as recorded in `contracts/mcp/registry/smithery/accepted-release-20260526.json`. |
-| Docker MCP Registry | Submitted by PR, not yet catalog-published. | `Dockerfile`, `scripts/smoke_mcp_container.py`, and `contracts/mcp/registry/docker/` provide the local containerized server candidate. Docker Registry metadata validation passed and PR `https://github.com/docker/mcp-registry/pull/3799` is open. Review feedback on `tools.json` was addressed in fork commit `f5fa706`. |
+| Docker MCP Registry | Submitted by PR, not yet catalog-published. | `Dockerfile`, `scripts/smoke_mcp_container.py`, and `contracts/mcp/registry/docker/` provide the local containerized server candidate. Docker Registry metadata validation passed and PR `https://github.com/docker/mcp-registry/pull/3799` is open, review-required, and at head `ecfd10955ed7e8f6f0c87e780122f3ad2efd7cbb` as of 2026-06-14. |
 
 ## Official MCP Registry Basis
 

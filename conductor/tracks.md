@@ -687,7 +687,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: MATLAB File Exchange Submission**
+- [x] **Track: MATLAB File Exchange Submission**
 *Link: [./tracks/matlab_file_exchange_submission_20260524/](./tracks/matlab_file_exchange_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `MATLAB File Exchange`, and capture immutable evidence before claiming publication.*
 

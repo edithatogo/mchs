@@ -99,6 +99,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Artifact: `io.github.edithatogo:mchs:0.1.0`
 - Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
 - Dry-run evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/27407884659` succeeded with `dry_run=true` on 2026-06-12 after commit `cde0439` moved the workflow runtime JDK to 17 for Gradle 9. The binding module remains Java 11-targeted via Gradle configuration.
+- Adjacent artifact probe: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returned public metadata for `io.github.edithatogo:mchs-jvm-bindings:0.1.0` on 2026-06-14. This does not close the checked-in `io.github.edithatogo:mchs:0.1.0` target unless the contract target is intentionally changed.
 - Required steps: Central Portal namespace verification, signing key setup, GitHub secrets `CENTRAL_PORTAL_DEPLOY_URL`, `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD`, authenticated publish/release, and public Maven Central verification. A 2026-06-13 `gh secret list` audit found `NUGET_API_KEY` and `OVSX_PAT` configured, but no Maven Central secrets, so `CENTRAL_PORTAL_DEPLOY_URL`, `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD` are still absent. A fresh dry-run, `Publish Maven Central package` run 27456830098, succeeded from `master` with `dry_run=true`.
 
 ### conda-forge
@@ -125,8 +126,8 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 - Package: `mchs-matlab-interop@0.1.0`
 - Local status: repo-ready for source/artifact preparation. The MATLAB source tree, contract surface, examples, and `bindings/matlab/mchs-matlab-interop-0.1.0.zip` bundle are present; MATLAB/Octave runtime validation is not claimed in this environment.
-- Latest public probe on 2026-06-12: MathWorks File Exchange search for `mchs-matlab-interop` returned HTTP 200 but only unrelated search results, so no public listing is claimed.
-- Required step: use a MathWorks account to upload the prepared bundle and complete File Exchange review.
+- Latest public probe on 2026-06-14: `https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop` returned HTTP 200 with title `MCHS MATLAB Interop - File Exchange - MATLAB Central`.
+- Remaining note: MATLAB/Octave runtime validation is not claimed because neither runtime is installed locally.
 
 ### Stata SSC
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-06-13",
+  "asOf": "2026-06-14T01:08:00+10:00",
   "purpose": "Track every language/package registry through discovery, preparation, submission, and evidence capture without overclaiming publication.",
   "registries": [
     {
@@ -479,6 +479,14 @@
           "localMavenSettingsPresent": false,
           "localGradlePropertiesPresent": false,
           "result": "Maven Central publication remains blocked on Central Portal credentials and exported in-memory signing key/password secrets."
+        },
+        "latestAdjacentArtifactProbe20260614": {
+          "asOf": "2026-06-14T01:08:00+10:00",
+          "url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml",
+          "groupId": "io.github.edithatogo",
+          "artifactId": "mchs-jvm-bindings",
+          "latest": "0.1.0",
+          "result": "Adjacent JVM binding artifact is public, but the checked-in Maven Central contract target remains io.github.edithatogo:mchs and is not promoted from this probe."
         }
       }
     },
@@ -708,10 +716,10 @@
       "package": "mchs-matlab-interop",
       "version": "0.1.0",
       "local_surface": "contracts/matlab-interop-binding",
-      "current_status": "prepared_pending_file_exchange_upload",
+      "current_status": "published_verified",
       "track": "matlab_file_exchange_submission_20260524",
-      "submission_url": null,
-      "blocker": "MATLAB File Exchange search remains reachable but no exact mchs-matlab-interop listing is verified; upload/review remains MathWorks-account gated.",
+      "submission_url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+      "blocker": null,
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "MathWorks File Exchange search page for term=mchs-matlab-interop was reachable from CLI, but no authenticated listing/API proof was available.",
@@ -722,7 +730,7 @@
         "bundleContents": "mchs/README.md, mchs/validateInput.m, mchs/importResultTable.m, mchs/invokeCli.m, examples/cli_invocation_demo.m, examples/file_import_demo.m, README.md, matlab-interop-notes.md, file-exchange-submission.json",
         "tooling": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed.",
         "remainingRepoBlocker": "None. Repo-side source, contract, examples, and File Exchange bundle are present; MATLAB runtime validation is not claimed because MATLAB/Octave are unavailable locally.",
-        "remainingExternalBlocker": "MATLAB File Exchange search remains reachable but no exact mchs-matlab-interop listing is verified; upload/review remains MathWorks-account gated.",
+        "remainingExternalBlocker": null,
         "latestPublicProbe20260612": {
           "asOf": "2026-06-12T12:18:08Z",
           "exactSearchUrl": "https://www.mathworks.com/matlabcentral/fileexchange/?term=mchs-matlab-interop",
@@ -746,7 +754,25 @@
           "matlabCliAvailable": false,
           "octaveCliAvailable": false,
           "result": "MATLAB File Exchange remains unpublished/unverified and upload remains MathWorks-account gated."
+        },
+        "latestPublicProbe20260614": {
+          "asOf": "2026-06-14T01:08:00+10:00",
+          "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+          "httpStatus": 200,
+          "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central",
+          "result": "Published MATLAB File Exchange listing verified by direct public page probe.",
+          "matlabCliAvailable": false,
+          "octaveCliAvailable": false,
+          "runtimeValidationClaimed": false
         }
+      },
+      "publication_claimed": true,
+      "publicationEvidence": {
+        "type": "public_registry_page",
+        "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+        "version": "0.1.0",
+        "verifiedAt": "2026-06-14T01:08:00+10:00",
+        "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central"
       }
     },
     {

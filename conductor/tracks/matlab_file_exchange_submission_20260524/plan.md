@@ -19,16 +19,16 @@
 
 ## Phase 3: Submission
 
-- [ ] Task: Submit to `MATLAB File Exchange` using an authenticated publisher workflow.
+- [x] Task: Submit to `MATLAB File Exchange` using an authenticated publisher workflow.
     - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR.
+    - [x] Publish or open the required upstream PR. Public File Exchange listing verified at `https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop`.
     - [x] Capture submission URL, version, owner, and review state.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication.
-    - [ ] Query public registry after propagation.
-    - [ ] Record immutable URL/API response/checksum.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)
+- [x] Task: Verify external publication.
+    - [x] Query public registry after propagation. File Exchange page returned HTTP 200 on 2026-06-14.
+    - [x] Record immutable URL/API response/checksum. URL and page title are recorded in the registry contract and metadata; bundle SHA-256 remains recorded.
+    - [x] Mark track complete only if publication or accepted-review evidence exists.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)

@@ -1,16 +1,16 @@
 {
   "track_id": "matlab_file_exchange_submission_20260524",
   "type": "chore",
-  "status": "blocked",
+  "status": "completed",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-13T06:00:00Z",
+  "updated_at": "2026-06-14T01:08:00+10:00",
   "description": "MATLAB File Exchange Submission: discover, prepare, submit, and evidence MATLAB File Exchange publication for mchs-matlab-interop.",
   "registry_id": "matlab_file_exchange",
-  "current_status": "prepared_pending_file_exchange_upload",
-  "publication_status": "not_published",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
   "local_readiness_resolved": true,
-  "blocker": "MATLAB File Exchange search remains reachable but no exact mchs-matlab-interop listing is verified; upload/review remains MathWorks-account gated.",
-  "publication_claimed": false,
+  "blocker": null,
+  "publication_claimed": true,
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip",
     "bundle_sha256": "7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c",
@@ -39,6 +39,24 @@
       "matlabCliAvailable": false,
       "octaveCliAvailable": false,
       "result": "MATLAB File Exchange remains unpublished/unverified and upload remains MathWorks-account gated."
+    },
+    "latest_public_probe_20260614": {
+      "asOf": "2026-06-14T01:08:00+10:00",
+      "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+      "httpStatus": 200,
+      "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central",
+      "result": "Published MATLAB File Exchange listing verified by direct public page probe.",
+      "matlabCliAvailable": false,
+      "octaveCliAvailable": false,
+      "runtimeValidationClaimed": false
     }
-  }
+  },
+  "publication_evidence": {
+    "type": "public_registry_page",
+    "url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+    "version": "0.1.0",
+    "verifiedAt": "2026-06-14T01:08:00+10:00",
+    "pageTitle": "MCHS MATLAB Interop - File Exchange - MATLAB Central"
+  },
+  "submission_url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop"
 }

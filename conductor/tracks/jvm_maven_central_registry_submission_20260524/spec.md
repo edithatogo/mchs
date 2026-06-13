@@ -23,7 +23,7 @@ Track discovery, local preparation, submission, and publication evidence for the
 
 ## Current Blocker
 
-Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in. GitHub Actions Maven Central dry-run now passes after moving the workflow runtime JDK to 17 for Gradle 9 while retaining the Java 11 target/toolchain. Namespace verification, signing key material, publish credentials, authenticated Central Portal release, and public Maven Central verification remain pending.
+Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in. GitHub Actions Maven Central dry-run now passes after moving the workflow runtime JDK to 17 for Gradle 9 while retaining the Java 11 target/toolchain. A 2026-06-14 public Maven probe verified adjacent artifact `io.github.edithatogo:mchs-jvm-bindings:0.1.0`, but this track's checked-in target remains `io.github.edithatogo:mchs`; namespace verification, signing key material, publish credentials, authenticated Central Portal release, and public Maven Central verification for the checked-in target remain pending.
 
 ## Evidence
 

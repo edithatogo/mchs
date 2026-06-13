@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `mchs-matlab-interop`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/contracts/matlab-interop-binding`
-- Current status: `prepared_pending_toolbox_packaging_and_file_exchange_upload`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A File Exchange upload bundle exists for the MATLAB interop scaffold. MATLAB/Octave are not installed locally, so no MATLAB runtime validation is claimed. The remaining blocker is external: MathWorks account upload and File Exchange review.
+Resolved and publicly verified. A File Exchange upload bundle exists for the MATLAB interop scaffold, and the public File Exchange listing `https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop` returned HTTP 200 with title `MCHS MATLAB Interop - File Exchange - MATLAB Central` on 2026-06-14. MATLAB/Octave are not installed locally, so no MATLAB runtime validation is claimed.
 
 ## Preparation Evidence
 
@@ -33,7 +33,8 @@ Resolved locally. A File Exchange upload bundle exists for the MATLAB interop sc
 - SHA256: `7e4b0e628fa72b7f21f133e89d321d64291a8e4c087e34c207c7040610765f3c`
 - Contents: `mchs/README.md`, `mchs/validateInput.m`, `mchs/importResultTable.m`, `mchs/invokeCli.m`, `examples/cli_invocation_demo.m`, `examples/file_import_demo.m`, `README.md`, `matlab-interop-notes.md`, `file-exchange-submission.json`
 - Runtime note: MATLAB and Octave are not installed locally.
-- Remaining external blocker: MathWorks File Exchange upload/review.
+- Publication evidence: `https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop` returned HTTP 200 with title `MCHS MATLAB Interop - File Exchange - MATLAB Central` on 2026-06-14.
+- Remaining runtime blocker: MATLAB/Octave runtime validation is not claimed because neither runtime is installed locally.
 
 ## Acceptance Criteria
 
