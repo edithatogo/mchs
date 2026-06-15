@@ -594,10 +594,10 @@
       "package": "mchs-tools",
       "version": "0.1.1",
       "local_surface": "integrations/vscode/package.json",
-      "current_status": "openvsx_0_1_1_verified_marketplace_republish_blocked",
+      "current_status": "openvsx_0_1_1_verified_marketplace_0_1_1_uploaded_verifying",
       "track": "vscode_openvsx_registry_submission_20260524",
       "submission_url": "https://open-vsx.org/extension/edithatogo/mchs-tools",
-      "blocker": "Open VSX 0.1.1 remains verified. Visual Studio Marketplace remains at 0.1.0 and cannot be republished to 0.1.1 until VSCE_PAT is configured.",
+      "blocker": "Open VSX 0.1.1 remains verified. Visual Studio Marketplace 0.1.1 was manually uploaded through the publisher portal and is showing as Verifying0.1.1; final public Marketplace API propagation remains pending.",
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "https://open-vsx.org/api/edithatogo/mchs-tools returned Extension not found before authenticated publication; https://open-vsx.org/extension/edithatogo/mchs-tools returned HTTP 200 after workflow publication.",
@@ -606,7 +606,7 @@
         "packageResult": "2026-06-13 merged workflow dry-run https://github.com/edithatogo/mchs/actions/runs/27455041574 packaged integrations/vscode/mchs-tools.vsix successfully using the explicit --out workflow command; publish workflow https://github.com/edithatogo/mchs/actions/runs/27455601114 published edithatogo.mchs-tools v0.1.0 to Open VSX.",
         "fixedLocalBlocker": "Added local LICENSE and files allowlist to package.json.",
         "credentialAttemptEvidence": "2026-06-13 completion: Open VSX Access Tokens became available after the Eclipse publisher agreement was accepted. OVSX_PAT was created, stored as a GitHub secret, and used by workflow run https://github.com/edithatogo/mchs/actions/runs/27455601114. The first authenticated publish exposed missing namespace edithatogo; `ovsx create-namespace edithatogo` succeeded, and the rerun published edithatogo.mchs-tools v0.1.0.",
-        "remainingExternalBlocker": "Open VSX 0.1.1 remains verified. Visual Studio Marketplace remains at 0.1.0 and cannot be republished to 0.1.1 until VSCE_PAT is configured.",
+        "remainingExternalBlocker": "Open VSX 0.1.1 remains verified. Visual Studio Marketplace 0.1.1 upload is accepted in the publisher portal and currently verifying; final public Marketplace API propagation remains pending.",
         "repoPublicationEvidence": "integrations/vscode source scaffold committed to the public repository without the generated .vsix artifact.",
         "manifestPolish": "package.json includes repository, homepage, bugs, keywords, files allowlist, and license file reference.",
         "sourceScaffold": "integrations/vscode contains the extension source scaffold and publisher-ready metadata; generated .vsix remains intentionally uncommitted and must be produced during the authenticated publish step.",
@@ -695,6 +695,16 @@
           "visualStudioMarketplaceVersion": "0.1.0",
           "missingSecret": "VSCE_PAT",
           "result": "Open VSX 0.1.1 is verified; Visual Studio Marketplace remains at 0.1.0 until VSCE_PAT is configured and 0.1.1 is published."
+        },
+        "marketplaceManualUpload20260616": {
+          "asOf": "2026-06-16T00:24:00+10:00",
+          "artifact": "/tmp/mchs-tools-0.1.1.vsix",
+          "packageCommand": "cd integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out /tmp/mchs-tools-0.1.1.vsix",
+          "publisherPortalUrl": "https://marketplace.visualstudio.com/manage/publishers/edithatogo",
+          "publisherPortalResult": "Upload dialog reported `It's live!`; publisher table showed `Verifying0.1.1` for MCHS Tools.",
+          "visualStudioMarketplaceQuery": "publisher.extensionName = edithatogo.mchs-tools",
+          "publicApiPropagation": "One immediate public Marketplace extension-query probe returned 0.1.1, but subsequent probes returned 0.1.0 while the publisher portal still showed Verifying0.1.1.",
+          "automationCredentialState": "VSCE_PAT is still not configured as a GitHub secret; this was a browser-side manual publisher upload."
         }
       },
       "publication_claimed": false,
@@ -705,7 +715,7 @@
         "openVsxVersion": "0.1.1",
         "openVsxTimestamp": "2026-06-13T05:28:35.187880Z",
         "visualStudioMarketplaceVerifiedVersionBeforeReadmeRefresh": "0.1.0",
-        "followUp": "Configure VSCE_PAT and publish mchs-tools 0.1.1 to Visual Studio Marketplace before closing the combined VS Code/Open VSX track."
+        "followUp": "Wait for Visual Studio Marketplace 0.1.1 validation/public API propagation, then verify both Open VSX and Marketplace expose 0.1.1 before closing the combined VS Code/Open VSX track."
       }
     },
     {
