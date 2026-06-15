@@ -12,7 +12,7 @@
   "blocker": "Open VSX 0.1.1 remains verified. Visual Studio Marketplace 0.1.1 was manually uploaded through the publisher portal and is showing as Verifying0.1.1; final public Marketplace API propagation remains pending.",
   "publication_claimed": false,
   "package_evidence": {
-    "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix",
+    "artifact": "integrations/vscode/mchs-tools-0.1.1.vsix",
     "artifact_sha256": "73db22882af022750ce7846ecd687dea0b7d383a12f6e9767a7eadbd63f1e4ef",
     "discovery_result": "Open VSX public API verifies edithatogo.mchs-tools v0.1.1 after README refresh publication. Visual Studio Marketplace accepted a manual v0.1.1 upload through the publisher portal, but public API propagation is not yet stable.",
     "credential_attempt": "Resolved on 2026-06-13: Eclipse publisher agreement accepted, OVSX_PAT created and stored as a GitHub secret, Open VSX namespace edithatogo created, and workflow run https://github.com/edithatogo/mchs/actions/runs/27455601114 published edithatogo.mchs-tools v0.1.0.",
