@@ -1,22 +1,54 @@
 {
   "track_id": "vscode_openvsx_registry_submission_20260524",
   "type": "chore",
-  "status": "blocked",
+  "status": "completed",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T06:35:00Z",
+  "updated_at": "2026-06-16T23:23:18+10:00",
   "description": "VS Code/Open VSX Extension Submission: discover, prepare, submit, and evidence Open VSX / Visual Studio Marketplace publication for mchs-tools.",
   "registry_id": "vscode_openvsx",
-  "current_status": "prepared_eclipse_github_linked_pending_eclipse_agreement_login_tokens_and_vsix_publish",
-  "publication_status": "not_published",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
   "local_readiness_resolved": true,
-  "blocker": "Open VSX login via GitHub now succeeds and Eclipse account edithatogo is linked to GitHub edithatogo, but Open VSX still reports no signed Publisher Agreement and redirects to an Eclipse password login before token creation; Visual Studio Marketplace publisher edithatogo exists and the signed-in account is Owner, but Marketplace PAT creation and authenticated VSIX publish remain pending.",
-  "publication_claimed": false,
+  "blocker": null,
+  "publication_claimed": true,
   "package_evidence": {
     "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix",
     "artifact_sha256": "0fde076ddf60d5d5d9d83dc1deb75c1ce4eebf820b0a1030ca564297b0986125",
+    "marketplace_sync_artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix",
+    "marketplace_sync_artifact_sha256": "bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6",
+    "marketplace_sync_package_result": "npx --yes @vscode/vsce package --no-dependencies packaged mchs-tools-0.1.1.vsix with 6 files, 4.42 KB; the public Marketplace Gallery API separately verifies published version 0.1.1.",
     "discovery_result": "Open VSX returned HTTP 404 Extension not found from https://open-vsx.org/api/edithatogo/mchs-tools with Accept: application/json on 2026-05-26; Visual Studio Marketplace returned HTTP 404 for the item page and 0 extensions from Gallery extensionquery; the earlier Open VSX HTTP 406 was caused by an incorrect GitHub vendor Accept header.",
-    "credential_attempt": "The user reports the Eclipse Foundation Open VSX Publisher Agreement is completed. Eclipse account edithatogo is now connected with GitHub account edithatogo, and Open VSX GitHub login succeeds. Open VSX Access Tokens still reports that no Eclipse Foundation Open VSX Publisher Agreement is signed and the Profile page redirects to Eclipse Foundation password login for the openvsx_publisher_agreement scope. Visual Studio Marketplace publisher edithatogo is visible in the publishing portal under the signed-in account with Owner role; Marketplace PAT creation and authenticated VSIX publish remain pending.",
-    "live_browser_setup_probe": "2026-06-12: Eclipse linked-account page shows 'Account successfully connected with Github Account' and 'Connected as edithatogo'. Open VSX settings login with GitHub succeeds, but Access Tokens still blocks token creation pending Publisher Agreement recognition and Log in with Eclipse reaches an Eclipse Foundation username/password prompt. Visual Studio Marketplace manage page shows publisher edithatogo with Owner role and no uploaded extensions.",
-    "local_surface": "Concrete VS Code commands read the registry-gate contract, open the language registry contract and external-gates roadmap, and copy the gated Open VSX publish command."
+    "credential_attempt": "2026-06-13 Chrome evidence shows Open VSX Access Tokens available for edithatogo after Eclipse Publisher Agreement recognition. A fresh token was generated for the publish check, ovsx publish reported edithatogo.mchs-tools 0.1.0 is already published, the public Open VSX API returned namespace edithatogo, name mchs-tools, version 0.1.0, and the fresh token was deleted afterwards; an older pre-existing Open VSX token row was left untouched.",
+    "local_token_probe": "No persistent local OVSX_PAT is required after verification; the fresh browser-created token was deleted after the publish check.",
+    "live_browser_setup_probe": "2026-06-13 Chrome evidence: Open VSX user settings are logged in as edithatogo, Access Tokens can be generated, a fresh token named mchs-tools publish 2026-06-13 was generated, ovsx publish returned that edithatogo.mchs-tools 0.1.0 is already published, and the fresh token was deleted. 2026-06-16 Chrome evidence: Visual Studio Marketplace publisher edithatogo is signed in as d.a.mordaunt@gmail.com and shows MCHS Tools version 0.1.1 as Public.",
+    "local_surface": "Concrete VS Code commands read the registry-gate contract, open the language registry contract and external-gates roadmap, and copy the gated Open VSX publish command.",
+    "marketplace_publication": {
+      "publisher_id": "bd039266-4396-4e4c-8bb8-13364a4aab70",
+      "extension_id": "8cf2c772-2ead-4a18-8dde-c5069790380a",
+      "item_url": "https://marketplace.visualstudio.com/items?itemName=edithatogo.mchs-tools",
+      "gallery_api": "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery?api-version=7.2-preview.1",
+      "version": "0.1.1",
+      "published_date": "2026-06-12T11:59:05.87Z",
+      "last_updated": "2026-06-15T14:31:27.95Z",
+      "public_state": "public",
+      "vsix_sha256": "1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad",
+      "latest_synchronization": "Open VSX latest and Visual Studio Marketplace latest both expose version 0.1.1."
+    },
+    "latest_public_probe": "2026-06-16: Open VSX API https://open-vsx.org/api/edithatogo/mchs-tools returns namespace edithatogo, name mchs-tools, latest version 0.1.1, and allVersions including 0.1.1, 0.1.0, and latest; Visual Studio Marketplace Gallery extensionquery returns public edithatogo.mchs-tools version 0.1.1 with VSIX SHA-256 1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad.",
+    "open_vsx_publication": {
+      "api_url": "https://open-vsx.org/api/edithatogo/mchs-tools",
+      "listing_url": "https://open-vsx.org/extension/edithatogo/mchs-tools",
+      "namespace": "edithatogo",
+      "name": "mchs-tools",
+      "version": "0.1.1",
+      "all_versions": [
+        "0.1.1",
+        "0.1.0",
+        "latest"
+      ],
+      "publish_check": "Public Open VSX API now reports latest edithatogo.mchs-tools version 0.1.1; version 0.1.0 remains available in allVersions.",
+      "token_cleanup": "Fresh Open VSX token was deleted after verification; pre-existing token row was left untouched."
+    },
+    "latest_synchronization": "Open VSX latest and Visual Studio Marketplace latest both expose version 0.1.1; no latest-version synchronization blocker remains."
   }
 }

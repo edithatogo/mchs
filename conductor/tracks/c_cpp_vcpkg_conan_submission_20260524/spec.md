@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-c-abi`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml`
-- Current status: `submitted_conancenter_pending_cla_scheduler_review_vcpkg_deferred`
+- Current status: `submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Prepared locally with caveat. A vcpkg port manifest and `portfile.cmake` exist, the C ABI crate builds and packages with Cargo, the Conan recipe passes `conan create packaging/conan --build=missing` from exported sources on macOS armv8, and a disposable vcpkg clone under `/tmp/mchs-vcpkg-validation` installs `nwau-c-abi:arm64-osx` from the local overlay port. This is local/private preview packaging evidence only. vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged because vcpkg does not currently support Rust library ports. ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262` is open after portability fixes; remaining blockers are CLA/recheck, job scheduler, maintainer review, and merge.
+Prepared locally with caveat. A vcpkg port manifest and `portfile.cmake` exist, the C ABI crate builds and packages with Cargo, the Conan recipe passes `conan create packaging/conan --build=missing` from exported sources on macOS armv8, and a disposable vcpkg clone under `/tmp/mchs-vcpkg-validation` installs `nwau-c-abi:arm64-osx` from the local overlay port. This is local/private preview packaging evidence only. vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged because vcpkg does not currently support Rust library ports. ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262` is open after portability fixes and CLA resolution; remaining blockers are job scheduler, maintainer review, and merge.
 
 ## Preparation Evidence
 
@@ -52,7 +52,7 @@ Prepared locally with caveat. A vcpkg port manifest and `portfile.cmake` exist, 
 - Publication claim: no public vcpkg or ConanCenter publication is claimed.
 - vcpkg submission: PR `https://github.com/microsoft/vcpkg/pull/51965` closed unmerged on 2026-05-26 because vcpkg does not currently support Rust library ports; keep as deferred upstream-policy evidence.
 - ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open; commit `c635b0f9d2f1619d9149e4fa964185658c063f5d` fixed test-package portability.
-- Remaining external blocker: complete ConanCenter CLA/recheck and wait for job scheduler/maintainer review; vcpkg remains deferred until upstream policy supports Rust library ports or the distribution design changes.
+- Remaining external blocker: wait for ConanCenter job scheduler/maintainer review; vcpkg remains deferred until upstream policy supports Rust library ports or the distribution design changes.
 
 ## Acceptance Criteria
 

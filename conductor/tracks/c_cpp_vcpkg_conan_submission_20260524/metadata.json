@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T00:00:00+10:00",
+  "updated_at": "2026-06-16T00:00:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare local/private preview package metadata, submit through upstream review when validated, and evidence vcpkg / ConanCenter publication only after acceptance.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "submitted_conancenter_pending_cla_scheduler_review_vcpkg_deferred",
+  "current_status": "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "ConanCenter PR 30262 is open with license/cla pending and Job scheduler ACTION_REQUIRED; maintainer review and merge remain pending. vcpkg remains deferred because PR 51965 was closed unmerged due upstream Rust-library policy.",
+  "blocker": "ConanCenter PR 30262 is open with license/cla now successful and Job scheduler ACTION_REQUIRED; maintainer review and merge remain pending. vcpkg remains deferred because PR 51965 was closed unmerged due upstream Rust-library policy.",
   "publication_claimed": false,
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
@@ -32,16 +32,16 @@
     "conan_create_result": "Built nwau-c-abi/0.1.0 from exported sources on macOS armv8; packaged LICENSE, nwau_abi.h, libnwau_c_abi.dylib, and libnwau_c_abi.a.",
     "conan_package_reference": "nwau-c-abi/0.1.0#54fd5d0abe08598387916b9bc960f74c:b8da06845b8444be84fc8e71e7354dc6f23831c8#711e388131e98c4a4f2449e8d3549768",
     "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
-    "remaining_external_blocker": "Complete ConanCenter CLA/recheck, wait for job scheduler / maintainer review and merge; keep vcpkg deferred until upstream Rust-library support exists or the C ABI distribution design changes.",
+    "remaining_external_blocker": "Wait for ConanCenter job scheduler / maintainer review and merge; keep vcpkg deferred until upstream Rust-library support exists or the C ABI distribution design changes.",
     "publication_claim": "No public vcpkg or ConanCenter publication is claimed.",
     "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io.",
     "vcpkg_submission_pr": "https://github.com/microsoft/vcpkg/pull/51965",
     "vcpkg_submission_state": "closed_unmerged_upstream_policy_deferred",
     "vcpkg_submission_outcome": "Closed unmerged on 2026-05-26 because vcpkg does not currently support building Rust libraries; actionable quality feedback was addressed in fork commit 58ff86fe before closure.",
     "conan_center_submission_pr": "https://github.com/conan-io/conan-center-index/pull/30262",
-    "conan_center_submission_state": "open_pending_cla_scheduler_review",
+    "conan_center_submission_state": "open_cla_resolved_pending_scheduler_review",
     "conan_center_latest_fix_commit": "c635b0f9d2f1619d9149e4fa964185658c063f5d",
-    "latest_cla_recheck_attempt": "2026-06-12: attempted unauthenticated CLA Assistant recheck URL https://cla-assistant.io/check/conan-io/conan-center-index?pullRequest=30262; it redirected to GitHub and PR checks still show license/cla pending plus Job scheduler ACTION_REQUIRED.",
-    "latest_conan_center_review_update": "2026-06-12 live GitHub check: PR 30262 remains open; license/cla status context is PENDING and Job scheduler is ACTION_REQUIRED. Prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
+    "latest_cla_recheck_attempt": "2026-06-12 live GitHub check: PR 30262 now reports license/cla SUCCESS after maintainer recheck.",
+    "latest_conan_center_review_update": "2026-06-16 authenticated live monitor shows PR 30262 remains open, merged=False, draft=False, mergeable=True, and mergeable_state=blocked; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
   }
 }

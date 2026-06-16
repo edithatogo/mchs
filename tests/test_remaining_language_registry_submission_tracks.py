@@ -83,9 +83,14 @@ def test_published_language_registry_entries_do_not_carry_blockers():
         "go_module_proxy",
         "homebrew",
         "julia_general",
+        "jvm_maven_central",
+        "matlab_file_exchange",
         "python_pypi",
         "rust_crates_io",
+        "stata_ssc",
+        "swift_package_index",
         "typescript_npm",
+        "vscode_openvsx",
     }
     assert all(item["blocker"] is None for item in published)
     assert all(item["submission_url"] for item in published)
@@ -93,26 +98,14 @@ def test_published_language_registry_entries_do_not_carry_blockers():
 
 def test_remaining_prepared_registry_tracks_are_blocked_without_publication_claims():
     tracks = _read(TRACKS)
-    expected = {
-        "vscode_openvsx": (
-            "vscode_openvsx_registry_submission_20260524",
-            "prepared_eclipse_github_linked_pending_eclipse_agreement_login_tokens_and_vsix_publish",
-            "Publisher Agreement",
-            "VS Code/Open VSX Extension Submission",
-        ),
-        "matlab_file_exchange": (
-            "matlab_file_exchange_submission_20260524",
-            "prepared_pending_file_exchange_upload_review",
-            "MathWorks account/session",
-            "MATLAB File Exchange Submission",
-        ),
-    }
+    expected = {}
 
     for registry_id, (
         track_id,
         current_status,
         blocker_text,
         title,
+        publication_status,
     ) in expected.items():
         metadata = _metadata(track_id)
         registry = _registry(registry_id)
@@ -120,7 +113,7 @@ def test_remaining_prepared_registry_tracks_are_blocked_without_publication_clai
         assert metadata["current_status"] == current_status
         assert metadata["local_readiness_resolved"] is True
         assert metadata["publication_claimed"] is False
-        assert metadata["publication_status"] == "not_published"
+        assert metadata["publication_status"] == publication_status
         assert registry["current_status"] == current_status
         assert registry["localReadinessResolved"] is True
         assert blocker_text in registry["blocker"]
@@ -144,6 +137,19 @@ def test_conda_forge_is_submitted_but_not_published():
     assert (
         registry["submissionEvidence"]["state"]
         == "open_checks_passed_pending_staged_recipes_review"
+    )
+    latest_probe = registry["preparationEvidence"]["latestLivePrProbe"]
+    assert "2026-06-16" in latest_probe
+    assert "authenticated live monitor" in latest_probe
+    assert "mergeable=True" in latest_probe
+    assert "mergeable_state=clean" in latest_probe
+    assert "GraphQL mergeability currently reports UNKNOWN" in latest_probe
+    assert "bffc5bf1a85389dc695adfd96c87bf2413f4db25" in latest_probe
+    assert "checks remain successful" in latest_probe
+    assert "no actionable comments" in latest_probe
+    assert "nwau-py-feedstock repository still return HTTP 404" in latest_probe
+    assert (
+        "no actionable comments" in metadata["package_evidence"]["latest_live_pr_probe"]
     )
     assert "maintainer review/merge/feedstock publication" in registry["blocker"]
 
@@ -181,8 +187,7 @@ def test_julia_general_is_published_verified():
         == "bb63b2a81ec2ded2c5675f09fb6cd63128f10a07"
     )
     assert (
-        registry["submissionEvidence"]["uuid"]
-        == "58dad789-f56a-4ab3-a66f-c15139bf9cbe"
+        registry["submissionEvidence"]["uuid"] == "58dad789-f56a-4ab3-a66f-c15139bf9cbe"
     )
     assert registry["submissionEvidence"]["checks"] == "successful"
     assert registry["submissionEvidence"]["automergeWait"] == "3-day new-package wait"
@@ -218,6 +223,7 @@ def test_external_gate_report_matches_blocked_registry_contract():
         if item["current_status"] != "published_verified"
     }
 
+    assert payload["report"] == {"live": False}
     assert {item["id"] for item in payload["external_gates"]} == blocked_ids
     assert all(item["blocker"] for item in payload["external_gates"])
     assert all(
@@ -246,8 +252,7 @@ def test_language_registry_submission_validator_enforces_track_consistency():
         assert metadata["registry_id"] == registry["id"]
         assert metadata["current_status"] == registry["current_status"]
         assert (
-            metadata["local_readiness_resolved"]
-            == registry["localReadinessResolved"]
+            metadata["local_readiness_resolved"] == registry["localReadinessResolved"]
         )
         if registry["current_status"] == "published_verified":
             assert metadata["status"] == "completed"
@@ -256,10 +261,9 @@ def test_language_registry_submission_validator_enforces_track_consistency():
             assert f"- [x] **Track: {registry['title']}**" in tracks_md
         else:
             assert registry["blocker"]
-            assert (
-                metadata["status"] in {"blocked", "submitted"}
-                or metadata["status"].startswith("submitted_")
-            )
+            assert metadata["status"] in {"blocked", "submitted"} or metadata[
+                "status"
+            ].startswith("submitted_")
             assert metadata["publication_claimed"] is False
             assert f"- [~] **Track: {registry['title']}**" in tracks_md
 
@@ -282,6 +286,7 @@ def test_external_gate_report_can_write_output_file(tmp_path):
 
     assert result.stdout == ""
     payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["report"] == {"live": False}
     assert "external_gates" in payload
     assert {item["id"] for item in payload["external_gates"]}
 
@@ -304,6 +309,17 @@ def test_promotion_report_is_non_live_by_default(tmp_path):
 
     assert result.stdout == ""
     payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["report"] == {"live": False}
+    assert "generated_at_utc" not in payload["report"]
+    assert payload["promotion_counts"] == {
+        "submitted_waiting_review": 3,
+    }
+    assert "stata_ssc" not in payload["next_actions"]
+    assert (
+        payload["next_actions"]["conda_forge"]["next_action"]
+        == "wait for conda-forge staged-recipes maintainer review, merge, "
+        "and feedstock publication"
+    )
     assert "promotion_groups" in payload
     flattened = [row for rows in payload["promotion_groups"].values() for row in rows]
     assert all("live_state" not in row for row in flattened)
@@ -324,6 +340,17 @@ def test_promotion_report_is_non_live_by_default(tmp_path):
         for row in flattened
     )
     assert "partial_publication_verified" not in payload["promotion_groups"]
+
+
+def test_external_gate_report_metadata_is_timestamped_only_for_live_reports():
+    module = _report_module()
+
+    assert module.report_metadata(False) == {"live": False}
+    assert module.report_metadata(True, "2026-06-14T00:00:00Z") == {
+        "live": True,
+        "generated_at_utc": "2026-06-14T00:00:00Z",
+    }
+    assert module.generated_at_utc().endswith("Z")
 
 
 def test_external_gate_report_live_helpers_classify_submission_urls(monkeypatch):
@@ -357,6 +384,8 @@ def test_external_gate_report_live_helpers_classify_submission_urls(monkeypatch)
             "state": "open",
             "merged": False,
             "draft": False,
+            "mergeable": True,
+            "mergeable_state": "clean",
         }
 
     monkeypatch.setattr(module, "fetch_json", fake_fetch_json)
@@ -365,6 +394,8 @@ def test_external_gate_report_live_helpers_classify_submission_urls(monkeypatch)
     )
     assert live["live_state"] == "submitted_open"
     assert "merged=False" in live["live_detail"]
+    assert "mergeable=True" in live["live_detail"]
+    assert "mergeable_state=clean" in live["live_detail"]
 
     def fake_fetch_repo_json(url: str, timeout: int = 20) -> dict:
         assert url == "https://api.github.com/repos/edithatogo/homebrew-mchs"
@@ -475,6 +506,11 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
     homebrew_registry = next(
         registry for registry in contract["registries"] if registry["id"] == "homebrew"
     )
+    swift_registry = next(
+        registry
+        for registry in contract["registries"]
+        if registry["id"] == "swift_package_index"
+    )
 
     rust_registry = next(
         registry
@@ -489,10 +525,29 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
         module.public_probe_url(dotnet_registry)
         == "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/index.json"
     )
+    maven_registry = next(
+        registry
+        for registry in contract["registries"]
+        if registry["id"] == "jvm_maven_central"
+    )
+    matlab_registry = next(
+        registry
+        for registry in contract["registries"]
+        if registry["id"] == "matlab_file_exchange"
+    )
+    vscode_registry = next(
+        registry
+        for registry in contract["registries"]
+        if registry["id"] == "vscode_openvsx"
+    )
     assert (
-        module.public_probe_url(by_id["jvm_maven_central"])
+        module.public_probe_url(maven_registry)
         == "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml"
     )
+    assert "jvm_maven_central" not in by_id
+    assert "swift_package_index" not in by_id
+    assert "matlab_file_exchange" not in by_id
+    assert "vscode_openvsx" not in by_id
     assert (
         module.public_probe_url(go_registry)
         == "https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go"
@@ -502,17 +557,45 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
         == "https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb"
     )
     assert (
-        module.public_probe_url(by_id["vscode_openvsx"])
+        module.public_probe_url(vscode_registry)
         == "https://open-vsx.org/api/edithatogo/mchs-tools"
     )
-    assert module.public_probe_url(by_id["matlab_file_exchange"]) is None
+    assert module.public_probe_url(matlab_registry) == (
+        "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop"
+    )
 
-    assert module.request_headers_for_url(
-        "https://open-vsx.org/api/edithatogo/mchs-tools"
-    )["Accept"] == "application/json"
-    assert module.request_headers_for_url(
+    assert (
+        module.request_headers_for_url(
+            "https://open-vsx.org/api/edithatogo/mchs-tools"
+        )["Accept"]
+        == "application/json"
+    )
+    assert (
+        module.request_headers_for_url(
+            "https://api.github.com/repos/conda-forge/staged-recipes/pulls/33452"
+        )["Accept"]
+        == "application/vnd.github+json"
+    )
+    assert "Authorization" not in module.request_headers_for_url(
         "https://api.github.com/repos/conda-forge/staged-recipes/pulls/33452"
-    )["Accept"] == "application/vnd.github+json"
+    )
+    monkeypatch.setenv("GH_TOKEN", "gh-test-token")
+    assert (
+        module.request_headers_for_url(
+            "https://api.github.com/repos/conda-forge/staged-recipes/pulls/33452"
+        )["Authorization"]
+        == "Bearer gh-test-token"
+    )
+    monkeypatch.setenv("GITHUB_TOKEN", "github-test-token")
+    assert (
+        module.request_headers_for_url(
+            "https://api.github.com/repos/conda-forge/staged-recipes/pulls/33452"
+        )["Authorization"]
+        == "Bearer github-test-token"
+    )
+    assert "Authorization" not in module.request_headers_for_url(
+        "https://open-vsx.org/api/edithatogo/mchs-tools"
+    )
 
     def fake_status(url: str, timeout: int = 20) -> int:
         if "swiftpackageindex.com" in url:
@@ -527,7 +610,12 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
         if "crates.io" in url:
             raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
         if "open-vsx.org" in url:
-            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+            return {
+                "namespace": "edithatogo",
+                "name": "mchs-tools",
+                "version": "0.1.1",
+                "allVersions": {"0.1.1": {}, "0.1.0": {}, "latest": {}},
+            }
         raise AssertionError(f"unexpected JSON fetch: {url}")
 
     def fake_text(url: str, timeout: int = 20) -> str:
@@ -539,7 +627,14 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
             return (
                 'url "https://files.pythonhosted.org/packages/source/n/nwau-py/'
                 'nwau_py-0.2.2.tar.gz"\n'
-                'sha256 "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3"\n'
+                'sha256 "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89'
+                'cfc05600ff4ddff3"\n'
+            )
+        if "mathworks.com/matlabcentral/fileexchange" in url:
+            return (
+                "<h1>MCHS MATLAB Interop</h1>"
+                "<a>Version 0.1.0</a>"
+                "<strong>Your submission has been published in File Exchange.</strong>"
             )
         raise AssertionError(f"unexpected text fetch: {url}")
 
@@ -548,7 +643,19 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
             criteria = payload["filters"][0]["criteria"][0]
             assert criteria["filterType"] == 7
             assert criteria["value"] == "edithatogo.mchs-tools"
-            return {"results": [{"extensions": []}]}
+            return {
+                "results": [
+                    {
+                        "extensions": [
+                            {
+                                "publisher": {"publisherName": "edithatogo"},
+                                "extensionName": "mchs-tools",
+                                "versions": [{"version": "0.1.1"}],
+                            }
+                        ]
+                    }
+                ]
+            }
         raise AssertionError(f"unexpected JSON POST fetch: {url}")
 
     monkeypatch.setattr(module, "fetch_status", fake_status)
@@ -568,17 +675,438 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
         == "public_listing_available"
     )
     assert (
-        module.live_public_package_state(by_id["swift_package_index"])["public_state"]
+        module.live_public_package_state(swift_registry)["public_state"]
         == "public_listing_missing"
     )
+    vscode_public_state = module.live_public_package_state(vscode_registry)
+    assert vscode_public_state["public_state"] == "public_listing_available"
+    assert "Open VSX" in vscode_public_state["public_detail"]
+    assert "Visual Studio Marketplace" in vscode_public_state["public_detail"]
     assert (
-        module.live_public_package_state(by_id["vscode_openvsx"])["public_state"]
-        == "public_listing_missing"
+        module.live_public_package_state(matlab_registry)["public_state"]
+        == "public_listing_available"
+    )
+
+
+def test_external_gate_report_cran_probe_checks_package_page_crandb_and_index(
+    monkeypatch,
+):
+    module = _report_module()
+    cran = {"id": "r_cran", "package": "nwauR", "version": "0.1.0"}
+    calls: list[str] = []
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        calls.append(url)
+        if url.endswith("/web/packages/nwauR/index.html"):
+            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+        if url.endswith("/src/contrib/PACKAGES"):
+            return "Package: otherpkg\nVersion: 1.0.0\n"
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        calls.append(url)
+        raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(cran)
+
+    assert state["public_state"] == "public_listing_missing"
+    assert (
+        "package page https://cran.r-project.org/web/packages/nwauR/index.html HTTP 404"
+        in state["public_detail"]
+    )
+    assert "CRANDB https://crandb.r-pkg.org/nwauR HTTP 404" in state["public_detail"]
+    assert (
+        "PACKAGES index https://cran.r-project.org/src/contrib/PACKAGES has "
+        "no Package: nwauR" in state["public_detail"]
+    )
+    assert calls == [
+        "https://cran.r-project.org/web/packages/nwauR/index.html",
+        "https://crandb.r-pkg.org/nwauR",
+        "https://cran.r-project.org/src/contrib/PACKAGES",
+    ]
+
+
+def test_external_gate_report_cran_probe_requires_target_version_evidence(
+    monkeypatch,
+):
+    module = _report_module()
+    cran = {"id": "r_cran", "package": "nwauR", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if url.endswith("/web/packages/nwauR/index.html"):
+            return "<html><h1>nwauR</h1><p>Version 0.0.9</p></html>"
+        if url.endswith("/src/contrib/PACKAGES"):
+            return "Package: nwauR\nVersion: 0.0.9\n"
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        assert url == "https://crandb.r-pkg.org/nwauR"
+        return {"Package": "nwauR", "Version": "0.0.9"}
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(cran)
+
+    assert state["public_state"] == "public_listing_version_unverified"
+    assert "version 0.1.0 was not found" in state["public_detail"]
+    assert "contains nwauR but version 0.1.0 was not found" in state["public_detail"]
+
+
+def test_external_gate_report_cran_probe_accepts_public_index_version(monkeypatch):
+    module = _report_module()
+    cran = {"id": "r_cran", "package": "nwauR", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if url.endswith("/web/packages/nwauR/index.html"):
+            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+        if url.endswith("/src/contrib/PACKAGES"):
+            return (
+                "Package: otherpkg\nVersion: 1.0.0\n\nPackage: nwauR\nVersion: 0.1.0\n"
+            )
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(cran)
+
+    assert state["public_state"] == "public_listing_available"
+    assert (
+        "PACKAGES index https://cran.r-project.org/src/contrib/PACKAGES "
+        "contains nwauR 0.1.0" in state["public_detail"]
+    )
+    assert module.cran_packages_index_has_version(
+        "Package: nwauR\nVersion: 0.1.0\n", "nwauR", "0.1.0"
+    )
+
+
+def test_external_gate_report_conda_probe_checks_anaconda_and_feedstock(monkeypatch):
+    module = _report_module()
+    row = {"id": "conda_forge", "package": "nwau-py", "version": "0.2.2"}
+    calls: list[str] = []
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        calls.append(url)
+        raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_missing"
+    assert (
+        "Anaconda https://api.anaconda.org/package/conda-forge/nwau-py HTTP 404"
+        in state["public_detail"]
     )
     assert (
-        module.live_public_package_state(by_id["matlab_file_exchange"])["public_state"]
-        == "manual_check_required"
+        "feedstock https://api.github.com/repos/conda-forge/nwau-py-feedstock HTTP 404"
+        in state["public_detail"]
     )
+    assert calls == [
+        "https://api.anaconda.org/package/conda-forge/nwau-py",
+        "https://api.github.com/repos/conda-forge/nwau-py-feedstock",
+    ]
+
+
+def test_external_gate_report_conda_feedstock_without_package_is_unverified(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "conda_forge", "package": "nwau-py", "version": "0.2.2"}
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        if "api.anaconda.org" in url:
+            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+        if url.endswith("/conda-forge/nwau-py-feedstock"):
+            return {
+                "html_url": "https://github.com/conda-forge/nwau-py-feedstock",
+                "default_branch": "main",
+                "archived": False,
+            }
+        raise AssertionError(f"unexpected JSON fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_version_unverified"
+    assert (
+        "feedstock https://github.com/conda-forge/nwau-py-feedstock"
+        in state["public_detail"]
+    )
+    assert "Anaconda package version evidence is missing" in state["public_detail"]
+    assert (
+        module.promotion_state(
+            row
+            | {
+                "status": "submitted_checks_passed_pending_staged_recipes_review",
+                "blocker": "feedstock publication pending",
+                "public_state": state["public_state"],
+            }
+        )["promotion_state"]
+        == "submitted_waiting_review"
+    )
+
+
+def test_external_gate_report_conda_package_version_completes_public_probe(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "conda_forge", "package": "nwau-py", "version": "0.2.2"}
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        if "api.anaconda.org" in url:
+            return {"files": [{"version": "0.2.2"}]}
+        if url.endswith("/conda-forge/nwau-py-feedstock"):
+            return {
+                "html_url": "https://github.com/conda-forge/nwau-py-feedstock",
+                "default_branch": "main",
+                "archived": False,
+            }
+        raise AssertionError(f"unexpected JSON fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_available"
+    assert (
+        "Anaconda https://api.anaconda.org/package/conda-forge/nwau-py "
+        "version 0.2.2 found" in state["public_detail"]
+    )
+    assert (
+        "feedstock https://github.com/conda-forge/nwau-py-feedstock"
+        in state["public_detail"]
+    )
+
+
+def test_external_gate_report_c_cpp_probe_checks_conancenter_before_vcpkg(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "c_cpp_vcpkg_conan", "package": "nwau-c-abi", "version": "0.1.0"}
+    calls: list[str] = []
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        calls.append(url)
+        raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_missing"
+    assert "ConanCenter conanfile" in state["public_detail"]
+    assert "ConanCenter conandata" in state["public_detail"]
+    assert "vcpkg" in state["public_detail"]
+    assert calls == [
+        (
+            "https://raw.githubusercontent.com/conan-io/conan-center-index/"
+            "master/recipes/nwau-c-abi/all/conanfile.py"
+        ),
+        (
+            "https://raw.githubusercontent.com/conan-io/conan-center-index/"
+            "master/recipes/nwau-c-abi/all/conandata.yml"
+        ),
+        (
+            "https://raw.githubusercontent.com/microsoft/vcpkg/master/"
+            "ports/nwau-c-abi/vcpkg.json"
+        ),
+    ]
+
+
+def test_external_gate_report_c_cpp_probe_accepts_conancenter_version(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "c_cpp_vcpkg_conan", "package": "nwau-c-abi", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if url.endswith("/conanfile.py"):
+            return 'class NwauCAbiConan(ConanFile):\n    name = "nwau-c-abi"\n'
+        if url.endswith("/conandata.yml"):
+            return (
+                'sources:\n  "0.1.0":\n    url: "https://example.invalid/src.tar.gz"\n'
+            )
+        if url.endswith("/vcpkg.json"):
+            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_available"
+    assert "ConanCenter conanfile" in state["public_detail"]
+    assert "ConanCenter conandata" in state["public_detail"]
+    assert "version 0.1.0 found" in state["public_detail"]
+    assert "vcpkg" in state["public_detail"]
+
+
+def test_external_gate_report_c_cpp_vcpkg_only_does_not_complete(monkeypatch):
+    module = _report_module()
+    row = {"id": "c_cpp_vcpkg_conan", "package": "nwau-c-abi", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if "conan-center-index" in url:
+            raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+        if url.endswith("/vcpkg.json"):
+            return '{"name": "nwau-c-abi", "version-string": "0.1.0"}'
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_version_unverified"
+    assert (
+        "vcpkg listing exists but ConanCenter publication still needs evidence"
+        in state["public_detail"]
+    )
+    assert (
+        module.promotion_state(
+            row
+            | {
+                "status": (
+                    "submitted_conancenter_cla_resolved_pending_scheduler_review_"
+                    "vcpkg_deferred"
+                ),
+                "blocker": "ConanCenter pending",
+                "public_state": state["public_state"],
+            }
+        )["promotion_state"]
+        == "submitted_waiting_review"
+    )
+
+
+def test_external_gate_report_stata_ssc_probe_checks_pkg_ado_and_help(monkeypatch):
+    module = _report_module()
+    row = {"id": "stata_ssc", "package": "mchs-stata-interop", "version": "0.1.0"}
+    calls: list[str] = []
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        calls.append(url)
+        raise module.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_missing"
+    assert "SSC package manifest" in state["public_detail"]
+    assert "SSC ado" in state["public_detail"]
+    assert "SSC help" in state["public_detail"]
+    assert calls == [
+        "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg",
+        "http://fmwww.bc.edu/repec/bocode/m/mchs.ado",
+        "http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp",
+    ]
+
+
+def test_external_gate_report_stata_ssc_probe_accepts_installable_package(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "stata_ssc", "package": "mchs-stata-interop", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if url.endswith("/mchs.pkg"):
+            return (
+                "d 'MCHS': module to provide Stata file/CLI boundary adapter\n"
+                "d Author: Dylan Mordaunt\n"
+                "d Support: email dylan.mordaunt@@vuw.ac.nz\n"
+                "f mchs.ado\n"
+                "f mchs.sthlp\n"
+            )
+        if url.endswith("/mchs.ado"):
+            return "program define mchs, rclass\nend\n"
+        if url.endswith("/mchs.sthlp"):
+            return "{title:MCHS Stata file/CLI boundary adapter}\n{cmd:mchs import}"
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_available"
+    assert "SSC package manifest" in state["public_detail"]
+    assert "semantic version 0.1.0 is local archive evidence" in state["public_detail"]
+    assert "SSC ado" in state["public_detail"]
+    assert "SSC help" in state["public_detail"]
+
+
+def test_external_gate_report_stata_ssc_probe_requires_manifest_identity(
+    monkeypatch,
+):
+    module = _report_module()
+    row = {"id": "stata_ssc", "package": "mchs-stata-interop", "version": "0.1.0"}
+
+    def fake_text(url: str, timeout: int = 20) -> str:
+        if url.endswith("/mchs.pkg"):
+            return "d Unrelated package\nf mchs.ado\nf mchs.sthlp\n"
+        if url.endswith("/mchs.ado"):
+            return "program define mchs, rclass\nend\n"
+        if url.endswith("/mchs.sthlp"):
+            return "{title:MCHS Stata file/CLI boundary adapter}\n"
+        raise AssertionError(f"unexpected text fetch: {url}")
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
+
+    state = module.live_public_package_state(row)
+
+    assert state["public_state"] == "public_listing_version_unverified"
+    assert "available but package identity was not verified" in state["public_detail"]
+
+
+def test_external_gate_report_requires_vscode_version_on_both_marketplaces(monkeypatch):
+    module = _report_module()
+    vscode = {
+        "id": "vscode_openvsx",
+        "package": "mchs-tools",
+        "version": "0.1.1",
+    }
+
+    def fake_json(url: str, timeout: int = 20) -> dict:
+        assert "open-vsx.org" in url
+        return {
+            "namespace": "edithatogo",
+            "name": "mchs-tools",
+            "version": "0.1.1",
+            "allVersions": {"0.1.1": {}, "0.1.0": {}, "latest": {}},
+        }
+
+    def fake_json_post(url: str, payload: dict, timeout: int = 20) -> dict:
+        assert "marketplace.visualstudio.com" in url
+        return {
+            "results": [
+                {
+                    "extensions": [
+                        {
+                            "publisher": {"publisherName": "edithatogo"},
+                            "extensionName": "mchs-tools",
+                            "versions": [{"version": "0.1.0"}],
+                        }
+                    ]
+                }
+            ]
+        }
+
+    monkeypatch.setattr(module, "fetch_json", fake_json)
+    monkeypatch.setattr(module, "fetch_json_post", fake_json_post)
+
+    state = module.live_public_package_state(vscode)
+
+    assert state["public_state"] == "public_listing_version_unverified"
+    assert "Open VSX" in state["public_detail"]
+    assert "Visual Studio Marketplace" in state["public_detail"]
+    assert "version 0.1.1 was not found" in state["public_detail"]
 
 
 def test_external_gate_report_public_probes_require_version_evidence(monkeypatch):
@@ -632,11 +1160,12 @@ def test_external_gate_report_go_and_swift_text_probes_require_target_version(
 ):
     module = _report_module()
 
-    monkeypatch.setattr(
-        module,
-        "fetch_text",
-        lambda url, timeout=20: "pkg page includes v0.1.0 release",
-    )
+    def fake_text(url, timeout=20):
+        if "swiftpackageindex.com" in url:
+            return "MCHSBind mchs-swift package page includes v0.1.0 release"
+        return "pkg page includes v0.1.0 release"
+
+    monkeypatch.setattr(module, "fetch_text", fake_text)
 
     go_state = module.live_public_package_state(
         {
@@ -655,6 +1184,33 @@ def test_external_gate_report_go_and_swift_text_probes_require_target_version(
 
     assert go_state["public_state"] == "public_listing_available"
     assert swift_state["public_state"] == "public_listing_available"
+
+
+def test_external_gate_report_swift_probe_rejects_cloudflare_token_false_positive(
+    monkeypatch,
+):
+    module = _report_module()
+
+    monkeypatch.setattr(
+        module,
+        "fetch_text",
+        lambda url, timeout=20: (
+            "<html><head><title>Just a moment...</title></head>"
+            "<body>Enable JavaScript and cookies to continue "
+            "https://challenges.cloudflare.com token 0.1.0</body></html>"
+        ),
+    )
+
+    state = module.live_public_package_state(
+        {
+            "id": "swift_package_index",
+            "package": "MCHSBind",
+            "version": "0.1.0",
+        }
+    )
+
+    assert state["public_state"] == "public_listing_blocked"
+    assert "Cloudflare challenge" in state["public_detail"]
 
 
 def test_external_gate_report_classifies_promotion_state():
@@ -678,6 +1234,19 @@ def test_external_gate_report_classifies_promotion_state():
         == "completion_candidate"
     )
 
+    partial_vscode_row = {
+        "id": "vscode_openvsx",
+        "status": (
+            "published_marketplace_pending_openvsx_eclipse_agreement_token_publish"
+        ),
+        "public_state": "public_listing_available",
+        "live_state": "manual_check_required",
+        "blocker": "Open VSX agreement/token/publish still pending",
+    }
+    partial_vscode_state = module.promotion_state(partial_vscode_row)
+    assert partial_vscode_state["promotion_state"] == "partial_publication_verified"
+    assert partial_vscode_state["next_action"] == partial_vscode_row["blocker"]
+
     conda_row = {
         "id": "conda_forge",
         "status": "submitted_pending_staged_recipes_review",
@@ -689,11 +1258,54 @@ def test_external_gate_report_classifies_promotion_state():
         module.promotion_state(conda_row)["promotion_state"]
         == "submitted_waiting_review"
     )
+    assert "feedstock publication" in module.promotion_state(conda_row)["next_action"]
     deferred_conda_row = conda_row | {"live_state": "check_deferred_rate_limited"}
     assert (
         module.promotion_state(deferred_conda_row)["promotion_state"]
         == "submitted_waiting_review"
     )
+
+    stata_row = {
+        "id": "stata_ssc",
+        "status": "published_verified",
+        "public_state": "public_listing_available",
+        "live_state": "manual_check_required",
+        "blocker": None,
+    }
+    stata_state = module.promotion_state(stata_row)
+    assert stata_state["promotion_state"] == "completion_candidate"
+    assert "capture immutable publication evidence" in stata_state["next_action"]
+
+    cran_row = {
+        "id": "r_cran",
+        "status": "submitted_confirmed_pending_cran_pretest_review_publication",
+        "public_state": "public_listing_missing",
+        "live_state": "manual_check_required",
+        "blocker": "CRAN pretest pending",
+    }
+    assert "CRAN incoming/pretest" in module.promotion_state(cran_row)["next_action"]
+
+    conan_row = {
+        "id": "c_cpp_vcpkg_conan",
+        "status": (
+            "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred"
+        ),
+        "public_state": "public_listing_missing",
+        "live_state": "submitted_open",
+        "blocker": "Conan scheduler pending",
+    }
+    assert (
+        "ConanCenter job scheduler" in module.promotion_state(conan_row)["next_action"]
+    )
+    assert "vcpkg deferred" in module.promotion_state(conan_row)["next_action"]
+    conan_published_row = conan_row | {"public_state": "public_listing_available"}
+    conan_published_state = module.promotion_state(conan_published_row)
+    assert conan_published_state["promotion_state"] == "partial_publication_verified"
+    assert (
+        "capture ConanCenter publication evidence"
+        in conan_published_state["next_action"]
+    )
+    assert "vcpkg deferred" in conan_published_state["next_action"]
 
     julia_row = {
         "id": "julia_general",
@@ -703,8 +1315,7 @@ def test_external_gate_report_classifies_promotion_state():
         "blocker": None,
     }
     assert (
-        module.promotion_state(julia_row)["promotion_state"]
-        == "completion_candidate"
+        module.promotion_state(julia_row)["promotion_state"] == "completion_candidate"
     )
 
     merged_conda_row = conda_row | {"public_state": "public_listing_available"}
@@ -715,10 +1326,12 @@ def test_external_gate_report_classifies_promotion_state():
 
     closed_issue_row = {
         "id": "swift_package_index",
-        "status": "submitted_accepted_pending_spi_public_probe",
+        "status": "submitted_packagelist_merged_pending_spi_page_probe",
         "public_state": "public_listing_missing",
         "live_state": "submitted_issue_completed",
-        "blocker": "Swift Package Index issue closed without public listing.",
+        "blocker": (
+            "Swift Package Index PackageList PR merged without public page evidence."
+        ),
     }
     assert (
         module.promotion_state(closed_issue_row)["promotion_state"]
@@ -730,6 +1343,18 @@ def test_external_gate_report_classifies_promotion_state():
     }
     assert (
         module.promotion_state(indexed_closed_issue_row)["promotion_state"]
+        == "completion_candidate"
+    )
+
+    published_swift_row = {
+        "id": "swift_package_index",
+        "status": "published_verified",
+        "public_state": "public_listing_available",
+        "live_state": "submitted_issue_completed",
+        "blocker": None,
+    }
+    assert (
+        module.promotion_state(published_swift_row)["promotion_state"]
         == "completion_candidate"
     )
 
@@ -771,15 +1396,14 @@ def test_non_live_promotion_group_counts_are_stable_from_contract():
     rows = module.enrich_promotion_from_contract(
         module.external_gate_rows(json.loads(_read(CONTRACT)))
     )
-    counts: dict[str, int] = {}
+    grouped: dict[str, list[dict]] = {}
     for row in rows:
-        counts[row["promotion_state"]] = counts.get(row["promotion_state"], 0) + 1
+        grouped.setdefault(row["promotion_state"], []).append(row)
 
-    assert counts == {
-        "external_gate_blocked": 3,
-        "publication_needs_follow_up": 1,
-        "submitted_waiting_review": 4,
+    assert module.promotion_counts(grouped) == {
+        "submitted_waiting_review": 3,
     }
+    assert "stata_ssc" not in module.next_actions_by_registry(grouped)
 
 
 def test_language_registry_external_gate_docs_explain_live_monitor_contract():
@@ -788,19 +1412,125 @@ def test_language_registry_external_gate_docs_explain_live_monitor_contract():
     assert "--promotion --live" in text
     assert "target-version evidence" in text
     assert "public_listing_version_unverified" in text
+    assert "next_actions" in text
+    assert "promotion_counts" in text
+    assert "promotion_groups" in text
+    assert "report.live" in text
+    assert "report.generated_at_utc" in text
     assert ".github/workflows/language-registry-live.yml" in text
     assert "language-registry-live" in text
+    assert "GitHub Actions job summary" in text
+    assert "GITHUB_TOKEN" in text
+    assert "promotion group counts" in text
+    assert "submission detail" in text
+    assert "public detail" in text
+    assert "mergeability fields" in text
+    assert "generated timestamp" in text
+    assert "CRAN package page, CRANDB" in text
+    assert "src/contrib/PACKAGES" in text
+    assert "Anaconda `conda-forge/nwau-py` package API" in text
+    assert "feedstock-only result" in text
+    assert "ConanCenter raw recipe" in text
+    assert "partial publication evidence" in text
+    assert "Boston College SSC/RePEc" in text
+    assert "mchs.pkg" in text
+    assert "mchs.ado" in text
+    assert "mchs.sthlp" in text
+    assert "promotion state" in text
+    assert "next actions" in text
     assert "PR CI workflow writes non-live JSON artifacts only" in text
     assert "https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go" in text
+
+
+def test_markdown_report_includes_promotion_next_actions():
+    module = _report_module()
+    rows = module.enrich_promotion_from_contract(
+        module.external_gate_rows(json.loads(_read(CONTRACT)))
+    )
+
+    markdown = module.render_markdown(rows)
+
+    assert "Promotion group counts:" in markdown
+    assert "`submitted_waiting_review`: 3" in markdown
+    assert "`approval_required_before_follow_up`" not in markdown
+    assert "Next action" in markdown
+    assert "wait for CRAN incoming/pretest or reviewer email" in markdown
+    assert "feedstock publication" in markdown
+    assert "explicit user approval" not in markdown
+    assert "ConanCenter job scheduler" in markdown
+
+
+def test_live_markdown_report_includes_pr_mergeability_details():
+    module = _report_module()
+    rows = [
+        {
+            "id": "conda_forge",
+            "registry": "conda-forge",
+            "package": "nwau-py",
+            "status": "submitted_checks_passed_pending_staged_recipes_review",
+            "blocker": "review pending",
+            "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
+            "version": "0.2.2",
+            "live_state": "submitted_open",
+            "live_detail": (
+                "https://github.com/conda-forge/staged-recipes/pull/33452 "
+                "state=open merged=False draft=False mergeable=True "
+                "mergeable_state=clean"
+            ),
+            "public_state": "public_listing_missing",
+            "public_detail": (
+                "https://api.anaconda.org/package/conda-forge/nwau-py HTTP 404"
+            ),
+            "promotion_state": "submitted_waiting_review",
+            "next_action": "wait for feedstock publication",
+            "track": "conda_forge_feedstock_submission_20260524",
+        }
+    ]
+
+    markdown = module.render_markdown(rows, generated_at="2026-06-14T00:00:00Z")
+
+    assert "Generated at (UTC): `2026-06-14T00:00:00Z`." in markdown
+    assert "Submission detail" in markdown
+    assert "Public detail" in markdown
+    assert "mergeable=True" in markdown
+    assert "mergeable_state=clean" in markdown
+    assert "https://api.anaconda.org/package/conda-forge/nwau-py HTTP 404" in markdown
 
 
 def test_external_submission_runbook_matches_current_go_and_swift_states():
     text = _read(EXTERNAL_SUBMISSION_RUNBOOK)
 
     assert (
-        "PyPI, npm, crates.io, NuGet, the Homebrew personal tap, and the Go "
-        "module are externally published and verified"
+        "PyPI, npm, crates.io, NuGet, the Homebrew personal tap, the Go "
+        "module, Swift Package Index, Maven Central, MATLAB File Exchange, "
+        "Open VSX, Visual Studio Marketplace, and Stata SSC are externally "
+        "published and verified"
     ) in text
+    assert "Maven Central" in text
+    assert "io.github.edithatogo:mchs-jvm-bindings:0.1.0" in text
+    assert "Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1`" in text
+    assert (
+        "Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; latest is `0.1.1`"
+        in text
+    )
+    assert "Swift Package Index: `MCHSBind@0.1.0`" in text
+    assert "GitHub Actions job summary" in text
+    assert (
+        "including the generated timestamp, promotion group counts, submission "
+        "detail, public detail, promotion state, and next action"
+    ) in text
+    assert "submission detail includes live mergeability fields" in text
+    assert "GitHub PR and feedstock probes avoid anonymous rate limits" in text
+    assert "CRAN public-proof note" in text
+    assert "CRAN package page, CRANDB" in text
+    assert "src/contrib/PACKAGES" in text
+    assert "conda-forge public-proof note" in text
+    assert "feedstock creation alone is not treated as publication" in text
+    assert "vcpkg / ConanCenter public-proof note" in text
+    assert "ConanCenter raw recipe" in text
+    assert "combined registry remains partial" in text
+    assert "Stata SSC public-proof note" in text
+    assert "mchs.pkg" in text
     assert "Go module proxy/pkg.go.dev" in text
     assert "Remaining step: none. Version `0.1.0` was verified" in text
     assert (
@@ -808,7 +1538,9 @@ def test_external_submission_runbook_matches_current_go_and_swift_states():
         "`https://github.com/SwiftPackageIndex/PackageList/issues/13717`, "
         "closed as completed" in text
     )
-    assert "verify public SPI listing/version evidence" in text
+    assert "Publication evidence: on 2026-06-12" in text
+    assert "stable `v0.1.0`" in text
+    assert "Remaining step: none for Swift Package Index publication" in text
     assert "wait for or retrigger `pkg.go.dev` page indexing" not in text
     assert "Swift Package Index review/indexing" not in text
 
@@ -820,39 +1552,90 @@ def test_external_only_runbook_has_exact_next_action_checklists():
     required_runbook_fragments = [
         "Wait for CRAN incoming/pretest or reviewer email",
         "Verify `https://cran.r-project.org/package=nwauR` and record version `0.1.0`",
-        "Namespace verification: on 2026-06-12, Sonatype Central Portal shows `io.github.edithatogo` as Verified",
-        "Wait for Central to discover public key `BB03C82343A653EE44BD5CDA9DF6B142F065199E`",
-        "Verify `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` contains version `0.1.0`",
-        "Complete the Eclipse Foundation password login/agreement-recognition flow for account `edithatogo`",
-        "Run `npx --yes ovsx publish microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat \"$OVSX_PAT\"`",
-        "Run `npx --yes @vscode/vsce publish --packagePath microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat \"$VSCE_PAT\"`",
-        "Upload `microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip`",
-        "Copy the description, license, tags, and version from `bindings/matlab/file-exchange-submission.json`",
-        "Email the SSC package submission contact with package name `mchs-stata-interop`, version `0.1.0`",
-        "Include `bindings/stata/pkg-mchs.pkg` as the package index file",
+        (
+            "Namespace verification: on 2026-06-12, Sonatype Central Portal "
+            "shows `io.github.edithatogo` as Verified"
+        ),
+        "Central validation passed after propagation",
+        (
+            "`https://repo1.maven.org/maven2/io/github/edithatogo/"
+            "mchs-jvm-bindings/maven-metadata.xml` returns HTTP 200 and "
+            "exposes latest/release/version `0.1.0`"
+        ),
+        (
+            "Feedback addressed: pushed commit "
+            "`e6ff7985c94b78471457e446e8fe3abfbe61fa41`"
+        ),
+        (
+            "the PR was later refreshed to head "
+            "`bffc5bf1a85389dc695adfd96c87bf2413f4db25`"
+        ),
+        (
+            "Open VSX publish check: `npx --yes ovsx publish "
+            "integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` "
+            "returned that version `0.1.0` is already published."
+        ),
+        "`MCHS Tools` version `0.1.1` as Public",
+        (
+            "Visual Studio Marketplace Gallery `extensionquery` returns public "
+            "`edithatogo.mchs-tools` version `0.1.1`"
+        ),
+        "1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad",
+        "bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6",
+        (
+            "corrected local SHA-256 is "
+            "`d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336`"
+        ),
+        "No corrected replacement publication is claimed.",
+        "Public evidence: on 2026-06-14",
+        "mchs.pkg` was live and listed the MCHS module",
+        "Remaining step: none for SSC publication",
         "Treat vcpkg as upstream-policy deferred",
-        "Complete the ConanCenter CLA/recheck gate",
         "Wait for ConanCenter job scheduler and maintainer review",
-        "Verify the merged ConanCenter package page before changing the Conan side of the gate to complete",
+        (
+            "Verify the merged ConanCenter package page before changing the "
+            "Conan side of the gate to complete"
+        ),
     ]
     for fragment in required_runbook_fragments:
         assert fragment in runbook
 
     required_gate_fragments = [
         "Next actions: record incoming/pretest evidence",
-        "Next actions: wait for supported keyserver propagation or publish the key through another supported path",
-        "Next actions: complete the Eclipse password login/agreement-recognition flow",
-        "Next actions: sign in to MathWorks File Exchange",
-        "Next actions: wait for SSC maintainer response",
+        (
+            "Maven Central | `io.github.edithatogo:mchs-jvm-bindings` | "
+            "Published and verified on repo1.maven.org"
+        ),
+        (
+            "Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` "
+            "returns namespace `edithatogo`"
+        ),
+        "Marketplace-sync artifact `integrations/vscode/mchs-tools-0.1.1.vsix`",
+        (
+            "Visual Studio Marketplace is published and public as "
+            "`edithatogo.mchs-tools` version `0.1.1`"
+        ),
+        "no Marketplace/Open VSX blocker remains",
+        (
+            "Published and verified at `https://www.mathworks.com/"
+            "matlabcentral/fileexchange/184067-mchs-matlab-interop`"
+        ),
+        (
+            "SSC / Stata package distribution | `mchs-stata-interop` | "
+            "Published and verified"
+        ),
         "vcpkg is upstream-policy deferred",
-        "ConanCenter remains active: complete CLA/recheck",
+        "ConanCenter remains active: wait for job scheduler/review",
     ]
     for fragment in required_gate_fragments:
         assert fragment in gates
 
     vague_runbook_phrases = [
         "Submit through CRAN maintainer upload/review workflow.",
-        "Create a track-local upstream PR checklist with the vcpkg version update and ConanCenter `conandata.yml` requirements.",
+        (
+            "Create a track-local upstream PR checklist with the vcpkg "
+            "version update and ConanCenter `conandata.yml` requirements."
+        ),
         "Required step: MathWorks account upload and File Exchange review.",
         "Required step: SSC maintainer submission/review.",
         "Required submission steps:",

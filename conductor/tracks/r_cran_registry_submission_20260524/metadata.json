@@ -3,7 +3,7 @@
   "type": "chore",
   "status": "submitted",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-12T00:00:00+10:00",
+  "updated_at": "2026-06-16T00:00:00+10:00",
   "description": "R CRAN Registry Submission: discover, prepare, submit, and evidence CRAN publication for nwauR.",
   "registry_id": "r_cran",
   "current_status": "submitted_confirmed_pending_cran_pretest_review_publication",
@@ -28,10 +28,11 @@
     "submission_state": "Submitted by maintainer through the CRAN web upload workflow on 2026-06-12; CRAN confirmation email was received in Outlook and the user clicked the confirmation link on 2026-06-12.",
     "confirmation_email": "Received in Outlook on 2026-06-12 02:17 Australia/Sydney from CRAN Package Submission Form <root-xmpalantir@xmbombadil.wu.ac.at> with subject 'CRAN Submission of nwauR 0.1.0 - Confirmation Link'. The link/code is not stored in repository evidence.",
     "next_required_evidence": "Wait for CRAN incoming/pretest or reviewer email, record any incoming/pretest URL or message identifier, respond to reviewer mail if requested, and verify https://cran.r-project.org/package=nwauR after publication.",
-    "latest_publication_probe": "2026-06-12: https://cran.r-project.org/package=nwauR and https://cran.r-project.org/web/packages/nwauR/index.html returned HTTP 404; https://cran.r-project.org/src/contrib/PACKAGES returned HTTP 200 but did not contain nwauR.",
+    "latest_publication_probe": "2026-06-16: https://cran.r-project.org/package=nwauR resolved to https://cran.r-project.org/web/packages/nwauR/index.html and returned HTTP 404; https://crandb.r-pkg.org/nwauR returned HTTP 404; https://cran.r-project.org/src/contrib/PACKAGES returned HTTP 200 but did not contain Package: nwauR.",
     "vuw_outlook_confirmation_email": "VUW Outlook confirmation email found: 2026-06-12: VUW Outlook inbox shows CRAN Package Submission Form email received at 02:17 Australia/Sydney with subject \"CRAN Submission of nwauR 0.1.0 - Confirmation Link\". The link/code is not stored in repository evidence.",
     "confirmation_link_clicked": "User reported clicking the CRAN confirmation link on 2026-06-12.",
     "confirmation_result": "CRAN confirmation result page at https://xmpalantir.wu.ac.at/cransubmit/index.php?strErr=96&redirect=1 displayed: The package has been uploaded successfully to CRAN submission team.",
-    "post_confirmation_public_probe": "Immediate probes after confirmation: https://cran.r-project.org/package=nwauR and /web/packages/nwauR/index.html returned HTTP 404; src/contrib/PACKAGES did not contain nwauR."
+    "post_confirmation_public_probe": "Immediate and refreshed probes after confirmation through 2026-06-16: https://cran.r-project.org/package=nwauR resolves to /web/packages/nwauR/index.html, the target package page returns HTTP 404, crandb returns not_found, and src/contrib/PACKAGES did not contain Package: nwauR.",
+    "latest_mail_probe": "2026-06-13: connected Gmail search for newer_than:21d CRAN/nwauR terms returned no messages. Microsoft 365/Outlook connector previously returned 'No accounts found. Please login first.', so VUW Outlook review/pretest mail still requires browser/manual capture before changing status."
   }
 }

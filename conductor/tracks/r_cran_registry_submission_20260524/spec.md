@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwauR`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/r-binding/DESCRIPTION`
-- Current status: `submitted_pending_cran_confirmation_link_action`
+- Current status: `submitted_confirmed_pending_cran_pretest_review_publication`
 
 ## Functional Requirements
 
@@ -28,7 +28,7 @@ Resolved locally, submitted, and confirmed. `R CMD build r-binding` created `nwa
 
 ## Preparation Evidence
 
-- Public registry discovery: `https://crandb.r-pkg.org/nwauR` returned `not_found`.
+- Public registry discovery: `https://crandb.r-pkg.org/nwauR` returned `not_found`; `https://cran.r-project.org/package=nwauR` redirected to `/web/packages/nwauR/index.html`, which returned HTTP 404 on 2026-06-12.
 - Build command: `R CMD build r-binding`
 - Package artifact: `microcosting_healthservices/nwauR_0.1.0.tar.gz`
 - Check command: `R CMD check --no-manual nwauR_0.1.0.tar.gz`

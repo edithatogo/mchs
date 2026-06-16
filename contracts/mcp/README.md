@@ -30,10 +30,10 @@ When a server exists, use this registry order:
 
 | Target | Use when | Status for MCHS |
 | --- | --- | --- |
-| Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Candidate primary target; held at the runnable server publication gate. |
-| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Prepared with Dockerfile and candidate registry files; publication pending upstream PR/review. |
-| Glama | The server is open source or publicly reachable and should be indexed, inspected, and tested through a public discovery layer. | Candidate secondary discovery target after primary metadata exists. |
-| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Prepared with HTTP entry point, server card, and MCPB manifest; publication pending authenticated Smithery submission. |
+| Official MCP Registry (`registry.modelcontextprotocol.io`) | Public server metadata is ready and points to a public package, container, or remote endpoint. This is the canonical MCP metadata registry. | Published for `io.github.edithatogo/mchs` version `0.2.2`; live registry search returns active/latest stdio PyPI metadata. |
+| Docker MCP Registry / Docker MCP Catalog | The server has a Docker deployment path and should be discoverable through Docker Desktop and Docker Hub tooling. | Submitted to Docker MCP Registry in PR `docker/mcp-registry#3799`; Docker Catalog publication remains review-pending and is not claimed. |
+| Glama | The server is open source or publicly reachable and should be indexed, inspected, and tested through a public discovery layer. | Eligible through official-registry indexing; no separate authenticated submission is claimed. |
+| Smithery | The server exposes Streamable HTTP with OAuth where required, or ships a local MCPB bundle for stdio distribution. | Published as a stdio MCPB bundle for `edithatogo/mchs`; hosted Streamable HTTP publication remains optional/future and is not claimed. |
 
 Private or restricted healthcare deployments should use a private registry or
 internal catalog instead of the public official MCP Registry.

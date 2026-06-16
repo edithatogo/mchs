@@ -12,6 +12,7 @@ Sources:
 ## Confirmed requirements
 
 - Smithery URL publishing accepts servers that expose Streamable HTTP.
+- Smithery also accepts local MCPB bundles for stdio server distribution.
 - If a server requires authentication, OAuth support is expected; Smithery handles client registration for the publishing flow.
 - Smithery scans public servers to extract tools, prompts, and resources for the server page.
 - If automatic scanning cannot complete because of auth, configuration, or scanner access issues, the server can provide manual metadata at `/.well-known/mcp/server-card.json`.
@@ -21,15 +22,20 @@ Sources:
 
 ## MCHS submission decision
 
-- Do not publish the current stdio-only server directly to Smithery as a production listing.
-- Add a Streamable HTTP adapter owned by this repository unless an external host is deliberately selected later.
+- The completed Smithery publication path is the local stdio MCPB bundle for
+  `edithatogo/mchs`.
+- Keep the Streamable HTTP adapter as optional/future hosted-publication
+  readiness unless an external host is deliberately selected later.
 - Preferred route shape:
   - MCP endpoint: `/mcp`
   - Health endpoint: `/healthz`
   - Static metadata fallback: `/.well-known/mcp/server-card.json`
 - Keep the initial Smithery listing unauthenticated if possible because MCHS registry demos use only synthetic/public-data-safe tools. If authentication is later added, return `401` for unauthenticated MCP requests and document scanner behavior.
-- Candidate namespace/name remains to be confirmed by the project owner before final submission.
+- Namespace/name for the accepted stdio bundle is `edithatogo/mchs`.
 
 ## Remaining gate
 
-This track remains deferred at `http_publication_evidence` until a public Streamable HTTP endpoint or delegated host exists, scanner/server-card evidence is captured, HTTP contract tests pass, and Smithery listing/submission/gate evidence exists.
+Smithery stdio-bundle publication evidence exists. The remaining deferred gate
+is hosted Streamable HTTP publication evidence: a public HTTPS endpoint or
+delegated host, scanner/server-card evidence for that hosted endpoint, HTTP
+contract tests, and Smithery hosted listing/submission evidence.

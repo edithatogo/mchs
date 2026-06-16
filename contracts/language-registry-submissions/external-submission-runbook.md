@@ -1,6 +1,18 @@
 # External Submission Runbook
 
-As of 2026-06-12, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, crates.io, NuGet, the Homebrew personal tap, and the Go module are externally published and verified. The official MCP Registry publication is verified outside this language-registry contract. The remaining items require public listing evidence, token/account linking, upstream maintainer review, or registry-specific validation and PR workflows.
+As of 2026-06-16, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, crates.io, NuGet, the Homebrew personal tap, the Go module, Swift Package Index, Maven Central, MATLAB File Exchange, Open VSX, Visual Studio Marketplace, and Stata SSC are externally published and verified. The official MCP Registry publication is verified outside this language-registry contract. The remaining items require CRAN/conda-forge/ConanCenter reviewer action.
+
+Email guardrail: do not send, reply, forward, or transmit corrected archives from any mailbox unless the user explicitly approves the exact outbound action first. Local draft text and package preparation can proceed, but outbound email remains user-approval gated.
+
+Live-monitor note: scheduled or manual `.github/workflows/language-registry-live.yml` runs upload the Markdown/JSON live reports and append the Markdown report, including the generated timestamp, promotion group counts, submission detail, public detail, promotion state, and next action, to the GitHub Actions job summary. The workflow exposes `GITHUB_TOKEN` only to the report-generation step so GitHub PR and feedstock probes avoid anonymous rate limits. For GitHub PR submissions, submission detail includes live mergeability fields when the API provides them.
+
+CRAN public-proof note: the live monitor checks the CRAN package page, CRANDB, and `https://cran.r-project.org/src/contrib/PACKAGES`; CRAN publication is not treated as verified until one of those public surfaces exposes target version `0.1.0`.
+
+conda-forge public-proof note: the live monitor checks both the Anaconda `conda-forge/nwau-py` package API and `https://github.com/conda-forge/nwau-py-feedstock`; feedstock creation alone is not treated as publication until the target package version is visible through Anaconda.
+
+vcpkg / ConanCenter public-proof note: the live monitor checks the ConanCenter raw recipe and `conandata.yml` before the vcpkg raw port. ConanCenter publication evidence can satisfy the active Conan side of the gate, but the combined registry remains partial while vcpkg is upstream-policy deferred.
+
+Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePEc `mchs.pkg`, `mchs.ado`, and `mchs.sthlp` paths; installability is treated as verified when the package manifest and ado/help files expose the `mchs` command identity. SSC `.pkg` metadata does not expose semantic versions, so version `0.1.0` remains local archive evidence.
 
 ## Already published and verified
 
@@ -10,6 +22,11 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - NuGet: `Mchs.Bindings.DotNet@0.1.0`
 - Homebrew personal tap: `https://github.com/edithatogo/homebrew-mchs`
 - Go module proxy/pkg.go.dev: `github.com/edithatogo/mchs/bindings/go@v0.1.0`
+- Swift Package Index: `MCHSBind@0.1.0`
+- Maven Central: `io.github.edithatogo:mchs-jvm-bindings:0.1.0`
+- Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1`
+- Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; latest is `0.1.1`
+- Stata SSC: `mchs` installable from Boston College SSC/RePEc public files
 
 ## Credential-gated direct publishes
 
@@ -38,22 +55,14 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 ### Open VSX / Visual Studio Marketplace
 
-- Extension: `edithatogo.mchs-tools@0.1.0`
-- Public probe: `https://open-vsx.org/api/edithatogo/mchs-tools` returned HTTP 404 `Extension not found` with `Accept: application/json` on 2026-05-26. The Visual Studio Marketplace item page returned HTTP 404, and the Gallery `extensionquery` API returned 0 extensions for `edithatogo.mchs-tools`. A 406 Open VSX response means the probe used an incompatible `Accept` header, not that the extension is listed.
-- Required credentials: Open VSX token and Visual Studio Marketplace publisher token.
-- Credential status: The user reports the Eclipse Foundation Open VSX Publisher Agreement is completed. Eclipse account `edithatogo` is now connected with GitHub account `edithatogo`, and Open VSX GitHub login succeeds. Open VSX Access Tokens still reports that no Eclipse Foundation Open VSX Publisher Agreement is signed and the Profile page redirects to Eclipse Foundation password login for the `openvsx_publisher_agreement` scope. Visual Studio Marketplace publisher `edithatogo` is visible in the publishing portal with Owner role under the signed-in Microsoft account; Marketplace PAT creation and authenticated VSIX publish remain unresolved.
+- Extension: `edithatogo.mchs-tools@0.1.1`
+- Public probe: `https://open-vsx.org/api/edithatogo/mchs-tools` returns namespace `edithatogo`, name `mchs-tools`, latest version `0.1.1`, and allVersions including `0.1.1`, `0.1.0`, and `latest`; Visual Studio Marketplace Gallery `extensionquery` returns public `edithatogo.mchs-tools` version `0.1.1` with VSIX SHA-256 `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
+- Credential status: Open VSX Access Tokens became available for `edithatogo` after Eclipse Publisher Agreement recognition. A fresh token named `mchs-tools publish 2026-06-13` was generated for the publish check, `npx --yes ovsx publish integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` returned that `edithatogo.mchs-tools 0.1.0` is already published, and the fresh token was deleted afterwards. A pre-existing Open VSX token row was left untouched. Visual Studio Marketplace publisher `edithatogo` is visible in the publishing portal with Owner role under the signed-in Microsoft account; Marketplace web upload accepted `mchs-tools-0.1.0.vsix` and published version `0.1.0`. On 2026-06-16, the signed-in Marketplace publisher page showed `MCHS Tools` version `0.1.1` as Public under `edithatogo`.
 - Track-specific checklist: `conductor/tracks/vscode_openvsx_registry_submission_20260524/access_checklist.md`.
 - Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
-- Open VSX command: `npx --yes ovsx publish microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$OVSX_PAT"`
-- Marketplace command: `npx --yes @vscode/vsce publish --packagePath microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$VSCE_PAT"`
-- Next-action checklist:
-  1. Complete the Eclipse Foundation password login/agreement-recognition flow for account `edithatogo`.
-  2. Create an Open VSX access token and expose it only as `OVSX_PAT` for the publish session.
-  3. Run `npx --yes ovsx publish microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$OVSX_PAT"`.
-  4. Verify `https://open-vsx.org/api/edithatogo/mchs-tools` returns version `0.1.0`.
-  5. Create a Marketplace PAT with extension publish rights for the existing Visual Studio Marketplace publisher `edithatogo` and expose it only as `VSCE_PAT`.
-  6. Run `npx --yes @vscode/vsce publish --packagePath microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix --pat "$VSCE_PAT"`.
-  7. Verify the Visual Studio Marketplace Gallery `extensionquery` API returns `edithatogo.mchs-tools` version `0.1.0`.
+- Prepared sync artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix` with local SHA-256 `bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6`.
+- Open VSX publish check: `npx --yes ovsx publish integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` returned that version `0.1.0` is already published.
+- Remaining step: none for the verified `0.1.1` publication; preserve publisher ID `bd039266-4396-4e4c-8bb8-13364a4aab70`, extension ID `8cf2c772-2ead-4a18-8dde-c5069790380a`, Open VSX API evidence, Marketplace Gallery API evidence, and token-cleanup evidence.
 
 ## Maintainer-review or PR-gated submissions
 
@@ -70,6 +79,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
   1. Wait for CRAN incoming/pretest or reviewer email and record the incoming/pretest URL or message identifier in the CRAN track evidence.
   2. Respond to any CRAN maintainer email with a patched tarball or explanation, then replace the checksum in the track evidence if the tarball changes.
   3. Verify `https://cran.r-project.org/package=nwauR` and record version `0.1.0` before changing the gate to complete.
+- Latest public probe: on 2026-06-16, `https://cran.r-project.org/web/packages/nwauR/index.html` returned HTTP 404; CRANDB returned HTTP 404; `src/contrib/PACKAGES` did not contain `Package: nwauR`. Latest mail-probe evidence remains the 2026-06-13 connected Gmail search with no CRAN/nwauR response; Microsoft 365/Outlook connector previously returned `No accounts found. Please login first.`
 
 ### Julia General
 
@@ -110,11 +120,13 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Dedicated package repo: `https://github.com/edithatogo/mchs-swift.git`
 - Tag: `v0.1.0`
 - GitHub release: `https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0`
-- PackageList issue: `https://github.com/SwiftPackageIndex/PackageList/issues/13717`, closed as completed on 2026-05-24.
+- PackageList issue: `https://github.com/SwiftPackageIndex/PackageList/issues/13717`, closed as completed on 2026-05-24; maintainer comment on 2026-06-12 says the original closure was premature and the package was added with PR `https://github.com/SwiftPackageIndex/PackageList/pull/13999`.
+- PackageList PR: `https://github.com/SwiftPackageIndex/PackageList/pull/13999`, merged on 2026-06-12 at `2026-06-12T12:02:16Z` with merge commit `ffdaf6cf883878adcb7f31691f6120e3d7f64c48`.
+- Raw PackageList evidence: `https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json` contains `https://github.com/edithatogo/mchs-swift.git`.
 - Fixed publication metadata: added MIT license, Swift package topics, and GitHub release `v0.1.0`.
-- Remaining step: verify public SPI listing/version evidence at `https://swiftpackageindex.com/edithatogo/mchs-swift`.
-- Latest public probe: on 2026-06-12, the PackageList issue remained closed completed and the GitHub release `v0.1.0` remained published, but the SPI page returned HTTP 403 with a Cloudflare `Just a moment...` challenge and no visible `MCHSBind` or `0.1.0` evidence.
-- Track-specific checklist: `conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md`.
+- Publication evidence: on 2026-06-12, `https://swiftpackageindex.com/edithatogo/mchs-swift` returned HTTP 200 and exposed `MCHSBind`, canonical `edithatogo/mchs-swift` links, stable `v0.1.0`, the SPM manifest snippet using `from: "0.1.0"`, and the GitHub release link.
+- Remaining step: none for Swift Package Index publication. Preserve the PackageList merge, raw PackageList, release, and public SPI page evidence.
+- Track-specific checklist: `conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md` is retained as completed publication evidence.
 
 ### Maven Central
 
@@ -122,15 +134,11 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Local check: `gradle -p bindings/jvm validateCentralPortalReadiness build` passed.
 - Generated local artifacts: binary jar, sources jar, javadoc jar, Maven POM, and Gradle module metadata.
 - Namespace verification: on 2026-06-12, Sonatype Central Portal shows `io.github.edithatogo` as Verified after public GitHub repository verification with key `f7fztfn9vz`.
-- Signing check: local GPG key `9DF6B142F065199E` / `BB03C82343A653EE44BD5CDA9DF6B142F065199E` exists for `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; upload to `hkps://keyserver.ubuntu.com` and `hkps://pgp.mit.edu` returned success, and a clean temporary keyring can receive the key from `hkps://keyserver.ubuntu.com`. Central validation still cannot discover the key by fingerprint.
-- Latest local refresh: on 2026-06-12, Maven Central metadata still returned HTTP 404, `gradle -p bindings/jvm validateCentralPortalReadiness build -PmavenCentralNamespaceVerified=true` passed, and the readiness report records `namespaceVerified=true`, `publisherCredentialsPresent=false`, `signingCredentialsPresent=false`, and `publicationUpload=not-attempted`.
-- Upload attempts: on 2026-06-12, Publisher API uploads succeeded in `USER_MANAGED` mode for deployments `89d0d2a9-91c6-4994-9f8e-fdd34bb501d0`, `fccefc51-9ccb-4466-8f85-8a47bc16cf3c`, and `7ced6d47-59ee-40fb-9c9b-09b1aa9f8491`; each failed validation because Central could not discover public key `BB03C82343A653EE44BD5CDA9DF6B142F065199E`. The temporary Central user token was revoked after the attempts.
+- Signing check: local GPG key `9DF6B142F065199E` / `BB03C82343A653EE44BD5CDA9DF6B142F065199E` exists for `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; upload to supported keyservers returned success and Central validation passed after propagation.
+- Publication evidence: Publisher API deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated and was published with HTTP 204. `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returns HTTP 200 and exposes latest/release/version `0.1.0`.
+- Artifact evidence: public JAR URL `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.jar` returns HTTP 200 with SHA-256 `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e`; public POM URL returns HTTP 200 with SHA-256 `367e6a08a9d57ebd6d97d9fa14f1fe65fbfdf7fce882369ab8264996995c36c6`.
 - Next-action checklist:
-  1. Wait for Central to discover public key `BB03C82343A653EE44BD5CDA9DF6B142F065199E` from a supported keyserver, or publish the public key through another supported path.
-  2. Create a fresh short-lived Central user token.
-  3. Re-upload `build/mchs-jvm-bindings-0.1.0-central-bundle.zip` through Central Portal or the Publisher API.
-  4. Release the deployment after validation succeeds.
-  5. Verify `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` contains version `0.1.0` before changing the gate to complete.
+  1. None for Maven Central publication. Preserve the public metadata/JAR evidence and revoked-token notes.
 - Track-specific checklist: `conductor/tracks/jvm_maven_central_registry_submission_20260524/submission_checklist.md`.
 
 ### conda-forge
@@ -138,8 +146,9 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Package: `nwau-py==0.2.2`
 - Prepared recipe: `microcosting_healthservices/packaging/conda-forge/meta.yaml`
 - Submitted PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
-- Feedback addressed: pushed commit `e6c8b9d632953263517de6a146783f3697fc450d` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points.
-- Branch update: GitHub accepted an update-branch request on 2026-05-26; linter, check-skip, linux_64, osx_64, win_64, and aggregate checks are passing on the current head.
+- Feedback addressed: pushed commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41` to add recipe maintainers, tests, build number, `license_file`, `setuptools`, noarch Python pins, runtime dependencies, and entry points; the PR was later refreshed to head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`.
+- Branch update: GitHub accepted an update-branch request on 2026-05-26; authenticated live evidence on 2026-06-16 observed current head `bffc5bf1a85389dc695adfd96c87bf2413f4db25` with linter, conda-forge-linter, staged-recipes, build fast finish, linux_64, osx_64, win_64, build status, and check skip passing.
+- Latest live PR probe: 2026-06-16 authenticated live monitor shows PR `33452` still open, `merged=False`, `draft=False`, `mergeable=True`, and `mergeable_state=clean`; GitHub CLI GraphQL mergeability currently reports `UNKNOWN`. Current linter/Azure staged-recipes checks remain successful, no review decision is present, and no actionable comments appear after the 2026-06-11 author follow-up. Anaconda API still returns HTTP 404 for `conda-forge/nwau-py`, and the `conda-forge/nwau-py-feedstock` repository still returns HTTP 404.
 - Remaining step: wait for conda-forge staged-recipes maintainer review, merge, and feedstock publication.
 - Track-specific checklist: `conductor/tracks/conda_forge_feedstock_submission_20260524/review_checklist.md`.
 
@@ -159,13 +168,11 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Package: `mchs-matlab-interop@0.1.0`
 - Prepared artifact: `microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip`
 - Contents: README, MIT license, File Exchange metadata, workflow notes, adapter functions, and examples.
-- Next-action checklist:
-  1. Sign in to MathWorks File Exchange with the publishing account.
-  2. Create a new File Exchange submission named `mchs-matlab-interop`.
-  3. Upload `microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip`.
-  4. Copy the description, license, tags, and version from `bindings/matlab/file-exchange-submission.json`.
-  5. Submit for File Exchange review and record the submission URL or review email in the MATLAB track evidence.
-  6. Verify the public File Exchange page exposes version `0.1.0` before changing the gate to complete.
+- Published URL: `https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop`.
+- Public evidence: Chrome observed the published File Exchange page on 2026-06-13 with title `MCHS MATLAB Interop - File Exchange - MATLAB Central`, version `0.1.0`, add-on id `184067`, add-on UUID `91133d3e-f475-413c-85bc-544188a60074`, the banner `Your submission has been published in File Exchange.`, tags `cli`, `csv`, `health economics`, `matlab`, `microcosting`, and `parquet`, and the recorded requirements text.
+- Submission note: the MathWorks live editor required population through its rich-text editor state before validation; the final public page shows the intended description and requirements. The original uploaded archive SHA-256 was `1156f506cda8ab797b5d07adebc35ecccb36bd9758cffaf011029c71c9d2515a`. After publication, the local ZIP was corrected so its README/metadata no longer say no File Exchange upload occurred; corrected local SHA-256 is `d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336`.
+- Replacement follow-up: Chrome opened new-version draft `https://www.mathworks.com/contribute/submissions/aaea44a8-4710-4e2c-a17d-a97aede040de/edit` with update notes and version `0.1.1`, but the browser automation backend could not complete a trusted replacement ZIP upload. No corrected replacement publication is claimed.
+- Remaining step: none for File Exchange publication; keep the local note that MATLAB/Octave runtime execution is not claimed in this repository evidence.
 - Track-specific checklist: `conductor/tracks/matlab_file_exchange_submission_20260524/submission_checklist.md`.
 
 ### Stata SSC
@@ -173,13 +180,13 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Package: `mchs-stata-interop@0.1.0`
 - Prepared artifact: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
 - Contents: ado/help/pkg files, README, MIT license, notes, and example `.do` workflows.
-- Next-action checklist:
-  1. Email the SSC package submission contact with package name `mchs-stata-interop`, version `0.1.0`, maintainer contact, and a short description.
-  2. Attach or link `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`.
-  3. Include `bindings/stata/pkg-mchs.pkg` as the package index file and list the included ado/help/example files.
-  4. Record the sent email date, recipient, and message identifier in the Stata SSC track evidence.
-  5. Apply any maintainer-requested package changes, rebuild the zip, and update the checksum evidence if the archive changes.
-  6. Verify the package is installable from SSC before changing the gate to complete.
+- Current archive SHA-256: `47e4f6a7c86d483ef71baa1daa8b9e20f61f12acab9973f94483923fb2e37f55`.
+- Submission state: initial SSC submission and maintainer-identity clarification were sent via Gmail on 2026-06-12. Christopher Baum replied that the author contact information seemed to be missing from `mchs.sthlp`.
+- Feedback fix: `mchs.sthlp` and the README now include the Author section with Dylan Mordaunt, `dylan.mordaunt@vuw.ac.nz`, and the repository URL; the SSC archive was rebuilt with the current checksum above.
+- Corrected-reply draft: `conductor/tracks/stata_ssc_submission_20260524/corrected_archive_reply_draft.md`.
+- Public evidence: on 2026-06-14, `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg` was live and listed the MCHS module, Dylan Mordaunt support email, `mchs.ado`, `mchs.sthlp`, and example files; `http://fmwww.bc.edu/repec/bocode/m/mchs.ado` exposed `program define mchs`; `http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp` exposed MCHS Stata help and `{cmd:mchs ...}` command help.
+- Version boundary: SSC `.pkg` metadata does not expose semantic versions, so version `0.1.0` remains local archive evidence rather than public SSC metadata.
+- Remaining step: none for SSC publication. The corrected-archive follow-up is obsolete because public installability evidence exists; do not send it without an explicit new user instruction.
 - Track-specific checklist: `conductor/tracks/stata_ssc_submission_20260524/submission_checklist.md`.
 
 ### vcpkg / ConanCenter
@@ -190,13 +197,13 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Prepared Conan recipe: `microcosting_healthservices/packaging/conan/conanfile.py`
 - Dependency gate: `nwau-core` is published to crates.io, and `cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml` now resolves it from the registry and verifies `nwau-c-abi`.
 - Conan validation: `conan create packaging/conan --build=missing` builds and packages `nwau-c-abi/0.1.0` locally on macOS armv8.
+- Latest ConanCenter probe: 2026-06-16 authenticated live monitor shows PR `30262` open, `merged=False`, `draft=False`, `mergeable=True`, and `mergeable_state=blocked`; `gh pr view` shows `reviewDecision=REVIEW_REQUIRED`, `license/cla` success, and `Job scheduler` `ACTION_REQUIRED`; no new actionable comments appear after the 2026-06-12 author follow-up.
 - vcpkg validation: bootstrapped vcpkg under `/tmp/mchs-vcpkg-validation` and ran `/tmp/mchs-vcpkg-validation/vcpkg install nwau-c-abi --overlay-ports=/Volumes/PortableSSD/GitHub/mchs/microcosting_healthservices/packaging/vcpkg/ports --triplet arm64-osx --clean-after-build --binarysource=clear`; install completed successfully with release/debug static libraries, header, copyright, and SPDX metadata.
 - vcpkg submission: PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged on 2026-05-26. The actionable port-quality feedback was addressed in fork commit `58ff86fe`, but maintainers closed the PR because vcpkg does not currently support building Rust libraries.
-- ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open. Portability fixes were pushed in commit `c635b0f9d2f1619d9149e4fa964185658c063f5d`; remaining external gates are CLA/recheck, job scheduler, maintainer review, and merge.
+- ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open. Portability fixes were pushed in commit `c635b0f9d2f1619d9149e4fa964185658c063f5d`; CLA/recheck is now resolved, and the remaining external gates are job scheduler, maintainer review, and merge.
 - Track-specific checklist: `conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`.
 - Next-action checklist:
   1. Treat vcpkg as upstream-policy deferred unless vcpkg adds Rust-library port support or the package is redesigned to avoid requiring vcpkg to build Rust code.
-  2. Complete the ConanCenter CLA/recheck gate for PR `https://github.com/conan-io/conan-center-index/pull/30262`.
-  3. Wait for ConanCenter job scheduler and maintainer review, then apply requested fixes if any.
-  4. Verify the merged ConanCenter package page before changing the Conan side of the gate to complete.
-  5. Keep vcpkg publication unclaimed until an accepted upstream path exists.
+  2. Wait for ConanCenter job scheduler and maintainer review, then apply requested fixes if any.
+  3. Verify the merged ConanCenter package page before changing the Conan side of the gate to complete.
+  4. Keep vcpkg publication unclaimed until an accepted upstream path exists.

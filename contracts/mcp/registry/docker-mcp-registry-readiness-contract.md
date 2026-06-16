@@ -5,16 +5,18 @@ Date created: 2026-05-17
 ## Purpose
 
 Define the required runtime, image, metadata, security, and submission evidence
-before MCHS can be submitted to the Docker MCP Registry and Docker MCP Catalog.
-The current MCP release is stdio-only through PyPI and does not yet satisfy the
-Docker local-server path because it has no Dockerfile-backed container artifact.
+for MCHS Docker MCP Registry submission and Docker MCP Catalog publication. The
+current completed state is submission-ready/review-pending; Docker Catalog
+publication is not claimed until Docker review, merge, and propagation complete.
 
 ## Current State
 
 - `mchs-mcp` is published through `nwau-py` as a local stdio server.
-- No Dockerfile, container image, Docker Hub artifact, or Docker MCP Registry PR
-  is currently claimed for the MCP server.
-- Docker MCP Registry submission remains deferred until this contract is met.
+- A Dockerfile-backed local container path exists in this repository.
+- Docker MCP Registry PR `https://github.com/docker/mcp-registry/pull/3799`
+  is open and review-pending.
+- Docker Catalog publication is not claimed. Docker Hub `mcp/mchs`
+  publication is also not claimed.
 
 ## Docker MCP Registry Requirements Interpreted for MCHS
 

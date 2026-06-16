@@ -82,7 +82,23 @@ def test_conda_forge_recipe_evidence_is_recorded_without_publication_claim():
     )
     assert (
         registry["submissionEvidence"]["commit"]
-        == "e6c8b9d632953263517de6a146783f3697fc450d"
+        == "bffc5bf1a85389dc695adfd96c87bf2413f4db25"
     )
-    assert "checks completed successfully" in metadata["package_evidence"]["branch_update"]
+    assert (
+        "bffc5bf1a85389dc695adfd96c87bf2413f4db25"
+        in metadata["package_evidence"]["branch_update"]
+    )
+    assert "conda-forge-linter" in metadata["package_evidence"]["branch_update"]
+    assert "mergeable=True" in metadata["package_evidence"]["latest_live_pr_probe"]
+    assert (
+        "mergeable_state=clean" in metadata["package_evidence"]["latest_live_pr_probe"]
+    )
+    assert (
+        "GraphQL mergeability currently reports UNKNOWN"
+        in metadata["package_evidence"]["latest_live_pr_probe"]
+    )
+    assert (
+        "nwau-py-feedstock repository still return HTTP 404"
+        in metadata["package_evidence"]["latest_live_pr_probe"]
+    )
     assert "Publication is not claimed" in plan

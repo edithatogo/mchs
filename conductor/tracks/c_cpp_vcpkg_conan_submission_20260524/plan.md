@@ -31,7 +31,8 @@
     - [x] Run vcpkg overlay-port validation in an environment with vcpkg installed.
     - [x] Open the vcpkg PR and capture the upstream policy outcome: `https://github.com/microsoft/vcpkg/pull/51965` closed unmerged because vcpkg does not currently support Rust library ports.
     - [x] Open the ConanCenter PR and capture review state: `https://github.com/conan-io/conan-center-index/pull/30262` is open after portability fixes.
-    - [ ] Complete the ConanCenter CLA/recheck gate and wait for job scheduler/maintainer review.
+    - [x] Capture ConanCenter CLA/recheck resolution: live GitHub check shows `license/cla` success.
+    - [ ] Wait for ConanCenter job scheduler/maintainer review.
     - [ ] Revisit vcpkg only if upstream Rust-library support appears or the C ABI distribution design changes.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 

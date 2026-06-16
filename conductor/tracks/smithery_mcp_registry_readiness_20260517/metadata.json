@@ -1,10 +1,10 @@
 {
   "track_id": "smithery_mcp_registry_readiness_20260517",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "track_class": "publication",
   "priority": "near-term",
-  "current_state": "prepared-local-submission-artifacts",
+  "current_state": "complete",
   "primary_contract": "contracts/mcp/registry/smithery-readiness-contract.md",
   "dependencies": [
     "mcp_server_registry_submission_20260516",
@@ -12,24 +12,27 @@
     "canonical_contract_foundation_20260513"
   ],
   "completion_evidence": [
-    "Streamable HTTP endpoint",
-    "requirements_notes.md",
+    "contracts/mcp/registry/smithery-readiness-contract.md",
     "contracts/mcp/registry/smithery/submission.md",
-    "static server card",
-    "Smithery scan or submission evidence",
-    "HTTP MCP contract tests",
-    "security and data-handling review"
+    "contracts/mcp/registry/smithery/server-card.json",
+    "contracts/mcp/registry/smithery/mcpb/manifest.json",
+    "contracts/mcp/registry/smithery/mcpb/pyproject.toml",
+    "contracts/mcp/registry/smithery/mcpb/src/server.py",
+    "contracts/mcp/registry/smithery/mchs-0.2.2.mcpb",
+    "contracts/mcp/registry/registry-submission-status-20260524.json",
+    "contracts/mcp/registry/submission-decisions.md"
   ],
-  "publication_status": "not-ready",
-  "deferred": true,
-  "deferred_gate": "http_publication_evidence",
+  "publication_status": "published-stdio-bundle",
+  "deferred": false,
+  "hosted_streamable_http_status": "optional-future",
+  "deferred_gate": "hosted_http_publication_evidence",
   "unblock_criteria": [
     "Current Smithery publication requirements are confirmed.",
-    "Public Streamable HTTP endpoint or delegated host is selected.",
+    "Smithery stdio bundle publication is verified.",
     "Static server card or Smithery scan evidence exists.",
-    "Smithery listing, submission, or explicit gate record is captured."
+    "Hosted Streamable HTTP publication remains optional and is not claimed."
   ],
   "created_at": "2026-05-17T05:34:46Z",
   "updated_at": "2026-05-24T00:00:00Z",
-  "description": "Add the Streamable HTTP, server-card, scan, and publication evidence required before submitting MCHS to Smithery. Deferred until HTTP publication evidence exists."
+  "description": "Add Smithery MCPB bundle, server-card, and publication evidence. Complete for the accepted stdio bundle; hosted Streamable HTTP remains optional future work and is not claimed."
 }

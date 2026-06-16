@@ -9,9 +9,9 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Ecosystem: `VS Code extension`
 - Registry: `Open VSX / Visual Studio Marketplace`
 - Package candidate: `mchs-tools`
-- Version candidate: `0.1.0`
+- Version candidate: `0.1.1`
 - Local surface: `microcosting_healthservices/integrations/vscode/package.json`
-- Current status: `prepared_pending_publisher_agreements_tokens_and_vsix_publish`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,16 +24,24 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A concrete VS Code helper extension project exists and packages into `mchs-tools-0.1.0.vsix` using `vsce`. The helper exposes commands to inspect the checked-in VS Code/Open VSX registry gate, open the registry contract, open the external-gates roadmap, and copy the gated Open VSX publish command. The remaining blocker is external: Open VSX and Visual Studio Marketplace require publisher accounts/tokens for authenticated publishing.
+Resolved for the canonical `0.1.0` submission and latest `0.1.1` synchronization. A concrete VS Code helper extension project exists and packages into `mchs-tools-0.1.1.vsix` using `vsce`. The helper exposes commands to inspect the checked-in VS Code/Open VSX registry gate, open the registry contract, open the external-gates roadmap, and copy the gated Open VSX publish command. Visual Studio Marketplace is published and public as `edithatogo.mchs-tools@0.1.1`; Open VSX also exposes `edithatogo.mchs-tools@0.1.0` and latest `0.1.1`.
+
+Follow-up synchronization is resolved: on 2026-06-16, the signed-in Marketplace publisher page showed `MCHS Tools` version `0.1.1` as public under `edithatogo`, and the public Gallery API returned `edithatogo.mchs-tools` version `0.1.1`. The prepared local sync artifact remains at `integrations/vscode/mchs-tools-0.1.1.vsix` with SHA-256 `bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6`; the public Marketplace VSIX SHA-256 returned by the Gallery API is `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
 
 ## Preparation Evidence
 
-- Public registry discovery: `https://open-vsx.org/api/edithatogo/mchs-tools` returned HTTP 404 `Extension not found` with `Accept: application/json` on 2026-05-26. The Visual Studio Marketplace item page returned HTTP 404, and the Gallery `extensionquery` API returned 0 extensions for `edithatogo.mchs-tools`. The earlier Open VSX HTTP 406 was caused by sending a GitHub vendor `Accept` header to Open VSX; the live probe now uses registry-neutral JSON headers for Open VSX.
+- Public registry discovery: `https://open-vsx.org/api/edithatogo/mchs-tools` returned HTTP 404 `Extension not found` with `Accept: application/json` on 2026-05-26 before publication. The Visual Studio Marketplace item page returned HTTP 404, and the Gallery `extensionquery` API returned 0 extensions for `edithatogo.mchs-tools`. The earlier Open VSX HTTP 406 was caused by sending a GitHub vendor `Accept` header to Open VSX; the live probe now uses registry-neutral JSON headers for Open VSX.
+- Marketplace publication evidence: Visual Studio Marketplace Gallery `extensionquery` returns public extension `edithatogo.mchs-tools`, publisher ID `bd039266-4396-4e4c-8bb8-13364a4aab70`, extension ID `8cf2c772-2ead-4a18-8dde-c5069790380a`, version `0.1.1`, and public VSIX SHA-256 `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
+- Open VSX publication evidence: `https://open-vsx.org/api/edithatogo/mchs-tools` returns namespace `edithatogo`, name `mchs-tools`, latest version `0.1.1`, and allVersions including `0.1.1`, `0.1.0`, and `latest`.
 - Package command: `npx --yes @vscode/vsce package --no-dependencies`
 - Artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
 - Package result: packaged 6 files, 4.33 KB.
+- Marketplace sync artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix`
+- Marketplace sync artifact SHA-256: `bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6`
+- Marketplace sync package result: packaged 6 files, 4.42 KB; no publish command was run.
 - Local fix: added local `LICENSE`, package `files` allowlist, and a concrete registry-gate helper command surface.
-- Remaining external blocker: publisher tokens for Open VSX and Visual Studio Marketplace.
+- Latest Open VSX browser evidence: on 2026-06-13, Open VSX user settings were logged in as `edithatogo`, Access Tokens could be generated, a fresh token named `mchs-tools publish 2026-06-13` was generated, `ovsx publish` returned that `edithatogo.mchs-tools 0.1.0` is already published, and the fresh token was deleted afterwards. A pre-existing Open VSX token row was left untouched.
+- Remaining external blocker: none. Latest-version synchronization is verified because both Open VSX and Visual Studio Marketplace expose `edithatogo.mchs-tools@0.1.1`.
 
 ## Acceptance Criteria
 

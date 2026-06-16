@@ -23,16 +23,20 @@
 - [x] Task: Assemble Open VSX and Visual Studio Marketplace access steps.
     - [x] Create a track-local access checklist with the agreement, publisher, token, and publish steps.
     - [x] Link the shared runbook back to the track-local checklist.
-- [ ] Task: Submit to `Open VSX / Visual Studio Marketplace` using an authenticated publisher workflow.
+- [x] Task: Submit to `Open VSX / Visual Studio Marketplace` using an authenticated publisher workflow.
     - [x] Use dry-run or validation mode first where available.
-    - [ ] Publish or open the required upstream PR. Open VSX is blocked by Eclipse Foundation password login/agreement recognition and token creation; Visual Studio Marketplace publisher `edithatogo` exists with Owner role, but PAT creation and authenticated VSIX publish remain pending.
-    - [x] Capture submission URL, version, owner, and review state. The user reports the Eclipse Foundation Open VSX Publisher Agreement is completed; Eclipse account `edithatogo` is now connected with GitHub account `edithatogo`, and Open VSX GitHub login succeeds. Open VSX Access Tokens still reports no signed Publisher Agreement and Log in with Eclipse reaches an Eclipse Foundation username/password prompt. Visual Studio Marketplace shows publisher `edithatogo` with Owner role and no uploaded extensions in the current Microsoft session.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
+    - [x] Publish or open the required upstream PR. Visual Studio Marketplace is published and public; Open VSX API also returns `edithatogo.mchs-tools` version `0.1.0`.
+    - [x] Capture submission URL, version, owner, and review state. Chrome evidence on 2026-06-13 showed Open VSX Access Tokens available for `edithatogo`; a fresh token was generated, `ovsx publish` returned that `edithatogo.mchs-tools 0.1.0` is already published, the public Open VSX API verified version `0.1.0`, and the fresh token was deleted afterwards.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication.
-    - [x] Query public registry after propagation. The deterministic Open VSX and Visual Studio Marketplace public probes confirm `mchs-tools` is not listed.
-    - [ ] Record immutable URL/API response/checksum.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)
+- [x] Task: Verify external publication.
+    - [x] Query public registry after propagation. Visual Studio Marketplace Gallery API returns `edithatogo.mchs-tools` version `0.1.1`; Open VSX API returns `edithatogo/mchs-tools` latest version `0.1.1` and still exposes version `0.1.0` in `allVersions`.
+    - [x] Record immutable URL/API response/checksum for both publications.
+    - [x] Mark track complete only if both required destinations are published or the remaining Open VSX destination is explicitly rescoped.
+- [x] Follow-up: synchronize latest Visual Studio Marketplace publication.
+    - [x] Prepare the local `mchs-tools-0.1.1.vsix` Marketplace-sync artifact.
+    - [x] Confirm the Marketplace publisher surface exposes version `0.1.1`.
+    - [x] Re-query Marketplace Gallery API and update evidence once both destinations expose latest version `0.1.1`.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)

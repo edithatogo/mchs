@@ -1,0 +1,61 @@
+{
+  "name": "mchs-tools",
+  "displayName": "MCHS Tools",
+  "description": "VS Code helper commands for MCHS registry-gate and contract workflow checks.",
+  "version": "0.1.1",
+  "publisher": "edithatogo",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edithatogo/mchs.git"
+  },
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": ["Other"],
+  "keywords": [
+    "mchs",
+    "registry",
+    "contracts",
+    "health-services"
+  ],
+  "extensionKind": ["workspace"],
+  "activationEvents": [
+    "onCommand:mchs.showRegistryStatus",
+    "onCommand:mchs.openLanguageRegistryContract",
+    "onCommand:mchs.openExternalGateRoadmap",
+    "onCommand:mchs.copyOpenVsxPublishCommand"
+  ],
+  "main": "./extension.js",
+  "files": [
+    "extension.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "mchs.showRegistryStatus",
+        "title": "MCHS: Show Registry Status"
+      },
+      {
+        "command": "mchs.openLanguageRegistryContract",
+        "title": "MCHS: Open Language Registry Contract"
+      },
+      {
+        "command": "mchs.openExternalGateRoadmap",
+        "title": "MCHS: Open External Gate Roadmap"
+      },
+      {
+        "command": "mchs.copyOpenVsxPublishCommand",
+        "title": "MCHS: Copy Open VSX Publish Command"
+      }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package --no-dependencies",
+    "publish:openvsx": "ovsx publish",
+    "publish:vsmarketplace": "vsce publish"
+  },
+  "devDependencies": {}
+}

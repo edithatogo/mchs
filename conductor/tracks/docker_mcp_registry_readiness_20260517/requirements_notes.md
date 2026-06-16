@@ -32,4 +32,7 @@ Sources:
 
 ## Remaining gate
 
-This track remains deferred at `container_publication_evidence` until a Dockerfile-backed runtime, smoke tests, registry candidate files, upstream validation output, and PR/merge/gate evidence exist.
+The Dockerfile-backed runtime, smoke tests, registry candidate files, upstream
+validation output, and active PR evidence now exist. The remaining deferred gate
+is Docker review, merge, and Docker Catalog/Docker Hub `mcp/mchs` propagation;
+no catalog publication is claimed before that evidence exists.

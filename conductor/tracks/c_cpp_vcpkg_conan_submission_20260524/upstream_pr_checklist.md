@@ -34,7 +34,9 @@ This checklist captures the upstream review steps required to complete `nwau-c-a
 7. Record the PR URL, branch, validation result, and any maintainer requests in the track evidence.
 8. Current PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
 9. Latest pushed fix: `c635b0f9d2f1619d9149e4fa964185658c063f5d` fixed test-package portability.
-10. Remaining gates: complete CLA/recheck, wait for job scheduler and maintainer review, then verify merged package evidence.
+10. CLA/recheck gate resolved on 2026-06-12: live GitHub check shows `license/cla` success.
+11. Latest live probe on 2026-06-16: PR 30262 remains open, `merged=False`, `draft=False`, `mergeable=True`, `mergeable_state=blocked`, `reviewDecision=REVIEW_REQUIRED`, `license/cla` success, and `Job scheduler` `ACTION_REQUIRED`; no new actionable comments appear after the 2026-06-12 author follow-up.
+12. Remaining gates: wait for job scheduler and maintainer review, then verify merged package evidence.
 
 ## Completion rule
 

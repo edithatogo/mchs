@@ -3,18 +3,21 @@
 ## Overview
 
 Prepare MCHS for Smithery publication without overclaiming the current stdio
-release. Smithery requires a public URL-based MCP server using Streamable HTTP,
-with OAuth support if authentication is required. This track defines and builds
-that readiness path while preserving the existing rule that the MCP adapter must
-not duplicate calculator formula logic.
+release. Smithery can publish a local stdio MCPB bundle or a public URL-based
+MCP server using Streamable HTTP, with OAuth support if authentication is
+required. This track records the completed stdio-bundle publication and keeps
+hosted Streamable HTTP publication as an optional/future gate while preserving
+the existing rule that the MCP adapter must not duplicate calculator formula
+logic.
 
 ## Functional Requirements
 
-- Implement or configure a Streamable HTTP MCP adapter for the existing MCHS MCP
-  tools and resources.
-- Serve a public HTTPS `/mcp` endpoint suitable for Smithery URL publishing.
-- Provide `/.well-known/mcp/server-card.json` as a static metadata fallback for
-  Smithery scanning.
+- Package a local stdio MCPB bundle or implement/configure a Streamable HTTP
+  MCP adapter for the existing MCHS MCP tools and resources.
+- For the hosted HTTP path, serve a public HTTPS `/mcp` endpoint suitable for
+  Smithery URL publishing.
+- Provide `/.well-known/mcp/server-card.json` as static metadata for Smithery
+  bundle/hosted publication evidence.
 - Define authentication behavior explicitly; unauthenticated protected endpoints
   must return `401`, not `403`, when OAuth discovery is expected.
 - Record the Smithery namespace, endpoint URL, submission method, scan result,
@@ -34,8 +37,8 @@ not duplicate calculator formula logic.
 ## Acceptance Criteria
 
 - `contracts/mcp/registry/smithery-readiness-contract.md` is met.
-- Streamable HTTP smoke tests cover `initialize`, `tools/list`, and one
-  read-only MCHS tool.
+- Stdio bundle evidence or Streamable HTTP smoke tests cover discovery and at
+  least one read-only MCHS capability for the claimed publication path.
 - Static server-card metadata is generated and validated against the tool and
   resource contract.
 - Smithery publication evidence exists, or an explicit external gate record is

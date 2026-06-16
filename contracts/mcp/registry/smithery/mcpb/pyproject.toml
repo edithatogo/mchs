@@ -1,0 +1,8 @@
+[project]
+name = "mchs-smithery-mcpb"
+version = "0.2.2"
+description = "Smithery MCPB launcher for the MCHS NWAU Calculator MCP server"
+requires-python = ">=3.10,<3.15"
+dependencies = [
+  "nwau-py==0.2.2",
+]

@@ -1,31 +1,50 @@
 {
+  "manifest_version": "0.4",
   "name": "mchs",
-  "display_name": "MCHS Health Services Microcosting",
+  "display_name": "MCHS NWAU Calculator MCP",
   "version": "0.2.2",
-  "description": "Synthetic-data-safe MCP tools for Australian health-services microcosting, NWAU pricing, and validation workflows.",
+  "description": "Synthetic-data-safe MCP tools for Australian health-services microcosting, NWAU pricing support-scope inspection, schema discovery, validation, and release evidence.",
   "author": {
     "name": "edithatogo"
   },
-  "license": "MIT",
-  "repository": "https://github.com/edithatogo/mchs",
-  "server": {
-    "type": "stdio",
-    "command": "mchs-mcp",
-    "args": []
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edithatogo/mchs"
   },
-  "tools": [
-    "mchs.list_calculators",
-    "mchs.get_schema",
-    "mchs.validate_input",
-    "mchs.calculate",
-    "mchs.explain_result",
-    "mchs.get_evidence"
-  ],
+  "homepage": "https://github.com/edithatogo/mchs",
+  "support": "https://github.com/edithatogo/mchs/issues",
+  "license": "MIT",
+  "server": {
+    "type": "python",
+    "entry_point": "src/server.py",
+    "mcp_config": {
+      "command": "python",
+      "args": [
+        "${__dirname}/src/server.py"
+      ],
+      "env": {}
+    }
+  },
+  "tools": [],
+  "tools_generated": true,
+  "prompts": [],
+  "prompts_generated": false,
   "keywords": [
     "mcp",
     "healthcare",
     "microcosting",
     "nwau",
-    "pricing"
-  ]
+    "pricing",
+    "validation"
+  ],
+  "compatibility": {
+    "platforms": [
+      "darwin",
+      "win32",
+      "linux"
+    ],
+    "runtimes": {
+      "python": ">=3.10,<3.15"
+    }
+  }
 }

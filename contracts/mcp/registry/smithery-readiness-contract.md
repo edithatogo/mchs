@@ -4,18 +4,21 @@ Date created: 2026-05-17
 
 ## Purpose
 
-Define the required product, runtime, security, and evidence conditions before
-MCHS can be submitted to Smithery. This contract exists because the current MCP
-release is stdio-only, while Smithery URL publishing requires a public HTTPS MCP
-server using Streamable HTTP, with OAuth support when authentication is required.
+Define the required product, runtime, security, and evidence conditions for
+MCHS Smithery publication. The first accepted Smithery release is a local stdio
+MCPB bundle; hosted URL publishing remains a separate optional future path that
+requires a public HTTPS MCP server using Streamable HTTP, with OAuth support
+when authentication is required.
 
 ## Current State
 
 - `mchs-mcp` is published as a stdio MCP server through `nwau-py`.
 - Official MCP Registry publication is complete for `io.github.edithatogo/mchs`
   version `0.2.2`.
-- No public hosted Streamable HTTP endpoint exists for the MCHS MCP server.
-- No Smithery publication or Smithery server page is currently claimed.
+- Smithery accepted the stdio MCPB release for `edithatogo/mchs` on
+  2026-05-24 with deployment ID `200f2fd3-86c4-4122-b3bf-98abe5aa62f1`.
+- No public hosted Streamable HTTP endpoint exists for the MCHS MCP server;
+  hosted Streamable HTTP publication remains optional/future and is not claimed.
 
 ## Smithery Requirements Interpreted for MCHS
 
@@ -33,7 +36,7 @@ server using Streamable HTTP, with OAuth support when authentication is required
 - Session configuration, if any, must be represented as JSON Schema and must not
   expose secrets or healthcare data.
 
-## Required Implementation Deliverables
+## Required Implementation Deliverables for Hosted HTTP
 
 - A hosted Streamable HTTP adapter that wraps the existing `mchs-mcp` tool and
   resource contract without duplicating formula logic.
@@ -48,7 +51,7 @@ server using Streamable HTTP, with OAuth support when authentication is required
   CLI equivalent:
   `smithery mcp publish "https://<host>/mcp" -n <namespace>`.
 
-## Required Validation Evidence
+## Required Validation Evidence for Hosted HTTP
 
 - Contract tests proving the Streamable HTTP endpoint exposes the same MCP tools
   and resources as the stdio server.
@@ -63,11 +66,15 @@ server using Streamable HTTP, with OAuth support when authentication is required
 
 ## Acceptance Criteria
 
-- A public HTTPS Streamable HTTP endpoint exists and can be scanned.
-- Smithery scan or static server-card metadata exposes the MCHS MCP capabilities
-  accurately.
-- Authentication behavior is explicit and Smithery-compatible.
-- No formula logic is implemented in the HTTP adapter.
+- Smithery stdio-bundle publication may be claimed only when the registry API,
+  status URL, bundle path, and bundle checksum are recorded.
+- Hosted HTTP publication may be claimed only when a public HTTPS Streamable
+  HTTP endpoint exists and can be scanned.
+- Smithery scan, bundle metadata, or static server-card metadata exposes the
+  MCHS MCP capabilities accurately for the claimed publication path.
+- Authentication behavior is explicit and Smithery-compatible for any hosted
+  endpoint.
+- No formula logic is implemented in the HTTP adapter or MCPB launcher.
 - No Smithery publication is claimed until a Smithery listing or submission
   record exists.
 

@@ -191,7 +191,7 @@ def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
     assert workflow.index("Run tests") < workflow.index("Run coverage")
 
 
-def test_language_registry_live_workflow_is_scheduled_and_artifact_only():
+def test_language_registry_live_workflow_is_scheduled_with_artifacts_and_summary():
     workflow = _read_text(LANGUAGE_REGISTRY_LIVE_WORKFLOW_FILE)
 
     assert "Language registry live monitor" in workflow
@@ -209,10 +209,13 @@ def test_language_registry_live_workflow_is_scheduled_and_artifact_only():
         "scripts/language_registry_external_gate_report.py --promotion --live --output"
         in workflow
     )
+    assert "GITHUB_TOKEN: ${{ github.token }}" in workflow
     assert "actions/upload-artifact@v6" in workflow
     assert "name: language-registry-live" in workflow
     assert "dist/language-registry-live.md" in workflow
     assert "dist/language-registry-live-promotion-groups.json" in workflow
+    assert "Publish live gate summary" in workflow
+    assert 'cat dist/language-registry-live.md >> "$GITHUB_STEP_SUMMARY"' in workflow
     assert "pull_request:" not in workflow
 
 

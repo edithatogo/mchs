@@ -41,11 +41,11 @@ def test_c_cpp_track_records_dependency_unblocked_but_not_publication():
     assert metadata["status"] == "blocked"
     assert (
         metadata["current_status"]
-        == "submitted_conancenter_pending_cla_scheduler_review_vcpkg_deferred"
+        == "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred"
     )
     assert metadata["publication_claimed"] is False
     assert metadata["publication_status"] == "not_published"
-    assert "license/cla pending" in metadata["blocker"]
+    assert "license/cla now successful" in metadata["blocker"]
     assert "Job scheduler ACTION_REQUIRED" in metadata["blocker"]
     assert "vcpkg remains deferred" in metadata["blocker"]
     assert (
@@ -62,18 +62,35 @@ def test_c_cpp_track_records_dependency_unblocked_but_not_publication():
     assert registry["preparationEvidence"]["vcpkgPortfile"].endswith("portfile.cmake")
     assert (
         registry["preparationEvidence"]["conanCenterSubmissionState"]
-        == "open_pending_cla_scheduler_review"
+        == "open_cla_resolved_pending_scheduler_review"
     )
-    assert "license/cla status context is PENDING" in registry["preparationEvidence"][
-        "latestConanCenterReviewUpdate"
-    ]
+    assert (
+        "license/cla status context is SUCCESS"
+        in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
+    )
+    assert (
+        "2026-06-16" in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
+    )
+    assert (
+        "mergeable_state=blocked"
+        in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
+    )
+    assert (
+        "Job scheduler is ACTION_REQUIRED"
+        in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
+    )
     assert "conanRecipeReadiness" in registry["preparationEvidence"]
     assert "conanCreateCommand" in registry["preparationEvidence"]
     assert "conanPackageReference" in registry["preparationEvidence"]
     assert "vcpkgOverlayInstallCommand" in registry["preparationEvidence"]
+    expected_overlay_result = (
+        "Installed nwau-c-abi:arm64-osx@0.1.0 successfully from the local overlay "
+        "port with release and debug static libraries, header, copyright, and SPDX "
+        "metadata."
+    )
     assert (
         registry["preparationEvidence"]["vcpkgOverlayInstallResult"]
-        == "Installed nwau-c-abi:arm64-osx@0.1.0 successfully from the local overlay port with release and debug static libraries, header, copyright, and SPDX metadata."
+        == expected_overlay_result
     )
 
 
@@ -96,7 +113,7 @@ def test_c_cpp_packaging_wording_preserves_private_preview_and_upstream_gates():
     assert "does not currently support building Rust libraries" in checklist
     assert "open a pr to `conan-io/conan-center-index`" in checklist.lower()
     assert "https://github.com/conan-io/conan-center-index/pull/30262" in plan
-    assert "Complete the ConanCenter CLA/recheck gate" in plan
+    assert "Capture ConanCenter CLA/recheck resolution" in plan
     assert "accepted upstream PR/merge evidence" in spec
 
 

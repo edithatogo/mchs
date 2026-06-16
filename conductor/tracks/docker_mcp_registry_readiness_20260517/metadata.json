@@ -1,10 +1,10 @@
 {
   "track_id": "docker_mcp_registry_readiness_20260517",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "track_class": "publication",
   "priority": "near-term",
-  "current_state": "prepared-local-submission-artifacts",
+  "current_state": "complete-with-gaps",
   "primary_contract": "contracts/mcp/registry/docker-mcp-registry-readiness-contract.md",
   "dependencies": [
     "mcp_server_registry_submission_20260516",
@@ -15,21 +15,25 @@
     "Dockerfile",
     "requirements_notes.md",
     "contracts/mcp/registry/docker/submission.md",
-    "container stdio smoke tests",
-    "Docker MCP Registry server.yaml candidate",
-    "Docker registry validation evidence",
-    "Docker MCP Registry PR or gate record"
+    "contracts/mcp/registry/docker/servers/mchs/server.yaml",
+    "contracts/mcp/registry/docker/servers/mchs/tools.json",
+    "contracts/mcp/registry/docker/servers/mchs/readme.md",
+    "contracts/mcp/registry/registry-submission-status-20260524.json",
+    "contracts/mcp/registry/submission-decisions.md"
   ],
-  "publication_status": "not-ready",
-  "deferred": true,
-  "deferred_gate": "container_publication_evidence",
+  "publication_status": "submitted-review-pending",
+  "deferred": false,
+  "catalog_publication_claimed": false,
+  "deferred_gate": "docker_maintainer_review_merge_and_catalog_propagation",
   "unblock_criteria": [
     "Current Docker MCP Registry requirements are confirmed.",
     "Dockerfile-backed container path is implemented and smoke-tested.",
     "Docker MCP Registry metadata validates in upstream tooling.",
-    "Docker MCP Registry PR, merge, or explicit gate record is captured."
+    "Docker MCP Registry PR is captured.",
+    "Docker Catalog publication remains unclaimed until Docker review, merge, and propagation complete."
   ],
   "created_at": "2026-05-17T05:34:46Z",
-  "updated_at": "2026-05-24T00:00:00Z",
-  "description": "Add the container, metadata, validation, and PR evidence required before submitting MCHS to the Docker MCP Registry. Deferred until container publication evidence exists."
+  "updated_at": "2026-06-16T00:00:00+10:00",
+  "description": "Add the container, metadata, validation, and PR evidence required for Docker MCP Registry submission. Complete for upstream PR submission; Docker Catalog publication remains review-pending and unclaimed.",
+  "latest_live_observation": "GitHub PR https://github.com/docker/mcp-registry/pull/3799 remains open, not draft, mergeable=MERGEABLE, mergeStateStatus=BLOCKED, reviewDecision=REVIEW_REQUIRED, no configured status checks, and no maintainer review as of 2026-06-16; refreshed validation comment records go run ./cmd/validate --name mchs passing from a clean temporary checkout."
 }

@@ -1,6 +1,6 @@
 # MCP Registry Submission Decisions
 
-Date: 2026-05-17
+Date: 2026-05-24
 
 ## Current Artifact
 
@@ -13,8 +13,8 @@ Docker is not required.
 | --- | --- | --- |
 | Official MCP Registry | Published. | `mcp-publisher` published `io.github.edithatogo/mchs` version `0.2.2` on 2026-05-17; registry search API returns active/latest metadata for `io.github.edithatogo/mchs`; `nwau-py 0.2.2` is visible on PyPI. |
 | Glama | Eligible through official-registry indexing; no separate authenticated submission completed from this environment. | Glama documentation states it is a superset of the official MCP Registry. Direct Glama API verification was blocked by its edge protection from this environment. |
-| Smithery | Prepared; submission pending authenticated Smithery publication. | `mchs-mcp-http`, static server-card metadata, and MCPB manifest candidate exist. A live Smithery listing is not claimed until a public HTTPS endpoint or MCPB bundle is submitted through an authenticated Smithery account. |
-| Docker MCP Registry | Prepared; upstream PR pending. | Dockerfile and Docker MCP Registry candidate files exist under `contracts/mcp/registry/docker/`. Docker Catalog publication is not claimed until the upstream Docker MCP Registry PR is opened, reviewed, and merged. |
+| Smithery | Published as stdio bundle. | Smithery accepted release `200f2fd3-86c4-4122-b3bf-98abe5aa62f1` for `edithatogo/mchs` on 2026-05-24. Registry API returns a stdio Python connection and bundle URL. Public Streamable HTTP hosting is not claimed. |
+| Docker MCP Registry | Submitted; upstream review pending. | Active Docker MCP Registry PR: https://github.com/docker/mcp-registry/pull/3799. Older duplicate PR https://github.com/docker/mcp-registry/pull/3595 was closed as superseded. Docker Catalog publication is not claimed until Docker review merges the active PR and the catalog/Docker Hub propagation completes. |
 
 ## Official MCP Registry Basis
 
@@ -66,7 +66,8 @@ uv run mchs-mcp
 ## Secondary Registry Submission Preparation
 
 - Smithery preparation: `contracts/mcp/registry/smithery/submission.md`.
-- Docker MCP Registry preparation:
+- Docker MCP Registry submission:
   `contracts/mcp/registry/docker/submission.md`.
-- Secondary registry listing publication requires authenticated external
-  submission and registry review.
+- Active Docker PR: `https://github.com/docker/mcp-registry/pull/3799`.
+- Smithery stdio bundle publication is complete; hosted Streamable HTTP publication remains optional/future.
+- Docker Catalog publication requires Docker review, merge, and catalog propagation.

@@ -40,8 +40,11 @@ uv run ruff check nwau_py/mcp_server.py tests/test_mcp_server.py .github/scripts
 
 ## Do Not Claim
 
-- Do not claim Smithery publication until a Streamable HTTP endpoint or MCPB
-  bundle exists and is submitted.
-- Do not submit to Docker MCP Registry unless a container artifact is added.
+- Do not claim Smithery hosted Streamable HTTP publication until a public HTTPS
+  endpoint exists and is submitted. The later Smithery evidence for this release
+  is limited to the accepted local stdio MCPB bundle.
+- Do not claim Docker MCP Catalog or Docker Hub `mcp/mchs` publication until
+  Docker review, merge, and propagation evidence exists. The later Docker
+  evidence for this release is limited to the active upstream registry PR.
 - Do not claim conda-forge, crates.io, npm, CRAN, NuGet, or other package
   registry publication unless a public registry page exists.

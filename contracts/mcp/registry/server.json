@@ -57,9 +57,9 @@
         "healthcareCaveat": "Private or restricted healthcare deployments should use an internal registry or catalog."
       },
       "knownLimitations": [
-        "Official MCP Registry submission requires mcp-publisher authentication.",
-        "Smithery submission is deferred until Streamable HTTP or MCPB packaging exists.",
-        "Docker MCP Registry submission is deferred because the first release is not containerized."
+        "Future Official MCP Registry releases require mcp-publisher authentication and fresh release evidence.",
+        "Smithery hosted Streamable HTTP publication is not claimed; the recorded Smithery publication is a local stdio MCPB bundle.",
+        "Docker MCP Catalog and Docker Hub mcp/mchs publication are not claimed until Docker review, merge, and propagation complete."
       ]
     }
   }

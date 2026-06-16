@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-06-16",
+  "serverName": "io.github.edithatogo/mchs",
+  "version": "0.2.2",
+  "registries": {
+    "officialMcpRegistry": {
+      "status": "published_active_latest",
+      "url": "https://registry.modelcontextprotocol.io/v0/servers?search=io.github.edithatogo%2Fmchs",
+      "publishedAt": "2026-05-17T04:52:23.796763Z",
+      "packageRegistry": "pypi",
+      "package": "nwau-py",
+      "packageVersion": "0.2.2"
+    },
+    "pypi": {
+      "status": "published",
+      "url": "https://pypi.org/project/nwau-py/0.2.2/",
+      "wheelSha256": "22f2de99c11dfb4396f51f6a4d1efcbe0002c4901e91a9de57511be6a12a5028",
+      "sdistSha256": "c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480"
+    },
+    "dockerMcpRegistry": {
+      "status": "submitted_review_pending",
+      "activePullRequest": "https://github.com/docker/mcp-registry/pull/3799",
+      "activePullRequestState": "open_blocked_review_required",
+      "supersededPullRequest": "https://github.com/docker/mcp-registry/pull/3595",
+      "catalogPublicationClaimed": false,
+      "latestObservedHeadRef": "add-mchs-mcp-20260524",
+      "latestObservedValidation": "docker/mcp-registry go run ./cmd/validate --name mchs passed from a clean temporary checkout on 2026-06-12 after refreshing against current upstream main.",
+      "validationChecks": [
+        "Name is valid",
+        "Directory is valid",
+        "Title is valid",
+        "YAML formatting is valid",
+        "Commit is pinned",
+        "Secrets are valid",
+        "Config env is valid",
+        "License is valid",
+        "Icon is valid",
+        "Remote validation skipped",
+        "OAuth dynamic configuration is valid"
+      ],
+      "latestObservedReviewState": "GitHub PR 3799 remains open, not draft, mergeable=MERGEABLE, mergeStateStatus=BLOCKED, reviewDecision=REVIEW_REQUIRED, no configured status checks, and no maintainer review as of 2026-06-16.",
+      "latestMaintainerBlocker": "Docker maintainer review, merge, and catalog propagation remain pending; no local validation issue is visible."
+    },
+    "smithery": {
+      "status": "published_stdio_bundle",
+      "qualifiedName": "edithatogo/mchs",
+      "statusUrl": "https://smithery.ai/servers/edithatogo/mchs/releases",
+      "registryApiUrl": "https://registry.smithery.ai/servers/edithatogo/mchs",
+      "deploymentId": "200f2fd3-86c4-4122-b3bf-98abe5aa62f1",
+      "mcpUrl": "https://mchs--edithatogo.run.tools",
+      "runtime": "python",
+      "bundlePath": "contracts/mcp/registry/smithery/mchs-0.2.2.mcpb",
+      "bundleSha256": "de353472d4a88848a9cb69fe1376f3d22deca97c72ca264d49eba1f09c056456",
+      "listingPublicationClaimed": true,
+      "registryApiObservation": {
+        "remote": false,
+        "connectionType": "stdio",
+        "toolsPublishedInStaticMetadata": false
+      }
+    },
+    "glama": {
+      "status": "eligible_via_official_registry_indexing_not_separately_submitted",
+      "listingPublicationClaimed": false
+    }
+  },
+  "claimBoundary": {
+    "allPossibleUnauthenticatedSubmissionsCompleted": true,
+    "allAuthenticatedSubmissionsCompleted": true,
+    "allRegistryPublicationsCompleted": false,
+    "dockerCatalogPublished": false,
+    "smitheryPublished": true
+  }
+}
