@@ -2,6 +2,20 @@
 
 As of 2026-06-12, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, Julia General, Stata SSC, and the Go module are externally published and verified. The remaining items require direct authenticated publish, public listing evidence, legal/publisher agreement completion, upstream maintainer review, or registry policy changes.
 
+## Track Checklists And Notes
+
+- CRAN: `conductor/tracks/r_cran_registry_submission_20260524/submission_checklist.md`
+- conda-forge: `conductor/tracks/conda_forge_feedstock_submission_20260524/review_checklist.md`
+- Maven Central: `conductor/tracks/jvm_maven_central_registry_submission_20260524/submission_checklist.md`
+- Open VSX / Visual Studio Marketplace: `conductor/tracks/vscode_openvsx_registry_submission_20260524/access_checklist.md`
+- Swift Package Index: `conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md`
+- vcpkg / ConanCenter: `conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`
+- Docker MCP Registry: `conductor/tracks/docker_mcp_registry_readiness_20260517/requirements_notes.md`
+- Smithery MCP Registry: `conductor/tracks/smithery_mcp_registry_readiness_20260517/requirements_notes.md`
+- MATLAB File Exchange: `conductor/tracks/matlab_file_exchange_submission_20260524/submission_checklist.md`
+- MATLAB File Exchange package copy: `conductor/tracks/matlab_file_exchange_submission_20260524/file_exchange_submission_notes.md`
+- Stata SSC: `conductor/tracks/stata_ssc_submission_20260524/submission_checklist.md`
+
 ## Already published and verified
 
 - PyPI: `nwau-py==0.2.2`
@@ -55,7 +69,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Prepared artifact: `microcosting_healthservices/nwauR_0.1.0.tar.gz`
 - Local check: `R CMD check --no-manual nwauR_0.1.0.tar.gz` returned `Status: OK`.
 - Latest public probe on 2026-06-12: CRANDB, `https://cran.r-project.org/package=nwauR`, and `https://cran.r-project.org/src/contrib/Archive/nwauR/` all returned HTTP 404, so no public CRAN publication is claimed.
-- Submitted through CRAN maintainer upload workflow on 2026-06-13 as package id 344701; maintainer confirmation email was sent to Dylan Mordaunt <d.a.mordaunt@gmail.com> and must be confirmed before CRAN review proceeds.
+- Submitted through CRAN maintainer upload workflow on 2026-06-13 as package id 344701 with maintainer metadata for Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz>; maintainer confirmation evidence must be recorded before CRAN review/publication is claimed.
 
 ### Julia General
 
