@@ -10,7 +10,7 @@ Language registry work is locally prepared where possible. Publication is intent
 | Julia General | `NationalWeightedActivityUnitWrapper` | General PR #156254 merged on 2026-05-28; raw General registry files verify `v0.1.0`, UUID `58dad789-f56a-4ab3-a66f-c15139bf9cbe`, and git-tree-sha1 `bb22d4bd44689549064bd441092fd540b5d852cf` | complete; JuliaHub may lag but raw General registry evidence is authoritative |
 | Go proxy/pkg.go.dev | Go binding module | Go module proxy and pkg.go.dev expose `v0.1.0` | complete |
 | Swift Package Index | `MCHSBind` | `swift build` passed; PackageList issue closed; repo metadata/release fixed; 2026-06-12T12:22:49Z raw PackageList probe now contains `https://github.com/edithatogo/mchs-swift.git`; SPI page probes still return Cloudflare HTTP 403 and API probe returned HTTP 000 from this environment | public SPI listing/version evidence still pending |
-| Maven Central | `io.github.edithatogo:mchs` | JVM module builds locally; Maven publishing metadata and Central Portal repository wiring present; GitHub Actions dry-runs pass; 2026-06-14 public Maven metadata verifies adjacent artifact `io.github.edithatogo:mchs-jvm-bindings:0.1.0`, but the checked-in Maven Central contract target remains `io.github.edithatogo:mchs` and is not promoted from that adjacent artifact probe | namespace verification, signing credentials, required Maven Central GitHub secrets, Central Portal release for the checked-in target coordinate |
+| Maven Central | `io.github.edithatogo:mchs-jvm-bindings` | JVM module builds locally; Maven publishing metadata and Central Portal namespace/repository wiring are present; successful Publisher API deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated after public key propagation and was published; public Maven metadata exposes `0.1.0`; public JAR SHA-256 is `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e` | complete |
 | conda-forge | `nwau-py` | 2026-06-12T11:56:04Z live check: 2026-06-12T12:38:52Z live check: PR `https://github.com/conda-forge/staged-recipes/pull/33452` is open and mergeable at head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks are green | maintainer review, merge, feedstock publication, and public Anaconda propagation |
 | Homebrew | `nwau-py` | personal tap published and verified; `brew info edithatogo/mchs/nwau-py --json=v2` verified stable `0.2.2`, tap head `fa12ed26c1d6a289b40bf59c9bacbb9a5e42f823`, and linked keg `0.2.2` | complete for personal tap; optional Homebrew/core PR/review only if core distribution is required |
 | Open VSX / Visual Studio Marketplace | `mchs-tools` | Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` returns `edithatogo.mchs-tools` version `0.1.1` after workflow `https://github.com/edithatogo/mchs/actions/runs/27457810800`; `/tmp/mchs-tools-0.1.1.vsix` was manually uploaded through the signed-in Visual Studio Marketplace publisher portal on 2026-06-16T00:24:00+10:00, and the portal showed `Verifying0.1.1`; public Marketplace API propagation was inconsistent, with one transient `0.1.1` response followed by `0.1.0` responses | complete for Open VSX `0.1.1`; Marketplace `0.1.1` upload accepted but final public API propagation/verification remains pending |
@@ -36,9 +36,11 @@ and uploads `language-registry-live` artifacts for registry drift review.
 
 The Go row is intentionally split: the Go proxy submission URL verifies the tagged module, while the public package probe checks `https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go`. Once pkg.go.dev exposes the target version, the Go track can be completed.
 
-The Maven Central row is intentionally fail-closed: a real publish attempt must
-provide `-PcentralPortalUsername` and `-PcentralPortalPassword`, and missing
-credentials stop the publish path instead of falling back to anonymous access.
+The Maven Central row remains fail-closed for future releases: a real publish
+attempt must provide `-PcentralPortalUsername` and `-PcentralPortalPassword`,
+and missing credentials stop the publish path instead of falling back to
+anonymous access. Version `0.1.0` is verified for
+`io.github.edithatogo:mchs-jvm-bindings`.
 
 ## Operator unblocker checklist
 

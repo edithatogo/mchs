@@ -1,13 +1,13 @@
-# Kotlin/Native binding scaffold
+# Kotlin/Native binding
 
-This scaffold is Kotlin/Native-first. It is intended for consumers who want
+This boundary adapter is Kotlin/Native-first. It is intended for consumers who want
 Kotlin ergonomics without a JVM runtime dependency.
 
 ## Boundary
 
-- Kotlin/Native should call the shared Rust core through a C ABI, service, or
+- Kotlin/Native calls the shared Rust core through a C ABI, service, or
   file/Arrow boundary.
-- Kotlin code may define request/response envelopes and diagnostics adapters.
+- Kotlin code defines request/response envelopes and diagnostics adapters.
 - Formula logic remains in the Rust core or shared calculator contract.
 
 ## Non-goals
@@ -16,6 +16,14 @@ Kotlin ergonomics without a JVM runtime dependency.
 - No Java-authored binding.
 - No duplicated formula implementation.
 - No Kotlin/Native artifact publication claim.
+
+## Adapter behavior
+
+`FileBoundaryNativeBindingClient` validates the public request envelope before a
+caller hands the file paths to the shared-core CLI, C ABI, or service boundary.
+It fails closed when required routing fields are missing or paths are absolute
+or traversal-shaped, and returns `ENVELOPE_VALIDATED` only when the request is
+shaped for caller-owned shared-core execution.
 
 ## Build note
 

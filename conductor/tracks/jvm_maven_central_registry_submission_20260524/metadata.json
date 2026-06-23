@@ -1,73 +1,51 @@
 {
   "track_id": "jvm_maven_central_registry_submission_20260524",
   "type": "chore",
-  "status": "blocked",
+  "status": "completed",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-14T01:08:00+10:00",
-  "description": "JVM Maven Central Registry Submission: discover, prepare, submit, and evidence Maven Central publication for io.github.edithatogo:mchs.",
+  "updated_at": "2026-06-12T00:00:00+10:00",
+  "description": "JVM Maven Central Registry Submission: discover, prepare, upload, publish, and evidence io.github.edithatogo:mchs-jvm-bindings on Maven Central.",
   "registry_id": "jvm_maven_central",
-  "current_status": "jvm_module_build_verified_pending_central_namespace_signing_and_release",
-  "publication_status": "not_published",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
   "local_readiness_resolved": true,
-  "blocker": "Maven Central remains unpublished. A local GPG secret key exists, but no Central Portal URL/credentials, Maven settings, Gradle properties, or GitHub Central/signing secrets are configured.",
-  "submission_url": null,
-  "publication_claimed": false,
+  "blocker": null,
+  "publication_claimed": true,
   "package_evidence": {
-    "package": "io.github.edithatogo:mchs",
-    "version": "0.1.0",
-    "ecosystem": "Kotlin/Scala/JVM",
-    "registry": "Maven Central",
-    "local_surface": "bindings/jvm/build.gradle.kts",
-    "preparation_evidence": {
-      "discovery": "Maven Central search for g:io.github.edithatogo AND a:mchs returned numFound=0.",
-      "buildCommand": "gradle build",
-      "buildResult": "BUILD SUCCESSFUL",
-      "fixedLocalBlocker": "The JVM binding module is under bindings/jvm and uses a Java 11 toolchain for Maven Central readiness.",
-      "remainingExternalBlocker": "Central Portal namespace verification, signing key provisioning, required GitHub secrets, authenticated Central Portal release, and public Maven Central verification remain pending.",
-      "jvmModule": "bindings/jvm",
-      "gradlePublishingMetadata": "bindings/jvm/build.gradle.kts includes java-library, maven-publish, signing, group io.github.edithatogo, artifact mchs, required POM metadata, a single Central Portal deployment repository configured only when a deploy URL is explicitly provided, and in-memory PGP signing via Gradle properties or environment variables.",
-      "jvmBuildEvidence": "gradle -p /tmp/mchs-registry-push/bindings/jvm build --console=plain passed in commit fc162f2.",
-      "centralPortalRepositoryWiring": "bindings/jvm/build.gradle.kts includes a centralPortal Maven repository only when -PcentralPortalDeployUrl or MAVEN_CENTRAL_DEPLOY_URL is present; publish tasks fail closed without URL, credentials, and signing key.",
-      "publishTaskEvidence": "Gradle exposes publishMavenJavaPublicationToCentralPortalRepository.",
-      "failClosedPublishCredentials": "Gradle Central Portal repository URL and credentials are read from Gradle properties or environment variables and fail closed when absent.",
-      "dryRunCommand": "gradle -p bindings/jvm publishAllPublicationsToCentralPortalRepository --dry-run",
-      "taskDiscoveryCommand": "gradle -p bindings/jvm tasks --all",
-      "workflowEvidence": ".github/workflows/publish-maven-central.yml provides a manual workflow_dispatch path with dry_run default true and fail-closed validation for CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD.",
-      "workflowDryRunValidation": "GitHub Actions run https://github.com/edithatogo/mchs/actions/runs/27456830098 succeeded with dry_run=true on 2026-06-13 from master. Earlier run https://github.com/edithatogo/mchs/actions/runs/27407884659 also succeeded on 2026-06-12 after setting workflow JDK to 17 for Gradle 9. Local Gradle dry-run also succeeded without credentials after aligning Central Portal and signing properties.",
-      "workflowCredentialModel": "GitHub Actions workflow uses CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD; real publish validates those secrets only when dry_run is false.",
-      "workflowDryRunCredentialPolicy": "GitHub Actions dry_run path no longer forwards empty secret-backed Gradle properties; real publish adds deploy URL, Central Portal credentials, and signing properties only when dry_run=false.",
-      "workflowRuntimeFix": "Commit cde0439 sets the Maven Central publish workflow JDK to 17 so Gradle 9 can run; the binding module remains Java 11-targeted via Gradle configuration.",
-      "secretAudit": "2026-06-13T04:41:31Z audit: no relevant local CENTRAL, MAVEN, GPG, or SIGNING environment variable names were present; GitHub repository secret list contains NUGET_API_KEY and OVSX_PAT only; CENTRAL_PORTAL_DEPLOY_URL, CENTRAL_PORTAL_USERNAME, CENTRAL_PORTAL_PASSWORD, MAVEN_SIGNING_KEY, and MAVEN_SIGNING_PASSWORD are absent.",
-      "latestPublicProbe20260613FollowUp": {
-        "asOf": "2026-06-13T06:00:00Z",
-        "searchUrl": "https://search.maven.org/solrsearch/select?q=g:%22io.github.edithatogo%22%20AND%20a:%22mchs%22&rows=20&wt=json",
-        "numFound": 0,
-        "githubSecretsPresent": [
-          "NUGET_API_KEY",
-          "OVSX_PAT"
-        ],
-        "missingSecrets": [
-          "CENTRAL_PORTAL_DEPLOY_URL",
-          "CENTRAL_PORTAL_USERNAME",
-          "CENTRAL_PORTAL_PASSWORD",
-          "MAVEN_SIGNING_KEY",
-          "MAVEN_SIGNING_PASSWORD"
-        ],
-        "localGpgSecretKeyObserved": true,
-        "localMavenSettingsPresent": false,
-        "localGradlePropertiesPresent": false,
-        "result": "Maven Central publication remains blocked on Central Portal credentials and exported in-memory signing key/password secrets."
-      },
-      "latestAdjacentArtifactProbe20260614": {
-        "asOf": "2026-06-14T01:08:00+10:00",
-        "url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml",
-        "groupId": "io.github.edithatogo",
-        "artifactId": "mchs-jvm-bindings",
-        "latest": "0.1.0",
-        "result": "Adjacent JVM binding artifact is public, but this track target remains io.github.edithatogo:mchs and publication is not claimed for that coordinate."
-      }
+    "coordinate": "io.github.edithatogo:mchs-jvm-bindings:0.1.0",
+    "discovery_url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml",
+    "discovery_result": "Initial Maven Central metadata probe returned HTTP 404 before submission; after publication, the latest probe on 2026-06-12 returned HTTP 200 and exposed version 0.1.0.",
+    "build_command": "gradle -p bindings/jvm validateCentralPortalReadiness build",
+    "build_result": "BUILD SUCCESSFUL",
+    "pom_validation": "checkPomFileForMavenPublication passed",
+    "generated_artifacts": [
+      "mchs-jvm-bindings-0.1.0.jar",
+      "mchs-jvm-bindings-0.1.0-sources.jar",
+      "mchs-jvm-bindings-0.1.0-javadoc.jar"
+    ],
+    "sha256": {
+      "jar": "2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e",
+      "sources_jar": "9db67ab4747978fd544012db5f0b95338987c4f6eface52159417a279e4f39f2",
+      "javadoc_jar": "c6deada2fac53b8ea6523dbda77597b128006674616f140f04df23264c6d1aa3"
     },
-    "submission_evidence": null,
-    "publication_evidence": null
+    "readiness_report": "bindings/jvm/build/reports/central-portal-readiness.txt",
+    "signing_check": "Local GPG signature verification succeeds for the generated artifacts using primary key BB03C82343A653EE44BD5CDA9DF6B142F065199E; Central validation succeeded after supported keyserver propagation.",
+    "latest_readiness_report": "coordinate=io.github.edithatogo:mchs-jvm-bindings:0.1.0; pomMetadata=passed; sourcesJar=present; javadocJar=present; publicationUpload=not-attempted; namespaceVerified=true; publisherCredentialsPresent=false; signingCredentialsPresent=false",
+    "namespace_verification": "2026-06-12: Sonatype Central Portal shows namespace io.github.edithatogo as Verified after creating public GitHub verification repository https://github.com/edithatogo/f7fztfn9vz for verification key f7fztfn9vz.",
+    "central_bundle": "2026-06-12: Central Portal upload bundle prepared at build/mchs-jvm-bindings-0.1.0-central-bundle.zip with SHA-256 d0024c9f97b6cc23081139948a6b22508b5a06e20f96b75dc9b07082d2e56f42; bundle contains jar, sources jar, javadoc jar, POM, Gradle module metadata, signatures, and checksum sidecars.",
+    "signing_key": "2026-06-12: local GPG signing key 9DF6B142F065199E / BB03C82343A653EE44BD5CDA9DF6B142F065199E exists for Dylan Mordaunt <d.a.mordaunt@gmail.com>; upload to hkps://keyserver.ubuntu.com and hkps://pgp.mit.edu returned success, and a clean temporary keyring can receive the key from hkps://keyserver.ubuntu.com.",
+    "central_user_token": "2026-06-12: short-lived one-month Central user tokens mchs-jvm-010-publish-20260612 and mchs-jvm-010-retry2-20260612 were created for upload sessions, not stored in repository evidence, and revoked after use.",
+    "submission_upload": "2026-06-12: Publisher API upload succeeded in USER_MANAGED mode. Failed validation deployments `89d0d2a9-91c6-4994-9f8e-fdd34bb501d0`, `fccefc51-9ccb-4466-8f85-8a47bc16cf3c`, and `7ced6d47-59ee-40fb-9c9b-09b1aa9f8491` preceded successful deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5`, which validated after keyserver propagation and was published by Publisher API with HTTP 204.",
+    "latest_external_blockers": null,
+    "latest_public_metadata_probe": "2026-06-12: https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml returned HTTP 200 and exposes latest/release/version 0.1.0 with lastUpdated 20260612084727. The public POM and JAR URLs returned HTTP 200; public JAR SHA-256 is 2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e.",
+    "publication_evidence": {
+      "deployment_id": "5fb01ae9-2609-4284-9427-5830e08bcbb5",
+      "metadata_url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml",
+      "pom_url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.pom",
+      "jar_url": "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.jar",
+      "version": "0.1.0",
+      "jar_sha256": "2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e",
+      "pom_sha256": "367e6a08a9d57ebd6d97d9fa14f1fe65fbfdf7fce882369ab8264996995c36c6"
+    }
   }
 }

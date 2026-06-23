@@ -1,9 +1,9 @@
 {
   "track_id": "kotlin_native_binding_20260512",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "track_class": "binding",
-  "current_state": "kotlin-native-binding-roadmap-complete",
+  "current_state": "complete",
   "primary_contract": "contracts/kotlin-native-binding/kotlin-native-binding.contract.json",
   "dependencies": [
     "polyglot_rust_core_roadmap_20260512",
@@ -17,5 +17,6 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Finalize a Kotlin/Native binding roadmap for native consumers through C ABI, service, or file interop without a JVM runtime dependency."
+  "description": "Finalize a Kotlin/Native binding roadmap for native consumers through C ABI, service, or file interop without a JVM runtime dependency.",
+  "no_stub_enforce": true
 }

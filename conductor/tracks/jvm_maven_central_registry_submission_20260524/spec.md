@@ -2,43 +2,53 @@
 
 ## Overview
 
-Track discovery, local preparation, submission, and publication evidence for the Maven Central registry without overclaiming publication.
+Work this registry one by one using a fail-closed process: discover existing publication, prepare the submission if absent, submit only when package readiness and credentials are present, and record durable publication evidence.
 
 ## Registry
 
 - Ecosystem: `Kotlin/Scala/JVM`
 - Registry: `Maven Central`
-- Package candidate: `io.github.edithatogo:mchs`
+- Package candidate: `io.github.edithatogo:mchs-jvm-bindings`
 - Version candidate: `0.1.0`
-- Local surface: `bindings/jvm/build.gradle.kts`
-- Current status: `jvm_module_build_verified_pending_central_namespace_signing_and_release`
+- Local surface: `microcosting_healthservices/bindings/jvm`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
-- Query the public registry or authoritative submission system for existing package/version evidence.
-- Record absence, submission, or publication evidence in the language registry contract.
-- Prepare registry-specific metadata or artifacts only from committed package surfaces.
-- Submit only through an authenticated, authorized publisher account or upstream review workflow.
-- Keep external legal, credential, maintainer-review, and propagation blockers explicit.
+- Query the public registry or authoritative submission system for an existing package/listing.
+- Record discovered package URL, version, owner, checksum, PR, or absence evidence.
+- If not published, prepare registry-specific package metadata and artifacts.
+- Verify package readiness locally before any publish attempt.
+- Submit only through an authenticated, authorized publisher account.
+- Capture immutable evidence after submission.
 
 ## Current Blocker
 
-Minimal JVM module, Maven publishing metadata, credential-safe Central Portal repository wiring, and in-memory signing wiring are checked in. GitHub Actions Maven Central dry-run now passes after moving the workflow runtime JDK to 17 for Gradle 9 while retaining the Java 11 target/toolchain. A 2026-06-14 public Maven probe verified adjacent artifact `io.github.edithatogo:mchs-jvm-bindings:0.1.0`, but this track's checked-in target remains `io.github.edithatogo:mchs`; namespace verification, signing key material, publish credentials, authenticated Central Portal release, and public Maven Central verification for the checked-in target remain pending.
+Resolved. A private Gradle/Kotlin JVM package candidate builds successfully with `gradle -p bindings/jvm validateCentralPortalReadiness build`. The Sonatype Central Portal namespace `io.github.edithatogo` is verified. Publisher API deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated after supported keyserver propagation and was published; public Maven metadata now exposes version `0.1.0`.
 
-## Evidence
+## Preparation Evidence
 
-- Submission URL: not applicable or not yet available.
-- Contract source: `contracts/language-registry-submissions/language-registry-submissions.contract.json`
-- External gate roadmap: `docs/roadmaps/language-registry-external-gates.md`
+- Public registry discovery: Maven Central metadata probe for `io.github.edithatogo:mchs-jvm-bindings` returned HTTP 404/no publication.
+- Build command: `gradle -p bindings/jvm validateCentralPortalReadiness build`
+- Build result: `BUILD SUCCESSFUL`
+- POM validation: `checkPomFileForMavenPublication` passed with required developer email/organization and SCM connection metadata.
+- Generated artifacts: binary jar, sources jar, javadoc jar, Maven POM, and Gradle module metadata.
+- Namespace verification: Sonatype Central Portal shows `io.github.edithatogo` as Verified after public GitHub repository verification with key `f7fztfn9vz`.
+- Upload bundle: `build/mchs-jvm-bindings-0.1.0-central-bundle.zip` was generated with jar, sources jar, javadoc jar, POM, Gradle module metadata, signatures, and checksum sidecars; SHA-256 `d0024c9f97b6cc23081139948a6b22508b5a06e20f96b75dc9b07082d2e56f42`.
+- Signing validation: local GPG signatures verify with key `9DF6B142F065199E` / `BB03C82343A653EE44BD5CDA9DF6B142F065199E` for `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; supported keyserver upload now returns success, a clean temporary keyring can receive the key from `hkps://keyserver.ubuntu.com`, and Central validation passed after propagation.
+- Publication evidence: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returns HTTP 200 and exposes latest/release/version `0.1.0`; public JAR SHA-256 is `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e`.
+- Local fix: Kotlin JVM toolchain lowered to Java 11 to match installed local JDK.
+- Remaining external blocker: none for Maven Central publication.
 
 ## Acceptance Criteria
 
-- Track context exists for the contract's `jvm_maven_central_registry_submission_20260524` reference.
-- Current status and blocker language match the checked-in language registry contract.
-- Publication is claimed only when public registry evidence verifies the target version.
+- Discovery evidence exists and is linked from this track.
+- Preparation evidence exists for package metadata, artifact integrity, and registry policy checks.
+- Submission evidence exists, or the track remains blocked with a concrete reason.
+- Publication is not claimed unless a public registry URL or accepted upstream PR/merge evidence exists.
 
 ## Out of Scope
 
-- Accepting CLAs, publisher agreements, or legal terms on behalf of a contributor.
-- Inventing credentials, namespace ownership, API keys, or registry maintainer approval.
-- Claiming publication from local artifacts alone.
+- Inventing package credentials or registry ownership.
+- Publishing prototype, private, placeholder, or non-packable surfaces.
+- Claiming support for clinical/private data workflows from package publication.

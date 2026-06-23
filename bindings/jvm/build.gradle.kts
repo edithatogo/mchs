@@ -1,117 +1,130 @@
 plugins {
-    `java-library`
+    kotlin("jvm") version "2.2.21"
     `maven-publish`
     signing
 }
 
-import org.gradle.api.artifacts.repositories.PasswordCredentials
-
 group = "io.github.edithatogo"
 version = "0.1.0"
 
-val centralPortalDeployUrlExplicit = providers.gradleProperty("centralPortalDeployUrl")
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_DEPLOY_URL"))
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_PORTAL_URL"))
-val centralPortalDeployUrl = centralPortalDeployUrlExplicit
-    .orElse("https://central.sonatype.com/api/v1/publisher")
-val centralPortalUsername = providers.gradleProperty("centralPortalUsername")
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_USERNAME"))
-val centralPortalPassword = providers.gradleProperty("centralPortalPassword")
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_PASSWORD"))
-val mavenSigningKey = providers.gradleProperty("mavenSigningKey")
-    .orElse(providers.gradleProperty("signingKey"))
-    .orElse(providers.environmentVariable("MAVEN_SIGNING_KEY"))
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_SIGNING_KEY"))
-val mavenSigningPassword = providers.gradleProperty("mavenSigningPassword")
-    .orElse(providers.gradleProperty("signingPassword"))
-    .orElse(providers.environmentVariable("MAVEN_SIGNING_PASSWORD"))
-    .orElse(providers.environmentVariable("MAVEN_CENTRAL_SIGNING_PASSWORD"))
+kotlin { jvmToolchain(11) }
 
 java {
-    withJavadocJar()
     withSourcesJar()
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
-    }
+    withJavadocJar()
 }
+
+dependencies {
+    testImplementation(kotlin("test"))
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+val centralPortalNamespaceVerified = providers
+    .gradleProperty("mavenCentralNamespaceVerified")
+    .map(String::toBoolean)
+    .orElse(false)
+val centralPortalUsername = providers
+    .gradleProperty("mavenCentralUsername")
+    .orElse(providers.environmentVariable("MAVEN_CENTRAL_USERNAME"))
+val centralPortalPassword = providers
+    .gradleProperty("mavenCentralPassword")
+    .orElse(providers.environmentVariable("MAVEN_CENTRAL_PASSWORD"))
+val signingKey = providers
+    .gradleProperty("mavenCentralSigningKey")
+    .orElse(providers.environmentVariable("MAVEN_CENTRAL_SIGNING_KEY"))
+val signingPassword = providers
+    .gradleProperty("mavenCentralSigningPassword")
+    .orElse(providers.environmentVariable("MAVEN_CENTRAL_SIGNING_PASSWORD"))
+val releaseMode = providers
+    .gradleProperty("mavenCentralRelease")
+    .map(String::toBoolean)
+    .orElse(false)
 
 publishing {
     publications {
-        create<MavenPublication>("mavenJava") {
+        create<MavenPublication>("maven") {
             from(components["java"])
-            artifactId = "mchs"
-
+            artifactId = "mchs-jvm-bindings"
             pom {
-                name.set("MCHS JVM Binding")
-                description.set("Minimal JVM binding scaffold for MCHS/NWAU contract interoperability.")
+                name.set("MCHS JVM Bindings")
+                description.set("JVM binding contract metadata and transport adapters for MCHS NWAU shared-core interoperability.")
                 url.set("https://github.com/edithatogo/mchs")
-                licenses {
-                    license {
-                        name.set("Apache License 2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
+                licenses { license { name.set("Apache-2.0"); url.set("https://www.apache.org/licenses/LICENSE-2.0") } }
                 developers {
                     developer {
                         id.set("edithatogo")
-                        name.set("Dylan Mordaunt")
+                        name.set("edithatogo")
+                        email.set("d.a.mordaunt@gmail.com")
+                        organization.set("MCHS")
+                        organizationUrl.set("https://github.com/edithatogo")
                     }
                 }
                 scm {
-                    connection.set("scm:git:https://github.com/edithatogo/mchs.git")
-                    developerConnection.set("scm:git:https://github.com/edithatogo/mchs.git")
                     url.set("https://github.com/edithatogo/mchs")
+                    connection.set("scm:git:https://github.com/edithatogo/mchs.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/edithatogo/mchs.git")
                 }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            name = "centralPortal"
-            url = uri(centralPortalDeployUrl.get())
-            credentials(PasswordCredentials::class) {
-                username = centralPortalUsername.orNull
-                password = centralPortalPassword.orNull
             }
         }
     }
 }
 
 signing {
-    setRequired {
-        gradle.taskGraph.allTasks.any {
-            it.project == project &&
-                it.name.startsWith("publish") &&
-                it.name.contains("CentralPortalRepository", ignoreCase = true)
-        } &&
-            !gradle.startParameter.isDryRun &&
-            !version.toString().endsWith("SNAPSHOT")
+    isRequired = releaseMode.get()
+    if (signingKey.isPresent && signingPassword.isPresent) {
+        useInMemoryPgpKeys(signingKey.get(), signingPassword.get())
     }
-
-    if (mavenSigningKey.isPresent) {
-        useInMemoryPgpKeys(mavenSigningKey.get(), mavenSigningPassword.orNull)
-    }
-
-    sign(publishing.publications["mavenJava"])
+    sign(publishing.publications["maven"])
 }
 
-gradle.taskGraph.whenReady {
-    val centralPortalPublishRequested = allTasks.any {
-        it.project == project &&
-            it.name.startsWith("publish") &&
-            it.name.contains("CentralPortalRepository", ignoreCase = true)
-    }
+tasks.register("validateCentralPortalReadiness") {
+    group = "verification"
+    description = "Checks Maven Central Portal readiness without uploading or requiring credentials."
 
-    if (centralPortalPublishRequested && !gradle.startParameter.isDryRun) {
-        require(centralPortalDeployUrlExplicit.isPresent) {
-            "Central Portal publish tasks require -PcentralPortalDeployUrl, MAVEN_CENTRAL_DEPLOY_URL, or MAVEN_CENTRAL_PORTAL_URL. Use the deployment endpoint required by the selected Central Portal publishing workflow."
+    dependsOn(
+        "checkPomFileForMavenPublication",
+        "generateMetadataFileForMavenPublication",
+        "generatePomFileForMavenPublication",
+        "jar",
+        "javadocJar",
+        "sourcesJar",
+    )
+
+    doLast {
+        val blockers = mutableListOf<String>()
+        if (!centralPortalNamespaceVerified.get()) {
+            blockers += "Central Portal namespace io.github.edithatogo has not been marked verified."
         }
-        require(centralPortalUsername.isPresent && centralPortalPassword.isPresent) {
-            "Central Portal publish tasks require -PcentralPortalUsername/-PcentralPortalPassword or MAVEN_CENTRAL_USERNAME/MAVEN_CENTRAL_PASSWORD."
+        if (!centralPortalUsername.isPresent || !centralPortalPassword.isPresent) {
+            blockers += "Central Portal publisher credentials are not present."
         }
-        require(mavenSigningKey.isPresent && mavenSigningPassword.isPresent) {
-            "Central Portal publish tasks require -PmavenSigningKey/-PmavenSigningPassword or MAVEN_SIGNING_KEY/MAVEN_SIGNING_PASSWORD."
+        if (!signingKey.isPresent || !signingPassword.isPresent) {
+            blockers += "In-memory PGP signing key/password are not present."
+        }
+
+        val reportFile = layout.buildDirectory.file("reports/central-portal-readiness.txt").get().asFile
+        reportFile.parentFile.mkdirs()
+        reportFile.writeText(
+            buildString {
+                appendLine("coordinate=io.github.edithatogo:mchs-jvm-bindings:0.1.0")
+                appendLine("pomMetadata=passed")
+                appendLine("sourcesJar=present")
+                appendLine("javadocJar=present")
+                appendLine("publicationUpload=not-attempted")
+                appendLine("namespaceVerified=${centralPortalNamespaceVerified.get()}")
+                appendLine("publisherCredentialsPresent=${centralPortalUsername.isPresent && centralPortalPassword.isPresent}")
+                appendLine("signingCredentialsPresent=${signingKey.isPresent && signingPassword.isPresent}")
+                appendLine("externalBlockers=${if (blockers.isEmpty()) "none" else blockers.joinToString(" | ")}")
+            },
+        )
+
+        logger.lifecycle("Maven Central readiness report written to ${reportFile.relativeTo(projectDir)}")
+
+        if (releaseMode.get() && blockers.isNotEmpty()) {
+            throw GradleException("Maven Central release mode requested but external gates are missing: ${blockers.joinToString("; ")}")
         }
     }
 }

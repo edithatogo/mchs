@@ -2,4 +2,5 @@
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
+- [Submission Checklist](./submission_checklist.md)
 - [Metadata](./metadata.json)

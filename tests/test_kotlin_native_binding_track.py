@@ -124,20 +124,19 @@ def test_kotlin_native_contract_and_fixtures_reject_runtime_overclaiming():
     assert "native adapter boundary" in str(fail_example["reason"])
 
 
-def test_kotlin_native_scaffold_has_no_jvm_build_or_formula_logic():
+def test_kotlin_native_adapter_has_no_jvm_build_or_formula_logic():
     assert BINDING_ROOT.exists()
-    assert BINDING_ROOT != ROOT / "bindings" / "jvm"
     assert not (BINDING_ROOT / "build.gradle.kts").exists()
     assert not (BINDING_ROOT / "pom.xml").exists()
 
-    scaffold_files = [
+    adapter_files = [
         path
         for path in BINDING_ROOT.rglob("*")
         if path.is_file() and path.suffix in {".md", ".kt", ".json"}
     ]
-    assert scaffold_files
+    assert adapter_files
 
-    scaffold_text = "\n".join(_read_text(path) for path in scaffold_files).lower()
+    adapter_text = "\n".join(_read_text(path) for path in adapter_files).lower()
 
     for forbidden in [
         "private_service_adjustment",
@@ -149,7 +148,46 @@ def test_kotlin_native_scaffold_has_no_jvm_build_or_formula_logic():
         "maven central",
         "gradle build",
     ]:
-        assert forbidden not in scaffold_text
+        assert forbidden not in adapter_text
 
-    assert "jvm runtime dependency" in scaffold_text
-    assert "formula logic remains in the rust core" in scaffold_text
+    assert "jvm runtime dependency" in adapter_text
+    assert "formula logic remains in the rust core" in adapter_text
+
+
+def test_kotlin_native_file_boundary_client_validates_routing_without_formula_logic():
+    client = _read_text(
+        BINDING_ROOT
+        / "src"
+        / "nativeMain"
+        / "kotlin"
+        / "org"
+        / "mchs"
+        / "bindings"
+        / "native"
+        / "NativeBindingClient.kt"
+    )
+    models = _read_text(
+        BINDING_ROOT
+        / "src"
+        / "nativeMain"
+        / "kotlin"
+        / "org"
+        / "mchs"
+        / "bindings"
+        / "native"
+        / "BindingModels.kt"
+    )
+
+    assert "class FileBoundaryNativeBindingClient" in client
+    assert "BindingStatus.ENVELOPE_VALIDATED" in client
+    assert "calculatorId must be nwau" in client
+    assert "inputPath is required for file-boundary execution" in client
+    assert "inputPath must be relative and must not contain parent traversal" in client
+    assert "outputPath is required for file-boundary execution" in client
+    assert "outputPath must be relative and must not contain parent traversal" in client
+    assert "isUnsafePath" in client
+    assert "metadata.correlationId is required" in client
+    assert "kotlin-native-file-boundary" in client
+    assert "ENVELOPE_VALIDATED" in models
+    assert "SCAFFOLD_ONLY" not in models
+    assert "nwau25 =" not in client

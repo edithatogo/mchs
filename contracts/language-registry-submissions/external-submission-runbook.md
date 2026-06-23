@@ -96,11 +96,12 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 
 ### Maven Central
 
-- Artifact: `io.github.edithatogo:mchs:0.1.0`
-- Local scaffold: `bindings/jvm` contains a minimal JVM module with Gradle `maven-publish`, `signing`, and Central Portal repository wiring for `io.github.edithatogo:mchs:0.1.0`. `gradle -p bindings/jvm build --console=plain` passed in the clean clone.
-- Dry-run evidence: GitHub Actions run `https://github.com/edithatogo/mchs/actions/runs/27407884659` succeeded with `dry_run=true` on 2026-06-12 after commit `cde0439` moved the workflow runtime JDK to 17 for Gradle 9. The binding module remains Java 11-targeted via Gradle configuration.
-- Adjacent artifact probe: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returned public metadata for `io.github.edithatogo:mchs-jvm-bindings:0.1.0` on 2026-06-14. This does not close the checked-in `io.github.edithatogo:mchs:0.1.0` target unless the contract target is intentionally changed.
-- Required steps: Central Portal namespace verification, signing key setup, GitHub secrets `CENTRAL_PORTAL_DEPLOY_URL`, `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD`, authenticated publish/release, and public Maven Central verification. A 2026-06-13 `gh secret list` audit found `NUGET_API_KEY` and `OVSX_PAT` configured, but no Maven Central secrets, so `CENTRAL_PORTAL_DEPLOY_URL`, `CENTRAL_PORTAL_USERNAME`, `CENTRAL_PORTAL_PASSWORD`, `MAVEN_SIGNING_KEY`, and `MAVEN_SIGNING_PASSWORD` are still absent. A fresh dry-run, `Publish Maven Central package` run 27456830098, succeeded from `master` with `dry_run=true`.
+- Artifact: `io.github.edithatogo:mchs-jvm-bindings:0.1.0`
+- Local validation: `gradle -p bindings/jvm validateCentralPortalReadiness build` passed with Maven POM metadata, sources jar, javadoc jar, and namespace readiness checks.
+- Publication evidence: Publisher API deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated after public key propagation and was published with HTTP 204.
+- Public metadata: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returns HTTP 200 and exposes latest/release/version `0.1.0`.
+- Artifact evidence: public JAR URL `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.jar` returns HTTP 200 with SHA-256 `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e`; public POM URL returns HTTP 200 with SHA-256 `367e6a08a9d57ebd6d97d9fa14f1fe65fbfdf7fce882369ab8264996995c36c6`.
+- Token hygiene: short-lived Central tokens used for the upload session were revoked after use; no Maven Central token or signing secret is stored in repository evidence.
 
 ### conda-forge
 
