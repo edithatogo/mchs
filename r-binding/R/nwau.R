@@ -328,6 +328,10 @@ nwau_diagnose <- function(
 nwau_cli_contract <- function(
     python = nwau_default_python(),
     module = nwau_default_module()) {
+  if (!is.character(module) || length(module) != 1L || !nzchar(module)) {
+    stop("`module` must be a single non-empty Python module path.", call. = FALSE)
+  }
+
   args <- c("-m", module, "interop", "contract")
   result <- nwau_system2(python, args)
   list(

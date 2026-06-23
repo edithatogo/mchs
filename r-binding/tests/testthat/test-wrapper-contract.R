@@ -74,3 +74,20 @@ test_that("CLI contract probe reports command failures without formula fallback"
   expect_null(result$contract)
   expect_true(any(grepl("interop", result$command)))
 })
+
+test_that("CLI contract probe captures successful contract output", {
+  python <- tempfile(fileext = if (.Platform$OS.type == "windows") ".bat" else "")
+  if (.Platform$OS.type == "windows") {
+    writeLines(c("@echo off", "echo {\"contract\":\"cli_file_interop\"}"), python)
+  } else {
+    writeLines(c("#!/usr/bin/env sh", "echo '{\"contract\":\"cli_file_interop\"}'"), python)
+    Sys.chmod(python, "0755")
+  }
+
+  result <- nwau_cli_contract(python = python, module = "nwau_py.cli.main")
+
+  expect_true(result$ok)
+  expect_equal(result$status, 0L)
+  expect_match(result$contract, "cli_file_interop")
+  expect_true(any(grepl("interop", result$command)))
+})
