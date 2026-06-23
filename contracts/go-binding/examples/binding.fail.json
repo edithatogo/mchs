@@ -24,7 +24,7 @@
     "mode": "service",
     "success": false,
     "status": "blocked",
-    "message": "Go module readiness is not yet promoted from scaffold-ready to ready.",
+    "message": "Go module release readiness is not yet promoted from private adapter validation to ready.",
     "warnings": [
       "The binding contract is available, but the Go module is not yet release-ready."
     ],
@@ -33,8 +33,8 @@
         "code": "GO_BINDING_MODULE_NOT_READY",
         "severity": "warning",
         "retryable": false,
-        "condition": "the Go module is only scaffold-ready",
-        "message": "The Go binding module has not been promoted to ready."
+        "condition": "the Go service and binding-file adapters are private validation surfaces only",
+        "message": "The Go binding module has not been promoted for release."
       }
     ],
     "diagnostics": {
@@ -48,7 +48,7 @@
         {
           "id": "module_readiness",
           "status": "fail",
-          "message": "The Go module is scaffold-ready but not ready for release."
+          "message": "The Go service and binding-file adapters are available, but the Go module is not ready for release."
         },
         {
           "id": "fixture_gate",
@@ -74,7 +74,7 @@
       "checksum_algorithm": "sha256"
     },
     "fixture_gate_state": "blocked",
-    "module_readiness_state": "scaffold_ready"
+    "module_readiness_state": "private_ready"
   },
   "privacy": {
     "classification": "synthetic",
