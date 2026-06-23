@@ -1,15 +1,35 @@
 {
-  "name": "@mchs/wasm-binding",
-  "private": true,
-  "version": "0.0.0",
-  "description": "TypeScript adapter shell for future wasm-pack output; no calculator logic.",
+  "name": "@edithatogo/mchs-wasm-binding",
+  "version": "0.1.0",
+  "description": "TypeScript adapter for wasm-pack output; no calculator logic.",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    }
+  },
+  "types": "./dist/src/index.d.ts",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
   "devDependencies": {
     "typescript": "^5.6.3",
     "vitest": "^4.1.6"
-  }
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edithatogo/mchs.git",
+    "directory": "microcosting_healthservices/wasm-binding"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "package.json",
+    "tsconfig.json"
+  ]
 }
