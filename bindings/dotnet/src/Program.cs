@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.ComponentModel;
 using Mchs.Bindings.DotNet.Interop;
 
 namespace Mchs.Bindings.DotNet;
@@ -43,7 +44,7 @@ public static class Program
             Console.WriteLine(JsonSerializer.Serialize(response, JsonOptions));
             return response.Success ? 0 : 1;
         }
-        catch (Exception ex) when (ex is FileNotFoundException or InvalidDataException or JsonException)
+        catch (Exception ex) when (ex is FileNotFoundException or InvalidDataException or JsonException or Win32Exception)
         {
             Console.Error.WriteLine(ex.Message);
             return 1;
@@ -66,13 +67,14 @@ public static class Program
     private static void PrintUsage()
     {
         Console.WriteLine("""
-        DotNet binding prototype
+        DotNet binding CLI/file adapter
 
         Usage:
           dotnet run --project bindings/dotnet -- --request <request.json> --response <response.json>
 
         The request file must contain a BindingRequest JSON document.
-        The CLI writes a BindingResponse JSON document and does not implement formula logic.
+        The CLI delegates calculator work to the shared core funding-calculator command.
+        Override the command with MCHS_DOTNET_SHARED_CORE_CLI when needed.
         """);
     }
 }
