@@ -1,10 +1,9 @@
-//! Minimal C ABI scaffold for the NWAU proof of concept.
+//! C ABI for the NWAU proof of concept.
 //!
-//! This crate deliberately exposes wrapper-only ABI types and entrypoints.
-//! It does not implement formula logic; the calculation entrypoint returns an
-//! unimplemented status after validating that required pointers are present.
+//! Exposes extern "C" entrypoints for use by foreign-language callers.
 
 use core::ffi::c_char;
+use core::{slice, str};
 
 #[repr(C)]
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -76,7 +75,7 @@ pub struct NwauAbiEpisodeOutput {
 pub type NwauAbiStatus = u32;
 
 pub const NWAU_ABI_VERSION_MAJOR: u32 = 0;
-pub const NWAU_ABI_VERSION_MINOR: u32 = 1;
+pub const NWAU_ABI_VERSION_MINOR: u32 = 2;
 pub const NWAU_ABI_VERSION_PATCH: u32 = 0;
 pub const NWAU_ABI_STATUS_OK: NwauAbiStatus = 0;
 pub const NWAU_ABI_STATUS_INVALID_ARGUMENT: NwauAbiStatus = 1;
@@ -89,6 +88,16 @@ fn static_view(text: &'static str) -> NwauAbiStringView {
     }
 }
 
+unsafe fn view_to_str<'a>(view: &NwauAbiStringView) -> Option<&'a str> {
+    if view.len == 0 {
+        return Some("");
+    }
+    if view.ptr.is_null() {
+        return None;
+    }
+    let bytes = unsafe { slice::from_raw_parts(view.ptr as *const u8, view.len) };
+    str::from_utf8(bytes).ok()
+}
 #[no_mangle]
 pub extern "C" fn nwau_abi_version_major() -> u32 {
     NWAU_ABI_VERSION_MAJOR
@@ -119,13 +128,12 @@ pub extern "C" fn nwau_abi_status_message(status: NwauAbiStatus) -> NwauAbiStrin
     }
 }
 
-/// Validate the pointer-shaped acute 2025 ABI surface.
-///
 /// # Safety
 ///
-/// `input`, `reference`, `adjustments`, and `out` must be valid pointers for
-/// the duration of the call when they are non-null. `out` must point to writable
-/// caller-owned storage for one `NwauAbiEpisodeOutput`.
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiEpisodeOutput>()` bytes.
 #[no_mangle]
 pub unsafe extern "C" fn nwau_abi_calculate_acute_2025(
     input: *const NwauAbiEpisodeInput,
@@ -136,25 +144,80 @@ pub unsafe extern "C" fn nwau_abi_calculate_acute_2025(
     if input.is_null() || reference.is_null() || adjustments.is_null() || out.is_null() {
         return NWAU_ABI_STATUS_INVALID_ARGUMENT;
     }
-
+    let input = unsafe { &*input };
+    let reference = unsafe { &*reference };
+    let adjustments = unsafe { &*adjustments };
+    let Some(drg) = (unsafe { view_to_str(&input.drg) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let Some(ref_drg) = (unsafe { view_to_str(&reference.drg) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let validation = nwau_core::AcuteValidationState::valid();
+    let acute_input = nwau_core::AcuteEpisodeInput {
+        drg,
+        los: input.los,
+        icu_hours: input.icu_hours,
+        icu_other: input.icu_other,
+        pat_sameday_flag: input.pat_sameday_flag != 0,
+        pat_private_flag: input.pat_private_flag != 0,
+        pat_covid_flag: input.pat_covid_flag != 0,
+        eligible_paed_flag: input.eligible_paed_flag != 0,
+        validation,
+    };
+    let acute_ref = nwau_core::AcuteReferenceRow {
+        drg: ref_drg,
+        inlier_lower_bound: reference.inlier_lower_bound,
+        inlier_upper_bound: reference.inlier_upper_bound,
+        paediatric_multiplier: reference.paediatric_multiplier,
+        same_day_list_flag: reference.same_day_list_flag != 0,
+        bundled_icu_flag: reference.bundled_icu_flag != 0,
+        same_day_base_weight: reference.same_day_base_weight,
+        same_day_per_diem: reference.same_day_per_diem,
+        inlier_weight: reference.inlier_weight,
+        long_stay_per_diem: reference.long_stay_per_diem,
+        private_service_adjustment: reference.private_service_adjustment,
+    };
+    let acute_adj = nwau_core::AcuteAdjustmentFactors {
+        icu_rate: adjustments.icu_rate,
+        covid_adjustment: adjustments.covid_adjustment,
+        indigenous_adjustment: adjustments.indigenous_adjustment,
+        remoteness_adjustment: adjustments.remoteness_adjustment,
+        treatment_remoteness_adjustment: adjustments.treatment_remoteness_adjustment,
+        radiotherapy_adjustment: adjustments.radiotherapy_adjustment,
+        dialysis_adjustment: adjustments.dialysis_adjustment,
+        private_accommodation_same_day: adjustments.private_accommodation_same_day,
+        private_accommodation_overnight: adjustments.private_accommodation_overnight,
+    };
+    let result = nwau_core::calculate_acute_2025(acute_input, acute_ref, acute_adj);
     unsafe {
-        *out = NwauAbiEpisodeOutput::default();
+        *out = NwauAbiEpisodeOutput {
+            error_code: result.error_code as u32,
+            separation_category: result.separation_category.map(|s| s as u32).unwrap_or(0),
+            eligible_icu_hours: result.eligible_icu_hours,
+            los_icu_removed: result.los_icu_removed,
+            w01: result.w01,
+            w02: result.w02,
+            w03: result.w03,
+            w04: result.w04,
+            gwau: result.gwau,
+            private_service_deduction: result.private_service_deduction,
+            private_accommodation_deduction: result.private_accommodation_deduction,
+            nwau25: result.nwau25,
+        };
     }
-
-    NWAU_ABI_STATUS_UNIMPLEMENTED
+    NWAU_ABI_STATUS_OK
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
-    fn version_queries_match_the_committed_abi_version() {
+    fn version_queries_match() {
         assert_eq!(nwau_abi_version_major(), 0);
-        assert_eq!(nwau_abi_version_minor(), 1);
+        assert_eq!(nwau_abi_version_minor(), 2);
         assert_eq!(nwau_abi_version_patch(), 0);
     }
-
     #[test]
     fn null_inputs_fail_closed() {
         let status = unsafe {
@@ -165,34 +228,106 @@ mod tests {
                 core::ptr::null_mut(),
             )
         };
-
         assert_eq!(status, NWAU_ABI_STATUS_INVALID_ARGUMENT);
     }
-
     #[test]
-    fn valid_pointer_shape_zeroes_output_and_returns_unimplemented() {
-        let input = NwauAbiEpisodeInput::default();
-        let reference = NwauAbiReferenceRow::default();
-        let adjustments = NwauAbiAdjustmentFactors::default();
-        let mut output = NwauAbiEpisodeOutput {
-            error_code: 999,
-            separation_category: 999,
-            eligible_icu_hours: 999.0,
-            los_icu_removed: 999.0,
-            w01: 999.0,
-            w02: 999.0,
-            w03: 999.0,
-            w04: 999.0,
-            gwau: 999.0,
-            private_service_deduction: 999.0,
-            private_accommodation_deduction: 999.0,
-            nwau25: 999.0,
+    fn null_string_view_with_length_fails_closed() {
+        let input = NwauAbiEpisodeInput {
+            drg: NwauAbiStringView {
+                ptr: core::ptr::null(),
+                len: 4,
+            },
+            los: 10.0,
+            icu_hours: 0.0,
+            icu_other: 0.0,
+            pat_sameday_flag: 0,
+            pat_private_flag: 0,
+            pat_covid_flag: 0,
+            eligible_paed_flag: 0,
         };
-
+        let ref_drg = b"801A";
+        let reference = NwauAbiReferenceRow {
+            drg: NwauAbiStringView {
+                ptr: ref_drg.as_ptr() as *const c_char,
+                len: ref_drg.len(),
+            },
+            ..NwauAbiReferenceRow::default()
+        };
+        let adjustments = NwauAbiAdjustmentFactors::default();
+        let mut output = NwauAbiEpisodeOutput::default();
         let status =
             unsafe { nwau_abi_calculate_acute_2025(&input, &reference, &adjustments, &mut output) };
-
-        assert_eq!(status, NWAU_ABI_STATUS_UNIMPLEMENTED);
-        assert_eq!(output, NwauAbiEpisodeOutput::default());
+        assert_eq!(status, NWAU_ABI_STATUS_INVALID_ARGUMENT);
+    }
+    #[test]
+    fn invalid_utf8_string_view_fails_closed() {
+        let drg = [0xff, 0xfe];
+        let input = NwauAbiEpisodeInput {
+            drg: NwauAbiStringView {
+                ptr: drg.as_ptr() as *const c_char,
+                len: drg.len(),
+            },
+            los: 10.0,
+            icu_hours: 0.0,
+            icu_other: 0.0,
+            pat_sameday_flag: 0,
+            pat_private_flag: 0,
+            pat_covid_flag: 0,
+            eligible_paed_flag: 0,
+        };
+        let ref_drg = b"801A";
+        let reference = NwauAbiReferenceRow {
+            drg: NwauAbiStringView {
+                ptr: ref_drg.as_ptr() as *const c_char,
+                len: ref_drg.len(),
+            },
+            ..NwauAbiReferenceRow::default()
+        };
+        let adjustments = NwauAbiAdjustmentFactors::default();
+        let mut output = NwauAbiEpisodeOutput::default();
+        let status =
+            unsafe { nwau_abi_calculate_acute_2025(&input, &reference, &adjustments, &mut output) };
+        assert_eq!(status, NWAU_ABI_STATUS_INVALID_ARGUMENT);
+    }
+    #[test]
+    fn valid_pointer_shape_returns_ok() {
+        let drg = b"801A\0";
+        let input = NwauAbiEpisodeInput {
+            drg: NwauAbiStringView {
+                ptr: drg.as_ptr() as *const c_char,
+                len: 4,
+            },
+            los: 10.0,
+            icu_hours: 0.0,
+            icu_other: 0.0,
+            pat_sameday_flag: 0,
+            pat_private_flag: 0,
+            pat_covid_flag: 0,
+            eligible_paed_flag: 0,
+        };
+        let ref_drg = b"801A\0";
+        let reference = NwauAbiReferenceRow {
+            drg: NwauAbiStringView {
+                ptr: ref_drg.as_ptr() as *const c_char,
+                len: 4,
+            },
+            inlier_lower_bound: 7.0,
+            inlier_upper_bound: 72.0,
+            paediatric_multiplier: 1.35,
+            same_day_list_flag: 0,
+            bundled_icu_flag: 0,
+            same_day_base_weight: 0.9527,
+            same_day_per_diem: 1.1849,
+            inlier_weight: 9.2472,
+            long_stay_per_diem: 0.26,
+            private_service_adjustment: 0.0,
+        };
+        let adjustments = NwauAbiAdjustmentFactors::default();
+        let mut output = NwauAbiEpisodeOutput::default();
+        let status =
+            unsafe { nwau_abi_calculate_acute_2025(&input, &reference, &adjustments, &mut output) };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        assert_eq!(output.error_code, 0);
+        assert!((output.nwau25 - 9.2472).abs() < 1e-4);
     }
 }

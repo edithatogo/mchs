@@ -2,21 +2,33 @@
 
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 import pandas as pd
 
 try:  # pragma: no cover - optional dependency
     import pyreadstat
-except Exception:  # pragma: no cover - pyreadstat is optional in some environments
+except (
+    ImportError
+) as exc:  # pragma: no cover - pyreadstat is optional in some environments
     pyreadstat = None
+    _PYREADSTAT_IMPORT_ERROR: ImportError | None = exc
+else:
+    _PYREADSTAT_IMPORT_ERROR = None
 
 try:
     import pyarrow  # noqa: F401
 
     _PARQUET_SUPPORTED = True
-except Exception:  # pragma: no cover - pyarrow is optional
+    _PYARROW_IMPORT_ERROR: ImportError | None = None
+except ImportError as exc:  # pragma: no cover - pyarrow is optional
     _PARQUET_SUPPORTED = False
+    _PYARROW_IMPORT_ERROR = exc
+
+
+def clear_reference_cache(cache_dir: str | Path = ".cache") -> None:
+    shutil.rmtree(cache_dir, ignore_errors=True)
 
 
 def load_sas_table(
@@ -61,7 +73,9 @@ def load_sas_table(
             return pd.read_csv(cache_path)
 
     if pyreadstat is None:  # pragma: no cover - dependency guard
-        raise ImportError("pyreadstat is not installed")
+        raise ImportError(
+            "pyreadstat is required to read SAS files when no cache exists"
+        ) from _PYREADSTAT_IMPORT_ERROR
 
     df, _ = pyreadstat.read_sas7bdat(str(path))
 
