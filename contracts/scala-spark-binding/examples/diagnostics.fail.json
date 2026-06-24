@@ -1,0 +1,46 @@
+{
+  "binding_bundle_id": "scala_spark_binding_contract_20260513",
+  "entry_id": "scala-spark-diagnostics-fail",
+  "entry_type": "diagnostic_record",
+  "diagnostics": {
+    "status": "fail",
+    "checks": [
+      {
+        "id": "fixture_gate_blocked",
+        "status": "blocked",
+        "message": "The selected fixture gate is not open for release promotion."
+      },
+      {
+        "id": "module_not_ready",
+        "status": "fail",
+        "message": "The Scala/Spark transport adapter is ready locally; public JVM promotion remains deferred."
+      },
+      {
+        "id": "error_codes_present",
+        "status": "pass",
+        "message": "Failure conditions emit explicit machine-readable error codes."
+      }
+    ],
+    "summary": {
+      "passed": 1,
+      "failed": 1,
+      "blocked": 1
+    },
+    "notes": "Synthetic diagnostics failure example only."
+  },
+  "provenance": {
+    "command": "scala-spark-binding validate-diagnostics-fail",
+    "binding_bundle_id": "scala_spark_binding_contract_20260513",
+    "source_manifest_path": "contracts/scala-spark-binding/examples/diagnostics.fail.json",
+    "source_url": "https://example.invalid/contracts/scala-spark-binding",
+    "retrieved_on": "2026-05-13",
+    "sha256": "synthetic-sha256-scala-spark-diagnostics-fail",
+    "bytes": 1824,
+    "checksum_algorithm": "sha256"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic diagnostics failure example only."
+  }
+}
