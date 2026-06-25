@@ -375,7 +375,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: GitHub Pages API Architecture**
-*Link: [./tracks/github_pages_api_architecture_20260513/](./tracks/github_pages_api_architecture_20260513/)*
+*Link: [./archive/github_pages_api_architecture_20260513/](./archive/github_pages_api_architecture_20260513/)*
 *Gate: Document that GitHub Pages hosts docs/static WASM demos only, while API-backed demos require an external or local backend.*
 
 ---

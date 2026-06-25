@@ -1,0 +1,32 @@
+{
+  "track_id": "github_pages_api_architecture_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "architecture",
+  "priority": "near-term",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/github-pages-api-architecture.md",
+  "dependencies": [
+    "http_api_contract_20260513",
+    "openai_tool_adapter_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Clarify that GitHub Pages hosts docs/static WASM demos only and cannot run the API backend.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "docs-site docs",
+    "conductor/web-architecture.md"
+  ],
+  "support_scope": {
+    "state": "architecture-guardrail",
+    "summary": "Documents static GitHub Pages, static WASM, external API, and local API modes; prevents claims that GitHub Pages hosts a production backend."
+  },
+  "gap_register": [
+    {
+      "id": "github-pages-api-hosting",
+      "status": "out-of-scope",
+      "summary": "GitHub Pages cannot host a server-side API; API-backed demos require an external or local backend."
+    }
+  ]
+}

@@ -30,6 +30,13 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _track_root(track_id: str) -> Path:
+    root = ROOT / "conductor" / "tracks" / track_id
+    if root.exists():
+        return root
+    return ROOT / "conductor" / "archive" / track_id
+
+
 def test_coordination_notice_and_tracks_are_present():
     tracks = _read(TRACKS)
 
@@ -37,14 +44,14 @@ def test_coordination_notice_and_tracks_are_present():
         assert path.exists(), path
 
     for track_id in TRACK_IDS:
-        root = ROOT / "conductor" / "tracks" / track_id
+        root = _track_root(track_id)
         assert (root / "index.md").exists()
         assert (root / "metadata.json").exists()
         assert (root / "spec.md").exists()
         assert (root / "plan.md").exists()
         metadata = json.loads(_read(root / "metadata.json"))
         assert metadata["track_id"] == track_id
-        assert metadata["status"] == "new"
+        assert metadata["status"] == "completed"
         assert track_id in tracks
 
     coordination = _read(ROADMAPS[0])
@@ -69,8 +76,10 @@ def test_status_schema_release_and_architecture_guardrails_are_explicit():
         "`unsupported`",
         "`blocked`",
         "`planned`",
+        "`deferred`",
         "`canary`",
         "`opt_in`",
+        "`preview`",
         "`release_candidate`",
         "`ga`",
         "`no_new_development`",
