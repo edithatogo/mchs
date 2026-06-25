@@ -1,0 +1,17 @@
+Outer wrapper migration Phase 1 inventory
+
+Commit notes:
+- Added conductor/outer-wrapper-migration-manifest.json with outer-wrapper inventory, dispositions, and SHA-256 checksums.
+- Recorded unmanaged gitlink, tracked Playwright logs, untracked source/governance slices, and Power Platform evidence without deleting outer-wrapper files.
+- Updated policy, track metadata, plan, review notes, and topology governance tests.
+
+Review:
+- conductor-review result: Phase 1 inventory is complete; track remains live because preservation, retirement/formalization, and post-migration outer validation remain open.
+
+Validation:
+- python -m json.tool conductor/outer-wrapper-migration-manifest.json
+- python -m json.tool conductor/tracks/outer_wrapper_retirement_migration_20260624/metadata.json
+- uv run pytest tests/test_repository_topology_governance.py -q
+- python scripts/validate_repository_topology.py --json
+- python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs (expected unmanaged-gitlink/nested-repo failure)
+- python conductor/scripts/stub_detector.py --root . --json
