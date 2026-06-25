@@ -31,6 +31,8 @@ Use these classes when creating or auditing tracks.
 Every new track should state:
 
 - Track class.
+- MoSCoW requirement IDs from `requirements.md`.
+- Design references from `design.md`.
 - Current state: `roadmap-only`, `scaffold-only`, `in-progress`,
   `complete-with-gaps`, or `complete`.
 - Primary contract: API, schema, source manifest, validation gate, package,
@@ -47,6 +49,12 @@ Use this extended `metadata.json` shape for new tracks:
   "type": "feature|bug|chore",
   "status": "new|in_progress|completed|cancelled",
   "track_class": "governance|source-discovery|data-contract|validator|calculator|classifier|costing|binding|publication|audit",
+  "requirements": [
+    "MUST-001"
+  ],
+  "design_refs": [
+    "System Design#Architecture Overview"
+  ],
   "current_state": "roadmap-only|scaffold-only|in-progress|complete-with-gaps|complete",
   "primary_contract": "<api|schema|source manifest|validation gate|package|docs page|audit report>",
   "dependencies": [
@@ -74,6 +82,7 @@ Before adding a new track:
 - Choose exactly one primary track class.
 - State the current state honestly; roadmap content alone is
   `roadmap-only`.
+- Reference the MoSCoW requirements and design sections affected by the track.
 - Identify upstream dependencies and downstream consumers.
 - Define the explicit contract being delivered.
 - Define the evidence needed before the track can be marked complete.
@@ -136,13 +145,27 @@ Run these recurring audits:
 A track must not be marked complete unless:
 
 - The contract is explicit.
+- The relevant requirements and design references are stated.
 - The required evidence exists.
 - Tests, docs, workflows, or registry records back the claim.
 - Current-state and future-state language are separated.
 - Publication claims are verified against the relevant registry or platform.
+- `conductor-review` has run at phase and track boundaries with high-confidence
+  fixes applied and validation rerun.
 
 If only the roadmap, scaffold, or documentation exists, mark the track as
 `roadmap-only` or `scaffold-only`, not complete.
+
+## Archive Rules
+
+Use `track-archive-policy.md` before moving tracks to `archive/`.
+
+Completed tracks in `conductor/tracks/` should be audited before archival. A
+track is archive-ready only when its metadata, spec, plan, review evidence,
+validation evidence, documentation links, and publication status agree. Tracks
+that are marked `[x]` but only contain scaffolds, stubs, generated placeholders,
+or docs-only intent must be downgraded or given remediation tracks instead of
+being archived.
 
 ## Remediation Rules
 

@@ -9,6 +9,7 @@ Use this template to create a recurring audit track that searches IHACPA's publi
 - `AUDIT_DATE`: `<YYYY-MM-DD>`
 - `PRICING_YEARS`: `<years or all current/recent years>`
 - `AUDITOR`: `<name or role>`
+- `TRACK_STATUS`: `new` for a created track, or another valid lifecycle status
 
 ## metadata.json
 
@@ -16,7 +17,7 @@ Use this template to create a recurring audit track that searches IHACPA's publi
 {
   "track_id": "TRACK_ID",
   "type": "chore",
-  "status": "new",
+  "status": "TRACK_STATUS",
   "track_class": "source-discovery",
   "current_state": "roadmap-only",
   "primary_contract": "source discovery audit report",

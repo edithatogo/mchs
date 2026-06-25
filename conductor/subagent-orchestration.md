@@ -66,6 +66,32 @@ Every subagent must report:
 For code-changing tasks, the handoff must explicitly state whether public
 contracts, schemas, docs, examples, or validation evidence were updated.
 
+## Multi-Level Delegation
+
+Multi-level delegation is allowed when it reduces coupling and each nested task
+has a bounded contract. The lead agent must define a tree of work packages before
+delegation:
+
+- Level 0: lead orchestrator owns requirements, design, integration, and final
+  release evidence.
+- Level 1: coordinators own contract, implementation, validation, docs, release,
+  or audit streams.
+- Level 2: workers own disjoint files or modules within a stream.
+- Level 3+: only use when a worker can safely split independent discovery,
+  fixture, docs, or validation subtasks without introducing merge conflicts.
+
+Nested subagents inherit the same evidence obligations as direct subagents. A
+subagent may not mark a nested task done without implementation evidence,
+validation evidence, docs impact, review findings, and residual risks.
+
+## Anti-Stub Rule
+
+Subagents must not satisfy a task by creating only stubs, fakes, TODOs,
+placeholder schemas, empty adapters, mocked-only tests, or aspirational docs.
+If a scaffold is the only safe output, the handoff must mark the work
+`scaffold-only`, explain what is blocked, and create or recommend a remediation
+track.
+
 ## Review and Documentation Requirement
 
 Subagents are not done when code compiles. A delegated implementation task is
@@ -102,7 +128,11 @@ At the end of every phase:
 5. Narrow validation is rerun.
 6. Documentation and evidence are updated.
 7. The phase checkpoint is created.
-8. Work automatically progresses to the next phase unless blocked.
+8. The phase changes are committed when the worktree is safe and attributable.
+9. Work automatically progresses to the next phase unless blocked.
+10. At the end of a track, public-state changes are pushed only after strict
+    validation, review evidence, and release/publication gates pass or are
+    explicitly gap-recorded.
 
 ## Example Assignment
 

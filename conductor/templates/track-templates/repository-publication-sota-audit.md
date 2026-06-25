@@ -9,6 +9,7 @@ Use this template to create a recurring audit track for local and remote reposit
 - `AUDIT_DATE`: `<YYYY-MM-DD>`
 - `REMOTE`: `<owner/repo>`
 - `AUDITOR`: `<name or role>`
+- `TRACK_STATUS`: `new` for a created track, or another valid lifecycle status
 
 ## metadata.json
 
@@ -16,7 +17,7 @@ Use this template to create a recurring audit track for local and remote reposit
 {
   "track_id": "TRACK_ID",
   "type": "chore",
-  "status": "new",
+  "status": "TRACK_STATUS",
   "track_class": "audit",
   "current_state": "roadmap-only",
   "primary_contract": "repository publication and SOTA audit report",
