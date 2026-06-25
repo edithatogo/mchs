@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ecosystem_language_readiness_20260507"
+TRACK = ROOT / "conductor" / "archive" / "ecosystem_language_readiness_20260507"
 CONDUCTOR_INDEX = ROOT / "conductor" / "index.md"
 
 
@@ -40,9 +40,13 @@ def test_ecosystem_language_readiness_track_scope_is_recorded():
     assert metadata["status"] in {"complete", "completed"}
     assert metadata["track_id"] == "ecosystem_language_readiness_20260507"
     assert metadata["updated_at"] == "2026-05-07T01:03:51Z"
+    assert metadata["current_state"] == "complete-with-gaps"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
+    assert (TRACK / "review.md").exists()
 
     for phrase in [
-        "Python is the only executable calculator package surface today",
+        "Python was the only executable calculator package surface in this snapshot",
         "docs-site is an npm-managed Astro/Starlight surface",
         "No R package, Julia package, C# solution/project",
         "Package/version management evidence precedes any language readiness claim",
@@ -50,6 +54,7 @@ def test_ecosystem_language_readiness_track_scope_is_recorded():
         "Health standards are documented separately as advisory guidance",
         "citation metadata",
         "manifest-level version pinning",
+        "package-surface tracks supersede its inventory rows",
     ]:
         assert phrase in spec
 
@@ -83,9 +88,10 @@ def test_ecosystem_language_readiness_track_scope_is_recorded():
         "C#",
         "Power Platform",
         "R package or wrapper",
-        "Julia package or kernel prototype",
+        "Julia package or kernel complete-with-gaps",
         "implemented, documented-only, missing, and deferred",
         "Package/version management evidence precedes any language readiness claim",
+        "dated snapshot inventory",
     ]:
         assert phrase in matrix
 

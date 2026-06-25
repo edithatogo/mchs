@@ -60,7 +60,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: define and ship the Starlight documentation platform, its versioning model, migration path, plugin set, and deployment workflow before any docs-site decommissioning is considered.*
 
 11. [x] **Track: Ecosystem Standards and Language Readiness**
-   *Link: [./tracks/ecosystem_language_readiness_20260507/](./tracks/ecosystem_language_readiness_20260507/)*
+   *Link: [./archive/ecosystem_language_readiness_20260507/](./archive/ecosystem_language_readiness_20260507/)*
    *Depends on: public calculator contracts, golden fixtures, release governance, Starlight documentation, and Power Platform boundary documentation.*
    *Gate: assess scientific software standards, language packaging maturity, C# and Power Platform implementation readiness, contribution pathways, and health interoperability standards before starting new language ports or integration surfaces.*
 

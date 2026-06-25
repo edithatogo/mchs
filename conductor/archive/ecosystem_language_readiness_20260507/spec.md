@@ -2,10 +2,10 @@
 
 ## Goal
 
-Create a repository-surface inventory and standards matrix that records the
-current package/version-management state for Python and docs-site, the missing
-R/Julia/C#/Power Platform artifacts, and the decision criteria implied by the
-ecosystem-readiness spec.
+Create a dated repository-surface inventory and standards matrix that records
+the package/version-management state as of 2026-05-07 for Python and docs-site,
+the then-missing R/Julia/C#/Power Platform artifacts, and the decision criteria
+implied by the ecosystem-readiness spec.
 
 The project already has strong Python, fixture, provenance, and documentation
 foundations. This track captures where those foundations are actually backed by
@@ -13,9 +13,13 @@ manifests and lockfiles today, where they are only described in architecture
 docs, and what minimum standards would be required before any future language
 surface could be described as ready.
 
-## Current State
+## Snapshot Boundary
 
-- Python is the only executable calculator package surface today.
+This track is an early ecosystem readiness snapshot. Later binding,
+publication, and package-surface tracks supersede its inventory rows when they
+provide newer implementation or registry evidence.
+
+- Python was the only executable calculator package surface in this snapshot.
 - Python packaging uses `pyproject.toml` plus `uv.lock`; `requirements*.txt`
   and `mypy.ini` remain transitional artifacts.
 - The docs-site is an npm-managed Astro/Starlight surface with `package.json`
@@ -23,14 +27,14 @@ surface could be described as ready.
   provides build, link-check, and deployment evidence. The Node version policy
   still lives in the workflow rather than the package manifest.
 - No R package, Julia package, C# solution/project, NuGet configuration, or
-  Power Platform solution artifact currently exists.
+  Power Platform solution artifact existed in this snapshot.
 - Existing C# and Power Platform material is architecture and boundary
   documentation, not executable implementation.
 - Power Platform is treated as an orchestration surface only; calculation
   logic must remain behind a secure C# service boundary.
 - Health standards are documented separately as advisory guidance rather than
   implementation evidence.
-- The matrix must stay conservative and distinguish current evidence from
+- The matrix must stay conservative and distinguish snapshot evidence from
   intended future direction.
 
 ## Standards and Decision Criteria
@@ -63,15 +67,15 @@ surface could be described as ready.
 
 The roadmap must preserve the following order:
 
-- Repository evidence precedes any statement about current readiness.
+- Repository evidence precedes any statement about readiness.
 - Package/version management evidence precedes any language readiness claim.
 - Shared public contracts and golden fixtures precede any non-Python
   implementation claim.
 - Docs-site versioning and deployment evidence must be separated from the
   Python package surface.
 - The docs-site surface should be judged against the archived Starlight track
-  while its current npm/package-lock evidence and GitHub Pages workflow are
-  the active repository evidence.
+  while the snapshot npm/package-lock evidence and GitHub Pages workflow remain
+  the evidence recorded here.
 - C# engine packaging precedes any Power Platform calculation-parity claim.
 - R and Julia remain wrapper, prototype, or deferred options unless parity and
   community evidence justify a fuller surface.
