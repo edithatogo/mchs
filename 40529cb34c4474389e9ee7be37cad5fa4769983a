@@ -1,0 +1,1 @@
+Scala/Spark binding cleanup note: added Parquet, Spark SQL, and service fallback adapter source plus contract/schema/examples and tests. Validation passed: test_scala_spark_binding_track 4 passed, JSON assets parsed, stub_detector total_findings=0. Local sbt build was not run because sbt was not installed.
