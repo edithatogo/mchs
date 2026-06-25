@@ -1,0 +1,1 @@
+Generated artifact cleanup note: ignored local dependency/build/package outputs and removed untracked generated artifacts from the working tree. Status no longer reports integrations/vscode/node_modules, wasm-binding/node_modules, wasm-binding/coverage, nwauR_0.1.0.tar.gz, or nwau_py/_rust.abi3.so.
