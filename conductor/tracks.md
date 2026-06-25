@@ -752,6 +752,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Future Repo Split Playbook**
-*Link: [./tracks/future_repo_split_playbook_20260624/](./tracks/future_repo_split_playbook_20260624/)*
+- [x] **Track: Future Repo Split Playbook**
+*Link: [./archive/future_repo_split_playbook_20260624/](./archive/future_repo_split_playbook_20260624/)*
 *Gate: Define when a surface may leave the monorepo and how to extract it with history, registry continuity, CI proof, and rollback.*

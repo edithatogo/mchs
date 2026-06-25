@@ -109,20 +109,30 @@ def test_repository_topology_track_family_is_registered() -> None:
     tracks_md = _read(TRACKS_MD)
     for track_id in TRACK_IDS:
         track_dir = TRACKS / track_id
+        archived = False
+        if not track_dir.exists():
+            track_dir = ROOT / "conductor" / "archive" / track_id
+            archived = True
         assert track_dir.exists(), track_id
         for filename in ["metadata.json", "spec.md", "plan.md", "index.md"]:
             assert (track_dir / filename).exists(), f"{track_id}/{filename}"
 
         metadata = _load_json(track_dir / "metadata.json")
         assert metadata["track_id"] == track_id
-        assert metadata["status"] == "new"
         assert metadata["no_stub_enforce"] is True
-        assert metadata["current_state"] == "in-progress"
+        if archived:
+            assert metadata["status"] == "completed"
+            assert metadata["current_state"] == "complete"
+            assert (track_dir / "review.md").exists(), track_id
+            assert f"./archive/{track_id}/" in tracks_md
+        else:
+            assert metadata["status"] == "new"
+            assert metadata["current_state"] == "in-progress"
+            assert f"./tracks/{track_id}/" in tracks_md
 
         plan = _read(track_dir / "plan.md")
         assert "Conductor - User Manual Verification" in plan
         assert "(Protocol in workflow.md)" in plan
-        assert f"./tracks/{track_id}/" in tracks_md
 
 
 def test_conductor_track_short_names_are_unique() -> None:

@@ -1,0 +1,35 @@
+{
+  "track_id": "future_repo_split_playbook_20260624",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "governance",
+  "priority": "normal",
+  "current_state": "complete",
+  "primary_contract": "conductor/future-repo-split-playbook.md",
+  "dependencies": [
+    "repository_topology_authority_20260624",
+    "package_surface_ownership_registry_20260624",
+    "release_boundary_control_plane_20260624"
+  ],
+  "completion_evidence": [
+    "conductor/future-repo-split-playbook.md",
+    "contracts/repository-topology/package-surfaces.json",
+    "tests/test_repository_topology_governance.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "description": "Define when a package surface may leave the monorepo and how to extract it with history, registry continuity, CI proof, and rollback.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "governance-control",
+    "summary": "Defines repo split eligibility, history-preserving extraction, registry continuity, CI proof, and rollback requirements. It does not perform a split or create external repositories."
+  },
+  "gap_register": [
+    {
+      "id": "future-repo-split-runtime-execution",
+      "status": "not-applicable",
+      "summary": "Actual extraction work is intentionally out of scope until a package surface is approved as a split candidate."
+    }
+  ]
+}
