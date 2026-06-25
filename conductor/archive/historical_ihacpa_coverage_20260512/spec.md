@@ -24,5 +24,5 @@ Audit how far IHACPA public materials go back and update the project roadmap acc
 - National Pricing Model Technical Specifications 2012-13: https://www.ihacpa.gov.au/resources/national-pricing-model-technical-specifications-2012-13
 - National Efficient Price Determination 2012-13: https://www.ihacpa.gov.au/resources/national-efficient-price-determination-2012-13
 - National Efficient Price Determination index: https://www.ihacpa.gov.au/health-care/pricing/national-efficient-price-determination
-- NWAU calculators: https://www.ihacpa.gov.au/what-we-do/national-weighted-activity-unit-nwau-calculators
+- NWAU calculators: https://www.ihacpa.gov.au/health-care/pricing/nwau-calculators
 - NHCDC public sector: https://www.ihacpa.gov.au/health-care/costing/national-hospital-cost-data-collection/national-hospital-cost-data-collection-public-sector

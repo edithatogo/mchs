@@ -6,7 +6,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "historical_ihacpa_coverage_20260512"
+TRACK_ID = "historical_ihacpa_coverage_20260512"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 INVENTORY = TRACK / "historical_source_inventory.md"
 MANIFEST = ROOT / "archive" / "ihacpa" / "raw" / "manifest.json"
 

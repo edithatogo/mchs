@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "historical_ihacpa_coverage_20260512"
+TRACK_ID = "historical_ihacpa_coverage_20260512"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 ARCHIVE_MATRIX = ROOT / "conductor" / "ihacpa-archive-matrix.md"
 TOOL_MATRIX = ROOT / "conductor" / "ihacpa-tool-coverage-matrix.md"
@@ -46,10 +49,18 @@ def test_historical_ihacpa_coverage_track_metadata_and_registry_stay_conservativ
     assert metadata["track_id"] == "historical_ihacpa_coverage_20260512"
     assert metadata["status"] == "completed"
     assert metadata["track_class"] == "governance"
-    assert metadata["current_state"] == "completed-with-explicit-validation-gaps"
+    assert metadata["current_state"] == "complete"
     assert metadata["publication_status"] == "not-applicable"
     assert "NHCDC cost evidence" in metadata["description"]
     assert "calculator support" in metadata["description"]
+    assert metadata["support_scope"]["state"] == "provenance-audit"
+    assert "2012-13 calculator support remains an explicit gap" in metadata[
+        "support_scope"
+    ]["summary"]
+    assert {gap["id"] for gap in metadata["gap_register"]} >= {
+        "historical-2012-13-calculator-artifact",
+        "historical-full-hash-census",
+    }
 
     assert "historical_ihacpa_coverage_20260512" in track_index
     assert "Historical IHACPA Coverage Audit" in registry
@@ -118,6 +129,8 @@ def test_historical_ihacpa_coverage_records_explicit_source_provenance():
         ),
     ]:
         assert phrase in spec
+    assert "health-care/pricing/nwau-calculators" in spec
+    assert "what-we-do/national-weighted-activity-unit" not in spec
 
     for phrase in [
         "provenance baseline",

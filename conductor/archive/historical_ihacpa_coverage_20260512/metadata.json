@@ -1,0 +1,35 @@
+{
+  "track_id": "historical_ihacpa_coverage_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/tracks/historical_ihacpa_coverage_20260512/historical_source_inventory.md plus executable historical inventory validation",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Double-check and extend historical IHACPA coverage back to 2012-13 where official pricing specifications exist, while distinguishing older NHCDC cost evidence from NWAU calculator support.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "provenance-audit",
+    "summary": "Covers 2012-13 through 2026-27 historical provenance for NEP determinations, pricing specifications, calculator availability, price weights, and NHCDC costing evidence. NHCDC is cost evidence only, and 2012-13 calculator support remains an explicit gap."
+  },
+  "gap_register": [
+    {
+      "id": "historical-2012-13-calculator-artifact",
+      "status": "open-gap",
+      "summary": "No direct 2012-13 NWAU calculator artifact is proven; support must not be inferred from pricing specifications or NHCDC evidence."
+    },
+    {
+      "id": "historical-full-hash-census",
+      "status": "deferred",
+      "summary": "Foundational PDF hashes are recorded, but a full hash census across every historical artifact remains outside this provenance-audit closure."
+    }
+  ]
+}

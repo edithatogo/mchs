@@ -1,0 +1,45 @@
+{
+  "track_id": "ihacpa_2026_27_support_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "2026-27 source inventory, pricing constants API, and conservative validation-status documentation",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add IHACPA 2026-27 NEP, technical specification, price-weight, and calculator coverage support.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "summary": "Covers 2026-27 source inventory, NEP26/NEC26 pricing constants, classification-version metadata, source checksums, and conservative validation-status documentation. It does not claim calculator parity."
+  },
+  "gap_register": [
+    {
+      "id": "nep26-calculator-parity",
+      "status": "open-gap",
+      "summary": "Calculator parity is not proven against official IHACPA SAS or Excel outputs."
+    },
+    {
+      "id": "nep26-sas-extraction",
+      "status": "deferred",
+      "summary": "The SAS .7Z archive is retained as raw evidence but has not been extracted or internally enumerated."
+    },
+    {
+      "id": "nep26-excel-internal-audit",
+      "status": "deferred",
+      "summary": "Excel .xlsb workbooks are raw, unmodified evidence and have not been internally audited for formulas or worksheet structure."
+    },
+    {
+      "id": "hac-ahr-companion-hashes",
+      "status": "deferred",
+      "summary": "HAC and AHR companion technical-specification checksums are deferred until a safety-and-quality follow-on track expands those claims."
+    }
+  ]
+}

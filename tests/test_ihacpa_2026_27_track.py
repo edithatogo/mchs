@@ -15,7 +15,10 @@ from nwau_py.pricing_constants import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ihacpa_2026_27_support_20260512"
+TRACK_ID = "ihacpa_2026_27_support_20260512"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 SOURCE_INVENTORY = TRACK / "source_inventory.md"
 
@@ -44,9 +47,17 @@ def test_ihacpa_2026_27_support_track_metadata_is_completed_but_conservative():
     assert metadata["track_id"] == "ihacpa_2026_27_support_20260512"
     assert metadata["status"] == "completed"
     assert metadata["track_class"] == "governance"
-    assert metadata["current_state"] == "implemented-with-explicit-validation-gaps"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-applicable"
     assert metadata["completion_evidence"] == ["docs", "workflows", "tests"]
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+    assert "does not claim calculator parity" in metadata["support_scope"]["summary"]
+    assert {gap["id"] for gap in metadata["gap_register"]} >= {
+        "nep26-calculator-parity",
+        "nep26-sas-extraction",
+        "nep26-excel-internal-audit",
+        "hac-ahr-companion-hashes",
+    }
 
     assert "ihacpa_2026_27_support_20260512" in track_index
     assert "IHACPA 2026-27 Support" in registry
@@ -98,6 +109,10 @@ def test_ihacpa_2026_27_phase_1_source_inventory_is_complete_and_gap_explicit():
         "Do not claim calculator parity until verified against official IHACPA "
         "calculator outputs or source logic."
     ) in spec
+    assert "health-care/pricing/national-pricing-model-technical-specifications" in spec
+    assert "health-care/pricing/nwau-calculators" in spec
+    assert "what-we-do/pricing" not in spec
+    assert "what-we-do/national-weighted-activity-unit" not in spec
     assert "Keep validation conservative and auditable." in spec
     assert "source inventory records official NEP, NEC" in _read_text(
         TRACK / "index.md"
@@ -117,6 +132,8 @@ def test_ihacpa_2026_27_phase_1_source_inventory_is_complete_and_gap_explicit():
         assert phrase in plan
 
     assert "**Captured:** SHA-256 hashes are recorded above" in inventory
+    assert "Checksum status: captured for the XLSX download" in inventory
+    assert "Checksum status: not yet captured for the XLSX download" not in inventory
     assert (
         "explicit gaps rather than being silently implied as support" in inventory
         or "Explicit gaps" in inventory

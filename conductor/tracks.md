@@ -121,7 +121,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: IHACPA 2026-27 Support**
-*Link: [./tracks/ihacpa_2026_27_support_20260512/](./tracks/ihacpa_2026_27_support_20260512/)*
+   *Link: [./archive/ihacpa_2026_27_support_20260512/](./archive/ihacpa_2026_27_support_20260512/)*
 *Gate: add current 2026-27 NEP, technical specification, price-weight, calculator, and classification-version support with explicit validation status.*
 
 ---
@@ -143,7 +143,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Historical IHACPA Coverage Audit**
-*Link: [./tracks/historical_ihacpa_coverage_20260512/](./tracks/historical_ihacpa_coverage_20260512/)*
+   *Link: [./archive/historical_ihacpa_coverage_20260512/](./archive/historical_ihacpa_coverage_20260512/)*
 *Gate: verify how far official NEP, technical specification, calculator, and NHCDC materials go back before extending historical support claims.*
 
 ---

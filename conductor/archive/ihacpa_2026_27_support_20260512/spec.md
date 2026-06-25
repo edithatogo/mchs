@@ -23,5 +23,5 @@ Add support planning and implementation coverage for IHACPA 2026-27 pricing mate
 
 ## Source Evidence
 - IHACPA National Efficient Price Determination 2026-27: https://www.ihacpa.gov.au/resources/national-efficient-price-determination-2026-27
-- IHACPA National Pricing Model Technical Specifications index: https://www.ihacpa.gov.au/what-we-do/pricing/national-pricing-model-technical-specifications
-- IHACPA NWAU calculators: https://www.ihacpa.gov.au/what-we-do/national-weighted-activity-unit-nwau-calculators
+- IHACPA National Pricing Model Technical Specifications index: https://www.ihacpa.gov.au/health-care/pricing/national-pricing-model-technical-specifications
+- IHACPA NWAU calculators: https://www.ihacpa.gov.au/health-care/pricing/nwau-calculators
