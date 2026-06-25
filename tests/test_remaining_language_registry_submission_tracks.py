@@ -143,11 +143,10 @@ def test_conda_forge_is_submitted_but_not_published():
         == "open_checks_passed_pending_staged_recipes_review"
     )
     latest_probe = registry["preparationEvidence"]["latestLivePrProbe"]
-    assert "2026-06-16" in latest_probe
+    assert "2026-06-25" in latest_probe
     assert "authenticated live monitor" in latest_probe
-    assert "mergeable=True" in latest_probe
-    assert "mergeable_state=clean" in latest_probe
-    assert "GraphQL mergeability currently reports UNKNOWN" in latest_probe
+    assert "mergeable=MERGEABLE" in latest_probe
+    assert "mergeStateStatus=BLOCKED" in latest_probe
     assert "bffc5bf1a85389dc695adfd96c87bf2413f4db25" in latest_probe
     assert "checks remain successful" in latest_probe
     assert "no actionable comments" in latest_probe

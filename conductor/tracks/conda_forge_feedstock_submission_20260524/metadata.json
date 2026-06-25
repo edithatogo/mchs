@@ -4,7 +4,7 @@
   "status": "submitted",
   "current_state": "submitted-external-review-pending",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-16T00:00:00+10:00",
+  "updated_at": "2026-06-25T00:00:00+10:00",
   "description": "conda-forge Feedstock Submission: discover, prepare, submit, and evidence conda-forge publication for nwau-py.",
   "registry_id": "conda_forge",
   "current_status": "submitted_checks_passed_pending_staged_recipes_review",
@@ -39,7 +39,7 @@
     "submission_pr": "https://github.com/conda-forge/staged-recipes/pull/33452",
     "feedback_addressed_commit": "e6ff7985c94b78471457e446e8fe3abfbe61fa41",
     "feedback_addressed": "conda-forge-linter passed after adding recipe maintainers, tests, build number, license_file, setuptools build backend, noarch Python minimum pins, pypi.org source URL, runtime dependencies, and entry points.",
-    "branch_update": "GitHub update-branch API accepted on 2026-05-26; authenticated live probe on 2026-06-16 observed current PR head bffc5bf1a85389dc695adfd96c87bf2413f4db25; linter, conda-forge-linter, staged-recipes, build fast finish, linux_64, osx_64, win_64, build status, and check skip completed successfully.",
-    "latest_live_pr_probe": "2026-06-16 authenticated live monitor shows PR 33452 still open, merged=False, draft=False, mergeable=True, mergeable_state=clean, and head bffc5bf1a85389dc695adfd96c87bf2413f4db25. GitHub CLI GraphQL mergeability currently reports UNKNOWN, but current linter/Azure staged-recipes checks remain successful, no maintainer review decision is present, and no actionable comments appear after the 2026-06-11 author follow-up. Anaconda API for conda-forge/nwau-py and the conda-forge/nwau-py-feedstock repository still return HTTP 404."
+    "branch_update": "GitHub update-branch API accepted on 2026-05-26; authenticated live probe on 2026-06-25 observed current PR head bffc5bf1a85389dc695adfd96c87bf2413f4db25; linter, conda-forge-linter, staged-recipes, build fast finish, linux_64, osx_64, win_64, build status, and check skip completed successfully.",
+    "latest_live_pr_probe": "2026-06-25 authenticated live monitor shows PR 33452 still open, mergedAt=null, draft=False, mergeable=MERGEABLE, mergeStateStatus=BLOCKED, and head bffc5bf1a85389dc695adfd96c87bf2413f4db25. Current linter/Azure staged-recipes checks remain successful, no maintainer review decision is present, and no actionable comments appear after the 2026-06-11 author follow-up. Anaconda API for conda-forge/nwau-py and the conda-forge/nwau-py-feedstock repository still return HTTP 404."
   }
 }

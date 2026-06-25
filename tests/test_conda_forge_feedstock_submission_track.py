@@ -90,12 +90,11 @@ def test_conda_forge_recipe_evidence_is_recorded_without_publication_claim():
         in metadata["package_evidence"]["branch_update"]
     )
     assert "conda-forge-linter" in metadata["package_evidence"]["branch_update"]
-    assert "mergeable=True" in metadata["package_evidence"]["latest_live_pr_probe"]
     assert (
-        "mergeable_state=clean" in metadata["package_evidence"]["latest_live_pr_probe"]
+        "mergeable=MERGEABLE" in metadata["package_evidence"]["latest_live_pr_probe"]
     )
     assert (
-        "GraphQL mergeability currently reports UNKNOWN"
+        "mergeStateStatus=BLOCKED"
         in metadata["package_evidence"]["latest_live_pr_probe"]
     )
     assert (
