@@ -70,10 +70,10 @@ def test_c_cpp_track_records_dependency_unblocked_but_not_publication():
         in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
     )
     assert (
-        "2026-06-16" in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
+        "2026-06-25" in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
     )
     assert (
-        "mergeable_state=blocked"
+        "mergeStateStatus=BLOCKED"
         in registry["preparationEvidence"]["latestConanCenterReviewUpdate"]
     )
     assert (

@@ -662,7 +662,7 @@
                 "conanCenterSubmissionState": "open_cla_resolved_pending_scheduler_review",
                 "conanCenterLatestFixCommit": "c635b0f9d2f1619d9149e4fa964185658c063f5d",
                 "latestClaRecheckAttempt": "2026-06-12 live GitHub check: PR 30262 now reports license/cla SUCCESS after maintainer recheck.",
-                "latestConanCenterReviewUpdate": "2026-06-16 authenticated live monitor shows PR 30262 remains open, merged=False, draft=False, mergeable=True, and mergeable_state=blocked; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
+                "latestConanCenterReviewUpdate": "2026-06-25 authenticated live monitor shows PR 30262 remains open, mergedAt=null, draft=False, mergeable=MERGEABLE, and mergeStateStatus=BLOCKED; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
             }
         }
     ],

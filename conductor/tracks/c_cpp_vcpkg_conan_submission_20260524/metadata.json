@@ -4,7 +4,7 @@
   "status": "blocked",
   "current_state": "blocked-external-review-and-policy-deferred",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-16T00:00:00+10:00",
+  "updated_at": "2026-06-25T00:00:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare local/private preview package metadata, submit through upstream review when validated, and evidence vcpkg / ConanCenter publication only after acceptance.",
   "registry_id": "c_cpp_vcpkg_conan",
   "current_status": "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred",
@@ -60,6 +60,6 @@
     "conan_center_submission_state": "open_cla_resolved_pending_scheduler_review",
     "conan_center_latest_fix_commit": "c635b0f9d2f1619d9149e4fa964185658c063f5d",
     "latest_cla_recheck_attempt": "2026-06-12 live GitHub check: PR 30262 now reports license/cla SUCCESS after maintainer recheck.",
-    "latest_conan_center_review_update": "2026-06-16 authenticated live monitor shows PR 30262 remains open, merged=False, draft=False, mergeable=True, and mergeable_state=blocked; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
+    "latest_conan_center_review_update": "2026-06-25 authenticated live monitor shows PR 30262 remains open, mergedAt=null, draft=False, mergeable=MERGEABLE, and mergeStateStatus=BLOCKED; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
   }
 }
