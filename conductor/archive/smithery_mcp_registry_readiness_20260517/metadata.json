@@ -23,6 +23,20 @@
     "contracts/mcp/registry/submission-decisions.md"
   ],
   "publication_status": "published-stdio-bundle",
+  "support_scope": {
+    "local_completion": "Smithery stdio MCPB bundle publication is complete and verified through registry API evidence.",
+    "external_gate": "closed for Smithery stdio-bundle publication; hosted Streamable HTTP publication remains optional future work and is not claimed.",
+    "runtime_support_claim": "The Smithery listing exposes the stdio MCP bundle for discovery, schema lookup, validation, delegation, explanation, and evidence tools."
+  },
+  "gap_register": [],
+  "publication_evidence": {
+    "registry_api_url": "https://registry.smithery.ai/servers/edithatogo/mchs",
+    "qualified_name": "edithatogo/mchs",
+    "connection_type": "stdio",
+    "runtime": "python",
+    "remote": false,
+    "verified_at": "2026-06-25"
+  },
   "deferred": false,
   "hosted_streamable_http_status": "optional-future",
   "deferred_gate": "hosted_http_publication_evidence",

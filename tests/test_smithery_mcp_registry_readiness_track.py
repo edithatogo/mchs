@@ -5,7 +5,15 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "smithery_mcp_registry_readiness_20260517"
+def _track(track_id: str) -> Path:
+    for base in (ROOT / "conductor" / "tracks", ROOT / "conductor" / "archive"):
+        candidate = base / track_id
+        if candidate.exists():
+            return candidate
+    raise AssertionError(f"missing Conductor track or archive: {track_id}")
+
+
+TRACK = _track("smithery_mcp_registry_readiness_20260517")
 STATUS = (
     ROOT / "contracts" / "mcp" / "registry" / "registry-submission-status-20260524.json"
 )

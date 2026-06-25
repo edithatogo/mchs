@@ -597,7 +597,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Smithery MCP Registry Readiness**
-*Link: [./tracks/smithery_mcp_registry_readiness_20260517/](./tracks/smithery_mcp_registry_readiness_20260517/)*
+*Link: [./archive/smithery_mcp_registry_readiness_20260517/](./archive/smithery_mcp_registry_readiness_20260517/)*
 *Gate: do not claim Smithery publication until a public Streamable HTTP endpoint, static server card or scan evidence, and Smithery submission/listing evidence exist.*
 
 ---
