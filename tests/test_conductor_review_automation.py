@@ -4,19 +4,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / "conductor" / "workflow.md"
+
+
+def _track_plan(track_id: str) -> Path:
+    for base in (ROOT / "conductor" / "tracks", ROOT / "conductor" / "archive"):
+        candidate = base / track_id / "plan.md"
+        if candidate.exists():
+            return candidate
+    raise AssertionError(f"missing Conductor plan: {track_id}")
+
+
 OPEN_TRACK_PLANS = [
     ROOT
     / "conductor"
     / "archive"
     / "docs_release_publication_readiness_20260510"
     / "plan.md",
-    (
-        ROOT
-        / "conductor"
-        / "tracks"
-        / "multi_surface_binding_delivery_20260510"
-        / "plan.md"
-    ),
+    _track_plan("multi_surface_binding_delivery_20260510"),
     ROOT / "conductor" / "archive" / "rust_acute_python_poc_20260510" / "plan.md",
     ROOT
     / "conductor"

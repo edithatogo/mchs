@@ -8,8 +8,11 @@ Define the staged delivery plan for surfacing the Rust core through language bin
 
 - Python package and CLI exist.
 - GitHub Pages static demo and Starlight docs exist.
-- C# and Power Platform boundaries are documented but not implemented.
-- R, Julia, Go, and TypeScript bindings do not exist.
+- C#/.NET, R, Julia, Go, TypeScript/WASM, and Power Platform boundaries now
+  have dedicated adapter or registry-readiness tracks with their own evidence
+  gates.
+- Deferred or private surfaces remain thin adapters over the shared core,
+  CLI/file, service, or C ABI boundaries rather than independent calculators.
 
 ## Requirements
 

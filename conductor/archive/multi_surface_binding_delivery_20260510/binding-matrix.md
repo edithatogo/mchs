@@ -6,6 +6,10 @@ This matrix defines the recommended language bindings and delivery surfaces for
 the Rust core. It is a roadmap artifact, not a promise that every surface is
 already implemented.
 
+Status vocabulary remains intentionally broad: `implemented`, `planned`,
+`deferred`, `private`, `preview`, and `advisory` can all appear as surfaces move
+through evidence gates.
+
 ## Sequencing Rule
 
 - Rust/Python parity is the prerequisite for any non-Python adapter that would
@@ -23,12 +27,12 @@ already implemented.
 | Surface | Status | Recommended toolchain | Boundary shape | Primary risk | Sequencing |
 | --- | --- | --- | --- | --- | --- |
 | Python | implemented | PyO3 / maturin for the Rust bridge, with the current Python package as the first adapter | Arrow-compatible table exchange and native package import | Adapter drift from the Rust core if parity tests weaken | Keep as the validated production path until Rust parity is fixture-backed |
-| Rust | implemented | Native Rust core crate and workspace consumers | Direct crate calls over Arrow-compatible structs/tables | None beyond ordinary crate API stability | Core source of truth for all later adapters |
-| TypeScript | planned | wasm-bindgen or wasm-pack over a Rust/WASM build | WebAssembly for synthetic browser demos only | Browser bundle size, serialization friction, and accidental real-data assumptions | Start after Rust/Python parity is stable and only for demo/fixture usage |
-| R | planned | extendr, with FFI reviewed against the data contract | Native extension or ABI wrapper around Rust core | Packaging complexity and host-runtime compatibility | Start after Rust/Python parity and after the matrix has stable contract tests |
-| Julia | planned | jlrs or a Julia `ccall` wrapper depending on the packaging target | ABI wrapper or native package bridge | Tooling maturity and call-convention maintenance | Start after Rust/Python parity and after adapter contract tests exist |
-| C# | planned | Stable ABI wrapper or service boundary, not formula duplication | Native wrapper or secured service call | Long-term maintenance of interop shims | Start after core parity; prefer service boundary if ABI overhead is high |
-| Go | deferred | C ABI or service boundary | Thin wrapper around the Rust core or service contract | Cross-language memory management and build portability | Defer until core contracts and a lower-risk adapter path are stable |
+| Rust | implemented | Native Rust core crate and workspace consumers | Direct crate calls over Arrow-compatible structs/tables | Ordinary crate API stability and release discipline | Core source of truth for all later adapters |
+| TypeScript | preview | wasm-bindgen or wasm-pack over a Rust/WASM build | WebAssembly package plus adapter for synthetic browser demos and Node smoke tests | Browser bundle size, serialization friction, and accidental real-data assumptions | Keep demo/fixture usage explicit and preserve shared contract tests |
+| R | private | extendr or CLI/file wrapper, with FFI reviewed against the data contract before native promotion | Thin package wrapper over CLI/file or ABI contract | Packaging complexity and host-runtime compatibility | CRAN release remains maintainer-review gated; do not duplicate formula logic |
+| Julia | private | jlrs or a Julia `ccall` wrapper depending on the packaging target | ABI wrapper, native package bridge, or CLI/file adapter | Tooling maturity and call-convention maintenance | General registry submission/review is tracked separately; keep adapter contract tests passing |
+| C# | preview | Stable ABI wrapper or service boundary, not formula duplication | Managed package over local file/service boundary | Long-term maintenance of interop shims | NuGet publication exists; continue proving boundary-only behavior and compatibility |
+| Go | private | C ABI or service boundary, plus file/service adapter where lower risk | Thin wrapper around the Rust core, CLI/file, or service contract | Cross-language memory management and build portability | Module publication exists; keep cross-compilation and contract fixtures stable |
 
 ## Delivery Surface Matrix
 

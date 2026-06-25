@@ -75,7 +75,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: implement the first Rust-backed acute 2025 canary behind explicit Python opt-in and prove fixture parity before any default runtime change.*
 
 14. [x] **Track: Multi-Surface Binding and Delivery Roadmap**
-   *Link: [./tracks/multi_surface_binding_delivery_20260510/](./tracks/multi_surface_binding_delivery_20260510/)*
+   *Link: [./archive/multi_surface_binding_delivery_20260510/](./archive/multi_surface_binding_delivery_20260510/)*
    *Depends on: Rust core architecture, Rust/Python proof-of-concept results, public contracts, web architecture, and Power Platform boundary rules.*
    *Gate: define binding and delivery sequencing for Python, R, Julia, C#, Rust, Go, TypeScript/WASM, Streamlit, GitHub Pages, and Power Platform before implementing additional adapters.*
 

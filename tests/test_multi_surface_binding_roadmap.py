@@ -3,7 +3,17 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "multi_surface_binding_delivery_20260510"
+
+
+def _track(track_id: str) -> Path:
+    for base in (ROOT / "conductor" / "tracks", ROOT / "conductor" / "archive"):
+        candidate = base / track_id
+        if candidate.exists():
+            return candidate
+    raise AssertionError(f"missing Conductor track or archive: {track_id}")
+
+
+TRACK = _track("multi_surface_binding_delivery_20260510")
 
 
 def _read(path: Path) -> str:

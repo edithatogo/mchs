@@ -1,0 +1,30 @@
+{
+  "track_id": "multi_surface_binding_delivery_20260510",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete",
+  "primary_contract": "conductor/tracks/multi_surface_binding_delivery_20260510/binding-matrix.md",
+  "dependencies": [
+    "rust_core_architecture_20260510",
+    "rust_acute_python_poc_20260510",
+    "public_api_contract_20260504"
+  ],
+  "completion_evidence": [
+    "conductor/tracks/multi_surface_binding_delivery_20260510/binding-matrix.md",
+    "conductor/tracks/multi_surface_binding_delivery_20260510/spec.md",
+    "conductor/tracks/multi_surface_binding_delivery_20260510/plan.md",
+    "tests/test_multi_surface_binding_roadmap.py"
+  ],
+  "support_scope": {
+    "local_completion": "The binding roadmap is complete as a sequencing and boundary matrix for delivery surfaces.",
+    "external_gate": "not applicable",
+    "runtime_support_claim": "No language adapter parity or publication claim is made by this roadmap; implementation and publication are owned by focused binding or registry tracks."
+  },
+  "gap_register": [],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-10T09:20:45Z",
+  "updated_at": "2026-05-10T14:37:24Z",
+  "description": "Multi-language bindings and delivery surfaces for the Rust core",
+  "no_stub_enforce": true
+}
