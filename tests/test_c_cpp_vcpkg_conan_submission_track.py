@@ -38,6 +38,7 @@ def test_c_cpp_track_records_dependency_unblocked_but_not_publication():
     metadata = json.loads(_read(TRACK / "metadata.json"))
     registry = _registry()
 
+    assert (TRACK / "review.md").exists()
     assert metadata["status"] == "blocked"
     assert (
         metadata["current_status"]
