@@ -1,0 +1,1 @@
+Conductor governance cleanup note: added archive policy and closure handoff, tightened roadmap/release/public API/subagent/template guidance around scoped evidence and explicit gaps. Validation passed: archive/topology pytest 12 passed; stub_detector total_findings=0; cached diff check clean.
