@@ -1,0 +1,32 @@
+{
+  "track_id": "python_tooling_ci_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/tracks/python_tooling_ci_20260504/spec.md",
+  "dependencies": [
+    "source_archive_provenance_20260504",
+    "cross_language_golden_tests_20260504"
+  ],
+  "completion_evidence": [
+    "pyproject.toml",
+    "uv.lock",
+    ".github/workflows/pr-ci.yml",
+    ".github/workflows/slow-validation.yml",
+    ".pre-commit-config.yaml",
+    "tests/test_tooling_configuration.py",
+    "tests/test_maintenance_configuration.py"
+  ],
+  "support_scope": {
+    "local_completion": "Python tooling and CI modernization is complete for the configured uv, Ruff, type-checking, pytest, coverage, Codecov, slow-validation, Renovate, and Vale surfaces.",
+    "external_gate": "not applicable",
+    "runtime_support_claim": "This governance track configures tooling only and does not claim calculator runtime support."
+  },
+  "gap_register": [],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T06:05:36Z",
+  "description": "Python Tooling and CI Modernization",
+  "no_stub_enforce": true
+}

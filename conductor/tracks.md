@@ -20,7 +20,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: define validation evidence and fixture contracts before broad tooling or architecture migrations.*
 
 3. [x] **Track: Python Tooling and CI Modernization**
-   *Link: [./tracks/python_tooling_ci_20260504/](./tracks/python_tooling_ci_20260504/)*
+   *Link: [./archive/python_tooling_ci_20260504/](./archive/python_tooling_ci_20260504/)*
    *Depends on: source archive provenance and validation fixture shape.*
    *Gate: lock the supported Python/tooling matrix, CI, coverage, type checking, linting, and profiling entry points before larger refactors.*
 
