@@ -137,7 +137,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Costing-Study Tutorials and Examples**
-*Link: [./tracks/costing_study_tutorials_20260512/](./tracks/costing_study_tutorials_20260512/)*
+*Link: [./archive/costing_study_tutorials_20260512/](./archive/costing_study_tutorials_20260512/)*
 *Gate: provide synthetic, reproducible costing-study workflows connecting NWAU, NEP, AHPCS, NHCDC, and benchmarking use cases.*
 
 ---

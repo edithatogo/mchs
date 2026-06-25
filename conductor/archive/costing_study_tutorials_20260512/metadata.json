@@ -1,0 +1,47 @@
+{
+  "track_id": "costing_study_tutorials_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "costing",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Synthetic costing-study tutorial suite using public-safe fixtures and documentation examples",
+  "support_scope": "Public-safe documentation and synthetic fixture coverage for costing-study workflows that connect NWAU outputs to NEP, observed costs, AHPCS/NHCDC concepts, and stream-level benchmarking. The track covers tutorial text, caveats, fixture provenance, and docs-site navigation; it does not certify official IHACPA outputs, local funding decisions, or patient-level costing data.",
+  "gap_register": [
+    {
+      "gap": "Tutorial examples are documentation-level and synthetic; they are not official IHACPA costing-study submissions or policy decision tools.",
+      "rationale": "The acceptance criteria require reproducible tutorials and synthetic data, not official costing approval or confidential patient-level data."
+    },
+    {
+      "gap": "Executable notebook/runtime coverage is limited to checked docs and fixture contracts rather than end-to-end notebook execution.",
+      "rationale": "The repository currently validates the tutorial surface and fixture provenance; full notebook execution should remain a follow-on docs runtime gate."
+    }
+  ],
+  "dependencies": [
+    "ahpcs_costing_process_model_20260512",
+    "cost_bucket_registry_20260512",
+    "cost_bucket_analytics_tutorials_20260512",
+    "nhcdc_cost_report_ingestion_20260512"
+  ],
+  "completion_evidence": [
+    "conductor/tracks/costing_study_tutorials_20260512/index.md",
+    "conductor/tracks/costing_study_tutorials_20260512/spec.md",
+    "docs-site/src/content/docs/2026/tutorials/costing-study-nwau-nep.mdx",
+    "docs-site/src/content/docs/2026/tutorials/costing-study-cost-vs-price.mdx",
+    "docs-site/src/content/docs/2026/tutorials/costing-study-stream-benchmarking.mdx",
+    "docs-site/src/content/docs/2026/tutorials/julia-dataframes-arrow-costing-study.mdx",
+    "docs-site/src/content/docs/2026/tutorials/r-markdown-quarto-costing-study.mdx",
+    "nwau_py/docs/tutorial_nwau_nep.md",
+    "nwau_py/docs/tutorial_cost_vs_efficient_price.md",
+    "nwau_py/docs/tutorial_stream_benchmarking.md",
+    "tests/data/costing_study/README.md",
+    "tests/data/costing_study/nwau_calculation_inputs.csv",
+    "tests/data/costing_study/observed_costs.csv",
+    "tests/data/costing_study/nhcdc_benchmarks.csv",
+    "tests/test_costing_study_tutorials_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add costing-study tutorials and synthetic examples that connect NWAU outputs to NEP, NHCDC, AHPCS, and cost benchmarking workflows.",
+  "no_stub_enforce": true
+}
