@@ -507,7 +507,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Rust Core GA Post-Cline Review**
-*Link: [./tracks/rust_core_ga_post_cline_review_20260513/](./tracks/rust_core_ga_post_cline_review_20260513/)*
+*Link: [./archive/rust_core_ga_post_cline_review_20260513/](./archive/rust_core_ga_post_cline_review_20260513/)*
 *Gate: Review Cline's Rust Core GA implementation after the active session finishes, verify evidence, and downgrade overclaims before merge.*
 
 ---
