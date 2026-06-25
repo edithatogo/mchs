@@ -1,0 +1,14 @@
+Worktree branch PR hygiene review checkpoint
+
+Commit notes:
+- Reviewed archived worktree_branch_pr_hygiene_20260624 after the autonomous execution workflow update.
+- Confirmed clean worktree, branch push, --force-with-lease, and external-gate separation policies are present and tested.
+- No file changes were needed; ongoing dirty-branch cleanup remains operational work governed by this policy.
+
+Review:
+- conductor-review result: no findings; track remains archived and complete.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
+- python scripts/validate_repository_topology.py --json
+- python conductor/scripts/stub_detector.py --root . --json
