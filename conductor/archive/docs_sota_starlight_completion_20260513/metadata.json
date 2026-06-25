@@ -1,0 +1,39 @@
+{
+  "track_id": "docs_sota_starlight_completion_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "publication",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "docs-site Starlight documentation contract",
+  "support_scope": "Starlight/Astro documentation site completion for homepage, versioned docs, calculator coverage, governance navigation, public contract page and schema, source archive status, tutorials, and conservative support-status language. The track validates docs content and navigation; it does not claim external publication or unsupported runtime parity.",
+  "gap_register": [
+    {
+      "gap": "External publication and registry claims remain outside this Starlight completion track.",
+      "rationale": "The track validates docs-site content and governance alignment, not release artifact publication."
+    },
+    {
+      "gap": "Docs pages describe current support and documented gaps; they do not create new calculator parity evidence.",
+      "rationale": "Runtime support claims remain governed by source archive, support matrix, and calculator validation tracks."
+    }
+  ],
+  "dependencies": [
+    "starlight_docs_site_20260506",
+    "support_status_reconciliation_20260513"
+  ],
+  "completion_evidence": [
+    "docs-site/src/content/docs/index.mdx",
+    "docs-site/src/content/docs/versions/index.mdx",
+    "docs-site/src/content/docs/governance/calculator-coverage.mdx",
+    "docs-site/src/content/docs/governance/public-calculator-contract.mdx",
+    "docs-site/public/contracts/public-calculator-contract.v1.schema.json",
+    "docs-site/src/content/docs/governance/starlight-extensions.mdx",
+    "docs-site/src/content/docs/governance/source-archive.md",
+    "docs-site/src/content/docs/governance/index.mdx",
+    "tests/test_docs_site_sota_refresh.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Make documentation comprehensive, versioned, support-status aware, tutorial-rich, and aligned with Starlight/Astro.",
+  "no_stub_enforce": true
+}

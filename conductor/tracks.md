@@ -567,7 +567,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Starlight Documentation SOTA Completion**
-*Link: [./tracks/docs_sota_starlight_completion_20260513/](./tracks/docs_sota_starlight_completion_20260513/)*
+*Link: [./archive/docs_sota_starlight_completion_20260513/](./archive/docs_sota_starlight_completion_20260513/)*
 *Gate: Make the Starlight/Astro documentation comprehensive, versioned, tutorial-rich, support-status aware, and contract-linked.*
 
 ---

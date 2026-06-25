@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+TRACK = ROOT / "conductor" / "archive" / "docs_sota_starlight_completion_20260513"
+TRACKS = ROOT / "conductor" / "tracks.md"
 DOCS_SITE = ROOT / "docs-site" / "src" / "content" / "docs"
 HOME = DOCS_SITE / "index.mdx"
 COVERS = DOCS_SITE / "versions" / "index.mdx"
@@ -25,6 +27,12 @@ def _read(path: Path) -> str:
 
 
 def test_docs_site_homepage_positions_the_current_public_contract():
+    assert (TRACK / "metadata.json").exists()
+    assert (TRACK / "review.md").exists()
+    tracks = _read(TRACKS)
+    assert "./archive/docs_sota_starlight_completion_20260513/" in tracks
+    assert "./tracks/docs_sota_starlight_completion_20260513/" not in tracks
+
     home = _read(HOME)
 
     for phrase in [
