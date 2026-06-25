@@ -1,0 +1,40 @@
+{
+  "track_id": "cross_language_golden_tests_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete",
+  "primary_contract": "Manifest-backed cross-language golden fixture contract for runner-neutral parity checks",
+  "support_scope": "Synthetic acute 2025 pilot fixture pack plus Python manifest loaders, validation helpers, and runner-neutral test coverage. The track proves the shared fixture contract and Python consumption surface; additional language runners must consume the same manifest before claiming their own parity support.",
+  "gap_register": [
+    {
+      "gap": "Only the acute 2025 pilot fixture pack is committed.",
+      "rationale": "The acceptance criteria require the initial pack and stable contract; expansion to every calculator stream is governed by later surface-specific tracks."
+    },
+    {
+      "gap": "C#, web, and other downstream runners are compatibility-checked through runner-neutral metadata, not full native execution in this track.",
+      "rationale": "This track establishes the shared fixture format; downstream binding tracks own native execution evidence."
+    }
+  ],
+  "dependencies": [
+    "calculator_core_abstractions_20260504",
+    "contract_schema_export_20260512",
+    "python_rust_binding_stabilization_20260512"
+  ],
+  "completion_evidence": [
+    "tests/fixtures/golden/acute_2025/manifest.json",
+    "tests/fixtures/golden/acute_2025/input.csv",
+    "tests/fixtures/golden/acute_2025/expected.csv",
+    "nwau_py/fixtures.py",
+    "tests/test_fixture_manifest.py",
+    "tests/test_fixture_consumption.py",
+    "tests/test_fixture_cross_engine.py",
+    "tests/test_fixture_runner.py",
+    "tests/test_cross_language_golden_tests_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T01:15:00Z",
+  "description": "Manifest-backed cross-language fixture packs",
+  "no_stub_enforce": true
+}

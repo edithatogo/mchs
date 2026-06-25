@@ -15,7 +15,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: establish source acquisition, storage policy, and manifest provenance before downstream validation or implementation work.*
 
 2. [x] **Track: Cross-Language Golden Test Suite**
-   *Link: [./tracks/cross_language_golden_tests_20260504/](./tracks/cross_language_golden_tests_20260504/)*
+   *Link: [./archive/cross_language_golden_tests_20260504/](./archive/cross_language_golden_tests_20260504/)*
    *Depends on: source archive manifesting and known-good reference artifacts.*
    *Gate: define validation evidence and fixture contracts before broad tooling or architecture migrations.*
 
