@@ -1,0 +1,33 @@
+Archive reviewed completed tracks
+
+Commit notes:
+- Archived 17 reviewed completed tracks from conductor/tracks to conductor/archive.
+- Updated conductor/tracks.md links to point at archive paths.
+- Left live only tracks that remain blocked, submitted external-review gated, or in progress.
+
+Archived tracks:
+- expert_panel_remediation_20260512
+- github_repo_sota_setup_20260513
+- hwau_terminology_migration_20260513
+- jurisdiction_funding_model_registry_20260513
+- jurisdiction_price_source_index_20260513
+- multilevel_agent_execution_20260513
+- nhcdc_cost_report_ingestion_20260512
+- no_stub_completion_enforcement_20260513
+- nsw_funding_model_20260513
+- parallel_valuation_outputs_20260513
+- power_platform_binding_20260512
+- python_rust_binding_stabilization_20260512
+- recursive_sota_contract_audit_20260513
+- release_evidence_bundle_20260513
+- roadmap_portfolio_governance_backfill_20260512
+- state_local_price_registry_20260513
+- strict_quality_gates_20260513
+
+Review:
+- conductor-review archive check: all moved tracks have metadata status completed and review.md evidence; active track directory now contains no completed reviewed tracks.
+
+Validation:
+- uv run pytest tests/test_track_archive_integrity_track.py tests/test_repository_topology_governance.py -q
+- python scripts/validate_repository_topology.py --json
+- python conductor/scripts/stub_detector.py --root . --json
