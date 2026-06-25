@@ -1,0 +1,1 @@
+Archive metadata cleanup note: normalized support_scope and gap_register across 34 archived tracks. Validation passed: archive metadata scan reported missing_current_state=0, missing_scope_or_gap=0, empty_gap_register=0; stub_detector reported total_findings=0; focused pytest suite reported 65 passed.
