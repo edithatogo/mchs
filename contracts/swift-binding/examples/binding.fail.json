@@ -1,0 +1,84 @@
+{
+  "binding_bundle_id": "swift_binding_contract_20260513",
+  "entry_id": "swift-binding-bundle-fail",
+  "entry_type": "swift_binding_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "service",
+    "service_url": "https://calculator.local/v1/execute",
+    "correlation_id": "swift-binding-bundle-fail",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "service"
+    },
+    "fixture_gate": "public_contract_pin"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "mode": "service",
+    "success": false,
+    "status": "blocked",
+    "message": "Swift transport adapter readiness is local-only; package publication remains deferred.",
+    "warnings": [
+      "The binding contract and local adapter are available, but no Swift Package Index or app-platform release is claimed."
+    ],
+    "errors": [
+      {
+        "code": "SWIFT_BINDING_MODULE_NOT_READY",
+        "severity": "warning",
+        "retryable": false,
+        "condition": "package publication or owner-backed promotion remains deferred",
+        "message": "The Swift transport adapter is ready locally, but public package promotion is blocked."
+      }
+    ],
+    "diagnostics": {
+      "status": "fail",
+      "checks": [
+        {
+          "id": "contract_alignment",
+          "status": "pass",
+          "message": "The request still mirrors the public calculator contract."
+        },
+        {
+          "id": "module_readiness",
+          "status": "fail",
+          "message": "The Swift adapter is available locally; public package release remains deferred."
+        },
+        {
+          "id": "fixture_gate",
+          "status": "blocked",
+          "message": "The selected fixture gate does not allow release promotion."
+        }
+      ],
+      "summary": {
+        "passed": 1,
+        "failed": 1,
+        "blocked": 1
+      },
+      "notes": "Synthetic failure example only."
+    },
+    "provenance": {
+      "command": "swift-binding validate-bundle-fail",
+      "binding_bundle_id": "swift_binding_contract_20260513",
+      "source_manifest_path": "contracts/swift-binding/examples/binding.fail.json",
+      "source_url": "https://example.invalid/contracts/swift-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-swift-binding-bundle-fail",
+      "bytes": 2192,
+      "checksum_algorithm": "sha256"
+    },
+    "fixture_gate_state": "blocked",
+    "module_readiness_state": "ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic binding failure example only."
+  }
+}

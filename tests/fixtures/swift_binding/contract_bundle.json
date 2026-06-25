@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "binding_id": "swift_binding_20260513",
+  "surface": "swift",
+  "initial_strategy": "file-arrow exchange and CLI invocation",
+  "fallback_strategy": "service boundary",
+  "future_strategy": "c-abi integration",
+  "formula_logic_location": "rust core",
+  "swift_module_status": "transport-adapter-ready",
+  "diagnostics": {
+    "format": "json",
+    "includes": [
+      "contract_id",
+      "fixture_id",
+      "validation_status",
+      "strategy",
+      "fallback"
+    ]
+  },
+  "provenance": {
+    "checksum_algorithm": "sha256",
+    "preserve_fields": [
+      "source_basis",
+      "fixture_id",
+      "notes"
+    ]
+  },
+  "swift_module": {
+    "status": "transport-adapter-ready",
+    "release_gate": "audience and owner evidence recorded",
+    "platform_gate": "apple-platform ci matrix"
+  }
+}

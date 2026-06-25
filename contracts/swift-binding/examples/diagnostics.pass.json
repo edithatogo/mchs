@@ -1,0 +1,56 @@
+{
+  "binding_bundle_id": "swift_binding_contract_20260513",
+  "entry_id": "swift-binding-diagnostics-pass",
+  "entry_type": "diagnostic_record",
+  "diagnostics": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "contract_alignment",
+        "status": "pass",
+        "message": "Swift request and response fields align with the public calculator contract."
+      },
+      {
+        "id": "file_exchange_cli_primary",
+        "status": "pass",
+        "message": "File-exchange and CLI invocation are the primary paths."
+      },
+      {
+        "id": "service_fallback",
+        "status": "pass",
+        "message": "Service fallback is declared."
+      },
+      {
+        "id": "c_abi_future",
+        "status": "pass",
+        "message": "C ABI integration is documented as a future path."
+      },
+      {
+        "id": "fixture_gates_synthetic_only",
+        "status": "pass",
+        "message": "Committed fixtures stay synthetic and metadata only."
+      }
+    ],
+    "summary": {
+      "passed": 5,
+      "failed": 0,
+      "blocked": 0
+    },
+    "notes": "Synthetic diagnostics metadata only."
+  },
+  "provenance": {
+    "command": "swift-binding validate-diagnostics-pass",
+    "binding_bundle_id": "swift_binding_contract_20260513",
+    "source_manifest_path": "contracts/swift-binding/examples/diagnostics.pass.json",
+    "source_url": "https://example.invalid/contracts/swift-binding",
+    "retrieved_on": "2026-05-13",
+    "sha256": "synthetic-sha256-swift-binding-diagnostics-pass",
+    "bytes": 1816,
+    "checksum_algorithm": "sha256"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic diagnostics pass example only."
+  }
+}
