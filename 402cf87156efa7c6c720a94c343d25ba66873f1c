@@ -1,0 +1,1 @@
+MATLAB/Stata interop cleanup note: added MATLAB and Stata interop contracts, schemas, examples, fixtures, and focused archive/policy tests. Validation passed: MATLAB/Stata/SAS focused pytest 9 passed, JSON assets parsed, stub_detector total_findings=0.
