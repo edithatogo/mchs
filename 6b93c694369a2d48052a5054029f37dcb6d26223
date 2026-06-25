@@ -1,0 +1,16 @@
+conda-forge staged-recipes evidence refresh
+
+Commit notes:
+- Refreshed PR 33452 evidence from the 2026-06-25 authenticated gh probe.
+- Preserved submitted external-review state: checks pass, no maintainer review decision is present, Anaconda/feedstock probes return 404, and publication is not claimed.
+- Updated track metadata/spec, shared registry contract, runbook, roadmap table, and assertions.
+
+Review:
+- conductor-review boundary check: track remains submitted and not archive eligible until maintainer review/merge and public feedstock/package evidence exist.
+
+Validation:
+- python -m json.tool conductor/tracks/conda_forge_feedstock_submission_20260524/metadata.json
+- python -m json.tool contracts/language-registry-submissions/language-registry-submissions.contract.json
+- uv run pytest tests/test_conda_forge_feedstock_submission_track.py -q
+- uv run pytest tests/test_remaining_language_registry_submission_tracks.py -q
+- python conductor/scripts/stub_detector.py --root . --json
