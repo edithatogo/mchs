@@ -5,6 +5,7 @@
   "track_class": "publication",
   "priority": "near-term",
   "current_state": "complete-with-gaps",
+  "status_scope": "Local Docker MCP Registry submission readiness is complete; Docker maintainer review, PR merge, and Docker Catalog propagation remain external and unclaimed.",
   "primary_contract": "contracts/mcp/registry/docker-mcp-registry-readiness-contract.md",
   "dependencies": [
     "mcp_server_registry_submission_20260516",
@@ -23,6 +24,18 @@
     "tests/test_docker_mcp_registry_readiness_track.py"
   ],
   "publication_status": "submitted-review-pending",
+  "support_scope": {
+    "local_completion": "Docker MCP Registry submission readiness is complete for the local scope: container path, candidate registry metadata, submission notes, validation evidence, and upstream PR evidence are recorded.",
+    "external_gate": "open; Docker maintainer review, PR merge, and Docker Catalog/Docker Hub MCP propagation remain external.",
+    "runtime_support_claim": "No Docker Catalog publication claim is made until Docker review, merge, and catalog propagation are verified."
+  },
+  "gap_register": [
+    {
+      "id": "docker-review-merge-pending",
+      "status": "external",
+      "summary": "Docker MCP Registry PR review, merge, and catalog propagation remain outside local control."
+    }
+  ],
   "deferred": false,
   "catalog_publication_claimed": false,
   "deferred_gate": "docker_maintainer_review_merge_and_catalog_propagation",

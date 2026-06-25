@@ -5,6 +5,8 @@
   "track_class": "contract",
   "priority": "immediate-after-cline",
   "current_state": "complete",
+  "support_scope": "canonical support-status schema reconciliation with governance vocabulary",
+  "gap_register": [],
   "primary_contract": "contracts/support/support-status.schema.json",
   "dependencies": [
     "support_status_matrix_20260513",
@@ -13,6 +15,7 @@
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
   "description": "Reconcile generated canonical support-status schemas with the governance support matrix vocabulary.",
+  "publication_status": "not-applicable",
   "no_stub_enforce": true,
   "completion_evidence": [
     "conductor/validation-vocabulary.md",

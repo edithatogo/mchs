@@ -2,6 +2,7 @@
   "track_id": "stata_ssc_submission_20260524",
   "type": "chore",
   "status": "completed",
+  "current_state": "complete-with-gaps",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-14T00:00:00+10:00",
   "description": "Stata SSC Submission: discover, prepare, submit, and evidence SSC / Stata package distribution publication for mchs-stata-interop.",
@@ -16,7 +17,18 @@
     "external_gate": "closed for SSC/RePEc publication; the corrected-archive reply draft is obsolete and must not be sent without explicit user approval.",
     "runtime_support_claim": "No local Stata runtime execution is claimed because Stata is not installed in the local validation environment."
   },
-  "gap_register": [],
+  "gap_register": [
+    {
+      "id": "stata-runtime-validation-not-claimed",
+      "status": "out-of-scope",
+      "summary": "SSC/RePEc publication is verified, but local Stata runtime execution was not available and is not claimed by this archive."
+    },
+    {
+      "id": "future-ssc-updates-require-explicit-approval",
+      "status": "future-release",
+      "summary": "Future SSC follow-up email, archive replacement, or release update requires explicit user approval and fresh public installability evidence."
+    }
+  ],
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip",
     "bundle_sha256": "7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a",

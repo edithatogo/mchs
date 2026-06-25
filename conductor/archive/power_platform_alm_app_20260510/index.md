@@ -6,4 +6,5 @@
 - [Service Boundary Contract](../../../power-platform/connectors/service-boundary-contract.md)
 - [ALM Workflow](../../../power-platform/solution/alm-workflow.md)
 - [Pipeline Notes](../../../power-platform/pipelines/README.md)
+- [Final Review](./review.md)
 - [Metadata](./metadata.json)

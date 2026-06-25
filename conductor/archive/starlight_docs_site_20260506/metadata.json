@@ -4,6 +4,8 @@
   "status": "completed",
   "track_class": "publication",
   "current_state": "complete",
+  "support_scope": "Starlight documentation-site scaffold, versioned content structure, and local build/test readiness",
+  "gap_register": [],
   "primary_contract": "Track starlight_docs_site_20260506 contract",
   "dependencies": [],
   "completion_evidence": [
@@ -12,6 +14,8 @@
     "tests"
   ],
   "publication_status": "future-only",
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/starlight_docs_site_20260506",
   "created_at": "2026-05-06T08:18:23Z",
   "updated_at": "2026-05-06T12:48:04Z",
   "description": "Starlight documentation site and versioning"

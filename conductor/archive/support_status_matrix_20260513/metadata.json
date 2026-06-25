@@ -5,6 +5,8 @@
   "track_class": "contract",
   "priority": "immediate",
   "current_state": "complete",
+  "support_scope": "machine-readable support-status vocabulary and schema governance",
+  "gap_register": [],
   "primary_contract": "docs/roadmaps/schemas/support-status-matrix.md",
   "dependencies": [
     "canonical_contract_foundation_20260513",
@@ -13,6 +15,7 @@
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
   "description": "Define machine-readable support statuses for streams, years, jurisdictions, surfaces, runtimes, and languages.",
+  "publication_status": "not-applicable",
   "no_stub_enforce": true,
   "completion_evidence": [
     "contracts/canonical/support-status.schema.json",

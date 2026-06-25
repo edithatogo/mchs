@@ -4,6 +4,8 @@
   "status": "completed",
   "track_class": "publication",
   "current_state": "complete",
+  "support_scope": "public appropriate-use, validation-status, caveat, licensing, and non-endorsement documentation",
+  "gap_register": [],
   "primary_contract": "public appropriate-use and validation-status documentation",
   "dependencies": [
     "validation-vocabulary.md",

@@ -2,6 +2,7 @@
   "track_id": "matlab_file_exchange_submission_20260524",
   "type": "chore",
   "status": "completed",
+  "current_state": "complete-with-gaps",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-13T00:00:00+10:00",
   "description": "MATLAB File Exchange Submission: discover, prepare, submit, and evidence MATLAB File Exchange publication for mchs-matlab-interop.",
@@ -16,7 +17,18 @@
     "external_gate": "closed for File Exchange publication of version 0.1.0; a corrected replacement ZIP draft remains optional follow-up and is not required for the archived publication claim.",
     "runtime_support_claim": "No MATLAB or Octave runtime execution is claimed because neither runtime is installed in the local validation environment."
   },
-  "gap_register": [],
+  "gap_register": [
+    {
+      "id": "matlab-runtime-validation-not-claimed",
+      "status": "out-of-scope",
+      "summary": "File Exchange publication is verified, but local MATLAB/Octave runtime execution was not available and is not claimed by this archive."
+    },
+    {
+      "id": "future-file-exchange-replacements",
+      "status": "future-release",
+      "summary": "Future replacement ZIPs or later File Exchange versions require fresh upload, public page, checksum, and runtime-scope evidence."
+    }
+  ],
   "package_evidence": {
     "bundle": "microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip",
     "bundle_sha256": "d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336",

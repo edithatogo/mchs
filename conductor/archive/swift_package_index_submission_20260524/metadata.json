@@ -2,6 +2,7 @@
   "track_id": "swift_package_index_submission_20260524",
   "type": "chore",
   "status": "completed",
+  "current_state": "complete",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-12T23:00:00+11:00",
   "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",

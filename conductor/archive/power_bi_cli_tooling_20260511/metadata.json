@@ -4,6 +4,8 @@
   "status": "completed",
   "track_class": "governance",
   "current_state": "complete",
+  "support_scope": "local Power BI and Power Platform CLI tooling governance only; no tenant runtime publication is claimed",
+  "gap_register": [],
   "primary_contract": "Track power_bi_cli_tooling_20260511 contract",
   "dependencies": [],
   "completion_evidence": [
@@ -12,6 +14,8 @@
     "tests"
   ],
   "publication_status": "not-applicable",
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/power_bi_cli_tooling_20260511",
   "created_at": "2026-05-11T00:00:00Z",
   "updated_at": "2026-05-11T00:00:00Z",
   "description": "Power BI and Power Platform CLI setup plus ALM-ready orchestration surface workflow"

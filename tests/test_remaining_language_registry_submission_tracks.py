@@ -11,6 +11,7 @@ from urllib.error import HTTPError
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "conductor" / "tracks.md"
 TRACK_ROOT = ROOT / "conductor" / "tracks"
+ARCHIVE_ROOT = ROOT / "conductor" / "archive"
 CONTRACT = (
     ROOT
     / "contracts"
@@ -41,7 +42,10 @@ def _registry(registry_id: str) -> dict:
 
 
 def _metadata(track_id: str) -> dict:
-    return json.loads(_read(TRACK_ROOT / track_id / "metadata.json"))
+    live_path = TRACK_ROOT / track_id / "metadata.json"
+    archive_path = ARCHIVE_ROOT / track_id / "metadata.json"
+    path = live_path if live_path.exists() else archive_path
+    return json.loads(_read(path))
 
 
 def _report_module():

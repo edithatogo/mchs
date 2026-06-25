@@ -4,5 +4,6 @@
 - [Implementation Plan](./plan.md)
 - [Delivery Workflow](./delivery-workflow.md)
 - [Verification and Handoff Notes](./verification-handoff.md)
+- [Final Review](./review.md)
 - [Bootstrap Script](../../scripts/bootstrap-power-platform-powerbi-cli.sh)
 - [Metadata](./metadata.json)
