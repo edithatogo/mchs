@@ -2,14 +2,14 @@
 
 ## Phase 1: Inventory
 
-- [ ] Task: Capture outer wrapper state.
-    - [ ] Record tracked gitlinks, tracked generated logs, untracked source slices, and ignored local files.
-    - [ ] Compare outer wrapper paths with canonical repo paths.
-    - [ ] Identify unique Power Platform, script, test, and evidence files.
-- [ ] Task: Create migration manifest.
-    - [ ] Assign each path a disposition: migrate, archive, delete, ignore, retain external, or duplicate.
-    - [ ] Require evidence checksums for files that are archived or migrated.
-- [ ] Task: Conductor - User Manual Verification 'Inventory' (Protocol in workflow.md)
+- [x] Task: Capture outer wrapper state.
+    - [x] Record tracked gitlinks, tracked generated logs, untracked source slices, and ignored local files.
+    - [x] Compare outer wrapper paths with canonical repo paths.
+    - [x] Identify unique Power Platform, script, test, and evidence files.
+- [x] Task: Create migration manifest.
+    - [x] Assign each path a disposition: migrate, archive, delete, ignore, retain external, or duplicate.
+    - [x] Require evidence checksums for files that are archived or migrated.
+- [x] Task: Conductor - User Manual Verification 'Inventory' (Protocol in workflow.md)
 
 ## Phase 2: Preservation and Retirement
 

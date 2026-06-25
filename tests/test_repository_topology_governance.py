@@ -12,6 +12,7 @@ TRACKS = ROOT / "conductor" / "tracks"
 TRACKS_MD = ROOT / "conductor" / "tracks.md"
 SURFACES = ROOT / "contracts" / "repository-topology" / "package-surfaces.json"
 VALIDATOR = ROOT / "scripts" / "validate_repository_topology.py"
+OUTER_MANIFEST = ROOT / "conductor" / "outer-wrapper-migration-manifest.json"
 
 _validator_spec = spec_from_file_location("validate_repository_topology", VALIDATOR)
 assert _validator_spec is not None and _validator_spec.loader is not None
@@ -338,6 +339,53 @@ def test_repository_topology_validator_detects_unmanaged_outer_gitlink(
     payload = json.loads(result.stdout)
     codes = {diagnostic["code"] for diagnostic in payload["diagnostics"]}
     assert "unmanaged_gitlink" in codes
+
+
+def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
+    manifest = _load_json(OUTER_MANIFEST)
+    assert manifest["track_id"] == "outer_wrapper_retirement_migration_20260624"
+    assert manifest["recommended_option"] == "retire-wrapper-after-preservation"
+    assert (
+        manifest["decision_boundary"]
+        == "Inventory and manifest only; no outer-wrapper files are deleted by this phase."
+    )
+
+    entries = {entry["path"]: entry for entry in manifest["entries"]}
+    gitlink = entries["microcosting_healthservices"]
+    assert gitlink["classification"] == "gitlink"
+    assert gitlink["disposition"] == "retire-or-formalize"
+    assert gitlink["git_mode"] == "160000"
+    assert gitlink["sha256"] is None
+
+    tracked_logs = [
+        entry
+        for entry in manifest["entries"]
+        if entry["state"] == "tracked"
+        and entry["classification"] == "generated-log"
+        and entry["path"].startswith(".playwright-mcp/")
+    ]
+    assert len(tracked_logs) >= 40
+    assert all(entry["sha256"] for entry in tracked_logs if entry["git_mode"] != "160000")
+
+    power_platform_evidence = [
+        entry
+        for entry in manifest["entries"]
+        if entry["state"] == "untracked"
+        and entry["classification"] == "evidence"
+        and entry["path"].startswith("power-platform/evidence/")
+    ]
+    assert len(power_platform_evidence) >= 100
+    assert all(entry["sha256"] for entry in power_platform_evidence)
+
+    source_slices = [
+        entry
+        for entry in manifest["entries"]
+        if entry["state"] == "untracked"
+        and entry["classification"] == "source-or-governance"
+    ]
+    assert any(entry["path"].startswith("scripts/") for entry in source_slices)
+    assert any(entry["path"].startswith("tests/") for entry in source_slices)
+    assert any(entry["path"].startswith("power-platform/") for entry in source_slices)
 
 
 def test_pr_ci_runs_repository_topology_validator() -> None:

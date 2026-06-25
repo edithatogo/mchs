@@ -24,7 +24,13 @@ are preserved.
 
 Before removing or migrating wrapper files, create a manifest that records path,
 classification, destination or retention reason, checksum for preserved files,
-owning track, validation command, and residual blocker if any.
+owning track, validation command, and residual blocker if any. The current
+Phase 1 manifest is `conductor/outer-wrapper-migration-manifest.json`.
+
+The manifest is inventory evidence, not cleanup authority. It may classify a
+path as `delete` or `ignore`, but no outer-wrapper file may be removed until
+the path has either been preserved, proven duplicate, or explicitly accepted as
+local-only/generated.
 
 ## Retirement Sequence
 

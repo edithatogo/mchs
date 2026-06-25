@@ -13,6 +13,7 @@
   ],
   "completion_evidence": [
     "conductor/outer-wrapper-retirement.md",
+    "conductor/outer-wrapper-migration-manifest.json",
     "scripts/validate_repository_topology.py",
     "tests/test_repository_topology_governance.py"
   ],
@@ -20,12 +21,11 @@
     "state": "in-progress",
     "included": [
       "Track definition for outer wrapper inventory, preservation, migration manifest, and retirement decision.",
+      "Phase 1 inventory manifest at conductor/outer-wrapper-migration-manifest.json with checksums for tracked and untracked outer-wrapper files.",
       "Repository topology validator and governance tests that keep the canonical-root policy visible.",
       "Explicit dependency on topology authority, generated artifact retention, and worktree hygiene tracks."
     ],
     "excluded": [
-      "Completed outer wrapper inventory.",
-      "Migration manifest with checksums and preservation evidence.",
       "Final wrapper deletion/archive/formalization decision.",
       "Outer-root validation result after migration."
     ]
@@ -33,13 +33,18 @@
   "gap_register": [
     {
       "id": "wrapper-inventory-and-migration-manifest",
+      "status": "complete",
+      "description": "Phase 1 inventory and migration manifest are recorded with dispositions and checksums."
+    },
+    {
+      "id": "wrapper-preservation-and-retirement",
       "status": "in-progress",
-      "description": "The track is intentionally new/in-progress; migration and retirement work remains open until source/evidence slices are preserved and the wrapper decision is recorded."
+      "description": "Source/evidence migration, generated-artifact cleanup, and final retire/formalize decision remain open."
     }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-06-24T02:50:05Z",
-  "updated_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00+10:00",
   "description": "Inventory the outer wrapper repo, preserve source and evidence slices, and retire or formalize the broken gitlink wrapper without data loss.",
   "no_stub_enforce": true
 }
