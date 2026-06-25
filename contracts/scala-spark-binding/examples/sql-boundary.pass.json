@@ -1,0 +1,78 @@
+{
+  "binding_bundle_id": "scala_spark_binding_contract_20260513",
+  "entry_id": "scala-spark-sql-boundary-pass",
+  "entry_type": "scala_spark_binding_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "sql-boundary",
+    "sql_connection_string": "jdbc:duckdb://localhost:8080/mchs",
+    "sql_query": "SELECT calculator_id, pricing_year, COUNT(*) AS row_count FROM nwau_2025 WHERE drg_code LIKE 'A%' GROUP BY calculator_id, pricing_year",
+    "correlation_id": "scala-spark-sql-boundary-pass",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "sql-boundary"
+    },
+    "fixture_gate": "synthetic_only_examples"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "mode": "sql-boundary",
+    "success": true,
+    "status": "pass",
+    "message": "SQL boundary query validated against pre-computed Parquet views.",
+    "warnings": [
+      "SQL boundary example is synthetic; query references do not connect to a live database."
+    ],
+    "errors": [],
+    "diagnostics": {
+      "status": "pass",
+      "checks": [
+        {
+          "id": "public_calculator_contract_aligned",
+          "status": "pass",
+          "message": "The request fields mirror the public calculator contract."
+        },
+        {
+          "id": "sql_boundary_declared",
+          "status": "pass",
+          "message": "The SQL boundary mode is explicitly declared with connection and query references."
+        },
+        {
+          "id": "fixture_gate_synthetic_only",
+          "status": "pass",
+          "message": "The example remains synthetic and metadata only."
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 0,
+        "blocked": 0
+      },
+      "notes": "Synthetic diagnostics example only."
+    },
+    "provenance": {
+      "command": "scala-spark-binding validate-sql-boundary-pass",
+      "binding_bundle_id": "scala_spark_binding_contract_20260513",
+      "source_manifest_path": "contracts/scala-spark-binding/examples/sql-boundary.pass.json",
+      "source_url": "https://example.invalid/contracts/scala-spark-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-scala-spark-sql-boundary-pass",
+      "bytes": 2724,
+      "checksum_algorithm": "sha256"
+    },
+    "sql_result_path": "nwau_2025_aggregate",
+    "fixture_gate_state": "pass",
+    "module_readiness_state": "adapter_ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic SQL boundary pass example only."
+  }
+}
