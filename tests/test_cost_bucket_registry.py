@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "cost_bucket_registry_20260512"
+TRACK = ROOT / "conductor" / "archive" / "cost_bucket_registry_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 SCHEMA_DOC = TRACK / "cost_bucket_registry_schema.md"
 
@@ -18,6 +19,7 @@ def test_cost_bucket_registry_track_files_exist():
         TRACK / "plan.md",
         TRACK / "metadata.json",
         TRACK / "index.md",
+        TRACK / "review.md",
         SCHEMA_DOC,
     ]:
         assert path.exists(), path
@@ -27,6 +29,7 @@ def test_cost_bucket_registry_tracks_md_is_open():
     registry = _read_text(TRACKS)
     assert "Cost Bucket Registry" in registry
     assert "- [x] **Track: Cost Bucket Registry**" in registry
+    assert "./archive/cost_bucket_registry_20260512/" in registry
 
 
 def test_schema_doc_defines_required_fields():
@@ -84,13 +87,15 @@ def test_schema_doc_explains_usage_boundary():
 
 
 def test_cost_bucket_registry_metadata_is_conservative():
-    import json
-
     metadata = json.loads(_read_text(TRACK / "metadata.json"))
 
     assert metadata["track_id"] == "cost_bucket_registry_20260512"
     assert metadata["track_class"] == "costing"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-applicable"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
+    assert "ahpcs_costing_process_model_20260512" in metadata["dependencies"]
     assert "cost" in metadata["description"].lower()
 
 

@@ -447,7 +447,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Cost Bucket Registry**
-*Link: [./tracks/cost_bucket_registry_20260512/](./tracks/cost_bucket_registry_20260512/)*
+*Link: [./archive/cost_bucket_registry_20260512/](./archive/cost_bucket_registry_20260512/)*
 *Gate: represent public IHACPA/NHCDC cost bucket definitions, mappings, caveats, and local overlay references without bundling confidential submissions.*
 
 ---

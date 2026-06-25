@@ -1,0 +1,39 @@
+{
+  "track_id": "cost_bucket_registry_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "costing",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "conductor/archive/cost_bucket_registry_20260512/cost_bucket_registry_schema.md",
+  "support_scope": "Versioned, source-cited public metadata schema for IHACPA/NHCDC cost bucket definitions, AHPCS concept relationships, provenance fields, caveats, and local overlay references. The archived scope covers schema and documentation boundaries, not confidential NHCDC submissions or local non-public mapping data.",
+  "gap_register": [
+    {
+      "gap": "No confidential NHCDC submissions or jurisdiction-specific non-public mappings are bundled.",
+      "status": "accepted-non-blocking",
+      "rationale": "The registry intentionally distinguishes public metadata from local overlays and prohibits committing sensitive data."
+    },
+    {
+      "gap": "Cost buckets are not treated as NWAU formula inputs unless a source explicitly requires it.",
+      "status": "accepted-non-blocking",
+      "rationale": "The schema is for costing-study analysis and provenance, not calculator formula execution."
+    },
+    {
+      "gap": "Validation is documentation/schema-oriented and does not yet include a machine-readable registry fixture with data-level validation.",
+      "status": "accepted-non-blocking",
+      "rationale": "The current completed scope defines the public metadata schema and boundaries; executable registry instances can be added by future costing-data tracks."
+    }
+  ],
+  "dependencies": [
+    "ahpcs_costing_process_model_20260512"
+  ],
+  "completion_evidence": [
+    "conductor/archive/cost_bucket_registry_20260512/cost_bucket_registry_schema.md",
+    "conductor/archive/cost_bucket_registry_20260512/spec.md",
+    "tests/test_cost_bucket_registry.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a versioned cost bucket registry for IHACPA/NHCDC cost bucket definitions, mappings, and review findings.",
+  "no_stub_enforce": true
+}
