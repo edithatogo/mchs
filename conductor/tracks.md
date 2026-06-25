@@ -40,7 +40,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: migrate data representation and DataFrame boundaries only after the core contract is stable.*
 
 7. [x] **Track: GitHub Pages Web App Prototype**
-   *Link: [./tracks/github_pages_web_app_20260504/](./tracks/github_pages_web_app_20260504/)*
+   *Link: [./archive/github_pages_web_app_20260504/](./archive/github_pages_web_app_20260504/)*
    *Depends on: public API contract, validation fixtures, and governance rules for demo-only flows.*
    *Gate: implement the browser-facing prototype only after a contract and privacy boundary exist.*
 

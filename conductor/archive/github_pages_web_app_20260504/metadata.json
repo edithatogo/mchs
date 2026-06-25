@@ -1,0 +1,45 @@
+{
+  "track_id": "github_pages_web_app_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "web-demo",
+  "current_state": "complete",
+  "primary_contract": "Static GitHub Pages demo boundary backed by public contract metadata and synthetic fixtures",
+  "dependencies": [],
+  "completion_evidence": [
+    "web/index.html",
+    "web/app.js",
+    "web/demo/acute_2025.json",
+    "tests/test_web_demo.py",
+    "tests/test_browser_delivery_boundaries.py",
+    "tests/test_hosted_delivery_boundaries.py"
+  ],
+  "support_scope": {
+    "state": "static-demo-complete",
+    "included": [
+      "Static GitHub Pages-safe demo shell.",
+      "Contract-driven calculator and pricing-year option display.",
+      "Synthetic fixture-backed demonstration flow.",
+      "Privacy boundary that excludes real patient data upload, persistence, and server-side processing from the Pages app.",
+      "Documentation and tests for the separate secure service boundary needed by future real-data workflows."
+    ],
+    "excluded": [
+      "Production hosted calculator service availability.",
+      "Real patient data entry, upload, storage, or processing in GitHub Pages.",
+      "Live external API integration from the static demo.",
+      "Publication proof that the Pages site is currently deployed and reachable."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "hosted-public-deployment-proof",
+      "status": "external-or-release-gate",
+      "description": "The track completes the static demo and boundary contract; live hosted publication proof is owned by release/docs delivery tracks."
+    }
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T02:10:00Z",
+  "description": "GitHub Pages Public Demo Readiness",
+  "no_stub_enforce": true
+}
