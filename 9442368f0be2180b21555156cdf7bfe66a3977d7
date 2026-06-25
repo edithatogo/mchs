@@ -1,0 +1,13 @@
+Future repo split playbook review checkpoint
+
+Commit notes:
+- Reviewed archived future_repo_split_playbook_20260624 against its governance contract.
+- Confirmed the playbook defines split eligibility, git subtree split/history preservation, registry continuity, CI proof, and rollback.
+- No file changes were needed; track remains archived and complete.
+
+Review:
+- conductor-review result: no findings; no runtime split performed or claimed.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
+- python conductor/scripts/stub_detector.py --root . --json
