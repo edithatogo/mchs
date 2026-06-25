@@ -1,4 +1,4 @@
-# Specification: no stuu completion enforcement
+# Specification: No-Stub Completion Enforcement
 
 ## Overview
 

@@ -15,6 +15,18 @@
     "conductor/workflow.md",
     "conductor/roadmap-governance.md"
   ],
+  "support_scope": {
+    "local_completion": "The no-stub policy is wired into workflow and archive policy, and the current stub detector reports no unresolved findings.",
+    "external_gate": "not applicable",
+    "runtime_support_claim": "No runtime support claim is made; this track governs Conductor completion evidence."
+  },
+  "gap_register": [
+    {
+      "id": "validator-owned-by-backlog-track",
+      "status": "delegated",
+      "description": "Executable stub-detector expansion and backlog burn-down are owned by scaffold_stub_completion_backlog_20260524."
+    }
+  ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
