@@ -1,0 +1,13 @@
+Generated artifact retention policy review checkpoint
+
+Commit notes:
+- Reviewed archived generated_artifact_retention_policy_20260624 against topology governance tests and retention policy contract.
+- Confirmed generated-ignore, release-attachment, evidence-allowed, external-archive, and local-only classes are covered by policy/validator evidence.
+- No file changes were needed; track remains archived and complete.
+
+Review:
+- conductor-review result: no findings; existing cleanup execution remains separate hygiene work, not a policy-track blocker.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
+- python conductor/scripts/stub_detector.py --root . --json
