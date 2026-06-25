@@ -1,10 +1,25 @@
 {
   "track_id": "end_to_end_validated_canary_20260512",
   "type": "feature",
-  "status": "complete",
+  "status": "blocked",
   "track_class": "calculator",
-  "current_state": "canary-specified",
+  "current_state": "overclaim-remediated-blocked",
   "primary_contract": "one stream/year validated lifecycle evidence package",
+  "support_scope": "Blocked canary lifecycle track for acute admitted 2025. Current evidence covers source-only formula parameter bundle loading, Python/Rust fixture comparison against synthetic golden fixtures, and explicit caveats. It does not yet prove official SAS parity, official Excel workbook formula parity, Arrow/Parquet output parity, or a published Starlight canary page/template.",
+  "gap_register": [
+    {
+      "gap": "Official SAS parity and Excel workbook parity are not complete.",
+      "rationale": "Current formula bundle validation is source-only and `parity_claim` remains false."
+    },
+    {
+      "gap": "The claimed Starlight canary page and track template do not exist.",
+      "rationale": "Documentation and template extraction must be implemented before this track can close."
+    },
+    {
+      "gap": "CLI/Arrow output parity is not complete.",
+      "rationale": "Existing evidence covers Python/Rust synthetic fixture agreement, not a full CLI/Arrow lifecycle."
+    }
+  ],
   "dependencies": [
     "reference_data_manifest_schema_20260512",
     "formula_parameter_bundle_pipeline_20260512",
@@ -12,16 +27,16 @@
     "rust_acute_python_poc_20260510"
   ],
   "completion_evidence": [
-    "source manifest",
-    "formula bundle",
-    "SAS parity record",
-    "Excel formula parity record",
-    "fixture parity report",
-    "Python/Rust/CLI conformance report",
-    "Starlight documentation page"
+    "reference-data/2025/parameter-bundles/acute/acute-2025-canary/v1/bundle.json",
+    "tests/fixtures/golden/acute_2025/manifest.json",
+    "tests/test_formula_parameter_bundle_pipeline.py",
+    "tests/test_rust_acute_binding.py",
+    "tests/test_rust_acute_parity.py",
+    "tests/test_end_to_end_validated_canary_track.py"
   ],
   "publication_status": "future-only",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T00:00:00Z",
-  "description": "Prove the full SOTA implementation lifecycle for one calculator stream and pricing year before scaling the roadmap."
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Prove the full SOTA implementation lifecycle for one calculator stream and pricing year before scaling the roadmap.",
+  "no_stub_enforce": true
 }
