@@ -657,7 +657,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: JVM Maven Central Registry Submission**
-*Link: [./tracks/jvm_maven_central_registry_submission_20260524/](./tracks/jvm_maven_central_registry_submission_20260524/)*
+*Link: [./archive/jvm_maven_central_registry_submission_20260524/](./archive/jvm_maven_central_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Maven Central`, and capture immutable evidence before claiming publication.*
 
 ---

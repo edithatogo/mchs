@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `io.github.edithatogo:mchs-jvm-bindings`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/bindings/jvm`
-- Current status: `prepared_namespace_verified_pending_central_portal_credentials_signing_upload_and_release`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A private Gradle/Kotlin JVM package candidate builds successfully with `gradle -p bindings/jvm validateCentralPortalReadiness build`. The Sonatype Central Portal namespace `io.github.edithatogo` is verified. The remaining blockers are Central Portal publisher credentials, in-memory PGP signing key/password, keyserver/public-key discoverability, authenticated upload/release, and public Maven metadata evidence.
+Resolved. A private Gradle/Kotlin JVM package candidate builds successfully with `gradle -p bindings/jvm validateCentralPortalReadiness build`. The Sonatype Central Portal namespace `io.github.edithatogo` is verified. Publisher API deployment `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated after supported keyserver propagation and was published; public Maven metadata now exposes version `0.1.0`.
 
 ## Preparation Evidence
 
@@ -35,9 +35,10 @@ Resolved locally. A private Gradle/Kotlin JVM package candidate builds successfu
 - Generated artifacts: binary jar, sources jar, javadoc jar, Maven POM, and Gradle module metadata.
 - Namespace verification: Sonatype Central Portal shows `io.github.edithatogo` as Verified after public GitHub repository verification with key `f7fztfn9vz`.
 - Upload bundle: `build/mchs-jvm-bindings-0.1.0-central-bundle.zip` was generated with jar, sources jar, javadoc jar, POM, Gradle module metadata, signatures, and checksum sidecars; SHA-256 `d0024c9f97b6cc23081139948a6b22508b5a06e20f96b75dc9b07082d2e56f42`.
-- Signing validation: local GPG signatures verify with key `9DF6B142F065199E` / `BB03C82343A653EE44BD5CDA9DF6B142F065199E` for `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; supported keyserver upload now returns success and a clean temporary keyring can receive the key from `hkps://keyserver.ubuntu.com`, but Central validation still cannot discover the key by fingerprint.
+- Signing validation: local GPG signatures verify with key `9DF6B142F065199E` / `BB03C82343A653EE44BD5CDA9DF6B142F065199E` for `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; supported keyserver upload now returns success, a clean temporary keyring can receive the key from `hkps://keyserver.ubuntu.com`, and Central validation passed after propagation.
+- Publication evidence: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml` returns HTTP 200 and exposes latest/release/version `0.1.0`; public JAR SHA-256 is `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e`.
 - Local fix: Kotlin JVM toolchain lowered to Java 11 to match installed local JDK.
-- Remaining external blocker: Central Portal publisher credentials, in-memory PGP signing key/password, keyserver/public-key discoverability, authenticated upload/release, and public metadata propagation.
+- Remaining external blocker: none for Maven Central publication.
 
 ## Acceptance Criteria
 
