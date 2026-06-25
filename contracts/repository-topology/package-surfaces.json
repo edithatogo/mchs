@@ -1,0 +1,600 @@
+{
+  "schema_version": "2026-06-24",
+  "canonical_root": "microcosting_healthservices",
+  "policy_documents": {
+    "topology": "conductor/repository-topology.md",
+    "outer_wrapper": "conductor/outer-wrapper-retirement.md",
+    "release_boundary": "conductor/release-boundary-control-plane.md",
+    "artifact_retention": "conductor/generated-artifact-retention-policy.md",
+    "worktree_hygiene": "conductor/worktree-branch-pr-hygiene.md",
+    "future_split": "conductor/future-repo-split-playbook.md"
+  },
+  "surfaces": [
+    {
+      "id": "python-runtime",
+      "display_name": "Python runtime package",
+      "category": "package",
+      "lifecycle": "implemented",
+      "support_status": "ga",
+      "path": ".",
+      "manifests": [
+        "pyproject.toml"
+      ],
+      "owner_track": "python_pypi_registry_submission_20260524",
+      "ci_gate": ".github/workflows/pr-ci.yml#quality-tests-coverage",
+      "release": {
+        "target": "PyPI",
+        "workflow": ".github/workflows/release.yml",
+        "version_source": "setuptools_scm plus nwau_py/_version.py",
+        "registry_state": "published_verified",
+        "evidence": [
+          "README.md#package-registry-status",
+          "conductor/tracks/python_pypi_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "shared-core",
+      "claim_boundary": "Python remains the current validated runtime while Rust promotion is stream-gated."
+    },
+    {
+      "id": "rust-workspace",
+      "display_name": "Rust workspace and core crates",
+      "category": "workspace",
+      "lifecycle": "implemented",
+      "support_status": "canary",
+      "path": "rust",
+      "manifests": [
+        "rust/Cargo.toml",
+        "rust/crates/nwau-c-abi/Cargo.toml",
+        "rust/crates/nwau-core/Cargo.toml",
+        "rust/crates/nwau-py/Cargo.toml",
+        "rust/crates/nwau-py/pyproject.toml"
+      ],
+      "owner_track": "rust_core_continuation_20260524",
+      "ci_gate": ".github/workflows/pr-ci.yml#rust",
+      "release": {
+        "target": "crates.io and GitHub Releases",
+        "workflow": ".github/workflows/release.yml",
+        "version_source": "rust/Cargo.toml",
+        "registry_state": "published_verified",
+        "evidence": [
+          "README.md#package-registry-status",
+          "docs/release-evidence-rust-continuation.md"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "shared-core",
+      "claim_boundary": "Rust support is limited to stream-specific parity evidence and must not be claimed GA across calculators."
+    },
+    {
+      "id": "docs-site",
+      "display_name": "Starlight documentation site",
+      "category": "docs",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "docs-site",
+      "manifests": [
+        "docs-site/package.json"
+      ],
+      "owner_track": "docs_sota_starlight_completion_20260513",
+      "ci_gate": ".github/workflows/docs-site.yml",
+      "release": {
+        "target": "GitHub Pages",
+        "workflow": ".github/workflows/docs-site.yml",
+        "version_source": "docs-site/package.json",
+        "registry_state": "published_verified",
+        "evidence": [
+          "README.md#documentation",
+          "docs-site/src/content/docs/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "Docs describe support truthfully and must not expand calculator validation claims."
+    },
+    {
+      "id": "r-binding",
+      "display_name": "R binding package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "r-binding",
+      "manifests": [
+        "r-binding/DESCRIPTION"
+      ],
+      "owner_track": "r_binding_20260512",
+      "ci_gate": "tests/test_r_binding_track.py",
+      "release": {
+        "target": "CRAN",
+        "workflow": "manual CRAN submission",
+        "version_source": "r-binding/DESCRIPTION",
+        "registry_state": "submitted",
+        "evidence": [
+          "conductor/tracks/r_cran_registry_submission_20260524/"
+        ],
+        "external_gate": "CRAN maintainer review and publication proof"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "R package readiness is local until CRAN publication is publicly verified."
+    },
+    {
+      "id": "julia-binding",
+      "display_name": "Julia binding package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "julia-binding",
+      "manifests": [
+        "julia-binding/Project.toml"
+      ],
+      "owner_track": "julia_binding_20260512",
+      "ci_gate": "tests/test_julia_binding_track.py",
+      "release": {
+        "target": "Julia General registry",
+        "workflow": "manual JuliaRegistrator and General PR",
+        "version_source": "julia-binding/Project.toml",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/julia_general_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Julia General publication is verified; runtime support remains limited to the thin adapter and fixture-parity scope."
+    },
+    {
+      "id": "go-binding",
+      "display_name": "Go binding module",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/go",
+      "manifests": [
+        "bindings/go/go.mod"
+      ],
+      "owner_track": "go_binding_20260512",
+      "ci_gate": "tests/test_go_binding_track.py",
+      "release": {
+        "target": "Go module proxy and pkg.go.dev",
+        "workflow": "tagged module release",
+        "version_source": "bindings/go/go.mod",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/tracks/go_module_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Go module exposes binding contracts and must not duplicate formulas."
+    },
+    {
+      "id": "dotnet-binding",
+      "display_name": ".NET binding package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/dotnet",
+      "manifests": [
+        "bindings/dotnet/DotNetBinding.csproj"
+      ],
+      "owner_track": "csharp_dotnet_binding_20260512",
+      "ci_gate": "tests/test_csharp_dotnet_binding_track.py",
+      "release": {
+        "target": "NuGet",
+        "workflow": "manual or release workflow package publication",
+        "version_source": "bindings/dotnet/DotNetBinding.csproj",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/tracks/dotnet_nuget_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": ".NET package is a file/service adapter surface over shared contracts."
+    },
+    {
+      "id": "swift-binding",
+      "display_name": "Swift Package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/swift",
+      "manifests": [
+        "bindings/swift/Package.swift"
+      ],
+      "owner_track": "swift_binding_20260513",
+      "ci_gate": "tests/test_swift_binding_track.py",
+      "release": {
+        "target": "Swift Package Index",
+        "workflow": "PackageList issue and public SPI indexing",
+        "version_source": "bindings/swift/Package.swift",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/swift_package_index_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Swift Package Index publication is verified; compatibility build results remain external processing evidence and do not expand runtime support."
+    },
+    {
+      "id": "jvm-binding",
+      "display_name": "JVM binding package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/jvm",
+      "manifests": [
+        "bindings/jvm/build.gradle.kts",
+        "bindings/jvm/settings.gradle.kts"
+      ],
+      "owner_track": "jvm_maven_central_registry_submission_20260524",
+      "ci_gate": "tests/test_jvm_maven_central_registry_submission_track.py",
+      "release": {
+        "target": "Maven Central",
+        "workflow": "Central Portal publication",
+        "version_source": "bindings/jvm/build.gradle.kts",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/jvm_maven_central_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Maven Central publication is verified; JVM support remains limited to the binding contract and package evidence scope."
+    },
+    {
+      "id": "scala-spark-binding",
+      "display_name": "Scala and Spark binding",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/scala-spark",
+      "manifests": [
+        "bindings/scala-spark/build.sbt"
+      ],
+      "owner_track": "scala_spark_binding_20260513",
+      "ci_gate": "tests/test_scala_spark_binding_track.py",
+      "release": {
+        "target": "internal package or Maven-style publication",
+        "workflow": "repository-local validation",
+        "version_source": "bindings/scala-spark/build.sbt",
+        "registry_state": "prepared",
+        "evidence": [
+          "conductor/archive/scala_spark_binding_20260513/"
+        ],
+        "external_gate": "Publication target remains unselected"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Scala/Spark is a file/service adapter and not an independent formula engine."
+    },
+    {
+      "id": "wasm-npm-binding",
+      "display_name": "TypeScript and WASM binding",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "wasm-binding",
+      "manifests": [
+        "wasm-binding/package.json"
+      ],
+      "owner_track": "typescript_wasm_binding_20260512",
+      "ci_gate": "tests/test_typescript_wasm_binding_track.py",
+      "release": {
+        "target": "npm",
+        "workflow": "npm package publication",
+        "version_source": "wasm-binding/package.json",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/tracks/typescript_npm_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "WASM binding is an adapter over generated/shared Rust artifacts."
+    },
+    {
+      "id": "vscode-extension",
+      "display_name": "VS Code and Open VSX extension",
+      "category": "package",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "integrations/vscode",
+      "manifests": [
+        "integrations/vscode/package.json"
+      ],
+      "owner_track": "vscode_openvsx_registry_submission_20260524",
+      "ci_gate": "scripts/language_registry_external_gate_report.py",
+      "release": {
+        "target": "Open VSX and Visual Studio Marketplace",
+        "workflow": "manual marketplace publication",
+        "version_source": "integrations/vscode/package.json",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/tracks/vscode_openvsx_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "release-attachment",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "Extension publication is separate from calculator validation."
+    },
+    {
+      "id": "smithery-mcpb-package",
+      "display_name": "Smithery MCP bundle package",
+      "category": "packaging",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "contracts/mcp/registry/smithery/mcpb",
+      "manifests": [
+        "contracts/mcp/registry/smithery/mcpb/pyproject.toml"
+      ],
+      "owner_track": "smithery_mcp_registry_readiness_20260517",
+      "ci_gate": "scripts/validate_mcp_registry_submission_status.py",
+      "release": {
+        "target": "Smithery MCP Registry",
+        "workflow": "MCP registry packaging workflow",
+        "version_source": "contracts/mcp/registry/smithery/mcpb/pyproject.toml",
+        "registry_state": "prepared",
+        "evidence": [
+          "contracts/mcp/registry/smithery-readiness-contract.md",
+          "conductor/tracks/smithery_mcp_registry_readiness_20260517/"
+        ],
+        "external_gate": "Smithery registry acceptance and public proof"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "Smithery packaging is a registry wrapper around the MCP server contract."
+    },
+    {
+      "id": "power-platform-app",
+      "display_name": "Power Platform app and connector surface",
+      "category": "app",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "power-platform",
+      "manifests": [
+        "power-platform/solution/app-surface.json",
+        "power-platform/connectors/service-boundary-contract.md"
+      ],
+      "owner_track": "power_platform_binding_20260512",
+      "ci_gate": ".github/workflows/power-platform-alm.yml",
+      "release": {
+        "target": "Power Platform managed solution",
+        "workflow": ".github/workflows/power-platform-alm.yml",
+        "version_source": "power-platform/solution/solution-manifest.md",
+        "registry_state": "prepared",
+        "evidence": [
+          "power-platform/solution/app-surface.md",
+          "contracts/power-platform/power-platform-binding.contract.json"
+        ],
+        "external_gate": "Tenant import, connection reference binding, and managed solution publish proof"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "orchestration-only",
+      "claim_boundary": "Power Platform may orchestrate only through the service boundary and must not contain formula logic."
+    },
+    {
+      "id": "stata-binding",
+      "display_name": "Stata SSC package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/stata",
+      "manifests": [
+        "bindings/stata/pkg-mchs.pkg"
+      ],
+      "owner_track": "stata_interop_binding_20260513",
+      "ci_gate": "tests/test_stata_interop_binding_track.py",
+      "release": {
+        "target": "Stata SSC",
+        "workflow": "manual SSC maintainer submission",
+        "version_source": "bindings/stata/pkg-mchs.pkg",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/stata_ssc_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "release-attachment",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Stata SSC publication is verified; no local Stata runtime execution support is claimed."
+    },
+    {
+      "id": "matlab-binding",
+      "display_name": "MATLAB File Exchange package",
+      "category": "binding",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "bindings/matlab",
+      "manifests": [
+        "bindings/matlab/file-exchange-submission.json"
+      ],
+      "owner_track": "matlab_interop_binding_20260513",
+      "ci_gate": "tests/test_matlab_interop_binding_track.py",
+      "release": {
+        "target": "MATLAB File Exchange",
+        "workflow": "manual MathWorks submission",
+        "version_source": "bindings/matlab/file-exchange-submission.json",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/matlab_file_exchange_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "release-attachment",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "MATLAB File Exchange publication is verified; no MATLAB or Octave runtime execution support is claimed."
+    },
+    {
+      "id": "conda-forge-recipe",
+      "display_name": "conda-forge recipe",
+      "category": "packaging",
+      "lifecycle": "implemented",
+      "support_status": "planned",
+      "path": "packaging/conda-forge",
+      "manifests": [
+        "packaging/conda-forge/meta.yaml",
+        "conda/recipe/meta.yaml"
+      ],
+      "owner_track": "conda_forge_feedstock_submission_20260524",
+      "ci_gate": ".github/workflows/conda-recipe.yml",
+      "release": {
+        "target": "conda-forge",
+        "workflow": "staged-recipes PR",
+        "version_source": "packaging/conda-forge/meta.yaml",
+        "registry_state": "submitted",
+        "evidence": [
+          "conductor/tracks/conda_forge_feedstock_submission_20260524/"
+        ],
+        "external_gate": "staged-recipes review, merge, and feedstock publication"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "conda-forge remains unpublished until feedstock package proof exists."
+    },
+    {
+      "id": "homebrew-formula",
+      "display_name": "Homebrew formula",
+      "category": "packaging",
+      "lifecycle": "implemented",
+      "support_status": "preview",
+      "path": "packaging/homebrew",
+      "manifests": [
+        "packaging/homebrew/nwau-py.rb"
+      ],
+      "owner_track": "homebrew_formula_submission_20260524",
+      "ci_gate": "tests/test_homebrew_formula_submission_track.py",
+      "release": {
+        "target": "Homebrew personal tap",
+        "workflow": "tap formula publication",
+        "version_source": "packaging/homebrew/nwau-py.rb",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/tracks/homebrew_formula_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "Homebrew/core remains optional and separately review-gated."
+    },
+    {
+      "id": "conan-recipe",
+      "display_name": "ConanCenter recipe",
+      "category": "packaging",
+      "lifecycle": "implemented",
+      "support_status": "planned",
+      "path": "packaging/conan",
+      "manifests": [
+        "packaging/conan/conanfile.py"
+      ],
+      "owner_track": "c_cpp_vcpkg_conan_submission_20260524",
+      "ci_gate": "tests/test_c_cpp_vcpkg_conan_submission_track.py",
+      "release": {
+        "target": "ConanCenter",
+        "workflow": "ConanCenter PR",
+        "version_source": "packaging/conan/conanfile.py",
+        "registry_state": "submitted",
+        "evidence": [
+          "conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/"
+        ],
+        "external_gate": "CLA, scheduler, and ConanCenter review"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "ConanCenter remains external-review-gated."
+    },
+    {
+      "id": "vcpkg-port",
+      "display_name": "vcpkg port",
+      "category": "packaging",
+      "lifecycle": "implemented",
+      "support_status": "blocked",
+      "path": "packaging/vcpkg",
+      "manifests": [
+        "packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
+        "packaging/vcpkg/ports/nwau-c-abi/portfile.cmake"
+      ],
+      "owner_track": "c_cpp_vcpkg_conan_submission_20260524",
+      "ci_gate": "tests/test_c_cpp_vcpkg_conan_submission_track.py",
+      "release": {
+        "target": "vcpkg",
+        "workflow": "overlay validation and upstream PR if policy permits",
+        "version_source": "packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
+        "registry_state": "blocked",
+        "evidence": [
+          "conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/"
+        ],
+        "external_gate": "vcpkg policy currently does not support Rust library ports"
+      },
+      "artifact_policy": "source",
+      "formula_logic": "not-applicable",
+      "claim_boundary": "vcpkg is deferred/blocked until upstream port policy supports this Rust/C ABI shape."
+    },
+    {
+      "id": "cran-registry",
+      "display_name": "CRAN registry gate",
+      "category": "registry",
+      "lifecycle": "external-gate",
+      "support_status": "planned",
+      "path": "r-binding",
+      "manifests": [
+        "r-binding/DESCRIPTION"
+      ],
+      "owner_track": "r_cran_registry_submission_20260524",
+      "ci_gate": "tests/test_r_cran_registry_submission_track.py",
+      "release": {
+        "target": "CRAN",
+        "workflow": "manual CRAN submission",
+        "version_source": "r-binding/DESCRIPTION",
+        "registry_state": "submitted",
+        "evidence": [
+          "conductor/tracks/r_cran_registry_submission_20260524/"
+        ],
+        "external_gate": "CRAN maintainer review and publication proof"
+      },
+      "artifact_policy": "release-attachment",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "CRAN is an external gate over the local R binding."
+    },
+    {
+      "id": "maven-central-registry",
+      "display_name": "Maven Central registry gate",
+      "category": "registry",
+      "lifecycle": "external-gate",
+      "support_status": "planned",
+      "path": "bindings/jvm",
+      "manifests": [
+        "bindings/jvm/build.gradle.kts",
+        "bindings/jvm/settings.gradle.kts"
+      ],
+      "owner_track": "jvm_maven_central_registry_submission_20260524",
+      "ci_gate": "tests/test_jvm_maven_central_registry_submission_track.py",
+      "release": {
+        "target": "Maven Central",
+        "workflow": "Central Portal publication",
+        "version_source": "bindings/jvm/build.gradle.kts",
+        "registry_state": "published_verified",
+        "evidence": [
+          "conductor/archive/jvm_maven_central_registry_submission_20260524/"
+        ],
+        "external_gate": null
+      },
+      "artifact_policy": "release-attachment",
+      "formula_logic": "adapter-only",
+      "claim_boundary": "Maven Central publication is verified by public metadata and package artifact evidence."
+    }
+  ]
+}

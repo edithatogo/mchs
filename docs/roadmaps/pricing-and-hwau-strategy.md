@@ -5,6 +5,12 @@ The library should use the generic term **healthcare weighted activity unit
 Activity Unit terminology remains important source terminology, but it should
 not be the generic library name.
 
+Status: roadmap intent only. The active HWAU, jurisdiction price, state/local
+price, NSW funding, and parallel valuation tracks are `[~]` /
+`complete-with-gaps`; no public sourced state/local pricing support claim is
+made until official provenance rows, runtime registry APIs, and behavior tests
+are complete.
+
 ## Terminology model
 
 - `hwau`: canonical library abstraction for a weighted activity unit.

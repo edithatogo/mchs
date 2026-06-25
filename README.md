@@ -44,7 +44,7 @@ tagged source.
 
 ## Package registry status
 
-As of 2026-05-25:
+Registry status snapshot from checked-in registry evidence:
 
 | Surface | Distribution evidence | Registry state |
 | --- | --- | --- |

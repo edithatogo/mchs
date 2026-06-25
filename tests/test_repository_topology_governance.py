@@ -253,16 +253,17 @@ def test_readme_registry_claims_match_release_boundary_states() -> None:
         for surface in registry["surfaces"]
     }
     assert states["cran-registry"] == "submitted"
-    assert states["maven-central-registry"] == "prepared"
+    assert states["maven-central-registry"] == "published_verified"
     assert states["vscode-extension"] == "published_verified"
     assert states["vcpkg-port"] == "blocked"
-    assert states["swift-binding"] == "submitted"
+    assert states["swift-binding"] == "published_verified"
 
     for phrase in [
         "CRAN maintainer submission/review remains external",
         "Prepared, not published",
         "upstream vcpkg/ConanCenter PR/review remains external",
-        "public SPI listing/version evidence is still pending",
+        "Swift Package Index (`MCHSBind`)",
+        "**Published** on Swift Package Index at `MCHSBind 0.1.0`",
         "No support claim beyond the specific registry states above",
     ]:
         assert phrase in readme
@@ -288,10 +289,22 @@ def test_generated_artifact_policy_detects_package_artifacts_and_allows_evidence
     assert _validator._is_generated_path(
         "archive/sas/NWAU24_SAS_Calculator/calculators/Scorer_v4/base_library.zip"
     )
+    assert _validator._is_generated_path(
+        "bindings/matlab/mchs-matlab-interop-0.1.0.zip"
+    )
+    assert _validator._is_generated_path(
+        "bindings/stata/mchs-stata-interop-0.1.0.zip"
+    )
     assert not _validator._is_evidence_artifact("dist/nwau_py-0.1.0.tar.gz")
     assert _validator._is_evidence_artifact("integrations/vscode/mchs-tools-0.1.1.vsix")
     assert _validator._is_evidence_artifact(
         "archive/sas/NWAU24_SAS_Calculator/calculators/Scorer_v4/base_library.zip"
+    )
+    assert _validator._is_evidence_artifact(
+        "bindings/matlab/mchs-matlab-interop-0.1.0.zip"
+    )
+    assert _validator._is_evidence_artifact(
+        "bindings/stata/mchs-stata-interop-0.1.0.zip"
     )
 
 

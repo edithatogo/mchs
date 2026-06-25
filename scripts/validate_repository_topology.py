@@ -79,6 +79,8 @@ GENERATED_FILE_SUFFIXES = (
 
 EVIDENCE_ARTIFACT_PATTERNS = (
     re.compile(r"^archive/sas/.+/base_library\.zip$"),
+    re.compile(r"^bindings/matlab/mchs-matlab-interop-[0-9][^/]*\.zip$"),
+    re.compile(r"^bindings/stata/mchs-stata-interop-[0-9][^/]*\.zip$"),
     re.compile(r"^integrations/vscode/mchs-tools-[0-9][^/]*\.vsix$"),
 )
 
