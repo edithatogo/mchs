@@ -1,17 +1,48 @@
 {
-  "track_id": "release_evidence_bundle_20260513",
-  "type": "feature",
-  "status": "new",
-  "track_class": "release",
-  "priority": "immediate",
-  "current_state": "planned",
-  "primary_contract": "docs/roadmaps/release/evidence-bundle-format.md",
-  "dependencies": [
-    "support_status_matrix_20260513",
-    "release_evidence_automation_20260512",
-    "rust_core_ga_20260513"
-  ],
-  "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Define the release evidence bundle required before any stream, jurisdiction, or surface can be marked GA."
+    "track_id": "release_evidence_bundle_20260513",
+    "type": "feature",
+    "status": "completed",
+    "track_class": "release-governance",
+    "current_state": "complete-with-gaps",
+    "primary_contract": "docs/roadmaps/release/evidence-bundle-format.md",
+    "dependencies": [
+        "support_status_matrix_20260513",
+        "release_evidence_automation_20260512",
+        "release_workflow_validation_20260513"
+    ],
+    "completion_evidence": [
+        "contracts/release/evidence-bundle.schema.json",
+        "tests/fixtures/governance/release-evidence.pass.json",
+        "docs/roadmaps/release/evidence-bundle-format.md"
+    ],
+    "support_scope": {
+        "local_completion": "The evidence bundle schema, fixture, and documentation are present and validated.",
+        "external_gate": "not applicable, but RC/GA release promotion is blocked until gap_blockers are closed in concrete release artifacts.",
+        "runtime_support_claim": "No release-candidate, GA, package, stream, or calculator support claim is made by this bundle format alone."
+    },
+    "publication_status": "not-applicable",
+    "completion_policy": "complete-with-gaps means the release evidence bundle schema and fixture exist, but no RC or GA release claim is allowed unless required evidence is present and gap_blockers are closed",
+    "gap_blockers": [
+        {
+            "id": "registry-evidence-required",
+            "severity": "release-blocking",
+            "evidence": "contracts/release/evidence-bundle.schema.json",
+            "description": "Release bundles must include registry evidence so recipe-only, private, future-only, unpublished, and published-with-gaps states cannot be mistaken for public publication evidence."
+        },
+        {
+            "id": "rc-ga-validation-integration",
+            "severity": "release-blocking",
+            "evidence": "docs/roadmaps/release/evidence-bundle-format.md",
+            "description": "Release automation must reject RC or GA claims when required bundle evidence is missing or marked with unresolved limitations."
+        }
+    ],
+    "promotion_requirements": [
+        "Require registry evidence in every release evidence bundle.",
+        "Attach evidence bundles to release artifacts before RC or GA support claims.",
+        "Reject GA promotion when required evidence is missing or gap statuses remain unresolved."
+    ],
+    "created_at": "2026-05-13T00:00:00Z",
+    "updated_at": "2026-05-15T00:00:00Z",
+    "description": "Define the release evidence bundle required before release-candidate or GA support claims.",
+    "no_stub_enforce": true
 }
