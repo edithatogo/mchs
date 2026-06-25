@@ -1,0 +1,44 @@
+{
+  "track_id": "rust_crate_boundary_rename_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "architecture",
+  "priority": "near-term",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/rust-crate-boundaries.md",
+  "dependencies": [
+    "hwau_terminology_migration_20260513",
+    "rust_core_ga_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Plan Rust crate boundaries and a careful NWAU-to-HWAU public API migration without disrupting active Rust implementation work.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/rust_crate_boundary_rename_20260513/index.md",
+    "docs/roadmaps/rust-crate-boundaries.md",
+    "conductor/tracks/rust_crate_boundary_rename_20260513/plan.md",
+    "conductor/tracks/rust_crate_boundary_rename_20260513/spec.md",
+    "tests/test_coordination_and_evidence_tracks.py"
+  ],
+  "support_scope": {
+    "state": "architecture-plan-complete",
+    "included": [
+      "Target Rust crate boundary plan for contracts, core, CLI, MCP, API, Python, .NET, and optional WASM surfaces.",
+      "NWAU-to-HWAU terminology migration strategy using compatibility shims and deprecation notes.",
+      "Parallel-agent guardrail that avoids broad crate renames while Rust implementation work is active."
+    ],
+    "excluded": [
+      "Bulk renaming active Rust crates or source files.",
+      "Claiming that the Rust workspace has completed a public crate rename.",
+      "Publishing renamed crates or breaking NWAU compatibility aliases."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "implementation-deferred",
+      "status": "delegated",
+      "description": "Actual crate rename implementation, public API migration, and registry publication are deferred to Rust GA and package registry tracks after compatibility tests and release evidence are ready."
+    }
+  ]
+}

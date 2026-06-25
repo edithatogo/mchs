@@ -55,7 +55,7 @@ Arrow/Parquet surfaces are stable.
 | Reference-data | [NSW Funding Model](../../conductor/tracks/nsw_funding_model_20260513/spec.md) | Models NSW State Price per NWAU/HWAU, LHD/SHN applicability, adjustments, and provenance. |
 | Reference-data | [Jurisdiction Funding Model Registry](../../conductor/tracks/jurisdiction_funding_model_registry_20260513/spec.md) | Covers Australian state and territory funding models, including ACT and NT, with source-status handling. |
 | Output | [Parallel Valuation Outputs](../../conductor/tracks/parallel_valuation_outputs_20260513/spec.md) | Produces HWAU-only, national, state, local, and discounted valuations in parallel. |
-| Architecture | [Rust Crate Boundaries and HWAU Rename](../../conductor/tracks/rust_crate_boundary_rename_20260513/spec.md) | Plans crate boundaries and NWAU-to-HWAU migration without disrupting active Rust work. |
+| Architecture | [Rust Crate Boundaries and HWAU Rename](../../conductor/archive/rust_crate_boundary_rename_20260513/spec.md) | Plans crate boundaries and NWAU-to-HWAU migration without disrupting active Rust work. |
 | Architecture | [GitHub Pages API Architecture](../../conductor/tracks/github_pages_api_architecture_20260513/spec.md) | Clarifies static docs/WASM versus external or local API hosting. |
 | Release | [Release Evidence Bundle](../../conductor/tracks/release_evidence_bundle_20260513/spec.md) | Defines evidence required before release-candidate and GA support claims. |
 

@@ -369,7 +369,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Rust Crate Boundaries and HWAU Rename**
-*Link: [./tracks/rust_crate_boundary_rename_20260513/](./tracks/rust_crate_boundary_rename_20260513/)*
+*Link: [./archive/rust_crate_boundary_rename_20260513/](./archive/rust_crate_boundary_rename_20260513/)*
 *Gate: Plan crate boundaries and NWAU-to-HWAU migration with compatibility aliases before renaming active Rust implementation paths.*
 
 ---
