@@ -13,9 +13,17 @@
   "blocker": null,
   "publication_claimed": true,
   "publication_url": "https://pypi.org/project/nwau-py/0.2.2/",
+  "support_scope": {
+    "local_completion": "The local PyPI submission track is complete: package metadata, release workflow, public project URL, and registry contract evidence identify `nwau-py 0.2.2` as published.",
+    "external_gate": "closed; PyPI exposes the `nwau-py 0.2.2` project/version and distribution files publicly.",
+    "runtime_support_claim": "Publication evidence does not expand calculator support status beyond the repository support matrix."
+  },
+  "gap_register": [],
   "completion_evidence": [
     "pyproject.toml",
     "nwau_py/cli/main.py",
-    "tests/test_python_pypi_registry_submission_track.py"
+    "tests/test_remaining_language_registry_submission_tracks.py",
+    "scripts/validate_language_registry_submission_tracks.py",
+    "https://pypi.org/project/nwau-py/0.2.2/"
   ]
 }

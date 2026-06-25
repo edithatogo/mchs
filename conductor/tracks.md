@@ -609,7 +609,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Python PyPI Registry Submission**
-*Link: [./tracks/python_pypi_registry_submission_20260524/](./tracks/python_pypi_registry_submission_20260524/)*
+*Link: [./archive/python_pypi_registry_submission_20260524/](./archive/python_pypi_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `PyPI`, and capture immutable evidence before claiming publication.*
 
 ---
