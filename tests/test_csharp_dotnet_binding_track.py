@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, cast
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "csharp_dotnet_binding_20260512"
+TRACK = ROOT / "conductor" / "archive" / "csharp_dotnet_binding_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 PACKAGING_MATRIX = ROOT / "docs" / "roadmaps" / "polyglot-packaging-release-matrix.md"
 ARCHITECTURE_DOC = ROOT / "conductor" / "csharp-architecture.md"
@@ -75,9 +75,9 @@ def test_csharp_dotnet_binding_track_metadata_docs_and_contract_bundle_are_safe(
 
     assert metadata["track_id"] == "csharp_dotnet_binding_20260512"
     assert metadata["type"] == "feature"
-    assert metadata["status"] == "in-progress"
+    assert metadata["status"] == "completed"
     assert metadata["track_class"] == "binding"
-    assert metadata["current_state"] == "dotnet-binding-roadmap-complete"
+    assert metadata["current_state"] == "complete"
     assert metadata["primary_contract"] == (
         "contracts/csharp-dotnet-binding/csharp-dotnet-binding.contract.json"
     )
@@ -192,18 +192,8 @@ def test_csharp_dotnet_binding_preserves_provenance_without_formula_logic():
 
 
 def test_csharp_dotnet_binding_if_a_scaffold_exists_it_stays_thin_and_non_formula():
-    candidate_roots = [
-        ROOT / "csharp-dotnet-binding",
-        ROOT / "dotnet-binding",
-        ROOT / "csharp_binding",
-        ROOT / "bindings" / "dotnet",
-        ROOT / "src" / "CSharp",
-        ROOT / "src" / "csharp",
-    ]
-    scaffold_root = next((path for path in candidate_roots if path.exists()), None)
-
-    if scaffold_root is None:
-        return
+    scaffold_root = ROOT / "bindings" / "dotnet"
+    assert scaffold_root.exists(), scaffold_root
 
     observed = _squash(_read_text(ARCHITECTURE_DOC)).lower()
     assert "downstream adapter or service integration target" in observed
@@ -222,5 +212,48 @@ def test_csharp_dotnet_binding_if_a_scaffold_exists_it_stays_thin_and_non_formul
     ).lower()
 
     assert "nuwau" not in scaffold_text
-    assert "formula logic" not in scaffold_text or "not implemented" in scaffold_text
+    assert (
+        "formula logic" not in scaffold_text
+        or "not implemented" in scaffold_text
+        or "delegated" in scaffold_text
+    )
     assert "nuget" not in scaffold_text or "preview" in scaffold_text
+
+
+def test_csharp_dotnet_binding_has_real_cli_file_boundary_adapter():
+    dotnet_root = ROOT / "bindings" / "dotnet"
+    csproj = _read_text(dotnet_root / "DotNetBinding.csproj")
+    request_model = _read_text(dotnet_root / "src" / "Models" / "BindingRequest.cs")
+    response_model = _read_text(dotnet_root / "src" / "Models" / "BindingResponse.cs")
+    adapter = _read_text(dotnet_root / "src" / "Interop" / "LocalFileInteropAdapter.cs")
+    readme = _read_text(dotnet_root / "README.md")
+
+    assert "<OutputType>Exe</OutputType>" in csproj
+    assert "string? PricingYear" in request_model
+    assert "string? ParamsDirectory" in request_model
+    assert "int? ExitCode" in response_model
+    assert "IReadOnlyList<string> Diagnostics" in response_model
+
+    assert "ProcessStartInfo" in adapter
+    assert "MCHS_DOTNET_SHARED_CORE_CLI" in adapter
+    assert "MCHS_DOTNET_FILE_ROOT" in adapter
+    assert "ResolvePathWithinRoot" in adapter
+    assert "ResolveExistingFilePath" in adapter
+    assert "ResolveWritableFilePath" in adapter
+    assert "path escapes configured .NET binding file root" in adapter
+    assert "ResolveLinkTarget(returnFinalTarget: true)" in adapter
+    assert "delegated-to-shared-core" in adapter
+    assert "shared-core-cli-failed" in adapter
+    assert "Formula logic is delegated to the shared core CLI" in adapter
+    assert '"acute"' in adapter
+    assert '"ed"' in adapter
+    assert '"non-admitted"' in adapter
+    assert '"interop contract"' in adapter
+    assert '"--output"' in adapter
+    assert '"--year"' in adapter
+    assert '"--params"' in adapter
+    assert "CreateResponse" not in adapter
+    assert "scaffold-only" not in adapter
+
+    assert "delegates execution to the shared `funding-calculator` CLI" in readme
+    assert "uv run funding-calculator" in readme

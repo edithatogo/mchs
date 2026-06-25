@@ -1,11 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    <OutputType>Exe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <PackageId>Mchs.Bindings.DotNet</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>edithatogo</Authors>
+    <Description>Thin .NET CLI/file adapter for MCHS NWAU contract validation and shared-core interoperability.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/edithatogo/mchs</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/edithatogo/mchs</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RootNamespace>Mchs.Bindings.DotNet</RootNamespace>
     <AssemblyName>Mchs.Bindings.DotNet</AssemblyName>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 </Project>
