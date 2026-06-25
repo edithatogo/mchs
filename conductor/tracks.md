@@ -149,7 +149,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Python Rust Binding Stabilization**
-*Link: [./tracks/python_rust_binding_stabilization_20260512/](./tracks/python_rust_binding_stabilization_20260512/)*
+*Link: [./archive/python_rust_binding_stabilization_20260512/](./archive/python_rust_binding_stabilization_20260512/)*
 *Gate: stabilize pyo3/maturin bindings while keeping Python as the validated public API and Rust-backed paths opt-in until parity is proven.*
 
 ---
@@ -333,37 +333,37 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: HWAU Terminology Migration**
-*Link: [./tracks/hwau_terminology_migration_20260513/](./tracks/hwau_terminology_migration_20260513/)*
+*Link: [./archive/hwau_terminology_migration_20260513/](./archive/hwau_terminology_migration_20260513/)*
 *Gate: Use HWAU as the generic healthcare weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias.*
 
 ---
 
 - [~] **Track: State and Local Price Registry**
-*Link: [./tracks/state_local_price_registry_20260513/](./tracks/state_local_price_registry_20260513/)*
+*Link: [./archive/state_local_price_registry_20260513/](./archive/state_local_price_registry_20260513/)*
 *Gate: Source and version national, state, local, and discounted HWAU price schedules over time with provenance, licence status, and fail-closed support metadata.*
 
 ---
 
 - [~] **Track: Jurisdiction Price Source Index**
-*Link: [./tracks/jurisdiction_price_source_index_20260513/](./tracks/jurisdiction_price_source_index_20260513/)*
+*Link: [./archive/jurisdiction_price_source_index_20260513/](./archive/jurisdiction_price_source_index_20260513/)*
 *Gate: Build a source index for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT before extracting or committing jurisdiction price values.*
 
 ---
 
 - [~] **Track: NSW Funding Model**
-*Link: [./tracks/nsw_funding_model_20260513/](./tracks/nsw_funding_model_20260513/)*
+*Link: [./archive/nsw_funding_model_20260513/](./archive/nsw_funding_model_20260513/)*
 *Gate: Model NSW State Price per NWAU/HWAU, LHD/SHN service agreement notes, adjustments, blocked years, and provenance before applying NSW-specific valuations.*
 
 ---
 
 - [~] **Track: Jurisdiction Funding Model Registry**
-*Link: [./tracks/jurisdiction_funding_model_registry_20260513/](./tracks/jurisdiction_funding_model_registry_20260513/)*
+*Link: [./archive/jurisdiction_funding_model_registry_20260513/](./archive/jurisdiction_funding_model_registry_20260513/)*
 *Gate: Cover NSW, VIC, QLD, WA, SA, TAS, ACT, and NT funding model sources with jurisdiction-specific terminology, provenance, support status, and blocked-source handling.*
 
 ---
 
 - [~] **Track: Parallel Valuation Outputs**
-*Link: [./tracks/parallel_valuation_outputs_20260513/](./tracks/parallel_valuation_outputs_20260513/)*
+*Link: [./archive/parallel_valuation_outputs_20260513/](./archive/parallel_valuation_outputs_20260513/)*
 *Gate: Produce HWAU-only, national, state, local, and discounted valuation outputs in parallel from the same normalized activity result across CLI/file, API, MCP, and OpenAI adapter surfaces.*
 
 ---
@@ -381,7 +381,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Release Evidence Bundle**
-*Link: [./tracks/release_evidence_bundle_20260513/](./tracks/release_evidence_bundle_20260513/)*
+*Link: [./archive/release_evidence_bundle_20260513/](./archive/release_evidence_bundle_20260513/)*
 *Gate: Define required release evidence bundles before any stream, jurisdiction, or surface can be promoted to release-candidate or GA.*
 
 ---
@@ -441,7 +441,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Power Platform Binding**
-*Link: [./tracks/power_platform_binding_20260512/](./tracks/power_platform_binding_20260512/)*
+*Link: [./archive/power_platform_binding_20260512/](./archive/power_platform_binding_20260512/)*
 *Gate: publish Power Platform orchestration as a managed solution/custom connector consumer of the shared calculator contract, never as a formula implementation.*
 
 ---
@@ -453,7 +453,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: NHCDC Cost Report Ingestion**
-*Link: [./tracks/nhcdc_cost_report_ingestion_20260512/](./tracks/nhcdc_cost_report_ingestion_20260512/)*
+*Link: [./archive/nhcdc_cost_report_ingestion_20260512/](./archive/nhcdc_cost_report_ingestion_20260512/)*
 *Gate: ingest public NHCDC cost report appendices and data request specifications with provenance while distinguishing aggregate reports from patient-level costing data.*
 
 ---
@@ -471,13 +471,13 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Roadmap Portfolio Governance Backfill**
-*Link: [./tracks/roadmap_portfolio_governance_backfill_20260512/](./tracks/roadmap_portfolio_governance_backfill_20260512/)*
+*Link: [./archive/roadmap_portfolio_governance_backfill_20260512/](./archive/roadmap_portfolio_governance_backfill_20260512/)*
 *Gate: backfill class, dependency, explicit contract, current-state, and completion-evidence metadata across the expanded Conductor roadmap before further broad implementation claims.*
 
 ---
 
 - [~] **Track: Expert Panel Remediation**
-*Link: [./tracks/expert_panel_remediation_20260512/](./tracks/expert_panel_remediation_20260512/)*
+*Link: [./archive/expert_panel_remediation_20260512/](./archive/expert_panel_remediation_20260512/)*
 *Gate: convert simulated expert-panel findings into explicit track dependencies, gate notes, and remediation priorities before implementing lower-priority bindings or publication expansion.*
 
 ---
@@ -549,19 +549,19 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Strict Quality Gates**
-*Link: [./tracks/strict_quality_gates_20260513/](./tracks/strict_quality_gates_20260513/)*
+*Link: [./archive/strict_quality_gates_20260513/](./archive/strict_quality_gates_20260513/)*
 *Gate: Enforce SOTA formatting, linting, typing, docstring/docs, security, supply-chain, and >90% coverage gates before completion, release, or publication claims.*
 
 ---
 
 - [~] **Track: Multi-Level Agent Execution**
-*Link: [./tracks/multilevel_agent_execution_20260513/](./tracks/multilevel_agent_execution_20260513/)*
+*Link: [./archive/multilevel_agent_execution_20260513/](./archive/multilevel_agent_execution_20260513/)*
 *Gate: Make tracks granular enough for multi-agent and nested-subagent execution with disjoint ownership, handoffs, conductor-review loops, commits, and push gates.*
 
 ---
 
 - [~] **Track: GitHub Repository SOTA Setup**
-*Link: [./tracks/github_repo_sota_setup_20260513/](./tracks/github_repo_sota_setup_20260513/)*
+*Link: [./archive/github_repo_sota_setup_20260513/](./archive/github_repo_sota_setup_20260513/)*
 *Gate: Complete GitHub labels, milestones, branch protections, security settings, homepage, releases, tags, packages, Pages, and publication evidence.*
 
 ---
@@ -573,13 +573,13 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [~] **Track: Recursive SOTA Contract Audit**
-*Link: [./tracks/recursive_sota_contract_audit_20260513/](./tracks/recursive_sota_contract_audit_20260513/)*
+*Link: [./archive/recursive_sota_contract_audit_20260513/](./archive/recursive_sota_contract_audit_20260513/)*
 *Gate: Periodically compare this repository to SOTA scientific/software projects, improve the project contract, and create implementation tracks for gaps.*
 
 ---
 
 - [~] **Track: No-Stub Completion Enforcement**
-*Link: [./tracks/no_stub_completion_enforcement_20260513/](./tracks/no_stub_completion_enforcement_20260513/)*
+*Link: [./archive/no_stub_completion_enforcement_20260513/](./archive/no_stub_completion_enforcement_20260513/)*
 *Gate: Prevent roadmap, scaffold, fake, TODO, placeholder, or mocked-only work from being marked complete without real implementation and validation evidence.*
 
 ---
