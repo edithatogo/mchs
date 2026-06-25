@@ -1,0 +1,1 @@
+.NET generated-artifact note: ignored bin/ and obj/ outputs and removed bindings/dotnet build directories after successful dotnet build validation.
