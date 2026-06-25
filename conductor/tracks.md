@@ -746,8 +746,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Worktree, Branch, and PR Hygiene**
-*Link: [./tracks/worktree_branch_pr_hygiene_20260624/](./tracks/worktree_branch_pr_hygiene_20260624/)*
+- [x] **Track: Worktree, Branch, and PR Hygiene**
+*Link: [./archive/worktree_branch_pr_hygiene_20260624/](./archive/worktree_branch_pr_hygiene_20260624/)*
 *Gate: Standardize clean temporary worktrees, minimal PR slices, branch naming, safe pushes, CI proof, and subagent handoff requirements.*
 
 ---
