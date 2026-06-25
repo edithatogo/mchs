@@ -722,8 +722,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Package Surface Ownership Registry**
-*Link: [./tracks/package_surface_ownership_registry_20260624/](./tracks/package_surface_ownership_registry_20260624/)*
+- [x] **Track: Package Surface Ownership Registry**
+*Link: [./archive/package_surface_ownership_registry_20260624/](./archive/package_surface_ownership_registry_20260624/)*
 *Gate: Register every package, binding, app, docs, and registry surface with owner, manifest, CI gate, support state, release target, and evidence boundary.*
 
 ---

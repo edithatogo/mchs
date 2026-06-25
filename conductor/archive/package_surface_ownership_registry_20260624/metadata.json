@@ -1,0 +1,36 @@
+{
+  "track_id": "package_surface_ownership_registry_20260624",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "data-contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "contracts/repository-topology/package-surfaces.json",
+  "dependencies": [
+    "repository_topology_authority_20260624",
+    "support_status_reconciliation_20260513",
+    "multi_surface_binding_delivery_20260510"
+  ],
+  "completion_evidence": [
+    "contracts/repository-topology/package-surfaces.schema.json",
+    "contracts/repository-topology/package-surfaces.json",
+    "scripts/validate_repository_topology.py",
+    "tests/test_repository_topology_governance.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "description": "Create a machine-readable ownership registry for package, binding, docs, app, and external registry surfaces in the monorepo.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "governance-control",
+    "summary": "Defines the machine-readable package surface ownership registry and validation expectations for package, binding, docs, app, packaging, and registry surfaces."
+  },
+  "gap_register": [
+    {
+      "id": "registry-publication-gates",
+      "status": "externalized",
+      "summary": "External registry publication and reviewer gates remain represented as surface release states, not local registry-contract completion blockers."
+    }
+  ]
+}

@@ -217,6 +217,33 @@ def test_package_surface_registry_covers_required_surfaces_and_manifests() -> No
         }
 
 
+def test_package_surface_registry_conforms_to_declared_schema_shape() -> None:
+    schema = _load_json(
+        ROOT / "contracts" / "repository-topology" / "package-surfaces.schema.json"
+    )
+    registry = _load_json(SURFACES)
+
+    assert set(schema["required"]) <= set(registry)
+    surface_schema = schema["$defs"]["surface"]
+    release_schema = schema["$defs"]["release"]
+    surface_keys = set(surface_schema["properties"])
+    release_keys = set(release_schema["properties"])
+
+    for surface in registry["surfaces"]:
+        assert set(surface_schema["required"]) <= set(surface), surface["id"]
+        assert set(surface) <= surface_keys, surface["id"]
+        for field in ["category", "lifecycle", "support_status", "artifact_policy", "formula_logic"]:
+            assert surface[field] in surface_schema["properties"][field]["enum"], (
+                surface["id"],
+                field,
+            )
+
+        release = surface["release"]
+        assert set(release_schema["required"]) <= set(release), surface["id"]
+        assert set(release) <= release_keys, surface["id"]
+        assert release["registry_state"] in release_schema["properties"]["registry_state"]["enum"]
+
+
 def test_repository_topology_validator_passes_for_current_canonical_repo() -> None:
     result = subprocess.run(
         [sys.executable, str(VALIDATOR), "--json"],
