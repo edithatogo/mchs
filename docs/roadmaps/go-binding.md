@@ -3,9 +3,10 @@
 Roadmap snapshot: 2026-05-13.
 
 This document compares the candidate integration strategies for the Go binding
-workstream and records the initial path, fallback, and guardrails. It is
-roadmap-only: it does not introduce formula logic, and it does not claim a
-production-ready binding.
+workstream and records the initial path, fallback, and guardrails. Local
+service and binding-file adapters now exist as evidence for the path, but this
+document does not claim a public Go module release or a production-ready
+binding.
 
 ## Scope
 
@@ -25,7 +26,10 @@ production-ready binding.
 
 ## Decision
 
-Start with **CLI / Arrow-file interop** as the initial Go strategy.
+Start with **CLI / Arrow-file interop** as the initial Go strategy. The current
+local Go adapter evidence covers service and binding-file boundaries over the
+shared contract; public module release remains gated on registry and parity
+evidence.
 
 Use **gRPC / service** as the fallback when a caller needs online request/
 response behavior, multi-step orchestration, or a persistent endpoint.
@@ -77,5 +81,6 @@ rules are stable enough to justify native embedding.
 - Every Go example must validate against shared golden fixtures.
 - A Go binding that duplicates formula constants, thresholds, or adjustment
   rules is out of scope.
-- Release claims for Go packaging should wait until the chosen contract is
-  stable and parity evidence exists for the shared fixtures.
+- Release claims for Go packaging should wait until registry gates are clear,
+  the chosen contract is stable, and parity evidence exists for the shared
+  fixtures.

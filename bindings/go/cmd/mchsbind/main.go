@@ -9,8 +9,8 @@ import (
 	"io"
 	"os"
 
-	"example.com/mchs-bindings-go/interop"
-	"example.com/mchs-bindings-go/model"
+	"github.com/edithatogo/mchs/bindings/go/interop"
+	"github.com/edithatogo/mchs/bindings/go/model"
 )
 
 func main() {
@@ -26,6 +26,8 @@ func run(ctx context.Context, args []string, stdin io.Reader, stdout, stderr io.
 	}
 
 	switch args[0] {
+	case "execute":
+		return runExecute(ctx, args[1:], stdin, stdout)
 	case "load":
 		return runLoad(ctx, args[1:], stdout)
 	case "save":
@@ -75,8 +77,53 @@ func runSave(ctx context.Context, args []string, stdin io.Reader) error {
 	return interop.JSONFileAdapter{}.Save(ctx, *path, &workbook)
 }
 
+func runExecute(ctx context.Context, args []string, stdin io.Reader, stdout io.Writer) error {
+	fs := flag.NewFlagSet("execute", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	requestPath := fs.String("request", "-", "path to a Go binding request json file, or - for stdin")
+	outputPath := fs.String("output", "-", "path to write a Go binding response json file, or - for stdout")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+
+	request, err := readBindingRequest(ctx, *requestPath, stdin)
+	if err != nil {
+		return err
+	}
+
+	response, err := interop.ServiceAdapter{}.Execute(ctx, request)
+	if err != nil {
+		return err
+	}
+
+	return writeBindingResponse(ctx, *outputPath, stdout, response)
+}
+
+func readBindingRequest(ctx context.Context, path string, stdin io.Reader) (*model.GoBindingRequest, error) {
+	if path != "-" {
+		return interop.BindingFileAdapter{}.LoadRequest(ctx, path)
+	}
+
+	var request model.GoBindingRequest
+	if err := json.NewDecoder(stdin).Decode(&request); err != nil {
+		return nil, fmt.Errorf("decode binding request from stdin: %w", err)
+	}
+	return &request, nil
+}
+
+func writeBindingResponse(ctx context.Context, path string, stdout io.Writer, response *model.GoBindingResponse) error {
+	if path != "-" {
+		return interop.BindingFileAdapter{}.SaveResponse(ctx, path, response)
+	}
+
+	enc := json.NewEncoder(stdout)
+	enc.SetIndent("", "  ")
+	return enc.Encode(response)
+}
+
 func usage(stderr io.Writer) error {
 	_, _ = fmt.Fprintln(stderr, "usage:")
+	_, _ = fmt.Fprintln(stderr, "  mchsbind execute --request <file|-> --output <file|->")
 	_, _ = fmt.Fprintln(stderr, "  mchsbind load --path <file>")
 	_, _ = fmt.Fprintln(stderr, "  mchsbind save --path <file> < input.json")
 	return errors.New("invalid command")

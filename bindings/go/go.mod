@@ -1,3 +1,3 @@
-module example.com/mchs-bindings-go
+module github.com/edithatogo/mchs/bindings/go
 
 go 1.22

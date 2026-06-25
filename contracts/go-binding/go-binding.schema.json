@@ -438,7 +438,7 @@
             "type": "string",
             "enum": [
               "blocked",
-              "scaffold_ready",
+              "private_ready",
               "ready"
             ]
           },
