@@ -1,0 +1,42 @@
+{
+  "track_id": "contract_schema_export_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "data-contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "versioned public contract and schema export artifacts under contracts/canonical and contracts/release",
+  "support_scope": "Versioned public schema-export governance, deterministic schema-export requirements, schema inventory, binding conformance references, and current canonical/release schema artifacts used by downstream contract tracks.",
+  "gap_register": [
+    {
+      "gap": "The original spec names `contracts/schemas/` as the output directory, while the current implemented schema authority lives under `contracts/canonical/` and `contracts/release/`.",
+      "status": "accepted-non-blocking",
+      "rationale": "The canonical contract foundation superseded the older output layout; dependent tracks now consume canonical and release schema paths."
+    },
+    {
+      "gap": "Arrow schema files are documented as a boundary but not separately committed under `contracts/arrow/`.",
+      "status": "accepted-non-blocking",
+      "rationale": "Arrow/Parquet batch contract evidence is handled by the archived Arrow/Polars and CLI/file contract tracks."
+    }
+  ],
+  "dependencies": [
+    "public_api_contract_20260504",
+    "reference_data_manifest_schema_20260512",
+    "formula_parameter_bundle_pipeline_20260512",
+    "polyglot_rust_core_roadmap_20260512"
+  ],
+  "completion_evidence": [
+    "contracts/canonical/calculator.schema.json",
+    "contracts/canonical/diagnostics.schema.json",
+    "contracts/canonical/provenance.schema.json",
+    "contracts/canonical/support-status.schema.json",
+    "contracts/canonical/evidence.schema.json",
+    "contracts/release/evidence-bundle.schema.json",
+    "tests/test_contract_schema_export.py",
+    "conductor/archive/contract_schema_export_20260512/contract_schema_export_spec.md"
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Export versioned public schemas for manifests, calculator inputs/outputs, diagnostics, provenance, and evidence records.",
+  "no_stub_enforce": true
+}

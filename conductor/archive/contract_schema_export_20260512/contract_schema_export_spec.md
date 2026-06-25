@@ -125,8 +125,8 @@ that explains:
 ## References
 
 - `conductor/tracks/public_api_contract_20260504/`
-- `conductor/tracks/reference_data_manifest_schema_20260512/`
-- `conductor/tracks/formula_parameter_bundle_pipeline_20260512/`
+- `conductor/archive/reference_data_manifest_schema_20260512/`
+- `conductor/archive/formula_parameter_bundle_pipeline_20260512/`
 - `conductor/validation-vocabulary.md`
 - `nwau_py/reference_manifest.py`
 - `contracts/` directory structure

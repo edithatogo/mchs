@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "contract_schema_export_20260512"
+TRACK = ROOT / "conductor" / "archive" / "contract_schema_export_20260512"
 TRACKS_REGISTRY = ROOT / "conductor" / "tracks.md"
 
 SAMPLE_CALCULATOR_INPUT_SCHEMA: dict[str, Any] = {
@@ -166,6 +166,7 @@ def test_contract_schema_export_track_files_exist():
         TRACK / "plan.md",
         TRACK / "index.md",
         TRACK / "metadata.json",
+        TRACK / "review.md",
         TRACK / "contract_schema_export_spec.md",
     ]:
         assert path.exists(), path
@@ -174,10 +175,17 @@ def test_contract_schema_export_track_files_exist():
 def test_contract_schema_export_track_metadata():
     metadata = json.loads(_read_text(TRACK / "metadata.json"))
     assert metadata["track_id"] == "contract_schema_export_20260512"
+    assert metadata["status"] == "completed"
     assert metadata["track_class"] == "data-contract"
+    assert metadata["current_state"] == "complete-with-gaps"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
+    assert "contracts/canonical/calculator.schema.json" in metadata[
+        "completion_evidence"
+    ]
 
 
 def test_contract_schema_export_in_tracks_registry():
     registry = _read_text(TRACKS_REGISTRY)
     assert "Contract Schema Export" in registry
-    assert "contract_schema_export_20260512" in registry
+    assert "./archive/contract_schema_export_20260512/" in registry

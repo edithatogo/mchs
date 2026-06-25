@@ -501,7 +501,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Contract Schema Export**
-*Link: [./tracks/contract_schema_export_20260512/](./tracks/contract_schema_export_20260512/)*
+*Link: [./archive/contract_schema_export_20260512/](./archive/contract_schema_export_20260512/)*
 *Gate: export versioned schemas for calculator contracts, manifests, evidence, diagnostics, and provenance before implementing broad bindings.*
 
 ---
