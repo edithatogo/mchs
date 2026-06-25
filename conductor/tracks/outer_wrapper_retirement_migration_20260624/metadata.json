@@ -16,6 +16,27 @@
     "scripts/validate_repository_topology.py",
     "tests/test_repository_topology_governance.py"
   ],
+  "support_scope": {
+    "state": "in-progress",
+    "included": [
+      "Track definition for outer wrapper inventory, preservation, migration manifest, and retirement decision.",
+      "Repository topology validator and governance tests that keep the canonical-root policy visible.",
+      "Explicit dependency on topology authority, generated artifact retention, and worktree hygiene tracks."
+    ],
+    "excluded": [
+      "Completed outer wrapper inventory.",
+      "Migration manifest with checksums and preservation evidence.",
+      "Final wrapper deletion/archive/formalization decision.",
+      "Outer-root validation result after migration."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "wrapper-inventory-and-migration-manifest",
+      "status": "in-progress",
+      "description": "The track is intentionally new/in-progress; migration and retirement work remains open until source/evidence slices are preserved and the wrapper decision is recorded."
+    }
+  ],
   "publication_status": "not-applicable",
   "created_at": "2026-06-24T02:50:05Z",
   "updated_at": "2026-06-24T02:50:05Z",

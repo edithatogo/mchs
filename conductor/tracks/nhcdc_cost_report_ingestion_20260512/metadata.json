@@ -3,14 +3,35 @@
   "type": "feature",
   "status": "completed",
   "track_class": "costing",
-  "current_state": "complete",
-  "primary_contract": "Track nhcdc_cost_report_ingestion_20260512 contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "NHCDC ingestion pipeline documentation and provenance contract",
   "dependencies": [],
   "completion_evidence": [
     "conductor/tracks/nhcdc_cost_report_ingestion_20260512/nhcdc_ingestion_pipeline.md",
     "conductor/tracks/nhcdc_cost_report_ingestion_20260512/spec.md",
     "conductor/tracks/nhcdc_cost_report_ingestion_20260512/plan.md",
-    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/index.md"
+    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/index.md",
+    "tests/test_nhcdc_ingestion.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "NHCDC source inventory, provenance, normalization, gap handling, and interpretation-limit documentation.",
+      "Cost bucket registry linkage and pipeline design for CSV, XLSX, Arrow, and Parquet outputs.",
+      "Tests proving the pipeline documentation includes required fields and limits."
+    ],
+    "excluded": [
+      "Executable NHCDC appendix parser.",
+      "At least one normalized manifest/output fixture from a public NHCDC appendix.",
+      "Patient-level costing data ingestion or compliance certification claims."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "executable-ingestion-fixture",
+      "status": "implementation-gap",
+      "description": "The current evidence is documentation-only; archive requires at least one manifest-backed normalized NHCDC appendix ingestion fixture and parser validation."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",

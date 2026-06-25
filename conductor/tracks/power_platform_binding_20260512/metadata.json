@@ -14,6 +14,32 @@
     "app-surface-model",
     "capability-validator"
   ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Local Power Platform binding contract and connector-boundary validation.",
+      "Calculator capability matrix for 2013 through 2026 source and implementation states.",
+      "App-surface model and local validator for orchestration-only behavior.",
+      "ALM workflow documentation and local-safe contract tests."
+    ],
+    "excluded": [
+      "Tenant-exported managed solution zip.",
+      "Credentialed Power Platform solution checker, import, publish, and environment validation proof.",
+      "Live Power Apps, Dataverse, or custom connector runtime evidence."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "tenant-exported-solution",
+      "status": "external-tenant-gate",
+      "description": "Archive requires tenant-exported managed solution evidence and solution checker/import/publish proof from a credentialed Power Platform environment."
+    },
+    {
+      "id": "live-runtime-proof",
+      "status": "external-tenant-gate",
+      "description": "Local contracts pass, but live Power Apps/Dataverse/custom connector runtime evidence remains unavailable in this checkout."
+    }
+  ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-26T00:00:00Z",
