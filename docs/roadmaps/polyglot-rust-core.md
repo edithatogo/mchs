@@ -44,7 +44,7 @@ Arrow/Parquet surfaces are stable.
 | GA | [Rust Core GA](../../conductor/tracks/rust_core_ga_20260513/spec.md) | Makes Rust GA the immediate priority, defers lower-priority adapters, and defines the evidence gates for release-candidate and GA promotion. |
 | Contract | [Canonical Contract Foundation](../../conductor/archive/canonical_contract_foundation_20260513/spec.md) | Defines canonical schemas before CLI/file, API, MCP, OpenAI adapter, and language surfaces. |
 | Contract | [Support Status Matrix](../../conductor/archive/support_status_matrix_20260513/spec.md) | Defines machine-readable statuses for streams, years, jurisdictions, surfaces, runtimes, and languages. |
-| Contract | [CLI/File Contracts](../../conductor/tracks/cli_file_contracts_20260513/spec.md) | Defines the stable batch and automation boundary for Rust Core GA. |
+| Contract | [CLI/File Contracts](../../conductor/archive/cli_file_contracts_20260513/spec.md) | Defines the stable batch and automation boundary for Rust Core GA. |
 | Contract | [HTTP API Contract](../../conductor/tracks/http_api_contract_20260513/spec.md) | Defines the OpenAPI 3.1 domain API over canonical schemas. |
 | Contract | [MCP Contract](../../conductor/tracks/mcp_contract_20260513/spec.md) | Defines a Rust-backed agent-facing MCP server with tools and resources over canonical schemas. |
 | Adapter | [OpenAI Tool Adapter](../../conductor/tracks/openai_tool_adapter_20260513/spec.md) | Defines a thin OpenAI tool adapter without making the calculator an LLM endpoint. |

@@ -1,0 +1,36 @@
+{
+  "track_id": "cli_file_contracts_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
+  "support_scope": "Contract documentation and synthetic fixtures for the CLI/file batch boundary, covering command names, global flags, stdin/stdout/stderr behavior, stable exit codes, JSON manifest plus Arrow/Parquet batch file conventions, diagnostics, provenance, and no adapter-owned formula logic.",
+  "gap_register": [
+    {
+      "gap": "This track defines the CLI/file contract; it does not guarantee every command is implemented in the production CLI.",
+      "status": "accepted-non-blocking",
+      "rationale": "Runtime implementation and Rust Core GA execution behavior are owned by dependent implementation tracks."
+    },
+    {
+      "gap": "Arrow/Parquet batch execution is contract-defined but broader release evidence remains downstream.",
+      "status": "accepted-non-blocking",
+      "rationale": "The contract is complete, while release-boundary and Rust-core tracks own publication and full execution proof."
+    }
+  ],
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "rust_core_ga_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Define stable CLI and file contracts for batch execution, validation, diagnostics, and provenance.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/cli-file/*.md",
+    "contracts/cli-file/examples/*.json",
+    "tests/test_core_contract_surface_tracks.py",
+    "contracts/canonical/index.md"
+  ]
+}

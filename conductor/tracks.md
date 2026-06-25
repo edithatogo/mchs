@@ -303,7 +303,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: CLI/File Contracts**
-*Link: [./tracks/cli_file_contracts_20260513/](./tracks/cli_file_contracts_20260513/)*
+*Link: [./archive/cli_file_contracts_20260513/](./archive/cli_file_contracts_20260513/)*
 *Gate: Define stable CLI commands, exit codes, stdin/stdout/stderr behavior, JSON manifests, Arrow/Parquet batch files, diagnostics, and provenance before promoting Rust execution surfaces.*
 
 ---

@@ -20,6 +20,7 @@ TRACK_IDS = [
 ARCHIVED_TRACK_IDS = {
     "audience_language_strategy_20260513",
     "canonical_contract_foundation_20260513",
+    "cli_file_contracts_20260513",
 }
 
 
