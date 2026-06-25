@@ -3,8 +3,11 @@ from __future__ import annotations
 import json
 from io import BytesIO
 from http import HTTPStatus
+from pathlib import Path
 
 from nwau_py import mcp_server
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _structured(result):
@@ -90,6 +93,24 @@ def test_mcp_calculate_does_not_duplicate_formula_logic():
     assert payload["result"] is None
     assert payload["diagnostics"]["diagnostics"][0]["code"] == "MCHS-WARN-MCP-001"
     assert "delegated" in payload["diagnostics"]["diagnostics"][0]["message"]
+
+
+def test_mcp_contract_examples_match_delegating_runtime_boundary():
+    tools = (ROOT / "contracts" / "mcp" / "tools.md").read_text(encoding="utf-8")
+    calculate = json.loads(
+        (ROOT / "contracts" / "mcp" / "examples" / "calculate-pass.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert "icu-bed-day" not in tools
+    assert "result: null" in tools
+    assert "Formula execution is delegated" in tools
+    assert calculate["input"]["calculatorId"] in {"acute", "ed"}
+    assert calculate["output"]["result"] is None
+    assert calculate["output"]["diagnostics"]["diagnostics"][0]["code"] == (
+        "MCHS-WARN-MCP-001"
+    )
 
 
 def test_mcp_calculate_and_explain_surface_validation_errors():

@@ -64,7 +64,7 @@ Returns an array of supported year strings.
 
 `mchs://evidence/{bundleId}`
 
-Returns an `EvidenceBundle` object. The bundle ID is typically returned as part of a calculation response.
+Returns an `EvidenceBundle` object. For the current stdio MCP boundary, evidence bundles describe contract, release, support-scope, and publication evidence; calculation responses do not imply that formula execution occurred inside the MCP adapter.
 
 ## Resource Discovery
 

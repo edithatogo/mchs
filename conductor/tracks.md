@@ -315,7 +315,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: MCP Contract**
-*Link: [./tracks/mcp_contract_20260513/](./tracks/mcp_contract_20260513/)*
+*Link: [./archive/mcp_contract_20260513/](./archive/mcp_contract_20260513/)*
 *Gate: Expose calculator tools and resources for agents through MCP over canonical schemas, preserving diagnostics and provenance without creating a separate formula contract.*
 
 ---

@@ -1,14 +1,10 @@
 {
   "tool": "mchs.calculate",
   "input": {
-    "calculatorId": "ed-presentation",
+    "calculatorId": "ed",
     "year": "2025-26",
     "inputs": {
-      "age": 34,
-      "triageCategory": 3,
-      "arrivalMode": "ambulance",
-      "diagnosisCode": "R10.4",
-      "departureDisposition": "admitted"
+      "triageCategory": 3
     },
     "options": {
       "includeEvidence": true,
@@ -16,44 +12,27 @@
     }
   },
   "output": {
-    "calculatorId": "ed-presentation",
+    "calculatorId": "ed",
     "year": "2025-26",
-    "result": {
-      "totalCost": 675.00,
-      "costBreakdown": {
-        "staffing": 420.00,
-        "consumables": 95.00,
-        "clinical": 80.00,
-        "overhead": 80.00
-      },
-      "nwau": 0.15,
-      "currency": "AUD"
-    },
+    "result": null,
     "diagnostics": {
       "diagnostics": [
         {
-          "severity": "info",
-          "code": "MCHS-INF-001",
-          "message": "Calculation completed successfully"
+          "severity": "warning",
+          "code": "MCHS-WARN-MCP-001",
+          "message": "MCP server validated the request boundary. Formula execution is delegated to the canonical runtime and is not duplicated in the MCP adapter."
         }
       ],
       "summary": {
         "errorCount": 0,
-        "warningCount": 0,
-        "infoCount": 1
+        "warningCount": 1,
+        "infoCount": 0
       }
     },
-    "evidence": {
-      "bundleId": "evb-ed-2025-q2",
-      "calculatorId": "ed-presentation",
-      "references": [
-        {
-          "id": "ref-nwa-2025-table-5.1",
-          "type": "cost_weight",
-          "title": "ED Urgency Cost Weights 2025-26"
-        }
-      ],
-      "costWeightVersion": "CW-2025-v2"
+    "provenance": {
+      "server": "mchs",
+      "serverVersion": "0.2.2",
+      "transport": "stdio"
     }
   }
 }

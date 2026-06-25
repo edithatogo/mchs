@@ -1,14 +1,10 @@
 {
   "tool": "mchs.validate_input",
   "input": {
-    "calculatorId": "icu-bed-day",
+    "calculatorId": "acute",
     "year": "2025-26",
     "inputs": {
-      "age": 999,
-      "drgCode": "INVALID",
-      "losDays": -1,
-      "ventilatorHours": 9999,
-      "admissionType": "unknown"
+      "DRG": ""
     }
   },
   "output": {
@@ -18,26 +14,9 @@
         {
           "severity": "error",
           "code": "MCHS-ERR-VAL-001",
-          "message": "Field 'age' value 999 exceeds maximum allowed value of 130",
-          "path": "/inputs/age",
-          "value": 999,
-          "rule": "range-check"
-        },
-        {
-          "severity": "error",
-          "code": "MCHS-ERR-VAL-002",
-          "message": "Field 'drgCode' value 'INVALID' is not a valid AR-DRG code",
-          "path": "/inputs/drgCode",
-          "value": "INVALID",
-          "rule": "enum-check"
-        },
-        {
-          "severity": "error",
-          "code": "MCHS-ERR-VAL-003",
-          "message": "Field 'losDays' value -1 is negative",
-          "path": "/inputs/losDays",
-          "value": -1,
-          "rule": "range-check"
+          "message": "Input payload did not satisfy the calculator boundary contract.",
+          "path": "/inputs",
+          "rule": "shape-check"
         }
       ],
       "summary": {

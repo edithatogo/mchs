@@ -1,0 +1,27 @@
+{
+  "track_id": "mcp_contract_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "http_api_contract_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Define a Rust-backed MCP contract that exposes calculator tools and resources over canonical schemas.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "local_completion": "The MCP contract is locally complete as a boundary contract: it defines tool/resource shapes, examples, and validation rules without duplicating formula logic.",
+    "external_gate": "closed for contract definition; registry publication evidence is tracked separately by MCP registry tracks.",
+    "runtime_support_claim": "The current stdio MCP adapter validates and delegates calculation requests. It does not claim in-adapter formula execution."
+  },
+  "gap_register": [],
+  "completion_evidence": [
+    "contracts/mcp/*.md",
+    "contracts/mcp/examples/*.json"
+  ]
+}

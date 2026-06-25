@@ -25,9 +25,9 @@ All parameters are optional. If omitted, returns all calculators.
 ```json
 [
   {
-    "id": "icu-bed-day",
-    "displayName": "ICU Bed-Day",
-    "description": "Calculates the micro-cost of a single ICU bed-day",
+    "id": "acute",
+    "displayName": "Acute admitted care",
+    "description": "Boundary adapter for acute admitted-care calculator requests",
     "version": "1.2.0",
     "supportedStreams": ["admitted_acute"],
     "supportedYears": ["2025-26", "2026-27"],
@@ -47,7 +47,7 @@ Retrieve the JSON Schema for a calculator's inputs or outputs.
 
 ```json
 {
-  "calculatorId": "icu-bed-day",
+  "calculatorId": "acute",
   "direction": "input"
 }
 ```
@@ -69,14 +69,10 @@ Validate input data against a calculator's input schema without executing a calc
 
 ```json
 {
-  "calculatorId": "icu-bed-day",
+  "calculatorId": "acute",
   "year": "2025-26",
   "inputs": {
-    "age": 65,
-    "drgCode": "A01A",
-    "losDays": 4,
-    "ventilatorHours": 12,
-    "admissionType": "emergency"
+    "DRG": "A01A"
   }
 }
 ```
@@ -103,20 +99,16 @@ Validate input data against a calculator's input schema without executing a calc
 
 ## `mchs.calculate`
 
-Run a micro-costing calculation.
+Validate a calculation request at the MCP boundary and delegate formula execution to the canonical runtime. The MCP adapter must not duplicate calculator formula logic; current stdio responses therefore return `result: null` with an explicit delegation diagnostic unless a downstream runtime execution result is added by a later contract.
 
 **Input:**
 
 ```json
 {
-  "calculatorId": "icu-bed-day",
+  "calculatorId": "acute",
   "year": "2025-26",
   "inputs": {
-    "age": 65,
-    "drgCode": "A01A",
-    "losDays": 4,
-    "ventilatorHours": 12,
-    "admissionType": "emergency"
+    "DRG": "A01A"
   },
   "options": {
     "includeEvidence": true,
@@ -129,23 +121,20 @@ Run a micro-costing calculation.
 
 ```json
 {
-  "calculatorId": "icu-bed-day",
+  "calculatorId": "acute",
   "year": "2025-26",
-  "result": {
-    "totalCost": 4520.75,
-    "costBreakdown": { "nursing": 2100.00, "medical": 875.50 },
-    "nwau": 4.85,
-    "currency": "AUD"
+  "result": null,
+  "diagnostics": {
+    "diagnostics": [
+      {
+        "severity": "warning",
+        "code": "MCHS-WARN-MCP-001",
+        "message": "MCP server validated the request boundary. Formula execution is delegated to the canonical runtime and is not duplicated in the MCP adapter."
+      }
+    ],
+    "summary": { "errorCount": 0, "warningCount": 1, "infoCount": 0 }
   },
-  "diagnostics": { "diagnostics": [], "summary": { "errorCount": 0, "warningCount": 0, "infoCount": 1 } },
-  "evidence": { "bundleId": "evb-...", "calculatorId": "icu-bed-day", "references": [], "costWeightVersion": "CW-2025-v2" },
-  "explanation": {
-    "calculatorId": "icu-bed-day",
-    "year": "2025-26",
-    "steps": [
-      { "step": 1, "label": "Identify AR-DRG weight", "description": "...", "value": "4.85" }
-    ]
-  }
+  "provenance": { "server": "mchs", "transport": "stdio" }
 }
 ```
 
@@ -153,20 +142,16 @@ Run a micro-costing calculation.
 
 ## `mchs.explain_result`
 
-Return a step-by-step explanation of how a result would be computed for given inputs.
+Return the MCP boundary explanation for a validated request.
 
 **Input:**
 
 ```json
 {
-  "calculatorId": "icu-bed-day",
+  "calculatorId": "acute",
   "year": "2025-26",
   "inputs": {
-    "age": 65,
-    "drgCode": "A01A",
-    "losDays": 4,
-    "ventilatorHours": 12,
-    "admissionType": "emergency"
+    "DRG": "A01A"
   }
 }
 ```

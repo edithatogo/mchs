@@ -1,6 +1,6 @@
 # MCHS MCP Contract
 
-This directory defines the Model Context Protocol (MCP) surface contract for the Micro-Costing Health Services (MCHS) system. MCP enables AI assistants to discover and interact with micro-costing calculators, run calculations, and retrieve evidence.
+This directory defines the Model Context Protocol (MCP) surface contract for the Micro-Costing Health Services (MCHS) system. MCP enables AI assistants to discover calculator metadata, validate request boundaries, delegate calculation requests to the canonical runtime, and retrieve evidence.
 
 ## Documents
 
@@ -17,7 +17,7 @@ This directory defines the Model Context Protocol (MCP) surface contract for the
 - All tool input/output shapes conform to the canonical JSON Schemas in `contracts/canonical/`.
 - Tools are idempotent where possible.
 - Resources are read-only and represent static or semi-static data.
-- No formula logic is exposed — tools delegate to the canonical calculation engine.
+- No formula logic is exposed; tools validate MCP request boundaries and delegate calculation execution to the canonical runtime.
 
 ## Registry Publication Targets
 
