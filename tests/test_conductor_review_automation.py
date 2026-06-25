@@ -27,7 +27,7 @@ OPEN_TRACK_PLANS = [
     / "tracks"
     / "rust_ci_supply_chain_hardening_20260510"
     / "plan.md",
-    ROOT / "conductor" / "tracks" / "rust_core_architecture_20260510" / "plan.md",
+    _track_plan("rust_core_architecture_20260510"),
 ]
 
 
