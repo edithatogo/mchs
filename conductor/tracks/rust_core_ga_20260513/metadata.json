@@ -1,12 +1,17 @@
 {
   "track_id": "rust_core_ga_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "core",
   "priority": "immediate",
-  "current_state": "roadmap-created",
+  "current_state": "complete",
   "parallelism": "depth-2",
-  "workstreams": ["rust-kernel", "surface-contracts", "parity-cicd", "governance-docs"],
+  "workstreams": [
+    "rust-kernel",
+    "surface-contracts",
+    "parity-cicd",
+    "governance-docs"
+  ],
   "primary_contract": "docs/roadmaps/rust-core-ga.md",
   "dependencies": [
     "abstraction_doctrine_enforcement_20260512",
@@ -22,6 +27,21 @@
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Make Rust Core GA the immediate priority and defer lower-priority adapter expansion until release-candidate evidence exists."
+  "updated_at": "2026-05-24T08:30:22Z",
+  "description": "Make Rust Core GA the immediate priority and defer lower-priority adapter expansion until release-candidate evidence exists.",
+  "completion_evidence": [
+    "rust/crates/nwau-core/src/lib.rs",
+    "rust/crates/nwau-core/src/acute.rs",
+    "rust/crates/nwau-core/src/kernels.rs",
+    "rust/crates/nwau-py/src/lib.rs",
+    "rust/crates/nwau-c-abi/src/lib.rs",
+    "contracts/canonical/calculator.schema.json",
+    "contracts/cli-file/README.md",
+    "contracts/http-api/openapi.yaml",
+    "contracts/mcp/README.md",
+    "contracts/openai-adapter/tool-definitions.md",
+    ".github/workflows/rust-ci.yml",
+    ".github/workflows/release-rust.yml",
+    "tests/test_rust_parity"
+  ]
 }

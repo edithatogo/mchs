@@ -1,4 +1,4 @@
-# Plan: GitHub Pages Web App Prototype
+# Plan: GitHub Pages Public Demo Readiness
 
 ## Phase 1: Demo Architecture and Boundary [checkpoint: c762b81]
 
@@ -12,17 +12,17 @@
     - [x] Define the secure service boundary for any future real-data workflow outside GitHub Pages
 - [x] Task: Conductor - User Manual Verification 'Demo Architecture and Boundary' (Protocol in workflow.md) [c762b81]
 
-## Phase 2: Prototype Shell [checkpoint: c762b81]
+## Phase 2: Demo Shell [checkpoint: c762b81]
 
 - [x] Task: Write UI smoke tests [c762b81]
     - [x] Verify calculator/year selection from metadata
     - [x] Verify synthetic fixture execution or display
     - [x] Verify real-data entry points are absent from the Pages demo
-- [x] Task: Build prototype shell [c762b81]
+- [x] Task: Build demo shell [c762b81]
     - [x] Add GitHub Pages build/deploy path
     - [x] Add fixture-backed demonstration workflow
     - [x] Consume public contract metadata for supported calculators and fields
-- [x] Task: Conductor - User Manual Verification 'Prototype Shell' (Protocol in workflow.md) [c762b81]
+- [x] Task: Conductor - User Manual Verification 'Demo Shell' (Protocol in workflow.md) [c762b81]
 
 ## Phase 3: Secure Real-Data Boundary [checkpoint: c762b81]
 

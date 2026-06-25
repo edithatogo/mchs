@@ -1,0 +1,22 @@
+{
+  "track_id": "no_stub_completion_enforcement_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "validator",
+  "current_state": "complete-with-gaps",
+  "no_stub_enforce": true,
+  "primary_contract": "completion evidence and anti-placeholder gate",
+  "dependencies": ["roadmap-governance.md", "workflow.md"],
+  "completion_evidence": [
+    "conductor/tracks/no_stub_completion_enforcement_20260513/spec.md",
+    "conductor/tracks/no_stub_completion_enforcement_20260513/plan.md",
+    "conductor/tracks/no_stub_completion_enforcement_20260513/index.md",
+    "conductor/track-archive-policy.md",
+    "conductor/workflow.md",
+    "conductor/roadmap-governance.md"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Prevent agents from marking tracks complete when they only created stubs, fakes, scaffolds, TODOs, or docs-only placeholders."
+}

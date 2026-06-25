@@ -1,10 +1,10 @@
 {
   "track_id": "parallel_valuation_outputs_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "calculation-output",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -14,5 +14,13 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Produce HWAU-only, national, state, local, and discounted valuation outputs in parallel from the same normalized activity result."
+  "description": "Produce HWAU-only, national, state, local, and discounted valuation outputs in parallel from the same normalized activity result.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/parallel_valuation_outputs_20260513/index.md",
+    "conductor/tracks/parallel_valuation_outputs_20260513/spec.md",
+    "conductor/tracks/parallel_valuation_outputs_20260513/plan.md",
+    "conductor/tracks/hwau_terminology_migration_20260513/index.md",
+    "docs/roadmaps/pricing-and-hwau-strategy.md"
+  ]
 }

@@ -1,10 +1,10 @@
 {
   "track_id": "openai_tool_adapter_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "adapter",
   "priority": "near-term",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
   "dependencies": [
     "canonical_contract_foundation_20260513",
@@ -13,5 +13,9 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Create an OpenAI-compatible tool adapter over the API/MCP contracts without making the calculator an LLM endpoint."
+  "description": "Create an OpenAI-compatible tool adapter over the API/MCP contracts without making the calculator an LLM endpoint.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/openai-adapter/*.md"
+  ]
 }

@@ -1,10 +1,10 @@
 {
   "track_id": "jurisdiction_price_source_index_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/jurisdiction-price-source-index.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -13,5 +13,11 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Create a source index for jurisdiction price models before extracting values."
+  "description": "Create a source index for jurisdiction price models before extracting values.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/jurisdiction_price_source_index_20260513/index.md",
+    "conductor/tracks/jurisdiction_price_source_index_20260513/spec.md",
+    "conductor/tracks/jurisdiction_price_source_index_20260513/plan.md"
+  ]
 }

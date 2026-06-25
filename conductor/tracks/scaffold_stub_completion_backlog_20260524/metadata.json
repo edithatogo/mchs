@@ -1,0 +1,33 @@
+{
+  "track_id": "scaffold_stub_completion_backlog_20260524",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "governance",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "conductor/no-stub-policy.md",
+  "dependencies": [
+    "no_stub_completion_enforcement_20260513",
+    "deferred_surface_cleanup_20260513",
+    "support_status_reconciliation_20260513",
+    "contract_enforcement_harness_20260513"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-24T08:30:22Z",
+  "updated_at": "2026-05-24T08:30:22Z",
+  "description": "Create an executable remediation backlog that brings scaffold-only, stub-only, complete-with-gaps, and overclaimed surfaces to validated completion or truthfully reclassifies them.",
+  "no_stub_enforce": true,
+  "completion_evidence_required": [
+    "conductor/scripts/stub_detector.py --root microcosting_healthservices --json reports zero unresolved findings or records explicit non-completion states",
+    "Every retained scaffold surface has an owner, target state, validation command, and follow-on implementation track",
+    "No complete track relies only on roadmap, placeholder, TODO, mock-only, or generated scaffold evidence",
+    "README, support matrix, registry status, and docs use the same support-state vocabulary"
+  ],
+  "completion_evidence": [
+    "conductor/scripts/stub_detector.py",
+    "tests/test_stub_detector.py",
+    "tests/test_scaffold_stub_completion_backlog_track.py",
+    "docs/roadmaps/scaffold-stub-completion-backlog.md",
+    "docs/roadmaps/deferred-surface-status.md"
+  ]
+}

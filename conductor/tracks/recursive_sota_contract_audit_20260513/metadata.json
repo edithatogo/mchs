@@ -1,0 +1,21 @@
+{
+  "track_id": "recursive_sota_contract_audit_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "audit",
+  "current_state": "complete",
+  "primary_contract": "recurring SOTA software-development contract",
+  "dependencies": [
+    "conductor_requirements_design_authority_20260513",
+    "strict_quality_gates_20260513"
+  ],
+  "completion_evidence": [
+    "conductor/requirements.md (SHOULD-003)",
+    "conductor/design.md (recursive audit flow)"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Periodically compare the repo against SOTA scientific/software project practices, update the project contract, and spawn remediation tracks.",
+  "no_stub_enforce": true
+}

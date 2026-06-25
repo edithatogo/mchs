@@ -1,10 +1,10 @@
 {
   "track_id": "rust_crate_boundary_rename_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "architecture",
   "priority": "near-term",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/rust-crate-boundaries.md",
   "dependencies": [
     "hwau_terminology_migration_20260513",
@@ -12,5 +12,12 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Plan Rust crate boundaries and a careful NWAU-to-HWAU public API migration without disrupting active Rust implementation work."
+  "description": "Plan Rust crate boundaries and a careful NWAU-to-HWAU public API migration without disrupting active Rust implementation work.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/rust_crate_boundary_rename_20260513/index.md",
+    "docs/roadmaps/rust-crate-boundaries.md",
+    "conductor/tracks/rust_crate_boundary_rename_20260513/plan.md",
+    "conductor/tracks/rust_crate_boundary_rename_20260513/spec.md"
+  ]
 }

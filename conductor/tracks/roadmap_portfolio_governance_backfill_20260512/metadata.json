@@ -14,5 +14,6 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-12T00:00:00Z",
-  "description": "Backfill roadmap-governance class, dependency, contract, and completion-evidence metadata across expanded Conductor tracks."
+  "description": "Backfill roadmap-governance class, dependency, contract, and completion-evidence metadata across expanded Conductor tracks.",
+  "no_stub_enforce": true
 }

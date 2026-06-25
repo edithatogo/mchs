@@ -16,4 +16,4 @@ Define the versioned public contract package that becomes the next delivery gate
 - Contract documentation exists for at least one calculator.
 - The contract maps to Python API and CLI behavior.
 - The contract is suitable for OpenAPI or C# model generation later.
-- The calculator core track is blocked on this contract definition before adapter implementation expands.
+- Calculator core and downstream adapter expansion remain gated by this contract definition.

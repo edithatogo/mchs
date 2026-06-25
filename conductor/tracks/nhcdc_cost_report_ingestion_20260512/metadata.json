@@ -1,18 +1,20 @@
 {
   "track_id": "nhcdc_cost_report_ingestion_20260512",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "costing",
-  "current_state": "roadmap-only",
+  "current_state": "complete",
   "primary_contract": "Track nhcdc_cost_report_ingestion_20260512 contract",
   "dependencies": [],
   "completion_evidence": [
-    "docs",
-    "workflows",
-    "tests"
+    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/nhcdc_ingestion_pipeline.md",
+    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/spec.md",
+    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/plan.md",
+    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/index.md"
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T00:00:00Z",
-  "description": "Add ingestion and provenance support for public NHCDC cost report appendix tables and data request specifications."
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add ingestion and provenance support for public NHCDC cost report appendix tables and data request specifications.",
+  "no_stub_enforce": true
 }

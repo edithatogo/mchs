@@ -1,10 +1,10 @@
 {
   "track_id": "hwau_terminology_migration_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "domain-model",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "canonical_contract_foundation_20260513",
@@ -12,5 +12,10 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Adopt HWAU as the generic weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias."
+  "description": "Adopt HWAU as the generic weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "docs/roadmaps/audience-language-strategy.md (HWAU migration sequencing)",
+    "contracts/canonical/ (nwau/hwau schema fields)"
+  ]
 }

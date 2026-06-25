@@ -1,10 +1,10 @@
 {
   "track_id": "state_local_price_registry_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "hwau_terminology_migration_20260513",
@@ -13,5 +13,11 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Source and version state, jurisdictional, local, and discounted HWAU price schedules over time with provenance and support status."
+  "description": "Source and version state, jurisdictional, local, and discounted HWAU price schedules over time with provenance and support status.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/state_local_price_registry_20260513/index.md",
+    "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "conductor/tracks/state_local_price_registry_20260513/spec.md"
+  ]
 }

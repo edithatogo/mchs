@@ -1,10 +1,10 @@
 {
   "track_id": "nsw_funding_model_20260513",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -12,5 +12,10 @@
   ],
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Create an explicit NSW funding model registry for State Price per NWAU/HWAU, local health district notes, adjustments, and provenance over time."
+  "description": "Create an explicit NSW funding model registry for State Price per NWAU/HWAU, local health district notes, adjustments, and provenance over time.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/jurisdiction_funding_model_registry_20260513/index.md",
+    "conductor/tracks/nsw_funding_model_20260513/index.md"
+  ]
 }

@@ -1,8 +1,8 @@
-# Specification: GitHub Pages Web App Prototype
+# Specification: GitHub Pages Public Demo Readiness
 
 ## Goal
 
-Prototype a static-hostable, demo-only web app that demonstrates calculator workflows using synthetic fixtures and the public calculator contract, while keeping all real-data workflows outside GitHub Pages behind a secure service boundary.
+Document a static-hostable, demo-only web app posture that demonstrates calculator workflows using synthetic fixtures and the public calculator contract, while keeping all real-data workflows outside GitHub Pages behind a secure service boundary.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ Prototype a static-hostable, demo-only web app that demonstrates calculator work
 
 ## Acceptance Criteria
 
-- A prototype architecture is documented before UI implementation.
+- A public demo architecture is documented before UI implementation.
 - Privacy and data-governance warnings are embedded in workflow design, not bolted on later.
 - The app can be deployed to GitHub Pages without server dependencies for demo use.
 - The real-data path is explicitly documented as a separate, secured service boundary and is not presented as a GitHub Pages capability.

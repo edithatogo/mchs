@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "completed",
   "track_class": "binding",
-  "current_state": "implemented-opt-in-acute-2025-binding",
+  "current_state": "complete-with-gaps",
   "primary_contract": "opt-in Python Rust bridge, maturin wheel CI, golden fixture parity, and fallback diagnostics",
   "dependencies": [],
   "completion_evidence": [
@@ -13,6 +13,7 @@
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T13:00:00Z",
-  "description": "Stabilize the Python binding over the Rust calculator core using pyo3/maturin while preserving Python as the validated public API."
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Stabilize the Python binding over the Rust calculator core using pyo3/maturin while preserving Python as the validated public API.",
+  "no_stub_enforce": true
 }

@@ -1,0 +1,49 @@
+{
+  "track_id": "rust_core_continuation_20260524",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "core",
+  "priority": "immediate",
+  "current_state": "complete",
+  "parallelism": "depth-2",
+  "workstreams": [
+    "rust-kernel-parity",
+    "python-binding-promotion",
+    "cli-file-contract",
+    "release-evidence",
+    "support-status"
+  ],
+  "primary_contract": "docs/roadmaps/rust-core-ga.md",
+  "dependencies": [
+    "rust_core_ga_20260513",
+    "rust_core_ga_post_cline_review_20260513",
+    "python_rust_binding_stabilization_20260512",
+    "canonical_contract_foundation_20260513",
+    "scaffold_stub_completion_backlog_20260524"
+  ],
+  "deprioritizes": [
+    "new language adapter formula implementations before Rust parity evidence",
+    "registry publication for documentation-only or unvalidated surfaces"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-24T08:30:22Z",
+  "updated_at": "2026-05-24T08:30:22Z",
+  "description": "Continue the transition from Python-first calculators to a validated Rust core, promoting streams only after parity, binding, CLI/file, documentation, and release evidence exists.",
+  "no_stub_enforce": true,
+  "completion_evidence_required": [
+    "Rust core implements promoted calculator streams with parity tests",
+    "Python binding uses Rust by default only for streams with recorded parity evidence",
+    "CLI/file and C ABI surfaces consume the shared Rust contract without duplicated formula logic",
+    "Support status and release evidence identify canary, opt-in, release-candidate, and GA streams"
+  ],
+  "completion_evidence": [
+    "docs/roadmaps/rust-core-promotion-matrix.md",
+    "docs/roadmaps/rust-core-continuation.md",
+    "docs/release-evidence-rust-continuation.md",
+    "rust/crates/nwau-core/src/kernels.rs",
+    "rust/crates/nwau-core/tests/phase2_promotion_gate.rs",
+    "tests/test_rust_parity/test_phase2_promotion_gate.py",
+    "tests/test_rust_parity/test_python_parity.py",
+    "tests/test_rust_core_continuation_track.py"
+  ]
+}

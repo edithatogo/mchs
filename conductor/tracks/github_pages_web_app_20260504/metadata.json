@@ -14,5 +14,6 @@
   "publication_status": "future-only",
   "created_at": "2026-05-04T14:00:00Z",
   "updated_at": "2026-05-06T02:10:00Z",
-  "description": "GitHub Pages Web App Prototype"
+  "description": "GitHub Pages Public Demo Readiness",
+  "no_stub_enforce": true
 }

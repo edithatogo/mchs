@@ -1,0 +1,20 @@
+{
+  "track_id": "multilevel_agent_execution_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/subagent-orchestration.md and track work packages",
+  "dependencies": [
+    "conductor_requirements_design_authority_20260513"
+  ],
+  "completion_evidence": [
+    "conductor/subagent-orchestration.md",
+    "conductor/design.md (multi-level agent model)"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Make tracks executable by many agents at multiple levels with bounded ownership, handoffs, review loops, commits, and push gates.",
+  "no_stub_enforce": true
+}

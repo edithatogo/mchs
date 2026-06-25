@@ -519,7 +519,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Release Workflow Validation**
-*Link: [./tracks/release_workflow_validation_20260513/](./tracks/release_workflow_validation_20260513/)*
+*Link: [./archive/release_workflow_validation_20260513/](./archive/release_workflow_validation_20260513/)*
 *Gate: Validate Rust CI, coverage, security, and release workflows, including tag outputs, SBOM fallback, and evidence-bundle integration.*
 
 ---
