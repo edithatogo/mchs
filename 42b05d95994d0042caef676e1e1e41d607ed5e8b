@@ -1,0 +1,1 @@
+Go binding cleanup note: added private service and binding-file adapters, CLI execute support, typed contract envelopes, and contract wording that withholds public release readiness. Validation passed: go test ./..., test_go_binding_track 3 passed, JSON contract/examples parse, stub_detector total_findings=0.
