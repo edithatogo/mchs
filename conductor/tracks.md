@@ -11,7 +11,7 @@ content alone is not sufficient evidence for marking a track complete.
 ## Delivery Order
 
 1. [x] **Track: Source Archive and Provenance Registry**
-   *Link: [./tracks/source_archive_provenance_20260504/](./tracks/source_archive_provenance_20260504/)*
+   *Link: [./archive/source_archive_provenance_20260504/](./archive/source_archive_provenance_20260504/)*
    *Gate: establish source acquisition, storage policy, and manifest provenance before downstream validation or implementation work.*
 
 2. [x] **Track: Cross-Language Golden Test Suite**

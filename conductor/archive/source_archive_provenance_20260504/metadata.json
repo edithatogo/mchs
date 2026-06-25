@@ -1,0 +1,43 @@
+{
+  "track_id": "source_archive_provenance_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "source-discovery",
+  "current_state": "complete",
+  "primary_contract": "IHACPA source archive provenance manifest, acquisition script, raw-storage policy, and explicit Box-hosted gap handling",
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/source-archive.md",
+    "scripts/archive_ihacpa_sources.py",
+    "nwau_py/provenance.py",
+    "tests/test_source_archive_manifest.py",
+    "tests/test_ihacpa_source_scanner.py"
+  ],
+  "support_scope": {
+    "state": "provenance-baseline",
+    "included": [
+      "Tracked manifest schema and helper types for IHACPA source artifacts.",
+      "Fixture-backed IHACPA calculators page parsing and list/download workflow.",
+      "Raw archive exclusion policy with tracked provenance output paths.",
+      "Explicit lifecycle axes for acquisition, extraction, implementation, and validation.",
+      "Box-hosted share-page outcomes recorded as acquisition gaps instead of completed downloads."
+    ],
+    "excluded": [
+      "Redistribution of licensed raw IHACPA calculator binaries in normal Git history.",
+      "Claiming extracted, implemented, or validated calculator parity for every archived source.",
+      "Recovering direct binaries for Box-hosted gaps without a separately approved source."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "box-hosted-sas-binaries",
+      "status": "external-gate",
+      "description": "The 2021-22 and 2022-23 SAS links resolved to Box HTML share pages or inaccessible links; the provenance layer records these as explicit gaps until a verified binary source is available."
+    }
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T01:00:00Z",
+  "description": "Source Archive and Provenance Registry",
+  "no_stub_enforce": true
+}
