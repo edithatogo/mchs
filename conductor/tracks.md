@@ -50,7 +50,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: keep Power Platform orchestration separate from the calculation engine and drive parity from shared fixtures.*
 
 9. [x] **Track: Release and Supply-Chain Governance**
-   *Link: [./tracks/release_supply_chain_governance_20260504/](./tracks/release_supply_chain_governance_20260504/)*
+   *Link: [./archive/release_supply_chain_governance_20260504/](./archive/release_supply_chain_governance_20260504/)*
    *Depends on: CI, validation evidence, and contract stability.*
    *Gate: add release policy, signed artifacts, dependency automation, and provenance controls after the implementation pipeline is stable.*
 

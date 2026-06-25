@@ -1,0 +1,44 @@
+{
+  "track_id": "release_supply_chain_governance_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "release-governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/release-policy.md and conductor/supply-chain-controls.md",
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/release-policy.md",
+    "conductor/supply-chain-controls.md",
+    ".github/scripts/validate_release_metadata.py",
+    ".github/workflows/release.yml",
+    ".github/workflows/publish.yml",
+    "tests/test_release_governance.py",
+    "tests/test_release_workflow_validation_track.py"
+  ],
+  "support_scope": {
+    "state": "local-governance-complete",
+    "included": [
+      "Release policy distinguishing code, data bundle, and validation-status releases.",
+      "Supply-chain controls for source checksums, locked installs, SBOMs, signed artifacts, Renovate review, and CI-passing requirements.",
+      "Release metadata validator for tag, package, conda, and MCP registry metadata consistency.",
+      "Workflow wiring for metadata validation and release evidence bundle checks."
+    ],
+    "excluded": [
+      "Proof that a signed public release artifact has been produced in this run.",
+      "Proof that every registry publication gate is complete.",
+      "CI-side SBOM, signing, provenance attestation, or audit/deny execution for all future artifacts."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "external-release-execution",
+      "status": "external-or-ci-gate",
+      "description": "The local governance controls are complete, but signed artifact publication, SBOM/provenance attestations, and registry-specific publication evidence must be proven by release workflow runs and registry tracks."
+    }
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T02:00:00Z",
+  "description": "Release and Supply-Chain Governance",
+  "no_stub_enforce": true
+}
