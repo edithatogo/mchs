@@ -65,7 +65,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: assess scientific software standards, language packaging maturity, C# and Power Platform implementation readiness, contribution pathways, and health interoperability standards before starting new language ports or integration surfaces.*
 
 12. [x] **Track: Rust Core Architecture and Calculator Abstraction**
-   *Link: [./tracks/rust_core_architecture_20260510/](./tracks/rust_core_architecture_20260510/)*
+   *Link: [./archive/rust_core_architecture_20260510/](./archive/rust_core_architecture_20260510/)*
    *Depends on: public calculator contracts, Arrow/Parquet bundle guidance, golden fixtures, ecosystem readiness, and existing C# and Power Platform boundary documentation.*
    *Gate: define Rust as the intended future calculator core and document formula, parameter, schema, reference data, provenance, validation, and adapter boundaries before Rust implementation begins.*
 

@@ -1,0 +1,43 @@
+{
+  "track_id": "rust_core_architecture_20260510",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "architecture",
+  "current_state": "complete",
+  "primary_contract": "docs/adr/0007-rust-core-architecture-and-calculator-abstraction.md and Rust-core boundary governance docs",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs/adr/0007-rust-core-architecture-and-calculator-abstraction.md",
+    "conductor/tech-stack.md",
+    "conductor/public-api-contract.md",
+    "conductor/power-platform-boundary.md",
+    "conductor/web-architecture.md",
+    "tests/test_rust_core_architecture_track.py"
+  ],
+  "support_scope": {
+    "state": "architecture-baseline-complete",
+    "included": [
+      "Rust-first target architecture and calculator abstraction ADR.",
+      "Documentation that keeps Python as the current validated runtime while Rust is the intended future core.",
+      "Adapter boundary rules prohibiting duplicated formula logic in language surfaces.",
+      "Calculator-by-calculator promotion policy requiring golden fixture parity before Rust-backed default behavior."
+    ],
+    "excluded": [
+      "Runtime implementation of the Rust calculator core.",
+      "Replacing Python as the default validated calculator path.",
+      "Language binding, WASM, Power Platform, or hosted-service implementation evidence."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "runtime-implementation-owned-downstream",
+      "status": "delegated",
+      "description": "Rust runtime code, parity proof, binding stabilization, and GA promotion are owned by the Rust acute POC, Rust continuation, Python/Rust stabilization, and Rust GA tracks."
+    }
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-10T09:20:45Z",
+  "updated_at": "2026-05-10T14:38:21Z",
+  "description": "Rust core architecture and calculator abstraction roadmap",
+  "no_stub_enforce": true
+}
