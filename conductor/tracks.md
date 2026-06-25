@@ -35,7 +35,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: freeze the versioned input/output contract before web, C#, or Power Platform integration.*
 
 6. [x] **Track: Arrow and Polars Data Bundle Migration**
-   *Link: [./tracks/arrow_polars_data_bundle_20260504/](./tracks/arrow_polars_data_bundle_20260504/)*
+   *Link: [./archive/arrow_polars_data_bundle_20260504/](./archive/arrow_polars_data_bundle_20260504/)*
    *Depends on: calculator core abstractions and stable validation fixtures.*
    *Gate: migrate data representation and DataFrame boundaries only after the core contract is stable.*
 

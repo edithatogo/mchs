@@ -1,0 +1,36 @@
+{
+  "track_id": "arrow_polars_data_bundle_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "Track arrow_polars_data_bundle_20260504 contract",
+  "support_scope": "Dataframe-neutral Arrow/Parquet bundle contract and acute synthetic pilot fixture, including manifest validation, pandas and Polars readers behind stable bundle APIs, ADR guidance, and tests for checksum, backend-neutral metadata, and missing payload diagnostics.",
+  "gap_register": [
+    {
+      "gap": "The pilot covers the synthetic acute 2025 bundle only, not every calculator stream.",
+      "status": "accepted-non-blocking",
+      "rationale": "The track acceptance criteria require a pilot path and migration boundary, while later tracks own broader GA interchange coverage."
+    },
+    {
+      "gap": "Arrow/Parquet is not yet the only public interchange surface for all language bindings.",
+      "status": "accepted-non-blocking",
+      "rationale": "CSV and CLI compatibility remain documented transition paths until release-boundary and Rust-core tracks promote the full batch surface."
+    }
+  ],
+  "dependencies": [],
+  "completion_evidence": [
+    "nwau_py/bundles.py",
+    "tests/fixtures/bundles/acute_2025/manifest.json",
+    "tests/fixtures/bundles/acute_2025/input.parquet",
+    "tests/fixtures/bundles/acute_2025/expected_output.parquet",
+    "tests/test_bundles.py",
+    "docs/adr/0002-arrow-polars-data-bundle.md",
+    "docs/adr/0003-arrow-polars-migration.md"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T01:50:00Z",
+  "description": "Arrow/Parquet data bundle migration with a dataframe-neutral boundary and Polars pilot",
+  "no_stub_enforce": true
+}
