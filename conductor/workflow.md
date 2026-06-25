@@ -79,6 +79,40 @@ All tasks follow a strict lifecycle:
 11. **Commit Plan Update:**
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message (e.g., `conductor(plan): Mark task 'Create user model' as complete`).
+    - **Action:** Push the task commit, task plan-update commit, and
+      `refs/notes/commits` to the active remote branch before moving to the
+      next task.
+
+### Autonomous Track Execution Schema
+
+When a user requests autonomous comprehensive operation, Conductor agents must
+use this stricter schema for every listed track:
+
+1. Resolve the track from `conductor/tracks/` or `conductor/archive/` and load
+   `metadata.json`, `spec.md`, `plan.md`, and this workflow.
+2. Treat local repository-completable work separately from external registry,
+   reviewer, account, maintainer, or policy gates. External gates may leave a
+   track `blocked`, `submitted`, or `complete-with-gaps`; they must not be
+   misreported as local implementation failure.
+3. Execute each task in `plan.md` sequentially. After each task, commit the
+   task changes with a body section titled `Commit notes:` and attach an
+   equivalent `git notes` task summary.
+4. After each task plan update, commit the plan update and push the branch plus
+   `refs/notes/commits`.
+5. At every phase boundary, run the Phase Completion Verification and
+   Checkpointing Protocol below, including `conductor-review`, auto-fixes,
+   validation reruns, checkpoint commit, checkpoint git note, plan checkpoint
+   update, and push.
+6. At the end of every track, rerun `conductor-review` at whole-track scope,
+   apply high-confidence fixes, rerun validation, and record any residual
+   external gates in metadata, review notes, and support/evidence docs.
+7. If the track is locally complete and archive-eligible under
+   `track-archive-policy.md`, archive it automatically without asking for a
+   manual archive/delete/skip choice. Archive commits must include `Commit
+   notes:` and `git notes`, then push the branch and `refs/notes/commits`.
+8. Continue directly to the next listed track unless blocked by missing context,
+   repeated validation failure after bounded retries, or an unresolved design
+   decision that cannot be recovered from local evidence.
 
 ### Phase Completion Verification and Checkpointing Protocol
 
@@ -135,6 +169,8 @@ is exhausted or a risky design decision cannot be resolved from local context.
 8. **Commit Plan Update:**
     - **Action:** Stage the modified `plan.md` file.
     - **Action:** Commit this change with a descriptive message following the format `conductor(plan): Mark phase '<PHASE NAME>' as complete`.
+    - **Action:** Push the phase checkpoint commit, phase plan-update commit,
+      and `refs/notes/commits` to the active remote branch before proceeding.
 
 9.  **Auto-Advance:** Once the checkpoint is recorded, automatically continue with the next incomplete task, next phase, or next track. Do not pause for manual confirmation unless the workflow is blocked by missing context, a failing bounded retry, or a risky design decision that cannot be resolved from local context.
 
