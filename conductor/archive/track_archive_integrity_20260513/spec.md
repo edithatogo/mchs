@@ -1,4 +1,4 @@
-# Specification: track archive integrity
+# Specification: Track Archive Integrity
 
 ## Overview
 

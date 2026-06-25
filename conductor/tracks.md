@@ -585,7 +585,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Track Archive Integrity**
-*Link: [./tracks/track_archive_integrity_20260513/](./tracks/track_archive_integrity_20260513/)*
+*Link: [./archive/track_archive_integrity_20260513/](./archive/track_archive_integrity_20260513/)*
 *Gate: Audit `[x]` tracks, archive only truly completed work, downgrade overclaimed tracks, and keep archive evidence truthful.*
 
 ---

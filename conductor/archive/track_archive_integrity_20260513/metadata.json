@@ -14,8 +14,15 @@
     "conductor/tracks/track_archive_integrity_20260513/spec.md",
     "conductor/tracks/track_archive_integrity_20260513/plan.md",
     "conductor/tracks/track_archive_integrity_20260513/index.md",
-    "conductor/roadmap-governance.md"
+    "conductor/roadmap-governance.md",
+    "tests/test_track_archive_integrity_track.py"
   ],
+  "support_scope": {
+    "local_completion": "The archive policy and workflow gates are defined, reviewed, and backed by focused tests.",
+    "external_gate": "not applicable",
+    "runtime_support_claim": "No runtime support claim is made; this track governs Conductor archive movement and evidence records."
+  },
+  "gap_register": [],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
