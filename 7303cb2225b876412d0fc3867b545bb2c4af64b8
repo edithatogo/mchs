@@ -1,0 +1,1 @@
+Swift binding cleanup note: added Swift transport adapter package, file/CLI boundary models, smoke executable, contract/schema/examples, and test fixture. Validation passed: swift build, swift run MCHSBindSmoke, test_swift_binding_track 3 passed, JSON assets parsed, stub_detector total_findings=0. Generated .build output was removed before commit.
