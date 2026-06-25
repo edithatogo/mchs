@@ -1,0 +1,16 @@
+C/C++ vcpkg/ConanCenter evidence refresh
+
+Commit notes:
+- Refreshed ConanCenter PR 30262 evidence from the 2026-06-25 authenticated gh probe.
+- Preserved blocked external-gate state: CLA successful, Job scheduler ACTION_REQUIRED, maintainer review required, vcpkg policy-deferred.
+- No public vcpkg or ConanCenter publication is claimed; track remains not archive eligible.
+
+Review:
+- conductor-review boundary check found no local implementation issue; remaining blockers are external.
+
+Validation:
+- python -m json.tool conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/metadata.json
+- python -m json.tool contracts/language-registry-submissions/language-registry-submissions.contract.json
+- uv run pytest tests/test_c_cpp_vcpkg_conan_submission_track.py -q
+- uv run pytest tests/test_remaining_language_registry_submission_tracks.py -q
+- python conductor/scripts/stub_detector.py --root . --json
