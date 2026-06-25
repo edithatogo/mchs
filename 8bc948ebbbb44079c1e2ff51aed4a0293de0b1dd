@@ -1,0 +1,14 @@
+DuckDB SQL archive evidence path cleanup
+
+Commit notes:
+- Updated archived metadata/review evidence paths from conductor/tracks to conductor/archive.
+- Preserved historical/no-new-development state and no active SQL/DuckDB support claim.
+- Updated tests to enforce archive-local evidence references.
+
+Review:
+- conductor-review boundary check: archive remains complete-with-gaps historical governance, not an implementation surface.
+
+Validation:
+- python -m json.tool conductor/archive/duckdb_sql_binding_20260512/metadata.json
+- uv run pytest tests/test_duckdb_sql_binding_track.py -q
+- python conductor/scripts/stub_detector.py --root . --json
