@@ -1,0 +1,734 @@
+openapi: "3.1.0"
+info:
+  title: MCHS Micro-Costing HTTP API
+  description: |
+    HTTP API for the Micro-Costing Health Services (MCHS) system.
+    Provides calculator discovery, input validation, calculation execution,
+    explanation retrieval, and evidence access.
+
+    All request/response payloads conform to the canonical JSON Schemas
+    defined in the `contracts/canonical/` set.
+  version: "1.0.0"
+  contact:
+    name: MCHS Team
+    url: https://mchs.example.org
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.mchs.example.org/v1
+    description: Production server
+  - url: https://staging-api.mchs.example.org/v1
+    description: Staging server
+
+paths:
+  /calculators:
+    get:
+      operationId: listCalculators
+      summary: List available calculators
+      description: Returns all calculators, optionally filtered by stream and/or year.
+      parameters:
+        - name: stream
+          in: query
+          schema:
+            $ref: "#/components/schemas/Stream"
+          description: Filter by AR-DRG stream
+        - name: year
+          in: query
+          schema:
+            $ref: "#/components/schemas/Year"
+          description: Filter by financial year (YYYY-YY)
+        - name: includeDeprecated
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Include deprecated calculators in the response
+      responses:
+        "200":
+          description: Array of calculator definitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Calculator"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /calculators/{calculatorId}:
+    get:
+      operationId: getCalculator
+      summary: Get a specific calculator
+      description: Returns the full definition for a single calculator.
+      parameters:
+        - name: calculatorId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Calculator identifier (e.g., `icu-bed-day`)
+      responses:
+        "200":
+          description: Calculator definition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Calculator"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+
+  /calculators/{calculatorId}/schema:
+    get:
+      operationId: getCalculatorSchema
+      summary: Get calculator input/output schema
+      description: Returns the input or output JSON Schema for a calculator.
+      parameters:
+        - name: calculatorId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: direction
+          in: query
+          schema:
+            type: string
+            enum: [input, output]
+            default: input
+          description: Whether to return the input or output schema
+      responses:
+        "200":
+          description: JSON Schema document
+          content:
+            application/json:
+              schema:
+                type: object
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+  /validate:
+    post:
+      operationId: validateInput
+      summary: Validate input against a calculator
+      description: |
+        Validates the provided input data against the specified calculator's
+        input schema. Returns diagnostics; does NOT execute a calculation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationRequest"
+      responses:
+        "200":
+          description: Validation result with diagnostics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+
+  /calculations:
+    post:
+      operationId: runCalculation
+      summary: Execute a micro-costing calculation
+      description: |
+        Executes a micro-costing calculation synchronously.
+        For long-running calculations, use the async endpoint instead.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+      responses:
+        "200":
+          description: Calculation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalculationResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "422":
+          description: Validation failure
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationResponse"
+  /calculations/async:
+    post:
+      operationId: startCalculationAsync
+      summary: Start an asynchronous calculation
+      description: |
+        Initiates a micro-costing calculation that runs asynchronously.
+        Returns a job ID for polling the result.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CalculationRequest"
+      responses:
+        "202":
+          description: Calculation accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AsyncJobResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /calculations/async/{jobId}:
+    get:
+      operationId: getAsyncJob
+      summary: Poll an async calculation job
+      description: Returns the current status and result (if completed) of an async job.
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Job status and result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AsyncJobStatus"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+
+  /calculations/{calculatorId}/explain:
+    post:
+      operationId: explainCalculation
+      summary: Explain a calculation result
+      description: Returns a step-by-step explanation of how a result is computed.
+      parameters:
+        - name: calculatorId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExplainRequest"
+      responses:
+        "200":
+          description: Explanation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExplainResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+
+  /evidence/{bundleId}:
+    get:
+      operationId: getEvidenceBundle
+      summary: Get an evidence bundle
+      description: Returns the full evidence bundle for a given bundle ID.
+      parameters:
+        - name: bundleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Evidence bundle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EvidenceBundle"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+
+  /support/streams:
+    get:
+      operationId: listStreams
+      summary: List AR-DRG streams
+      description: Returns all AR-DRG streams with their support status.
+      parameters:
+        - name: year
+          in: query
+          schema:
+            $ref: "#/components/schemas/Year"
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, deprecated, retired]
+      responses:
+        "200":
+          description: Array of support status objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SupportStatus"
+
+  /support/years:
+    get:
+      operationId: listYears
+      summary: List supported financial years
+      description: Returns all supported financial years.
+      parameters:
+        - name: stream
+          in: query
+          schema:
+            $ref: "#/components/schemas/Stream"
+      responses:
+        "200":
+          description: Array of year strings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Year"
+
+components:
+  schemas:
+    Stream:
+      type: string
+      enum:
+        - admitted_acute
+        - admitted_non_acute
+        - emergency_department
+        - outpatient_clinic
+        - sub_acute
+        - mental_health
+        - community_health
+        - primary_care
+      description: AR-DRG stream identifier
+
+    Year:
+      type: string
+      pattern: "^\\d{4}-\\d{2}$"
+      description: Financial year in YYYY-YY format
+      example: "2025-26"
+
+    Calculator:
+      type: object
+      description: A micro-costing calculator definition
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        supportedStreams:
+          type: array
+          items:
+            $ref: "#/components/schemas/Stream"
+        supportedYears:
+          type: array
+          items:
+            $ref: "#/components/schemas/Year"
+        inputSchema:
+          $ref: "#/components/schemas/SchemaRef"
+        outputSchema:
+          $ref: "#/components/schemas/SchemaRef"
+      required:
+        - id
+        - displayName
+        - supportedStreams
+        - supportedYears
+        - inputSchema
+        - outputSchema
+
+    SchemaRef:
+      type: object
+      properties:
+        $ref:
+          type: string
+          format: uri
+        format:
+          type: string
+          enum: [json, json-schema]
+      required:
+        - $ref
+        - format
+
+    ValidationRequest:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        inputs:
+          type: object
+          description: Calculator-specific input payload
+      required:
+        - calculatorId
+        - year
+        - inputs
+
+    ValidationResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        diagnostics:
+          $ref: "#/components/schemas/Diagnostics"
+      required:
+        - valid
+        - diagnostics
+    CalculationRequest:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        inputs:
+          type: object
+        options:
+          type: object
+          properties:
+            includeEvidence:
+              type: boolean
+              default: false
+            includeExplanation:
+              type: boolean
+              default: false
+            includeProvenance:
+              type: boolean
+              default: false
+      required:
+        - calculatorId
+        - year
+        - inputs
+
+    CalculationResponse:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        result:
+          type: object
+          description: Calculator-specific result payload
+        diagnostics:
+          $ref: "#/components/schemas/Diagnostics"
+        evidence:
+          $ref: "#/components/schemas/EvidenceBundle"
+        explanation:
+          $ref: "#/components/schemas/Explanation"
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+      required:
+        - calculatorId
+        - year
+        - result
+        - diagnostics
+
+    AsyncJobResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [queued, running, completed, failed]
+        location:
+          type: string
+          format: uri
+          description: URL to poll for job status
+      required:
+        - jobId
+        - status
+        - location
+
+    AsyncJobStatus:
+      type: object
+      properties:
+        jobId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [queued, running, completed, failed]
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Percentage complete (0-100)
+        result:
+          $ref: "#/components/schemas/CalculationResponse"
+        diagnostics:
+          $ref: "#/components/schemas/Diagnostics"
+      required:
+        - jobId
+        - status
+
+    EvidenceBundle:
+      type: object
+      properties:
+        bundleId:
+          type: string
+        calculatorId:
+          type: string
+        references:
+          type: array
+          items:
+            $ref: "#/components/schemas/EvidenceReference"
+        costWeightVersion:
+          type: string
+        dataSources:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              version:
+                type: string
+              url:
+                type: string
+                format: uri
+            required:
+              - name
+        assumptions:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              description:
+                type: string
+              value:
+                type: string
+            required:
+              - key
+              - description
+        provenance:
+          $ref: "#/components/schemas/Provenance"
+      required:
+        - bundleId
+        - calculatorId
+        - references
+        - costWeightVersion
+
+    EvidenceReference:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - cost_weight
+            - methodology
+            - data_table
+            - publication
+            - internal_doc
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        description:
+          type: string
+      required:
+        - id
+        - type
+        - title
+
+    SupportStatus:
+      type: object
+      properties:
+        stream:
+          $ref: "#/components/schemas/Stream"
+        year:
+          $ref: "#/components/schemas/Year"
+        status:
+          type: string
+          enum: [active, deprecated, retired]
+        deprecationMessage:
+          type: string
+        sunsetDate:
+          type: string
+          format: date
+      required:
+        - stream
+        - year
+        - status
+
+    Provenance:
+      type: object
+      properties:
+        source:
+          type: string
+        schemaVersion:
+          type: string
+        generatedAt:
+          type: string
+          format: date-time
+        generatedBy:
+          type: string
+        inputDigest:
+          type: string
+      required:
+        - source
+        - schemaVersion
+        - generatedAt
+        - generatedBy
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: string
+          required:
+            - code
+            - message
+      required:
+        - error
+
+    ExplainRequest:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        inputs:
+          type: object
+      required:
+        - calculatorId
+        - year
+        - inputs
+
+    ExplainResponse:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExplanationStep"
+      required:
+        - calculatorId
+        - year
+        - steps
+
+    Explanation:
+      type: object
+      properties:
+        calculatorId:
+          type: string
+        year:
+          $ref: "#/components/schemas/Year"
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExplanationStep"
+
+    ExplanationStep:
+      type: object
+      properties:
+        step:
+          type: integer
+        label:
+          type: string
+        description:
+          type: string
+        value:
+          type: string
+      required:
+        - step
+        - label
+        - description
+
+
+
+    Diagnostics:
+      type: object
+      properties:
+        diagnostics:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticEntry"
+        summary:
+          type: object
+          properties:
+            errorCount:
+              type: integer
+              minimum: 0
+            warningCount:
+              type: integer
+              minimum: 0
+            infoCount:
+              type: integer
+              minimum: 0
+          required:
+            - errorCount
+            - warningCount
+            - infoCount
+      required:
+        - diagnostics
+        - summary
+
+    DiagnosticEntry:
+      type: object
+      properties:
+        severity:
+          type: string
+          enum: [error, warning, info]
+        code:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        value:
+          description: The offending value
+        rule:
+          type: string
+      required:
+        - severity
+        - code
+        - message
+
+  responses:
+    ErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    NotFoundResponse:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

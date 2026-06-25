@@ -309,7 +309,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: HTTP API Contract**
-*Link: [./tracks/http_api_contract_20260513/](./tracks/http_api_contract_20260513/)*
+*Link: [./archive/http_api_contract_20260513/](./archive/http_api_contract_20260513/)*
 *Gate: Define a domain OpenAPI 3.1 contract for calculators, schemas, validation, calculations, async jobs, results, and evidence without pretending the calculator is an LLM endpoint.*
 
 ---

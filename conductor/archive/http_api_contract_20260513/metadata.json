@@ -1,0 +1,32 @@
+{
+  "track_id": "http_api_contract_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "cli_file_contracts_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Define a domain HTTP API contract using OpenAPI 3.1 over canonical calculator schemas.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/http-api/openapi.yaml",
+    "contracts/http-api/examples/*.json"
+  ],
+  "support_scope": {
+    "state": "contract-surface",
+    "summary": "Defines the domain HTTP OpenAPI 3.1 contract over canonical calculator schemas. It is a static contract surface, not a deployed production API claim."
+  },
+  "gap_register": [
+    {
+      "id": "http-api-runtime-deployment",
+      "status": "out-of-scope",
+      "summary": "Deploying a production HTTP service and proving hosted runtime behavior remains outside this contract-definition track."
+    }
+  ]
+}

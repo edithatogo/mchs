@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,8 +31,10 @@ def _read(path: Path) -> str:
 
 
 def _track_root(track_id: str) -> Path:
-    base = "archive" if track_id in ARCHIVED_TRACK_IDS else "tracks"
-    return ROOT / "conductor" / base / track_id
+    root = ROOT / "conductor" / "tracks" / track_id
+    if root.exists():
+        return root
+    return ROOT / "conductor" / "archive" / track_id
 
 
 def test_core_contract_surface_tracks_exist_and_are_ordered():
@@ -45,7 +49,7 @@ def test_core_contract_surface_tracks_exist_and_are_ordered():
         metadata = json.loads(_read(root / "metadata.json"))
         assert metadata["track_id"] == track_id
         assert metadata["status"] in {"new", "completed"}
-        if track_id in ARCHIVED_TRACK_IDS:
+        if root.parent.name == "archive":
             assert metadata["support_scope"]
             assert metadata["gap_register"]
             assert f"./archive/{track_id}/" in tracks_text
@@ -54,6 +58,17 @@ def test_core_contract_surface_tracks_exist_and_are_ordered():
 
     assert positions == sorted(positions)
     assert tracks_text.index("rust_core_ga_20260513") < positions[0]
+
+
+def test_http_api_openapi_contract_validates_without_duplicate_keys():
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_http_api_contract.py"],
+        cwd=ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_contract_surface_and_language_strategy_are_audience_driven():
