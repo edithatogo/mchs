@@ -7,7 +7,7 @@ WORKFLOW = ROOT / "conductor" / "workflow.md"
 OPEN_TRACK_PLANS = [
     ROOT
     / "conductor"
-    / "tracks"
+    / "archive"
     / "docs_release_publication_readiness_20260510"
     / "plan.md",
     (
@@ -17,7 +17,7 @@ OPEN_TRACK_PLANS = [
         / "multi_surface_binding_delivery_20260510"
         / "plan.md"
     ),
-    ROOT / "conductor" / "tracks" / "rust_acute_python_poc_20260510" / "plan.md",
+    ROOT / "conductor" / "archive" / "rust_acute_python_poc_20260510" / "plan.md",
     ROOT
     / "conductor"
     / "tracks"
@@ -40,7 +40,7 @@ def test_workflow_uses_conductor_review_and_auto_advances():
     assert "user confirmation" not in workflow.lower()
     assert "Do not pause for manual confirmation" in workflow
     assert (
-        "automatically continue with the next incomplete task or next track"
+        "automatically continue with the next incomplete task"
         in normalized
     )
 

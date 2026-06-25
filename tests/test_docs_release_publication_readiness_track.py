@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+TRACK = ROOT / "conductor" / "archive" / "docs_release_publication_readiness_20260510"
+TRACKS = ROOT / "conductor" / "tracks.md"
 DOCS_SITE = ROOT / "docs-site" / "src" / "content" / "docs"
 GOVERNANCE = DOCS_SITE / "governance"
 MIGRATION = DOCS_SITE / "migration"
@@ -13,6 +15,12 @@ def _read(path: Path) -> str:
 
 
 def test_phase1_rust_core_architecture_and_migration_status_are_published():
+    assert (TRACK / "metadata.json").exists()
+    assert (TRACK / "review.md").exists()
+    tracks = _read(TRACKS)
+    assert "./archive/docs_release_publication_readiness_20260510/" in tracks
+    assert "./tracks/docs_release_publication_readiness_20260510/" not in tracks
+
     architecture = GOVERNANCE / "rust-core-architecture.md"
     reference_generation = GOVERNANCE / "reference-generation.md"
     public_readiness = GOVERNANCE / "public-readiness.md"

@@ -85,7 +85,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: align branch triggers, pre-commit hooks, Rust quality gates, dependency review, advisory checks, provenance, and release hardening before Rust code is treated as merge-ready.*
 
 16. [x] **Track: Documentation, Release, and Public Readiness**
-   *Link: [./tracks/docs_release_publication_readiness_20260510/](./tracks/docs_release_publication_readiness_20260510/)*
+   *Link: [./archive/docs_release_publication_readiness_20260510/](./archive/docs_release_publication_readiness_20260510/)*
    *Depends on: Rust core architecture, binding delivery roadmap, Starlight documentation, release governance, validation vocabulary, and public repository status.*
    *Gate: publish conservative docs for current versus intended Rust-backed behavior, release status, contributor workflows, public-readiness gaps, and safe delivery surfaces.*
 

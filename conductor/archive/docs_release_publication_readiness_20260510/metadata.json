@@ -1,0 +1,39 @@
+{
+  "track_id": "docs_release_publication_readiness_20260510",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "publication",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Public documentation and release-readiness governance for Rust-core modernization",
+  "support_scope": "Documentation and release-readiness content for Rust-core architecture, generated reference strategy, release policy, contributor/public-readiness guidance, and conservative validation language. The track prepares public docs and governance; it does not publish release artifacts or claim unsupported Rust parity.",
+  "gap_register": [
+    {
+      "gap": "Publication status remains future-only for release artifacts.",
+      "rationale": "The acceptance criteria require docs and release-readiness governance, not actual registry publication."
+    },
+    {
+      "gap": "Rust parity remains fixture-gated and is not claimed by this documentation track.",
+      "rationale": "Runtime parity belongs to Rust-core and binding validation tracks."
+    }
+  ],
+  "dependencies": [
+    "rust_core_architecture_20260510",
+    "docs_sota_starlight_completion_20260513",
+    "release_supply_chain_governance_20260504"
+  ],
+  "completion_evidence": [
+    "docs-site/src/content/docs/governance/rust-core-architecture.md",
+    "docs-site/src/content/docs/governance/reference-generation.md",
+    "docs-site/src/content/docs/governance/public-readiness.md",
+    "docs-site/src/content/docs/migration/legacy-docs.md",
+    "docs-site/src/content/docs/governance/index.mdx",
+    "conductor/release-policy.md",
+    "tests/test_docs_release_publication_readiness_track.py",
+    "tests/test_conductor_review_automation.py"
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-10T09:20:45Z",
+  "updated_at": "2026-05-10T15:07:51Z",
+  "description": "Documentation, release, and public-readiness updates for Rust-core modernization",
+  "no_stub_enforce": true
+}
