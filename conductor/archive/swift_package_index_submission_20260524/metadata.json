@@ -1,0 +1,46 @@
+{
+  "track_id": "swift_package_index_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-06-12T23:00:00+11:00",
+  "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",
+  "registry_id": "swift_package_index",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "publication_claimed": true,
+  "package_evidence": {
+    "discovery_url": "https://swiftpackageindex.com/edithatogo/mchs-swift",
+    "discovery_result": "Live probes on 2026-06-12 found the PackageList issue closed as completed, a maintainer correction comment that the package was added with PR 13999, merged PackageList PR 13999, raw PackageList main containing https://github.com/edithatogo/mchs-swift.git, and the GitHub release v0.1.0 still published. A public Swift Package Index page probe with the checked-in registry probe user agent returned HTTP 200 and exposed MCHSBind, edithatogo/mchs-swift, stable v0.1.0, the SPM manifest snippet, and the GitHub release link.",
+    "submission_issue_live_result": "GitHub API returned issue state=closed state_reason=completed closed_at=2026-05-24T11:07:11Z; maintainer comment on 2026-06-12 says the original issue was closed prematurely and the package was added with PR 13999.",
+    "packagelist_pr": "https://github.com/SwiftPackageIndex/PackageList/pull/13999",
+    "packagelist_pr_state": "MERGED",
+    "packagelist_merged_at": "2026-06-12T12:02:16Z",
+    "packagelist_merge_commit": "ffdaf6cf883878adcb7f31691f6120e3d7f64c48",
+    "packagelist_head_commit": "47bdda9f409745a9bfe5e35e293e3f5578cbcfb1",
+    "packagelist_validation": "Valid JSON checks succeeded and maintainer review was APPROVED by daveverwer.",
+    "raw_packagelist_probe": "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json contains https://github.com/edithatogo/mchs-swift.git.",
+    "build_command": "swift build",
+    "build_result": "Build complete",
+    "test_note": "swift test exits with no tests found because the package has no Tests target",
+    "fixed_publication_metadata": "Added MIT LICENSE to the public package repo, set Swift package topics, and created GitHub release v0.1.0.",
+    "metadata_commit": "02b12bd6667fae762cdf26833514dbbce5c05476",
+    "release_url": "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0",
+    "release_probe_result": "GitHub release API returned tag_name=v0.1.0, name=MCHSBind v0.1.0, draft=false, prerelease=false, published_at=2026-05-25T13:03:45Z.",
+    "latest_public_probe": "https://swiftpackageindex.com/edithatogo/mchs-swift returned HTTP 200 on 2026-06-12 with title MCHSBind - Swift Package Index, canonical edithatogo/mchs-swift links, stable v0.1.0, an SPM snippet using from: 0.1.0, and a release link to https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0."
+  },
+  "submission_url": "https://swiftpackageindex.com/edithatogo/mchs-swift",
+  "support_scope": {
+    "state": "published-verified",
+    "summary": "Swift Package Index publication is verified for MCHSBind v0.1.0 through merged PackageList PR 13999, the public SPI listing, and the GitHub release. Compatibility build results remain separate SPI processing evidence."
+  },
+  "gap_register": [
+    {
+      "id": "spi-compatibility-build-results",
+      "status": "externalized",
+      "summary": "SPI compatibility/build matrix processing is external to the publication claim and may lag after package listing."
+    }
+  ]
+}

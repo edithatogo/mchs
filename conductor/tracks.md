@@ -651,7 +651,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Swift Package Index Submission**
-*Link: [./tracks/swift_package_index_submission_20260524/](./tracks/swift_package_index_submission_20260524/)*
+*Link: [./archive/swift_package_index_submission_20260524/](./archive/swift_package_index_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Swift Package Index`, and capture immutable evidence before claiming publication.*
 
 ---

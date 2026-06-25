@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "swift_package_index_submission_20260524"
+TRACK_ID = "swift_package_index_submission_20260524"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = (
     ROOT
@@ -27,47 +30,60 @@ def _swift_registry() -> dict:
     )
 
 
-def test_swift_package_index_track_is_submitted_with_closed_issue_pending_probe():
+def test_swift_package_index_track_is_published_with_public_spi_evidence():
     metadata = json.loads(_read(TRACK / "metadata.json"))
     registry = _swift_registry()
     tracks = _read(TRACKS)
 
-    assert metadata["status"] == "submitted"
-    assert metadata["current_status"] == "submitted_accepted_pending_spi_public_probe"
+    assert metadata["status"] == "completed"
+    assert metadata["current_status"] == "published_verified"
     assert metadata["local_readiness_resolved"] is True
-    assert metadata["publication_claimed"] is False
-    assert metadata["publication_status"] == "not_published"
-    assert "- [~] **Track: Swift Package Index Submission**" in tracks
+    assert metadata["publication_claimed"] is True
+    assert metadata["publication_status"] == "published_verified"
+    assert "- [x] **Track: Swift Package Index Submission**" in tracks
+    assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
-    assert registry["current_status"] == "submitted_accepted_pending_spi_public_probe"
+    assert registry["current_status"] == "published_verified"
     assert (
         registry["submission_url"]
-        == "https://github.com/SwiftPackageIndex/PackageList/issues/13717"
+        == "https://swiftpackageindex.com/edithatogo/mchs-swift"
     )
     assert registry["localReadinessResolved"] is True
-    assert "closed as completed" in registry["blocker"]
-    assert "publication metadata is fixed" in registry["blocker"]
-    assert (
-        registry["submissionEvidence"]["state"]
-        == "closed_completed_public_probe_blocked"
-    )
+    assert registry["blocker"] is None
+    assert registry["submissionEvidence"]["state"] == "published_verified"
     assert registry["submissionEvidence"]["stateReason"] == "completed"
+    assert (
+        registry["submissionEvidence"]["packageListPullRequest"]
+        == "https://github.com/SwiftPackageIndex/PackageList/pull/13999"
+    )
+    assert (
+        registry["submissionEvidence"]["packageListMergeCommit"]
+        == "ffdaf6cf883878adcb7f31691f6120e3d7f64c48"
+    )
 
 
-def test_swift_package_index_evidence_has_no_publication_claim():
+def test_swift_package_index_evidence_has_publication_claim():
     metadata = json.loads(_read(TRACK / "metadata.json"))
     registry = _swift_registry()
     plan = _read(TRACK / "plan.md")
 
     evidence = metadata["package_evidence"]
-    assert "PackageList issue still closed as completed" in evidence["discovery_result"]
-    assert "HTTP 403 Cloudflare challenge" in evidence["discovery_result"]
-    assert "without visible MCHSBind or 0.1.0 version evidence" in evidence[
-        "discovery_result"
-    ]
+    assert "merged PackageList PR 13999" in evidence["discovery_result"]
+    assert "raw PackageList main containing" in evidence["discovery_result"]
+    assert "returned HTTP 200" in evidence["discovery_result"]
+    assert "stable v0.1.0" in evidence["discovery_result"]
     assert "state=closed state_reason=completed" in evidence[
         "submission_issue_live_result"
     ]
+    assert evidence["packagelist_pr"] == (
+        "https://github.com/SwiftPackageIndex/PackageList/pull/13999"
+    )
+    assert evidence["packagelist_pr_state"] == "MERGED"
+    assert (
+        evidence["packagelist_merge_commit"]
+        == "ffdaf6cf883878adcb7f31691f6120e3d7f64c48"
+    )
+    assert "mchs-swift.git" in evidence["raw_packagelist_probe"]
     assert evidence["build_command"] == "swift build"
     assert evidence["build_result"] == "Build complete"
     assert registry["preparationEvidence"]["testAttempt"].startswith(
@@ -78,11 +94,18 @@ def test_swift_package_index_evidence_has_no_publication_claim():
         == "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0"
     )
     assert "tag_name=v0.1.0" in evidence["release_probe_result"]
-    assert "HTTP 403" in evidence["latest_public_probe"]
+    assert "HTTP 200" in evidence["latest_public_probe"]
+    assert "SPM snippet using from: 0.1.0" in evidence["latest_public_probe"]
     assert "fixedPublicationMetadata" in registry["preparationEvidence"]
-    assert "HTTP 403 Cloudflare challenge" in registry["preparationEvidence"]["discovery"]
+    assert "returned HTTP 200" in registry["preparationEvidence"]["discovery"]
     assert "latestSubmissionProbe" in registry["preparationEvidence"]
+    assert "packageListPullRequest" in registry["preparationEvidence"]
+    assert (
+        registry["preparationEvidence"]["rawPackageListProbe"]
+        == "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json contains https://github.com/edithatogo/mchs-swift.git."
+    )
     assert "latestReleaseProbe" in registry["preparationEvidence"]
     assert "latestPublicProbe" in registry["preparationEvidence"]
     assert "pkg.go.dev" not in plan
-    assert "Publication is not claimed" in plan
+    assert "Publication is verified" in plan
+    assert "Pending Swift Package Index listing/version evidence" not in plan
