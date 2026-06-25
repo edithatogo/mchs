@@ -38,5 +38,13 @@
   "description": "Add a versioned, provenance-aware emergency code mapping pipeline for declared source emergency-care fields, using official or locally validated mapping references and registry-driven UDG/AECC era selection.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/emergency_code_mapping_pipeline_20260512"
+  "archive_path": "conductor/archive/emergency_code_mapping_pipeline_20260512",
+  "support_scope": "Versioned provenance-aware emergency source-field mapping bundles under the emergency transition registry.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "official or locally validated mapping references remain local-only or deferred"
+    }
+  ]
 }

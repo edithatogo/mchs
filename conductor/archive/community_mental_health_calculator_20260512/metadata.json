@@ -15,5 +15,13 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-12T11:20:53Z",
-  "description": "Add first-class community mental health calculator support and AMHCC documentation with documented fixture gaps."
+  "description": "Add first-class community mental health calculator support and AMHCC documentation with documented fixture gaps.",
+  "support_scope": "Community mental health calculator contract, inventory, documentation, and fixture-gap governance.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "official-source golden validation fixtures for NEP21-NEP26 remain deferred"
+    }
+  ]
 }

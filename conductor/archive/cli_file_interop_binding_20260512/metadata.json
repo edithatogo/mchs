@@ -17,5 +17,13 @@
   "description": "Add a conservative language-neutral CLI and file interoperability contract scaffold with Arrow/Parquet as the target and CSV compatibility where safe.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/cli_file_interop_binding_20260512"
+  "archive_path": "conductor/archive/cli_file_interop_binding_20260512",
+  "support_scope": "Versioned CLI/file interoperability contract with Arrow/Parquet target and CSV compatibility where safe.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "Arrow/Parquet smoke evidence and workflow enforcement remain future gates"
+    }
+  ]
 }

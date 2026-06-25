@@ -14,5 +14,7 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-10T16:11:56Z",
   "updated_at": "2026-05-10T16:17:17Z",
-  "description": "Recover and verify the remaining IHACPA source archive gaps and confirm archive completeness"
+  "description": "Recover and verify the remaining IHACPA source archive gaps and confirm archive completeness",
+  "support_scope": "IHACPA source archive recovery and manifest gap closure evidence.",
+  "gap_register": []
 }

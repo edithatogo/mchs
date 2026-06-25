@@ -23,5 +23,7 @@
   "description": "Coordinate the transition from Python-first package to a proper polyglot library with a shared Rust calculator core and thin bindings.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/polyglot_rust_core_roadmap_20260512"
+  "archive_path": "conductor/archive/polyglot_rust_core_roadmap_20260512",
+  "support_scope": "Polyglot Rust-core transition roadmap and thin-binding governance contract.",
+  "gap_register": []
 }

@@ -19,5 +19,13 @@
   "description": "Govern local-only handling of licensed classification tables, manuals, mappings, and grouper software for admitted acute and related workflows.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/icd_achi_acs_license_workflow_20260512"
+  "archive_path": "conductor/archive/icd_achi_acs_license_workflow_20260512",
+  "support_scope": "Metadata-only local licensed asset workflow for ICD-10-AM, ACHI, ACS, and related grouper assets.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed classification assets must remain local-only and cannot be redistributed"
+    }
+  ]
 }

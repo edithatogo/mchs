@@ -18,5 +18,13 @@
   "description": "Add AR-DRG version parity fixtures to validate version-specific grouping and NWAU behavior across pricing years.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/ar_drg_version_parity_fixtures_20260512"
+  "archive_path": "conductor/archive/ar_drg_version_parity_fixtures_20260512",
+  "support_scope": "Metadata-only AR-DRG version parity fixture contract for synthetic and local-only licensed reference fixtures.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed AR-DRG parity fixtures remain local-only or deferred"
+    }
+  ]
 }

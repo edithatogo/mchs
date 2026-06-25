@@ -20,5 +20,13 @@
   "description": "Classify SAS interoperability as private/local reference comparison only: no public SAS adapter, no SAS formula port, and no new development until licensed reference-output evidence and an accountable owner are recorded.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/sas_interop_binding_20260512"
+  "archive_path": "conductor/archive/sas_interop_binding_20260512",
+  "support_scope": "Private/local SAS reference comparison policy; no public SAS adapter or formula port is claimed.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed SAS reference-output evidence and accountable ownership are required before any future development"
+    }
+  ]
 }

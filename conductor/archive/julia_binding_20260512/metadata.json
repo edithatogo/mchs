@@ -17,5 +17,13 @@
   "description": "Add a wrapper-only Julia binding prototype for high-performance analysis through CLI/file interop while preserving single-sourced calculator logic.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/julia_binding_20260512"
+  "archive_path": "conductor/archive/julia_binding_20260512",
+  "support_scope": "Wrapper-only Julia binding prototype through CLI/file interop with single-sourced calculator logic.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "Julia CI matrix and stable file-fixture proof remain future gates"
+    }
+  ]
 }

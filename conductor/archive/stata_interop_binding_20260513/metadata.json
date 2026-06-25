@@ -30,5 +30,13 @@
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/stata_interop_binding_20260513",
-  "pre_archive_current_state": "file-cli-adapter-ready-with-publication-gates"
+  "pre_archive_current_state": "file-cli-adapter-ready-with-publication-gates",
+  "support_scope": "Stata interoperability through bounded file/CLI adapter and service contract.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "owner, CLI/file readiness, and publication evidence remain deferred for future updates"
+    }
+  ]
 }

@@ -32,5 +32,13 @@
   "description": "Add strict validation gates so pricing years cannot be marked supported or validated without required source, extraction, and fixture evidence.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/pricing_year_validation_gates_20260512"
+  "archive_path": "conductor/archive/pricing_year_validation_gates_20260512",
+  "support_scope": "Strict pricing-year support and validation gates tied to source, extraction, and fixture evidence.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "future years cannot be marked supported without full evidence gates"
+    }
+  ]
 }

@@ -19,5 +19,13 @@
   "description": "Add versioned AR-DRG mapping registry capability for ICD-10-AM, ACHI, ACS, and AR-DRG table relationships with conservative source and licensing handling.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/ar_drg_icd_mapping_registry_20260512"
+  "archive_path": "conductor/archive/ar_drg_icd_mapping_registry_20260512",
+  "support_scope": "Versioned AR-DRG ICD/ACHI/ACS mapping metadata registry with explicit provenance and licensing boundaries.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "official licensed mapping evidence remains local-only or deferred"
+    }
+  ]
 }

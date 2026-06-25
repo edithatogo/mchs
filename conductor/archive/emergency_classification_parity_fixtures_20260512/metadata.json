@@ -44,5 +44,13 @@
   "description": "Govern safe emergency classification parity fixtures for UDG, AECC, transition-year, and grouper-dependent workflows without redistributing licensed source material.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/emergency_classification_parity_fixtures_20260512"
+  "archive_path": "conductor/archive/emergency_classification_parity_fixtures_20260512",
+  "support_scope": "Metadata-only emergency parity fixture contract for UDG, AECC, transition handling, and downstream emergency validation.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed emergency classification parity fixtures remain local-only or deferred"
+    }
+  ]
 }

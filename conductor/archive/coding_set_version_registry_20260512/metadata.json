@@ -22,5 +22,13 @@
   "description": "Add a machine-readable registry for classification and coding-set versions, pricing-year compatibility, and licensing boundaries for AR-DRG, AECC, UDG, Tier 2, AMHCC, ICD-10-AM, ACHI, and ACS.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/coding_set_version_registry_20260512"
+  "archive_path": "conductor/archive/coding_set_version_registry_20260512",
+  "support_scope": "Machine-readable metadata registry for classification and coding-set versions, compatibility, and licensing boundaries.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "official licensed coding-set assets remain local-only or deferred"
+    }
+  ]
 }

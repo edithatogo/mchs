@@ -22,5 +22,13 @@
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/rust_acute_python_poc_20260510",
-  "pre_archive_current_state": "implemented-canary-poc"
+  "pre_archive_current_state": "implemented-canary-poc",
+  "support_scope": "Opt-in Rust acute 2025 proof of concept with Python bindings and parity checks.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "GA runtime promotion and broader fixture coverage remain future gates"
+    }
+  ]
 }

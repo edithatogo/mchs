@@ -17,5 +17,7 @@
   "description": "Add a TypeScript and WebAssembly export adapter for synthetic-data browser docs demos, a thin Node workflow, and conservative contract parity.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/typescript_wasm_binding_20260512"
+  "archive_path": "conductor/archive/typescript_wasm_binding_20260512",
+  "support_scope": "TypeScript and WebAssembly adapter for synthetic-data browser demos and thin Node workflows.",
+  "gap_register": []
 }

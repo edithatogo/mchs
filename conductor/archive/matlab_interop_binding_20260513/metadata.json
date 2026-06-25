@@ -30,5 +30,13 @@
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/matlab_interop_binding_20260513",
-  "pre_archive_current_state": "adapter-ready-with-deferred-release-gates"
+  "pre_archive_current_state": "adapter-ready-with-deferred-release-gates",
+  "support_scope": "MATLAB file and CLI adapter interoperability contract with service, toolbox, and C ABI MEX gates deferred.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "MATLAB/Octave runtime validation and toolbox publication remain deferred"
+    }
+  ]
 }

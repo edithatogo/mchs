@@ -20,5 +20,7 @@
   "description": "Finalize the Go service and binding-file adapter path for services, CLIs, and data-pipeline integration.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/go_binding_20260512"
+  "archive_path": "conductor/archive/go_binding_20260512",
+  "support_scope": "Go service and binding-file adapter contract for services, CLIs, and data-pipeline integration.",
+  "gap_register": []
 }

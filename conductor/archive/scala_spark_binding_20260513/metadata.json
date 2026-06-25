@@ -28,5 +28,13 @@
   "description": "Add a Scala/Spark roadmap for lakehouse and distributed costing-study workflows through Arrow/Parquet, service, or SQL boundaries. Deferred until audience, owner, and evidence criteria are recorded.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/scala_spark_binding_20260513"
+  "archive_path": "conductor/archive/scala_spark_binding_20260513",
+  "support_scope": "Scala/Spark roadmap for lakehouse and distributed costing-study workflows through Arrow/Parquet, service, or SQL boundaries.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "audience, owner, and evidence criteria remain deferred"
+    }
+  ]
 }

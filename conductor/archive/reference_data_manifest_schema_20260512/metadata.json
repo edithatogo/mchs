@@ -17,5 +17,13 @@
   "description": "Add strict machine-readable pricing-year reference data manifest loaders with pinned examples, explicit gaps, canonical paths, and validation-status taxonomy.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/reference_data_manifest_schema_20260512"
+  "archive_path": "conductor/archive/reference_data_manifest_schema_20260512",
+  "support_scope": "Strict machine-readable pricing-year reference-data manifest schema, loaders, examples, and validation taxonomy.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "example manifests retain unresolved source-only gaps until official evidence is added"
+    }
+  ]
 }

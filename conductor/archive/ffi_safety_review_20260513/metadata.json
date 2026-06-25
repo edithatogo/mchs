@@ -19,5 +19,7 @@
     "conductor/archive/ffi_safety_review_20260513/index.md"
   ],
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/ffi_safety_review_20260513"
+  "archive_path": "conductor/archive/ffi_safety_review_20260513",
+  "support_scope": "FFI/C ABI safety review for pointer, UTF-8, length, ownership, and error-status handling.",
+  "gap_register": []
 }

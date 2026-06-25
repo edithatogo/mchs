@@ -40,5 +40,13 @@
   "description": "Build a versioned formula and parameter bundle pipeline for future IHACPA calculator releases, anchored to explicit source-discovered gap records and source-scanner fixtures.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/formula_parameter_bundle_pipeline_20260512"
+  "archive_path": "conductor/archive/formula_parameter_bundle_pipeline_20260512",
+  "support_scope": "Versioned formula and parameter bundle pipeline anchored to source-discovered gap records and source-scanner fixtures.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "future IHACPA release extraction and official parity evidence remain deferred"
+    }
+  ]
 }

@@ -17,5 +17,13 @@
   "description": "Add an R binding roadmap for health economics and costing-study users without duplicating formula logic.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/r_binding_20260512"
+  "archive_path": "conductor/archive/r_binding_20260512",
+  "support_scope": "R binding roadmap and wrapper-only package scaffold for health economics and costing-study users.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "R CI matrix and stable CLI fixture path remain future gates"
+    }
+  ]
 }

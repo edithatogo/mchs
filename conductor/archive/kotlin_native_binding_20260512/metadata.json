@@ -20,5 +20,7 @@
   "description": "Finalize a Kotlin/Native binding roadmap for native consumers through C ABI, service, or file interop without a JVM runtime dependency.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/kotlin_native_binding_20260512"
+  "archive_path": "conductor/archive/kotlin_native_binding_20260512",
+  "support_scope": "Kotlin/Native binding roadmap through C ABI, service, or file interop without JVM runtime dependency.",
+  "gap_register": []
 }

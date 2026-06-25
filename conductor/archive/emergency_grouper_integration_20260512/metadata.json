@@ -41,5 +41,13 @@
   "description": "Define a safe emergency classification grouper integration roadmap for UDG/AECC derivation through precomputed inputs or licensed external command, service, or file-exchange workflows.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/emergency_grouper_integration_20260512"
+  "archive_path": "conductor/archive/emergency_grouper_integration_20260512",
+  "support_scope": "Boundary for precomputed UDG/AECC outputs and licensed external emergency grouper or mapping-service workflows.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed external grouper parity and service evidence remain deferred"
+    }
+  ]
 }

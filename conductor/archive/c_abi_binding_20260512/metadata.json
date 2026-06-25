@@ -17,5 +17,13 @@
   "description": "Add a conservative, versioned C ABI scaffold for institutional embedding and downstream language bindings.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/c_abi_binding_20260512"
+  "archive_path": "conductor/archive/c_abi_binding_20260512",
+  "support_scope": "Conservative versioned C ABI strategy and readiness scaffold for institutional embedding and downstream language bindings.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "generated headers, exported-symbol diffs, sanitizers, and cross-platform ABI parity remain future gates"
+    }
+  ]
 }

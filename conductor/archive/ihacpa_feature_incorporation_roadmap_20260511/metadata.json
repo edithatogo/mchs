@@ -14,5 +14,7 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-10T16:11:56Z",
   "updated_at": "2026-05-10T19:56:47Z",
-  "description": "Inventory IHACPA calculator features and close remaining implementation gaps across calculators, adjustments, and year-specific parity"
+  "description": "Inventory IHACPA calculator features and close remaining implementation gaps across calculators, adjustments, and year-specific parity",
+  "support_scope": "IHACPA feature inventory and coverage roadmap for calculator, adjustment, and year-specific parity gaps.",
+  "gap_register": []
 }

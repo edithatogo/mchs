@@ -20,5 +20,13 @@
   "description": "Define a safe AR-DRG grouper integration track for admitted acute workflows that can ingest precomputed DRGs or call a user-supplied licensed external grouper without claiming proprietary grouper support.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/ar_drg_grouper_integration_20260512"
+  "archive_path": "conductor/archive/ar_drg_grouper_integration_20260512",
+  "support_scope": "Local external-grouper reference and precomputed AR-DRG provenance interface; proprietary grouper support remains unclaimed.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "licensed external grouper parity and publication remain deferred"
+    }
+  ]
 }

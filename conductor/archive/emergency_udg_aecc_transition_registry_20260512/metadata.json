@@ -38,5 +38,13 @@
   "description": "Document and validate emergency classification transition registry semantics for UDG and AECC versions, pricing-year applicability, stream compatibility, source licensing caveats, and no-invented-crosswalk boundaries.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/emergency_udg_aecc_transition_registry_20260512"
+  "archive_path": "conductor/archive/emergency_udg_aecc_transition_registry_20260512",
+  "support_scope": "Metadata-only transition registry for UDG, AECC, pricing-year applicability, acceptance state, and stream compatibility.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "future transition updates require source evidence before support claims expand"
+    }
+  ]
 }

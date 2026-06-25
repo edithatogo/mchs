@@ -17,5 +17,13 @@
   "description": "Add source scanning commands to discover, record, and gap-track future IHACPA formula, parameter, and calculator releases.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
-  "archive_path": "conductor/archive/ihacpa_source_scanner_20260512"
+  "archive_path": "conductor/archive/ihacpa_source_scanner_20260512",
+  "support_scope": "Review-only IHACPA source discovery commands and gap-record generation.",
+  "gap_register": [
+    {
+      "id": "post-archive-evidence-gate",
+      "status": "deferred",
+      "summary": "live scans, downloads, and source commits remain manual review gates"
+    }
+  ]
 }
