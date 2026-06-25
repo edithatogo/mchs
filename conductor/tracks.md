@@ -734,8 +734,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Release Boundary Control Plane**
-*Link: [./tracks/release_boundary_control_plane_20260624/](./tracks/release_boundary_control_plane_20260624/)*
+- [x] **Track: Release Boundary Control Plane**
+*Link: [./archive/release_boundary_control_plane_20260624/](./archive/release_boundary_control_plane_20260624/)*
 *Gate: Map package surfaces to release workflows, version sources, registry evidence, support status, and external blocker classes before public claims change.*
 
 ---

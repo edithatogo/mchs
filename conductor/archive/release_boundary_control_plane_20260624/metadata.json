@@ -1,0 +1,35 @@
+{
+  "track_id": "release_boundary_control_plane_20260624",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "publication",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "conductor/release-boundary-control-plane.md",
+  "dependencies": [
+    "package_surface_ownership_registry_20260624",
+    "support_status_reconciliation_20260513",
+    "release_evidence_bundle_20260513"
+  ],
+  "completion_evidence": [
+    "conductor/release-boundary-control-plane.md",
+    "contracts/repository-topology/package-surfaces.json",
+    "tests/test_repository_topology_governance.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "description": "Map package surfaces to release workflows, version sources, registry evidence, and external blocker classes so support claims cannot drift.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "governance-control",
+    "summary": "Maps package surfaces to release workflows, version sources, registry evidence, support status, and external gate classes. It validates static release-boundary claims but does not perform live registry polling."
+  },
+  "gap_register": [
+    {
+      "id": "live-registry-proof",
+      "status": "externalized",
+      "summary": "Live registry polling and publication actions remain owned by registry-specific tracks and scripts."
+    }
+  ]
+}

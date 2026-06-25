@@ -244,6 +244,30 @@ def test_package_surface_registry_conforms_to_declared_schema_shape() -> None:
         assert release["registry_state"] in release_schema["properties"]["registry_state"]["enum"]
 
 
+def test_readme_registry_claims_match_release_boundary_states() -> None:
+    readme = _read(ROOT / "README.md")
+    registry = _load_json(SURFACES)
+
+    states = {
+        surface["id"]: surface["release"]["registry_state"]
+        for surface in registry["surfaces"]
+    }
+    assert states["cran-registry"] == "submitted"
+    assert states["maven-central-registry"] == "prepared"
+    assert states["vscode-extension"] == "published_verified"
+    assert states["vcpkg-port"] == "blocked"
+    assert states["swift-binding"] == "submitted"
+
+    for phrase in [
+        "CRAN maintainer submission/review remains external",
+        "Prepared, not published",
+        "upstream vcpkg/ConanCenter PR/review remains external",
+        "public SPI listing/version evidence is still pending",
+        "No support claim beyond the specific registry states above",
+    ]:
+        assert phrase in readme
+
+
 def test_repository_topology_validator_passes_for_current_canonical_repo() -> None:
     result = subprocess.run(
         [sys.executable, str(VALIDATOR), "--json"],
