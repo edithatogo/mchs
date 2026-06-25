@@ -1,0 +1,38 @@
+{
+  "track_id": "deferred_surface_cleanup_20260513",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "governance",
+  "priority": "immediate-after-cline",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "docs/roadmaps/audience-language-strategy.md",
+  "support_scope": "Governance cleanup for deferred and no-new-development language/surface artifacts. The track records canonical support vocabulary, audience/owner gates, no-formula-duplication rules, and deferred surface statuses; it does not implement every deferred adapter or delete every historical scaffold.",
+  "gap_register": [
+    {
+      "gap": "Some deferred surface artifacts remain in the repository as private, preview, historical, or no-new-development context.",
+      "rationale": "The cleanup policy intentionally preserves traceability and valid boundary adapters while preventing unsupported public claims."
+    },
+    {
+      "gap": "Promotion of deferred surfaces still requires owner, audience, contract, parity, CI, packaging, and registry evidence.",
+      "rationale": "This track governs status and cleanup policy; surface-specific readiness remains owned by each binding or registry track."
+    }
+  ],
+  "dependencies": [
+    "audience_language_strategy_20260513",
+    "rust_core_ga_post_cline_review_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Decide whether to keep, quarantine, or remove generated deferred surface artefacts after Cline finishes.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/tracks/deferred_surface_cleanup_20260513/index.md",
+    "conductor/tracks/deferred_surface_cleanup_20260513/spec.md",
+    "conductor/tracks/deferred_surface_cleanup_20260513/plan.md",
+    "docs/roadmaps/audience-language-strategy.md",
+    "docs/roadmaps/deferred-surface-status.md",
+    "tests/test_deferred_surface_cleanup_track.py",
+    "tests/test_pricing_hwau_strategy_tracks.py",
+    "tests/test_duckdb_sql_binding_track.py"
+  ]
+}

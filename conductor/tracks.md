@@ -531,7 +531,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Deferred Surface Cleanup**
-*Link: [./tracks/deferred_surface_cleanup_20260513/](./tracks/deferred_surface_cleanup_20260513/)*
+*Link: [./archive/deferred_surface_cleanup_20260513/](./archive/deferred_surface_cleanup_20260513/)*
 *Gate: Decide whether generated deferred-surface artefacts are retained, quarantined, or removed after Cline finishes.*
 
 ---
