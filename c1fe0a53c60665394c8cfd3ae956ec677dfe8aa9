@@ -1,0 +1,8 @@
+Autonomous Conductor schema checkpoint
+
+Commit notes:
+- Codified autonomous comprehensive track execution in conductor/workflow.md.
+- Requires commit notes, git notes, branch and refs/notes pushes, conductor-review at phase and track boundaries, auto-fixes, archive-eligible cleanup, and external-gate separation.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
