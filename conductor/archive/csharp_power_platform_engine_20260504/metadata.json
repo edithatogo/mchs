@@ -1,0 +1,43 @@
+{
+  "track_id": "csharp_power_platform_engine_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "C#/.NET and Power Platform service-boundary architecture over shared calculator contracts",
+  "support_scope": "Architecture and governance documentation for a C#/.NET service boundary and Power Platform orchestration surface. The track documents contract consumption, logging/privacy rules, fixture alignment, and the rule that Power Platform must not contain calculator formula logic. It does not provide an executable C# engine, signed NuGet package, or tenant-validated Power Platform runtime.",
+  "gap_register": [
+    {
+      "gap": "No executable C# calculation engine is completed by this track.",
+      "rationale": "Later Rust-core governance makes C# a downstream adapter/service boundary rather than the formula owner."
+    },
+    {
+      "gap": "No NuGet/package publication evidence is claimed here.",
+      "rationale": "Package publication is owned by the .NET/NuGet registry submission track and support-status evidence."
+    },
+    {
+      "gap": "No live Power Platform tenant/runtime validation is claimed here.",
+      "rationale": "Power Platform implementation and live tenant proof are owned by the Power Platform binding and runtime evidence tracks."
+    }
+  ],
+  "dependencies": [
+    "cross_language_golden_tests_20260504",
+    "public_api_contract_20260504",
+    "calculator_core_abstractions_20260504",
+    "rust_core_architecture_20260510"
+  ],
+  "completion_evidence": [
+    "conductor/csharp-architecture.md",
+    "conductor/power-platform-boundary.md",
+    "docs/adr/0005-web-and-power-platform-delivery.md",
+    "tests/test_csharp_architecture.py",
+    "tests/test_rust_core_architecture_track.py",
+    "tests/test_rust_core_boundary_contracts.py",
+    "tests/test_csharp_power_platform_engine_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T02:20:00Z",
+  "description": "C#/.NET service-boundary architecture and Power Platform orchestration rules.",
+  "no_stub_enforce": true
+}

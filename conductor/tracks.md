@@ -45,7 +45,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: implement the browser-facing prototype only after a contract and privacy boundary exist.*
 
 8. [x] **Track: C# Calculation Engine and Power Platform Adapter**
-   *Link: [./tracks/csharp_power_platform_engine_20260504/](./tracks/csharp_power_platform_engine_20260504/)*
+   *Link: [./archive/csharp_power_platform_engine_20260504/](./archive/csharp_power_platform_engine_20260504/)*
    *Depends on: public API contract, calculator core abstractions, and golden fixtures.*
    *Gate: keep Power Platform orchestration separate from the calculation engine and drive parity from shared fixtures.*
 
