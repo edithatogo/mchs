@@ -17,7 +17,10 @@ TRACK_IDS = [
     "audience_language_strategy_20260513",
 ]
 
-ARCHIVED_TRACK_IDS = {"audience_language_strategy_20260513"}
+ARCHIVED_TRACK_IDS = {
+    "audience_language_strategy_20260513",
+    "canonical_contract_foundation_20260513",
+}
 
 
 def _read(path: Path) -> str:

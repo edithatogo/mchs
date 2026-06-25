@@ -291,7 +291,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Canonical Contract Foundation**
-*Link: [./tracks/canonical_contract_foundation_20260513/](./tracks/canonical_contract_foundation_20260513/)*
+*Link: [./archive/canonical_contract_foundation_20260513/](./archive/canonical_contract_foundation_20260513/)*
 *Gate: Immediate priority after Rust Core GA planning. Define canonical JSON Schema/OpenAPI-compatible domain contracts for calculator requests, responses, diagnostics, errors, provenance, support status, and evidence before adding more surfaces.*
 
 ---

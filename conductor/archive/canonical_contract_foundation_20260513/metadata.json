@@ -1,0 +1,39 @@
+{
+  "track_id": "canonical_contract_foundation_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
+  "support_scope": "Canonical JSON Schema foundation for calculator, diagnostics, provenance, support-status, and evidence contracts, including pass/fail examples and surface derivation rules for CLI/file, HTTP API, MCP, OpenAI tools, Arrow/Parquet, and language adapters. The archived scope covers schema ownership and validation fixtures, not every downstream surface implementation.",
+  "gap_register": [
+    {
+      "gap": "Downstream surface-specific implementations are outside this track.",
+      "status": "accepted-non-blocking",
+      "rationale": "CLI/file, HTTP API, MCP, OpenAI adapter, and language bindings are owned by dependent tracks."
+    },
+    {
+      "gap": "Future schema additions must continue through dependent contract governance.",
+      "status": "accepted-non-blocking",
+      "rationale": "This track establishes the foundation and fail-closed rules, while later release-boundary work governs promotion evidence."
+    }
+  ],
+  "dependencies": [
+    "rust_core_ga_20260513",
+    "contract_schema_export_20260512"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Create canonical domain schemas that drive CLI/file, API, MCP, OpenAI adapter, and language surfaces.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/canonical/*.json",
+    "contracts/canonical/examples/*.json",
+    "contracts/canonical/index.md",
+    "docs/roadmaps/core-contract-surfaces.md",
+    "tests/test_governance_contracts.py",
+    "tests/test_contract_schema_export.py",
+    "tests/test_core_contract_surface_tracks.py"
+  ]
+}

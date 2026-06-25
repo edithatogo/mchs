@@ -42,7 +42,7 @@ Arrow/Parquet surfaces are stable.
 | Formula-bundle | [Formula and Parameter Bundle Pipeline](../../conductor/archive/formula_parameter_bundle_pipeline_20260512/spec.md) | Provides the extraction, versioning, and validation pipeline for formula and parameter bundles. |
 | Validation-gate | [Pricing-Year Validation Gates](../../conductor/archive/pricing_year_validation_gates_20260512/spec.md) | Prevents unsupported support claims until the required source and fixture evidence exists. |
 | GA | [Rust Core GA](../../conductor/tracks/rust_core_ga_20260513/spec.md) | Makes Rust GA the immediate priority, defers lower-priority adapters, and defines the evidence gates for release-candidate and GA promotion. |
-| Contract | [Canonical Contract Foundation](../../conductor/tracks/canonical_contract_foundation_20260513/spec.md) | Defines canonical schemas before CLI/file, API, MCP, OpenAI adapter, and language surfaces. |
+| Contract | [Canonical Contract Foundation](../../conductor/archive/canonical_contract_foundation_20260513/spec.md) | Defines canonical schemas before CLI/file, API, MCP, OpenAI adapter, and language surfaces. |
 | Contract | [Support Status Matrix](../../conductor/archive/support_status_matrix_20260513/spec.md) | Defines machine-readable statuses for streams, years, jurisdictions, surfaces, runtimes, and languages. |
 | Contract | [CLI/File Contracts](../../conductor/tracks/cli_file_contracts_20260513/spec.md) | Defines the stable batch and automation boundary for Rust Core GA. |
 | Contract | [HTTP API Contract](../../conductor/tracks/http_api_contract_20260513/spec.md) | Defines the OpenAPI 3.1 domain API over canonical schemas. |
