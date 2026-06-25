@@ -11,9 +11,9 @@ only to prevent future overclaims and to define reopen criteria.
 
 ## Evidence Reviewed
 
-- `conductor/tracks/duckdb_sql_binding_20260512/spec.md`
-- `conductor/tracks/duckdb_sql_binding_20260512/plan.md`
-- `conductor/tracks/duckdb_sql_binding_20260512/binding_strategy.md`
+- `conductor/archive/duckdb_sql_binding_20260512/spec.md`
+- `conductor/archive/duckdb_sql_binding_20260512/plan.md`
+- `conductor/archive/duckdb_sql_binding_20260512/binding_strategy.md`
 - `contracts/support/support-matrix.json`
 - `tests/test_duckdb_sql_binding_track.py`
 

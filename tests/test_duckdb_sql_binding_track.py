@@ -49,9 +49,9 @@ def test_duckdb_sql_track_is_historical_not_adapter_ready():
         "none; retained as historical roadmap context"
     )
     assert metadata["completion_evidence"] == [
-        "conductor/tracks/duckdb_sql_binding_20260512/spec.md",
-        "conductor/tracks/duckdb_sql_binding_20260512/plan.md",
-        "conductor/tracks/duckdb_sql_binding_20260512/binding_strategy.md",
+        "conductor/archive/duckdb_sql_binding_20260512/spec.md",
+        "conductor/archive/duckdb_sql_binding_20260512/plan.md",
+        "conductor/archive/duckdb_sql_binding_20260512/binding_strategy.md",
         "tests/test_duckdb_sql_binding_track.py",
         "contracts/support/support-matrix.json",
     ]
