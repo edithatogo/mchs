@@ -26,7 +26,10 @@ import nwau_py.fixtures as fixtures
 import nwau_py.rust_bridge as rust_bridge
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK_DIR = ROOT / "conductor" / "tracks" / "python_rust_binding_stabilization_20260512"
+TRACK_ID = "python_rust_binding_stabilization_20260512"
+TRACK_DIR = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK_DIR.exists():
+    TRACK_DIR = ROOT / "conductor" / "archive" / TRACK_ID
 FIXTURE_ROOT = Path(__file__).resolve().parent / "fixtures" / "golden" / "acute_2025"
 MANIFEST = FIXTURE_ROOT / "manifest.json"
 INPUT_CSV = FIXTURE_ROOT / "input.csv"

@@ -7,9 +7,37 @@
   "primary_contract": "opt-in Python Rust bridge, maturin wheel CI, golden fixture parity, and fallback diagnostics",
   "dependencies": [],
   "completion_evidence": [
-    "docs",
-    "workflows",
-    "tests"
+    "nwau_py/rust_bridge.py",
+    "nwau_py/calculators/acute.py",
+    "rust/crates/nwau-py/src/lib.rs",
+    ".github/workflows/pr-ci.yml",
+    "tests/test_python_rust_binding_stabilization_track.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Opt-in Python Rust bridge boundary.",
+      "Pure Python fallback behavior for default public execution.",
+      "Golden fixture parity checks for the validated acute 2025 opt-in path.",
+      "Maturin wheel-build workflow wiring and clear missing-extension diagnostics."
+    ],
+    "excluded": [
+      "Making Rust the default Python runtime for all streams.",
+      "Full `cargo test --workspace` proof while local `nwau-py` dynamic Python linkage is unresolved.",
+      "Cross-platform wheel publication or registry release evidence."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "nwau-py-dynamic-python-linkage",
+      "status": "environment-gap",
+      "description": "Full Rust workspace tests can abort in `nwau-py` when local `libpython3.13.dylib` is unavailable; focused Python binding tests still pass."
+    },
+    {
+      "id": "default-rust-runtime-promotion",
+      "status": "deferred",
+      "description": "Rust-backed Python execution remains opt-in until stream-specific parity and release evidence are promoted."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
