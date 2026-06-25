@@ -31,6 +31,7 @@ def test_conda_forge_track_is_blocked_by_feedstock_pr_review():
     registry = _conda_registry()
     tracks = _read(TRACKS)
 
+    assert (TRACK / "review.md").exists()
     assert metadata["status"] == "submitted"
     assert (
         metadata["current_status"]
