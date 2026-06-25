@@ -1,0 +1,51 @@
+{
+  "binding_bundle_id": "stata_interop_binding_contract_20260513",
+  "entry_id": "stata-interop-diagnostics-pass",
+  "entry_type": "diagnostic_record",
+  "diagnostics": {
+    "status": "pass",
+    "checks": [
+      {
+        "id": "contract_alignment",
+        "status": "pass",
+        "message": "Stata interop request and response fields align with the public calculator contract."
+      },
+      {
+        "id": "file_cli_primary",
+        "status": "pass",
+        "message": "File-import and CLI-invocation are the primary paths for Stata."
+      },
+      {
+        "id": "dta_service_fallback",
+        "status": "pass",
+        "message": "DTA-exchange and service fallback are declared."
+      },
+      {
+        "id": "fixture_gates_synthetic_only",
+        "status": "pass",
+        "message": "Committed fixtures stay synthetic and metadata only."
+      }
+    ],
+    "summary": {
+      "passed": 4,
+      "failed": 0,
+      "blocked": 0
+    },
+    "notes": "Synthetic diagnostics metadata only."
+  },
+  "provenance": {
+    "command": "stata-interop validate-diagnostics-pass",
+    "binding_bundle_id": "stata_interop_binding_contract_20260513",
+    "source_manifest_path": "contracts/stata-interop-binding/examples/diagnostics.pass.json",
+    "source_url": "https://example.invalid/contracts/stata-interop-binding",
+    "retrieved_on": "2026-05-13",
+    "sha256": "synthetic-sha256-stata-interop-diagnostics-pass",
+    "bytes": 1740,
+    "checksum_algorithm": "sha256"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic diagnostics pass example only."
+  }
+}

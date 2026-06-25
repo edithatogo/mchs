@@ -1,0 +1,74 @@
+{
+  "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+  "entry_id": "matlab-interop-file-import-pass",
+  "entry_type": "matlab_interop_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "file-import",
+    "input_path": "./fixtures/outpatients/input.csv",
+    "output_path": "./fixtures/outpatients/output.csv",
+    "csv_input_path": "./fixtures/outpatients/input.csv",
+    "csv_output_path": "./fixtures/outpatients/output.csv",
+    "correlation_id": "matlab-interop-file-import-pass",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "file-import"
+    },
+    "fixture_gate": "local_only_licensed_assets"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "mode": "file-import",
+    "success": true,
+    "status": "pass",
+    "message": "File-import accepted for MATLAB readtable/parquetread consumer.",
+    "warnings": [],
+    "errors": [],
+    "diagnostics": {
+      "status": "pass",
+      "checks": [
+        {
+          "id": "file_import_mode_declared",
+          "status": "pass",
+          "message": "The file-import primary mode is explicitly declared."
+        },
+        {
+          "id": "csv_boundary_inspectable",
+          "status": "pass",
+          "message": "The CSV file boundary is inspectable and fixture-testable."
+        },
+        {
+          "id": "no_formula_duplication",
+          "status": "pass",
+          "message": "The example does not introduce calculator logic."
+        }
+      ],
+      "summary": {"passed": 3, "failed": 0, "blocked": 0},
+      "notes": "Synthetic file-import example only."
+    },
+    "provenance": {
+      "command": "matlab-interop validate-file-import-pass",
+      "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+      "source_manifest_path": "contracts/matlab-interop-binding/examples/file-import.pass.json",
+      "source_url": "https://example.invalid/contracts/matlab-interop-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-matlab-interop-file-import-pass",
+      "bytes": 2100,
+      "checksum_algorithm": "sha256"
+    },
+    "csv_output_path": "./fixtures/outpatients/output.csv",
+    "fixture_gate_state": "pass",
+    "module_readiness_state": "adapter_ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic file-import example only."
+  }
+}

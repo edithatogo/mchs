@@ -1,0 +1,71 @@
+{
+  "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+  "entry_id": "matlab-interop-cli-invocation-pass",
+  "entry_type": "matlab_interop_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "cli-invocation",
+    "cli_command": "mchs-calc --calculator acute --pricing-year 2025 --output /tmp/results.csv",
+    "correlation_id": "matlab-interop-cli-invocation-pass",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "cli-invocation"
+    },
+    "fixture_gate": "synthetic_only_examples"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "mode": "cli-invocation",
+    "success": true,
+    "status": "pass",
+    "message": "CLI invocation from MATLAB system() completed.",
+    "warnings": ["Synthetic example only; no calculation output is committed."],
+    "errors": [],
+    "diagnostics": {
+      "status": "pass",
+      "checks": [
+        {
+          "id": "public_calculator_contract_aligned",
+          "status": "pass",
+          "message": "The request fields mirror the public calculator contract."
+        },
+        {
+          "id": "cli_invocation_selected",
+          "status": "pass",
+          "message": "The CLI-invocation primary mode was used."
+        },
+        {
+          "id": "fixture_gate_synthetic_only",
+          "status": "pass",
+          "message": "The example remains synthetic and metadata only."
+        }
+      ],
+      "summary": {"passed": 3, "failed": 0, "blocked": 0},
+      "notes": "Synthetic diagnostics example only."
+    },
+    "provenance": {
+      "command": "matlab-interop validate-cli-invocation-pass",
+      "binding_bundle_id": "matlab_interop_binding_contract_20260513",
+      "source_manifest_path": "contracts/matlab-interop-binding/examples/cli-invocation.pass.json",
+      "source_url": "https://example.invalid/contracts/matlab-interop-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-matlab-interop-cli-invocation-pass",
+      "bytes": 2100,
+      "checksum_algorithm": "sha256"
+    },
+    "cli_stdout": "Calculator complete. Output written to /tmp/results.csv",
+    "fixture_gate_state": "pass",
+    "module_readiness_state": "adapter_ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic CLI-invocation example only."
+  }
+}

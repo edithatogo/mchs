@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/contracts/matlab-interop-binding/matlab-interop-binding.schema.json",
+  "title": "MATLAB interop binding contract",
+  "description": "Schema for synthetic metadata-only MATLAB interop binding contract bundles covering request/response structs, file-import, CLI-invocation, MAT-exchange, and C ABI MEX transport, diagnostics, provenance, errors, fixture gates, and module readiness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "binding_bundle_id",
+    "tool",
+    "privacy",
+    "public_calculator_contract",
+    "transport_modes",
+    "request_structs",
+    "response_structs",
+    "diagnostics",
+    "provenance",
+    "errors",
+    "fixture_gates",
+    "module_readiness",
+    "rules",
+    "examples"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "binding_bundle_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_\\\\-]+$"
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "package", "entry_point"],
+      "properties": {
+        "name": {"type": "string"},
+        "package": {"type": "string"},
+        "entry_point": {"type": "string"}
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "contains_phi", "notes"],
+      "properties": {
+        "classification": {"type": "string", "enum": ["synthetic"]},
+        "contains_phi": {"type": "boolean", "const": false},
+        "notes": {"type": "string"}
+      }
+    },
+    "public_calculator_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_path", "model_name", "fields", "supported_calculators", "notes"],
+      "properties": {
+        "source_path": {"type": "string"},
+        "model_name": {"type": "string"},
+        "fields": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "supported_calculators": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      }
+    },
+    "transport_modes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["mode", "priority", "notes"],
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"]
+          },
+          "priority": {"type": "string", "enum": ["primary", "fallback"]},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "request_structs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "fields", "notes"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["preview", "stable"]},
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "type", "required", "modes", "notes"],
+              "properties": {
+                "name": {"type": "string"},
+                "type": {"type": "string", "enum": ["string", "boolean", "integer", "number", "array", "object"]},
+                "required": {"type": "boolean"},
+                "modes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "enum": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"]
+                  }
+                },
+                "notes": {"type": "string"}
+              }
+            }
+          },
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "response_structs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "fields", "notes"],
+        "properties": {
+          "name": {"type": "string"},
+          "status": {"type": "string", "enum": ["preview", "stable"]},
+          "fields": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "type", "required", "modes", "notes"],
+              "properties": {
+                "name": {"type": "string"},
+                "type": {"type": "string", "enum": ["string", "boolean", "integer", "number", "array", "object"]},
+                "required": {"type": "boolean"},
+                "modes": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string",
+                    "enum": ["file-import", "cli-invocation", "mat-exchange", "c-abi-mex"]
+                  }
+                },
+                "notes": {"type": "string"}
+              }
+            }
+          },
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "notes"],
+        "properties": {
+          "id": {"type": "string"},
+          "status": {"type": "string", "enum": ["pass", "fail", "blocked"]},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "provenance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "required", "notes"],
+        "properties": {
+          "field": {"type": "string"},
+          "required": {"type": "boolean"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "severity", "retryable", "condition", "notes"],
+        "properties": {
+          "code": {"type": "string"},
+          "severity": {"type": "string", "enum": ["info", "warning", "error"]},
+          "retryable": {"type": "boolean"},
+          "condition": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "fixture_gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "state", "notes"],
+        "properties": {
+          "id": {"type": "string"},
+          "state": {"type": "string", "enum": ["pass", "fail", "blocked"]},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "module_readiness": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "state", "notes"],
+        "properties": {
+          "id": {"type": "string"},
+          "state": {"type": "string", "enum": ["blocked", "adapter_ready", "ready"]},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string"}
+    },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "path", "description"],
+        "properties": {
+          "name": {"type": "string"},
+          "path": {"type": "string"},
+          "description": {"type": "string"}
+        }
+      }
+    }
+  }
+}

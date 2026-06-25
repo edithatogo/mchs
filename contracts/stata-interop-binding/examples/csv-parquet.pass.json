@@ -1,0 +1,81 @@
+{
+  "binding_bundle_id": "stata_interop_binding_contract_20260513",
+  "entry_id": "stata-interop-csv-parquet-pass",
+  "entry_type": "stata_interop_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "file-import",
+    "csv_input_path": "./fixtures/outpatients/input.csv",
+    "csv_output_path": "./fixtures/outpatients/output.csv",
+    "parquet_input_path": "./fixtures/outpatients/input.parquet",
+    "parquet_output_path": "./fixtures/outpatients/output.parquet",
+    "correlation_id": "stata-interop-csv-parquet-pass",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "file-import"
+    },
+    "fixture_gate": "local_only_licensed_assets"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "outpatients",
+    "pricing_year": "2025",
+    "mode": "file-import",
+    "success": true,
+    "status": "fallback-pass",
+    "message": "File-import accepted for CSV/Parquet batch handoff.",
+    "warnings": [
+      "File-import is for batch use and must stay transport-only."
+    ],
+    "errors": [],
+    "diagnostics": {
+      "status": "pass",
+      "checks": [
+        {
+          "id": "file_import_mode_declared",
+          "status": "pass",
+          "message": "The file-import mode is explicitly declared."
+        },
+        {
+          "id": "file_boundary_inspectable",
+          "status": "pass",
+          "message": "The local file boundary is inspectable and fixture-testable."
+        },
+        {
+          "id": "no_formula_duplication",
+          "status": "pass",
+          "message": "The example does not introduce calculator logic."
+        }
+      ],
+      "summary": {
+        "passed": 3,
+        "failed": 0,
+        "blocked": 0
+      },
+      "notes": "Synthetic diagnostics example only."
+    },
+    "provenance": {
+      "command": "stata-interop validate-csv-parquet-pass",
+      "binding_bundle_id": "stata_interop_binding_contract_20260513",
+      "source_manifest_path": "contracts/stata-interop-binding/examples/csv-parquet.pass.json",
+      "source_url": "https://example.invalid/contracts/stata-interop-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-stata-interop-csv-parquet-pass",
+      "bytes": 2500,
+      "checksum_algorithm": "sha256"
+    },
+    "csv_output_path": "./fixtures/outpatients/output.csv",
+    "parquet_output_path": "./fixtures/outpatients/output.parquet",
+    "fixture_gate_state": "pass",
+    "module_readiness_state": "ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic CSV/Parquet file-import example only."
+  }
+}
