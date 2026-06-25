@@ -1,0 +1,34 @@
+{
+  "track_id": "contract_enforcement_harness_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "validator",
+  "current_state": "complete",
+  "primary_contract": "conductor/contract-enforcement.md, conductor/archive/contract_enforcement_harness_20260513/spec.md, and contracts/",
+  "support_scope": "Governance and validation plan for contract enforcement across canonical schemas, CLI/file, HTTP API, MCP, OpenAI adapter, bindings, release evidence, and no-stub checks. The archived scope preserves the enforcement plan and required gate definitions; dependent tracks own implementation-specific validators.",
+  "gap_register": [
+    {
+      "gap": "This track defines the enforcement harness requirements and gate plan; not every surface-specific validator is implemented here.",
+      "status": "accepted-non-blocking",
+      "rationale": "Surface tracks and release-boundary tracks own their concrete validation commands and CI wiring."
+    }
+  ],
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "contract_schema_export_20260512"
+  ],
+  "completion_evidence": [
+    "conductor/contract-enforcement.md",
+    "conductor/workflow.md",
+    "conductor/track-archive-policy.md",
+    "conductor/archive/contract_enforcement_harness_20260513/spec.md",
+    "conductor/archive/contract_enforcement_harness_20260513/plan.md",
+    "conductor/archive/contract_enforcement_harness_20260513/index.md",
+    "tests/test_contract_enforcement_harness_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Turn public contracts into generated, validated, drift-checked artifacts across schemas, CLI/file, API, MCP, OpenAI tools, and bindings.",
+  "no_stub_enforce": true
+}

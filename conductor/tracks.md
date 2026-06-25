@@ -543,7 +543,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Contract Enforcement Harness**
-*Link: [./tracks/contract_enforcement_harness_20260513/](./tracks/contract_enforcement_harness_20260513/)*
+*Link: [./archive/contract_enforcement_harness_20260513/](./archive/contract_enforcement_harness_20260513/)*
 *Gate: Turn canonical, CLI/file, API, MCP, OpenAI adapter, binding, and release contracts into generated or validated artifacts with drift checks and fail-closed tests.*
 
 ---
