@@ -537,7 +537,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Conductor Requirements and Design Authority**
-*Link: [./tracks/conductor_requirements_design_authority_20260513/](./tracks/conductor_requirements_design_authority_20260513/)*
+*Link: [./archive/conductor_requirements_design_authority_20260513/](./archive/conductor_requirements_design_authority_20260513/)*
 *Gate: Maintain MoSCoW requirements, system design diagrams, and cross-references as the authority for all tracks, contracts, CI/CD, docs, and agent orchestration.*
 
 ---

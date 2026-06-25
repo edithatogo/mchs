@@ -1,0 +1,35 @@
+{
+  "track_id": "conductor_requirements_design_authority_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/index.md, conductor/requirements.md, conductor/design.md, and conductor/archive/conductor_requirements_design_authority_20260513/spec.md",
+  "support_scope": "Conductor requirements and design authority for MoSCoW requirements, system design, track evidence requirements, subagent handoff requirements, no-stub completion semantics, and automatic conductor-review phase boundaries.",
+  "gap_register": [
+    {
+      "gap": "This track governs Conductor authority documents and workflow rules; it does not complete every dependent implementation track.",
+      "status": "accepted-non-blocking",
+      "rationale": "Dependent tracks consume the authority and provide their own implementation, validation, and release evidence."
+    }
+  ],
+  "dependencies": [
+    "roadmap_portfolio_governance_backfill_20260512",
+    "subagent-orchestration.md"
+  ],
+  "completion_evidence": [
+    "conductor/index.md",
+    "conductor/requirements.md",
+    "conductor/design.md",
+    "conductor/roadmap-governance.md",
+    "conductor/workflow.md",
+    "conductor/archive/conductor_requirements_design_authority_20260513/spec.md",
+    "conductor/archive/conductor_requirements_design_authority_20260513/plan.md",
+    "tests/test_conductor_requirements_design_authority_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Create and enforce the MoSCoW requirements and system design authority for Conductor-driven development.",
+  "no_stub_enforce": true
+}
