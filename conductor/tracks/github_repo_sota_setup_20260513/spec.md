@@ -1,4 +1,4 @@
-# Specification: githuu repo sota setup
+# Specification: github repo sota setup
 
 ## Overview
 

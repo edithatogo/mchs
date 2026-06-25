@@ -1,7 +1,7 @@
 {
   "track_id": "roadmap_portfolio_governance_backfill_20260512",
   "type": "chore",
-  "status": "complete",
+  "status": "completed",
   "track_class": "governance",
   "current_state": "complete-with-gaps",
   "primary_contract": "roadmap governance metadata and evidence backfill checklist",

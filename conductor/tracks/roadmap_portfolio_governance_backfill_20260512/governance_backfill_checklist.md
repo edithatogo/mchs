@@ -593,19 +593,18 @@ clarifies the real state of each track before broad implementation proceeds.
 
 | Track | Registry Status | Actual State | Action |
 | --- | --- | --- | --- |
-| Roadmap Portfolio Governance Backfill | `roadmap-only` | In progress (this track) | Update to complete after backfill |
-| Expert Panel Remediation | `roadmap-only` | In progress (this track) | Update to complete after remediation |
-| End-to-End Validated Canary | `roadmap-only` | In progress (this track) | Update to complete after canary |
-| Public Appropriate-Use Docs | `roadmap-only` | In progress (this track) | Update to complete after docs |
-| Release Evidence Automation | `roadmap-only` | In progress (this track) | Update to complete after automation |
-| Contract Schema Export | `roadmap-only` | In progress (this track) | Update to complete after export |
+| Roadmap Portfolio Governance Backfill | `roadmap-only` | In progress (this track) | Update to completed after backfill |
+| Expert Panel Remediation | `roadmap-only` | In progress (this track) | Update to completed after remediation |
+| End-to-End Validated Canary | `roadmap-only` | In progress (this track) | Update to completed after canary |
+| Public Appropriate-Use Docs | `roadmap-only` | In progress (this track) | Update to completed after docs |
+| Release Evidence Automation | `roadmap-only` | In progress (this track) | Update to completed after automation |
+| Contract Schema Export | `roadmap-only` | In progress (this track) | Update to completed after export |
 | Java/JVM Binding | `in-progress` | In progress | Consistent |
 | SQL/DuckDB/SA/PowerPlatform/Cost/ NHCDC/AHPCS/Tutorials | `roadmap-only` | roadmap-only | Consistent |
 
 ## Actions Required
 
-1. Update metadata.json for this track from `roadmap-only` to `complete` after backfill.
-2. Ensure all completed tracks have `"status": "complete"` in metadata.json and consistent `current_state`.
+1. Update metadata.json for this track from `roadmap-only` to `completed` after backfill.
+2. Ensure all completed tracks have `"status": "completed"` in metadata.json and consistent `current_state`.
 3. Mark the 6 in-progress tracks complete in tracks.md after each is delivered.
 4. Fix any stale links or workflow references discovered during this backfill.
-

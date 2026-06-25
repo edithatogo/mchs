@@ -26,7 +26,7 @@ def test_nhcdc_ingestion_track_files_exist():
 def test_nhcdc_ingestion_tracks_md_is_open():
     registry = _read_text(TRACKS)
     assert "NHCDC Cost Report Ingestion" in registry
-    assert "- [x] **Track: NHCDC Cost Report Ingestion**" in registry
+    assert "- [~] **Track: NHCDC Cost Report Ingestion**" in registry
 
 
 def test_pipeline_doc_defines_source_inventory():

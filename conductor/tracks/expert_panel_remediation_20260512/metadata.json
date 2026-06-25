@@ -1,7 +1,7 @@
 {
   "track_id": "expert_panel_remediation_20260512",
   "type": "chore",
-  "status": "complete",
+  "status": "completed",
   "track_class": "governance",
   "current_state": "complete-with-gaps",
   "primary_contract": "expert-panel remediation backlog and priority gate",

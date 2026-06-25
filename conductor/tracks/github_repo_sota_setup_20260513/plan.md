@@ -1,4 +1,4 @@
-# Plan: githuu repo sota setup
+# Plan: github repo sota setup
 
 ## Phase 1: Scope and Contract
 
