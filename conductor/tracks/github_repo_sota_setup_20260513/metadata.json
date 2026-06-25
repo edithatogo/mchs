@@ -3,14 +3,35 @@
   "type": "feature",
   "status": "completed",
   "track_class": "publication",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "GitHub repo settings, labels, branch protection, releases, packages, Pages, security",
   "dependencies": [
     "release_evidence_automation_20260512",
     "strict_quality_gates_20260513"
   ],
   "completion_evidence": [
-    "Starlight docs site exists at docs-site/, GitHub Pages workflow active"
+    "Starlight docs site exists at docs-site/, GitHub Pages workflow active",
+    "tests/test_tooling_configuration.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Local docs-site and GitHub Pages workflow evidence.",
+      "Repository setup checklist for labels, branch protection, security, releases, tags, packages, Pages, and homepage metadata.",
+      "Local tooling tests that keep repository workflow expectations visible."
+    ],
+    "excluded": [
+      "Credentialed proof of remote GitHub labels, milestones, branch protection, releases, environments, packages, and security settings.",
+      "Homepage and publication evidence verified through GitHub APIs.",
+      "A final remote repository settings audit."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "remote-github-settings-proof",
+      "status": "external-gate",
+      "description": "Remote GitHub repository labels, branch protection, releases, packages, Pages, homepage, and security settings require credentialed API evidence before archive."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",

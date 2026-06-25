@@ -3,14 +3,36 @@
   "type": "feature",
   "status": "completed",
   "track_class": "governance",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "conductor/subagent-orchestration.md and track work packages",
   "dependencies": [
     "conductor_requirements_design_authority_20260513"
   ],
   "completion_evidence": [
     "conductor/subagent-orchestration.md",
-    "conductor/design.md (multi-level agent model)"
+    "conductor/design.md (multi-level agent model)",
+    "tests/test_tooling_configuration.py",
+    "tests/test_governance_contracts.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Subagent orchestration governance and multi-level agent model.",
+      "Design rules for bounded ownership, handoffs, review loops, commits, and push gates.",
+      "Local governance tests for tooling and contract surfaces."
+    ],
+    "excluded": [
+      "Final archived evidence from actual multilevel subagent handoffs.",
+      "Changed-file lists, validation commands, residual risks, and review outcomes for each delegated work package.",
+      "Proof that every active track followed the multilevel execution protocol."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "actual-handoff-evidence",
+      "status": "evidence-gap",
+      "description": "The governance document exists, but archive should wait for concrete subagent handoff logs or evidence bundles with changed files, validation commands, and residual risks."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",

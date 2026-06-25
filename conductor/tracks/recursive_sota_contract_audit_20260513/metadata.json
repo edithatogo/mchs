@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "completed",
   "track_class": "audit",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "recurring SOTA software-development contract",
   "dependencies": [
     "conductor_requirements_design_authority_20260513",
@@ -11,7 +11,29 @@
   ],
   "completion_evidence": [
     "conductor/requirements.md (SHOULD-003)",
-    "conductor/design.md (recursive audit flow)"
+    "conductor/design.md (recursive audit flow)",
+    "tests/test_tooling_configuration.py",
+    "tests/test_governance_contracts.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Recurring SOTA audit requirement and design-loop definition.",
+      "Governance references that describe the recursive audit flow.",
+      "Local tests for governance and tooling surfaces."
+    ],
+    "excluded": [
+      "A completed current SOTA comparison report.",
+      "Finding list with remediation links and owner tracks.",
+      "Publication or external benchmark proof."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "actual-sota-audit-report",
+      "status": "audit-gap",
+      "description": "The track defines the recurring audit contract but does not yet contain a completed audit report, findings baseline, or spawned remediation links."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",

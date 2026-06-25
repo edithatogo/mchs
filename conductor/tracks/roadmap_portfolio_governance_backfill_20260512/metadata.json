@@ -3,13 +3,34 @@
   "type": "chore",
   "status": "complete",
   "track_class": "governance",
-  "current_state": "complete",
-  "primary_contract": "Track roadmap_portfolio_governance_backfill_20260512 contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "roadmap governance metadata and evidence backfill checklist",
   "dependencies": [],
   "completion_evidence": [
-    "docs",
-    "workflows",
-    "tests"
+    "conductor/tracks/roadmap_portfolio_governance_backfill_20260512/governance_backfill_checklist.md",
+    "conductor/roadmap-governance.md",
+    "tests/test_tracks_registry.py",
+    "tests/test_tooling_configuration.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Backfill checklist for track classes, dependencies, contracts, and evidence language.",
+      "Governance vocabulary alignment for roadmap and completion claims.",
+      "Track registry and tooling tests that keep the governance surface visible."
+    ],
+    "excluded": [
+      "A final audited proof that every live and archived track now satisfies the latest archive policy.",
+      "Replacing final conductor-review evidence for individual tracks.",
+      "Resolving contradictions introduced by later track moves and stricter gap-register requirements."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "portfolio-wide-policy-recheck",
+      "status": "audit-gap",
+      "description": "The checklist is a broad assertion ledger and needs a fresh audit against the current archive policy, including review files and gap registers."
+    }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
