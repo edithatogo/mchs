@@ -1,0 +1,1 @@
+Repository topology governance note: committed topology authority, wrapper retirement, release-boundary, artifact-retention, worktree hygiene, future split docs, schema/README, and PR CI topology validator wiring. Validation passed: topology pytest 10 passed; validate_repository_topology ok=true; stub_detector total_findings=0.
