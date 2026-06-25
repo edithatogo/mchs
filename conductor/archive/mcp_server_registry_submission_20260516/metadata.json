@@ -14,6 +14,12 @@
   "created_at": "2026-05-16T00:00:00Z",
   "updated_at": "2026-05-17T04:52:24Z",
   "description": "Implement a runnable stdio-first MCP server and submit eligible metadata to MCP registries without requiring Docker.",
+  "support_scope": {
+    "local_completion": "The stdio MCP server implementation, package metadata, official MCP Registry publication evidence, and PyPI package linkage are complete.",
+    "external_gate": "closed for the official MCP Registry; Docker MCP Catalog review remains tracked separately and is not claimed here.",
+    "runtime_support_claim": "The MCP server exposes stdio tools/resources for schema, validation, support, and evidence workflows while delegating formula execution to the canonical runtime."
+  },
+  "gap_register": [],
   "completion_evidence": [
     "nwau_py/mcp_server.py",
     "tests/test_mcp_server.py",
@@ -27,5 +33,15 @@
     "README.md",
     "docs/roadmaps/polyglot-packaging-release-matrix.md"
   ],
-  "publication_status": "published"
+  "publication_status": "published",
+  "publication_evidence": {
+    "official_mcp_registry_url": "https://registry.modelcontextprotocol.io/v0/servers?search=io.github.edithatogo%2Fmchs",
+    "server_name": "io.github.edithatogo/mchs",
+    "version": "0.2.2",
+    "package": "nwau-py",
+    "package_version": "0.2.2",
+    "status": "active",
+    "is_latest": true,
+    "verified_at": "2026-06-25"
+  }
 }

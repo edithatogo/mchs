@@ -591,7 +591,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: MCP Server Readiness and Registry Submission**
-*Link: [./tracks/mcp_server_registry_submission_20260516/](./tracks/mcp_server_registry_submission_20260516/)*
+*Link: [./archive/mcp_server_registry_submission_20260516/](./archive/mcp_server_registry_submission_20260516/)*
 *Gate: Provide a runnable stdio-first MCP server, contract-backed validation, official MCP Registry metadata, and truthful secondary registry submission evidence without requiring Docker.*
 
 ---
