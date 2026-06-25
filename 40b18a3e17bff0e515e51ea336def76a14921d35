@@ -1,0 +1,1 @@
+Swift generated-artifact note: ignored SwiftPM .build outputs and removed bindings/swift/.build from the working tree before staging Swift source. Status now reports only bindings/swift source files.
