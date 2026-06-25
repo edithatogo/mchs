@@ -43,5 +43,33 @@
     ".github/workflows/rust-ci.yml",
     ".github/workflows/release-rust.yml",
     "tests/test_rust_parity"
-  ]
+  ],
+  "support_scope": {
+    "state": "structural-ga-foundation-complete",
+    "included": [
+      "Rust Core GA roadmap, priority freeze, and deferred-adapter governance.",
+      "Rust core, Python binding, C ABI, canonical, CLI/file, HTTP, MCP, and OpenAI surface contract foundations.",
+      "Focused Rust parity, Python parity, CI, and release-evidence scaffolding needed for release-candidate promotion.",
+      "Support-status guardrails that prevent unsupported streams from being inferred as GA."
+    ],
+    "excluded": [
+      "External public GA release proof.",
+      "Stakeholder approval, signed release artifacts, SBOM attestation, or registry publication.",
+      "Claiming every stream/year is Rust-default or Rust-GA.",
+      "Full local `cargo test --workspace` proof when `nwau-py` dynamic Python linkage is unavailable."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "external-ga-release-hardening",
+      "status": "external-or-ci-gate",
+      "description": "Full release hardening, evidence bundle attachment, SBOM/provenance, rollback procedures, and GA promotion require real CI and stakeholder coordination."
+    },
+    {
+      "id": "nwau-py-full-workspace-linkage",
+      "status": "environment-gap",
+      "description": "Focused Rust core and parity validations pass, but full local workspace tests can be blocked by missing `libpython3.13.dylib` for `nwau-py`."
+    }
+  ],
+  "no_stub_enforce": true
 }

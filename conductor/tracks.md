@@ -285,7 +285,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Rust Core GA**
-*Link: [./tracks/rust_core_ga_20260513/](./tracks/rust_core_ga_20260513/)*
+*Link: [./archive/rust_core_ga_20260513/](./archive/rust_core_ga_20260513/)*
 *Gate: Immediate priority. Promote the Rust calculator core to release-candidate and GA through versioned contracts, parity evidence, required delivery surfaces, strict CI/CD, security, and release automation before expanding lower-priority adapters.*
 
 ---

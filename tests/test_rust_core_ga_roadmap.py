@@ -4,18 +4,22 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "rust_core_ga_20260513"
+TRACK_ID = "rust_core_ga_20260513"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 ROADMAP = ROOT / "docs" / "roadmaps" / "rust-core-ga.md"
 POLYGLOT = ROOT / "docs" / "roadmaps" / "polyglot-rust-core.md"
 ARCHITECTURE = ROOT / "docs" / "roadmaps" / "polyglot-rust-core-architecture.md"
+PROMOTION_MATRIX = ROOT / "docs" / "roadmaps" / "rust-core-promotion-matrix.md"
 
 
 def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_rust_core_ga_is_immediate_priority_and_defers_adapter_tracks():
+def test_rust_core_ga_is_completed_and_defers_adapter_tracks_to_evidence_gates():
     for path in [
         ROADMAP,
         TRACK / "index.md",
@@ -33,7 +37,8 @@ def test_rust_core_ga_is_immediate_priority_and_defers_adapter_tracks():
 
     assert metadata["track_id"] == "rust_core_ga_20260513"
     assert metadata["priority"] == "immediate"
-    assert metadata["status"] == "new"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete"
     assert metadata["deprioritizes"] == [
         "scala_spark_binding_20260513",
         "swift_binding_20260513",
@@ -50,7 +55,7 @@ def test_rust_core_ga_is_immediate_priority_and_defers_adapter_tracks():
         "MATLAB Interoperability",
     ]:
         assert label in tracks
-    assert tracks.count("No new development") >= 3
+    assert tracks.count("audience/owner evidence gate") >= 3
     assert "Historical/deprioritized" in tracks
 
     for phrase in [
@@ -68,3 +73,48 @@ def test_rust_core_ga_is_immediate_priority_and_defers_adapter_tracks():
 
     assert "Rust Core GA is now the immediate priority" in polyglot
     assert "Rust Core GA roadmap" in architecture
+
+
+def test_rust_core_continuation_phase_1_promotion_matrix_is_conservative():
+    assert PROMOTION_MATRIX.exists(), PROMOTION_MATRIX
+
+    matrix = _read(PROMOTION_MATRIX)
+
+    for heading in [
+        "Rust Core Promotion Matrix",
+        "State Vocabulary",
+        "Stream Matrix",
+        "Promotion Order",
+        "Phase 1 Validation Notes",
+    ]:
+        assert heading in matrix
+
+    for column in [
+        "Stream or surface",
+        "Current state",
+        "Evidence",
+        "Owner",
+        "Next action",
+        "Validation command",
+    ]:
+        assert column in matrix
+
+    for stream in [
+        "Acute admitted",
+        "Emergency department",
+        "Admitted mental health",
+        "Community mental health",
+        "Subacute",
+        "Outpatient",
+        "Adjustment factors",
+        "Hospital-acquired complications (HAC)",
+        "Avoidable hospital readmissions (AHR)",
+        "State and local pricing",
+        "Classification-adjacent surfaces",
+    ]:
+        assert stream in matrix
+
+    assert "No stream is marked `GA` in this Phase 1 baseline." in matrix
+    assert "| Acute admitted | `canary` |" in matrix
+    assert "| Subacute | internal `canary` / public `blocked` |" in matrix
+    assert "Missing source evidence stays `blocked` or `not-ready`" in matrix
