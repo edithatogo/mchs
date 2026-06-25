@@ -12,7 +12,7 @@ Reviewed and still live. This track is not archive-ready because CRAN publicatio
   - `https://cran.r-project.org/package=nwauR` resolves to the package page and returns HTTP 404.
   - `https://cran.r-project.org/web/packages/nwauR/index.html` returns HTTP 404.
   - `https://cran.r-project.org/src/contrib/PACKAGES` returns HTTP 200 but does not contain `Package: nwauR`.
-  - `https://crandb.r-pkg.org/nwauR` returned HTTP 403 from this network and is not positive publication evidence.
+  - `https://crandb.r-pkg.org/nwauR` returned HTTP 404 and is not positive publication evidence.
 
 ## Fixes Applied
 

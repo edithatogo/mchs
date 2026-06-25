@@ -7,7 +7,7 @@ This contract tracks language/package registry publication work independently fr
 3. Submit using the registry-specific workflow and authenticated account.
 4. Capture immutable evidence such as URL, version, checksum, PR, review status, or registry API response.
 
-Current claim boundary as of 2026-06-16:
+Current claim boundary as of 2026-06-25:
 
 - Tracks created: yes.
 - Discovery completed: yes, using public registry/API/page evidence where available.

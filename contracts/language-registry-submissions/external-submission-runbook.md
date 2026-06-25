@@ -79,7 +79,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
   1. Wait for CRAN incoming/pretest or reviewer email and record the incoming/pretest URL or message identifier in the CRAN track evidence.
   2. Respond to any CRAN maintainer email with a patched tarball or explanation, then replace the checksum in the track evidence if the tarball changes.
   3. Verify `https://cran.r-project.org/package=nwauR` and record version `0.1.0` before changing the gate to complete.
-- Latest public probe: on 2026-06-16, `https://cran.r-project.org/web/packages/nwauR/index.html` returned HTTP 404; CRANDB returned HTTP 404; `src/contrib/PACKAGES` did not contain `Package: nwauR`. Latest mail-probe evidence remains the 2026-06-13 connected Gmail search with no CRAN/nwauR response; Microsoft 365/Outlook connector previously returned `No accounts found. Please login first.`
+- Latest public probe: on 2026-06-25, `https://cran.r-project.org/web/packages/nwauR/index.html` returned HTTP 404; CRANDB returned HTTP 404; `src/contrib/PACKAGES` returned HTTP 200 but did not contain `Package: nwauR`. Latest mail-probe evidence remains the 2026-06-13 connected Gmail search with no CRAN/nwauR response; Microsoft 365/Outlook connector previously returned `No accounts found. Please login first.`
 
 ### Julia General
 
