@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edithatogo.github.io/mchs/contracts/repository-topology/package-surfaces.schema.json",
+  "title": "MCHS package surface ownership registry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "canonical_root",
+    "policy_documents",
+    "surfaces"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "canonical_root": {
+      "const": "microcosting_healthservices"
+    },
+    "policy_documents": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "surfaces": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/surface"
+      }
+    }
+  },
+  "$defs": {
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "display_name",
+        "category",
+        "lifecycle",
+        "support_status",
+        "path",
+        "manifests",
+        "owner_track",
+        "ci_gate",
+        "release",
+        "artifact_policy",
+        "formula_logic",
+        "claim_boundary"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "display_name": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "app",
+            "binding",
+            "docs",
+            "package",
+            "packaging",
+            "registry",
+            "workspace"
+          ]
+        },
+        "lifecycle": {
+          "enum": [
+            "implemented",
+            "planned",
+            "registry-only",
+            "external-gate",
+            "advisory"
+          ]
+        },
+        "support_status": {
+          "enum": [
+            "unsupported",
+            "blocked",
+            "planned",
+            "deferred",
+            "canary",
+            "opt_in",
+            "preview",
+            "release_candidate",
+            "ga",
+            "no_new_development",
+            "historical"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "manifests": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "owner_track": {
+          "type": "string"
+        },
+        "ci_gate": {
+          "type": "string"
+        },
+        "release": {
+          "$ref": "#/$defs/release"
+        },
+        "artifact_policy": {
+          "enum": [
+            "source",
+            "generated-ignore",
+            "release-attachment",
+            "evidence-allowed",
+            "external-archive",
+            "local-only"
+          ]
+        },
+        "formula_logic": {
+          "enum": [
+            "shared-core",
+            "adapter-only",
+            "orchestration-only",
+            "not-applicable"
+          ]
+        },
+        "claim_boundary": {
+          "type": "string"
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "workflow",
+        "version_source",
+        "registry_state",
+        "evidence",
+        "external_gate"
+      ],
+      "properties": {
+        "target": {
+          "type": "string"
+        },
+        "workflow": {
+          "type": "string"
+        },
+        "version_source": {
+          "type": "string"
+        },
+        "registry_state": {
+          "enum": [
+            "not_applicable",
+            "prepared",
+            "submitted",
+            "published_verified",
+            "blocked"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "external_gate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}
