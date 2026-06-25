@@ -321,7 +321,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: OpenAI Tool Adapter**
-*Link: [./tracks/openai_tool_adapter_20260513/](./tracks/openai_tool_adapter_20260513/)*
+*Link: [./archive/openai_tool_adapter_20260513/](./archive/openai_tool_adapter_20260513/)*
 *Gate: Provide OpenAI-compatible tool definitions over the API/MCP contracts while keeping the domain API canonical and avoiding LLM endpoint emulation.*
 
 ---

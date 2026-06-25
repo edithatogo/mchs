@@ -1,0 +1,46 @@
+{
+  "track_id": "openai_tool_adapter_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "adapter",
+  "priority": "near-term",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/core-contract-surfaces.md",
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "mcp_contract_20260513",
+    "http_api_contract_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Create an OpenAI-compatible tool adapter over the API/MCP contracts without making the calculator an LLM endpoint.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/openai-adapter/README.md",
+    "contracts/openai-adapter/tool-definitions.md",
+    "contracts/openai-adapter/examples.md",
+    "contracts/surfaces/api-mcp-openai-relationship.json",
+    "tests/test_openai_tool_adapter_contract.py"
+  ],
+  "support_scope": {
+    "state": "tool-contract-complete",
+    "included": [
+      "OpenAI-compatible function tool definitions over canonical calculator surfaces.",
+      "Examples for Responses-style and Chat Completions-style tool use.",
+      "Contract tests proving the tool definitions are parseable strict function tools and remain bound to canonical schema ownership.",
+      "Boundary documentation that prevents LLM endpoint emulation and formula logic in the adapter."
+    ],
+    "excluded": [
+      "Serving the calculator as an OpenAI-compatible model endpoint.",
+      "Owning calculator formula logic or business rules in the OpenAI adapter.",
+      "Live OpenAI API execution, credentials, or hosted production integration proof."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "live-openai-execution",
+      "status": "out-of-scope",
+      "description": "The local track validates tool definitions and boundary contracts only; live model invocation and hosted integration are deployment concerns outside this adapter contract."
+    }
+  ]
+}
