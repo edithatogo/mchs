@@ -5,19 +5,26 @@
   "track_class": "calculator",
   "current_state": "overclaim-remediated-blocked",
   "primary_contract": "one stream/year validated lifecycle evidence package",
-  "support_scope": "Blocked canary lifecycle track for acute admitted 2025. Current evidence covers source-only formula parameter bundle loading, Python/Rust fixture comparison against synthetic golden fixtures, and explicit caveats. It does not yet prove official SAS parity, official Excel workbook formula parity, Arrow/Parquet output parity, or a published Starlight canary page/template.",
+  "support_scope": {
+    "local_completion": "Current evidence covers source-only formula parameter bundle loading, Python/Rust fixture comparison against synthetic golden fixtures, and explicit caveats for the acute admitted 2025 canary.",
+    "external_gate": "blocked; official SAS parity, official Excel workbook formula parity, CLI/Arrow lifecycle parity, and the Starlight canary page/template are not complete.",
+    "runtime_support_claim": "No end-to-end validated canary, official parity, Arrow output parity, or published documentation-template support claim is made."
+  },
   "gap_register": [
     {
-      "gap": "Official SAS parity and Excel workbook parity are not complete.",
-      "rationale": "Current formula bundle validation is source-only and `parity_claim` remains false."
+      "id": "official-sas-excel-parity-missing",
+      "status": "blocked",
+      "description": "Official SAS parity and Excel workbook parity are not complete; current formula bundle validation is source-only and `parity_claim` remains false."
     },
     {
-      "gap": "The claimed Starlight canary page and track template do not exist.",
-      "rationale": "Documentation and template extraction must be implemented before this track can close."
+      "id": "starlight-canary-page-template-missing",
+      "status": "blocked",
+      "description": "The claimed Starlight canary page and reusable track template do not exist; documentation and template extraction must be implemented before this track can close."
     },
     {
-      "gap": "CLI/Arrow output parity is not complete.",
-      "rationale": "Existing evidence covers Python/Rust synthetic fixture agreement, not a full CLI/Arrow lifecycle."
+      "id": "cli-arrow-output-parity-missing",
+      "status": "blocked",
+      "description": "CLI/Arrow output parity is not complete; existing evidence covers Python/Rust synthetic fixture agreement, not a full CLI/Arrow lifecycle."
     }
   ],
   "dependencies": [

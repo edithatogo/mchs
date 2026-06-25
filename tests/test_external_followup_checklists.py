@@ -4,7 +4,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-SWIFT_TRACK = ROOT / "conductor" / "tracks" / "swift_package_index_submission_20260524"
+SWIFT_TRACK = (
+    ROOT / "conductor" / "archive" / "swift_package_index_submission_20260524"
+)
 CONDA_TRACK = ROOT / "conductor" / "tracks" / "conda_forge_feedstock_submission_20260524"
 RUNBOOK = ROOT / "contracts" / "language-registry-submissions" / "external-submission-runbook.md"
 GATES = ROOT / "docs" / "roadmaps" / "language-registry-external-gates.md"
@@ -32,7 +34,7 @@ def test_swift_and_conda_followup_checklists_exist_and_are_linked():
     gates = _read(GATES)
 
     assert (
-        "conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md"
+        "conductor/archive/swift_package_index_submission_20260524/public_probe_checklist.md"
         in runbook
     )
     assert (
@@ -40,7 +42,7 @@ def test_swift_and_conda_followup_checklists_exist_and_are_linked():
         in runbook
     )
     assert (
-        "conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md"
+        "conductor/archive/swift_package_index_submission_20260524/public_probe_checklist.md"
         in gates
     )
     assert (

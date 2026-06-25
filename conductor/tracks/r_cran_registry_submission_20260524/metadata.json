@@ -2,6 +2,7 @@
   "track_id": "r_cran_registry_submission_20260524",
   "type": "chore",
   "status": "submitted",
+  "current_state": "submitted-external-review-pending",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-16T00:00:00+10:00",
   "description": "R CRAN Registry Submission: discover, prepare, submit, and evidence CRAN publication for nwauR.",

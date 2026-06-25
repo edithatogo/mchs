@@ -34,9 +34,21 @@
             "severity": "release-blocking",
             "evidence": "docs/roadmaps/release/evidence-bundle-format.md",
             "description": "Release automation must reject RC or GA claims when required bundle evidence is missing or marked with unresolved limitations."
-        }
-    ],
-    "promotion_requirements": [
+    }
+  ],
+  "gap_register": [
+    {
+      "id": "registry-evidence-required",
+      "status": "release-blocking",
+      "description": "Release bundles must include registry evidence so recipe-only, private, future-only, unpublished, and published-with-gaps states cannot be mistaken for public publication evidence."
+    },
+    {
+      "id": "rc-ga-validation-integration",
+      "status": "release-blocking",
+      "description": "Release automation must reject RC or GA claims when required bundle evidence is missing or marked with unresolved limitations."
+    }
+  ],
+  "promotion_requirements": [
         "Require registry evidence in every release evidence bundle.",
         "Attach evidence bundles to release artifacts before RC or GA support claims.",
         "Reject GA promotion when required evidence is missing or gap statuses remain unresolved."

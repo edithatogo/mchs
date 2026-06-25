@@ -2,6 +2,7 @@
   "track_id": "conda_forge_feedstock_submission_20260524",
   "type": "chore",
   "status": "submitted",
+  "current_state": "submitted-external-review-pending",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-16T00:00:00+10:00",
   "description": "conda-forge Feedstock Submission: discover, prepare, submit, and evidence conda-forge publication for nwau-py.",
@@ -12,6 +13,23 @@
   "blocker": "Branch updated against upstream main; linter, check-skip, linux_64, osx_64, win_64, and aggregate staged-recipes checks passing; maintainer review/merge/feedstock publication pending.",
   "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
   "publication_claimed": false,
+  "support_scope": {
+    "local_completion": "conda-forge recipe preparation and staged-recipes submission are complete, with current linter and platform checks recorded as passing.",
+    "external_gate": "open; staged-recipes maintainer review, merge, feedstock creation, and Anaconda package publication remain outside local control.",
+    "runtime_support_claim": "No public conda-forge package availability or conda installation support claim is made until the feedstock and Anaconda package are visible."
+  },
+  "gap_register": [
+    {
+      "id": "staged-recipes-review-pending",
+      "status": "external",
+      "description": "Wait for conda-forge staged-recipes maintainer review and merge for PR 33452."
+    },
+    {
+      "id": "feedstock-publication-pending",
+      "status": "external",
+      "description": "Verify feedstock repository creation and Anaconda package publication for nwau-py before claiming conda-forge support."
+    }
+  ],
   "package_evidence": {
     "discovery_url": "https://api.anaconda.org/package/conda-forge/nwau-py",
     "discovery_result": "404 package not found",

@@ -2,6 +2,7 @@
   "track_id": "c_cpp_vcpkg_conan_submission_20260524",
   "type": "chore",
   "status": "blocked",
+  "current_state": "blocked-external-review-and-policy-deferred",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-16T00:00:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare local/private preview package metadata, submit through upstream review when validated, and evidence vcpkg / ConanCenter publication only after acceptance.",
@@ -11,6 +12,23 @@
   "local_readiness_resolved": true,
   "blocker": "ConanCenter PR 30262 is open with license/cla now successful and Job scheduler ACTION_REQUIRED; maintainer review and merge remain pending. vcpkg remains deferred because PR 51965 was closed unmerged due upstream Rust-library policy.",
   "publication_claimed": false,
+  "support_scope": {
+    "local_completion": "Local C ABI packaging preparation is complete for Conan and vcpkg preview use: cargo packaging, cargo tests, Conan recipe inspection/create, and vcpkg overlay-port validation are recorded.",
+    "external_gate": "open; ConanCenter PR 30262 still requires scheduler/maintainer review and merge, while vcpkg remains policy-deferred after upstream closed PR 51965 unmerged.",
+    "runtime_support_claim": "No public ConanCenter or vcpkg package publication or registry-supported C/C++ installation claim is made."
+  },
+  "gap_register": [
+    {
+      "id": "conancenter-review-pending",
+      "status": "external",
+      "description": "Wait for ConanCenter job scheduler, maintainer review, merge, and public package evidence for PR 30262."
+    },
+    {
+      "id": "vcpkg-rust-library-policy-deferred",
+      "status": "policy-deferred",
+      "description": "Keep vcpkg publication deferred unless upstream Rust-library support changes or a later governance decision changes the C ABI distribution design."
+    }
+  ],
   "package_evidence": {
     "vcpkg_manifest": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
     "vcpkg_portfile": "microcosting_healthservices/packaging/vcpkg/ports/nwau-c-abi/portfile.cmake",
