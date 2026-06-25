@@ -25,9 +25,30 @@
   ],
   "completion_evidence": [
     "conductor/scripts/stub_detector.py",
-    "tests/test_stub_detector.py",
+    "tests/test_tooling_configuration.py",
     "tests/test_scaffold_stub_completion_backlog_track.py",
     "docs/roadmaps/scaffold-stub-completion-backlog.md",
     "docs/roadmaps/deferred-surface-status.md"
+  ],
+  "support_scope": {
+    "state": "governance-backlog-complete",
+    "included": [
+      "Executable no-stub detector and workflow regression tests.",
+      "Inventory and remediation policy for scaffold-only, complete-with-gaps, and overclaimed surfaces.",
+      "Follow-on track linkage for retained scaffolds and deferred surfaces.",
+      "Documentation vocabulary for distinguishing product-ready surfaces from registry, external, or scaffold gates."
+    ],
+    "excluded": [
+      "Completing every downstream implementation surface inside this governance track.",
+      "Overriding external registry, maintainer, tenant, or admin gates.",
+      "Treating synthetic fixtures or roadmap files as final product evidence for other tracks."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "downstream-surface-completion",
+      "status": "delegated",
+      "description": "Remaining implementation and publication work is owned by the individual language, package, Power Platform, and release-boundary tracks rather than this backlog governance track."
+    }
   ]
 }

@@ -699,7 +699,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Scaffold and Stub Completion Backlog**
-*Link: [./tracks/scaffold_stub_completion_backlog_20260524/](./tracks/scaffold_stub_completion_backlog_20260524/)*
+*Link: [./archive/scaffold_stub_completion_backlog_20260524/](./archive/scaffold_stub_completion_backlog_20260524/)*
 *Gate: Bring scaffold-only, stub-only, complete-with-gaps, and overclaimed surfaces to validated completion or reclassify them truthfully with follow-on implementation tracks.*
 
 ---
