@@ -37,18 +37,18 @@ Arrow/Parquet surfaces are stable.
 | Track family | Track link | Why it matters |
 | --- | --- | --- |
 | Binding | [Python Rust Binding Stabilization](../../conductor/tracks/python_rust_binding_stabilization_20260512/spec.md) | Defines the opt-in Python boundary over the Rust core and the fallback rules while parity is still in progress. |
-| Abstraction | [Abstraction Doctrine Enforcement](../../conductor/tracks/abstraction_doctrine_enforcement_20260512/spec.md) | Establishes the canonical kernel boundary so formulas, adapters, and docs stay aligned. |
-| Source-manifest | [Reference Data Manifest Schema](../../conductor/tracks/reference_data_manifest_schema_20260512/spec.md) | Defines the year-scoped manifest shape that records sources, gaps, provenance, and validation status. |
-| Formula-bundle | [Formula and Parameter Bundle Pipeline](../../conductor/tracks/formula_parameter_bundle_pipeline_20260512/spec.md) | Provides the extraction, versioning, and validation pipeline for formula and parameter bundles. |
-| Validation-gate | [Pricing-Year Validation Gates](../../conductor/tracks/pricing_year_validation_gates_20260512/spec.md) | Prevents unsupported support claims until the required source and fixture evidence exists. |
+| Abstraction | [Abstraction Doctrine Enforcement](../../conductor/archive/abstraction_doctrine_enforcement_20260512/spec.md) | Establishes the canonical kernel boundary so formulas, adapters, and docs stay aligned. |
+| Source-manifest | [Reference Data Manifest Schema](../../conductor/archive/reference_data_manifest_schema_20260512/spec.md) | Defines the year-scoped manifest shape that records sources, gaps, provenance, and validation status. |
+| Formula-bundle | [Formula and Parameter Bundle Pipeline](../../conductor/archive/formula_parameter_bundle_pipeline_20260512/spec.md) | Provides the extraction, versioning, and validation pipeline for formula and parameter bundles. |
+| Validation-gate | [Pricing-Year Validation Gates](../../conductor/archive/pricing_year_validation_gates_20260512/spec.md) | Prevents unsupported support claims until the required source and fixture evidence exists. |
 | GA | [Rust Core GA](../../conductor/tracks/rust_core_ga_20260513/spec.md) | Makes Rust GA the immediate priority, defers lower-priority adapters, and defines the evidence gates for release-candidate and GA promotion. |
 | Contract | [Canonical Contract Foundation](../../conductor/tracks/canonical_contract_foundation_20260513/spec.md) | Defines canonical schemas before CLI/file, API, MCP, OpenAI adapter, and language surfaces. |
-| Contract | [Support Status Matrix](../../conductor/tracks/support_status_matrix_20260513/spec.md) | Defines machine-readable statuses for streams, years, jurisdictions, surfaces, runtimes, and languages. |
+| Contract | [Support Status Matrix](../../conductor/archive/support_status_matrix_20260513/spec.md) | Defines machine-readable statuses for streams, years, jurisdictions, surfaces, runtimes, and languages. |
 | Contract | [CLI/File Contracts](../../conductor/tracks/cli_file_contracts_20260513/spec.md) | Defines the stable batch and automation boundary for Rust Core GA. |
 | Contract | [HTTP API Contract](../../conductor/tracks/http_api_contract_20260513/spec.md) | Defines the OpenAPI 3.1 domain API over canonical schemas. |
 | Contract | [MCP Contract](../../conductor/tracks/mcp_contract_20260513/spec.md) | Defines a Rust-backed agent-facing MCP server with tools and resources over canonical schemas. |
 | Adapter | [OpenAI Tool Adapter](../../conductor/tracks/openai_tool_adapter_20260513/spec.md) | Defines a thin OpenAI tool adapter without making the calculator an LLM endpoint. |
-| Governance | [Audience Language Strategy](../../conductor/tracks/audience_language_strategy_20260513/spec.md) | Prioritizes researcher and enterprise-engineer surfaces and blocks unsupported language sprawl. |
+| Governance | [Audience Language Strategy](../../conductor/archive/audience_language_strategy_20260513/spec.md) | Prioritizes researcher and enterprise-engineer surfaces and blocks unsupported language sprawl. |
 | Domain | [HWAU Terminology Migration](../../conductor/tracks/hwau_terminology_migration_20260513/spec.md) | Uses HWAU as the generic weighted activity unit concept while retaining NWAU as Australian source terminology. |
 | Reference-data | [State and Local Price Registry](../../conductor/tracks/state_local_price_registry_20260513/spec.md) | Sources national, state, local, and discounted price schedules over time with provenance. |
 | Reference-data | [Jurisdiction Price Source Index](../../conductor/tracks/jurisdiction_price_source_index_20260513/spec.md) | Indexes jurisdiction price sources before value extraction. |

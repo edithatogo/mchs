@@ -327,7 +327,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Audience Language Strategy**
-*Link: [./tracks/audience_language_strategy_20260513/](./tracks/audience_language_strategy_20260513/)*
+*Link: [./archive/audience_language_strategy_20260513/](./archive/audience_language_strategy_20260513/)*
 *Gate: Prioritize language support around researchers and enterprise engineers, require audience/owner/evidence before new bindings, and prevent language sprawl before Rust Core GA.*
 
 ---

@@ -17,9 +17,16 @@ TRACK_IDS = [
     "audience_language_strategy_20260513",
 ]
 
+ARCHIVED_TRACK_IDS = {"audience_language_strategy_20260513"}
+
 
 def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _track_root(track_id: str) -> Path:
+    base = "archive" if track_id in ARCHIVED_TRACK_IDS else "tracks"
+    return ROOT / "conductor" / base / track_id
 
 
 def test_core_contract_surface_tracks_exist_and_are_ordered():
@@ -27,13 +34,17 @@ def test_core_contract_surface_tracks_exist_and_are_ordered():
     positions = []
 
     for track_id in TRACK_IDS:
-        root = ROOT / "conductor" / "tracks" / track_id
+        root = _track_root(track_id)
         assert (root / "index.md").exists()
         assert (root / "spec.md").exists()
         assert (root / "plan.md").exists()
         metadata = json.loads(_read(root / "metadata.json"))
         assert metadata["track_id"] == track_id
-        assert metadata["status"] == "new"
+        assert metadata["status"] in {"new", "completed"}
+        if track_id in ARCHIVED_TRACK_IDS:
+            assert metadata["support_scope"]
+            assert metadata["gap_register"]
+            assert f"./archive/{track_id}/" in tracks_text
         assert track_id in tracks_text
         positions.append(tracks_text.index(track_id))
 
