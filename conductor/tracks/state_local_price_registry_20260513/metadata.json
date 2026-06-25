@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "hwau_terminology_migration_20260513",
@@ -18,6 +18,33 @@
   "completion_evidence": [
     "conductor/tracks/state_local_price_registry_20260513/index.md",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
-    "conductor/tracks/state_local_price_registry_20260513/spec.md"
+    "conductor/tracks/state_local_price_registry_20260513/spec.md",
+    "tests/test_pricing_hwau_strategy_tracks.py",
+    "tests/test_price_registry.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Roadmap and contract shape for national, state, local, discounted, blocked, and missing price schedules.",
+      "Synthetic serialization checks for price schedule records.",
+      "Support-state vocabulary for provenance-aware price schedule work."
+    ],
+    "excluded": [
+      "Complete sourced registry implementation for every jurisdiction and year.",
+      "Runtime APIs such as PriceRegistry, get_state_price, get_national_price, or list_available_jurisdictions.",
+      "Public claims that synthetic constants are official sourced prices."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "runtime-price-registry-api",
+      "status": "implementation-gap",
+      "description": "The price_registry module currently has synthetic constants and record helpers, but does not expose PriceRegistry, get_state_price, get_national_price, or list_available_jurisdictions APIs."
+    },
+    {
+      "id": "official-source-coverage",
+      "status": "source-gap",
+      "description": "National, state, local, discounted, missing, and blocked schedule rows still need official provenance records and behavior tests before archive."
+    }
   ]
 }

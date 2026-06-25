@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -16,6 +16,29 @@
   "no_stub_enforce": true,
   "completion_evidence": [
     "conductor/tracks/jurisdiction_funding_model_registry_20260513/index.md",
-    "conductor/tracks/nsw_funding_model_20260513/index.md"
+    "conductor/tracks/nsw_funding_model_20260513/index.md",
+    "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "tests/test_pricing_hwau_strategy_tracks.py",
+    "tests/test_price_registry.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "NSW funding-model roadmap and registry intent for State Price per NWAU/HWAU.",
+      "Governance documentation for missing-year, blocked-source, and provenance-aware valuation behavior.",
+      "Synthetic price-record validation used as a placeholder for future sourced fixtures."
+    ],
+    "excluded": [
+      "Official NSW State Price fixture rows.",
+      "Validated NSW-specific adjustment logic.",
+      "Parallel application of sourced NSW funding model outputs."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "nsw-official-source-fixtures",
+      "status": "source-gap",
+      "description": "NSW funding-model support still needs at least one public-safe sourced fixture, missing-year blocked handling, and tests over sourced NSW rows."
+    }
   ]
 }

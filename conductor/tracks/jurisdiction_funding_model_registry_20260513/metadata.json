@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -17,6 +17,28 @@
   "completion_evidence": [
     "conductor/tracks/jurisdiction_funding_model_registry_20260513/index.md",
     "conductor/tracks/jurisdiction_funding_model_registry_20260513/spec.md",
-    "conductor/tracks/jurisdiction_funding_model_registry_20260513/plan.md"
+    "conductor/tracks/jurisdiction_funding_model_registry_20260513/plan.md",
+    "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "tests/test_pricing_hwau_strategy_tracks.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Jurisdiction funding-model registry design for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.",
+      "Provenance and blocked-source handling requirements.",
+      "Roadmap tests proving the jurisdictional strategy remains visible."
+    ],
+    "excluded": [
+      "Implemented registry rows or blocked-source rows for all states and territories.",
+      "Behavior tests covering NSW, QLD, VIC, WA, SA, TAS, ACT, and NT statuses.",
+      "Official state and territory funding-model extraction."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "all-jurisdiction-registry-rows",
+      "status": "implementation-gap",
+      "description": "The current implementation has limited synthetic state constants and does not yet provide full registry/status rows for every state and territory."
+    }
   ]
 }

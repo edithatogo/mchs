@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "reference-data",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/jurisdiction-price-source-index.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -18,6 +18,28 @@
   "completion_evidence": [
     "conductor/tracks/jurisdiction_price_source_index_20260513/index.md",
     "conductor/tracks/jurisdiction_price_source_index_20260513/spec.md",
-    "conductor/tracks/jurisdiction_price_source_index_20260513/plan.md"
+    "conductor/tracks/jurisdiction_price_source_index_20260513/plan.md",
+    "docs/roadmaps/jurisdiction-price-source-index.md",
+    "tests/test_coordination_and_evidence_tracks.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Source-index field design for jurisdiction price-model discovery.",
+      "Documentation that separates public-safe, local-only, blocked, and unknown source states.",
+      "Governance tests proving the roadmap and track artifacts are present."
+    ],
+    "excluded": [
+      "Machine-readable source rows for every state and territory.",
+      "Official source URLs, local-only references, or blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.",
+      "Extraction or validation of jurisdiction price values."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "jurisdiction-source-rows",
+      "status": "source-gap",
+      "description": "The roadmap defines index fields, but actual public-safe or blocked-source rows for all states and territories are not yet implemented."
+    }
   ]
 }
