@@ -1,0 +1,35 @@
+{
+  "track_id": "repository_topology_ci_gate_20260624",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "validator",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "scripts/validate_repository_topology.py",
+  "dependencies": [
+    "repository_topology_authority_20260624",
+    "package_surface_ownership_registry_20260624",
+    "generated_artifact_retention_policy_20260624"
+  ],
+  "completion_evidence": [
+    "scripts/validate_repository_topology.py",
+    ".github/workflows/pr-ci.yml",
+    "tests/test_repository_topology_governance.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "description": "Add a fail-closed repository topology validation gate for nested git state, package ownership, generated artifacts, and wrapper assumptions.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "governance-control",
+    "summary": "Provides a deterministic local and PR-CI validator for nested Git state, unmanaged gitlinks, package-surface ownership, generated artifact drift, and explicit outer-wrapper checks."
+  },
+  "gap_register": [
+    {
+      "id": "automatic-topology-repair",
+      "status": "out-of-scope",
+      "summary": "The validator reports fail-closed diagnostics but intentionally does not rewrite Git topology or delete artifacts automatically."
+    }
+  ]
+}

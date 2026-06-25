@@ -728,8 +728,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Repository Topology CI Gate**
-*Link: [./tracks/repository_topology_ci_gate_20260624/](./tracks/repository_topology_ci_gate_20260624/)*
+- [x] **Track: Repository Topology CI Gate**
+*Link: [./archive/repository_topology_ci_gate_20260624/](./archive/repository_topology_ci_gate_20260624/)*
 *Gate: Fail closed on nested Git state, unmanaged gitlinks, missing package-surface ownership, tracked generated artifacts, and invalid wrapper assumptions.*
 
 ---
