@@ -21,6 +21,8 @@ uv.lock
 .build/
 dist/
 build/
+bin/
+obj/
 node_modules/
 coverage/
 *.tar.gz
