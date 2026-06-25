@@ -1,0 +1,49 @@
+{
+  "track_id": "rust_ci_supply_chain_hardening_20260510",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "quality-gate",
+  "current_state": "complete",
+  "primary_contract": "Rust CI, pre-commit, and supply-chain quality-gate policy",
+  "dependencies": [],
+  "completion_evidence": [
+    ".github/workflows/rust-ci.yml",
+    ".github/workflows/security.yml",
+    ".pre-commit-config.yaml",
+    "conductor/workflow.md",
+    "conductor/release-policy.md",
+    "tests/test_tooling_configuration.py",
+    "tests/test_conductor_review_automation.py"
+  ],
+  "support_scope": {
+    "state": "quality-gate-baseline-complete",
+    "included": [
+      "Rust formatting, clippy, and test gate expectations.",
+      "Python/docs/Rust quality-gate alignment across workflow and local guidance.",
+      "Supply-chain hardening guidance for audit, deny, SBOM, signing, attestations, dependency automation, and release policy.",
+      "CI branch and pre-commit drift remediation."
+    ],
+    "excluded": [
+      "Guaranteeing every CI-side cargo audit, cargo deny, SBOM, or signing provider has run in the current local workspace.",
+      "Publishing Rust release artifacts.",
+      "Closing runtime blockers owned by Rust GA or Python/Rust binding stabilization."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "ci-side-supply-chain-execution",
+      "status": "external-or-ci-gate",
+      "description": "Local fmt and clippy evidence can pass, but audit/deny/SBOM/signing confidence requires CI-side tool availability and release workflow evidence."
+    },
+    {
+      "id": "full-workspace-nwau-py-linkage",
+      "status": "environment-gap",
+      "description": "Full `cargo test --workspace` currently reaches a local `nwau-py` dynamic Python linkage blocker when `libpython3.13.dylib` is unavailable; binding stabilization owns that environment-specific proof."
+    }
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-10T09:20:45Z",
+  "updated_at": "2026-05-10T15:07:51Z",
+  "description": "Rust CI, pre-commit, and supply-chain hardening",
+  "no_stub_enforce": true
+}

@@ -22,11 +22,7 @@ OPEN_TRACK_PLANS = [
     / "plan.md",
     _track_plan("multi_surface_binding_delivery_20260510"),
     ROOT / "conductor" / "archive" / "rust_acute_python_poc_20260510" / "plan.md",
-    ROOT
-    / "conductor"
-    / "tracks"
-    / "rust_ci_supply_chain_hardening_20260510"
-    / "plan.md",
+    _track_plan("rust_ci_supply_chain_hardening_20260510"),
     _track_plan("rust_core_architecture_20260510"),
 ]
 

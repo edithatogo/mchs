@@ -80,7 +80,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: define binding and delivery sequencing for Python, R, Julia, C#, Rust, Go, TypeScript/WASM, Streamlit, GitHub Pages, and Power Platform before implementing additional adapters.*
 
 15. [x] **Track: Rust CI, Pre-Commit, and Supply-Chain Hardening**
-   *Link: [./tracks/rust_ci_supply_chain_hardening_20260510/](./tracks/rust_ci_supply_chain_hardening_20260510/)*
+   *Link: [./archive/rust_ci_supply_chain_hardening_20260510/](./archive/rust_ci_supply_chain_hardening_20260510/)*
    *Depends on: Python tooling and CI modernization, release governance, docs-site workflow, and Rust workspace decisions.*
    *Gate: align branch triggers, pre-commit hooks, Rust quality gates, dependency review, advisory checks, provenance, and release hardening before Rust code is treated as merge-ready.*
 
