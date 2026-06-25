@@ -18,6 +18,7 @@ uv.lock
 
 # Generated/cache data
 .cache/
+.build/
 dist/
 build/
 node_modules/
