@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ahpcs_costing_process_model_20260512"
+TRACK = ROOT / "conductor" / "archive" / "ahpcs_costing_process_model_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 MODEL_DOC = TRACK / "ahpcs_model.md"
 
@@ -27,6 +27,7 @@ def test_ahpcs_model_tracks_md_is_open():
     registry = _read_text(TRACKS)
     assert "AHPCS Costing Process Model" in registry
     assert "- [x] **Track: AHPCS Costing Process Model**" in registry
+    assert "./archive/ahpcs_costing_process_model_20260512/" in registry
 
 
 def test_model_doc_defines_cost_ledger():
@@ -95,5 +96,8 @@ def test_ahpcs_model_metadata_is_conservative():
 
     assert metadata["track_id"] == "ahpcs_costing_process_model_20260512"
     assert metadata["track_class"] == "costing"
+    assert metadata["current_state"] == "complete"
     assert metadata["publication_status"] == "not-applicable"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
     assert "cost" in metadata["description"].lower()

@@ -459,7 +459,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: AHPCS Costing Process Model**
-*Link: [./tracks/ahpcs_costing_process_model_20260512/](./tracks/ahpcs_costing_process_model_20260512/)*
+*Link: [./archive/ahpcs_costing_process_model_20260512/](./archive/ahpcs_costing_process_model_20260512/)*
 *Gate: model AHPCS costing-process concepts as validation aids for costing studies without claiming official compliance certification.*
 
 ---

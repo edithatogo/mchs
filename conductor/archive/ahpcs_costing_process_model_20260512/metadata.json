@@ -1,0 +1,32 @@
+{
+  "track_id": "ahpcs_costing_process_model_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "costing",
+  "current_state": "complete",
+  "primary_contract": "Track ahpcs_costing_process_model_20260512 contract",
+  "support_scope": "Documentation-only AHPCS costing-process concept model for public-safe costing-study preparation and validation guidance. The track covers cost ledger, cost centre, product, allocation, line item, offset, recovery, RVU, and caveat documentation, and does not implement official AHPCS compliance certification or patient-level costing logic.",
+  "gap_register": [
+    {
+      "gap": "Official AHPCS compliance certification is out of scope.",
+      "status": "accepted-non-blocking",
+      "rationale": "The model is explicitly documented as guidance and validation aid material only."
+    },
+    {
+      "gap": "Patient-level costing engine and local health-service policy validation are out of scope.",
+      "status": "accepted-non-blocking",
+      "rationale": "Those workflows require local governed data and institution-specific costing policy."
+    }
+  ],
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/tracks/ahpcs_costing_process_model_20260512/ahpcs_model.md",
+    "conductor/tracks/ahpcs_costing_process_model_20260512/spec.md",
+    "tests/test_ahpcs_model.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Model AHPCS costing process concepts so costing-study workflows can validate cost ledger, cost centre, product, and allocation inputs.",
+  "no_stub_enforce": true
+}
