@@ -84,3 +84,12 @@ def test_tracks_registry_records_dependency_and_gate_language():
         "map archive families and helpers to executable surfaces",
     ]:
         assert phrase in text
+
+
+def test_modernization_foundation_is_coordination_only():
+    text = TRACKS.read_text(encoding="utf-8")
+
+    assert "**Track: Modernization Foundation**" in text
+    assert "*Coordination only.*" in text
+    assert "Retained to preserve sequencing and governance context." in text
+    assert "Do not duplicate work already owned by the focused tracks above." in text

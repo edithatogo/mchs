@@ -92,7 +92,7 @@ content alone is not sufficient evidence for marking a track complete.
 ## Umbrella Coordination
 
 - [x] **Track: Modernization Foundation**
-  *Link: [./tracks/modernization_foundation_20260504/](./tracks/modernization_foundation_20260504/)*
+  *Link: [./archive/modernization_foundation_20260504/](./archive/modernization_foundation_20260504/)*
   *Coordination only.*
   *Retained to preserve sequencing and governance context.*
   *Do not duplicate work already owned by the focused tracks above.*

@@ -1,0 +1,26 @@
+{
+  "track_id": "modernization_foundation_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete",
+  "primary_contract": "conductor/tracks.md#umbrella-coordination",
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/tracks.md",
+    "conductor/tracks/modernization_foundation_20260504/spec.md",
+    "conductor/tracks/modernization_foundation_20260504/plan.md",
+    "tests/test_tracks_registry.py"
+  ],
+  "support_scope": {
+    "local_completion": "The track is complete as umbrella coordination only: the registry preserves sequencing and points implementation work to focused tracks.",
+    "external_gate": "not applicable",
+    "runtime_support_claim": "No runtime, package, registry, or calculator support claim is made by this umbrella track."
+  },
+  "gap_register": [],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T13:45:51Z",
+  "updated_at": "2026-05-06T02:30:00Z",
+  "description": "Establish the modernization foundation for calculator fidelity, validation, source archiving, web delivery, and Power Platform interoperability",
+  "no_stub_enforce": true
+}
