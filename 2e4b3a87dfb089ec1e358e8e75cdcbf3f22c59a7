@@ -1,0 +1,17 @@
+CRAN publication probe refresh
+
+Commit notes:
+- Refreshed CRAN public probes for nwauR on 2026-06-25: CRAN package page 404, CRANDB 404, and src/contrib/PACKAGES lacks Package: nwauR.
+- Preserved submitted external-review state: confirmation link was clicked, but CRAN incoming/pretest/reviewer response and public package publication remain pending.
+- Updated CRAN track metadata/review and shared language-registry contract/runbook boundary date.
+
+Review:
+- conductor-review result: track remains live and not archive eligible until CRAN publication or accepted-review evidence exists.
+
+Validation:
+- uv run pytest tests/test_r_cran_registry_submission_track.py -q
+- uv run pytest tests/test_remaining_language_registry_submission_tracks.py -q
+- python scripts/validate_language_registry_submission_tracks.py
+- python -m json.tool conductor/tracks/r_cran_registry_submission_20260524/metadata.json
+- python -m json.tool contracts/language-registry-submissions/language-registry-submissions.contract.json
+- python conductor/scripts/stub_detector.py --root . --json
