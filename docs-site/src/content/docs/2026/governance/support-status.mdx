@@ -1,0 +1,101 @@
+---
+title: Support status
+slug: 2026/governance/support-status
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+This page documents the canonical support status vocabulary and the current
+status for every stream, surface, runtime, and language. The project uses
+fail-closed semantics: no support status may be inferred from absence of
+evidence. See the [validation ladder](#validation-ladder) below for how a
+stream moves from discovery through to GA.
+
+## Canonical statuses
+
+| Status | Meaning |
+| --- | --- |
+| `unsupported` | The project does not support this stream, year, jurisdiction, or surface. |
+| `blocked` | Support is desired but blocked by missing source, licence, parity, implementation, or release evidence. |
+| `planned` | Work is planned but not implemented. |
+| `deferred` | Work is intentionally paused behind explicit audience, owner, contract, or evidence gates. |
+| `canary` | Experimental implementation exists for limited synthetic or internal fixtures. |
+| `opt_in` | Users may explicitly enable the surface or stream; it is not default. |
+| `preview` | Local or pre-release implementation exists, but publication or default support is not claimed. |
+| `release_candidate` | Release evidence is complete enough for final validation before GA. |
+| `ga` | Supported by default for the declared scope. |
+| `no_new_development` | Roadmap entry is retained, but active implementation is paused unless reprioritised. |
+| `historical` | Prior work or context retained for traceability, not an active product commitment. |
+
+## Validation ladder
+
+A pricing year or stream moves through these stages. Each stage requires
+explicit evidence before promotion:
+
+1. **Discovered** — Official sources are identified.
+2. **Archived** — Sources are archived or explicitly gap-recorded.
+3. **Extracted** — SAS logic, Excel formulae, workbook tables, price weights,
+   and supporting parameters are extracted into structured bundles.
+4. **Source-parity-checked** — Implementation logic is compared with SAS and
+   Excel formulae where available.
+5. **Fixture-parity-checked** — Outputs are checked against official SAS/Excel
+   or trusted reference outputs.
+6. **Cross-engine-checked** — Python, Rust, CLI, and released bindings agree on
+   shared fixtures.
+7. **Validated** — Evidence records are complete and linked from manifests/docs.
+
+See the canonical source in [Conductor roadmap-governance.md](https://github.com/edithatogo/microcosting_healthservices/blob/master/conductor/roadmap-governance.md).
+
+## Stream statuses
+
+The following streams, surfaces, and languages are mapped to their current
+support status.
+
+| Dimension | Subject | Status | Notes |
+|-----------|---------|--------|-------|
+| **runtime** | Python | `ga` | Current validated public runtime |
+| **runtime** | Rust core | `planned` | Immediate priority; requires GA evidence |
+| **runtime** | Rust canary (acute 2025) | `canary` | Opt-in experimental path |
+| **surface** | CLI/file | `planned` | Part of required GA surface set |
+| **surface** | HTTP API | `planned` | Depends on canonical schemas |
+| **surface** | MCP | `planned` | Depends on HTTP API contract |
+| **surface** | OpenAI tool adapter | `planned` | Depends on MCP contract |
+| **surface** | GitHub Pages / WASM | `canary` | Opt-in; synthetic-data-only demos |
+| **surface** | C ABI | `planned` | Required GA surface for institutional embedding |
+| **surface** | Arrow/Parquet | `planned` | Required GA interchange format |
+| **surface** | SQL/DuckDB | `historical` | Prior references retained for traceability |
+| **surface** | Power Platform | `deferred` | Connector contract exists; tenant ALM validation remains external |
+| **language** | R | `planned` | Local CLI/file wrapper exists; requires owner, parity, packaging, and release evidence |
+| **language** | Julia | `canary` | Local CLI/file and service adapters exist; public release evidence remains pending |
+| **language** | C#/.NET | `preview` | Local CLI/file adapter exists; NuGet publication evidence exists, but support remains preview and boundary-only |
+| **language** | Go | `no_new_development` | Local service adapter exists; cross-compilation posture and named audience remain unresolved |
+| **language** | Kotlin/Native | `deferred` | Local file-boundary validator exists; native-platform owner and release evidence remain pending |
+| **language** | Scala/Spark | `deferred` | Local transport adapters exist; live Spark validation and owner evidence remain pending |
+| **language** | Swift | `deferred` | Local transport adapters exist; Apple-platform audience and package listing evidence remain pending |
+| **language** | Stata | `deferred` | Ado CLI/file adapter exists; Stata runtime and distribution review remain pending |
+| **language** | MATLAB | `deferred` | File/CLI helpers exist; MATLAB runtime and File Exchange review remain pending |
+| **language** | SAS interop | `no_new_development` | Retain existing SAS-read workflows only |
+| **stream** | Admitted acute | `ga` (Python) / `canary` (Rust) | Acute 2025 is the named Rust canary |
+| **stream** | Admitted subacute | `ga` (Python) | Year-aware loader implemented |
+| **stream** | Emergency department | `ga` (Python) | Covers AECC and UDG branches |
+| **stream** | Community mental health | `planned` | Shadow/current behaviour documented; not GA |
+| **stream** | Admitted mental health | `planned` | Coverage under development |
+
+## Fail-closed rules
+
+- Missing source evidence is `blocked`, not inferred support.
+- Missing parity evidence is `blocked` or `canary`, not GA.
+- Deferred language surfaces are `deferred` when they have an explicit future path, or `no_new_development` when retained only as roadmap context.
+- Prior SQL/DuckDB references are `historical` unless reprioritised.
+- Public docs must show the narrowest truthful status.
+- No surface may claim GA status without completing all [promotion criteria](/2026/governance/polyglot-rust-core-roadmap/).
+
+## Related material
+
+- [Polyglot Rust core roadmap](./polyglot-rust-core-roadmap/)
+- [Rust core architecture](./rust-core-architecture/)
+- [Validation vocabulary](./validation-vocabulary/)
+- [Release policy](./release-policy/)
+- [Public readiness](./public-readiness/)
+- [Audience and language strategy](https://github.com/edithatogo/microcosting_healthservices/blob/master/docs/roadmaps/audience-language-strategy.md)
+- [Support status matrix (conductor)](https://github.com/edithatogo/microcosting_healthservices/blob/master/docs/roadmaps/schemas/support-status-matrix.md)

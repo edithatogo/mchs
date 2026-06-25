@@ -41,14 +41,14 @@ See the canonical contract in
 
 ## NuGet packaging posture
 
-NuGet packaging is future-gated.
+NuGet publication evidence now exists for `Mchs.Bindings.DotNet 0.1.0`, but
+the .NET surface remains a preview, thin-boundary adapter.
 
-- Do not claim a public NuGet package until the dependency model, versioning,
-  and release gates are explicit.
-- Treat package publication as a later milestone, not the baseline delivery
-  surface.
-- For now, keep the documented posture focused on the contract and service
-  boundary.
+- Treat the NuGet package as registry publication evidence, not a GA support
+  claim.
+- Keep the documented posture focused on the contract and service boundary.
+- Do not duplicate formula logic, validation rules, or pricing-year semantics
+  inside .NET package code.
 
 ## Related pages
 

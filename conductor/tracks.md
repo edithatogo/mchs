@@ -627,7 +627,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: .NET NuGet Registry Submission**
-*Link: [./tracks/dotnet_nuget_registry_submission_20260524/](./tracks/dotnet_nuget_registry_submission_20260524/)*
+*Link: [./archive/dotnet_nuget_registry_submission_20260524/](./archive/dotnet_nuget_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `NuGet`, and capture immutable evidence before claiming publication.*
 
 ---

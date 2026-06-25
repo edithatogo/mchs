@@ -4,8 +4,11 @@ Roadmap snapshot: 2026-05-13.
 
 This document compares the candidate integration strategies for the C#/.NET
 binding workstream and records the initial path, fallback, and guardrails. It
-is roadmap-only: it does not introduce formula logic, and it does not claim a
-production-ready binding.
+does not introduce formula logic. Local .NET adapter code can exercise the
+service and file boundaries, but this document does not claim a NuGet release
+or a production-ready binding. Later registry evidence verifies
+`Mchs.Bindings.DotNet 0.1.0` on NuGet; that publication does not change this
+roadmap's preview support boundary.
 
 ## Scope
 
@@ -25,7 +28,9 @@ production-ready binding.
 
 ## Decision
 
-Start with the **service boundary** as the initial C#/.NET strategy.
+Start with the **service boundary** as the initial C#/.NET strategy. The
+current local .NET adapter evidence is a pre-release integration boundary, not
+a public package or production support claim.
 
 Use **CLI / Arrow-file interop** as the fallback when a caller needs batch
 execution, offline handoff, or a more inspectable contract than a live service
@@ -80,5 +85,6 @@ rules are stable enough to justify an in-process surface.
 - Every .NET example must validate against shared golden fixtures.
 - A .NET binding that duplicates formula constants, thresholds, or adjustment
   rules is out of scope.
-- Release claims for NuGet packaging should wait until the chosen boundary is
-  stable and parity evidence exists for the shared contract.
+- NuGet publication evidence may be cited for package availability, but support
+  claims still wait until the chosen boundary is stable and parity evidence
+  exists for the shared contract.

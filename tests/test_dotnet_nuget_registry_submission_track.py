@@ -4,8 +4,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "dotnet_nuget_registry_submission_20260524"
+TRACK = ROOT / "conductor" / "archive" / "dotnet_nuget_registry_submission_20260524"
 TRACKS = ROOT / "conductor" / "tracks.md"
+CSHARP_DOC = ROOT / "docs-site" / "src" / "content" / "docs" / "governance" / "csharp-dotnet-binding.md"
 CONTRACT = (
     ROOT
     / "contracts"
@@ -43,7 +44,12 @@ def test_dotnet_nuget_track_is_published_verified():
     assert metadata["local_readiness_resolved"] is True
     assert metadata["publication_claimed"] is True
     assert metadata["publication_status"] == "published_verified"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
+    assert (TRACK / "review.md").exists()
     assert "- [x] **Track: .NET NuGet Registry Submission**" in tracks
+    assert "./archive/dotnet_nuget_registry_submission_20260524/" in tracks
+    assert "./tracks/dotnet_nuget_registry_submission_20260524/" not in tracks
 
     assert registry["current_status"] == "published_verified"
     assert (
@@ -84,3 +90,6 @@ def test_dotnet_nuget_package_evidence_records_publication_claim():
         in registry["publicationEvidence"]["packagePageNote"]
     )
     assert "Publication is claimed from public NuGet flat-container evidence" in plan
+    csharp_docs = _read(CSHARP_DOC)
+    assert "Mchs.Bindings.DotNet 0.1.0" in csharp_docs
+    assert "not a GA support claim" in " ".join(csharp_docs.split())
