@@ -465,7 +465,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Cost Bucket Analytics Tutorials**
-*Link: [./tracks/cost_bucket_analytics_tutorials_20260512/](./tracks/cost_bucket_analytics_tutorials_20260512/)*
+*Link: [./archive/cost_bucket_analytics_tutorials_20260512/](./archive/cost_bucket_analytics_tutorials_20260512/)*
 *Gate: publish synthetic and public-safe cost bucket tutorials for benchmarking, cost-versus-NWAU studies, and local mapping overlays.*
 
 ---

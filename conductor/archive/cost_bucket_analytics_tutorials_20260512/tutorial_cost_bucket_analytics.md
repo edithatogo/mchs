@@ -153,5 +153,5 @@ Demonstrate how a jurisdiction might define local cost bucket mapping overlays t
 - NHCDC Public Sector: https://www.ihacpa.gov.au/health-care/costing/national-hospital-cost-data-collection/national-hospital-cost-data-collection-public-sector
 - Cost Bucket Review 2025: https://www.ihacpa.gov.au/sites/default/files/2025-11/cost_bucket_review_2025.pdf
 - AHPCS: https://www.ihacpa.gov.au/health-care/costing/australian-hospital-patient-costing-standards
-- Cost Bucket Registry: `../../cost_bucket_registry_20260512/cost_bucket_registry_schema.md`
-- AHPCS Model: `../../ahpcs_costing_process_model_20260512/ahpcs_model.md`
+- Cost Bucket Registry: `../cost_bucket_registry_20260512/cost_bucket_registry_schema.md`
+- AHPCS Model: `../ahpcs_costing_process_model_20260512/ahpcs_model.md`

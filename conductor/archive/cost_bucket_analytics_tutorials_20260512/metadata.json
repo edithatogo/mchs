@@ -1,0 +1,35 @@
+{
+  "track_id": "cost_bucket_analytics_tutorials_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "costing",
+  "current_state": "complete",
+  "primary_contract": "conductor/archive/cost_bucket_analytics_tutorials_20260512/tutorial_cost_bucket_analytics.md",
+  "support_scope": "Documentation tutorial set for cost bucket distribution analysis, cost-versus-NWAU analysis, public aggregate NHCDC interpretation, and synthetic local cost bucket overlay examples. The archived scope is tutorial and analysis guidance only, with no claim of official IHACPA costing compliance or patient-level costing data.",
+  "gap_register": [
+    {
+      "gap": "Tutorial examples are documented and synthetic; they are not executable notebooks or official compliance tooling.",
+      "status": "accepted-non-blocking",
+      "rationale": "The track acceptance criteria permit checked tutorial examples using synthetic/public-safe fixtures and caveats."
+    },
+    {
+      "gap": "Public NHCDC aggregate data is not patient-level costing data.",
+      "status": "accepted-non-blocking",
+      "rationale": "The tutorial explicitly warns against interpreting aggregate public tables as local patient-level costing evidence."
+    }
+  ],
+  "dependencies": [
+    "cost_bucket_registry_20260512",
+    "ahpcs_costing_process_model_20260512"
+  ],
+  "completion_evidence": [
+    "conductor/archive/cost_bucket_analytics_tutorials_20260512/tutorial_cost_bucket_analytics.md",
+    "conductor/archive/cost_bucket_analytics_tutorials_20260512/spec.md",
+    "tests/test_cost_bucket_analytics_tutorials_track.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add tutorials for cost bucket analytics, benchmarking, and cost-versus-NWAU studies using synthetic and public aggregate data.",
+  "no_stub_enforce": true
+}
