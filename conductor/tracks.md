@@ -681,13 +681,13 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: MATLAB File Exchange Submission**
-*Link: [./tracks/matlab_file_exchange_submission_20260524/](./tracks/matlab_file_exchange_submission_20260524/)*
+*Link: [./archive/matlab_file_exchange_submission_20260524/](./archive/matlab_file_exchange_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `MATLAB File Exchange`, and capture immutable evidence before claiming publication.*
 
 ---
 
 - [x] **Track: Stata SSC Submission**
-*Link: [./tracks/stata_ssc_submission_20260524/](./tracks/stata_ssc_submission_20260524/)*
+*Link: [./archive/stata_ssc_submission_20260524/](./archive/stata_ssc_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `SSC / Stata package distribution`, and capture immutable evidence before claiming publication.*
 
 ---

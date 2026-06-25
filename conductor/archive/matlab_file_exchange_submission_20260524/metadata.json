@@ -1,0 +1,36 @@
+{
+  "track_id": "matlab_file_exchange_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-06-13T00:00:00+10:00",
+  "description": "MATLAB File Exchange Submission: discover, prepare, submit, and evidence MATLAB File Exchange publication for mchs-matlab-interop.",
+  "registry_id": "matlab_file_exchange",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "publication_claimed": true,
+  "support_scope": {
+    "local_completion": "The local MATLAB File Exchange submission track is complete: source upload bundle evidence, checksum evidence, and public File Exchange page evidence are recorded.",
+    "external_gate": "closed for File Exchange publication of version 0.1.0; a corrected replacement ZIP draft remains optional follow-up and is not required for the archived publication claim.",
+    "runtime_support_claim": "No MATLAB or Octave runtime execution is claimed because neither runtime is installed in the local validation environment."
+  },
+  "gap_register": [],
+  "package_evidence": {
+    "bundle": "microcosting_healthservices/bindings/matlab/mchs-matlab-interop-0.1.0.zip",
+    "bundle_sha256": "d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336",
+    "bundle_contents": "README.md, LICENSE, file-exchange-submission.json, matlab-interop-notes.md, mchs/*.m, examples/*.m",
+    "runtime_note": "MATLAB and Octave are not installed locally, so no MATLAB runtime validation is claimed",
+    "latest_public_probe": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop was published and directly observed in Chrome on 2026-06-13; page title was MCHS MATLAB Interop - File Exchange - MATLAB Central, page stated 'Your submission has been published in File Exchange', exposed version 0.1.0, download id 184067, add-on UUID 91133d3e-f475-413c-85bc-544188a60074, author Dylan, and tags cli/csv/health economics/matlab/microcosting/parquet.",
+    "file_exchange_submission_notes": "conductor/tracks/matlab_file_exchange_submission_20260524/file_exchange_submission_notes.md",
+    "submission_url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+    "submission_id": "184067",
+    "addon_uuid": "91133d3e-f475-413c-85bc-544188a60074",
+    "published_at": "2026-06-13",
+    "initial_uploaded_bundle_sha256": "1156f506cda8ab797b5d07adebc35ecccb36bd9758cffaf011029c71c9d2515a",
+    "corrected_local_bundle_sha256": "d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336",
+    "replacement_draft": "Chrome opened replacement draft https://www.mathworks.com/contribute/submissions/aaea44a8-4710-4e2c-a17d-a97aede040de/edit with update notes and version 0.1.1, but the browser automation backend could not complete a trusted replacement ZIP upload; no corrected replacement publication is claimed.",
+    "remaining_external_blocker": null
+  }
+}

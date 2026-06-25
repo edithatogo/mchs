@@ -16,6 +16,14 @@ MATLAB_BUNDLE = ROOT / "bindings" / "matlab" / "mchs-matlab-interop-0.1.0.zip"
 STATA_BUNDLE = ROOT / "bindings" / "stata" / "mchs-stata-interop-0.1.0.zip"
 
 
+def _track(track_id: str) -> Path:
+    for base in (ROOT / "conductor" / "tracks", ROOT / "conductor" / "archive"):
+        candidate = base / track_id
+        if candidate.exists():
+            return candidate
+    raise AssertionError(f"missing Conductor track or archive: {track_id}")
+
+
 def _contract_registry(registry_id: str) -> dict:
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     return next(item for item in contract["registries"] if item["id"] == registry_id)
@@ -38,20 +46,29 @@ def test_matlab_file_exchange_bundle_matches_registry_evidence():
     registry = _contract_registry("matlab_file_exchange")
     evidence = registry["preparationEvidence"]
     metadata = json.loads(
-        (
-            ROOT
-            / "conductor"
-            / "tracks"
-            / "matlab_file_exchange_submission_20260524"
-            / "metadata.json"
-        ).read_text(encoding="utf-8")
+        (_track("matlab_file_exchange_submission_20260524") / "metadata.json").read_text(
+            encoding="utf-8"
+        )
     )
 
-    assert registry["current_status"] == "prepared_pending_file_exchange_upload_review"
-    assert metadata["publication_claimed"] is False
-    assert registry["submission_url"] is None
+    assert registry["current_status"] == "published_verified"
+    assert metadata["publication_claimed"] is True
+    assert (
+        registry["submission_url"]
+        == "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop"
+    )
     assert evidence["sha256"] == _sha256(MATLAB_BUNDLE)
     assert metadata["package_evidence"]["bundle_sha256"] == evidence["sha256"]
+    assert "184067-mchs-matlab-interop" in evidence["latestPublicProbe"]
+    assert "version 0.1.0" in evidence["latestPublicProbe"]
+    assert evidence["remainingExternalBlocker"] is None
+    assert (
+        "184067-mchs-matlab-interop"
+        in metadata["package_evidence"]["latest_public_probe"]
+    )
+    assert metadata["package_evidence"]["remaining_external_blocker"] is None
+    assert registry["publicationEvidence"]["version"] == "0.1.0"
+    assert registry["publicationEvidence"]["submissionId"] == "184067"
 
     names = _zip_names(MATLAB_BUNDLE)
     assert {
@@ -74,9 +91,13 @@ def test_matlab_file_exchange_bundle_matches_registry_evidence():
         readme = archive.read("README.md").decode("utf-8")
 
     assert submission["license"] == "MIT"
-    assert submission["publication_claimed"] is False
+    assert submission["publication_claimed"] is True
+    assert (
+        submission["publication_url"]
+        == "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop"
+    )
     squashed_readme = _squash(readme)
-    assert "no MathWorks File Exchange upload has been performed" in squashed_readme
+    assert "published on MathWorks File Exchange as version `0.1.0`" in squashed_readme
     assert "MATLAB/Octave are not installed" in squashed_readme
 
 
@@ -84,26 +105,41 @@ def test_stata_ssc_bundle_matches_registry_evidence():
     registry = _contract_registry("stata_ssc")
     evidence = registry["preparationEvidence"]
     metadata = json.loads(
-        (
-            ROOT
-            / "conductor"
-            / "tracks"
-            / "stata_ssc_submission_20260524"
-            / "metadata.json"
-        ).read_text(encoding="utf-8")
+        (_track("stata_ssc_submission_20260524") / "metadata.json").read_text(
+            encoding="utf-8"
+        )
     )
 
-    assert registry["current_status"] == "submitted_pending_ssc_maintainer_review"
-    assert metadata["publication_claimed"] is False
-    assert registry["submission_url"] == "mailto:baum@bc.edu"
+    assert registry["current_status"] == "published_verified"
+    assert metadata["publication_claimed"] is True
+    assert registry["submission_url"] == "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg"
     assert evidence["sha256"] == _sha256(STATA_BUNDLE)
     assert metadata["package_evidence"]["bundle_sha256"] == evidence["sha256"]
     assert "submissionEmailEvidence" in evidence
     assert "maintainerIdentityClarification" in evidence
-    assert "d.a.mordaunt@gmail.com" in evidence["latestEmailProbe"]
-    assert "no inbound SSC maintainer response has been captured" in evidence[
-        "latestEmailProbe"
-    ]
+    assert "maintainerFeedback" in evidence
+    assert "feedbackFix" in evidence
+    assert "emailSendGuardrail" in evidence
+    assert "correctedArchiveReplyDraft" in evidence
+    assert "fionnandniamh@gmail.com" in evidence["latestEmailProbe"]
+    assert (
+        "author contact information seems to be missing" in evidence["latestEmailProbe"]
+    )
+    assert (
+        "No outbound response with the corrected archive was sent"
+        in evidence["latestEmailProbe"]
+    )
+    assert "explicit user approval" in evidence["emailSendGuardrail"]
+    assert evidence["remainingExternalBlocker"] is None
+    assert "latestPublicProbe" in evidence
+    assert "mchs.pkg" in evidence["latestPublicProbe"]
+    assert "mchs.ado" in evidence["latestPublicProbe"]
+    assert "mchs.sthlp" in evidence["latestPublicProbe"]
+    assert registry["publicationEvidence"]["url"] == (
+        "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg"
+    )
+    assert registry["publicationEvidence"]["packageName"] == "mchs"
+    assert registry["publicationEvidence"]["localArchiveVersion"] == "0.1.0"
 
     names = _zip_names(STATA_BUNDLE)
     assert {
@@ -119,6 +155,7 @@ def test_stata_ssc_bundle_matches_registry_evidence():
 
     with ZipFile(STATA_BUNDLE) as archive:
         package_manifest = archive.read("pkg-mchs.pkg").decode("utf-8")
+        help_file = archive.read("mchs.sthlp").decode("utf-8")
         readme = archive.read("README.md").decode("utf-8")
 
     for required_file in [
@@ -132,5 +169,11 @@ def test_stata_ssc_bundle_matches_registry_evidence():
         assert required_file in package_manifest
 
     squashed_readme = _squash(readme)
-    assert "No SSC submission has been performed or claimed" in squashed_readme
+    squashed_help = _squash(help_file)
+    assert "published on the Boston College SSC/RePEc archive" in squashed_readme
+    assert "no Stata runtime validation is claimed" in squashed_readme
+    assert "dylan mordaunt" in squashed_readme.lower()
+    assert "dylan.mordaunt@vuw.ac.nz" in squashed_readme
+    assert "dylan mordaunt" in squashed_help.lower()
+    assert "dylan.mordaunt@vuw.ac.nz" in squashed_help
     assert "Stata is not installed" in squashed_readme

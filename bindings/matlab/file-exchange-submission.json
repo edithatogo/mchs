@@ -1,0 +1,20 @@
+{
+  "name": "MCHS MATLAB Interop",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "https://github.com/edithatogo/mchs",
+  "summary": "MATLAB file and CLI boundary helpers for MCHS shared-core outputs.",
+  "keywords": [
+    "health economics",
+    "microcosting",
+    "matlab",
+    "csv",
+    "parquet",
+    "cli"
+  ],
+  "status": "published_verified",
+  "publication_claimed": true,
+  "publication_url": "https://www.mathworks.com/matlabcentral/fileexchange/184067-mchs-matlab-interop",
+  "file_exchange_id": "184067",
+  "addon_uuid": "91133d3e-f475-413c-85bc-544188a60074"
+}

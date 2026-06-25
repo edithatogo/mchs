@@ -153,7 +153,7 @@
                 "discovery": "https://crandb.r-pkg.org/nwauR returned not_found/document not found.",
                 "buildCommand": "R CMD build r-binding",
                 "packageArtifact": "microcosting_healthservices/nwauR_0.1.0.tar.gz",
-                "packageSha256": "73e10d07e32153f8830b1b2a638637c058323963b34d854ead45deac9b849848",
+                "packageSha256": "8ee27bada58bf7e0e7b85b9ae8b6cb51b05fc4bd4510fe290cb49def49a17818",
                 "checkCommand": "R CMD check --no-manual nwauR_0.1.0.tar.gz",
                 "checkResult": "Status: OK",
                 "asCranCheckCommand": "_R_CHECK_CRAN_INCOMING_REMOTE_=false R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz",
@@ -586,7 +586,7 @@
             "preparationEvidence": {
                 "discovery": "IDEAS/RePEc and Boston College SSC/RePEc paths were reachable from CLI. On 2026-06-14, http://fmwww.bc.edu/repec/bocode/m/mchs.pkg, http://fmwww.bc.edu/repec/bocode/m/mchs.ado, and http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp were live and exposed the MCHS Stata file/CLI adapter.",
                 "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip",
-                "sha256": "47e4f6a7c86d483ef71baa1daa8b9e20f61f12acab9973f94483923fb2e37f55",
+                "sha256": "7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a",
                 "bundleContents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg, README.md, LICENSE, examples/*.do, stata-interop-notes.md",
                 "tooling": "No Stata executable is installed locally, so ado runtime validation is not claimed.",
                 "remainingExternalBlocker": null,
@@ -597,7 +597,7 @@
                 "latestEmailProbe": "2026-06-13: connected Gmail profile is fionnandniamh@gmail.com. Christopher Baum replied in thread 19eb741219922d5b, message id 19ebc6e44956ef25, saying the author contact information seems to be missing from the .sthlp file. An automatic/sent follow-up message id 19ebc6e4ae23499c says this email is not monitored. No outbound response with the corrected archive was sent.",
                 "maintainerIdentityClarification": "SSC follow-up clarification sent to baum@bc.edu on 2026-06-12 in Gmail thread 19eb741219922d5b; message id 19eb747b4e40344b clarifies that Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz> remains the package maintainer/contact and the Gmail account was only used to transmit the archive.",
                 "maintainerFeedback": "2026-06-12: Christopher Baum replied that author contact information seems to be missing from mchs.sthlp.",
-                "feedbackFix": "Added an Author section to bindings/stata/mchs.sthlp and bindings/stata/README.md with Dylan Mordaunt, dylan.mordaunt@vuw.ac.nz, and the repository URL; rebuilt bindings/stata/mchs-stata-interop-0.1.0.zip with SHA-256 47e4f6a7c86d483ef71baa1daa8b9e20f61f12acab9973f94483923fb2e37f55.",
+                "feedbackFix": "Added an Author section to bindings/stata/mchs.sthlp and bindings/stata/README.md with Dylan Mordaunt, dylan.mordaunt@vuw.ac.nz, and the repository URL; rebuilt bindings/stata/mchs-stata-interop-0.1.0.zip with SHA-256 7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a.",
                 "emailSendGuardrail": "Do not send, reply, forward, or transmit a corrected archive from any mailbox without explicit user approval of the exact outbound action. The corrected-archive reply is now obsolete because public SSC/RePEc installability evidence exists.",
                 "correctedArchiveReplyDraft": "conductor/tracks/stata_ssc_submission_20260524/corrected_archive_reply_draft.md",
                 "latestPublicProbe": "2026-06-14 live SSC/RePEc probe: http://fmwww.bc.edu/repec/bocode/m/mchs.pkg is available and lists the MCHS module, Dylan Mordaunt support email, mchs.ado, mchs.sthlp, and example files; http://fmwww.bc.edu/repec/bocode/m/mchs.ado exposes `program define mchs`; http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp exposes MCHS Stata help and `{cmd:mchs ...}` command help. SSC does not expose the local semantic archive version in the public .pkg manifest; version 0.1.0 remains local archive evidence."

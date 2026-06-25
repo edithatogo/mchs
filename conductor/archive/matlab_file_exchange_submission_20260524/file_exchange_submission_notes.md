@@ -9,7 +9,8 @@ Submission URL: https://www.mathworks.com/matlabcentral/fileexchange/
 - License: MIT
 - Repository: https://github.com/edithatogo/mchs
 - Upload archive: bindings/matlab/mchs-matlab-interop-0.1.0.zip
-- Archive SHA-256: 1156f506cda8ab797b5d07adebc35ecccb36bd9758cffaf011029c71c9d2515a
+- Original uploaded archive SHA-256: 1156f506cda8ab797b5d07adebc35ecccb36bd9758cffaf011029c71c9d2515a
+- Corrected local archive SHA-256: d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336
 
 ## Summary
 

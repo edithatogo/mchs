@@ -1,0 +1,46 @@
+{
+  "track_id": "stata_ssc_submission_20260524",
+  "type": "chore",
+  "status": "completed",
+  "created_at": "2026-05-24T08:28:21Z",
+  "updated_at": "2026-06-14T00:00:00+10:00",
+  "description": "Stata SSC Submission: discover, prepare, submit, and evidence SSC / Stata package distribution publication for mchs-stata-interop.",
+  "registry_id": "stata_ssc",
+  "current_status": "published_verified",
+  "publication_status": "published_verified",
+  "local_readiness_resolved": true,
+  "blocker": null,
+  "publication_claimed": true,
+  "support_scope": {
+    "local_completion": "The local Stata SSC submission track is complete: SSC/RePEc package, ado, and help files are public and the repository bundle records checksum and author/contact remediation evidence.",
+    "external_gate": "closed for SSC/RePEc publication; the corrected-archive reply draft is obsolete and must not be sent without explicit user approval.",
+    "runtime_support_claim": "No local Stata runtime execution is claimed because Stata is not installed in the local validation environment."
+  },
+  "gap_register": [],
+  "package_evidence": {
+    "bundle": "microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip",
+    "bundle_sha256": "7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a",
+    "bundle_contents": "mchs.ado, mchs.sthlp, pkg-mchs.pkg, README.md, LICENSE, examples/*.do, stata-interop-notes.md",
+    "runtime_note": "No Stata executable is installed locally, so ado runtime validation is not claimed",
+    "ssc_submission_contact_source": "RePEc SSC submission guidance and Stata SSC documentation identify the Boston College SSC archive maintained by Christopher F. Baum; contact baum@bc.edu.",
+    "submission_email_draft": "conductor/tracks/stata_ssc_submission_20260524/submission_email.md",
+    "remaining_external_blocker": null,
+    "gmail_draft_evidence": "Gmail draft created for SSC submission to baum@bc.edu with bindings/stata/mchs-stata-interop-0.1.0.zip attached; draft_id r5716184915787392751, message_id 19eb741219922d5b, thread_id 19eb741219922d5b. Draft not sent pending sender identity review.",
+    "submission_email_evidence": "SSC submission email sent to baum@bc.edu via Gmail on 2026-06-12 with bindings/stata/mchs-stata-interop-0.1.0.zip attached; Gmail sent message id 19eb7426b99dc08c, thread id 19eb741219922d5b.",
+    "latest_email_probe": "2026-06-13: connected Gmail profile is fionnandniamh@gmail.com. Christopher Baum replied in thread 19eb741219922d5b, message id 19ebc6e44956ef25, saying the author contact information seems to be missing from the .sthlp file. An automatic/sent follow-up message id 19ebc6e4ae23499c says this email is not monitored. No outbound response with the corrected archive was sent.",
+    "maintainer_identity_clarification": "SSC follow-up clarification sent to baum@bc.edu on 2026-06-12 in Gmail thread 19eb741219922d5b; message id 19eb747b4e40344b clarifies that Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz> remains the package maintainer/contact and the Gmail account was only used to transmit the archive.",
+    "maintainer_feedback": "2026-06-12: Christopher Baum replied that author contact information seems to be missing from mchs.sthlp.",
+    "feedback_fix": "2026-06-13: added an Author section to bindings/stata/mchs.sthlp with Dylan Mordaunt, dylan.mordaunt@vuw.ac.nz, and the repository URL; rebuilt mchs-stata-interop-0.1.0.zip with SHA-256 7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a.",
+    "email_send_guardrail": "Do not send SSC follow-up email, reply, forward, or corrected archive without explicit user approval of that outbound action. The corrected-archive reply is now obsolete because public SSC/RePEc installability evidence exists.",
+    "latest_public_probe": "2026-06-14 live SSC/RePEc probe: http://fmwww.bc.edu/repec/bocode/m/mchs.pkg is available and lists the MCHS module, Dylan Mordaunt support email, mchs.ado, mchs.sthlp, and example files; http://fmwww.bc.edu/repec/bocode/m/mchs.ado exposes `program define mchs`; http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp exposes MCHS Stata help and `{cmd:mchs ...}` command help. SSC does not expose the local semantic archive version in the public .pkg manifest; version 0.1.0 remains local archive evidence.",
+    "publication_evidence": {
+      "url": "http://fmwww.bc.edu/repec/bocode/m/mchs.pkg",
+      "package_name": "mchs",
+      "local_archive_version": "0.1.0",
+      "ado_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.ado",
+      "help_url": "http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp",
+      "distribution_date": "202605",
+      "verified_at": "2026-06-14T00:00:00+10:00"
+    }
+  }
+}

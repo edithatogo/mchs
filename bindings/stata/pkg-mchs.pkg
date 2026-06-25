@@ -1,0 +1,9 @@
+v 0.1.0
+N mchs
+D MCHS Stata file/CLI interop adapter
+F mchs.ado
+F mchs.sthlp
+F README.md
+F LICENSE
+F examples/file_import_workflow.do
+F examples/nwau_cli_invocation.do

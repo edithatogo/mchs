@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `mchs-stata-interop`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/bindings/stata`
-- Current status: `submitted_pending_ssc_maintainer_review`
+- Current status: `published_verified`
 
 ## Functional Requirements
 
@@ -24,16 +24,18 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A Stata ado/help/pkg bundle exists with README, license, notes, and examples for maintainer review. No Stata executable is installed locally, so no ado runtime validation is claimed. The remaining blocker is external SSC maintainer submission and review.
+Resolved locally, submitted, and published on the Boston College SSC/RePEc archive. A Stata ado/help/pkg bundle exists with README, license, notes, and examples for maintainer review. No Stata executable is installed locally, so no ado runtime validation is claimed. SSC maintainer feedback requested author contact information in `mchs.sthlp`; this was corrected locally before publication evidence was captured. No corrected-archive follow-up email is needed because public installability evidence now exists.
 
 ## Preparation Evidence
 
-- Discovery: IDEAS/RePEc search page for `mchs-stata-interop` was reachable from CLI, but no clean machine-readable SSC publication proof was available.
+- Discovery/publication: `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg`, `http://fmwww.bc.edu/repec/bocode/m/mchs.ado`, and `http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp` are live SSC/RePEc publication evidence.
 - Bundle: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
-- SHA256: `58592db4e6feb5bdfc78a3fd34b91e0e86f859dc06de5fdf40cd7a8f2a7b0ffd`
+- SHA256: `7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a`
 - Contents: `mchs.ado`, `mchs.sthlp`, `pkg-mchs.pkg`, `README.md`, `LICENSE`, `examples/*.do`, `stata-interop-notes.md`
 - Runtime note: no Stata executable is installed locally.
-- Remaining external blocker: SSC submission/review.
+- Maintainer feedback: on 2026-06-12 Christopher Baum replied that author contact information seems to be missing from `mchs.sthlp`.
+- Local feedback fix: on 2026-06-13 `mchs.sthlp` gained an Author section with Dylan Mordaunt, `dylan.mordaunt@vuw.ac.nz`, and the repository URL; the SSC ZIP was rebuilt.
+- Remaining external blocker: none for SSC publication. SSC public `.pkg` metadata does not expose the local semantic archive version; version `0.1.0` remains local archive evidence, while installability is verified through the public package manifest, ado file, and help file.
 
 ## Acceptance Criteria
 

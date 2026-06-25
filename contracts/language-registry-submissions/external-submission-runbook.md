@@ -58,7 +58,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Extension: `edithatogo.mchs-tools@0.1.1`
 - Public probe: `https://open-vsx.org/api/edithatogo/mchs-tools` returns namespace `edithatogo`, name `mchs-tools`, latest version `0.1.1`, and allVersions including `0.1.1`, `0.1.0`, and `latest`; Visual Studio Marketplace Gallery `extensionquery` returns public `edithatogo.mchs-tools` version `0.1.1` with VSIX SHA-256 `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
 - Credential status: Open VSX Access Tokens became available for `edithatogo` after Eclipse Publisher Agreement recognition. A fresh token named `mchs-tools publish 2026-06-13` was generated for the publish check, `npx --yes ovsx publish integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` returned that `edithatogo.mchs-tools 0.1.0` is already published, and the fresh token was deleted afterwards. A pre-existing Open VSX token row was left untouched. Visual Studio Marketplace publisher `edithatogo` is visible in the publishing portal with Owner role under the signed-in Microsoft account; Marketplace web upload accepted `mchs-tools-0.1.0.vsix` and published version `0.1.0`. On 2026-06-16, the signed-in Marketplace publisher page showed `MCHS Tools` version `0.1.1` as Public under `edithatogo`.
-- Track-specific checklist: `conductor/tracks/vscode_openvsx_registry_submission_20260524/access_checklist.md`.
+- Track-specific checklist: `conductor/archive/vscode_openvsx_registry_submission_20260524/access_checklist.md`.
 - Prepared artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
 - Prepared sync artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix` with local SHA-256 `bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6`.
 - Open VSX publish check: `npx --yes ovsx publish integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` returned that version `0.1.0` is already published.
@@ -126,7 +126,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Fixed publication metadata: added MIT license, Swift package topics, and GitHub release `v0.1.0`.
 - Publication evidence: on 2026-06-12, `https://swiftpackageindex.com/edithatogo/mchs-swift` returned HTTP 200 and exposed `MCHSBind`, canonical `edithatogo/mchs-swift` links, stable `v0.1.0`, the SPM manifest snippet using `from: "0.1.0"`, and the GitHub release link.
 - Remaining step: none for Swift Package Index publication. Preserve the PackageList merge, raw PackageList, release, and public SPI page evidence.
-- Track-specific checklist: `conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md` is retained as completed publication evidence.
+- Track-specific checklist: `conductor/archive/swift_package_index_submission_20260524/public_probe_checklist.md` is retained as completed publication evidence.
 
 ### Maven Central
 
@@ -139,7 +139,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Artifact evidence: public JAR URL `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.jar` returns HTTP 200 with SHA-256 `2f499b78d06317fd9bf2e343542b74043f163f127cd32db4651098f6ac6af49e`; public POM URL returns HTTP 200 with SHA-256 `367e6a08a9d57ebd6d97d9fa14f1fe65fbfdf7fce882369ab8264996995c36c6`.
 - Next-action checklist:
   1. None for Maven Central publication. Preserve the public metadata/JAR evidence and revoked-token notes.
-- Track-specific checklist: `conductor/tracks/jvm_maven_central_registry_submission_20260524/submission_checklist.md`.
+- Track-specific checklist: `conductor/archive/jvm_maven_central_registry_submission_20260524/submission_checklist.md`.
 
 ### conda-forge
 
@@ -173,21 +173,21 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Submission note: the MathWorks live editor required population through its rich-text editor state before validation; the final public page shows the intended description and requirements. The original uploaded archive SHA-256 was `1156f506cda8ab797b5d07adebc35ecccb36bd9758cffaf011029c71c9d2515a`. After publication, the local ZIP was corrected so its README/metadata no longer say no File Exchange upload occurred; corrected local SHA-256 is `d78cc11a9ab23080b38604e21c5d21ba9c8801ae0cf6219888f1797834cf2336`.
 - Replacement follow-up: Chrome opened new-version draft `https://www.mathworks.com/contribute/submissions/aaea44a8-4710-4e2c-a17d-a97aede040de/edit` with update notes and version `0.1.1`, but the browser automation backend could not complete a trusted replacement ZIP upload. No corrected replacement publication is claimed.
 - Remaining step: none for File Exchange publication; keep the local note that MATLAB/Octave runtime execution is not claimed in this repository evidence.
-- Track-specific checklist: `conductor/tracks/matlab_file_exchange_submission_20260524/submission_checklist.md`.
+- Track-specific checklist: `conductor/archive/matlab_file_exchange_submission_20260524/submission_checklist.md`.
 
 ### Stata SSC
 
 - Package: `mchs-stata-interop@0.1.0`
 - Prepared artifact: `microcosting_healthservices/bindings/stata/mchs-stata-interop-0.1.0.zip`
 - Contents: ado/help/pkg files, README, MIT license, notes, and example `.do` workflows.
-- Current archive SHA-256: `47e4f6a7c86d483ef71baa1daa8b9e20f61f12acab9973f94483923fb2e37f55`.
+- Current archive SHA-256: `7cd12328f7b9e061fb2fe42c72ee6812f055f64ccabb2338ef45c26cdf98ce1a`.
 - Submission state: initial SSC submission and maintainer-identity clarification were sent via Gmail on 2026-06-12. Christopher Baum replied that the author contact information seemed to be missing from `mchs.sthlp`.
 - Feedback fix: `mchs.sthlp` and the README now include the Author section with Dylan Mordaunt, `dylan.mordaunt@vuw.ac.nz`, and the repository URL; the SSC archive was rebuilt with the current checksum above.
 - Corrected-reply draft: `conductor/tracks/stata_ssc_submission_20260524/corrected_archive_reply_draft.md`.
 - Public evidence: on 2026-06-14, `http://fmwww.bc.edu/repec/bocode/m/mchs.pkg` was live and listed the MCHS module, Dylan Mordaunt support email, `mchs.ado`, `mchs.sthlp`, and example files; `http://fmwww.bc.edu/repec/bocode/m/mchs.ado` exposed `program define mchs`; `http://fmwww.bc.edu/repec/bocode/m/mchs.sthlp` exposed MCHS Stata help and `{cmd:mchs ...}` command help.
 - Version boundary: SSC `.pkg` metadata does not expose semantic versions, so version `0.1.0` remains local archive evidence rather than public SSC metadata.
 - Remaining step: none for SSC publication. The corrected-archive follow-up is obsolete because public installability evidence exists; do not send it without an explicit new user instruction.
-- Track-specific checklist: `conductor/tracks/stata_ssc_submission_20260524/submission_checklist.md`.
+- Track-specific checklist: `conductor/archive/stata_ssc_submission_20260524/submission_checklist.md`.
 
 ### vcpkg / ConanCenter
 
