@@ -19,7 +19,8 @@
     "contracts/mcp/registry/docker/servers/mchs/tools.json",
     "contracts/mcp/registry/docker/servers/mchs/readme.md",
     "contracts/mcp/registry/registry-submission-status-20260524.json",
-    "contracts/mcp/registry/submission-decisions.md"
+    "contracts/mcp/registry/submission-decisions.md",
+    "tests/test_docker_mcp_registry_readiness_track.py"
   ],
   "publication_status": "submitted-review-pending",
   "deferred": false,

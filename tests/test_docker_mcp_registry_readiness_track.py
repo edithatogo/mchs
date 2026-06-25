@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "docker_mcp_registry_readiness_20260517"
+TRACK = ROOT / "conductor" / "archive" / "docker_mcp_registry_readiness_20260517"
 TRACKS = ROOT / "conductor" / "tracks.md"
 STATUS = (
     ROOT / "contracts" / "mcp" / "registry" / "registry-submission-status-20260524.json"
@@ -32,7 +32,10 @@ def test_docker_track_is_complete_for_submission_not_catalog_publication():
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "submitted-review-pending"
     assert metadata["catalog_publication_claimed"] is False
+    assert (TRACK / "review.md").exists()
     assert "- [x] **Track: Docker MCP Registry Readiness**" in tracks
+    assert "./archive/docker_mcp_registry_readiness_20260517/" in tracks
+    assert "./tracks/docker_mcp_registry_readiness_20260517/" not in tracks
 
     docker = status["registries"]["dockerMcpRegistry"]
     assert docker["status"] == "submitted_review_pending"

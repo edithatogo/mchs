@@ -603,7 +603,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Docker MCP Registry Readiness**
-*Link: [./tracks/docker_mcp_registry_readiness_20260517/](./tracks/docker_mcp_registry_readiness_20260517/)*
+*Link: [./archive/docker_mcp_registry_readiness_20260517/](./archive/docker_mcp_registry_readiness_20260517/)*
 *Gate: do not claim Docker MCP Catalog publication until a Dockerfile-backed container path, Docker Registry metadata, validation evidence, and Docker Registry PR or merge evidence exist.*
 
 ---
