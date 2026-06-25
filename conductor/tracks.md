@@ -30,7 +30,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: define the calculator core boundary, parameter models, schemas, and provenance metadata before adapter work.*
 
 5. [x] **Track: Public Calculator API Contract**
-   *Link: [./tracks/public_api_contract_20260504/](./tracks/public_api_contract_20260504/)*
+   *Link: [./archive/public_api_contract_20260504/](./archive/public_api_contract_20260504/)*
    *Depends on: calculator core abstractions and golden fixtures.*
    *Gate: freeze the versioned input/output contract before web, C#, or Power Platform integration.*
 

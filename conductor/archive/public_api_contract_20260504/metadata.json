@@ -1,0 +1,42 @@
+{
+  "track_id": "public_api_contract_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "data-contract",
+  "current_state": "complete",
+  "primary_contract": "conductor/public-api-contract.md plus nwau_py.contracts runtime-neutral calculator contract helpers",
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/public-api-contract.md",
+    "nwau_py/contracts.py",
+    "tests/test_contracts.py",
+    "tests/test_web_demo.py",
+    "tests/test_docs_site_sota_refresh.py"
+  ],
+  "support_scope": {
+    "state": "contract-baseline-complete",
+    "included": [
+      "Versioned public contract vocabulary for calculator identifiers, pricing-year labels, required columns, output columns, schema versions, and validation errors.",
+      "Python contract helper models that validate supported identifiers, years, input columns, output columns, and structured contract failures.",
+      "Documentation of adapter responsibilities and generation readiness for OpenAPI, C# models, web, Power Platform, and language bindings.",
+      "Fixture-backed tests tying public contract metadata to downstream demo and documentation surfaces."
+    ],
+    "excluded": [
+      "Runtime parity proof for every downstream adapter.",
+      "Generated OpenAPI, C#, or other client models as committed release artifacts.",
+      "Publication or support claims for surfaces that have their own implementation or registry gates."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "downstream-client-generation",
+      "status": "delegated",
+      "description": "OpenAPI/client model generation and per-surface runtime conformance are owned by downstream contract, HTTP, MCP, OpenAI, and language-binding tracks."
+    }
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T01:35:00Z",
+  "description": "Public Calculator API Contract",
+  "no_stub_enforce": true
+}
