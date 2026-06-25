@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "domain-model",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "canonical_contract_foundation_20260513",
@@ -16,6 +16,28 @@
   "no_stub_enforce": true,
   "completion_evidence": [
     "docs/roadmaps/audience-language-strategy.md (HWAU migration sequencing)",
-    "contracts/canonical/ (nwau/hwau schema fields)"
+    "contracts/canonical/ (nwau/hwau schema fields)",
+    "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "tests/test_pricing_hwau_strategy_tracks.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Terminology rule that HWAU is the generic abstraction and NWAU remains Australian source terminology.",
+      "Roadmap and audience-language documentation for HWAU/NWAU sequencing.",
+      "Pricing strategy vocabulary including `price_per_hwau`."
+    ],
+    "excluded": [
+      "Runtime alias coverage across every calculator and adapter.",
+      "Generated schema migration proof for all public contracts.",
+      "Deprecation rollout for every historical NWAU-named API."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "runtime-alias-tests",
+      "status": "implementation-gap",
+      "description": "Tests currently cover roadmap wording; runtime/schema alias tests for HWAU and NWAU compatibility remain to be added before archive."
+    }
   ]
 }

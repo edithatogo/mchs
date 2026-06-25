@@ -4,7 +4,7 @@
   "status": "completed",
   "track_class": "calculation-output",
   "priority": "immediate",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "docs/roadmaps/pricing-and-hwau-strategy.md",
   "dependencies": [
     "state_local_price_registry_20260513",
@@ -21,6 +21,27 @@
     "conductor/tracks/parallel_valuation_outputs_20260513/spec.md",
     "conductor/tracks/parallel_valuation_outputs_20260513/plan.md",
     "conductor/tracks/hwau_terminology_migration_20260513/index.md",
-    "docs/roadmaps/pricing-and-hwau-strategy.md"
+    "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "tests/test_pricing_hwau_strategy_tracks.py"
+  ],
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "included": [
+      "Parallel valuation output contract intent for HWAU-only, national, state, local, and discounted values.",
+      "Separation rule between formula execution and pricing application.",
+      "Roadmap evidence that required surfaces should consume the valuation contract."
+    ],
+    "excluded": [
+      "Implemented valuation output schema with source, rule, year, jurisdiction, and checksum fields.",
+      "CLI/file, HTTP API, MCP, and OpenAI adapter behavior tests for parallel valuation outputs.",
+      "Tests covering national, state, local, discounted, missing schedule, and unsupported jurisdiction behavior."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "parallel-valuation-runtime-contract",
+      "status": "implementation-gap",
+      "description": "The current evidence is roadmap-level; executable schema and surface tests for parallel valuations are still required before archive."
+    }
   ]
 }
