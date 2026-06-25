@@ -740,8 +740,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Generated Artifact Retention Policy**
-*Link: [./tracks/generated_artifact_retention_policy_20260624/](./tracks/generated_artifact_retention_policy_20260624/)*
+- [x] **Track: Generated Artifact Retention Policy**
+*Link: [./archive/generated_artifact_retention_policy_20260624/](./archive/generated_artifact_retention_policy_20260624/)*
 *Gate: Define which generated artifacts are ignored, release-attached, archived, or evidence-owned, and block accidental generated-output drift.*
 
 ---

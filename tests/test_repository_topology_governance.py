@@ -4,6 +4,7 @@ import json
 import os
 import subprocess
 import sys
+from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,6 +12,12 @@ TRACKS = ROOT / "conductor" / "tracks"
 TRACKS_MD = ROOT / "conductor" / "tracks.md"
 SURFACES = ROOT / "contracts" / "repository-topology" / "package-surfaces.json"
 VALIDATOR = ROOT / "scripts" / "validate_repository_topology.py"
+
+_validator_spec = spec_from_file_location("validate_repository_topology", VALIDATOR)
+assert _validator_spec is not None and _validator_spec.loader is not None
+_validator = module_from_spec(_validator_spec)
+sys.modules[_validator_spec.name] = _validator
+_validator_spec.loader.exec_module(_validator)
 
 TRACK_IDS = [
     "repository_topology_authority_20260624",
@@ -222,6 +229,19 @@ def test_repository_topology_validator_passes_for_current_canonical_repo() -> No
     payload = json.loads(result.stdout)
     assert payload["ok"] is True
     assert payload["diagnostics"] == []
+
+
+def test_generated_artifact_policy_detects_package_artifacts_and_allows_evidence() -> None:
+    assert _validator._is_generated_path("dist/nwau_py-0.1.0.tar.gz")
+    assert _validator._is_generated_path("integrations/vscode/mchs-tools-0.1.1.vsix")
+    assert _validator._is_generated_path(
+        "archive/sas/NWAU24_SAS_Calculator/calculators/Scorer_v4/base_library.zip"
+    )
+    assert not _validator._is_evidence_artifact("dist/nwau_py-0.1.0.tar.gz")
+    assert _validator._is_evidence_artifact("integrations/vscode/mchs-tools-0.1.1.vsix")
+    assert _validator._is_evidence_artifact(
+        "archive/sas/NWAU24_SAS_Calculator/calculators/Scorer_v4/base_library.zip"
+    )
 
 
 def test_repository_topology_validator_detects_unmanaged_outer_gitlink(

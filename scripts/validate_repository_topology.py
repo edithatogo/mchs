@@ -70,6 +70,18 @@ GENERATED_PREFIXES = (
     "dist/",
 )
 
+GENERATED_FILE_SUFFIXES = (
+    ".tar.gz",
+    ".vsix",
+    ".whl",
+    ".zip",
+)
+
+EVIDENCE_ARTIFACT_PATTERNS = (
+    re.compile(r"^archive/sas/.+/base_library\.zip$"),
+    re.compile(r"^integrations/vscode/mchs-tools-[0-9][^/]*\.vsix$"),
+)
+
 GITMODULE_PATH_RE = re.compile(r"^\s*path\s*=\s*(?P<path>.+?)\s*$")
 
 
@@ -169,7 +181,13 @@ def _is_generated_path(path: str) -> bool:
     parts = set(Path(path).parts)
     if parts & GENERATED_PATH_PARTS:
         return True
-    return any(path.startswith(prefix) for prefix in GENERATED_PREFIXES)
+    return any(path.startswith(prefix) for prefix in GENERATED_PREFIXES) or any(
+        path.endswith(suffix) for suffix in GENERATED_FILE_SUFFIXES
+    )
+
+
+def _is_evidence_artifact(path: str) -> bool:
+    return any(pattern.match(path) for pattern in EVIDENCE_ARTIFACT_PATTERNS)
 
 
 def _validate_gitlinks(root: Path) -> list[Diagnostic]:
@@ -366,7 +384,7 @@ def _validate_current_repo(data: dict[str, Any]) -> list[Diagnostic]:
                 path=path,
             )
             for path in _tracked_files(ROOT)
-            if _is_generated_path(path)
+            if _is_generated_path(path) and not _is_evidence_artifact(path)
         ]
     )
 
