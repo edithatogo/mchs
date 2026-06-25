@@ -19,8 +19,8 @@ stack is moving toward Arrow-backed interchange and Polars where parity work
 allows it. A lightweight command line interface is available via the
 `funding-calculator` script.
 
-The public documentation site is published from the Starlight scaffold in
-`docs-site/` and serves as the canonical docs front door.
+The public documentation site is built with Starlight from `docs-site/` and
+serves as the canonical docs front door.
 The GitHub Pages deployment path is wired through
 [`.github/workflows/docs-site.yml`](.github/workflows/docs-site.yml).
 Open the docs at <https://edithatogo.github.io/mchs/>.
@@ -31,35 +31,57 @@ Releases are tag-driven and start from `v0.2.0`-style tags.
 The repo uses release drafts for notes and a release workflow to build
 distributions and publish GitHub Releases from tagged commits.
 Tagged releases also trigger Python package publishing to PyPI through
-trusted publishing.
-The Rust GA workflow also publishes Rust artifacts to GitHub Releases,
-but crates.io submission is not wired in this repository yet.
-The conda-forge recipe draft is maintained under `conda/recipe/`; new conda
-packages are currently recipe-only until a staged-recipes PR is accepted and
-the package appears on the public channel; users should treat conda-forge as
-unpublished until that registry record exists.
+trusted publishing. The current public Python release is `nwau-py 0.2.2`.
+The Rust GA workflow also publishes Rust artifacts to GitHub Releases, and
+`nwau-core 0.1.0` is published on crates.io; the other local Rust crates are
+not public registry packages.
+The conda-forge recipe is under staged-recipes review in
+<https://github.com/conda-forge/staged-recipes/pull/33452>; users should treat
+conda-forge as unpublished until that PR is merged and the package appears on
+the public channel.
 All release claims still depend on the CI and validation gates passing for the
 tagged source.
 
 ## Package registry status
 
-As of 2026-05-17:
+As of 2026-05-25:
 
 | Surface | Distribution evidence | Registry state |
 | --- | --- | --- |
 | Python package (`nwau-py`) | `pyproject.toml`, release workflow, and PyPI badge links | **Published** on PyPI at `nwau-py 0.2.2` |
-| Conda package (`nwau-py`) | `conda/recipe/meta.yaml` | **Recipe-only** (not yet conda-forge published) |
+| Conda package (`nwau-py`) | `packaging/conda-forge/meta.yaml` and staged-recipes PR `33452` | **Submitted, not published**; linter, check-skip, platform, and aggregate checks are passing; maintainer review, merge, and feedstock publication remain pending |
 | MCP stdio server (`mchs-mcp`) | `nwau_py/mcp_server.py`, `contracts/mcp/registry/server.json`, `.github/workflows/publish-mcp-registry.yml` | **Published** to the official MCP Registry as `io.github.edithatogo/mchs` version `0.2.2` |
-| Rust crates (`nwau-core`, `nwau-c-abi`, `nwau-py`) | `rust/crates/*/Cargo.toml` | **Unpublished/Private** (crate code exists locally; two crates set `publish = false`) |
-| `@mchs/wasm-binding` package manifest | `wasm-binding/package.json` | **Private** (`"private": true`) |
-| R / Julia / Scala / Spark / Swift / Stata / MATLAB / Kotlin-Native / Power Platform | Track specs in `conductor/tracks/*` | **Private** / roadmap-only; no registry artifacts claimed |
+| Rust crate (`nwau-core`) | `rust/crates/nwau-core/Cargo.toml` and crates.io API evidence | **Published** on crates.io at `nwau-core 0.1.0`; checksum `c755101f5e206a92892250f35a4474a7fcac1cebb6d4782a5b97f8f6aa243547` |
+| Other Rust crates (`nwau-c-abi`, `nwau-py`) | `rust/crates/*/Cargo.toml` | **Unpublished/Private**; `nwau-core` publication only closes their registry dependency gate |
+| .NET package (`Mchs.Bindings.DotNet`) | `bindings/dotnet/DotNetBinding.csproj`, package artifact, and NuGet flat-container API | **Published** on NuGet at `Mchs.Bindings.DotNet 0.1.0` |
+| Homebrew formula (`nwau-py`) | `packaging/homebrew/nwau-py.rb` and personal tap `edithatogo/homebrew-mchs` | **Published to personal tap** with audit, source install, and `brew test` passing; Homebrew/core remains optional/upstream-review-gated |
+| Go module (`github.com/edithatogo/mchs/bindings/go`) | `bindings/go/go.mod`, Go module tag, proxy and pkg.go.dev evidence | **Published** at `v0.1.0` through the Go module proxy/pkg.go.dev |
+| npm package (`@edithatogo/mchs-wasm-binding`) | `wasm-binding/package.json` and npm registry evidence | **Published** on npm at `0.1.0` |
+| CRAN (`nwauR`) | R package build/check artifacts | **Prepared, not published**; CRAN maintainer submission/review remains external |
+| Julia General (`NationalWeightedActivityUnitWrapper`) | `julia-binding/Project.toml` and merged General PR `156254` | **Published** in Julia General as `NationalWeightedActivityUnitWrapper 0.1.0`; merged registry PR is the authoritative publication evidence |
+| Maven Central (`io.github.edithatogo:mchs-jvm-bindings`) | JVM/Gradle build evidence | **Prepared, not published**; namespace verification, signing, and Central Portal release remain external |
+| Open VSX / Visual Studio Marketplace (`mchs-tools`) | Packaged `.vsix` artifact | **Prepared, not published**; publisher agreement/account/token access remains external |
+| MATLAB File Exchange / Stata SSC | Prepared interop bundles | **Prepared, not published**; account or maintainer review workflows remain external |
+| vcpkg / ConanCenter (`nwau-c-abi`) | Prepared portfile/recipe, local Conan create, and vcpkg overlay validation evidence | **Prepared, not published**; upstream vcpkg/ConanCenter PR/review remains external |
+| Swift Package Index (`MCHSBind`) | PackageList issue and Swift package metadata | **Accepted/submitted follow-up**; public SPI listing/version evidence is still pending |
+| R / Julia / Scala / Spark / Swift / Stata / MATLAB / Kotlin-Native / Power Platform adapters | Private adapter code, contracts, or track specs in this repo | **No support claim beyond the specific registry states above** |
 
 Do not state registry submission success (including crates.io, npm, CRAN, NuGet,
 etc.) unless a registry page exists and is linked in evidence.
+For the current scaffold/product distinction, Rust promotion state, and
+deferred-surface vocabulary, see
+[Scaffold and Stub Completion Backlog](docs/roadmaps/scaffold-stub-completion-backlog.md),
+[Rust Core Continuation](docs/roadmaps/rust-core-continuation.md), and
+[Deferred Surface Status](docs/roadmaps/deferred-surface-status.md).
 
-The repository also contains a Rust workspace scaffold for calculator-core
+The repository also contains the Rust workspace used for calculator-core
 migration. Python remains the current validated runtime path until Rust parity
 is proven calculator by calculator.
+Current Rust support is limited to an acute 2025 canary with documented parity
+evidence plus an internal synthetic subacute canary boundary. Subacute remains
+blocked for Python/public Rust support, and other Rust calculator streams
+remain blocked or not-ready until stream-specific tests and evidence are
+committed.
 The intended architecture is a polyglot library: a shared Rust calculator core
 with thin bindings or adapters for Python, Rust, R, Julia, C#/.NET, Go,
 TypeScript/WASM, Java/JVM, C ABI, SQL/DuckDB, SAS interoperability, CLI/file
@@ -188,9 +210,10 @@ excel_calculator/
 Dropping the SAS folder and matching `weights.csv`/`formula.json` files for a
 new edition is all that's required to add support for that year.
 
-The repository currently includes verified weights and formulas for the 2024
-and 2025 editions. Additional years can be added once their outputs are
-validated.
+The repository currently includes verified Excel-derived weights and formulas
+for the 2025 edition. The 2024 formula mapping is retained for historical
+comparison, but 2024 Excel weights are not committed until they can be
+recreated from an archived workbook and validated.
 
 ### Data availability matrix
 
@@ -206,7 +229,7 @@ validated.
 |2021|✅|❌|❌|
 |2022|✅|❌|❌|
 |2023|✅|❌|❌|
-|2024|✅|✅|✅|
+|2024|✅|❌|❌|
 |2025|✅|✅|✅|
 
 ### Adding a new pricing year
@@ -321,28 +344,27 @@ After installation the `funding-calculator` entry point is available. You can
 select a specific pricing year with `--year`:
 
 ```bash
-funding-calculator --year 2024 patient_data.csv > funding.csv
+funding-calculator --year 2025 patient_data.csv > funding.csv
 ```
 
 The `--year` option selects the data directory for that pricing year. The
-example above uses the 2024 weights but you can also choose `--year 2025` once
-verified data is available. `patient_data.csv` should contain the columns
-referenced in `excel_calculator/data/2024/formula.json` and the output will
-include a `NWAU24` column.
+example above uses the verified 2025 weights. `patient_data.csv` should contain
+the columns referenced in `excel_calculator/data/formula.json` and the output
+will include a `NWAU25` column.
 
 To calculate funding using an older edition simply pass the relevant year.
-For example, to run the 2024 calculator use:
+For example, to run the 2025 calculator use:
 
 ```bash
-funding-calculator --year 2024 patient_data.csv > funding.csv
+funding-calculator --year 2025 patient_data.csv > funding.csv
 ```
 
 This instructs the tool to load weights and the formula from
-`excel_calculator/data/2024/`.
+`excel_calculator/data/`.
 
 The `nwau_py` package also exposes a lightweight command line interface via
-`python -m nwau_py.cli.main`. The `--year` flag works with any supported
-edition (currently 2024 and 2025). The subcommands `acute`, `ed` and
+`python -m nwau_py.cli.main`. The `--year` flag works with editions that have
+committed validated source data. The subcommands `acute`, `ed` and
 `non-admitted` mirror the SAS calculators:
 
 ```bash

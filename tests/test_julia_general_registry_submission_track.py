@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "julia_general_registry_submission_20260524"
+TRACK_ID = "julia_general_registry_submission_20260524"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = (
     ROOT
@@ -36,6 +39,7 @@ def test_julia_general_track_is_published_verified():
     assert metadata["publication_claimed"] is True
     assert metadata["publication_status"] == "published_verified"
     assert "- [x] **Track: Julia General Registry Submission**" in tracks
+    assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
     assert registry["current_status"] == "published_verified"
     assert registry["package"] == "NationalWeightedActivityUnitWrapper"
@@ -76,6 +80,9 @@ def test_julia_general_track_is_published_verified():
         "https://github.com/JuliaRegistries/General/pull/156254"
     )
     assert registry["publicationEvidence"]["mergedAt"] == "2026-05-28T15:34:44Z"
+    readme = _read(ROOT / "README.md")
+    assert "Published" in readme
+    assert "NationalWeightedActivityUnitWrapper 0.1.0" in readme
 
 
 def test_julia_general_submission_evidence_is_recorded_with_publication_claim():

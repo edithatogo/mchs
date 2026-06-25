@@ -18,7 +18,7 @@
     "tests/test_homebrew_formula_submission_track.py",
     "contracts/language-registry-submissions/language-registry-submissions.contract.json"
   ],
-  "package_evidence": {
+    "package_evidence": {
     "discovery_command": "brew info nwau-py",
     "discovery_result": "No available formula with the name nwau-py",
     "core_formula_api_result": "https://formulae.brew.sh/api/formula/nwau-py.json returned HTTP 404 on 2026-05-26",
@@ -33,5 +33,16 @@
     "formula_url": "https://raw.githubusercontent.com/edithatogo/homebrew-mchs/main/Formula/nwau-py.rb",
     "formula_sha256": "6f987bc4a81f3ac78cbc893d6a502fc572a534905f9f1f89cfc05600ff4ddff3",
     "tap_state": "published_to_personal_tap_audit_install_test_passing"
-  }
+  },
+  "support_scope": {
+    "state": "published-verified-personal-tap",
+    "summary": "Homebrew formula publication is verified for the personal tap edithatogo/homebrew-mchs with audit, source install, and brew test evidence. Homebrew/core publication is not claimed."
+  },
+  "gap_register": [
+    {
+      "id": "homebrew-core-upstream",
+      "status": "optional-external-gate",
+      "summary": "Homebrew/core submission/review remains optional and upstream-gated; it is not a blocker to the personal-tap publication claim."
+    }
+  ]
 }

@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "typescript_npm_registry_submission_20260524"
+TRACK_ID = "typescript_npm_registry_submission_20260524"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = (
     ROOT
@@ -33,6 +36,7 @@ def test_typescript_npm_track_is_published_and_registered_complete():
     assert metadata["publication_claimed"] is True
     assert metadata["publication_url"] == registry["submission_url"]
     assert "- [x] **Track: TypeScript/WASM npm Registry Submission**" in tracks
+    assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
     assert registry["current_status"] == "published_verified"
     assert registry["localReadinessResolved"] is True

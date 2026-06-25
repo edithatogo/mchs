@@ -26,5 +26,16 @@
         "pkg_go_dev_url": "https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go",
         "pkg_go_dev_result": "indexed version 0.1.0 verified by live probe on 2026-05-24"
     },
-    "submission_url": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info"
+    "submission_url": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info",
+    "support_scope": {
+        "state": "published-verified",
+        "summary": "Go module publication is verified for github.com/edithatogo/mchs/bindings/go v0.1.0 through the Go module proxy and pkg.go.dev. This is a registry publication claim, not a broad Go runtime support expansion."
+    },
+    "gap_register": [
+        {
+            "id": "go-module-future-versions",
+            "status": "externalized",
+            "summary": "Future Go module versions require fresh tags and registry propagation evidence."
+        }
+    ]
 }

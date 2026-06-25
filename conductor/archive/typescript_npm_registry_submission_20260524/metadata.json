@@ -27,5 +27,16 @@
     "integrity": "sha512-0GarRubfN7lucDSKVM4wMpIZCqKb1qn2oYQzx55SlCJs5O5kub5qDYUpGic+zCDB5Kl0l9oOxZwDwJims6bXug==",
     "published_at": "2026-05-24T09:08:12.407Z",
     "verified_at": "2026-05-24T09:09:37Z"
-  }
+  },
+  "support_scope": {
+    "state": "published-verified",
+    "summary": "npm publication is verified for @edithatogo/mchs-wasm-binding@0.1.0 with registry tarball and integrity evidence. This is a package publication claim, not a browser formula-parity claim."
+  },
+  "gap_register": [
+    {
+      "id": "npm-future-versions",
+      "status": "externalized",
+      "summary": "Future npm versions require fresh package build, publication, and registry integrity evidence."
+    }
+  ]
 }

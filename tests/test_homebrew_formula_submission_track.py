@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "homebrew_formula_submission_20260524"
+TRACK_ID = "homebrew_formula_submission_20260524"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = (
     ROOT
@@ -38,6 +41,7 @@ def test_homebrew_track_is_published_to_personal_tap_with_core_review_optional()
     assert metadata["publication_claimed"] is True
     assert metadata["publication_status"] == "published_verified"
     assert "- [x] **Track: Homebrew Formula Submission**" in tracks
+    assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
     assert registry["current_status"] == "published_verified"
     assert registry["submission_url"] == "https://github.com/edithatogo/homebrew-mchs"

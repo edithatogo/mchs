@@ -621,7 +621,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: TypeScript/WASM npm Registry Submission**
-*Link: [./tracks/typescript_npm_registry_submission_20260524/](./tracks/typescript_npm_registry_submission_20260524/)*
+*Link: [./archive/typescript_npm_registry_submission_20260524/](./archive/typescript_npm_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `npm`, and capture immutable evidence before claiming publication.*
 
 ---
@@ -639,13 +639,13 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Julia General Registry Submission**
-*Link: [./tracks/julia_general_registry_submission_20260524/](./tracks/julia_general_registry_submission_20260524/)*
+*Link: [./archive/julia_general_registry_submission_20260524/](./archive/julia_general_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `General registry`, and capture immutable evidence before claiming publication. Publication is verified by the merged General PR.*
 
 ---
 
 - [x] **Track: Go Module Registry Submission**
-*Link: [./tracks/go_module_registry_submission_20260524/](./tracks/go_module_registry_submission_20260524/)*
+*Link: [./archive/go_module_registry_submission_20260524/](./archive/go_module_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Go module proxy/pkg.go.dev`, and capture immutable evidence before claiming publication.*
 
 ---
@@ -669,7 +669,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Homebrew Formula Submission**
-*Link: [./tracks/homebrew_formula_submission_20260524/](./tracks/homebrew_formula_submission_20260524/)*
+*Link: [./archive/homebrew_formula_submission_20260524/](./archive/homebrew_formula_submission_20260524/)*
 *Gate: Personal tap publication is verified; Homebrew/core remains an optional upstream review gate.*
 
 ---

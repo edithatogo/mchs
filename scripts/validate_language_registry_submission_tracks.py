@@ -11,6 +11,7 @@ CONTRACT = (
     / "language-registry-submissions.contract.json"
 )
 TRACKS = ROOT / "conductor" / "tracks"
+ARCHIVE = ROOT / "conductor" / "archive"
 TRACKS_MD = ROOT / "conductor" / "tracks.md"
 REQUIRED_PHASES = ["Discovery", "Preparation", "Submission", "Publication Evidence"]
 
@@ -32,6 +33,10 @@ def main() -> None:
         seen.add(track_id)
 
         track_dir = TRACKS / track_id
+        archived = False
+        if not track_dir.exists():
+            track_dir = ARCHIVE / track_id
+            archived = True
         assert track_dir.exists(), track_id
         for filename in ("metadata.json", "spec.md", "plan.md", "index.md"):
             assert (track_dir / filename).exists(), f"{track_id}/{filename}"
@@ -63,7 +68,8 @@ def main() -> None:
         assert registry["package"] in spec
         for phase in REQUIRED_PHASES:
             assert "## Phase" in plan and phase in plan, f"{track_id} missing {phase}"
-        assert f"./tracks/{track_id}/" in tracks_md
+        expected_link = f"./archive/{track_id}/" if archived else f"./tracks/{track_id}/"
+        assert expected_link in tracks_md
 
     print("Language registry submission tracks contract passed.")
 

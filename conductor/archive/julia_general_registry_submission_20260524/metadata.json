@@ -64,5 +64,16 @@
       "rename_response": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4534823787",
       "reviewer_follow_up": "https://github.com/JuliaRegistries/General/pull/156236#issuecomment-4534836505"
     }
-  }
+  },
+  "support_scope": {
+    "state": "published-verified",
+    "summary": "Julia General publication is verified for NationalWeightedActivityUnitWrapper v0.1.0 by merged General PR #156254. Superseded NwauCore registration attempts are retained as historical evidence only."
+  },
+  "gap_register": [
+    {
+      "id": "juliahub-indexing",
+      "status": "externalized",
+      "summary": "JuliaHub package indexing is downstream propagation and not required for the Julia General merged-PR publication claim."
+    }
+  ]
 }
