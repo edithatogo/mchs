@@ -1,0 +1,31 @@
+{
+  "track_id": "release_evidence_automation_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "publication",
+  "current_state": "complete",
+  "primary_contract": "conductor/tracks/release_evidence_automation_20260512/release_evidence_automation_spec.md",
+  "dependencies": [
+    "release_supply_chain_governance_20260504",
+    "repository-publication-sota-audit template",
+    "publish.yml",
+    "release.yml"
+  ],
+  "completion_evidence": [
+    "scripts/generate_release_evidence.py",
+    "tests/test_release_evidence_automation.py",
+    "conductor/tracks/release_evidence_automation_20260512/release_evidence_automation_spec.md",
+    ".github/workflows/release-rust.yml"
+  ],
+  "support_scope": {
+    "local_completion": "The track now provides a local release evidence generator that emits JSON and Markdown reports from local metadata and mockable registry evidence.",
+    "external_gate": "not applicable for the generator itself; individual registry publication states remain governed by their registry tracks.",
+    "runtime_support_claim": "The generator records release evidence states and warnings only. It does not make package, registry, stream, or calculator support claims by itself."
+  },
+  "gap_register": [],
+  "publication_status": "future-only",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Automate release and publication evidence so package, tag, docs, and registry claims are queryable and auditable.",
+  "no_stub_enforce": true
+}

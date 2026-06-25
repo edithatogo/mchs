@@ -23,14 +23,14 @@ published, current, and version-consistent.
   "registries": [
     {
       "name": "pypi",
-      "status": "published|unpublished|future-only|published-with-gaps",
+      "status": "published|unpublished|future-only|published-with-gaps|recipe-only|private",
       "version": "0.5.0",
       "url": "https://pypi.org/project/nwau-py/",
       "checked_at": "2026-05-12T12:00:00Z"
     },
     {
       "name": "conda-forge",
-      "status": "future-only|unpublished|published",
+      "status": "recipe-only|future-only|unpublished|published",
       "version": null,
       "url": null,
       "checked_at": "2026-05-12T12:00:00Z",
@@ -56,6 +56,13 @@ published, current, and version-consistent.
       "url": null,
       "checked_at": "2026-05-12T12:00:00Z",
       "notes": "Rust core not yet stable"
+    },
+    {
+      "name": "internal_registry",
+      "status": "private",
+      "version": "0.5.0",
+      "url": "https://internal.example.invalid/nwau/",
+      "checked_at": "2026-05-12T12:00:00Z"
     }
   ],
   "workflows": [
@@ -141,7 +148,9 @@ Generated: 2026-05-12T12:00:00Z
 |---|---|
 | `published` | Registry has the claimed version, and it matches source |
 | `unpublished` | Registry exists but no matching version is published |
+| `recipe-only` | Registry source recipe exists, but a released package/version is not yet published |
 | `future-only` | Registry is planned but not yet targeted |
+| `private` | Registry publishes through a private channel that is not public evidence |
 | `published-with-gaps` | Registry has a version but it is stale or mismatched |
 
 ## Implementation Notes
