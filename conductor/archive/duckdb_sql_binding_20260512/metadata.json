@@ -1,0 +1,32 @@
+{
+  "track_id": "duckdb_sql_binding_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "none; retained as historical roadmap context",
+  "support_scope": "Historical/no-new-development governance record for SQL/DuckDB. The track preserves the prior read/query file-boundary strategy and explicitly records that no DuckDB extension, SQL UDF, adapter, active contract bundle, or formula logic is implemented or supported.",
+  "gap_register": [
+    {
+      "gap": "No active SQL/DuckDB adapter or contract exists.",
+      "rationale": "The repository support matrix classifies SQL/DuckDB as historical unless a future evidence-backed audience and owner reopen the surface."
+    },
+    {
+      "gap": "Future SQL/DuckDB work requires a new track with owner, audience, contract bundle, and fixture validation.",
+      "rationale": "Historical notes are traceability only and cannot be reinterpreted as preview or production readiness."
+    }
+  ],
+  "dependencies": [],
+  "completion_evidence": [
+    "conductor/tracks/duckdb_sql_binding_20260512/spec.md",
+    "conductor/tracks/duckdb_sql_binding_20260512/plan.md",
+    "conductor/tracks/duckdb_sql_binding_20260512/binding_strategy.md",
+    "tests/test_duckdb_sql_binding_track.py",
+    "contracts/support/support-matrix.json"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-26T00:00:00Z",
+  "description": "Retain SQL/DuckDB as historical roadmap context only; no active adapter, extension, UDF, or contract bundle is claimed.",
+  "no_stub_enforce": true
+}

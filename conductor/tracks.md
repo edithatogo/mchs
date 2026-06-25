@@ -429,7 +429,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: SQL and DuckDB Integration**
-*Link: [./tracks/duckdb_sql_binding_20260512/](./tracks/duckdb_sql_binding_20260512/)*
+*Link: [./archive/duckdb_sql_binding_20260512/](./archive/duckdb_sql_binding_20260512/)*
 *Gate: Historical/deprioritized. Do not develop SQL/DuckDB as an active surface; retain only as prior roadmap context unless a future evidence-backed audience emerges.*
 
 ---
