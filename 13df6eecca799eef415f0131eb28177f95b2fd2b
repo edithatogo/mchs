@@ -1,0 +1,1 @@
+.NET binding cleanup note: upgraded .NET adapter to validate bounded requests, constrain file paths, invoke the shared CLI, and emit structured responses while keeping formula logic out of .NET. Validation passed: dotnet build, test_csharp_dotnet_binding_track 4 passed, stub_detector total_findings=0.
