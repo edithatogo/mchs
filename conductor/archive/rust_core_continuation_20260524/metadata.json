@@ -45,5 +45,31 @@
     "tests/test_rust_parity/test_phase2_promotion_gate.py",
     "tests/test_rust_parity/test_python_parity.py",
     "tests/test_rust_core_continuation_track.py"
+  ],
+  "support_scope": {
+    "state": "core-continuation-complete",
+    "included": [
+      "Rust core promotion matrix and support-state evidence for stream-by-stream progression.",
+      "Rust kernel parity surface for the promoted bounded slice.",
+      "Python parity and fallback checks for Rust opt-in behavior.",
+      "CLI/file, C ABI, support-status, and release-evidence guardrails that prevent adapters from duplicating formula logic."
+    ],
+    "excluded": [
+      "Declaring every calculator stream GA on Rust.",
+      "Publishing Rust crates or downstream registry packages.",
+      "Resolving local dynamic Python linkage for full `nwau-py` workspace test execution."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "nwau-py-dylib-full-workspace-test",
+      "status": "environment-gap",
+      "description": "Focused Rust core, clippy, and parity tests pass, but full `cargo test --workspace` can abort in `nwau-py` when local `libpython3.13.dylib` is unavailable."
+    },
+    {
+      "id": "non-promoted-streams",
+      "status": "tracked",
+      "description": "Streams outside the promoted bounded slice remain canary, blocked, planned, or not-ready until parity and release evidence exists."
+    }
   ]
 }

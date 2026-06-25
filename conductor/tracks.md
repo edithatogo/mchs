@@ -705,7 +705,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Rust Core Continuation**
-*Link: [./tracks/rust_core_continuation_20260524/](./tracks/rust_core_continuation_20260524/)*
+*Link: [./archive/rust_core_continuation_20260524/](./archive/rust_core_continuation_20260524/)*
 *Gate: Continue stream-by-stream promotion from Python-first calculators to a validated Rust core with parity, binding, CLI/file, support-status, and release evidence before GA claims.*
 
 ---
