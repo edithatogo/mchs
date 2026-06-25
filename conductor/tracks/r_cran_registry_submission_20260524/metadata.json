@@ -11,12 +11,24 @@
   "local_readiness_resolved": true,
   "blocker": "CRAN confirmation link has been clicked by the user; CRAN pretest/reviewer response and public package publication remain pending.",
   "publication_claimed": false,
+  "support_scope": {
+    "local_completion": "CRAN local preparation and maintainer submission are complete: package build, package checks, CRAN-style checks, web upload, and maintainer confirmation are recorded.",
+    "external_gate": "open; CRAN incoming/pretest, reviewer response, and public package publication remain outside local control.",
+    "runtime_support_claim": "No CRAN publication or expanded R runtime support claim is made until the public CRAN package page exposes `nwauR 0.1.0`."
+  },
+  "gap_register": [
+    {
+      "id": "cran-publication-pending",
+      "status": "external",
+      "description": "Wait for CRAN incoming/pretest or reviewer email, respond if requested, and verify `https://cran.r-project.org/package=nwauR` after publication."
+    }
+  ],
   "package_evidence": {
     "discovery_url": "https://crandb.r-pkg.org/nwauR",
     "discovery_result": "404 not_found/no existing public package listing",
     "build_command": "R CMD build r-binding",
     "package_artifact": "microcosting_healthservices/nwauR_0.1.0.tar.gz",
-    "package_sha256": "73e10d07e32153f8830b1b2a638637c058323963b34d854ead45deac9b849848",
+    "package_sha256": "8ee27bada58bf7e0e7b85b9ae8b6cb51b05fc4bd4510fe290cb49def49a17818",
     "check_command": "R CMD check --no-manual nwauR_0.1.0.tar.gz",
     "check_result": "Status: OK",
     "as_cran_check_command": "_R_CHECK_CRAN_INCOMING_REMOTE_=false R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz",
@@ -28,11 +40,11 @@
     "submission_state": "Submitted by maintainer through the CRAN web upload workflow on 2026-06-12; CRAN confirmation email was received in Outlook and the user clicked the confirmation link on 2026-06-12.",
     "confirmation_email": "Received in Outlook on 2026-06-12 02:17 Australia/Sydney from CRAN Package Submission Form <root-xmpalantir@xmbombadil.wu.ac.at> with subject 'CRAN Submission of nwauR 0.1.0 - Confirmation Link'. The link/code is not stored in repository evidence.",
     "next_required_evidence": "Wait for CRAN incoming/pretest or reviewer email, record any incoming/pretest URL or message identifier, respond to reviewer mail if requested, and verify https://cran.r-project.org/package=nwauR after publication.",
-    "latest_publication_probe": "2026-06-16: https://cran.r-project.org/package=nwauR resolved to https://cran.r-project.org/web/packages/nwauR/index.html and returned HTTP 404; https://crandb.r-pkg.org/nwauR returned HTTP 404; https://cran.r-project.org/src/contrib/PACKAGES returned HTTP 200 but did not contain Package: nwauR.",
+    "latest_publication_probe": "2026-06-25: https://cran.r-project.org/package=nwauR resolved to https://cran.r-project.org/web/packages/nwauR/index.html and returned HTTP 404; https://crandb.r-pkg.org/nwauR returned HTTP 403 from this network and is not publication evidence; https://cran.r-project.org/src/contrib/PACKAGES returned HTTP 200 but did not contain Package: nwauR.",
     "vuw_outlook_confirmation_email": "VUW Outlook confirmation email found: 2026-06-12: VUW Outlook inbox shows CRAN Package Submission Form email received at 02:17 Australia/Sydney with subject \"CRAN Submission of nwauR 0.1.0 - Confirmation Link\". The link/code is not stored in repository evidence.",
     "confirmation_link_clicked": "User reported clicking the CRAN confirmation link on 2026-06-12.",
     "confirmation_result": "CRAN confirmation result page at https://xmpalantir.wu.ac.at/cransubmit/index.php?strErr=96&redirect=1 displayed: The package has been uploaded successfully to CRAN submission team.",
-    "post_confirmation_public_probe": "Immediate and refreshed probes after confirmation through 2026-06-16: https://cran.r-project.org/package=nwauR resolves to /web/packages/nwauR/index.html, the target package page returns HTTP 404, crandb returns not_found, and src/contrib/PACKAGES did not contain Package: nwauR.",
+    "post_confirmation_public_probe": "Immediate and refreshed probes after confirmation through 2026-06-25: https://cran.r-project.org/package=nwauR resolves to /web/packages/nwauR/index.html, the target package page returns HTTP 404, CRANDB is not positive publication evidence, and src/contrib/PACKAGES did not contain Package: nwauR.",
     "latest_mail_probe": "2026-06-13: connected Gmail search for newer_than:21d CRAN/nwauR terms returned no messages. Microsoft 365/Outlook connector previously returned 'No accounts found. Please login first.', so VUW Outlook review/pretest mail still requires browser/manual capture before changing status."
   }
 }

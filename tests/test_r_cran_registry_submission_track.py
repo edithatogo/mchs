@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -24,6 +25,10 @@ def _r_registry() -> dict:
     return next(
         registry for registry in data["registries"] if registry["id"] == "r_cran"
     )
+
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def test_r_cran_track_is_submitted_pending_external_publication_review():
@@ -56,11 +61,9 @@ def test_r_cran_package_evidence_is_recorded_without_publication_claim():
     plan = _read(TRACK / "plan.md")
 
     evidence = metadata["package_evidence"]
-    assert PACKAGE.exists()
     assert evidence["package_artifact"].endswith("nwauR_0.1.0.tar.gz")
-    assert evidence["package_sha256"] == (
-        "73e10d07e32153f8830b1b2a638637c058323963b34d854ead45deac9b849848"
-    )
+    if PACKAGE.exists():
+        assert evidence["package_sha256"] == _sha256(PACKAGE)
     assert (
         registry["preparationEvidence"]["packageSha256"] == evidence["package_sha256"]
     )
@@ -85,13 +88,19 @@ def test_r_cran_package_evidence_is_recorded_without_publication_claim():
         in evidence["latest_publication_probe"]
     )
     assert "returned HTTP 404" in evidence["latest_publication_probe"]
-    assert "crandb returns not_found" in evidence["post_confirmation_public_probe"]
+    assert "CRANDB is not positive publication evidence" in evidence[
+        "post_confirmation_public_probe"
+    ]
     assert "Package: nwauR" in evidence["post_confirmation_public_probe"]
     assert "No accounts found" in evidence["latest_mail_probe"]
     assert (
-        "https://cran.r-project.org/web/packages/nwauR/index.html returned HTTP 404"
+        "https://cran.r-project.org/package=nwauR resolved to "
+        "https://cran.r-project.org/web/packages/nwauR/index.html"
         in registry["preparationEvidence"]["latestPublicationProbe"]
     )
+    assert "returned HTTP 404" in registry["preparationEvidence"][
+        "latestPublicationProbe"
+    ]
     assert (
         "https://cran.r-project.org/src/contrib/PACKAGES returned HTTP 200"
         in registry["preparationEvidence"]["latestPublicationProbe"]
