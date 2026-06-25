@@ -1,0 +1,35 @@
+{
+  "track_id": "repository_topology_authority_20260624",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "governance",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "conductor/repository-topology.md",
+  "dependencies": [
+    "conductor_requirements_design_authority_20260513",
+    "scaffold_stub_completion_backlog_20260524",
+    "track_archive_integrity_20260513"
+  ],
+  "completion_evidence": [
+    "conductor/repository-topology.md",
+    "tests/test_repository_topology_governance.py",
+    "scripts/validate_repository_topology.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-06-24T02:50:05Z",
+  "updated_at": "2026-06-25T00:00:00Z",
+  "description": "Define the canonical repository root, permitted nested layouts, banned unmanaged gitlinks, and ownership authority for the MCHS monorepo.",
+  "no_stub_enforce": true,
+  "support_scope": {
+    "state": "governance-control",
+    "summary": "Defines the canonical implementation root, permitted layouts, prohibited unmanaged Git topology, package-surface ownership requirements, wrapper rule, and local versus external completion boundary."
+  },
+  "gap_register": [
+    {
+      "id": "outer-wrapper-execution",
+      "status": "externalized",
+      "summary": "Actual migration or retirement of wrapper-level files is governed by outer_wrapper_retirement_migration_20260624."
+    }
+  ]
+}

@@ -710,8 +710,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Repository Topology Authority**
-*Link: [./tracks/repository_topology_authority_20260624/](./tracks/repository_topology_authority_20260624/)*
+- [x] **Track: Repository Topology Authority**
+*Link: [./archive/repository_topology_authority_20260624/](./archive/repository_topology_authority_20260624/)*
 *Gate: Declare the canonical repo root, ban unmanaged nested repos and gitlinks, and define source, evidence, package, generated, and external-gate ownership.*
 
 ---
