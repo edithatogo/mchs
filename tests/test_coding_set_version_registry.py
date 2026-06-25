@@ -24,7 +24,7 @@ from nwau_py.coding_set_registry import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "coding_set_version_registry_20260512"
+TRACK = ROOT / "conductor" / "archive" / "coding_set_version_registry_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 REFERENCE_DATA_2025 = ROOT / "reference-data" / "2025" / "manifest.yaml"
 REFERENCE_DATA_2026 = ROOT / "reference-data" / "2026" / "manifest.yaml"
@@ -77,8 +77,8 @@ def test_coding_set_registry_track_docs_and_contract_are_complete():
     docs = _read_text(DOCS)
 
     assert metadata["track_id"] == "coding_set_version_registry_20260512"
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-metadata-registry"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "nwau_py.coding_set_registry" in metadata["primary_contract"]
     assert "- [x] **Track: Coding-Set Version Registry**" in registry

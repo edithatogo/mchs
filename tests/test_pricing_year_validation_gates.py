@@ -24,7 +24,7 @@ except Exception as exc:  # pragma: no cover - environment dependent
     _CLI_ERR = exc
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "pricing_year_validation_gates_20260512"
+TRACK = ROOT / "conductor" / "archive" / "pricing_year_validation_gates_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 FIXTURE = (
     Path(__file__).resolve().parent
@@ -111,7 +111,7 @@ def test_pricing_year_validation_track_metadata_and_registry_are_explicit():
     registry = _read_text(TRACKS)
 
     assert metadata["track_id"] == "pricing_year_validation_gates_20260512"
-    assert metadata["status"] == "complete"
+    assert metadata["status"] == "completed"
     assert metadata["track_class"] == "validator"
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
@@ -126,7 +126,7 @@ def test_pricing_year_validation_track_metadata_and_registry_are_explicit():
     assert "Implementation Plan" in index
     assert "Pricing-Year Validation Gates" in registry
     assert "prevent pricing years from being marked supported or validated" in registry
-    assert "[./tracks/pricing_year_validation_gates_20260512/]" in registry
+    assert "[./archive/pricing_year_validation_gates_20260512/]" in registry
     assert "- [x] **Track: Pricing-Year Validation Gates**" in registry
 
 

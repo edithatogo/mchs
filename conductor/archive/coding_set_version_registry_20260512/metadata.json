@@ -1,0 +1,26 @@
+{
+  "track_id": "coding_set_version_registry_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "data-contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "nwau_py.coding_set_registry metadata-only registry and compatibility validators",
+  "dependencies": [
+    "conductor/roadmap-governance.md",
+    "classification_input_validation_20260512",
+    "icd_achi_acs_license_workflow_20260512"
+  ],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests",
+    "registry"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a machine-readable registry for classification and coding-set versions, pricing-year compatibility, and licensing boundaries for AR-DRG, AECC, UDG, Tier 2, AMHCC, ICD-10-AM, ACHI, and ACS.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/coding_set_version_registry_20260512"
+}

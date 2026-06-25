@@ -1,0 +1,26 @@
+{
+  "track_id": "public_appropriate_use_docs_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "publication",
+  "current_state": "complete",
+  "primary_contract": "public appropriate-use and validation-status documentation",
+  "dependencies": [
+    "validation-vocabulary.md",
+    "roadmap-governance.md",
+    "docs_release_publication_readiness_20260510"
+  ],
+  "completion_evidence": [
+    "Starlight appropriate-use page",
+    "validation status page",
+    "source/licensing caveat page",
+    "README links"
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add public documentation that explains appropriate use, validation status, caveats, licensing boundaries, and non-endorsement.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/public_appropriate_use_docs_20260512"
+}

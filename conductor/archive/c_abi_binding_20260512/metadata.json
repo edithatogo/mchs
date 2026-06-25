@@ -1,0 +1,21 @@
+{
+  "track_id": "c_abi_binding_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Conservative versioned C ABI strategy, Arrow boundary policy, and fixture-gated readiness",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a conservative, versioned C ABI scaffold for institutional embedding and downstream language bindings.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/c_abi_binding_20260512"
+}

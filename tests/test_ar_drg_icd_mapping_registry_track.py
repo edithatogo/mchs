@@ -19,7 +19,7 @@ from nwau_py.ar_drg_mapping_registry import (
 from nwau_py.calculators.acute import build_acute_contract
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ar_drg_icd_mapping_registry_20260512"
+TRACK = ROOT / "conductor" / "archive" / "ar_drg_icd_mapping_registry_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = ROOT / "contracts" / "ar-drg-icd-mapping-registry"
 DOCS = (
@@ -60,8 +60,8 @@ def test_ar_drg_mapping_track_docs_and_contract_are_complete() -> None:
     docs = DOCS.read_text(encoding="utf-8")
     contract = _read_json(CONTRACT / "ar-drg-icd-mapping-registry.contract.json")
 
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-metadata-registry"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "nwau_py.ar_drg_mapping_registry" in metadata["primary_contract"]
     assert "- [x] **Track: AR-DRG ICD/ACHI/ACS Mapping Registry**" in tracks
@@ -169,5 +169,12 @@ def test_ar_drg_mapping_contract_examples_are_metadata_only() -> None:
     assert example["registry_id"] == "ar_drg_icd_mapping_registry_20260512"
     assert "licensed icd-10-am table rows" in json.dumps(boundary).lower()
     assert "local-only" in json.dumps(external).lower()
+    external_reference = external["reference"]
+    assert isinstance(external_reference, dict)
+    assert external_reference["implementation_evidence"] is False
+    assert "placeholder-only" in str(external_reference["evidence_status"])
+    versioned_external = example["records"][3]["reference"]
+    assert isinstance(versioned_external, dict)
+    assert versioned_external["implementation_evidence"] is False
     assert "patient data" in json.dumps(example["records"][2]["boundary"]).lower()
     assert example["records"][2]["boundary"]["contains_phi"] is False

@@ -1,0 +1,23 @@
+{
+  "track_id": "ar_drg_icd_mapping_registry_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "classifier",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "nwau_py.ar_drg_mapping_registry versioned AR-DRG ICD/ACHI/ACS mapping metadata registry with explicit provenance and licensing boundaries",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests",
+    "strict_registry_models",
+    "contract_fixtures"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add versioned AR-DRG mapping registry capability for ICD-10-AM, ACHI, ACS, and AR-DRG table relationships with conservative source and licensing handling.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/ar_drg_icd_mapping_registry_20260512"
+}

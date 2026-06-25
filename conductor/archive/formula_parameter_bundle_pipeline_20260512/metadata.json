@@ -1,0 +1,44 @@
+{
+  "track_id": "formula_parameter_bundle_pipeline_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Extract, normalize, version, diff, and validate formula and parameter bundles from source-discovered manifests and workbook artifacts",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests",
+    "strict_bundle_models",
+    "acute_2025_canary_bundle",
+    "deterministic_bundle_diff"
+  ],
+  "publication_status": "not-ready",
+  "completion_policy": "complete-with-gaps means the source-only canary and strict bundle contracts are implemented, but the bundle must not be presented as parity-validated or publication-ready until gap_blockers are closed",
+  "gap_blockers": [
+    {
+      "id": "official-sas-excel-extraction",
+      "severity": "publication-blocking",
+      "evidence": "conductor/archive/formula_parameter_bundle_pipeline_20260512/review.md",
+      "description": "Official SAS and Excel extraction is not complete for release-grade formula and parameter bundles."
+    },
+    {
+      "id": "stream-year-parity-fixtures",
+      "severity": "publication-blocking",
+      "evidence": "reference-data/2025/parameter-bundles/acute/acute-2025-canary/v1/bundle.json",
+      "description": "The committed bundle is source-only and must not be presented as parity validated until stream/year fixture evidence closes the extraction gaps."
+    }
+  ],
+  "promotion_requirements": [
+    "Close source-discovered extraction gaps with official SAS/Excel extraction evidence.",
+    "Add fixture-backed parity evidence for each claimed stream/year bundle.",
+    "Keep source evidence and deterministic bundle diffs stable for review."
+  ],
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Build a versioned formula and parameter bundle pipeline for future IHACPA calculator releases, anchored to explicit source-discovered gap records and source-scanner fixtures.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/formula_parameter_bundle_pipeline_20260512"
+}

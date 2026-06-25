@@ -1,0 +1,26 @@
+{
+  "track_id": "rust_acute_python_poc_20260510",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Track rust_acute_python_poc_20260510 contract",
+  "dependencies": [],
+  "completion_evidence": [
+    "rust/crates/nwau-core/src/lib.rs exports the acute 2025 proof-of-concept kernel label and core kernel API",
+    "rust/crates/nwau-core/tests/acute_2025_contract.rs covers acute 2025 formula, precision, provenance, and validation behavior",
+    "rust/crates/nwau-py/src/lib.rs exposes the PyO3 nwau_py._rust binding including calculate_acute_2025_row()",
+    "nwau_py/rust_bridge.py loads the optional Rust extension and preserves explicit opt-in behavior",
+    "nwau_py/calculators/acute.py exposes calculate_acute_rust_2025() without replacing calculate_acute()",
+    "tests/test_rust_acute_binding.py validates Rust adapter invocation, golden fixture parity, and default Python path preservation",
+    "docs/audits/20260511-rust-acute-poc-status.md records canary validation evidence, limitations, and rollback behavior"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-10T09:20:45Z",
+  "updated_at": "2026-05-26T00:00:00Z",
+  "description": "Rust acute 2025 proof of concept with Python bindings",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/rust_acute_python_poc_20260510",
+  "pre_archive_current_state": "implemented-canary-poc"
+}

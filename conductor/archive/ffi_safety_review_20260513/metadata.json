@@ -1,0 +1,23 @@
+{
+  "track_id": "ffi_safety_review_20260513",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "security",
+  "priority": "immediate-after-cline",
+  "current_state": "complete",
+  "primary_contract": "rust/crates/nwau-c-abi/src/lib.rs",
+  "dependencies": [
+    "rust_core_ga_post_cline_review_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Review and harden FFI/C ABI safety, including pointer, UTF-8, length, ownership, and error-status handling.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/archive/ffi_safety_review_20260513/spec.md",
+    "conductor/archive/ffi_safety_review_20260513/plan.md",
+    "conductor/archive/ffi_safety_review_20260513/index.md"
+  ],
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/ffi_safety_review_20260513"
+}

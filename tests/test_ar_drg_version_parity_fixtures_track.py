@@ -19,7 +19,7 @@ from nwau_py.ar_drg_version_parity_fixtures import (
 from nwau_py.licensed_product_workflow import diagnose_missing_licensed_assets
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ar_drg_version_parity_fixtures_20260512"
+TRACK = ROOT / "conductor" / "archive" / "ar_drg_version_parity_fixtures_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = ROOT / "contracts" / "ar-drg-version-parity-fixtures"
 
@@ -67,8 +67,8 @@ def test_ar_drg_version_parity_track_docs_and_contract_are_complete() -> None:
     tracks = _read_text(TRACKS)
     contract = _read_json(CONTRACT / "ar-drg-version-parity-fixtures.contract.json")
 
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-metadata-fixtures"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "nwau_py.ar_drg_version_parity_fixtures" in metadata["primary_contract"]
     assert "- [x] **Track: AR-DRG Version Parity Fixtures**" in tracks
@@ -106,7 +106,7 @@ def test_registration_helpers_validate_version_scope_and_local_boundaries() -> N
         fixture_id="ar_drg_version_parity_synthetic_custom_2026",
         version_window=_window_2026(),
         source_refs=(
-            "conductor/tracks/ar_drg_version_parity_fixtures_20260512/spec.md",
+            "conductor/archive/ar_drg_version_parity_fixtures_20260512/spec.md",
             "reference-data/2026/manifest.yaml",
         ),
         local_path_hint="tests/fixtures/derived/ar_drg_version_parity/2026/custom.json",
@@ -116,7 +116,7 @@ def test_registration_helpers_validate_version_scope_and_local_boundaries() -> N
         fixture_id="ar_drg_version_parity_local_custom_2026",
         version_window=_window_2026(),
         source_refs=(
-            "conductor/tracks/ar_drg_version_parity_fixtures_20260512/spec.md",
+            "conductor/archive/ar_drg_version_parity_fixtures_20260512/spec.md",
             "https://www.ihacpa.gov.au/resources/ar-drg-version-120",
         ),
         local_path_hint="archive/ihacpa/raw/2026/licensed/ar_drg/parity/custom.json",
@@ -193,5 +193,7 @@ def test_contract_examples_are_metadata_only() -> None:
     assert manifest["privacy"]["contains_phi"] is False
     assert manifest["fixture_kind"] == "synthetic"
     assert local["license_boundary"] == "local-only"
+    assert local["implementation_evidence"] is False
+    assert "placeholder-only" in str(local["evidence_status"])
     assert boundary["boundary"]["contains_proprietary_payloads"] is False
     assert diagnostics["diagnostics"]["status"] == "pass"

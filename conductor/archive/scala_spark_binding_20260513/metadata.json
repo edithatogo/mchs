@@ -1,0 +1,32 @@
+{
+  "track_id": "scala_spark_binding_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "contracts/scala-spark-binding/scala-spark-binding.contract.json",
+  "dependencies": [
+    "polyglot_rust_core_roadmap_20260512",
+    "abstraction_doctrine_enforcement_20260512",
+    "rust_core_ga_20260513"
+  ],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-applicable",
+  "deferred": true,
+  "deferred_gate": "audience_owner_evidence",
+  "deferred_rationale": "Design/prototype scope is complete. Implementation remains deferred until a named enterprise audience and owner are recorded.",
+  "unblock_criteria": [
+    "Named enterprise audience and accountable owner are recorded.",
+    "Post-GA Scala/Spark evidence case is approved."
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a Scala/Spark roadmap for lakehouse and distributed costing-study workflows through Arrow/Parquet, service, or SQL boundaries. Deferred until audience, owner, and evidence criteria are recorded.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/scala_spark_binding_20260513"
+}

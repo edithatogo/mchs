@@ -1,0 +1,21 @@
+{
+  "track_id": "julia_binding_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Track julia_binding_20260512 contract",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a wrapper-only Julia binding prototype for high-performance analysis through CLI/file interop while preserving single-sourced calculator logic.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/julia_binding_20260512"
+}

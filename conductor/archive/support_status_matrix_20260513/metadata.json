@@ -1,0 +1,23 @@
+{
+  "track_id": "support_status_matrix_20260513",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate",
+  "current_state": "complete",
+  "primary_contract": "docs/roadmaps/schemas/support-status-matrix.md",
+  "dependencies": [
+    "canonical_contract_foundation_20260513",
+    "rust_core_ga_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Define machine-readable support statuses for streams, years, jurisdictions, surfaces, runtimes, and languages.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "contracts/canonical/support-status.schema.json",
+    "conductor/validation-vocabulary.md"
+  ],
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/support_status_matrix_20260513"
+}

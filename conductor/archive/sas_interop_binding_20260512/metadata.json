@@ -1,0 +1,25 @@
+{
+  "track_id": "sas_interop_binding_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Private/local SAS reference comparison policy",
+  "dependencies": [
+    "cli_file_interop_binding_20260512",
+    "source_archive_provenance_20260504"
+  ],
+  "completion_evidence": [
+    "docs",
+    "private-reference-policy",
+    "tests"
+  ],
+  "publication_status": "private-not-published",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-26T00:00:00Z",
+  "description": "Classify SAS interoperability as private/local reference comparison only: no public SAS adapter, no SAS formula port, and no new development until licensed reference-output evidence and an accountable owner are recorded.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/sas_interop_binding_20260512",
+  "pre_archive_current_state": "private-no-new-development"
+}

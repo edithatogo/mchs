@@ -1,0 +1,21 @@
+{
+  "track_id": "reference_data_manifest_schema_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "data-contract",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Reference Data Manifest Schema",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add strict machine-readable pricing-year reference data manifest loaders with pinned examples, explicit gaps, canonical paths, and validation-status taxonomy.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/reference_data_manifest_schema_20260512"
+}

@@ -1,0 +1,49 @@
+{
+  "track_id": "abstraction_doctrine_enforcement_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "governance",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "nwau_py.abstraction_doctrine shared abstraction doctrine and reviewable metadata-only boundary guardrails for kernels, bundles, registries, adapters, bindings, apps, docs, and releases",
+  "dependencies": [
+    "emergency_udg_aecc_transition_registry_20260512",
+    "emergency_code_mapping_pipeline_20260512",
+    "emergency_grouper_integration_20260512",
+    "emergency_classification_parity_fixtures_20260512",
+    "pricing_year_validation_gates_20260512",
+    "coding_set_version_registry_20260512"
+  ],
+  "completion_evidence": [
+    "nwau_py/abstraction_doctrine.py",
+    "contracts/abstraction-doctrine-enforcement/",
+    "tests/test_abstraction_doctrine_enforcement_track.py",
+    "doctrine document",
+    "test-based boundary guardrails",
+    "developer guidance for canonical formula, parameter, mapping, grouper, binding, and app locations"
+  ],
+  "publication_status": "not-applicable",
+  "validation_status": "validated-targeted",
+  "licensing_caveats": [
+    "Do not encode proprietary or undisclosed crosswalks, fee schedules, or source tables into the doctrine, tests, or examples unless the source license explicitly permits it.",
+    "Treat compatibility shims as transitional exceptions, not the intended architecture.",
+    "Keep any licensed classifier or grouper artifacts out of the repository unless they are synthetic, local-only, or otherwise redistributable."
+  ],
+  "evidence_surfaces": [
+    "spec.md",
+    "plan.md",
+    "index.md",
+    "nwau_py/abstraction_doctrine.py",
+    "contracts/abstraction-doctrine-enforcement/",
+    "tests/test_abstraction_doctrine_enforcement_track.py",
+    "conductor/roadmap-governance.md",
+    "conductor/validation-vocabulary.md",
+    "roadmap and contributor docs that point back to the doctrine",
+    "boundary-check tests or static checks"
+  ],
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Make the project's abstraction doctrine explicit, reviewable, and enforceable across calculators, coding sets, groupers, bindings, docs, and apps.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/abstraction_doctrine_enforcement_20260512"
+}

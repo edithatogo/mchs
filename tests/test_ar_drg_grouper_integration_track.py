@@ -19,7 +19,7 @@ from nwau_py.ar_drg_grouper import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "ar_drg_grouper_integration_20260512"
+TRACK = ROOT / "conductor" / "archive" / "ar_drg_grouper_integration_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = ROOT / "contracts" / "ar-drg-icd-mapping-registry"
 
@@ -65,8 +65,8 @@ def test_ar_drg_grouper_track_contract_and_docs_are_complete() -> None:
     spec = _read_text(TRACK / "spec.md")
     contract = _read_json(CONTRACT / "ar-drg-icd-mapping-registry.contract.json")
 
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-interface-contract"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "nwau_py.ar_drg_grouper" in metadata["primary_contract"]
     assert "- [x] **Track: AR-DRG Grouper Integration**" in tracks

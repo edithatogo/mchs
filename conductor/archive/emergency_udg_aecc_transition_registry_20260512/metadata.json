@@ -1,0 +1,42 @@
+{
+  "track_id": "emergency_udg_aecc_transition_registry_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "classifier",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "nwau_py.emergency_transition_registry metadata-only transition registry for UDG, AECC, pricing-year applicability, acceptance state, and emergency-stream compatibility",
+  "dependencies": [
+    "coding_set_version_registry_20260512",
+    "classification_input_validation_20260512",
+    "icd_achi_acs_license_workflow_20260512"
+  ],
+  "completion_evidence": [
+    "nwau_py/emergency_transition_registry.py",
+    "contracts/emergency-udg-aecc-transition-registry/",
+    "tests/test_emergency_udg_aecc_transition_registry_track.py",
+    "docs",
+    "conductor/archive/emergency_udg_aecc_transition_registry_20260512/review.md"
+  ],
+  "publication_status": "not-applicable",
+  "validation_status": "validated-targeted",
+  "licensing_caveats": [
+    "Do not embed or redistribute licensed UDG, AECC, or grouper tables unless the relevant source license explicitly permits it.",
+    "Any local mapping tables, grouped outputs, or user-supplied reference artifacts remain outside the repository unless they are synthetic or otherwise redistributable.",
+    "This registry records licensing boundaries and workflow references only; it does not satisfy the user's own licensing obligations."
+  ],
+  "evidence_surfaces": [
+    "spec.md",
+    "plan.md",
+    "metadata.json",
+    "nwau_py/emergency_transition_registry.py",
+    "contracts/emergency-udg-aecc-transition-registry/",
+    "tests/test_emergency_udg_aecc_transition_registry_track.py",
+    "registry fixtures and validator tests"
+  ],
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Document and validate emergency classification transition registry semantics for UDG and AECC versions, pricing-year applicability, stream compatibility, source licensing caveats, and no-invented-crosswalk boundaries.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/emergency_udg_aecc_transition_registry_20260512"
+}

@@ -1,0 +1,24 @@
+{
+  "track_id": "ar_drg_grouper_integration_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "classifier",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "nwau_py.ar_drg_grouper local external grouper reference and precomputed AR-DRG provenance interface",
+  "dependencies": [],
+  "completion_evidence": [
+    "interface docs",
+    "adapter tests",
+    "workflow docs",
+    "provenance records",
+    "strict interface models",
+    "contract fixtures"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Define a safe AR-DRG grouper integration track for admitted acute workflows that can ingest precomputed DRGs or call a user-supplied licensed external grouper without claiming proprietary grouper support.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/ar_drg_grouper_integration_20260512"
+}

@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, cast
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "cli_file_interop_binding_20260512"
+TRACK = ROOT / "conductor" / "archive" / "cli_file_interop_binding_20260512"
 TRACKS_REGISTRY = ROOT / "conductor" / "tracks.md"
 INTEROP_ROOT = ROOT / "contracts" / "interop"
 INTEROP_SCHEMA = INTEROP_ROOT / "cli-file-interop.schema.json"
@@ -209,9 +209,9 @@ def test_cli_file_interop_track_metadata_stays_roadmap_only():
 
     assert metadata["track_id"] == "cli_file_interop_binding_20260512"
     assert metadata["type"] == "feature"
-    assert metadata["status"] == "complete"
+    assert metadata["status"] == "completed"
     assert metadata["track_class"] == "binding"
-    assert metadata["current_state"] == "prototype"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert metadata["completion_evidence"] == ["docs", "workflows", "tests"]
     assert "CLI and file interoperability contract scaffold" in str(

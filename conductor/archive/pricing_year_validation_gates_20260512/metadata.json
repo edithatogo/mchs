@@ -1,0 +1,36 @@
+{
+  "track_id": "pricing_year_validation_gates_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "validator",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "funding-calculator validate-year <year> manifest completeness, evidence, and validation-status gate",
+  "dependencies": [],
+  "completion_evidence": [
+    "roadmap-governance validation ladder",
+    "validation vocabulary",
+    "reference-data manifest schema",
+    "track strategy and CI notes"
+  ],
+  "publication_status": "not-ready",
+  "completion_policy": "complete-with-gaps means local validation contracts and tests exist, but the track is not publication-ready and must not be used as a GA support claim until gap_blockers are closed",
+  "gap_blockers": [
+    {
+      "id": "manifest-derived-public-support-matrix",
+      "severity": "publication-blocking",
+      "evidence": "conductor/archive/pricing_year_validation_gates_20260512/review.md",
+      "description": "Public support matrices are still mostly prose-driven and must be generated from manifest validation status before publication or GA support claims."
+    }
+  ],
+  "promotion_requirements": [
+    "Generate docs/API support matrices directly from reference-data manifest validation status.",
+    "Keep funding-calculator validate-year checks passing for claimed pricing years.",
+    "Retain explicit gap records until source, extraction, and fixture evidence close them."
+  ],
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add strict validation gates so pricing years cannot be marked supported or validated without required source, extraction, and fixture evidence.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/pricing_year_validation_gates_20260512"
+}

@@ -13,7 +13,7 @@ from nwau_py.pricing_year_diff import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "pricing_year_diff_tooling_20260512"
+TRACK = ROOT / "conductor" / "archive" / "pricing_year_diff_tooling_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = ROOT / "contracts" / "pricing-year-diff"
 DOCS_PAGE = (
@@ -59,8 +59,8 @@ def test_pricing_year_diff_tooling_track_and_contract_are_complete():
     docs = _read_text(DOCS_PAGE)
 
     assert metadata["track_id"] == "pricing_year_diff_tooling_20260512"
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-with-manifest-backed-diffs"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "funding-calculator diff-year <from-year> <to-year>" in (
         metadata["primary_contract"]

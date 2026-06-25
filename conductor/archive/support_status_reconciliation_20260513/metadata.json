@@ -1,0 +1,23 @@
+{
+  "track_id": "support_status_reconciliation_20260513",
+  "type": "chore",
+  "status": "completed",
+  "track_class": "contract",
+  "priority": "immediate-after-cline",
+  "current_state": "complete",
+  "primary_contract": "contracts/support/support-status.schema.json",
+  "dependencies": [
+    "support_status_matrix_20260513",
+    "canonical_contract_foundation_20260513"
+  ],
+  "created_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Reconcile generated canonical support-status schemas with the governance support matrix vocabulary.",
+  "no_stub_enforce": true,
+  "completion_evidence": [
+    "conductor/validation-vocabulary.md",
+    "contracts/canonical/support-status.schema.json"
+  ],
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/support_status_reconciliation_20260513"
+}

@@ -14,8 +14,8 @@ from nwau_py.licensed_product_workflow import (
     build_licensed_product_asset_reference,
     build_licensed_product_manifest_record,
     diagnose_missing_licensed_assets,
-    ensure_licensed_product_compatibility,
     ensure_commit_safe_exclusion,
+    ensure_licensed_product_compatibility,
     get_licensed_product_manifest_record,
     is_commit_safe_excluded_path,
     is_local_only_licensed_path,
@@ -25,7 +25,7 @@ from nwau_py.licensed_product_workflow import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "icd_achi_acs_license_workflow_20260512"
+TRACK = ROOT / "conductor" / "archive" / "icd_achi_acs_license_workflow_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = ROOT / "contracts" / "icd-achi-acs-license-workflow"
 
@@ -60,7 +60,7 @@ def test_license_workflow_track_docs_and_contract_are_complete() -> None:
     tracks = _read_text(TRACKS)
     spec = _read_text(TRACK / "spec.md")
 
-    assert metadata["status"] == "complete"
+    assert metadata["status"] == "completed"
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
     assert "nwau_py.licensed_product_workflow" in metadata["primary_contract"]
@@ -147,11 +147,14 @@ def test_missing_local_asset_diagnostics_are_safe_and_non_disclosing() -> None:
         for asset in record.assets
         if asset.restricted and asset.local_path_hint is not None
     ]
-    assert diagnose_missing_licensed_assets(
-        "ICD-10-AM",
-        "2026",
-        existing_paths=existing,
-    ) == ()
+    assert (
+        diagnose_missing_licensed_assets(
+            "ICD-10-AM",
+            "2026",
+            existing_paths=existing,
+        )
+        == ()
+    )
 
 
 def test_licensed_product_compatibility_fails_closed() -> None:
@@ -184,9 +187,7 @@ def test_licensed_product_compatibility_fails_closed() -> None:
 
 
 def test_contract_examples_are_synthetic_and_local_only() -> None:
-    manifest = _read_json(
-        CONTRACT / "examples" / "local-licensed-asset-manifest.json"
-    )
+    manifest = _read_json(CONTRACT / "examples" / "local-licensed-asset-manifest.json")
     boundary = _read_json(CONTRACT / "examples" / "license-boundary.json")
     guard = _read_json(CONTRACT / "examples" / "commit-guard-diagnostics.json")
 
@@ -383,7 +384,10 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"asset_role": "metadata"},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="asset_id must not be blank"):
+    with pytest.raises(
+        LicensedProductWorkflowError,
+        match="asset_id must not be blank",
+    ):
         LicensedProductAssetReference(
             asset_id="",
             kind="public-metadata",
@@ -426,7 +430,7 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"asset_role": "metadata"},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="metadata.source_refs"):
+    with pytest.raises(LicensedProductWorkflowError, match=r"metadata\.source_refs"):
         build_licensed_product_asset_reference(
             asset_id="bad-metadata-list",
             kind="public-metadata",
@@ -436,7 +440,7 @@ def test_license_workflow_normalizers_reject_blank_duplicate_and_bad_values() ->
             metadata={"source_refs": ["duplicate", "duplicate"]},
             notes=("metadata only",),
         )
-    with pytest.raises(LicensedProductWorkflowError, match="metadata.asset_role"):
+    with pytest.raises(LicensedProductWorkflowError, match=r"metadata\.asset_role"):
         build_licensed_product_asset_reference(
             asset_id="bad-metadata-value",
             kind="public-metadata",

@@ -29,7 +29,7 @@ from nwau_py.formula_parameter_bundle import (  # noqa: E402
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "formula_parameter_bundle_pipeline_20260512"
+TRACK = ROOT / "conductor" / "archive" / "formula_parameter_bundle_pipeline_20260512"
 TRACKS = ROOT / "conductor" / "tracks.md"
 DOCS_PAGE = (
     ROOT
@@ -80,11 +80,16 @@ def test_formula_parameter_bundle_track_docs_and_contract_are_current() -> None:
     governance_index = GOVERNANCE_INDEX.read_text(encoding="utf-8")
     contract = _read_json(CONTRACT)
 
-    assert metadata["status"] == "complete"
-    assert metadata["current_state"] == "implemented-source-only-canary"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
+    assert metadata["gap_blockers"]
+    assert metadata["completion_policy"].startswith("complete-with-gaps means")
     assert "[x] **Track: Formula and Parameter Bundle Pipeline**" in tracks
     assert "source-only" in docs_page.lower()
+    index = (TRACK / "index.md").read_text(encoding="utf-8")
+    assert "not parity-validated" in index
+    assert "publication blockers" in index
     assert "formula-parameter-bundle-pipeline" in governance_index
     assert contract["tool"]["name"] == "nwau_py.formula_parameter_bundle"
     assert contract["tool"]["package"] == "nwau_py"

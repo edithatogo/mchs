@@ -1,0 +1,21 @@
+{
+  "track_id": "cli_file_interop_binding_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "Versioned CLI/file interoperability contract",
+  "dependencies": [],
+  "completion_evidence": [
+    "docs",
+    "workflows",
+    "tests"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a conservative language-neutral CLI and file interoperability contract scaffold with Arrow/Parquet as the target and CSV compatibility where safe.",
+  "no_stub_enforce": true,
+  "archived_at": "2026-06-24T00:00:00Z",
+  "archive_path": "conductor/archive/cli_file_interop_binding_20260512"
+}

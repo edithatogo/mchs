@@ -70,7 +70,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: define Rust as the intended future calculator core and document formula, parameter, schema, reference data, provenance, validation, and adapter boundaries before Rust implementation begins.*
 
 13. [x] **Track: Rust Acute 2025 Proof of Concept with Python Bindings**
-   *Link: [./tracks/rust_acute_python_poc_20260510/](./tracks/rust_acute_python_poc_20260510/)*
+   *Link: [./archive/rust_acute_python_poc_20260510/](./archive/rust_acute_python_poc_20260510/)*
    *Depends on: Rust core architecture, acute 2025 golden fixtures, Python packaging, and Arrow-compatible batch contract decisions.*
    *Gate: implement the first Rust-backed acute 2025 canary behind explicit Python opt-in and prove fixture parity before any default runtime change.*
 
@@ -155,131 +155,131 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: R Binding**
-*Link: [./tracks/r_binding_20260512/](./tracks/r_binding_20260512/)*
+*Link: [./archive/r_binding_20260512/](./archive/r_binding_20260512/)*
 *Gate: support health-economics and costing-study R users without duplicating calculator formula logic.*
 
 ---
 
 - [x] **Track: Julia Binding**
-*Link: [./tracks/julia_binding_20260512/](./tracks/julia_binding_20260512/)*
+*Link: [./archive/julia_binding_20260512/](./archive/julia_binding_20260512/)*
 *Gate: support Julia analytics through C ABI or Arrow/CLI interop while preserving single-sourced calculator logic.*
 
 ---
 
 - [x] **Track: TypeScript and WebAssembly Binding**
-*Link: [./tracks/typescript_wasm_binding_20260512/](./tracks/typescript_wasm_binding_20260512/)*
+*Link: [./archive/typescript_wasm_binding_20260512/](./archive/typescript_wasm_binding_20260512/)*
 *Gate: enable browser docs demos and Node workflows from the shared Rust core with synthetic-data-only privacy boundaries.*
 
 ---
 
 - [x] **Track: C ABI Binding**
-*Link: [./tracks/c_abi_binding_20260512/](./tracks/c_abi_binding_20260512/)*
+*Link: [./archive/c_abi_binding_20260512/](./archive/c_abi_binding_20260512/)*
 *Gate: define a stable institutional embedding ABI only after core schemas and calculator parity are stable.*
 
 ---
 
 - [x] **Track: CLI and File Interoperability Binding**
-*Link: [./tracks/cli_file_interop_binding_20260512/](./tracks/cli_file_interop_binding_20260512/)*
+*Link: [./archive/cli_file_interop_binding_20260512/](./archive/cli_file_interop_binding_20260512/)*
 *Gate: provide a language-neutral Arrow/Parquet/CSV and CLI contract for ecosystems where native bindings are premature.*
 
 ---
 
 - [x] **Track: Reference Data Manifest Schema**
-*Link: [./tracks/reference_data_manifest_schema_20260512/](./tracks/reference_data_manifest_schema_20260512/)*
+*Link: [./archive/reference_data_manifest_schema_20260512/](./archive/reference_data_manifest_schema_20260512/)*
 *Gate: define machine-readable pricing-year manifests for source artifacts, constants, coding sets, and validation status before automating future-year support.*
 
 ---
 
 - [x] **Track: IHACPA Source Scanner**
-*Link: [./tracks/ihacpa_source_scanner_20260512/](./tracks/ihacpa_source_scanner_20260512/)*
+*Link: [./archive/ihacpa_source_scanner_20260512/](./archive/ihacpa_source_scanner_20260512/)*
 *Gate: discover and draft future IHACPA source manifests without overclaiming validation or redistributing restricted material.*
 
 ---
 
 - [x] **Track: Pricing-Year Validation Gates**
-*Link: [./tracks/pricing_year_validation_gates_20260512/](./tracks/pricing_year_validation_gates_20260512/)*
+*Link: [./archive/pricing_year_validation_gates_20260512/](./archive/pricing_year_validation_gates_20260512/)*
 *Gate: prevent pricing years from being marked supported or validated without required source, extraction, and fixture evidence.*
-*Evidence surfaces: `funding-calculator validate-year <year>`, the validation ladder in `conductor/roadmap-governance.md`, the status vocabulary in `conductor/validation-vocabulary.md`, and the manifest schema contract in `conductor/tracks/reference_data_manifest_schema_20260512`.*
+*Evidence surfaces: `funding-calculator validate-year <year>`, the validation ladder in `conductor/roadmap-governance.md`, the status vocabulary in `conductor/validation-vocabulary.md`, and the manifest schema contract in `conductor/archive/reference_data_manifest_schema_20260512`.*
 
 ---
 
 - [x] **Track: Pricing-Year Diff Tooling**
-*Link: [./tracks/pricing_year_diff_tooling_20260512/](./tracks/pricing_year_diff_tooling_20260512/)*
+*Link: [./archive/pricing_year_diff_tooling_20260512/](./archive/pricing_year_diff_tooling_20260512/)*
 *Gate: compare pricing years and summarize formula, parameter, classification, source, and validation deltas for review and releases.*
-*Evidence surfaces: the installed `funding-calculator diff-year <from-year> <to-year>` command, `conductor/tracks/pricing_year_diff_tooling_20260512/strategy.md`, and `conductor/tracks/pricing_year_diff_tooling_20260512/ci_notes.md`.*
+*Evidence surfaces: the installed `funding-calculator diff-year <from-year> <to-year>` command, `conductor/archive/pricing_year_diff_tooling_20260512/strategy.md`, and `conductor/archive/pricing_year_diff_tooling_20260512/ci_notes.md`.*
 
 ---
 
 - [x] **Track: Coding-Set Version Registry**
-*Link: [./tracks/coding_set_version_registry_20260512/](./tracks/coding_set_version_registry_20260512/)*
+*Link: [./archive/coding_set_version_registry_20260512/](./archive/coding_set_version_registry_20260512/)*
 *Gate: record AR-DRG, AECC, UDG, Tier 2, AMHCC, ICD-10-AM, ACHI, and ACS version compatibility and licensing boundaries.*
-*Evidence surfaces: `conductor/roadmap-governance.md`, `conductor/validation-vocabulary.md`, `conductor/tracks/classification_input_validation_20260512/classification_matrix.md`, `docs/reviews/20260512-expert-panel/deliberation-and-prioritisation.md`, `conductor/tracks/coding_set_version_registry_20260512/strategy.md`, and `conductor/tracks/coding_set_version_registry_20260512/ci_notes.md`.*
+*Evidence surfaces: `conductor/roadmap-governance.md`, `conductor/validation-vocabulary.md`, `conductor/tracks/classification_input_validation_20260512/classification_matrix.md`, `docs/reviews/20260512-expert-panel/deliberation-and-prioritisation.md`, `conductor/archive/coding_set_version_registry_20260512/strategy.md`, and `conductor/archive/coding_set_version_registry_20260512/ci_notes.md`.*
 
 ---
 
 - [x] **Track: Formula and Parameter Bundle Pipeline**
-*Link: [./tracks/formula_parameter_bundle_pipeline_20260512/](./tracks/formula_parameter_bundle_pipeline_20260512/)*
+*Link: [./archive/formula_parameter_bundle_pipeline_20260512/](./archive/formula_parameter_bundle_pipeline_20260512/)*
 *Gate: extract, normalize, version, diff, and validate future IHACPA formula and parameter bundles before production calculator claims.*
 *Evidence surfaces: `reference-data/2026/manifest.yaml`, `contracts/source-scanner/examples/add-year.draft-manifest.json`, and `conductor/tracks/end_to_end_validated_canary_20260512`.*
 
 ---
 
 - [x] **Track: AR-DRG ICD/ACHI/ACS Mapping Registry**
-*Link: [./tracks/ar_drg_icd_mapping_registry_20260512/](./tracks/ar_drg_icd_mapping_registry_20260512/)*
+*Link: [./archive/ar_drg_icd_mapping_registry_20260512/](./archive/ar_drg_icd_mapping_registry_20260512/)*
 *Gate: model version-specific relationships between ICD-10-AM, ACHI, ACS, AR-DRG versions, and mapping-table provenance before deriving or validating DRGs.*
 
 ---
 
 - [x] **Track: AR-DRG Grouper Integration**
-*Link: [./tracks/ar_drg_grouper_integration_20260512/](./tracks/ar_drg_grouper_integration_20260512/)*
+*Link: [./archive/ar_drg_grouper_integration_20260512/](./archive/ar_drg_grouper_integration_20260512/)*
 *Gate: support precomputed AR-DRGs and licensed external grouper integration without reimplementing proprietary grouping logic.*
 
 ---
 
 - [x] **Track: ICD-10-AM/ACHI/ACS Licensed Product Workflow**
-*Link: [./tracks/icd_achi_acs_license_workflow_20260512/](./tracks/icd_achi_acs_license_workflow_20260512/)*
+*Link: [./archive/icd_achi_acs_license_workflow_20260512/](./archive/icd_achi_acs_license_workflow_20260512/)*
 *Gate: define local-only handling, manifest references, commit guards, setup docs, and appropriate-use caveats for licensed classification tables and groupers.*
 
 ---
 
 - [x] **Track: AR-DRG Version Parity Fixtures**
-*Link: [./tracks/ar_drg_version_parity_fixtures_20260512/](./tracks/ar_drg_version_parity_fixtures_20260512/)*
+*Link: [./archive/ar_drg_version_parity_fixtures_20260512/](./archive/ar_drg_version_parity_fixtures_20260512/)*
 *Gate: validate version-specific AR-DRG grouping and admitted acute NWAU behavior with safe synthetic and local licensed fixtures.*
 
 ---
 
 - [x] **Track: Emergency UDG/AECC Transition Registry**
-*Link: [./tracks/emergency_udg_aecc_transition_registry_20260512/](./tracks/emergency_udg_aecc_transition_registry_20260512/)*
+*Link: [./archive/emergency_udg_aecc_transition_registry_20260512/](./archive/emergency_udg_aecc_transition_registry_20260512/)*
 *Gate: model UDG, AECC, transition periods, emergency stream compatibility, and pricing-year applicability before accepting emergency classification inputs as interchangeable.*
 
 ---
 
 - [x] **Track: Emergency Code Mapping Pipeline**
-*Link: [./tracks/emergency_code_mapping_pipeline_20260512/](./tracks/emergency_code_mapping_pipeline_20260512/)*
+*Link: [./archive/emergency_code_mapping_pipeline_20260512/](./archive/emergency_code_mapping_pipeline_20260512/)*
 *Gate: add versioned, provenance-aware mapping bundles for source emergency fields to UDG or AECC outputs without inventing unsupported crosswalks.*
 
 ---
 
 - [x] **Track: Emergency Grouper Integration**
-*Link: [./tracks/emergency_grouper_integration_20260512/](./tracks/emergency_grouper_integration_20260512/)*
+*Link: [./archive/emergency_grouper_integration_20260512/](./archive/emergency_grouper_integration_20260512/)*
 *Gate: support precomputed and externally derived UDG/AECC outputs through a validated classifier interface and local tool/service integration.*
 
 ---
 
 - [x] **Track: Emergency Classification Parity Fixtures**
-*Link: [./tracks/emergency_classification_parity_fixtures_20260512/](./tracks/emergency_classification_parity_fixtures_20260512/)*
+*Link: [./archive/emergency_classification_parity_fixtures_20260512/](./archive/emergency_classification_parity_fixtures_20260512/)*
 *Gate: validate UDG/AECC parity fixtures only after the emergency transition registry, mapping pipeline, and grouper integration are in place, and keep synthetic and local-only licensed fixtures separate from redistributed content.*
 
 ---
 
 - [x] **Track: Abstraction Doctrine Enforcement**
-*Link: [./tracks/abstraction_doctrine_enforcement_20260512/](./tracks/abstraction_doctrine_enforcement_20260512/)*
+*Link: [./archive/abstraction_doctrine_enforcement_20260512/](./archive/abstraction_doctrine_enforcement_20260512/)*
 *Gate: make formula, parameter, registry, classifier, binding, app, and documentation boundaries explicit and enforceable before implementing more surfaces.*
 
 ---
 
 - [x] **Track: Polyglot Rust Core Roadmap**
-*Link: [./tracks/polyglot_rust_core_roadmap_20260512/](./tracks/polyglot_rust_core_roadmap_20260512/)*
+*Link: [./archive/polyglot_rust_core_roadmap_20260512/](./archive/polyglot_rust_core_roadmap_20260512/)*
 *Gate: coordinate the transition from Python-first package to shared Rust calculator core with thin Python, R, Julia, TypeScript/WASM, C ABI, CLI/file, web, and Power Platform consumers.*
 
 ---
@@ -297,7 +297,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Support Status Matrix**
-*Link: [./tracks/support_status_matrix_20260513/](./tracks/support_status_matrix_20260513/)*
+*Link: [./archive/support_status_matrix_20260513/](./archive/support_status_matrix_20260513/)*
 *Gate: Define machine-readable support statuses for stream, year, jurisdiction, surface, runtime, and language claims before public docs or release metadata can mark support as complete.*
 
 ---
@@ -387,43 +387,43 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: C#/.NET Binding**
-*Link: [./tracks/csharp_dotnet_binding_20260512/](./tracks/csharp_dotnet_binding_20260512/)*
+*Link: [./archive/csharp_dotnet_binding_20260512/](./archive/csharp_dotnet_binding_20260512/)*
 *Gate: expose institutional .NET integration through C ABI, service, or CLI/file contracts without duplicating formula logic.*
 
 ---
 
 - [x] **Track: Go Binding**
-*Link: [./tracks/go_binding_20260512/](./tracks/go_binding_20260512/)*
+*Link: [./archive/go_binding_20260512/](./archive/go_binding_20260512/)*
 *Gate: support Go services and data pipelines through shared-core or file/service contracts without formula duplication.*
 
 ---
 
 - [x] **Track: Kotlin/Native Binding**
-*Link: [./tracks/kotlin_native_binding_20260512/](./tracks/kotlin_native_binding_20260512/)*
+*Link: [./archive/kotlin_native_binding_20260512/](./archive/kotlin_native_binding_20260512/)*
 *Gate: support native Kotlin consumers through C ABI, service, or Arrow/Parquet interop with shared fixture validation and no JVM runtime requirement.*
 
 ---
 
 - [x] **Track: Scala/Spark Binding**
-*Link: [./tracks/scala_spark_binding_20260513/](./tracks/scala_spark_binding_20260513/)*
+*Link: [./archive/scala_spark_binding_20260513/](./archive/scala_spark_binding_20260513/)*
 *Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named enterprise audience, accountable owner, and post-GA Scala/Spark evidence case are recorded.*
 
 ---
 
 - [x] **Track: Swift Binding**
-*Link: [./tracks/swift_binding_20260513/](./tracks/swift_binding_20260513/)*
+*Link: [./archive/swift_binding_20260513/](./archive/swift_binding_20260513/)*
 *Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named Apple-platform healthcare audience, accountable owner, and post-GA Swift evidence case are recorded.*
 
 ---
 
 - [x] **Track: Stata Interoperability**
-*Link: [./tracks/stata_interop_binding_20260513/](./tracks/stata_interop_binding_20260513/)*
+*Link: [./archive/stata_interop_binding_20260513/](./archive/stata_interop_binding_20260513/)*
 *Gate: Design complete; implementation is now held at the audience/owner evidence gate and stable CLI/file contract readiness. Proceed only when a named health-economics owner and post-GA Stata evidence case are recorded.*
 
 ---
 
 - [x] **Track: MATLAB Interoperability**
-*Link: [./tracks/matlab_interop_binding_20260513/](./tracks/matlab_interop_binding_20260513/)*
+*Link: [./archive/matlab_interop_binding_20260513/](./archive/matlab_interop_binding_20260513/)*
 *Gate: Design complete; implementation is now held at the audience/owner evidence gate. Proceed only when a named healthcare economics audience, accountable owner, and post-GA MATLAB evidence case are recorded.*
 
 ---
@@ -435,7 +435,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: SAS Interoperability**
-*Link: [./tracks/sas_interop_binding_20260512/](./tracks/sas_interop_binding_20260512/)*
+*Link: [./archive/sas_interop_binding_20260512/](./archive/sas_interop_binding_20260512/)*
 *Gate: support SAS reference comparison and import/export workflows without creating a separate SAS formula implementation.*
 
 ---
@@ -489,7 +489,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Public Appropriate-Use Documentation**
-*Link: [./tracks/public_appropriate_use_docs_20260512/](./tracks/public_appropriate_use_docs_20260512/)*
+*Link: [./archive/public_appropriate_use_docs_20260512/](./archive/public_appropriate_use_docs_20260512/)*
 *Gate: publish conservative docs for validation status, appropriate use, policy caveats, source licensing, and non-endorsement before broad promotion.*
 
 ---
@@ -513,7 +513,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: FFI Safety Review**
-*Link: [./tracks/ffi_safety_review_20260513/](./tracks/ffi_safety_review_20260513/)*
+*Link: [./archive/ffi_safety_review_20260513/](./archive/ffi_safety_review_20260513/)*
 *Gate: Harden FFI/C ABI pointer, UTF-8, length, ownership, and error-status behavior before merging ABI changes.*
 
 ---
@@ -525,7 +525,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Support Status Reconciliation**
-*Link: [./tracks/support_status_reconciliation_20260513/](./tracks/support_status_reconciliation_20260513/)*
+*Link: [./archive/support_status_reconciliation_20260513/](./archive/support_status_reconciliation_20260513/)*
 *Gate: Reconcile generated canonical support statuses with the governance support matrix before public support claims.*
 
 ---
@@ -596,12 +596,162 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Smithery MCP Registry Readiness**
+- [x] **Track: Smithery MCP Registry Readiness**
 *Link: [./tracks/smithery_mcp_registry_readiness_20260517/](./tracks/smithery_mcp_registry_readiness_20260517/)*
 *Gate: do not claim Smithery publication until a public Streamable HTTP endpoint, static server card or scan evidence, and Smithery submission/listing evidence exist.*
 
 ---
 
-- [~] **Track: Docker MCP Registry Readiness**
+- [x] **Track: Docker MCP Registry Readiness**
 *Link: [./tracks/docker_mcp_registry_readiness_20260517/](./tracks/docker_mcp_registry_readiness_20260517/)*
 *Gate: do not claim Docker MCP Catalog publication until a Dockerfile-backed container path, Docker Registry metadata, validation evidence, and Docker Registry PR or merge evidence exist.*
+
+---
+
+- [x] **Track: Python PyPI Registry Submission**
+*Link: [./tracks/python_pypi_registry_submission_20260524/](./tracks/python_pypi_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `PyPI`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Rust crates.io Registry Submission**
+*Link: [./tracks/rust_crates_io_registry_submission_20260524/](./tracks/rust_crates_io_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `crates.io`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: TypeScript/WASM npm Registry Submission**
+*Link: [./tracks/typescript_npm_registry_submission_20260524/](./tracks/typescript_npm_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `npm`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: .NET NuGet Registry Submission**
+*Link: [./tracks/dotnet_nuget_registry_submission_20260524/](./tracks/dotnet_nuget_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `NuGet`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [~] **Track: R CRAN Registry Submission**
+*Link: [./tracks/r_cran_registry_submission_20260524/](./tracks/r_cran_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `CRAN`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Julia General Registry Submission**
+*Link: [./tracks/julia_general_registry_submission_20260524/](./tracks/julia_general_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `General registry`, and capture immutable evidence before claiming publication. Publication is verified by the merged General PR.*
+
+---
+
+- [x] **Track: Go Module Registry Submission**
+*Link: [./tracks/go_module_registry_submission_20260524/](./tracks/go_module_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Go module proxy/pkg.go.dev`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Swift Package Index Submission**
+*Link: [./tracks/swift_package_index_submission_20260524/](./tracks/swift_package_index_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Swift Package Index`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: JVM Maven Central Registry Submission**
+*Link: [./tracks/jvm_maven_central_registry_submission_20260524/](./tracks/jvm_maven_central_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Maven Central`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [~] **Track: conda-forge Feedstock Submission**
+*Link: [./tracks/conda_forge_feedstock_submission_20260524/](./tracks/conda_forge_feedstock_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `conda-forge`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Homebrew Formula Submission**
+*Link: [./tracks/homebrew_formula_submission_20260524/](./tracks/homebrew_formula_submission_20260524/)*
+*Gate: Personal tap publication is verified; Homebrew/core remains an optional upstream review gate.*
+
+---
+
+- [x] **Track: VS Code/Open VSX Extension Submission**
+*Link: [./tracks/vscode_openvsx_registry_submission_20260524/](./tracks/vscode_openvsx_registry_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Open VSX / Visual Studio Marketplace`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: MATLAB File Exchange Submission**
+*Link: [./tracks/matlab_file_exchange_submission_20260524/](./tracks/matlab_file_exchange_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `MATLAB File Exchange`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Stata SSC Submission**
+*Link: [./tracks/stata_ssc_submission_20260524/](./tracks/stata_ssc_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `SSC / Stata package distribution`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [~] **Track: C/C++ vcpkg and Conan Submission**
+*Link: [./tracks/c_cpp_vcpkg_conan_submission_20260524/](./tracks/c_cpp_vcpkg_conan_submission_20260524/)*
+*Gate: Discover existing publication, prepare package artifacts if absent, submit through `vcpkg / ConanCenter`, and capture immutable evidence before claiming publication.*
+
+---
+
+- [x] **Track: Scaffold and Stub Completion Backlog**
+*Link: [./tracks/scaffold_stub_completion_backlog_20260524/](./tracks/scaffold_stub_completion_backlog_20260524/)*
+*Gate: Bring scaffold-only, stub-only, complete-with-gaps, and overclaimed surfaces to validated completion or reclassify them truthfully with follow-on implementation tracks.*
+
+---
+
+- [x] **Track: Rust Core Continuation**
+*Link: [./tracks/rust_core_continuation_20260524/](./tracks/rust_core_continuation_20260524/)*
+*Gate: Continue stream-by-stream promotion from Python-first calculators to a validated Rust core with parity, binding, CLI/file, support-status, and release evidence before GA claims.*
+
+---
+
+- [ ] **Track: Repository Topology Authority**
+*Link: [./tracks/repository_topology_authority_20260624/](./tracks/repository_topology_authority_20260624/)*
+*Gate: Declare the canonical repo root, ban unmanaged nested repos and gitlinks, and define source, evidence, package, generated, and external-gate ownership.*
+
+---
+
+- [ ] **Track: Outer Wrapper Retirement Migration**
+*Link: [./tracks/outer_wrapper_retirement_migration_20260624/](./tracks/outer_wrapper_retirement_migration_20260624/)*
+*Gate: Inventory the transitional outer wrapper, preserve source and Power Platform evidence, and retire or formalize the broken gitlink wrapper without data loss.*
+
+---
+
+- [ ] **Track: Package Surface Ownership Registry**
+*Link: [./tracks/package_surface_ownership_registry_20260624/](./tracks/package_surface_ownership_registry_20260624/)*
+*Gate: Register every package, binding, app, docs, and registry surface with owner, manifest, CI gate, support state, release target, and evidence boundary.*
+
+---
+
+- [ ] **Track: Repository Topology CI Gate**
+*Link: [./tracks/repository_topology_ci_gate_20260624/](./tracks/repository_topology_ci_gate_20260624/)*
+*Gate: Fail closed on nested Git state, unmanaged gitlinks, missing package-surface ownership, tracked generated artifacts, and invalid wrapper assumptions.*
+
+---
+
+- [ ] **Track: Release Boundary Control Plane**
+*Link: [./tracks/release_boundary_control_plane_20260624/](./tracks/release_boundary_control_plane_20260624/)*
+*Gate: Map package surfaces to release workflows, version sources, registry evidence, support status, and external blocker classes before public claims change.*
+
+---
+
+- [ ] **Track: Generated Artifact Retention Policy**
+*Link: [./tracks/generated_artifact_retention_policy_20260624/](./tracks/generated_artifact_retention_policy_20260624/)*
+*Gate: Define which generated artifacts are ignored, release-attached, archived, or evidence-owned, and block accidental generated-output drift.*
+
+---
+
+- [ ] **Track: Worktree, Branch, and PR Hygiene**
+*Link: [./tracks/worktree_branch_pr_hygiene_20260624/](./tracks/worktree_branch_pr_hygiene_20260624/)*
+*Gate: Standardize clean temporary worktrees, minimal PR slices, branch naming, safe pushes, CI proof, and subagent handoff requirements.*
+
+---
+
+- [ ] **Track: Future Repo Split Playbook**
+*Link: [./tracks/future_repo_split_playbook_20260624/](./tracks/future_repo_split_playbook_20260624/)*
+*Gate: Define when a surface may leave the monorepo and how to extract it with history, registry continuity, CI proof, and rollback.*
