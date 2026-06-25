@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "rust_crates_io_registry_submission_20260524"
+TRACK_ID = "rust_crates_io_registry_submission_20260524"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 TRACKS = ROOT / "conductor" / "tracks.md"
 CONTRACT = (
     ROOT
@@ -38,6 +41,7 @@ def test_rust_crates_io_track_is_published_verified():
     assert metadata["publication_claimed"] is True
     assert metadata["publication_status"] == "published_verified"
     assert "- [x] **Track: Rust crates.io Registry Submission**" in tracks
+    assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
     assert registry["current_status"] == "published_verified"
     assert registry["submission_url"] == "https://crates.io/crates/nwau-core/0.1.0"

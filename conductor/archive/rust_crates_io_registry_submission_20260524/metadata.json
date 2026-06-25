@@ -39,5 +39,16 @@
     "duplicate_publish_run": "https://github.com/edithatogo/mchs/actions/runs/26404356667",
     "duplicate_publish_result": "crate nwau-core@0.1.0 already exists on crates.io index",
     "credential_cleanup": "crates.io token `mchs-github-actions-publish` was revoked after publication; GitHub Actions secret CARGO_REGISTRY_TOKEN was deleted."
-  }
+  },
+  "support_scope": {
+    "state": "published-verified",
+    "summary": "crates.io publication is verified for nwau-core 0.1.0 with public API checksum and yanked=false evidence. This is a crate publication claim, not Rust GA across all calculator streams."
+  },
+  "gap_register": [
+    {
+      "id": "rust-crates-future-versions",
+      "status": "externalized",
+      "summary": "Future crates.io versions require fresh package, publish, checksum, token cleanup, and public API evidence."
+    }
+  ]
 }

@@ -615,7 +615,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: Rust crates.io Registry Submission**
-*Link: [./tracks/rust_crates_io_registry_submission_20260524/](./tracks/rust_crates_io_registry_submission_20260524/)*
+*Link: [./archive/rust_crates_io_registry_submission_20260524/](./archive/rust_crates_io_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `crates.io`, and capture immutable evidence before claiming publication.*
 
 ---
