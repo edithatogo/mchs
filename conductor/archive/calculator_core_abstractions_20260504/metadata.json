@@ -1,0 +1,38 @@
+{
+  "track_id": "calculator_core_abstractions_20260504",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "calculator",
+  "current_state": "complete",
+  "primary_contract": "Track calculator_core_abstractions_20260504 contract",
+  "support_scope": "Calculator-core boundary for contract-backed parameter/input/output models, deterministic reference-bundle resolution, provenance-aware fixtures, and adapter separation across Python library and CLI paths. The archived scope covers the implemented Python contract/reference-data boundary and regression evidence, not every future runtime surface.",
+  "gap_register": [
+    {
+      "gap": "Full Rust ownership of calculator kernels is outside this track.",
+      "status": "accepted-non-blocking",
+      "rationale": "Rust-core promotion is owned by the Rust Core GA and continuation tracks."
+    },
+    {
+      "gap": "Downstream web, Power Platform, and language binding adapters are outside this track.",
+      "status": "accepted-non-blocking",
+      "rationale": "This track defines the core boundary that those adapter tracks consume."
+    }
+  ],
+  "dependencies": [
+    "public_api_contract_20260504"
+  ],
+  "completion_evidence": [
+    "nwau_py/contracts.py",
+    "nwau_py/reference_data.py",
+    "nwau_py/fixtures.py",
+    "tests/test_contract_schema_export.py",
+    "tests/test_fixture_manifest.py",
+    "tests/test_cli.py",
+    "tests/test_regression.py"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-04T14:00:00Z",
+  "updated_at": "2026-05-06T01:25:00Z",
+  "description": "Calculator Core Abstraction and Validation Models",
+  "no_stub_enforce": true
+}

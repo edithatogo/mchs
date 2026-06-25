@@ -25,7 +25,7 @@ content alone is not sufficient evidence for marking a track complete.
    *Gate: lock the supported Python/tooling matrix, CI, coverage, type checking, linting, and profiling entry points before larger refactors.*
 
 4. [x] **Track: Calculator Core Abstraction and Validation Models**
-   *Link: [./tracks/calculator_core_abstractions_20260504/](./tracks/calculator_core_abstractions_20260504/)*
+   *Link: [./archive/calculator_core_abstractions_20260504/](./archive/calculator_core_abstractions_20260504/)*
    *Depends on: validation evidence and CI coverage so the boundary contract can be protected by tests.*
    *Gate: define the calculator core boundary, parameter models, schemas, and provenance metadata before adapter work.*
 
