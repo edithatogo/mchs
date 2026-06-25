@@ -1,0 +1,38 @@
+{
+  "track_id": "classification_input_validation_20260512",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "validator",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "conductor/archive/classification_input_validation_20260512/classification_matrix.md plus nwau_py.classification_validation",
+  "support_scope": "Classification-aware preflight validation helpers and compatibility matrix for AR-DRG, AECC, UDG, Tier 2, and AMHCC, including strict required-field checks, pricing-year/version compatibility checks, licensed-input caveats, exports through nwau_py, and targeted validator tests.",
+  "gap_register": [
+    {
+      "gap": "Not every calculator and CLI entry point is documented as enforcing the shared preflight validator end-to-end.",
+      "status": "accepted-non-blocking",
+      "rationale": "The shared validator is implemented and tested, while broader endpoint-by-endpoint enforcement remains a downstream calculator/API surface obligation."
+    },
+    {
+      "gap": "Licensed AR-DRG, ICD-10-AM, ACHI, and ACS products are not redistributed or reimplemented.",
+      "status": "accepted-non-blocking",
+      "rationale": "The validator records version compatibility and licensed-input caveats only; proprietary grouping assets remain external."
+    }
+  ],
+  "dependencies": [
+    "coding_set_version_registry_20260512",
+    "icd_achi_acs_license_workflow_20260512"
+  ],
+  "completion_evidence": [
+    "conductor/archive/classification_input_validation_20260512/classification_matrix.md",
+    "nwau_py/classification_validation.py",
+    "nwau_py/__init__.py",
+    "tests/test_classification_validation.py",
+    "nwau_py/docs/calculators.md",
+    "docs-site/src/content/docs/governance/calculator-coverage.mdx"
+  ],
+  "publication_status": "not-applicable",
+  "created_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add classification-aware input validation and version matrices for AR-DRG, AECC, UDG, Tier 2, and AMHCC.",
+  "no_stub_enforce": true
+}

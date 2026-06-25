@@ -131,7 +131,7 @@ content alone is not sufficient evidence for marking a track complete.
 *Gate: separate community mental health and AMHCC shadow/current behavior from admitted mental health before claiming stream coverage.*
 
 - [x] **Track: Classification Input Validation**
-*Link: [./tracks/classification_input_validation_20260512/](./tracks/classification_input_validation_20260512/)*
+*Link: [./archive/classification_input_validation_20260512/](./archive/classification_input_validation_20260512/)*
 *Gate: add stream-specific classification version matrices and strict input validation before broader calculator expansion.*
 
 ---
@@ -213,7 +213,7 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Coding-Set Version Registry**
 *Link: [./archive/coding_set_version_registry_20260512/](./archive/coding_set_version_registry_20260512/)*
 *Gate: record AR-DRG, AECC, UDG, Tier 2, AMHCC, ICD-10-AM, ACHI, and ACS version compatibility and licensing boundaries.*
-*Evidence surfaces: `conductor/roadmap-governance.md`, `conductor/validation-vocabulary.md`, `conductor/tracks/classification_input_validation_20260512/classification_matrix.md`, `docs/reviews/20260512-expert-panel/deliberation-and-prioritisation.md`, `conductor/archive/coding_set_version_registry_20260512/strategy.md`, and `conductor/archive/coding_set_version_registry_20260512/ci_notes.md`.*
+*Evidence surfaces: `conductor/roadmap-governance.md`, `conductor/validation-vocabulary.md`, `conductor/archive/classification_input_validation_20260512/classification_matrix.md`, `docs/reviews/20260512-expert-panel/deliberation-and-prioritisation.md`, `conductor/archive/coding_set_version_registry_20260512/strategy.md`, and `conductor/archive/coding_set_version_registry_20260512/ci_notes.md`.*
 
 ---
 

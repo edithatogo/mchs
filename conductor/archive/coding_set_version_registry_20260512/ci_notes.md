@@ -28,7 +28,7 @@ whenever source provenance or license handling is unclear.
 ## Evidence expectations
 
 - The registry should stay consistent with
-  `conductor/tracks/classification_input_validation_20260512/classification_matrix.md`.
+  `conductor/archive/classification_input_validation_20260512/classification_matrix.md`.
 - Validation notes should preserve the distinction between public metadata and
   restricted products.
 - If a year is supported only by a local licensed artifact, the CI record

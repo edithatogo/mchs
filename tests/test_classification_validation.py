@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -19,7 +20,7 @@ from nwau_py.classification_validation import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "classification_input_validation_20260512"
+TRACK = ROOT / "conductor" / "archive" / "classification_input_validation_20260512"
 
 
 def _read_text(path: Path) -> str:
@@ -40,6 +41,18 @@ def test_track_matrix_records_streams_versions_and_license_caveats():
         "Version 10.0",
     ]:
         assert phrase in matrix
+
+
+def test_classification_track_archive_metadata_records_scope_and_gaps():
+    metadata = json.loads(_read_text(TRACK / "metadata.json"))
+
+    assert metadata["track_id"] == "classification_input_validation_20260512"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
+    assert metadata["support_scope"]
+    assert metadata["gap_register"]
+    assert "nwau_py/classification_validation.py" in metadata["completion_evidence"]
+    assert (TRACK / "review.md").exists()
 
 
 @pytest.mark.parametrize(
