@@ -675,7 +675,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: VS Code/Open VSX Extension Submission**
-*Link: [./tracks/vscode_openvsx_registry_submission_20260524/](./tracks/vscode_openvsx_registry_submission_20260524/)*
+*Link: [./archive/vscode_openvsx_registry_submission_20260524/](./archive/vscode_openvsx_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Open VSX / Visual Studio Marketplace`, and capture immutable evidence before claiming publication.*
 
 ---

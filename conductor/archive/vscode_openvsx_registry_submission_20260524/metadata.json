@@ -50,5 +50,16 @@
       "token_cleanup": "Fresh Open VSX token was deleted after verification; pre-existing token row was left untouched."
     },
     "latest_synchronization": "Open VSX latest and Visual Studio Marketplace latest both expose version 0.1.1; no latest-version synchronization blocker remains."
-  }
+  },
+  "support_scope": {
+    "state": "published-verified",
+    "summary": "Open VSX and Visual Studio Marketplace publication is verified for edithatogo.mchs-tools 0.1.1 with public API evidence. This is an extension publication claim, not a calculator runtime support expansion."
+  },
+  "gap_register": [
+    {
+      "id": "vscode-extension-future-versions",
+      "status": "externalized",
+      "summary": "Future extension versions require fresh VSIX packaging, Open VSX and Marketplace publication, API probes, and token cleanup evidence."
+    }
+  ]
 }

@@ -60,7 +60,7 @@ As of 2026-05-25:
 | CRAN (`nwauR`) | R package build/check artifacts | **Prepared, not published**; CRAN maintainer submission/review remains external |
 | Julia General (`NationalWeightedActivityUnitWrapper`) | `julia-binding/Project.toml` and merged General PR `156254` | **Published** in Julia General as `NationalWeightedActivityUnitWrapper 0.1.0`; merged registry PR is the authoritative publication evidence |
 | Maven Central (`io.github.edithatogo:mchs-jvm-bindings`) | JVM/Gradle build evidence | **Prepared, not published**; namespace verification, signing, and Central Portal release remain external |
-| Open VSX / Visual Studio Marketplace (`mchs-tools`) | Packaged `.vsix` artifact | **Prepared, not published**; publisher agreement/account/token access remains external |
+| Open VSX / Visual Studio Marketplace (`mchs-tools`) | Packaged `.vsix` artifact and public registry API evidence | **Published** as `edithatogo.mchs-tools 0.1.1` on Open VSX and Visual Studio Marketplace |
 | MATLAB File Exchange / Stata SSC | Prepared interop bundles | **Prepared, not published**; account or maintainer review workflows remain external |
 | vcpkg / ConanCenter (`nwau-c-abi`) | Prepared portfile/recipe, local Conan create, and vcpkg overlay validation evidence | **Prepared, not published**; upstream vcpkg/ConanCenter PR/review remains external |
 | Swift Package Index (`MCHSBind`) | PackageList issue and Swift package metadata | **Accepted/submitted follow-up**; public SPI listing/version evidence is still pending |
