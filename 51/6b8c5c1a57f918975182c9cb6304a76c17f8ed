@@ -1,0 +1,9 @@
+Task: Add contract-hardening pre-phases to CLI and MCP plans
+
+Summary:
+- Added regression coverage requiring CLI and MCP plans to contain a Contract Hardening Pre-Phase.
+- Added CLI pre-phase tasks for numeric tolerance and rounding policy, schema parity source, unsupported diagnostic codes, and support-status wording.
+- Added MCP pre-phase tasks for the same gates, including Python stdio transport versus Rust-backed formula runtime wording.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
