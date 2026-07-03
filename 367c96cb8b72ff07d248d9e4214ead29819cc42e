@@ -1,0 +1,15 @@
+Task: Create Rust migration track hardening Conductor track
+
+Summary:
+- Added rust_migration_track_hardening_20260703 as a governance/chore track.
+- Captured metadata normalization for the Rust CLI, MCP, and promotion tracks.
+- Captured acute 2025 as the first Rust-backed migration slice.
+- Captured explicit CLI runtime selection: --runtime python|rust|auto, Python default until promotion, NWAU_RUNTIME as internal/CI override, and fail-closed unsupported Rust requests.
+- Captured MCP boundary clarification: Python may remain stdio transport, but promoted formula execution must use a Rust-backed dispatcher; MCP should reuse CLI runtime policy and fixtures without implicit CLI shell-out.
+- Captured additional recommendations: sync conductor-newtrack template wording with automated-review workflow, scope Rust migration metadata validation first, consider broader metadata governance after legacy backfill, and include this hardening track in project-board sync if external boards remain active.
+- Updated conductor/tracks.md and conductor/status-matrix.json.
+
+Validation:
+- python3 scripts/validate_conductor_status_matrix.py
+- python3 -m json.tool on conductor/status-matrix.json and the new metadata.json
+- git diff --check
