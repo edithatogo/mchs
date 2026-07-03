@@ -11,7 +11,7 @@
     - [x] Cover the three Rust migration track metadata files directly.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Governance Normalization' (Protocol in workflow.md) [4e326b5]
 
-## Phase 2: Runtime Boundary Decisions
+## Phase 2: Runtime Boundary Decisions [checkpoint: 73587ee]
 
 - [x] Task: Harden the CLI runtime-selection contract [f38ac67]
     - [x] Update the CLI migration spec and plan to define `--runtime python|rust|auto`.
@@ -22,7 +22,7 @@
     - [x] Update the MCP migration spec and plan to distinguish Python stdio transport from formula runtime.
     - [x] Require promoted MCP calculation behaviour to use a Rust-backed dispatcher.
     - [x] State that MCP reuses CLI runtime policy and parity fixtures without implicitly shelling out to the CLI.
-- [~] Task: Conductor - Automated Review and Checkpoint 'Runtime Boundary Decisions' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Runtime Boundary Decisions' (Protocol in workflow.md) [73587ee]
 
 ## Phase 3: First-Slice and Contract Hardening
 
