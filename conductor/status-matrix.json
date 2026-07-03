@@ -23,7 +23,6 @@
     "r_cran_registry_submission_20260524",
     "rust_cli_core_migration_20260703",
     "rust_cli_mcp_promotion_evidence_20260703",
-    "rust_migration_track_hardening_20260703",
     "rust_mcp_core_migration_20260703",
     "swift_package_index_submission_20260524",
     "vscode_openvsx_registry_submission_20260524"
@@ -33,7 +32,6 @@
     "support_status_matrix_20260513",
     "mcp_contract_20260513",
     "http_api_contract_20260513",
-    "rust_migration_track_hardening_20260703",
     "rust_cli_core_migration_20260703",
     "rust_mcp_core_migration_20260703",
     "rust_cli_mcp_promotion_evidence_20260703",
