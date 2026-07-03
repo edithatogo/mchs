@@ -1,0 +1,11 @@
+Task: Harden the CLI runtime-selection contract
+
+Summary:
+- Added a regression test requiring the CLI migration track to pin the runtime contract.
+- Updated the CLI migration spec and plan to define --runtime python|rust|auto.
+- Recorded Python as the default runtime until promotion evidence changes it.
+- Recorded NWAU_RUNTIME as an internal/CI override and explicit CLI option precedence.
+- Recorded fail-closed behavior for unsupported --runtime rust requests.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
