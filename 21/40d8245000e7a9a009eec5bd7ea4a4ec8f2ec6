@@ -1,0 +1,14 @@
+Archive closeout: Rust Migration Track Hardening
+
+Summary:
+- Moved conductor/tracks/rust_migration_track_hardening_20260703 to conductor/archive/rust_migration_track_hardening_20260703.
+- Removed the active registry section from conductor/tracks.md.
+- Updated the focused test to resolve the hardening track from active tracks or archive so validation remains stable after closeout.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
+- python3 scripts/validate_rust_migration_track_governance.py
+- python3 scripts/validate_conductor_status_matrix.py
+- uv run ruff check scripts/validate_rust_migration_track_governance.py tests/test_rust_migration_track_hardening.py
+- git diff --check
+- archive-move-ok filesystem check
