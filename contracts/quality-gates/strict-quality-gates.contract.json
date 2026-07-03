@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "asOf": "2026-06-24",
+  "purpose": "Define the repository quality, security, coverage, dependency, release, and publication-evidence gates required before public-surface completion claims.",
+  "minimumCoveragePercent": 90,
+  "requiredGateClasses": [
+    "format",
+    "lint",
+    "docstring",
+    "typing",
+    "unit",
+    "integration",
+    "wheel_smoke",
+    "rust_format",
+    "rust_lint",
+    "rust_unit",
+    "coverage",
+    "property_based",
+    "mutation",
+    "profiling",
+    "security",
+    "dependency_review",
+    "dependency_automation",
+    "release_metadata",
+    "versioning"
+  ],
+  "workflowEvidence": {
+    "pullRequestCi": ".github/workflows/pr-ci.yml",
+    "slowValidation": ".github/workflows/slow-validation.yml",
+    "slowValidationReusable": ".github/workflows/slow-validation-reusable.yml",
+    "codeScanning": ".github/workflows/codeql.yml",
+    "dependencyReviewConfig": ".github/dependency-review-config.yml",
+    "release": ".github/workflows/release.yml",
+    "registryPublication": ".github/workflows/publish-registry-packages.yml"
+  },
+  "globalCriteria": {
+    "coverage": {
+      "thresholdPercent": 90,
+      "pythonGate": ".github/workflows/pr-ci.yml runs pytest with --cov-fail-under=90 and uploads Codecov with fail_ci_if_error.",
+      "rustGate": ".github/workflows/pr-ci.yml runs cargo fmt, cargo audit, cargo clippy -D warnings, and cargo test for the Rust workspace."
+    },
+    "quality": {
+      "python": "ruff format --check, ruff check, docstring lint, and ty --error all run before tests.",
+      "rust": "cargo fmt --all --check, cargo clippy --all-targets --all-features -- -D warnings, and cargo test run in PR CI.",
+      "slowValidation": "property, mutation, and profiling jobs are available through slow-validation workflows."
+    },
+    "security": {
+      "python": "security-focused Ruff rules, bandit, and pip-audit run in PR CI.",
+      "rust": "cargo audit runs in PR CI.",
+      "codeScanning": "CodeQL runs on pull requests, pushes to master, and weekly schedule.",
+      "dependencyReview": "dependency-review-action uses .github/dependency-review-config.yml and fails at high or worse severity."
+    },
+    "dependencyAutomation": {
+      "renovate": "renovate.json covers Python, GitHub Actions, Cargo, npm, Go modules, Gradle, NuGet, and Dockerfile managers.",
+      "dependencyDashboard": "Dependency dashboard approval is required for grouped package-manager updates."
+    },
+    "versioning": {
+      "repo": "Git tags and release workflows are the repository version source of truth.",
+      "packages": "Package manifests carry explicit versions or tag conventions, and release evidence binds package versions to source commit/tag/checksum."
+    }
+  },
+  "surfaces": [
+    {
+      "id": "python",
+      "package": "nwau-py",
+      "versionField": "project.version",
+      "artifacts": [
+        "pyproject.toml",
+        "nwau_py",
+        ".github/workflows/pr-ci.yml",
+        ".github/workflows/release.yml"
+      ]
+    },
+    {
+      "id": "rust",
+      "package": "nwau-core / nwau-c-abi / nwau-py",
+      "versionField": "workspace.package.version and crate package.version fields",
+      "artifacts": [
+        "rust/Cargo.toml",
+        "rust/crates/nwau-core/Cargo.toml",
+        "rust/crates/nwau-c-abi/Cargo.toml",
+        "rust/crates/nwau-py/Cargo.toml",
+        ".github/workflows/pr-ci.yml"
+      ]
+    },
+    {
+      "id": "r",
+      "package": "nwauR",
+      "versionField": "DESCRIPTION Version",
+      "artifacts": [
+        "r-binding/DESCRIPTION",
+        "r-binding/tests/testthat",
+        "conductor/tracks/r_cran_registry_submission_20260524"
+      ],
+      "externalGate": "CRAN acceptance remains an external reviewer gate."
+    },
+    {
+      "id": "typescript_wasm",
+      "package": "@edithatogo/mchs-wasm-binding",
+      "versionField": "package.json version",
+      "artifacts": [
+        "wasm-binding/package.json",
+        "wasm-binding/test",
+        "conductor/tracks/typescript_npm_registry_submission_20260524"
+      ]
+    },
+    {
+      "id": "go",
+      "package": "github.com/edithatogo/mchs/bindings/go",
+      "versionField": "git tag bindings/go/v*",
+      "artifacts": [
+        "bindings/go/go.mod",
+        "contracts/go-binding/go-binding.contract.json",
+        "conductor/tracks/go_module_registry_submission_20260524"
+      ]
+    },
+    {
+      "id": "dotnet",
+      "package": "Mchs.Bindings.DotNet",
+      "versionField": "csproj Version",
+      "artifacts": [
+        "bindings/dotnet/DotNetBinding.csproj",
+        "contracts/csharp-dotnet-binding/csharp-dotnet-binding.contract.json",
+        "conductor/tracks/dotnet_nuget_registry_submission_20260524"
+      ]
+    },
+    {
+      "id": "jvm",
+      "package": "io.github.edithatogo:mchs-jvm-bindings",
+      "versionField": "Gradle project version",
+      "artifacts": [
+        "bindings/jvm/build.gradle.kts",
+        "conductor/tracks/jvm_maven_central_registry_submission_20260524"
+      ],
+      "externalGate": "Maven Central namespace, signing, and close/release state remain external service gates."
+    },
+    {
+      "id": "julia",
+      "package": "NationalWeightedActivityUnitWrapper",
+      "versionField": "Project.toml version",
+      "artifacts": [
+        "julia-binding/Project.toml",
+        "julia-binding/test",
+        "conductor/tracks/julia_general_registry_submission_20260524"
+      ]
+    },
+    {
+      "id": "matlab",
+      "package": "MATLAB File Exchange interop package",
+      "versionField": "submission package metadata",
+      "artifacts": [
+        "contracts/matlab-interop-binding/matlab-interop-binding.contract.json",
+        "conductor/tracks/matlab_file_exchange_submission_20260524"
+      ],
+      "externalGate": "MATLAB File Exchange publication remains an external account/reviewer gate."
+    },
+    {
+      "id": "stata",
+      "package": "Stata SSC interop package",
+      "versionField": "submission package metadata",
+      "artifacts": [
+        "contracts/stata-interop-binding/stata-interop-binding.contract.json",
+        "conductor/tracks/stata_ssc_submission_20260524"
+      ],
+      "externalGate": "SSC acceptance remains a maintainer-review gate."
+    },
+    {
+      "id": "kotlin_native",
+      "package": "Kotlin Native boundary adapter",
+      "versionField": "contract and track metadata",
+      "artifacts": [
+        "contracts/kotlin-native-binding/kotlin-native-binding.contract.json",
+        "conductor/tracks/kotlin_native_binding_20260512"
+      ],
+      "runtimeConstraint": "Native runtime execution must be separately evidenced before completion claims."
+    }
+  ]
+}

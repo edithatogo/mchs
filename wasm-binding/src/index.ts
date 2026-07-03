@@ -1,4 +1,9 @@
-export { createWasmAdapter, WasmAdapterError } from './adapter.js';
+export {
+  createWasmAdapter,
+  createWasmCalculatorAdapter,
+  isWasmCalculatorExports,
+  WasmAdapterError,
+} from './adapter.js';
 export type {
   FutureWasmCalculatorExports,
   JsonObject,
@@ -6,6 +11,7 @@ export type {
   JsonValue,
   WasmAdapterConfig,
   WasmAdapterHandle,
+  WasmCalculatorAdapter,
+  WasmCalculatorExports,
   WasmModuleShape,
 } from './types.js';
-

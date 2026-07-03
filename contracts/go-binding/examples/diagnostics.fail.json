@@ -13,7 +13,7 @@
       {
         "id": "module_not_ready",
         "status": "fail",
-        "message": "The Go module is still scaffold-ready rather than ready."
+        "message": "The Go service and binding-file adapters are still private validation surfaces rather than release-ready module outputs."
       },
       {
         "id": "error_codes_present",

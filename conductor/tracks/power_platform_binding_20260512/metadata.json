@@ -4,13 +4,15 @@
   "status": "design-complete",
   "track_class": "binding",
   "current_state": "runtime-evidence-recorded-with-blockers",
-  "primary_contract": "Track power_platform_binding_20260512 contract",
+  "primary_contract": "contracts/power-platform/power-platform-binding.contract.json",
   "dependencies": [],
   "completion_evidence": [
     "docs",
     "workflows",
     "tests",
-    "power-platform/solution/runtime-evidence-20260525.md"
+    "power-platform/solution/runtime-evidence-20260525.md",
+    "scripts/validate_power_platform_capabilities.py",
+    "tests/test_power_platform_binding_track.py"
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",

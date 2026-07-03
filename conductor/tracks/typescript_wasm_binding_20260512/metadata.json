@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "complete",
   "track_class": "binding",
-  "current_state": "prototype",
+  "current_state": "complete",
   "primary_contract": "Track typescript_wasm_binding_20260512 contract",
   "dependencies": [],
   "completion_evidence": [
@@ -11,8 +11,9 @@
     "workflows",
     "tests"
   ],
-  "publication_status": "not-ready",
+  "publication_status": "published_verified",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T13:01:38Z",
-  "description": "Add a TypeScript and WebAssembly adapter-shell prototype for synthetic-data browser docs demos, a thin Node workflow, and conservative contract parity."
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a TypeScript and WebAssembly export adapter for synthetic-data browser docs demos, a thin Node workflow, and conservative contract parity.",
+  "no_stub_enforce": true
 }

@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "complete",
   "track_class": "binding",
-  "current_state": "prototype",
+  "current_state": "complete-with-gaps",
   "primary_contract": "Track julia_binding_20260512 contract",
   "dependencies": [],
   "completion_evidence": [
@@ -13,6 +13,7 @@
   ],
   "publication_status": "not-ready",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T00:00:00Z",
-  "description": "Add a wrapper-only Julia binding prototype for high-performance analysis through CLI/file interop while preserving single-sourced calculator logic."
+  "updated_at": "2026-05-13T00:00:00Z",
+  "description": "Add a wrapper-only Julia binding prototype for high-performance analysis through CLI/file interop while preserving single-sourced calculator logic.",
+  "no_stub_enforce": true
 }

@@ -86,7 +86,7 @@ Exit gates:
 - Rust code path can execute synthetic fixtures for at least one end-to-end
   canary stream/year.
 - Core APIs are thin enough for Python, CLI/file, C ABI, and WASM consumers.
-- Formula logic is not implemented in bindings.
+- Bindings must not own formula logic.
 
 ## Phase 3: Parity and validation
 

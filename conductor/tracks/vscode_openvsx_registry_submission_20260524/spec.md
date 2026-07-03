@@ -24,16 +24,17 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally. A VS Code extension project exists and packages into `mchs-tools-0.1.0.vsix` using `vsce`. The remaining blocker is external: Open VSX and Visual Studio Marketplace require publisher accounts/tokens for authenticated publishing.
+Resolved. A VS Code extension project exists and packages into `mchs-tools` VSIX artifacts using `vsce`. Open VSX and Visual Studio Marketplace both expose `edithatogo.mchs-tools@0.1.1`; no active VS Code Marketplace/Open VSX publication blocker remains.
 
 ## Preparation Evidence
 
 - Public registry discovery: `https://open-vsx.org/api/edithatogo/mchs-tools` returned `Extension not found`.
 - Package command: `npx --yes @vscode/vsce package --no-dependencies`
-- Artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix`
-- Package result: packaged 6 files, 2.56 KB.
+- Artifact: `microcosting_healthservices/integrations/vscode/mchs-tools.vsix` through the explicit workflow `--out` path; manual Marketplace update used `/tmp/mchs-tools-0.1.1.vsix`.
+- Package result: packaged successfully in workflow run `https://github.com/edithatogo/mchs/actions/runs/27457810800` before Open VSX `0.1.1` publication.
 - Local fix: added local `LICENSE` and package `files` allowlist.
-- Remaining external blocker: publisher tokens for Open VSX and Visual Studio Marketplace.
+- Publication evidence: Open VSX API verifies `0.1.1`, and the Visual Studio Marketplace Gallery API verifies public `0.1.1` with VSIX SHA-256 `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
+- Remaining external blocker: none for Open VSX / Visual Studio Marketplace `0.1.1` publication.
 
 ## Acceptance Criteria
 

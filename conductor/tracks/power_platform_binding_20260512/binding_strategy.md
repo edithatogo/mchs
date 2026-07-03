@@ -49,6 +49,13 @@ transport metadata:
 - `fixture_gate` — declared synthetic-only or local-only gate
 - `correlation_id` — traceable caller identifier
 
+The source-controlled contract artifacts are
+`contracts/power-platform/power-platform-binding.contract.json` and
+`contracts/power-platform/custom-connector.openapi.yaml`.
+Power Platform uses `listMchsCalculatorCapabilities` for selector discovery,
+`validateMchsCalculatorInput` for pre-submit checks, and `runMchsCalculation`
+for calculation delegation.
+
 Response fields from the calculator contract are surfaced as structured
 outputs for workflow apps: success/fail status, computed values,
 diagnostics, and provenance.
@@ -65,9 +72,13 @@ diagnostics, and provenance.
 
 ## Supported calculators
 
-All calculators exposed through the shared service API or CLI/file boundary
-are accessible from Power Platform. The custom connector or flow action
-selects the target calculator via `calculator_id` and `pricing_year`.
+Power Platform discovers calculator/year coverage through
+`listMchsCalculatorCapabilities` and
+`contracts/power-platform/calculator-capability-matrix.json`. source-available
+coverage from 2013 through 2026 is visible for selection context, while submit
+actions remain disabled until the selected state is implemented or helper.
+Historical variant surfaces remain discoverable without being runnable app
+logic.
 
 ## Limitations
 
@@ -119,10 +130,13 @@ Prefer CLI/file interop or native bindings when:
 
 ## Readiness bar
 
-- This track is design-only. No Power Platform connector code or solution
-  artifacts are being committed to the binding strategy.
-- The managed solution publication path is documented but not implemented
-  here.
-- Do not claim Power Platform integration as production-ready until the
-  shared service API is stable, the custom connector exists, and solution
-  checker passes for the managed solution.
+- Local contract artifacts and validation tests are source-controlled, including
+  `tests/test_power_platform_binding_track.py`.
+- The managed solution publication path is documented, but runtime execution is
+  not claimed until tenant connector configuration and app-player smoke evidence
+  are captured.
+- There is no tenant-exported managed solution zip in source control; managed
+  solution export/import remains an external tenant gate.
+- Do not claim Power Platform integration as production-ready until the shared
+  service API is stable, the custom connector points at a real service endpoint,
+  and solution checker passes for the managed solution.

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "binding_id": "scala_spark_binding_20260513",
+  "surface": "scala_spark",
+  "initial_strategy": "parquet-arrow file exchange",
+  "fallback_strategy": "service boundary",
+  "formula_logic_location": "rust core",
+  "spark_module_status": "future-only",
+  "diagnostics": {
+    "format": "json",
+    "includes": [
+      "contract_id",
+      "fixture_id",
+      "validation_status",
+      "strategy",
+      "fallback"
+    ]
+  },
+  "provenance": {
+    "checksum_algorithm": "sha256",
+    "preserve_fields": [
+      "source_basis",
+      "fixture_id",
+      "notes"
+    ]
+  },
+  "spark_module": {
+    "status": "future-only",
+    "release_gate": "contract and parity stable"
+  }
+}

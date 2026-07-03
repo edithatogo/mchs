@@ -20,5 +20,6 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Coordinate the transition from Python-first package to a proper polyglot library with a shared Rust calculator core and thin bindings."
+  "description": "Coordinate the transition from Python-first package to a proper polyglot library with a shared Rust calculator core and thin bindings.",
+  "no_stub_enforce": true
 }

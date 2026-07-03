@@ -8,7 +8,8 @@ while Python remains the baseline reference and fallback until each stream has
 complete parity evidence.
 
 Scala/Spark, Swift, Stata, and MATLAB tracks are valid future consumers, but
-they are explicitly deferred behind Rust Core GA.
+they remain deferred until each has an accountable audience, owner, and
+surface-specific evidence case.
 
 ## Functional Requirements
 
@@ -47,7 +48,7 @@ they are explicitly deferred behind Rust Core GA.
 - `conductor/tracks.md` includes `Rust Core GA` as an incomplete immediate
   priority track.
 - Scala/Spark, Swift, Stata, and MATLAB tracks are marked as deferred behind
-  Rust Core GA.
+  their audience, owner, and evidence gates.
 
 ## Out of Scope
 

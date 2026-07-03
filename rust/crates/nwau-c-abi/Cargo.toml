@@ -2,8 +2,9 @@
 name = "nwau-c-abi"
 version = "0.1.0"
 edition = "2021"
-description = "Minimal C ABI scaffold for the NWAU proof of concept"
+description = "C ABI package surface for the MCHS NWAU calculation core"
 license = "Apache-2.0"
+repository = "https://github.com/edithatogo/mchs"
 publish = false
 
 [lib]
@@ -12,4 +13,4 @@ path = "src/lib.rs"
 crate-type = ["cdylib", "staticlib", "rlib"]
 
 [dependencies]
-
+nwau-core = { version = "0.1.0", path = "../nwau-core" }
