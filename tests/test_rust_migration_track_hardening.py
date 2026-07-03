@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -35,3 +37,15 @@ def test_rust_migration_tracks_have_normalized_metadata() -> None:
         metadata = _metadata(track_id)
         for key, value in expected.items():
             assert metadata.get(key) == value, (track_id, key, metadata.get(key))
+
+
+def test_rust_migration_governance_validator_passes() -> None:
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_rust_migration_track_governance.py"],
+        check=False,
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+
+    assert result.returncode == 0, result.stderr or result.stdout
