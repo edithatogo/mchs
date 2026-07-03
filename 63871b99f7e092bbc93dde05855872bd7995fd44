@@ -1,0 +1,9 @@
+Task: Start Rust Migration Track Hardening
+
+Summary:
+- Marked Rust Migration Track Hardening in progress in conductor/tracks.md.
+- Updated track metadata to in_progress/in-progress.
+- Marked the first plan task in progress.
+
+Validation:
+- Start-state commit only; implementation validation follows with task-specific checks.
