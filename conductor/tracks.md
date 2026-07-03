@@ -722,12 +722,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Rust CLI Core Migration**
-*Link: [./tracks/rust_cli_core_migration_20260703/](./tracks/rust_cli_core_migration_20260703/)*
-*Gate: Migrate current CLI calculation and validation execution to the shared Rust core behind parity, diagnostics, fallback, and documentation evidence before any default-runtime claim.*
-
----
-
 - [ ] **Track: Rust MCP Core Migration**
 *Link: [./tracks/rust_mcp_core_migration_20260703/](./tracks/rust_mcp_core_migration_20260703/)*
 *Gate: Migrate current MCP stdio calculation and validation tools to the shared Rust core while preserving the published MCP contract and registry-facing behaviour.*
