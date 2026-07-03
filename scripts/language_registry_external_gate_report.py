@@ -49,11 +49,15 @@ def external_gate_rows(contract: dict) -> list[dict]:
     for registry in contract["registries"]:
         if registry["current_status"] == "published_verified":
             continue
+        is_cancelled = (
+            "cancelled" in registry["current_status"]
+            or "canceled" in registry["current_status"]
+        )
         blocker = registry.get("blocker")
         if not blocker:
             raise AssertionError(f"{registry['id']} is unpublished but has no blocker")
         submission_url = registry.get("submission_url")
-        if submission_url and not (
+        if submission_url and not is_cancelled and not (
             registry["current_status"].startswith("submitted_")
             or (
                 registry["current_status"].startswith("published_")
@@ -1054,6 +1058,14 @@ def promotion_state(row: dict) -> dict:
     public_state = row.get("public_state")
     live_state = row.get("live_state")
 
+    if "cancelled" in status or "canceled" in status:
+        return {
+            "promotion_state": "deprecated_cancelled",
+            "next_action": (
+                "retain historical evidence only; do not pursue publication or "
+                "monitoring unless a new track re-charters the surface"
+            ),
+        }
     if status.startswith("published_") and "_pending_" in status:
         return {
             "promotion_state": "partial_publication_verified",

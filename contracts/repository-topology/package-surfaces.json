@@ -215,15 +215,15 @@
         "target": "Swift Package Index",
         "workflow": "PackageList issue and public SPI indexing",
         "version_source": "bindings/swift/Package.swift",
-        "registry_state": "published_verified",
+        "registry_state": "deprecated_cancelled_publication_retained",
         "evidence": [
           "conductor/archive/swift_package_index_submission_20260524/"
         ],
-        "external_gate": null
+        "external_gate": "deprecated and cancelled on 2026-07-03; historical Swift Package Index evidence retained only"
       },
       "artifact_policy": "source",
       "formula_logic": "adapter-only",
-      "claim_boundary": "Swift Package Index publication is verified; compatibility build results remain external processing evidence and do not expand runtime support."
+      "claim_boundary": "Swift Package Index publication evidence is retained historically; the Swift package surface is deprecated and cancelled and does not expand runtime support."
     },
     {
       "id": "jvm-binding",
@@ -320,15 +320,15 @@
         "target": "Open VSX and Visual Studio Marketplace",
         "workflow": "manual marketplace publication",
         "version_source": "integrations/vscode/package.json",
-        "registry_state": "published_verified",
+        "registry_state": "deprecated_cancelled_publication_retained",
         "evidence": [
-          "conductor/tracks/vscode_openvsx_registry_submission_20260524/"
+          "conductor/archive/vscode_openvsx_registry_submission_20260524/"
         ],
-        "external_gate": null
+        "external_gate": "deprecated and cancelled on 2026-07-03; historical Open VSX and Marketplace evidence retained only"
       },
       "artifact_policy": "release-attachment",
       "formula_logic": "not-applicable",
-      "claim_boundary": "Extension publication is separate from calculator validation."
+      "claim_boundary": "Extension publication evidence is retained historically; the VS Code/Open VSX surface is deprecated and cancelled and remains separate from calculator validation."
     },
     {
       "id": "smithery-mcpb-package",
@@ -533,15 +533,15 @@
         "target": "vcpkg",
         "workflow": "overlay validation and upstream PR if policy permits",
         "version_source": "packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
-        "registry_state": "blocked",
+        "registry_state": "deprecated_cancelled_not_published",
         "evidence": [
           "conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/"
         ],
-        "external_gate": "vcpkg policy currently does not support Rust library ports"
+        "external_gate": "deprecated and cancelled on 2026-07-03; vcpkg PR 51965 and ConanCenter PR 30262 retained as historical evidence only"
       },
       "artifact_policy": "source",
       "formula_logic": "not-applicable",
-      "claim_boundary": "vcpkg is deferred/blocked until upstream port policy supports this Rust/C ABI shape."
+      "claim_boundary": "vcpkg/Conan publication is deprecated and cancelled; local overlay and PR evidence is retained historically and no public registry publication is claimed."
     },
     {
       "id": "cran-registry",

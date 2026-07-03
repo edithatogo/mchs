@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `MCHSBind`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/bindings/swift/Package.swift`
-- Current status: `published_verified`
+- Current status: `deprecated_cancelled_publication_retained`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved and published. `swift build` completes for `MCHSBind`, a clean public package repository exists at `https://github.com/edithatogo/mchs-swift.git`, tag `v0.1.0` exists, `swift package dump-package` succeeds, and the Swift Package Index PackageList issue was closed as completed on 2026-05-24. On 2026-06-12, a Swift Package Index maintainer confirmed the original issue had been closed prematurely and added the package with merged PackageList PR `https://github.com/SwiftPackageIndex/PackageList/pull/13999`. Public repository metadata was improved with an MIT license, Swift package topics, and a GitHub release for `v0.1.0`. A public Swift Package Index page probe now exposes `MCHSBind`, `edithatogo/mchs-swift`, stable `v0.1.0`, the SPM manifest snippet, and the GitHub release link.
+Resolved and published as historical evidence, then deprecated and cancelled on 2026-07-03. `swift build` completes for `MCHSBind`, a clean public package repository exists at `https://github.com/edithatogo/mchs-swift.git`, tag `v0.1.0` exists, `swift package dump-package` succeeds, and the Swift Package Index PackageList issue was closed as completed on 2026-05-24. On 2026-06-12, a Swift Package Index maintainer confirmed the original issue had been closed prematurely and added the package with merged PackageList PR `https://github.com/SwiftPackageIndex/PackageList/pull/13999`. Public repository metadata was improved with an MIT license, Swift package topics, and a GitHub release for `v0.1.0`. A public Swift Package Index page probe exposes `MCHSBind`, `edithatogo/mchs-swift`, stable `v0.1.0`, the SPM manifest snippet, and the GitHub release link. No further SPI publication, compatibility, or monitoring work is planned unless re-chartered.
 
 ## Preparation Evidence
 
@@ -54,7 +54,7 @@ Resolved and published. `swift build` completes for `MCHSBind`, a clean public p
 - Discovery evidence exists and is linked from this track.
 - Preparation evidence exists for package metadata, artifact integrity, and registry policy checks.
 - Submission evidence exists.
-- Publication is verified by the public Swift Package Index page exposing the package and version.
+- Publication is verified by the public Swift Package Index page exposing the package and version, but the surface is now deprecated and cancelled.
 
 ## Out of Scope
 

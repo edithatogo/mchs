@@ -160,6 +160,8 @@
             "prepared",
             "submitted",
             "published_verified",
+            "deprecated_cancelled_publication_retained",
+            "deprecated_cancelled_not_published",
             "blocked"
           ]
         },

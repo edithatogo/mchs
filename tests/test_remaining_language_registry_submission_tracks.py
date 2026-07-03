@@ -92,12 +92,22 @@ def test_published_language_registry_entries_do_not_carry_blockers():
         "python_pypi",
         "rust_crates_io",
         "stata_ssc",
-        "swift_package_index",
         "typescript_npm",
-        "vscode_openvsx",
     }
     assert all(item["blocker"] is None for item in published)
     assert all(item["submission_url"] for item in published)
+
+    cancelled = [
+        item
+        for item in data["registries"]
+        if "cancelled" in item["current_status"]
+    ]
+    assert {item["id"] for item in cancelled} == {
+        "c_cpp_vcpkg_conan",
+        "swift_package_index",
+        "vscode_openvsx",
+    }
+    assert all("Deprecated and cancelled" in item["blocker"] for item in cancelled)
 
 
 def test_remaining_prepared_registry_tracks_are_blocked_without_publication_claims():
@@ -262,6 +272,10 @@ def test_language_registry_submission_validator_enforces_track_consistency():
             assert registry["blocker"] is None
             assert metadata["publication_claimed"] is True
             assert f"- [x] **Track: {registry['title']}**" in tracks_md
+        elif "cancelled" in registry["current_status"]:
+            assert metadata["status"] in {"completed", "cancelled"}
+            assert metadata["blocker"]
+            assert "cancelled" in metadata["current_status"]
         else:
             assert registry["blocker"]
             assert metadata["status"] in {"blocked", "submitted"} or metadata[
@@ -315,7 +329,8 @@ def test_promotion_report_is_non_live_by_default(tmp_path):
     assert payload["report"] == {"live": False}
     assert "generated_at_utc" not in payload["report"]
     assert payload["promotion_counts"] == {
-        "submitted_waiting_review": 3,
+        "deprecated_cancelled": 3,
+        "submitted_waiting_review": 2,
     }
     assert "stata_ssc" not in payload["next_actions"]
     assert (
@@ -548,9 +563,13 @@ def test_external_gate_report_live_helpers_classify_public_registry_probes(monke
         == "https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml"
     )
     assert "jvm_maven_central" not in by_id
-    assert "swift_package_index" not in by_id
+    assert module.promotion_state(by_id["swift_package_index"])[
+        "promotion_state"
+    ] == "deprecated_cancelled"
     assert "matlab_file_exchange" not in by_id
-    assert "vscode_openvsx" not in by_id
+    assert module.promotion_state(by_id["vscode_openvsx"])[
+        "promotion_state"
+    ] == "deprecated_cancelled"
     assert (
         module.public_probe_url(go_registry)
         == "https://pkg.go.dev/github.com/edithatogo/mchs/bindings/go"
@@ -1290,25 +1309,20 @@ def test_external_gate_report_classifies_promotion_state():
 
     conan_row = {
         "id": "c_cpp_vcpkg_conan",
-        "status": (
-            "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred"
-        ),
+        "status": "deprecated_cancelled_not_published",
         "public_state": "public_listing_missing",
         "live_state": "submitted_open",
         "blocker": "Conan scheduler pending",
     }
-    assert (
-        "ConanCenter job scheduler" in module.promotion_state(conan_row)["next_action"]
+    assert module.promotion_state(conan_row)["promotion_state"] == (
+        "deprecated_cancelled"
     )
-    assert "vcpkg deferred" in module.promotion_state(conan_row)["next_action"]
+    assert (
+        "historical evidence only" in module.promotion_state(conan_row)["next_action"]
+    )
     conan_published_row = conan_row | {"public_state": "public_listing_available"}
     conan_published_state = module.promotion_state(conan_published_row)
-    assert conan_published_state["promotion_state"] == "partial_publication_verified"
-    assert (
-        "capture ConanCenter publication evidence"
-        in conan_published_state["next_action"]
-    )
-    assert "vcpkg deferred" in conan_published_state["next_action"]
+    assert conan_published_state["promotion_state"] == "deprecated_cancelled"
 
     julia_row = {
         "id": "julia_general",
@@ -1404,7 +1418,8 @@ def test_non_live_promotion_group_counts_are_stable_from_contract():
         grouped.setdefault(row["promotion_state"], []).append(row)
 
     assert module.promotion_counts(grouped) == {
-        "submitted_waiting_review": 3,
+        "deprecated_cancelled": 3,
+        "submitted_waiting_review": 2,
     }
     assert "stata_ssc" not in module.next_actions_by_registry(grouped)
 
@@ -1433,8 +1448,8 @@ def test_language_registry_external_gate_docs_explain_live_monitor_contract():
     assert "src/contrib/PACKAGES" in text
     assert "Anaconda `conda-forge/nwau-py` package API" in text
     assert "feedstock-only result" in text
-    assert "ConanCenter raw recipe" in text
-    assert "partial publication evidence" in text
+    assert "vcpkg / ConanCenter live public probe" in text
+    assert "deprecated and cancelled" in text
     assert "Boston College SSC/RePEc" in text
     assert "mchs.pkg" in text
     assert "mchs.ado" in text
@@ -1454,13 +1469,14 @@ def test_markdown_report_includes_promotion_next_actions():
     markdown = module.render_markdown(rows)
 
     assert "Promotion group counts:" in markdown
-    assert "`submitted_waiting_review`: 3" in markdown
+    assert "`deprecated_cancelled`: 3" in markdown
+    assert "`submitted_waiting_review`: 2" in markdown
     assert "`approval_required_before_follow_up`" not in markdown
     assert "Next action" in markdown
     assert "wait for CRAN incoming/pretest or reviewer email" in markdown
     assert "feedstock publication" in markdown
     assert "explicit user approval" not in markdown
-    assert "ConanCenter job scheduler" in markdown
+    assert "historical evidence only" in markdown
 
 
 def test_live_markdown_report_includes_pr_mergeability_details():
@@ -1504,19 +1520,21 @@ def test_external_submission_runbook_matches_current_go_and_swift_states():
     text = _read(EXTERNAL_SUBMISSION_RUNBOOK)
 
     assert (
-        "PyPI, npm, crates.io, NuGet, the Homebrew personal tap, the Go "
-        "module, Swift Package Index, Maven Central, MATLAB File Exchange, "
-        "Open VSX, Visual Studio Marketplace, and Stata SSC are externally "
-        "published and verified"
+        "Swift Package Index, Open VSX, Visual Studio Marketplace, and "
+        "vcpkg/ConanCenter are deprecated and cancelled"
     ) in text
     assert "Maven Central" in text
     assert "io.github.edithatogo:mchs-jvm-bindings:0.1.0" in text
-    assert "Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1`" in text
     assert (
-        "Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; latest is `0.1.1`"
+        "Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1` "
+        "historical evidence retained"
+    ) in text
+    assert (
+        "Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; "
+        "latest is `0.1.1`; surface deprecated and cancelled"
         in text
     )
-    assert "Swift Package Index: `MCHSBind@0.1.0`" in text
+    assert "Swift Package Index: `MCHSBind@0.1.0` historical evidence retained" in text
     assert "GitHub Actions job summary" in text
     assert (
         "including the generated timestamp, promotion group counts, submission "
@@ -1530,8 +1548,10 @@ def test_external_submission_runbook_matches_current_go_and_swift_states():
     assert "conda-forge public-proof note" in text
     assert "feedstock creation alone is not treated as publication" in text
     assert "vcpkg / ConanCenter public-proof note" in text
-    assert "ConanCenter raw recipe" in text
-    assert "combined registry remains partial" in text
+    assert (
+        "historical local packaging, vcpkg pr, and conancenter pr evidence"
+        in text.lower()
+    )
     assert "Stata SSC public-proof note" in text
     assert "mchs.pkg" in text
     assert "Go module proxy/pkg.go.dev" in text
@@ -1543,7 +1563,7 @@ def test_external_submission_runbook_matches_current_go_and_swift_states():
     )
     assert "Publication evidence: on 2026-06-12" in text
     assert "stable `v0.1.0`" in text
-    assert "Remaining step: none for Swift Package Index publication" in text
+    assert "Cancellation state: deprecated and cancelled on 2026-07-03" in text
     assert "wait for or retrigger `pkg.go.dev` page indexing" not in text
     assert "Swift Package Index review/indexing" not in text
 
@@ -1593,12 +1613,9 @@ def test_external_only_runbook_has_exact_next_action_checklists():
         "Public evidence: on 2026-06-14",
         "mchs.pkg` was live and listed the MCHS module",
         "Remaining step: none for SSC publication",
-        "Treat vcpkg as upstream-policy deferred",
-        "Wait for ConanCenter job scheduler and maintainer review",
-        (
-            "Verify the merged ConanCenter package page before changing the "
-            "Conan side of the gate to complete"
-        ),
+        "Treat vcpkg / ConanCenter as deprecated and cancelled",
+        "Retain PRs and local packaging evidence as historical evidence only",
+        "Do not wait for ConanCenter review",
     ]
     for fragment in required_runbook_fragments:
         assert fragment in runbook
@@ -1618,7 +1635,7 @@ def test_external_only_runbook_has_exact_next_action_checklists():
             "Visual Studio Marketplace is published and public as "
             "`edithatogo.mchs-tools` version `0.1.1`"
         ),
-        "no Marketplace/Open VSX blocker remains",
+        "deprecated and cancelled on 2026-07-03",
         (
             "Published and verified at `https://www.mathworks.com/"
             "matlabcentral/fileexchange/184067-mchs-matlab-interop`"
@@ -1627,8 +1644,7 @@ def test_external_only_runbook_has_exact_next_action_checklists():
             "SSC / Stata package distribution | `mchs-stata-interop` | "
             "Published and verified"
         ),
-        "vcpkg is upstream-policy deferred",
-        "ConanCenter remains active: wait for job scheduler/review",
+        "no further upstream review, publication, or monitoring work is planned",
     ]
     for fragment in required_gate_fragments:
         assert fragment in gates

@@ -1,32 +1,32 @@
 {
   "track_id": "c_cpp_vcpkg_conan_submission_20260524",
   "type": "chore",
-  "status": "blocked",
-  "current_state": "blocked-external-review-and-policy-deferred",
+  "status": "cancelled",
+  "current_state": "deprecated-cancelled",
   "created_at": "2026-05-24T08:28:21Z",
   "updated_at": "2026-06-25T00:00:00+10:00",
   "description": "C/C++ vcpkg and Conan Submission: discover, prepare local/private preview package metadata, submit through upstream review when validated, and evidence vcpkg / ConanCenter publication only after acceptance.",
   "registry_id": "c_cpp_vcpkg_conan",
-  "current_status": "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred",
-  "publication_status": "not_published",
+  "current_status": "deprecated_cancelled_not_published",
+  "publication_status": "cancelled_not_published",
   "local_readiness_resolved": true,
-  "blocker": "ConanCenter PR 30262 is open with license/cla now successful and Job scheduler ACTION_REQUIRED; maintainer review and merge remain pending. vcpkg remains deferred because PR 51965 was closed unmerged due upstream Rust-library policy.",
+  "blocker": "Deprecated and cancelled on 2026-07-03 by project governance. ConanCenter PR 30262 and vcpkg PR 51965 are retained as historical evidence only; no further upstream review, publication, or monitoring work is planned unless re-chartered.",
   "publication_claimed": false,
   "support_scope": {
     "local_completion": "Local C ABI packaging preparation is complete for Conan and vcpkg preview use: cargo packaging, cargo tests, Conan recipe inspection/create, and vcpkg overlay-port validation are recorded.",
-    "external_gate": "open; ConanCenter PR 30262 still requires scheduler/maintainer review and merge, while vcpkg remains policy-deferred after upstream closed PR 51965 unmerged.",
-    "runtime_support_claim": "No public ConanCenter or vcpkg package publication or registry-supported C/C++ installation claim is made."
+    "external_gate": "cancelled; ConanCenter and vcpkg upstream activity is historical evidence only, not an active publication target.",
+    "runtime_support_claim": "No public ConanCenter or vcpkg package publication or registry-supported C/C++ installation claim is made; the surface is deprecated and cancelled."
   },
   "gap_register": [
     {
-      "id": "conancenter-review-pending",
-      "status": "external",
-      "description": "Wait for ConanCenter job scheduler, maintainer review, merge, and public package evidence for PR 30262."
+      "id": "conancenter-review-cancelled",
+      "status": "cancelled",
+      "description": "ConanCenter PR 30262 is retained as historical evidence only; no further review monitoring is planned unless re-chartered."
     },
     {
-      "id": "vcpkg-rust-library-policy-deferred",
-      "status": "policy-deferred",
-      "description": "Keep vcpkg publication deferred unless upstream Rust-library support changes or a later governance decision changes the C ABI distribution design."
+      "id": "vcpkg-rust-library-policy-cancelled",
+      "status": "cancelled",
+      "description": "vcpkg PR 51965 closure is retained as historical evidence only; no further vcpkg work is planned unless re-chartered."
     }
   ],
   "package_evidence": {
@@ -50,8 +50,8 @@
     "conan_create_result": "Built nwau-c-abi/0.1.0 from exported sources on macOS armv8; packaged LICENSE, nwau_abi.h, libnwau_c_abi.dylib, and libnwau_c_abi.a.",
     "conan_package_reference": "nwau-c-abi/0.1.0#54fd5d0abe08598387916b9bc960f74c:b8da06845b8444be84fc8e71e7354dc6f23831c8#711e388131e98c4a4f2449e8d3549768",
     "fixed_dependency_blocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
-    "remaining_external_blocker": "Wait for ConanCenter job scheduler / maintainer review and merge; keep vcpkg deferred until upstream Rust-library support exists or the C ABI distribution design changes.",
-    "publication_claim": "No public vcpkg or ConanCenter publication is claimed.",
+    "remaining_external_blocker": "Cancelled on 2026-07-03; no further ConanCenter or vcpkg upstream review is planned unless re-chartered.",
+    "publication_claim": "No public vcpkg or ConanCenter publication is claimed; the surface is deprecated and cancelled.",
     "resolved_blocker": "nwau-core@0.1.0 is published and verified on crates.io.",
     "vcpkg_submission_pr": "https://github.com/microsoft/vcpkg/pull/51965",
     "vcpkg_submission_state": "closed_unmerged_upstream_policy_deferred",
@@ -61,5 +61,7 @@
     "conan_center_latest_fix_commit": "c635b0f9d2f1619d9149e4fa964185658c063f5d",
     "latest_cla_recheck_attempt": "2026-06-12 live GitHub check: PR 30262 now reports license/cla SUCCESS after maintainer recheck.",
     "latest_conan_center_review_update": "2026-06-25 authenticated live monitor shows PR 30262 remains open, mergedAt=null, draft=False, mergeable=MERGEABLE, and mergeStateStatus=BLOCKED; gh pr view shows reviewDecision=REVIEW_REQUIRED, license/cla status context is SUCCESS, and Job scheduler is ACTION_REQUIRED. No new actionable comments appear after the 2026-06-12 author follow-up; prior portability fixes are present at head c635b0f9 and maintainer review/merge remain pending."
-  }
+  },
+  "cancelled_at": "2026-07-03",
+  "cancellation_reason": "C/C++ vcpkg/Conan surface deprecated and cancelled; no public registry publication is claimed."
 }

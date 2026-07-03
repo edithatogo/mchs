@@ -2,14 +2,13 @@
 
 ## Review Result
 
-Not archive eligible.
+Archive eligible as cancelled.
 
-The local packaging and submission preparation scope is well evidenced, but the
-track remains live because the ConanCenter PR is still external-review-gated and
-vcpkg is upstream-policy deferred. The track must not be moved to
-`conductor/archive/` until ConanCenter accepted-review or publication evidence
-exists, and the vcpkg side is either accepted upstream or explicitly closed by a
-later governance decision as a policy-deferred registry.
+The local packaging and submission preparation scope is well evidenced. On
+2026-07-03, project governance deprecated and cancelled the C/C++ vcpkg/Conan
+surface. ConanCenter PR 30262 and vcpkg PR 51965 are retained as historical
+evidence only. No further upstream review, publication, or monitoring work is
+planned unless a new track explicitly re-charters the surface.
 
 ## Evidence Reviewed
 
@@ -25,9 +24,10 @@ later governance decision as a policy-deferred registry.
 ## Remaining Gates
 
 - ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262`
-  still needs job scheduler and maintainer review/merge evidence.
+  remains historical evidence only after cancellation.
 - vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` was closed
-  unmerged because vcpkg does not currently support Rust library ports.
+  unmerged because vcpkg does not currently support Rust library ports; it is
+  now historical evidence only after cancellation.
 - Public vcpkg or ConanCenter publication is not claimed.
 
 ## Validation

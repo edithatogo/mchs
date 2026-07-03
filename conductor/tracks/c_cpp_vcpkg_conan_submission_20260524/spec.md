@@ -2,7 +2,7 @@
 
 ## Overview
 
-Work this registry one by one using a fail-closed process: discover existing publication, prepare local/private preview package metadata if absent, submit only when package readiness and credentials are present, and record durable publication evidence only after upstream acceptance.
+This registry surface is deprecated and cancelled as of 2026-07-03. Historical local packaging, vcpkg PR, and ConanCenter PR evidence is retained, but no further upstream review, publication, or monitoring work is planned unless a new track explicitly re-charters the surface.
 
 ## Registry
 
@@ -11,7 +11,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 - Package candidate: `nwau-c-abi`
 - Version candidate: `0.1.0`
 - Local surface: `microcosting_healthservices/rust/crates/nwau-c-abi/Cargo.toml`
-- Current status: `submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred`
+- Current status: `deprecated_cancelled_not_published`
 
 ## Functional Requirements
 
@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Prepared locally with caveat. A vcpkg port manifest and `portfile.cmake` exist, the C ABI crate builds and packages with Cargo, the Conan recipe passes `conan create packaging/conan --build=missing` from exported sources on macOS armv8, and a disposable vcpkg clone under `/tmp/mchs-vcpkg-validation` installs `nwau-c-abi:arm64-osx` from the local overlay port. This is local/private preview packaging evidence only. vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged because vcpkg does not currently support Rust library ports. ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262` is open after portability fixes and CLA resolution; remaining blockers are job scheduler, maintainer review, and merge.
+Deprecated and cancelled. A vcpkg port manifest and `portfile.cmake` exist, the C ABI crate builds and packages with Cargo, the Conan recipe passes `conan create packaging/conan --build=missing` from exported sources on macOS armv8, and a disposable vcpkg clone under `/tmp/mchs-vcpkg-validation` installs `nwau-c-abi:arm64-osx` from the local overlay port. This is local/private preview packaging evidence only. vcpkg PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged because vcpkg does not currently support Rust library ports. ConanCenter PR `https://github.com/conan-io/conan-center-index/pull/30262` is retained as historical evidence only. No further ConanCenter review, vcpkg publication, or public registry monitoring is planned unless re-chartered.
 
 ## Preparation Evidence
 
@@ -52,13 +52,13 @@ Prepared locally with caveat. A vcpkg port manifest and `portfile.cmake` exist, 
 - Publication claim: no public vcpkg or ConanCenter publication is claimed.
 - vcpkg submission: PR `https://github.com/microsoft/vcpkg/pull/51965` closed unmerged on 2026-05-26 because vcpkg does not currently support Rust library ports; keep as deferred upstream-policy evidence.
 - ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open; commit `c635b0f9d2f1619d9149e4fa964185658c063f5d` fixed test-package portability.
-- Remaining external blocker: wait for ConanCenter job scheduler/maintainer review; vcpkg remains deferred until upstream policy supports Rust library ports or the distribution design changes.
+- Cancellation state: deprecated and cancelled on 2026-07-03; ConanCenter and vcpkg upstream activity is historical evidence only.
 
 ## Acceptance Criteria
 
 - Discovery evidence exists and is linked from this track.
 - Preparation evidence exists for local/private preview package metadata, artifact integrity, and registry policy checks.
-- Submission evidence exists, or the track remains blocked with a concrete reason.
+- Submission evidence exists historically, and the track is explicitly recorded as deprecated and cancelled.
 - Publication is not claimed unless a public registry URL or accepted upstream PR/merge evidence exists.
 
 ## Out of Scope

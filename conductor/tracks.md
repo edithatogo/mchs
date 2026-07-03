@@ -650,9 +650,9 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: Swift Package Index Submission**
+- [x] **Track: Swift Package Index Submission (deprecated and cancelled)**
 *Link: [./archive/swift_package_index_submission_20260524/](./archive/swift_package_index_submission_20260524/)*
-*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Swift Package Index`, and capture immutable evidence before claiming publication.*
+*Gate: Deprecated and cancelled on 2026-07-03. Historical Swift Package Index publication evidence is retained, but no further SPI publication, compatibility, or monitoring work is planned unless re-chartered.*
 
 ---
 
@@ -674,9 +674,9 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: VS Code/Open VSX Extension Submission**
+- [x] **Track: VS Code/Open VSX Extension Submission (deprecated and cancelled)**
 *Link: [./archive/vscode_openvsx_registry_submission_20260524/](./archive/vscode_openvsx_registry_submission_20260524/)*
-*Gate: Discover existing publication, prepare package artifacts if absent, submit through `Open VSX / Visual Studio Marketplace`, and capture immutable evidence before claiming publication.*
+*Gate: Deprecated and cancelled on 2026-07-03. Historical Open VSX and Visual Studio Marketplace publication evidence is retained, but no further extension publishing or synchronization work is planned unless re-chartered.*
 
 ---
 
@@ -692,9 +692,9 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: C/C++ vcpkg and Conan Submission**
+- [~] **Track: C/C++ vcpkg and Conan Submission (deprecated and cancelled)**
 *Link: [./tracks/c_cpp_vcpkg_conan_submission_20260524/](./tracks/c_cpp_vcpkg_conan_submission_20260524/)*
-*Gate: Discover existing publication, prepare package artifacts if absent, submit through `vcpkg / ConanCenter`, and capture immutable evidence before claiming publication.*
+*Gate: Deprecated and cancelled on 2026-07-03. ConanCenter PR 30262 and vcpkg PR 51965 are retained as historical evidence only; no further upstream review, publication, or monitoring work is planned unless re-chartered.*
 
 ---
 

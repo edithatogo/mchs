@@ -7,10 +7,10 @@
   "updated_at": "2026-06-12T23:00:00+11:00",
   "description": "Swift Package Index Submission: discover, prepare, submit, and evidence Swift Package Index publication for MCHSBind.",
   "registry_id": "swift_package_index",
-  "current_status": "published_verified",
-  "publication_status": "published_verified",
+  "current_status": "deprecated_cancelled_publication_retained",
+  "publication_status": "deprecated_cancelled_publication_retained",
   "local_readiness_resolved": true,
-  "blocker": null,
+  "blocker": "Deprecated and cancelled on 2026-07-03 by project governance. Historical Swift Package Index publication evidence is retained only; no further SPI work is planned unless re-chartered.",
   "publication_claimed": true,
   "package_evidence": {
     "discovery_url": "https://swiftpackageindex.com/edithatogo/mchs-swift",
@@ -34,8 +34,8 @@
   },
   "submission_url": "https://swiftpackageindex.com/edithatogo/mchs-swift",
   "support_scope": {
-    "state": "published-verified",
-    "summary": "Swift Package Index publication is verified for MCHSBind v0.1.0 through merged PackageList PR 13999, the public SPI listing, and the GitHub release. Compatibility build results remain separate SPI processing evidence."
+    "state": "deprecated-cancelled",
+    "summary": "Swift Package Index publication evidence remains retained as historical proof, but the Swift package surface is deprecated and cancelled and is not an active support or publication target."
   },
   "gap_register": [
     {
@@ -43,5 +43,7 @@
       "status": "externalized",
       "summary": "SPI compatibility/build matrix processing is external to the publication claim and may lag after package listing."
     }
-  ]
+  ],
+  "cancelled_at": "2026-07-03",
+  "cancellation_reason": "Surface deprecated and cancelled; historical publication evidence retained only."
 }

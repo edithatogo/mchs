@@ -1,6 +1,6 @@
 # External Submission Runbook
 
-As of 2026-06-16, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, crates.io, NuGet, the Homebrew personal tap, the Go module, Swift Package Index, Maven Central, MATLAB File Exchange, Open VSX, Visual Studio Marketplace, and Stata SSC are externally published and verified. The official MCP Registry publication is verified outside this language-registry contract. The remaining items require CRAN/conda-forge/ConanCenter reviewer action.
+As of 2026-07-03, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, crates.io, NuGet, the Homebrew personal tap, the Go module, Maven Central, MATLAB File Exchange, and Stata SSC are externally published and verified. Swift Package Index, Open VSX, Visual Studio Marketplace, and vcpkg/ConanCenter are deprecated and cancelled; their historical evidence is retained, but no further publication or monitoring work is planned unless re-chartered. The official MCP Registry publication is verified outside this language-registry contract. The remaining active items require CRAN/conda-forge reviewer action.
 
 Email guardrail: do not send, reply, forward, or transmit corrected archives from any mailbox unless the user explicitly approves the exact outbound action first. Local draft text and package preparation can proceed, but outbound email remains user-approval gated.
 
@@ -10,7 +10,7 @@ CRAN public-proof note: the live monitor checks the CRAN package page, CRANDB, a
 
 conda-forge public-proof note: the live monitor checks both the Anaconda `conda-forge/nwau-py` package API and `https://github.com/conda-forge/nwau-py-feedstock`; feedstock creation alone is not treated as publication until the target package version is visible through Anaconda.
 
-vcpkg / ConanCenter public-proof note: the live monitor checks the ConanCenter raw recipe and `conandata.yml` before the vcpkg raw port. ConanCenter publication evidence can satisfy the active Conan side of the gate, but the combined registry remains partial while vcpkg is upstream-policy deferred.
+vcpkg / ConanCenter public-proof note: the surface is deprecated and cancelled as of 2026-07-03. Historical local packaging, vcpkg PR, and ConanCenter PR evidence is retained only; no further upstream review or publication monitoring is planned unless re-chartered.
 
 Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePEc `mchs.pkg`, `mchs.ado`, and `mchs.sthlp` paths; installability is treated as verified when the package manifest and ado/help files expose the `mchs` command identity. SSC `.pkg` metadata does not expose semantic versions, so version `0.1.0` remains local archive evidence.
 
@@ -22,10 +22,10 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - NuGet: `Mchs.Bindings.DotNet@0.1.0`
 - Homebrew personal tap: `https://github.com/edithatogo/homebrew-mchs`
 - Go module proxy/pkg.go.dev: `github.com/edithatogo/mchs/bindings/go@v0.1.0`
-- Swift Package Index: `MCHSBind@0.1.0`
+- Swift Package Index: `MCHSBind@0.1.0` historical evidence retained; surface deprecated and cancelled
 - Maven Central: `io.github.edithatogo:mchs-jvm-bindings:0.1.0`
-- Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1`
-- Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; latest is `0.1.1`
+- Visual Studio Marketplace: `edithatogo.mchs-tools@0.1.1` historical evidence retained; surface deprecated and cancelled
+- Open VSX: `edithatogo.mchs-tools@0.1.0` remains available; latest is `0.1.1`; surface deprecated and cancelled
 - Stata SSC: `mchs` installable from Boston College SSC/RePEc public files
 
 ## Credential-gated direct publishes
@@ -63,6 +63,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Prepared sync artifact: `microcosting_healthservices/integrations/vscode/mchs-tools-0.1.1.vsix` with local SHA-256 `bfbeca13497f21489c532e58af3b1e10df9fe60ae5eab4c721e632baee9b5dd6`.
 - Open VSX publish check: `npx --yes ovsx publish integrations/vscode/mchs-tools-0.1.0.vsix --pat [REDACTED]` returned that version `0.1.0` is already published.
 - Remaining step: none for the verified `0.1.1` publication; preserve publisher ID `bd039266-4396-4e4c-8bb8-13364a4aab70`, extension ID `8cf2c772-2ead-4a18-8dde-c5069790380a`, Open VSX API evidence, Marketplace Gallery API evidence, and token-cleanup evidence.
+- Cancellation state: deprecated and cancelled on 2026-07-03. No further Open VSX or Marketplace publishing, synchronization, token setup, or monitoring work is planned unless re-chartered.
 
 ## Maintainer-review or PR-gated submissions
 
@@ -126,6 +127,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Fixed publication metadata: added MIT license, Swift package topics, and GitHub release `v0.1.0`.
 - Publication evidence: on 2026-06-12, `https://swiftpackageindex.com/edithatogo/mchs-swift` returned HTTP 200 and exposed `MCHSBind`, canonical `edithatogo/mchs-swift` links, stable `v0.1.0`, the SPM manifest snippet using `from: "0.1.0"`, and the GitHub release link.
 - Remaining step: none for Swift Package Index publication. Preserve the PackageList merge, raw PackageList, release, and public SPI page evidence.
+- Cancellation state: deprecated and cancelled on 2026-07-03. No further Swift Package Index publication, compatibility, or monitoring work is planned unless re-chartered.
 - Track-specific checklist: `conductor/archive/swift_package_index_submission_20260524/public_probe_checklist.md` is retained as completed publication evidence.
 
 ### Maven Central
@@ -200,10 +202,9 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - Latest ConanCenter probe: 2026-06-25 authenticated live monitor shows PR `30262` open, `mergedAt=null`, `draft=False`, `mergeable=MERGEABLE`, and `mergeStateStatus=BLOCKED`; `gh pr view` shows `reviewDecision=REVIEW_REQUIRED`, `license/cla` success, and `Job scheduler` `ACTION_REQUIRED`; no new actionable comments appear after the 2026-06-12 author follow-up.
 - vcpkg validation: bootstrapped vcpkg under `/tmp/mchs-vcpkg-validation` and ran `/tmp/mchs-vcpkg-validation/vcpkg install nwau-c-abi --overlay-ports=/Volumes/PortableSSD/GitHub/mchs/microcosting_healthservices/packaging/vcpkg/ports --triplet arm64-osx --clean-after-build --binarysource=clear`; install completed successfully with release/debug static libraries, header, copyright, and SPDX metadata.
 - vcpkg submission: PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged on 2026-05-26. The actionable port-quality feedback was addressed in fork commit `58ff86fe`, but maintainers closed the PR because vcpkg does not currently support building Rust libraries.
-- ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open. Portability fixes were pushed in commit `c635b0f9d2f1619d9149e4fa964185658c063f5d`; CLA/recheck is now resolved, and the remaining external gates are job scheduler, maintainer review, and merge.
+- ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open. Portability fixes were pushed in commit `c635b0f9d2f1619d9149e4fa964185658c063f5d`; CLA/recheck is resolved. The PR is now retained as historical evidence only after cancellation.
 - Track-specific checklist: `conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`.
 - Next-action checklist:
-  1. Treat vcpkg as upstream-policy deferred unless vcpkg adds Rust-library port support or the package is redesigned to avoid requiring vcpkg to build Rust code.
-  2. Wait for ConanCenter job scheduler and maintainer review, then apply requested fixes if any.
-  3. Verify the merged ConanCenter package page before changing the Conan side of the gate to complete.
-  4. Keep vcpkg publication unclaimed until an accepted upstream path exists.
+  1. Treat vcpkg / ConanCenter as deprecated and cancelled as of 2026-07-03.
+  2. Retain PRs and local packaging evidence as historical evidence only.
+  3. Do not wait for ConanCenter review, pursue vcpkg changes, claim public publication, or monitor these registries unless a new track re-charters the surface.

@@ -6,6 +6,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 VSCODE_ROOT = ROOT / "integrations" / "vscode"
+CONTRACT = (
+    ROOT
+    / "contracts"
+    / "language-registry-submissions"
+    / "language-registry-submissions.contract.json"
+)
+TRACK_METADATA = (
+    ROOT
+    / "conductor"
+    / "archive"
+    / "vscode_openvsx_registry_submission_20260524"
+    / "metadata.json"
+)
 PACKAGE_JSON = VSCODE_ROOT / "package.json"
 EXTENSION_JS = VSCODE_ROOT / "extension.js"
 README = VSCODE_ROOT / "README.md"
@@ -68,3 +81,20 @@ def test_vscode_marketplace_sync_artifact_is_prepared():
     digest = hashlib.sha256(SYNC_VSIX.read_bytes()).hexdigest()
 
     assert digest == SYNC_VSIX_SHA256
+
+
+def test_vscode_openvsx_surface_is_deprecated_and_cancelled():
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    registry = next(
+        item for item in contract["registries"] if item["id"] == "vscode_openvsx"
+    )
+    metadata = json.loads(TRACK_METADATA.read_text(encoding="utf-8"))
+
+    assert registry["current_status"] == "deprecated_cancelled_publication_retained"
+    assert registry["cancelled_at"] == "2026-07-03"
+    assert "Deprecated and cancelled" in registry["blocker"]
+    assert "historical" in registry["blocker"].lower()
+    assert metadata["current_status"] == "deprecated_cancelled_publication_retained"
+    assert metadata["publication_status"] == "deprecated_cancelled_publication_retained"
+    assert metadata["cancelled_at"] == "2026-07-03"
+    assert metadata["publication_claimed"] is True

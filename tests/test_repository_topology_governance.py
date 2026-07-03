@@ -233,7 +233,13 @@ def test_package_surface_registry_conforms_to_declared_schema_shape() -> None:
     for surface in registry["surfaces"]:
         assert set(surface_schema["required"]) <= set(surface), surface["id"]
         assert set(surface) <= surface_keys, surface["id"]
-        for field in ["category", "lifecycle", "support_status", "artifact_policy", "formula_logic"]:
+        for field in [
+            "category",
+            "lifecycle",
+            "support_status",
+            "artifact_policy",
+            "formula_logic",
+        ]:
             assert surface[field] in surface_schema["properties"][field]["enum"], (
                 surface["id"],
                 field,
@@ -242,7 +248,10 @@ def test_package_surface_registry_conforms_to_declared_schema_shape() -> None:
         release = surface["release"]
         assert set(release_schema["required"]) <= set(release), surface["id"]
         assert set(release) <= release_keys, surface["id"]
-        assert release["registry_state"] in release_schema["properties"]["registry_state"]["enum"]
+        assert (
+            release["registry_state"]
+            in release_schema["properties"]["registry_state"]["enum"]
+        )
 
 
 def test_readme_registry_claims_match_release_boundary_states() -> None:
@@ -255,16 +264,15 @@ def test_readme_registry_claims_match_release_boundary_states() -> None:
     }
     assert states["cran-registry"] == "submitted"
     assert states["maven-central-registry"] == "published_verified"
-    assert states["vscode-extension"] == "published_verified"
-    assert states["vcpkg-port"] == "blocked"
-    assert states["swift-binding"] == "published_verified"
+    assert states["vscode-extension"] == "deprecated_cancelled_publication_retained"
+    assert states["vcpkg-port"] == "deprecated_cancelled_not_published"
+    assert states["swift-binding"] == "deprecated_cancelled_publication_retained"
 
     for phrase in [
         "CRAN maintainer submission/review remains external",
-        "Prepared, not published",
-        "upstream vcpkg/ConanCenter PR/review remains external",
+        "**Deprecated and cancelled** as of 2026-07-03",
         "Swift Package Index (`MCHSBind`)",
-        "**Published** on Swift Package Index at `MCHSBind 0.1.0`",
+        "no further Swift Package Index work is planned unless re-chartered",
         "No support claim beyond the specific registry states above",
     ]:
         assert phrase in readme
@@ -284,7 +292,7 @@ def test_repository_topology_validator_passes_for_current_canonical_repo() -> No
     assert payload["diagnostics"] == []
 
 
-def test_generated_artifact_policy_detects_package_artifacts_and_allows_evidence() -> None:
+def test_generated_artifact_policy_detects_package_artifacts() -> None:
     assert _validator._is_generated_path("dist/nwau_py-0.1.0.tar.gz")
     assert _validator._is_generated_path("integrations/vscode/mchs-tools-0.1.1.vsix")
     assert _validator._is_generated_path(
@@ -347,7 +355,8 @@ def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
     assert manifest["recommended_option"] == "retire-wrapper-after-preservation"
     assert (
         manifest["decision_boundary"]
-        == "Inventory and manifest only; no outer-wrapper files are deleted by this phase."
+        == "Inventory and manifest only; no outer-wrapper files are deleted by "
+        "this phase."
     )
 
     entries = {entry["path"]: entry for entry in manifest["entries"]}
@@ -365,7 +374,9 @@ def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
         and entry["path"].startswith(".playwright-mcp/")
     ]
     assert len(tracked_logs) >= 40
-    assert all(entry["sha256"] for entry in tracked_logs if entry["git_mode"] != "160000")
+    assert all(
+        entry["sha256"] for entry in tracked_logs if entry["git_mode"] != "160000"
+    )
 
     power_platform_evidence = [
         entry

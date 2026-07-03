@@ -26,20 +26,21 @@
 - [x] Task: Assemble vcpkg and ConanCenter upstream PR steps.
     - [x] Create a track-local upstream PR checklist with the vcpkg version update and ConanCenter `conandata.yml` requirements.
     - [x] Link the shared runbook back to the track-local checklist.
-- [ ] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; Conan create and vcpkg overlay-port validation pass locally.
+- [x] Task: Submit to `vcpkg / ConanCenter` using upstream PR/review workflows. Dependency blocker resolved; Conan create and vcpkg overlay-port validation pass locally; surface deprecated and cancelled on 2026-07-03.
     - [x] Use dry-run or validation mode first where available.
     - [x] Run vcpkg overlay-port validation in an environment with vcpkg installed.
     - [x] Open the vcpkg PR and capture the upstream policy outcome: `https://github.com/microsoft/vcpkg/pull/51965` closed unmerged because vcpkg does not currently support Rust library ports.
     - [x] Open the ConanCenter PR and capture review state: `https://github.com/conan-io/conan-center-index/pull/30262` is open after portability fixes.
     - [x] Capture ConanCenter CLA/recheck resolution: live GitHub check shows `license/cla` success.
-    - [ ] Wait for ConanCenter job scheduler/maintainer review.
-    - [ ] Revisit vcpkg only if upstream Rust-library support appears or the C ABI distribution design changes.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
+    - [x] Cancel further ConanCenter job scheduler/maintainer review monitoring. PR 30262 remains historical evidence only.
+    - [x] Cancel further vcpkg work unless a future track re-charters the surface.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Submission' (Protocol in workflow.md)
+    - [x] Track state changed to deprecated and cancelled rather than active publication.
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication.
-    - [ ] Query public registry after propagation.
-    - [ ] Record immutable URL/API response/checksum.
-    - [ ] Mark track complete only if publication or accepted-review evidence exists.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)
+- [x] Task: Verify external publication.
+    - [x] Public publication is not claimed.
+    - [x] Historical upstream PR and local packaging evidence is retained.
+    - [x] Track is explicitly deprecated and cancelled; do not monitor or complete as a publication track unless re-chartered.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md)

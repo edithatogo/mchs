@@ -30,28 +30,38 @@ def _swift_registry() -> dict:
     )
 
 
-def test_swift_package_index_track_is_published_with_public_spi_evidence():
+def test_swift_package_index_track_is_deprecated_cancelled_with_spi_evidence():
     metadata = json.loads(_read(TRACK / "metadata.json"))
     registry = _swift_registry()
     tracks = _read(TRACKS)
 
     assert metadata["status"] == "completed"
-    assert metadata["current_status"] == "published_verified"
+    assert metadata["current_status"] == "deprecated_cancelled_publication_retained"
     assert metadata["local_readiness_resolved"] is True
     assert metadata["publication_claimed"] is True
-    assert metadata["publication_status"] == "published_verified"
-    assert "- [x] **Track: Swift Package Index Submission**" in tracks
+    assert metadata["publication_status"] == "deprecated_cancelled_publication_retained"
+    assert metadata["cancelled_at"] == "2026-07-03"
+    assert "deprecated and cancelled" in metadata["blocker"].lower()
+    assert (
+        "- [x] **Track: Swift Package Index Submission (deprecated and cancelled)**"
+        in tracks
+    )
     assert f"./archive/{TRACK_ID}/" in tracks or f"./tracks/{TRACK_ID}/" in tracks
 
-    assert registry["current_status"] == "published_verified"
+    assert registry["current_status"] == "deprecated_cancelled_publication_retained"
     assert (
         registry["submission_url"]
         == "https://swiftpackageindex.com/edithatogo/mchs-swift"
     )
     assert registry["localReadinessResolved"] is True
-    assert registry["blocker"] is None
-    assert registry["submissionEvidence"]["state"] == "published_verified"
-    assert registry["submissionEvidence"]["stateReason"] == "completed"
+    assert "Deprecated and cancelled" in registry["blocker"]
+    assert registry["cancelled_at"] == "2026-07-03"
+    assert registry["submissionEvidence"]["state"] == (
+        "deprecated_cancelled_publication_retained"
+    )
+    assert registry["submissionEvidence"]["stateReason"] == (
+        "cancelled_after_publication_evidence_retained"
+    )
     assert (
         registry["submissionEvidence"]["packageListPullRequest"]
         == "https://github.com/SwiftPackageIndex/PackageList/pull/13999"
@@ -100,9 +110,9 @@ def test_swift_package_index_evidence_has_publication_claim():
     assert "returned HTTP 200" in registry["preparationEvidence"]["discovery"]
     assert "latestSubmissionProbe" in registry["preparationEvidence"]
     assert "packageListPullRequest" in registry["preparationEvidence"]
-    assert (
-        registry["preparationEvidence"]["rawPackageListProbe"]
-        == "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/packages.json contains https://github.com/edithatogo/mchs-swift.git."
+    assert registry["preparationEvidence"]["rawPackageListProbe"] == (
+        "https://raw.githubusercontent.com/SwiftPackageIndex/PackageList/main/"
+        "packages.json contains https://github.com/edithatogo/mchs-swift.git."
     )
     assert "latestReleaseProbe" in registry["preparationEvidence"]
     assert "latestPublicProbe" in registry["preparationEvidence"]

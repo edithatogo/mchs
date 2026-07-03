@@ -34,27 +34,27 @@ def _registry() -> dict:
     )
 
 
-def test_c_cpp_track_records_dependency_unblocked_but_not_publication():
+def test_c_cpp_track_records_cancelled_not_publication():
     metadata = json.loads(_read(TRACK / "metadata.json"))
     registry = _registry()
 
     assert (TRACK / "review.md").exists()
-    assert metadata["status"] == "blocked"
-    assert (
-        metadata["current_status"]
-        == "submitted_conancenter_cla_resolved_pending_scheduler_review_vcpkg_deferred"
-    )
+    assert metadata["status"] == "cancelled"
+    assert metadata["current_status"] == "deprecated_cancelled_not_published"
     assert metadata["publication_claimed"] is False
-    assert metadata["publication_status"] == "not_published"
-    assert "license/cla now successful" in metadata["blocker"]
-    assert "Job scheduler ACTION_REQUIRED" in metadata["blocker"]
-    assert "vcpkg remains deferred" in metadata["blocker"]
+    assert metadata["publication_status"] == "cancelled_not_published"
+    assert metadata["cancelled_at"] == "2026-07-03"
+    assert "Deprecated and cancelled" in metadata["blocker"]
+    assert "historical evidence only" in metadata["blocker"]
     assert (
         metadata["package_evidence"]["publication_claim"]
-        == "No public vcpkg or ConanCenter publication is claimed."
+        == "No public vcpkg or ConanCenter publication is claimed; the surface is "
+        "deprecated and cancelled."
     )
-    assert registry["blocker"].startswith("ConanCenter PR 30262 is open")
-    assert "vcpkg remains deferred" in registry["blocker"]
+    assert registry["current_status"] == "deprecated_cancelled_not_published"
+    assert "Deprecated and cancelled" in registry["blocker"]
+    assert registry["cancelled_at"] == "2026-07-03"
+    assert "historical evidence only" in registry["blocker"]
     assert "cargoPackageResult" in registry["preparationEvidence"]
     assert (
         "compiled nwau-c-abi v0.1.0 successfully"
@@ -105,6 +105,7 @@ def test_c_cpp_packaging_wording_preserves_private_preview_and_upstream_gates():
     assert "local/private preview readiness" in readme
     assert "not evidence of public vcpkg" in readme
     assert "no public vcpkg or conancenter publication is claimed." in spec.lower()
+    assert "deprecated and cancelled" in spec.lower()
     assert "conan create packaging/conan --build=missing" in readme
     assert "Conan create and vcpkg overlay-port validation pass locally" in plan
     assert "Upstream PR Checklist" in index
@@ -115,7 +116,8 @@ def test_c_cpp_packaging_wording_preserves_private_preview_and_upstream_gates():
     assert "open a pr to `conan-io/conan-center-index`" in checklist.lower()
     assert "https://github.com/conan-io/conan-center-index/pull/30262" in plan
     assert "Capture ConanCenter CLA/recheck resolution" in plan
-    assert "accepted upstream PR/merge evidence" in spec
+    assert "deprecated and cancelled" in checklist.lower()
+    assert "historical evidence only" in checklist.lower()
 
 
 def test_vcpkg_port_has_manifest_and_build_portfile():

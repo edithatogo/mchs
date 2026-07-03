@@ -7,10 +7,10 @@
   "updated_at": "2026-06-16T23:23:18+10:00",
   "description": "VS Code/Open VSX Extension Submission: discover, prepare, submit, and evidence Open VSX / Visual Studio Marketplace publication for mchs-tools.",
   "registry_id": "vscode_openvsx",
-  "current_status": "published_verified",
-  "publication_status": "published_verified",
+  "current_status": "deprecated_cancelled_publication_retained",
+  "publication_status": "deprecated_cancelled_publication_retained",
   "local_readiness_resolved": true,
-  "blocker": null,
+  "blocker": "Deprecated and cancelled on 2026-07-03 by project governance. Historical Open VSX and Visual Studio Marketplace publication evidence is retained only; no further extension publishing or synchronization work is planned unless re-chartered.",
   "publication_claimed": true,
   "package_evidence": {
     "artifact": "microcosting_healthservices/integrations/vscode/mchs-tools-0.1.0.vsix",
@@ -53,8 +53,8 @@
     "latest_synchronization": "Open VSX latest and Visual Studio Marketplace latest both expose version 0.1.1; no latest-version synchronization blocker remains."
   },
   "support_scope": {
-    "state": "published-verified",
-    "summary": "Open VSX and Visual Studio Marketplace publication is verified for edithatogo.mchs-tools 0.1.1 with public API evidence. This is an extension publication claim, not a calculator runtime support expansion."
+    "state": "deprecated-cancelled",
+    "summary": "Open VSX and Visual Studio Marketplace publication evidence remains retained as historical proof, but the VS Code/Open VSX surface is deprecated and cancelled and is not an active support or publication target."
   },
   "gap_register": [
     {
@@ -62,5 +62,7 @@
       "status": "externalized",
       "summary": "Future extension versions require fresh VSIX packaging, Open VSX and Marketplace publication, API probes, and token cleanup evidence."
     }
-  ]
+  ],
+  "cancelled_at": "2026-07-03",
+  "cancellation_reason": "VS Code/Open VSX surface deprecated and cancelled; historical publication evidence retained only."
 }
