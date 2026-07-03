@@ -5,36 +5,14 @@ from __future__ import annotations
 import json
 from collections.abc import Callable
 from pathlib import Path
-from typing import IO, Any, cast
+from typing import IO, Any, Protocol, cast
 
 import click
-import pandas as pd
 
-from nwau_py.calculators import (
-    AcuteParams,
-    EDParams,
-    OutpatientParams,
-    calculate_acute,
-    calculate_ed,
-    calculate_outpatients,
-)
-from nwau_py.classification_validation import get_classification_requirement
-from nwau_py.coding_set_registry import (
-    CodingSetRegistryError,
-    list_coding_set_families,
-    validate_coding_set_compatibility,
-)
-from nwau_py.pricing_year_diff import (
-    compare_pricing_year_manifests,
-    format_pricing_year_diff_report,
-)
-from nwau_py.pricing_year_validation import (
-    format_pricing_year_validation_report,
-    validate_pricing_year,
-)
-from nwau_py.reference_manifest import ReferenceManifestError
-from nwau_py.runtime import run_csv_calculation
-from nwau_py.source_scanner import manifest_to_json, scan_sources_dry_run
+
+class _CsvFrame(Protocol):
+    def to_csv(self, outfh: IO[str], *, index: bool) -> None: ...
+
 
 _CLASSIFICATION_SYSTEMS = {
     "acute": "ar_drg",
@@ -49,7 +27,7 @@ _INTEROP_CONTRACT_PATH = (
 )
 
 
-def _write_output(df: pd.DataFrame, outfh: IO[str]) -> None:
+def _write_output(df: _CsvFrame, outfh: IO[str]) -> None:
     df.to_csv(outfh, index=False)
 
 
@@ -66,6 +44,11 @@ def _run(
     year: str | None,
     ref_dir: str | None,
 ) -> None:
+    import pandas as pd
+
+    from nwau_py.classification_validation import get_classification_requirement
+    from nwau_py.runtime import run_csv_calculation
+
     validation_year = year or "2025"
     try:
         input_df = pd.read_csv(input_csv)
@@ -196,6 +179,8 @@ def coding_set_registry() -> None:
 )
 def coding_set_registry_list(year: str | None, metadata_only: bool) -> None:
     """List metadata-only coding-set registry entries."""
+    from nwau_py.coding_set_registry import list_coding_set_families
+
     families = []
     for family in list_coding_set_families():
         payload = family.to_dict()
@@ -227,9 +212,85 @@ def coding_set_registry_validate_compatibility(
     version: str | None,
 ) -> None:
     """Validate a coding-set family/version against the registry."""
+    from nwau_py.coding_set_registry import (
+        CodingSetRegistryError,
+        validate_coding_set_compatibility,
+    )
+
     try:
         result = validate_coding_set_compatibility(system, year, version)
     except CodingSetRegistryError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(json.dumps(result.to_dict(), indent=2, sort_keys=True))
+    if not result.compatible:
+        raise SystemExit(1)
+
+
+@cli.group(name="classification")
+def classification() -> None:
+    """Inspect classification mapping metadata."""
+
+
+@classification.group(name="registry")
+def classification_registry() -> None:
+    """Inspect public classification mapping registry entries."""
+
+
+@classification_registry.command(name="list")
+@click.option("--system", default=None, help="filter by classification system")
+@click.option("--stream", default=None, help="filter by stream")
+@click.option("--year", default=None, help="filter registry versions by pricing year")
+def classification_registry_list(
+    system: str | None,
+    stream: str | None,
+    year: str | None,
+) -> None:
+    """List public classification mapping registry entries."""
+    from nwau_py.classification_mapping_registry import (
+        list_classification_mapping_records,
+    )
+    from nwau_py.classification_validation import normalize_classification_system
+
+    canonical_system = (
+        None if system is None else normalize_classification_system(system)
+    )
+    records = []
+    for record in list_classification_mapping_records():
+        if canonical_system is not None and record.system != canonical_system:
+            continue
+        if stream is not None and record.stream != stream:
+            continue
+        if year is not None and record.version_for_year(year) is None:
+            continue
+        records.append(record.to_dict())
+    click.echo(json.dumps({"records": records}, indent=2, sort_keys=True))
+
+
+@classification_registry.command(name="validate-compatibility")
+@click.option("--stream", required=True, help="declared stream")
+@click.option("--system", required=True, help="classification system or alias")
+@click.option("--year", required=True, help="pricing year")
+@click.option("--version", default=None, help="declared version")
+def classification_registry_validate_compatibility(
+    stream: str,
+    system: str,
+    year: str,
+    version: str | None,
+) -> None:
+    """Validate a stream/system/year/version set against the registry."""
+    from nwau_py.classification_mapping_registry import (
+        ClassificationMappingRegistryError,
+        validate_classification_mapping_compatibility,
+    )
+
+    try:
+        result = validate_classification_mapping_compatibility(
+            stream,
+            system,
+            year,
+            version=version,
+        )
+    except ClassificationMappingRegistryError as exc:
         raise click.ClickException(str(exc)) from exc
     click.echo(json.dumps(result.to_dict(), indent=2, sort_keys=True))
     if not result.compatible:
@@ -299,6 +360,8 @@ def sources_scan(
     emit_json: bool,
 ) -> None:
     """Scan offline fixtures or URL lists and print a draft manifest."""
+    from nwau_py.source_scanner import manifest_to_json, scan_sources_dry_run
+
     result = scan_sources_dry_run(
         html_documents=html_files,
         text_documents=text_files,
@@ -325,6 +388,8 @@ def sources_add_year(
     emit_json: bool,
 ) -> None:
     """Create or update a pricing-year draft manifest from discoveries."""
+    from nwau_py.source_scanner import manifest_to_json, scan_sources_dry_run
+
     result = scan_sources_dry_run(
         html_documents=html_files,
         text_documents=text_files,
@@ -349,6 +414,11 @@ def sources_add_year(
 )
 def validate_year(year: str, emit_json: bool) -> None:
     """Validate repository-local evidence for a pricing year."""
+    from nwau_py.pricing_year_validation import (
+        format_pricing_year_validation_report,
+        validate_pricing_year,
+    )
+
     report = validate_pricing_year(year)
     if emit_json:
         click.echo(json.dumps(report.to_dict(), indent=2, sort_keys=True))
@@ -370,6 +440,12 @@ def validate_year(year: str, emit_json: bool) -> None:
 )
 def diff_year(from_year: str, to_year: str, emit_json: bool) -> None:
     """Compare repository-local reference-data manifests for two pricing years."""
+    from nwau_py.pricing_year_diff import (
+        compare_pricing_year_manifests,
+        format_pricing_year_diff_report,
+    )
+    from nwau_py.reference_manifest import ReferenceManifestError
+
     try:
         report = compare_pricing_year_manifests(from_year, to_year)
     except (FileNotFoundError, ReferenceManifestError, ValueError) as exc:
@@ -385,6 +461,8 @@ def diff_year(from_year: str, to_year: str, emit_json: bool) -> None:
 @_common_options
 def acute(input_csv: str, params: str | None, output: str, year: str | None) -> None:
     """Calculate NWAU for acute care."""
+    from nwau_py.calculators import AcuteParams, calculate_acute
+
     _run("acute", calculate_acute, AcuteParams(), input_csv, output, year, params)
 
 
@@ -392,6 +470,8 @@ def acute(input_csv: str, params: str | None, output: str, year: str | None) -> 
 @_common_options
 def ed(input_csv: str, params: str | None, output: str, year: str | None) -> None:
     """Calculate NWAU for emergency department care."""
+    from nwau_py.calculators import EDParams, calculate_ed
+
     _run("ed", calculate_ed, EDParams(), input_csv, output, year, params)
 
 
@@ -401,6 +481,8 @@ def non_admitted(
     input_csv: str, params: str | None, output: str, year: str | None
 ) -> None:
     """Calculate NWAU for non-admitted care."""
+    from nwau_py.calculators import OutpatientParams, calculate_outpatients
+
     _run(
         "outpatients",
         calculate_outpatients,

@@ -15,15 +15,20 @@ from __future__ import annotations
 
 import re
 from collections.abc import Iterable
-from typing import Any, Final
+from typing import Any, Final, cast
 
 from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+
+from .classification_mapping_registry_data import CLASSIFICATION_MAPPING_ROWS
 
 __all__ = [
     "AECC_REQUIRED_FIELDS",
     "AMHCC_REQUIRED_FIELDS",
     "AR_DRG_REQUIRED_FIELDS",
     "CLASSIFICATION_REQUIRED_FIELDS",
+    "CLASSIFICATION_SOURCE_REFS",
+    "CLASSIFICATION_STREAMS",
+    "CLASSIFICATION_SUPPORT_STATUS",
     "CLASSIFICATION_VERSION_MATRIX",
     "CLASSIFICATION_YEAR_RE",
     "TIER_2_REQUIRED_FIELDS",
@@ -34,6 +39,9 @@ __all__ = [
     "build_classification_requirement",
     "get_classification_name",
     "get_classification_requirement",
+    "get_classification_source_refs",
+    "get_classification_stream",
+    "get_classification_support_status",
     "get_classification_version",
     "get_expected_classification_version",
     "get_required_classification_fields",
@@ -54,128 +62,60 @@ __all__ = [
 CLASSIFICATION_YEAR_RE = re.compile(r"^(?:201[3-9]|202[0-6])$")
 _CLASSIFICATION_VERSION_RE = re.compile(r"^[A-Za-z0-9_.-]+$")
 
+_ROW_BY_SYSTEM: Final[dict[str, dict[str, object]]] = {
+    str(row["system"]): row for row in CLASSIFICATION_MAPPING_ROWS
+}
+
 _SYSTEM_ALIASES: Final[dict[str, str]] = {
-    "ar-drg": "ar_drg",
-    "ar_drg": "ar_drg",
-    "ar drg": "ar_drg",
-    "aecc": "aecc",
-    "udg": "udg",
-    "tier-2": "tier_2",
-    "tier_2": "tier_2",
-    "tier 2": "tier_2",
-    "amhcc": "amhcc",
+    str(alias).lower(): str(row["system"])
+    for row in CLASSIFICATION_MAPPING_ROWS
+    for alias in (
+        row["system"],
+        row["display_name"],
+        *cast(tuple[str, ...], row["aliases"]),
+    )
 }
 
 CLASSIFICATION_SYSTEMS: Final[dict[str, str]] = {
-    "ar_drg": "AR-DRG",
-    "aecc": "AECC",
-    "udg": "UDG",
-    "tier_2": "Tier 2",
-    "amhcc": "AMHCC",
+    system: str(row["display_name"]) for system, row in _ROW_BY_SYSTEM.items()
 }
 
-LICENSED_CLASSIFICATIONS: Final[frozenset[str]] = frozenset({"ar_drg"})
-
-AR_DRG_REQUIRED_FIELDS: Final[tuple[str, ...]] = ("DRG",)
-AECC_REQUIRED_FIELDS: Final[tuple[str, ...]] = ("AECC",)
-UDG_REQUIRED_FIELDS: Final[tuple[str, ...]] = ("UDG",)
-TIER_2_REQUIRED_FIELDS: Final[tuple[str, ...]] = ("TIER2_CLINIC",)
-AMHCC_REQUIRED_FIELDS: Final[tuple[str, ...]] = ("AMHCC",)
+LICENSED_CLASSIFICATIONS: Final[frozenset[str]] = frozenset(
+    system for system, row in _ROW_BY_SYSTEM.items() if bool(row["licensed"])
+)
 
 CLASSIFICATION_REQUIRED_FIELDS: Final[dict[str, tuple[str, ...]]] = {
-    "ar_drg": AR_DRG_REQUIRED_FIELDS,
-    "aecc": AECC_REQUIRED_FIELDS,
-    "udg": UDG_REQUIRED_FIELDS,
-    "tier_2": TIER_2_REQUIRED_FIELDS,
-    "amhcc": AMHCC_REQUIRED_FIELDS,
+    system: cast(tuple[str, ...], row["required_fields"])
+    for system, row in _ROW_BY_SYSTEM.items()
 }
 
-_YEAR_VERSION_MATRIX: Final[dict[str, dict[str, str | None]]] = {
-    "ar_drg": {
-        "2013": "v7.0",
-        "2014": "v7.0",
-        "2015": "v7.0",
-        "2016": "v8.0",
-        "2017": "v8.0",
-        "2018": "v9.0",
-        "2019": "v9.0",
-        "2020": "v10.0",
-        "2021": "v10.0",
-        "2022": "v10.0",
-        "2023": "v11.0",
-        "2024": "v11.0",
-        "2025": "v11.0",
-        "2026": "v12.0",
-    },
-    "aecc": {
-        "2013": None,
-        "2014": None,
-        "2015": None,
-        "2016": None,
-        "2017": None,
-        "2018": None,
-        "2019": None,
-        "2020": "v1.0_shadow",
-        "2021": "v1.0",
-        "2022": "v1.1",
-        "2023": "v1.1",
-        "2024": "v1.1",
-        "2025": "v1.1",
-        "2026": "v1.1",
-    },
-    "udg": {
-        "2013": "URG_v1.4",
-        "2014": "URG_v1.4",
-        "2015": "URG_v1.4",
-        "2016": "URG_v1.4",
-        "2017": "URG_v1.4",
-        "2018": "URG_v1.4",
-        "2019": "URG_v1.4",
-        "2020": "URG_v1.4",
-        "2021": "UDG_v1.3",
-        "2022": "UDG_v1.3",
-        "2023": "UDG_v1.3",
-        "2024": "UDG_v1.3",
-        "2025": "UDG_v1.3",
-        "2026": "UDG_v1.3",
-    },
-    "tier_2": {
-        "2013": None,
-        "2014": None,
-        "2015": None,
-        "2016": None,
-        "2017": None,
-        "2018": None,
-        "2019": None,
-        "2020": None,
-        "2021": None,
-        "2022": "v7",
-        "2023": "v7",
-        "2024": "v7",
-        "2025": "v7",
-        "2026": "v10.0",
-    },
-    "amhcc": {
-        "2013": None,
-        "2014": None,
-        "2015": None,
-        "2016": None,
-        "2017": None,
-        "2018": None,
-        "2019": None,
-        "2020": None,
-        "2021": "v1",
-        "2022": "v1",
-        "2023": "v1",
-        "2024": "v1",
-        "2025": "v1",
-        "2026": "v1",
-    },
+AR_DRG_REQUIRED_FIELDS: Final[tuple[str, ...]] = CLASSIFICATION_REQUIRED_FIELDS[
+    "ar_drg"
+]
+AECC_REQUIRED_FIELDS: Final[tuple[str, ...]] = CLASSIFICATION_REQUIRED_FIELDS["aecc"]
+UDG_REQUIRED_FIELDS: Final[tuple[str, ...]] = CLASSIFICATION_REQUIRED_FIELDS["udg"]
+TIER_2_REQUIRED_FIELDS: Final[tuple[str, ...]] = CLASSIFICATION_REQUIRED_FIELDS[
+    "tier_2"
+]
+AMHCC_REQUIRED_FIELDS: Final[tuple[str, ...]] = CLASSIFICATION_REQUIRED_FIELDS["amhcc"]
+
+CLASSIFICATION_SOURCE_REFS: Final[dict[str, tuple[str, ...]]] = {
+    system: cast(tuple[str, ...], row["source_refs"])
+    for system, row in _ROW_BY_SYSTEM.items()
 }
 
-CLASSIFICATION_VERSION_MATRIX: Final[dict[str, dict[str, str | None]]] = (
-    _YEAR_VERSION_MATRIX
-)
+CLASSIFICATION_STREAMS: Final[dict[str, str]] = {
+    system: str(row["stream"]) for system, row in _ROW_BY_SYSTEM.items()
+}
+
+CLASSIFICATION_SUPPORT_STATUS: Final[dict[str, str]] = {
+    system: str(row["support_status"]) for system, row in _ROW_BY_SYSTEM.items()
+}
+
+CLASSIFICATION_VERSION_MATRIX: Final[dict[str, dict[str, str | None]]] = {
+    system: dict(cast(tuple[tuple[str, str | None]], row["versions"]))
+    for system, row in _ROW_BY_SYSTEM.items()
+}
 
 
 class ClassificationValidationError(ValueError):
@@ -240,9 +180,7 @@ def _normalize_year(year: str) -> str:
 def _expected_version_for(system: str, year: str) -> str | None:
     canonical_system = normalize_classification_system(system)
     normalized_year = _normalize_year(year)
-    return CLASSIFICATION_VERSION_MATRIX.get(canonical_system, {}).get(
-        normalized_year
-    )
+    return CLASSIFICATION_VERSION_MATRIX.get(canonical_system, {}).get(normalized_year)
 
 
 def get_expected_classification_version(system: str, year: str) -> str | None:
@@ -259,6 +197,24 @@ def get_classification_name(system: str) -> str:
     """Return the display name for a classification system."""
     canonical_system = normalize_classification_system(system)
     return CLASSIFICATION_SYSTEMS[canonical_system]
+
+
+def get_classification_source_refs(system: str) -> tuple[str, ...]:
+    """Return the public source references for a classification system."""
+    canonical_system = normalize_classification_system(system)
+    return CLASSIFICATION_SOURCE_REFS[canonical_system]
+
+
+def get_classification_stream(system: str) -> str:
+    """Return the primary stream for a classification system."""
+    canonical_system = normalize_classification_system(system)
+    return CLASSIFICATION_STREAMS[canonical_system]
+
+
+def get_classification_support_status(system: str) -> str:
+    """Return the support-status label for a classification system."""
+    canonical_system = normalize_classification_system(system)
+    return CLASSIFICATION_SUPPORT_STATUS[canonical_system]
 
 
 def is_classification_licensed(system: str) -> bool:

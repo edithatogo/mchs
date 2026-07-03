@@ -25,6 +25,12 @@ into every calculator or CLI entry point yet.
 
 The SAS programs are stored under `archive/sas/NEP25_SAS_NWAU_calculator/calculators`. The Python functions focus on the core weighting formulae and use pandas for data manipulation. See the source code of each module for details of the translation.
 
+AR-DRG derivation is intentionally bounded. This repository records the public
+classification metadata and the local-only hook placeholders needed for
+version-aware validation, but it does not bundle proprietary grouper logic or
+licensed mapping tables. For executable admitted-acute grouping, users must
+use local licensed tooling or precomputed DRG values.
+
 Community mental health still needs an official-source fixture pack before the
 `mh` surface can be validated against extracted IHACPA outputs. The current gap
 record and pricing-year caveats are documented in

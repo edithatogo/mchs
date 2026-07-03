@@ -65,6 +65,12 @@ fixture helpers in `nwau_py.fixtures` to load packs, read payloads, and run
 runner-neutral checks that can later be consumed by Python, C#, and web
 tooling.
 
+The classification validation and mapping registry helpers keep the stream,
+year, version, and licensing boundaries explicit. AR-DRG derivation stays
+local-only: the repository records metadata and placeholder hook references,
+while executable grouping still depends on precomputed DRG values or licensed
+local tooling.
+
 For the acute 2025 pilot there is also an explicit Rust-backed opt-in path,
 `nwau_py.calculators.calculate_acute_rust_2025()`, which loads the optional
 `nwau_py._rust` extension through `nwau_py.rust_bridge` and returns the same

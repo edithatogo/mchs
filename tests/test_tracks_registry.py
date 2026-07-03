@@ -86,6 +86,11 @@ def test_tracks_registry_records_dependency_and_gate_language():
         assert phrase in text
 
 
+def test_archived_classification_mapping_track_is_no_longer_listed_in_tracks_registry():
+    text = TRACKS.read_text(encoding="utf-8")
+    assert "classification_mapping_registry_enrichment_20260703" not in text
+
+
 def test_modernization_foundation_is_coordination_only():
     text = TRACKS.read_text(encoding="utf-8")
 

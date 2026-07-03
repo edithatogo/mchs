@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from importlib import import_module
 
+from .version import __version__, get_version
+
 __all__ = [
     "ABSTRACTION_BOUNDARIES",
     "ABSTRACTION_BOUNDARY_INDEX",
@@ -53,6 +55,12 @@ __all__ = [
     "AbstractionDependency",
     "AbstractionDoctrine",
     "AbstractionSurface",
+    "ClassificationLocalHookCompatibilityResult",
+    "ClassificationLocalHookReference",
+    "ClassificationMappingAssetReference",
+    "ClassificationMappingCompatibilityResult",
+    "ClassificationMappingRecord",
+    "ClassificationMappingRegistryError",
     "ClassificationRequirement",
     "ClassificationValidationError",
     "ClassificationValidationResult",
@@ -85,10 +93,12 @@ __all__ = [
     "LicensedProductCompatibilityResult",
     "LicensedProductManifestRecord",
     "LicensedProductWorkflowError",
+    "__version__",
     "abstraction_doctrine",
     "ar_drg_mapping_registry",
     "ar_drg_version_parity_fixtures",
     "build_ar_drg_parity_fixture_reference",
+    "build_classification_local_hook_reference",
     "build_classification_requirement",
     "build_emergency_classification_parity_fixture_reference",
     "build_emergency_code_mapping_asset_reference",
@@ -99,6 +109,7 @@ __all__ = [
     "build_emergency_provenance",
     "build_licensed_product_asset_reference",
     "build_licensed_product_manifest_record",
+    "classification_mapping_registry",
     "classification_validation",
     "coding_set_registry",
     "describe_abstraction_doctrine",
@@ -109,6 +120,8 @@ __all__ = [
     "emergency_transition_registry",
     "ensure_ar_drg_mapping_compatibility",
     "ensure_ar_drg_parity_fixture_scope",
+    "ensure_classification_local_hook_compatibility",
+    "ensure_classification_mapping_compatibility",
     "ensure_coding_set_compatibility",
     "ensure_commit_safe_exclusion",
     "ensure_emergency_classification_compatibility",
@@ -121,8 +134,12 @@ __all__ = [
     "get_allowed_target_surfaces",
     "get_ar_drg_mapping_record",
     "get_ar_drg_parity_fixture_record",
+    "get_classification_mapping_record",
     "get_classification_name",
     "get_classification_requirement",
+    "get_classification_source_refs",
+    "get_classification_stream",
+    "get_classification_support_status",
     "get_classification_version",
     "get_coding_set_family",
     "get_coding_set_policy",
@@ -150,6 +167,7 @@ __all__ = [
     "get_supported_coding_set_years",
     "get_supported_pricing_years",
     "get_transition_years",
+    "get_version",
     "is_classification_licensed",
     "is_coding_set_licensed",
     "is_coding_set_restricted",
@@ -158,6 +176,7 @@ __all__ = [
     "licensed_product_workflow",
     "list_ar_drg_mapping_records",
     "list_ar_drg_parity_fixture_records",
+    "list_classification_mapping_records",
     "list_coding_set_families",
     "list_emergency_classification_parity_fixture_records",
     "list_emergency_classification_records",
@@ -183,6 +202,8 @@ __all__ = [
     "validate_ar_drg_parity_fixture_scope",
     "validate_ar_drg_version_binding",
     "validate_classification_input",
+    "validate_classification_local_hook_compatibility",
+    "validate_classification_mapping_compatibility",
     "validate_classification_version",
     "validate_coding_set_compatibility",
     "validate_emergency_classification_compatibility",
@@ -663,9 +684,63 @@ _LAZY_ATTRS = {
         ".emergency_grouper",
         "validate_emergency_grouper_compatibility",
     ),
+    "classification_mapping_registry": (".classification_mapping_registry", None),
+    "ClassificationLocalHookCompatibilityResult": (
+        ".classification_mapping_registry",
+        "ClassificationLocalHookCompatibilityResult",
+    ),
+    "ClassificationLocalHookReference": (
+        ".classification_mapping_registry",
+        "ClassificationLocalHookReference",
+    ),
+    "ClassificationMappingAssetReference": (
+        ".classification_mapping_registry",
+        "ClassificationMappingAssetReference",
+    ),
+    "ClassificationMappingCompatibilityResult": (
+        ".classification_mapping_registry",
+        "ClassificationMappingCompatibilityResult",
+    ),
+    "ClassificationMappingRecord": (
+        ".classification_mapping_registry",
+        "ClassificationMappingRecord",
+    ),
+    "ClassificationMappingRegistryError": (
+        ".classification_mapping_registry",
+        "ClassificationMappingRegistryError",
+    ),
+    "build_classification_local_hook_reference": (
+        ".classification_mapping_registry",
+        "build_classification_local_hook_reference",
+    ),
+    "ensure_classification_local_hook_compatibility": (
+        ".classification_mapping_registry",
+        "ensure_classification_local_hook_compatibility",
+    ),
+    "ensure_classification_mapping_compatibility": (
+        ".classification_mapping_registry",
+        "ensure_classification_mapping_compatibility",
+    ),
+    "get_classification_mapping_record": (
+        ".classification_mapping_registry",
+        "get_classification_mapping_record",
+    ),
+    "list_classification_mapping_records": (
+        ".classification_mapping_registry",
+        "list_classification_mapping_records",
+    ),
+    "validate_classification_local_hook_compatibility": (
+        ".classification_mapping_registry",
+        "validate_classification_local_hook_compatibility",
+    ),
+    "validate_classification_mapping_compatibility": (
+        ".classification_mapping_registry",
+        "validate_classification_mapping_compatibility",
+    ),
     "classification_validation": (".classification_validation", None),
     "ClassificationRequirement": (
-        ".classification_validation", "ClassificationRequirement",
+        ".classification_validation",
+        "ClassificationRequirement",
     ),
     "ClassificationValidationError": (
         ".classification_validation",
@@ -680,7 +755,20 @@ _LAZY_ATTRS = {
         "build_classification_requirement",
     ),
     "get_classification_name": (
-        ".classification_validation", "get_classification_name",
+        ".classification_validation",
+        "get_classification_name",
+    ),
+    "get_classification_source_refs": (
+        ".classification_validation",
+        "get_classification_source_refs",
+    ),
+    "get_classification_stream": (
+        ".classification_validation",
+        "get_classification_stream",
+    ),
+    "get_classification_support_status": (
+        ".classification_validation",
+        "get_classification_support_status",
     ),
     "get_classification_version": (
         ".classification_validation",
