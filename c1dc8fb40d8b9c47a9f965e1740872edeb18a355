@@ -1,0 +1,1 @@
+Completion note: implemented the AR-DRG provider runtime registry, fail-closed compatibility checks, provider-record builder, CLI exposure, and track documentation. Validation passed with pytest, ruff, ty, and the stub detector.
