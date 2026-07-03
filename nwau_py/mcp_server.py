@@ -14,6 +14,11 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
+import pandas as pd
+
+from nwau_py.calculators import AcuteParams
+from nwau_py.calculators import acute as acute_calculator
+
 try:
     from .contracts import CALCULATOR_IDENTIFIERS
 except ModuleNotFoundError as error:
@@ -35,6 +40,7 @@ SERVER_NAME = "mchs"
 SERVER_REGISTRY_NAME = "io.github.edithatogo/mchs"
 PROTOCOL_VERSION = "2024-11-05"
 SUPPORTED_YEARS = ("2024", "2025")
+_VALID_RUNTIMES = {"python", "rust", "auto"}
 
 
 def server_version() -> str:
@@ -107,6 +113,29 @@ def _tool_error(code: str, message: str) -> dict[str, Any]:
     }
 
 
+def _runtime_from_options(arguments: dict[str, Any]) -> str:
+    options = arguments.get("options") or {}
+    if not isinstance(options, dict):
+        raise McpError("MCHS-ERR-VAL-001", "options must be a JSON object.")
+    runtime = str(options.get("runtime", "python")).strip().lower()
+    if runtime not in _VALID_RUNTIMES:
+        raise McpError(
+            "MCHS-MCP-RUNTIME-INVALID",
+            "options.runtime must be one of python, rust, or auto.",
+        )
+    return runtime
+
+
+def _ref_dir_from_options(arguments: dict[str, Any]) -> Path | None:
+    options = arguments.get("options") or {}
+    if not isinstance(options, dict):
+        raise McpError("MCHS-ERR-VAL-001", "options must be a JSON object.")
+    ref_dir = options.get("refDir")
+    if ref_dir is None:
+        return None
+    return Path(str(ref_dir))
+
+
 def _text_result(payload: Any) -> dict[str, Any]:
     return {
         "content": [
@@ -124,6 +153,7 @@ def _calculator_display_name(calculator_id: str) -> str:
 
 
 def _calculator_record(calculator_id: str) -> dict[str, Any]:
+    rust_opt_in = calculator_id == "acute"
     return {
         "id": calculator_id,
         "displayName": _calculator_display_name(calculator_id),
@@ -141,7 +171,9 @@ def _calculator_record(calculator_id: str) -> dict[str, Any]:
             "$ref": "mchs://schemas/calculator",
             "format": "json-schema",
         },
-        "supportStatus": "validated-python-runtime",
+        "supportStatus": (
+            "rust-opt-in-acute-2025" if rust_opt_in else "validated-python-runtime"
+        ),
     }
 
 
@@ -178,6 +210,7 @@ def validate_input(arguments: dict[str, Any]) -> dict[str, Any]:
     calculator_id = str(arguments.get("calculatorId", "")).strip()
     year = str(arguments.get("year", "")).strip()
     inputs = arguments.get("inputs")
+    runtime = _runtime_from_options(arguments)
     if calculator_id not in CALCULATOR_IDENTIFIERS:
         return {
             "valid": False,
@@ -214,8 +247,58 @@ def validate_input(arguments: dict[str, Any]) -> dict[str, Any]:
                 path="/inputs",
             ),
         }
+    if runtime == "rust" and (calculator_id != "acute" or year != "2025"):
+        return {
+            "valid": False,
+            "diagnostics": _diagnostics(
+                severity="error",
+                code="MCHS-MCP-RUST-UNSUPPORTED",
+                message="Rust MCP execution is only validated for acute 2025.",
+                path="/options/runtime",
+            ),
+        }
+    if runtime == "rust":
+        try:
+            contract = acute_calculator.build_acute_contract(
+                params=AcuteParams(),
+                year=year,
+                ref_dir=_ref_dir_from_options(arguments),
+            )
+            acute_calculator.validate_acute_input_frame(
+                pd.DataFrame([inputs]), contract
+            )
+        except ImportError as exc:
+            return {
+                "valid": False,
+                "diagnostics": _diagnostics(
+                    severity="error",
+                    code="MCHS-MCP-RUST-UNAVAILABLE",
+                    message=str(exc),
+                    path="/options/runtime",
+                ),
+            }
+        except Exception as exc:
+            return {
+                "valid": False,
+                "diagnostics": _diagnostics(
+                    severity="error",
+                    code="MCHS-ERR-VAL-001",
+                    message=str(exc),
+                    path="/inputs",
+                ),
+            }
+        return {
+            "valid": True,
+            "runtime": "rust",
+            "diagnostics": _diagnostics(
+                severity="info",
+                code="MCHS-INF-001",
+                message="Input validated for the Rust-backed MCP dispatcher.",
+            ),
+        }
     return {
         "valid": True,
+        "runtime": runtime,
         "diagnostics": _diagnostics(
             severity="info",
             code="MCHS-INF-001",
@@ -228,15 +311,20 @@ def calculate(arguments: dict[str, Any]) -> dict[str, Any]:
     """Return bounded calculation response or explicit unsupported diagnostic."""
     validation = validate_input(arguments)
     if not validation["valid"]:
+        diagnostic = validation["diagnostics"]["diagnostics"][0]
         return _tool_error(
-            "MCHS-ERR-VAL-001",
-            validation["diagnostics"]["diagnostics"][0]["message"],
+            diagnostic["code"],
+            diagnostic["message"],
         )
     calculator_id = str(arguments["calculatorId"])
     year = str(arguments["year"])
+    runtime = _runtime_from_options(arguments)
+    if runtime == "rust":
+        return _calculate_with_rust(arguments, calculator_id=calculator_id, year=year)
     return {
         "calculatorId": calculator_id,
         "year": year,
+        "runtime": runtime,
         "result": None,
         "diagnostics": _diagnostics(
             severity="warning",
@@ -251,6 +339,50 @@ def calculate(arguments: dict[str, Any]) -> dict[str, Any]:
             "server": SERVER_NAME,
             "serverVersion": server_version(),
             "transport": "stdio",
+            "transportRuntime": "python",
+            "formulaRuntime": "python-boundary",
+        },
+    }
+
+
+def _calculate_with_rust(
+    arguments: dict[str, Any], *, calculator_id: str, year: str
+) -> dict[str, Any]:
+    """Dispatch a validated MCP calculation request to the Rust-backed slice."""
+    if calculator_id != "acute" or year != "2025":
+        raise McpError(
+            "MCHS-MCP-RUST-UNSUPPORTED",
+            "Rust MCP execution is only validated for acute 2025.",
+        )
+    inputs = arguments.get("inputs")
+    if not isinstance(inputs, dict):
+        raise McpError("MCHS-ERR-VAL-001", "inputs must be a JSON object.")
+    try:
+        output = acute_calculator.calculate_acute_rust_2025(
+            pd.DataFrame([inputs]),
+            AcuteParams(),
+            year=year,
+            ref_dir=_ref_dir_from_options(arguments),
+        )
+    except ImportError as exc:
+        raise McpError("MCHS-MCP-RUST-UNAVAILABLE", str(exc)) from exc
+    row = output.iloc[0].where(pd.notna(output.iloc[0]), None).to_dict()
+    return {
+        "calculatorId": calculator_id,
+        "year": year,
+        "runtime": "rust",
+        "result": row,
+        "diagnostics": _diagnostics(
+            severity="info",
+            code="MCHS-INF-001",
+            message="Calculation completed through the Rust-backed MCP dispatcher.",
+        ),
+        "provenance": {
+            "server": SERVER_NAME,
+            "serverVersion": server_version(),
+            "transport": "stdio",
+            "transportRuntime": "python",
+            "formulaRuntime": "rust",
         },
     }
 
@@ -360,6 +492,13 @@ def list_tools() -> list[dict[str, Any]]:
                         "calculatorId": {"type": "string"},
                         "year": {"type": "string"},
                         "inputs": {"type": "object"},
+                        "options": {
+                            "type": "object",
+                            "properties": {
+                                "runtime": {"enum": ["python", "rust", "auto"]},
+                                "refDir": {"type": "string"},
+                            },
+                        },
                     },
                 },
             ),
@@ -373,7 +512,13 @@ def list_tools() -> list[dict[str, Any]]:
                         "calculatorId": {"type": "string"},
                         "year": {"type": "string"},
                         "inputs": {"type": "object"},
-                        "options": {"type": "object"},
+                        "options": {
+                            "type": "object",
+                            "properties": {
+                                "runtime": {"enum": ["python", "rust", "auto"]},
+                                "refDir": {"type": "string"},
+                            },
+                        },
                     },
                 },
             ),
@@ -463,10 +608,25 @@ def read_resource(uri: str) -> dict[str, Any]:
             "status": "ready-for-local-use",
             "dockerRequired": False,
             "years": list(SUPPORTED_YEARS),
+            "transport": {
+                "type": "stdio",
+                "runtime": "python-stdio",
+                "status": "published-compatible-shim",
+            },
+            "formulaRuntime": {
+                "default": "python-boundary",
+                "rustOptIn": {
+                    "tool": "mchs.calculate",
+                    "calculatorId": "acute",
+                    "year": "2025",
+                    "status": "validated-when-rust-extension-available",
+                },
+            },
             "knownLimitations": [
                 "Registry submission requires external account or review flow.",
-                "Formula execution is delegated; the MCP adapter does not "
-                "duplicate calculator logic.",
+                "The Python stdio transport is a compatibility shim, not a "
+                "formula-runtime claim.",
+                "Rust formula execution is opt-in for acute 2025 only.",
             ],
         }
     elif uri == "mchs://calculators":

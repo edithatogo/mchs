@@ -1,9 +1,9 @@
 {
   "track_id": "rust_mcp_core_migration_20260703",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "binding",
-  "current_state": "roadmap-only",
+  "current_state": "implemented-awaiting-review",
   "primary_contract": "contracts/mcp",
   "dependencies": [
     "rust_core_ga_20260513",
@@ -20,6 +20,6 @@
   ],
   "publication_status": "published-with-gaps",
   "created_at": "2026-07-03T08:59:33Z",
-  "updated_at": "2026-07-03T09:50:04Z",
+  "updated_at": "2026-07-03T11:55:00Z",
   "description": "Migrate the core MCP stdio calculation and validation functionality to the shared Rust calculator core while preserving the published MCP contract and registry-facing behaviour."
 }

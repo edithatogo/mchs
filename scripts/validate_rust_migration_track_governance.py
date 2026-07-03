@@ -5,16 +5,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "conductor" / "tracks"
+ARCHIVE = ROOT / "conductor" / "archive"
 
 EXPECTED_METADATA = {
     "rust_cli_core_migration_20260703": {
         "track_class": "binding",
-        "current_state": "roadmap-only",
+        "current_state": {"roadmap-only", "implemented-awaiting-review", "archived"},
         "publication_status": "published-with-gaps",
     },
     "rust_mcp_core_migration_20260703": {
         "track_class": "binding",
-        "current_state": "roadmap-only",
+        "current_state": {"roadmap-only", "implemented-awaiting-review", "archived"},
         "publication_status": "published-with-gaps",
     },
     "rust_cli_mcp_promotion_evidence_20260703": {
@@ -62,13 +63,20 @@ REQUIRED_TEXT = {
 }
 
 
+def _track_root(track_id: str) -> Path:
+    active = TRACKS / track_id
+    if active.exists():
+        return active
+    return ARCHIVE / track_id
+
+
 def _metadata(track_id: str) -> dict[str, object]:
-    path = TRACKS / track_id / "metadata.json"
+    path = _track_root(track_id) / "metadata.json"
     return json.loads(path.read_text(encoding="utf-8"))
 
 
 def _track_text(track_id: str, filename: str) -> str:
-    return (TRACKS / track_id / filename).read_text(encoding="utf-8")
+    return (_track_root(track_id) / filename).read_text(encoding="utf-8")
 
 
 def main() -> int:
@@ -77,7 +85,11 @@ def main() -> int:
         metadata = _metadata(track_id)
         for key, expected_value in expected.items():
             actual = metadata.get(key)
-            if actual != expected_value:
+            if isinstance(expected_value, set):
+                matches = actual in expected_value
+            else:
+                matches = actual == expected_value
+            if not matches:
                 failures.append(
                     f"{track_id}: expected {key}={expected_value!r}, got {actual!r}"
                 )

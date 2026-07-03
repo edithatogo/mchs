@@ -49,7 +49,7 @@
           "2024",
           "2025"
         ],
-        "formulaLogicPolicy": "The MCP server delegates to the canonical runtime and does not duplicate calculator formula logic."
+        "formulaLogicPolicy": "The MCP server delegates promoted formula execution to the Rust-backed dispatcher where validated and does not duplicate calculator formula logic. The Python stdio process is a transport shim during migration."
       },
       "security": {
         "networkAccess": "none-required-for-stdio",

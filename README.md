@@ -66,7 +66,7 @@ As of 2026-05-26:
 | --- | --- | --- |
 | Python package (`nwau-py`) | `pyproject.toml`, release workflow, and PyPI badge links | **Published** on PyPI at `nwau-py 0.2.2` |
 | Conda package (`nwau-py`) | `conda/recipe/meta.yaml` | **Recipe-only** (not yet conda-forge published) |
-| MCP stdio server (`mchs-mcp`) | `nwau_py/mcp_server.py`, `contracts/mcp/registry/server.json`, `.github/workflows/publish-mcp-registry.yml` | **Published** to the official MCP Registry as `io.github.edithatogo/mchs` version `0.2.2` |
+| MCP stdio server (`mchs-mcp`) | `nwau_py/mcp_server.py`, `contracts/mcp/registry/server.json`, `.github/workflows/publish-mcp-registry.yml` | **Published** to the official MCP Registry as `io.github.edithatogo/mchs` version `0.2.2`; Rust formula execution is opt-in for MCP acute 2025 only |
 | Rust crates (`nwau-core`, `nwau-c-abi`, `nwau-py`) | `rust/crates/*/Cargo.toml` | `nwau-core` **Published** on crates.io at `0.1.0`; `nwau-c-abi` and `nwau-py` remain local/private scaffolds |
 | `@edithatogo/mchs-wasm-binding` package manifest | `wasm-binding/package.json` | **Published** on npm at `0.1.0` |
 | R / Julia / Scala / Spark / Swift / Stata / MATLAB / Kotlin-Native / Power Platform | Track specs in `conductor/tracks/*` | **Private** / roadmap-only; no registry artifacts claimed |
@@ -90,6 +90,11 @@ overrides. Python remains the default. The only Rust-backed CLI slice currently
 promoted is opt-in acute 2025 CSV execution; unsupported Rust requests fail
 closed rather than falling back silently. See
 `docs/roadmaps/rust-cli-runtime-boundary.md` for the support boundary.
+
+The MCP stdio server keeps its Python transport shim for registry-compatible
+local execution, but `mchs.calculate` can opt into the same Rust acute 2025
+formula slice with `options.runtime = "rust"`. MCP support-status resources
+distinguish the Python stdio transport from Rust-backed formula execution.
 
 ## Calculator modules
 

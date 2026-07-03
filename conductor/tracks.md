@@ -722,7 +722,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Rust MCP Core Migration**
+- [~] **Track: Rust MCP Core Migration**
 *Link: [./tracks/rust_mcp_core_migration_20260703/](./tracks/rust_mcp_core_migration_20260703/)*
 *Gate: Migrate current MCP stdio calculation and validation tools to the shared Rust core while preserving the published MCP contract and registry-facing behaviour.*
 
