@@ -30,12 +30,12 @@
     - [x] Update the CLI and MCP migration specs to make acute 2025 the first Rust-backed implementation slice.
     - [x] Link the first slice to existing Rust canary/kernel evidence and Rust Core Continuation dependencies.
     - [x] Record other calculators and years as follow-on coverage until their fixtures are ready.
-- [~] Task: Add contract-hardening pre-phases to CLI and MCP plans
-    - [ ] Add numeric tolerance and rounding policy tasks.
-    - [ ] Add schema parity source tasks.
-    - [ ] Add unsupported diagnostic-code tasks.
-    - [ ] Add support-status wording tasks for Rust canary, Rust opt-in, Python default, and Rust default.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'First-Slice and Contract Hardening' (Protocol in workflow.md)
+- [x] Task: Add contract-hardening pre-phases to CLI and MCP plans [516b8c5]
+    - [x] Add numeric tolerance and rounding policy tasks.
+    - [x] Add schema parity source tasks.
+    - [x] Add unsupported diagnostic-code tasks.
+    - [x] Add support-status wording tasks for Rust canary, Rust opt-in, Python default, and Rust default.
+- [~] Task: Conductor - Automated Review and Checkpoint 'First-Slice and Contract Hardening' (Protocol in workflow.md)
 
 ## Phase 4: Status Alignment and Additional Track Improvements
 
