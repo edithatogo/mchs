@@ -1,0 +1,11 @@
+Task: Add governance validation for new Rust migration track metadata
+
+Summary:
+- Added scripts/validate_rust_migration_track_governance.py scoped to the three Rust migration tracks.
+- Extended tests/test_rust_migration_track_hardening.py to require the validator script to pass.
+- Kept validation scoped to the Rust migration track set so legacy metadata vocabularies remain a separate governance-backfill concern.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
+- python3 scripts/validate_rust_migration_track_governance.py
+- python3 scripts/validate_conductor_status_matrix.py
