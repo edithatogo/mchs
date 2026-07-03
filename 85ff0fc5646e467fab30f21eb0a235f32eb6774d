@@ -1,0 +1,1 @@
+Removed the stale active-path copy of rust_acute_python_poc_20260510 after archiving it. The archived copy under conductor/archive remains the preserved record; this commit only deletes the duplicate active-path files.
