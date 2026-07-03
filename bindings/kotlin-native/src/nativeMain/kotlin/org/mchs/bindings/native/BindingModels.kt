@@ -23,6 +23,6 @@ data class BindingResponse(
 )
 
 enum class BindingStatus {
-    SCAFFOLD_ONLY,
+    ENVELOPE_VALIDATED,
     BLOCKED,
 }
