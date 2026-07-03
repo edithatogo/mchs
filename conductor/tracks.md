@@ -148,7 +148,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Python Rust Binding Stabilization**
+- [x] **Track: Python Rust Binding Stabilization**
 *Link: [./archive/python_rust_binding_stabilization_20260512/](./archive/python_rust_binding_stabilization_20260512/)*
 *Gate: stabilize pyo3/maturin bindings while keeping Python as the validated public API and Rust-backed paths opt-in until parity is proven.*
 
