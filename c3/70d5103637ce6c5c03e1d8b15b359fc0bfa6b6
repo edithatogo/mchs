@@ -1,0 +1,4 @@
+Plan update: marked 'Record upstream submission URL or external gate' complete for r_cran_registry_submission_20260524.
+
+Task evidence commit: 4cdbead.
+Remaining gates: public CRAN target-version publication and final publication completion remain unchecked because nwauR 0.1.0 is not visible on CRANDB, CRAN package page, or CRAN archive.
