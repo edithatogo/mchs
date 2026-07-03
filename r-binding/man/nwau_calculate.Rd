@@ -4,6 +4,8 @@
 \alias{nwau_ed}
 \alias{nwau_non_admitted}
 \alias{nwau_diagnose}
+\alias{nwau_cli_contract}
+\alias{validate_nwau_input}
 \title{Run NWAU calculations through the shared Python CLI}
 \usage{
 nwau_calculate(input, stream = c("acute", "ed", "non-admitted"), year = NULL,
@@ -18,6 +20,9 @@ nwau_non_admitted(input, year = NULL, params = NULL, output = NULL,
 nwau_diagnose(input, stream = c("acute", "ed", "non-admitted"), year = NULL,
   params = NULL, python = nwau_default_python(),
   module = nwau_default_module())
+nwau_cli_contract(python = nwau_default_python(),
+  module = nwau_default_module())
+validate_nwau_input(input)
 }
 \arguments{
 \item{input}{A data frame or path to a CSV input file.}
@@ -32,16 +37,23 @@ nwau_diagnose(input, stream = c("acute", "ed", "non-admitted"), year = NULL,
 These helpers are thin wrappers over \code{python -m nwau_py.cli.main}. They
 perform file handoff and result loading only; calculator formulas and
 validation remain in the shared Python implementation.
+\code{nwau_cli_contract()} probes the shared CLI/file interop contract exposed
+by the Python service boundary. \code{validate_nwau_input()} checks only the R
+handoff shape before Python execution.
 }
 \value{
 \code{nwau_calculate()} and stream helpers return a data frame. \code{nwau_diagnose()}
 returns a list containing command status, command arguments, output, and error
-message fields.
+message fields. \code{nwau_cli_contract()} returns a status list with the raw
+contract text when available. \code{validate_nwau_input()} returns invisibly on
+success.
 }
 \examples{
-\dontrun{
 input <- data.frame(DRG = "801A", LOS = 1)
-diagnostic <- nwau_diagnose(input, stream = "acute", year = 2025)
-diagnostic$ok
+validate_nwau_input(input)
+
+\donttest{
+# Requires Python 3 with nwau_py and calculator data available.
+# result <- nwau_acute(input, year = 2025)
 }
 }

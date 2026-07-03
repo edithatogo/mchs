@@ -1,6 +1,6 @@
 # nwauR
 
-`nwauR` is a lightweight R wrapper around the separately distributed `nwau-py`
+`nwauR` is a minimal R wrapper around the authoritative `nwau_py` Python
 calculator CLI. It does not reimplement the funding formulas in R. Instead it
 passes CSV input to Python, lets the existing calculator run, and reads the
 resulting CSV back into R.
@@ -13,14 +13,15 @@ single source of truth for the calculation logic.
 - `nwau_calculate()` for generic batch execution
 - `nwau_acute()`, `nwau_ed()`, and `nwau_non_admitted()` convenience helpers
 - `nwau_diagnose()` for CLI-oriented validation diagnostics
+- `nwau_cli_contract()` for probing the shared CLI/file interop contract
+- `validate_nwau_input()` for checking data frame or CSV handoff inputs before
+  launching Python
 
 ## Requirements
 
 - R 4.1 or newer
-- Python 3.10 or newer with the `nwau-py` package available on the selected interpreter
-- Calculator reference data supplied separately through the Python package or
-  the `params` argument. Licensed source data is not bundled with this R
-  package.
+- Python 3 with the `nwau_py` package available on the selected interpreter
+- The archived calculator data under `archive/sas/<YEAR>/`
 
 The wrapper defaults to `python3` and the module `nwau_py.cli.main`. Override
 either with R options:
@@ -44,13 +45,6 @@ Or install it locally:
 install.packages("r-binding", repos = NULL, type = "source")
 ```
 
-Run CRAN-oriented checks from the repository root:
-
-```sh
-R CMD build r-binding
-R CMD check --as-cran nwauR_0.1.0.tar.gz
-```
-
 ## Example
 
 The repo includes a synthetic acute fixture at
@@ -66,6 +60,18 @@ diagnostic <- nwau_diagnose(acute_input, year = 2025)
 
 The returned `acute_output` is the Python-produced result CSV parsed into an R
 data frame. Any validation failures come from the existing Python CLI.
+
+## CLI/file boundary
+
+The R adapter performs only boundary checks needed for reliable handoff:
+
+- data frame inputs must have named columns
+- file inputs must be existing `.csv` files
+- output paths must target `.csv` files in existing directories
+- successful CLI runs must produce a non-empty output CSV
+
+Use `nwau_cli_contract()` to inspect the Python CLI/file contract exposed by
+`python -m nwau_py.cli.main interop contract`.
 
 ## Boundary
 

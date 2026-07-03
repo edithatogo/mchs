@@ -122,6 +122,14 @@ def test_r_binding_package_is_wrapper_only_and_has_testthat_guardrails():
         assert forbidden not in source
 
     assert "system2" in source
+    assert "nwau_cli_contract" in source
+    assert "validate_nwau_input" in source
+    assert "nwau_assert_output_file" in source
     assert "`python3` and the module `nwau_py.cli.main`" in readme
     assert "formula logic stays in python" in readme
+    assert "successful cli runs must produce a non-empty output csv" in readme
     assert "diagnose reports cli failures without formula fallback" in testthat
+    assert "input validation enforces concrete csv handoff" in testthat
+    assert "cli contract probe reports command failures without formula fallback" in (
+        testthat
+    )
