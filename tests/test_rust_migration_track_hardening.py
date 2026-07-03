@@ -123,3 +123,18 @@ def test_status_matrix_recommends_hardening_before_migration_tracks() -> None:
     promotion = recommended.index("rust_cli_mcp_promotion_evidence_20260703")
 
     assert hardening < cli < mcp < promotion
+
+
+def test_hardening_track_records_follow_on_improvements() -> None:
+    path = (
+        TRACKS
+        / "rust_migration_track_hardening_20260703"
+        / "additional_improvements.md"
+    )
+    text = path.read_text()
+
+    assert "conductor-newtrack" in text
+    assert "automated-review workflow" in text
+    assert "broader metadata-governance validator" in text
+    assert "legacy backfill" in text
+    assert "GitHub Project synchronization" in text
