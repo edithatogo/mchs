@@ -1,8 +1,9 @@
-name = "NWAUJulia"
-uuid = "69dd8659-98b3-47a3-b428-c6dad20e2275"
+name = "NationalWeightedActivityUnitWrapper"
+uuid = "58dad789-f56a-4ab3-a66f-c15139bf9cbe"
 version = "0.1.0"
 
 [deps]
+Downloads = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
@@ -11,4 +12,5 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 test = ["Test"]
 
 [compat]
+Downloads = "1"
 julia = "1.10"
