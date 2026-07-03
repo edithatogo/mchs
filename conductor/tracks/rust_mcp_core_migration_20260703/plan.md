@@ -9,7 +9,9 @@
 - [ ] Task: Define the Rust-backed MCP dispatcher boundary
     - [ ] Specify request validation, schema conversion, Rust core invocation, and response shaping.
     - [ ] Specify unsupported-surface diagnostics and fallback rules.
-    - [ ] Document whether the Python layer is a transitional transport shim or a retained compatibility layer.
+    - [ ] Document that the Python stdio transport may remain during transition but is not the formula runtime.
+    - [ ] Specify that promoted formula execution uses the Rust-backed dispatcher.
+    - [ ] State that MCP should reuse the CLI runtime policy and parity fixtures but must not shell out to the CLI unless a later implementation decision records that boundary explicitly.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'MCP Contract Inventory and Dispatcher Design' (Protocol in workflow.md)
 
 ## Phase 2: Red Tests for MCP Parity
@@ -32,7 +34,7 @@
 - [ ] Task: Implement compatibility and fallback controls
     - [ ] Keep the stdio transport stable for existing registry consumers.
     - [ ] Return explicit unsupported diagnostics where Rust coverage is incomplete.
-    - [ ] Align runtime-selection behaviour with the CLI migration track.
+    - [ ] Align runtime-selection behaviour with the CLI migration track without making CLI shell-out the implicit architecture.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Implement Rust-Backed MCP Execution' (Protocol in workflow.md)
 
 ## Phase 4: Evidence, Documentation, and Registry Claim Hygiene

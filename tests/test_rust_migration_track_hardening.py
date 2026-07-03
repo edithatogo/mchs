@@ -65,3 +65,15 @@ def test_cli_migration_track_pins_runtime_selection_contract() -> None:
     assert "NWAU_RUNTIME" in combined
     assert "explicit CLI `--runtime` option takes precedence" in combined
     assert "fail closed" in combined
+
+
+def test_mcp_migration_track_separates_transport_from_formula_runtime() -> None:
+    spec = _text("rust_mcp_core_migration_20260703", "spec.md")
+    plan = _text("rust_mcp_core_migration_20260703", "plan.md")
+    combined = f"{spec}\n{plan}"
+
+    assert "Python stdio transport" in combined
+    assert "formula runtime" in combined
+    assert "Rust-backed dispatcher" in combined
+    assert "reuse the CLI runtime policy and parity fixtures" in combined
+    assert "must not shell out to the CLI" in combined
