@@ -103,3 +103,13 @@ app/connection observations, flow smoke, DLP/monitoring, and subrepo closure.
 The compact evidence record is
 `power-platform/evidence/preflight-readiness-20260612.json`. No production
 readiness, runtime smoke, or live tenant completion claim is made.
+
+## Aggregate Preflight - 2026-07-03
+
+`scripts/preflight_power_platform_readiness.py` was rerun from the repository
+and the same six gates remained blocked but contract-valid: endpoint, GitHub
+live gate, PAC app/connection observations, flow smoke, DLP/monitoring, and
+subrepo closure. The checked-in refresh record is
+`power-platform/evidence/preflight-readiness-20260703.json`. The track is not
+archive-eligible until live app, connector, and flow smoke evidence plus the
+remaining governance gates are captured.
