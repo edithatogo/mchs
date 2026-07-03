@@ -3,4 +3,4 @@
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
 - [Metadata](./metadata.json)
-- GitHub issue: pending
+- GitHub issue: [#205](https://github.com/edithatogo/mchs/issues/205)

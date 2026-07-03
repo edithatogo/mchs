@@ -20,7 +20,7 @@
   "created_at": "2026-07-03T00:00:00Z",
   "updated_at": "2026-07-03T00:00:00Z",
   "description": "Incorporate redistributable IHACPA calculator surfaces by year and stream without overclaiming restricted or unvalidated assets.",
-  "github_issue_number": null,
-  "github_issue_url": null,
+  "github_issue_number": 202,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/202",
   "no_stub_enforce": true
 }

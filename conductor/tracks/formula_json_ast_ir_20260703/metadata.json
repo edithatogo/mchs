@@ -20,7 +20,7 @@
   "created_at": "2026-07-03T00:00:00Z",
   "updated_at": "2026-07-03T00:00:00Z",
   "description": "Add JSON AST formula IR for calculator formulas as a shared, inspectable formula contract.",
-  "github_issue_number": null,
-  "github_issue_url": null,
+  "github_issue_number": 207,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/207",
   "no_stub_enforce": true
 }

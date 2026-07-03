@@ -20,7 +20,7 @@
   "created_at": "2026-07-03T00:00:00Z",
   "updated_at": "2026-07-03T00:00:00Z",
   "description": "Add local-only licensed asset registry and restricted-asset guards without redistributing licensed material.",
-  "github_issue_number": null,
-  "github_issue_url": null,
+  "github_issue_number": 204,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/204",
   "no_stub_enforce": true
 }
