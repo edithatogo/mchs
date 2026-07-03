@@ -39,11 +39,11 @@
 
 ## Phase 4: Status Alignment and Additional Track Improvements
 
-- [~] Task: Align Conductor registry and status matrix
-    - [ ] Update `conductor/tracks.md` wording if needed to reflect hardened gates.
-    - [ ] Update `conductor/status-matrix.json` if any status or recommended-next-track ordering changes.
-    - [ ] Run the Conductor status-matrix validator.
-- [ ] Task: Record additional track-quality improvements
+- [x] Task: Align Conductor registry and status matrix [b72d2f9]
+    - [x] Update `conductor/tracks.md` wording if needed to reflect hardened gates.
+    - [x] Update `conductor/status-matrix.json` if any status or recommended-next-track ordering changes.
+    - [x] Run the Conductor status-matrix validator.
+- [~] Task: Record additional track-quality improvements
     - [ ] Decide whether to update the reusable `conductor-newtrack` skill/template wording so it matches the repo's automated-review workflow.
     - [ ] Record whether a broader metadata-governance validator should cover all active tracks, not only the Rust migration set.
     - [ ] Record whether project-board synchronization should explicitly include the new hardening track.
