@@ -136,20 +136,28 @@ def test_status_matrix_orders_rust_migration_tracks_coherently() -> None:
     matrix = json.loads((ROOT / "conductor" / "status-matrix.json").read_text())
     recommended = matrix["recommendedNextTracks"]
 
-    if "rust_cli_core_migration_20260703" in recommended:
-        cli = recommended.index("rust_cli_core_migration_20260703")
-    else:
-        cli = -1
-    if "rust_mcp_core_migration_20260703" in recommended:
-        mcp = recommended.index("rust_mcp_core_migration_20260703")
-    else:
-        mcp = cli
     promotion = recommended.index("rust_cli_mcp_promotion_evidence_20260703")
 
-    if "rust_migration_track_hardening_20260703" in recommended:
+    if "rust_cli_core_migration_20260703" in recommended:
+        cli = recommended.index("rust_cli_core_migration_20260703")
+        assert cli < promotion
+    if "rust_mcp_core_migration_20260703" in recommended:
+        mcp = recommended.index("rust_mcp_core_migration_20260703")
+        assert mcp < promotion
+    if (
+        "rust_cli_core_migration_20260703" in recommended
+        and "rust_mcp_core_migration_20260703" in recommended
+    ):
+        cli = recommended.index("rust_cli_core_migration_20260703")
+        mcp = recommended.index("rust_mcp_core_migration_20260703")
+        assert cli < mcp
+    if (
+        "rust_migration_track_hardening_20260703" in recommended
+        and "rust_cli_core_migration_20260703" in recommended
+    ):
         hardening = recommended.index("rust_migration_track_hardening_20260703")
+        cli = recommended.index("rust_cli_core_migration_20260703")
         assert hardening < cli
-    assert cli < mcp < promotion
 
 
 def test_hardening_track_records_follow_on_improvements() -> None:
