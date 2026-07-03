@@ -1,0 +1,1 @@
+Final plan update for capability matrix runtime truth:\n- Phases 2 and 3 are marked complete because the implementation, docs, and validation all converged on the generated capability matrix.\n- Validation evidence remains the same test/lint/type-check set attached to the checkpoint note.\n- The remaining stub-detector findings are pre-existing and unrelated to this track.
