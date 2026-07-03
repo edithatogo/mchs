@@ -1,0 +1,8 @@
+Final review fix: extended the Rust migration governance validator so the standalone command now checks required runtime-selection, MCP boundary, acute 2025 first-slice, and contract-hardening pre-phase text in addition to metadata.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
+- python3 scripts/validate_rust_migration_track_governance.py
+- python3 scripts/validate_conductor_status_matrix.py
+- uv run ruff check scripts/validate_rust_migration_track_governance.py tests/test_rust_migration_track_hardening.py
+- git diff --check
