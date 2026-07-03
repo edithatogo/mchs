@@ -1,0 +1,86 @@
+{
+  "binding_bundle_id": "scala_spark_binding_contract_20260513",
+  "entry_id": "scala-spark-bundle-fail",
+  "entry_type": "scala_spark_binding_execution",
+  "request": {
+    "schema_version": "1.0",
+    "calculator_id": "subacute",
+    "pricing_year": "2025",
+    "input_schema_version": "1.0",
+    "output_schema_version": "1.0",
+    "mode": "file-exchange",
+    "parquet_input_path": "./fixtures/subacute/input.parquet",
+    "parquet_output_path": "./fixtures/subacute/output.parquet",
+    "correlation_id": "scala-spark-bundle-fail",
+    "metadata": {
+      "source": "synthetic",
+      "transport": "file-exchange"
+    },
+    "fixture_gate": "public_contract_pin"
+  },
+  "response": {
+    "schema_version": "1.0",
+    "calculator_id": "subacute",
+    "pricing_year": "2025",
+    "mode": "file-exchange",
+    "success": false,
+    "status": "blocked",
+    "message": "Scala/Spark transport adapter readiness is local-only; JVM publication remains deferred.",
+    "warnings": [
+      "The binding contract and local adapter are available, but no public Scala/Spark module or Maven Central release is claimed."
+    ],
+    "errors": [
+      {
+        "code": "SCALA_SPARK_MODULE_NOT_READY",
+        "severity": "warning",
+        "retryable": false,
+        "condition": "JVM publication or owner-backed promotion remains deferred",
+        "message": "The Scala/Spark transport adapter is ready locally, but public module promotion is blocked."
+      }
+    ],
+    "diagnostics": {
+      "status": "fail",
+      "checks": [
+        {
+          "id": "contract_alignment",
+          "status": "pass",
+          "message": "The request still mirrors the public calculator contract."
+        },
+        {
+          "id": "module_readiness",
+          "status": "fail",
+          "message": "The Scala/Spark adapter is available locally; public module release remains deferred."
+        },
+        {
+          "id": "fixture_gate",
+          "status": "blocked",
+          "message": "The selected fixture gate does not allow release promotion."
+        }
+      ],
+      "summary": {
+        "passed": 1,
+        "failed": 1,
+        "blocked": 1
+      },
+      "notes": "Synthetic failure example only."
+    },
+    "provenance": {
+      "command": "scala-spark-binding validate-bundle-fail",
+      "binding_bundle_id": "scala_spark_binding_contract_20260513",
+      "source_manifest_path": "contracts/scala-spark-binding/examples/binding.fail.json",
+      "source_url": "https://example.invalid/contracts/scala-spark-binding",
+      "retrieved_on": "2026-05-13",
+      "sha256": "synthetic-sha256-scala-spark-bundle-fail",
+      "bytes": 2296,
+      "checksum_algorithm": "sha256"
+    },
+    "parquet_output_path": "./fixtures/subacute/output.parquet",
+    "fixture_gate_state": "blocked",
+    "module_readiness_state": "adapter_ready"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Synthetic binding failure example only."
+  }
+}

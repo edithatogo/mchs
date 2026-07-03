@@ -1,0 +1,327 @@
+{
+  "schema_version": "1.0",
+  "binding_bundle_id": "scala_spark_binding_contract_20260513",
+  "tool": {
+    "name": "mchs-scala-spark-binding",
+    "package": "scala-spark-binding",
+    "entry_point": "contracts/scala-spark-binding"
+  },
+  "privacy": {
+    "classification": "synthetic",
+    "contains_phi": false,
+    "notes": "Metadata-only Scala/Spark binding contract. It describes request and response structs, transport fallback, diagnostics, provenance, errors, fixture gates, and module readiness without committing calculator logic or licensed payloads."
+  },
+  "public_calculator_contract": {
+    "source_path": "microcosting_healthservices/nwau_py/contracts.py",
+    "model_name": "CalculatorContract",
+    "fields": [
+      "schema_version",
+      "calculator_id",
+      "pricing_year",
+      "input_schema_version",
+      "output_schema_version",
+      "required_input_columns",
+      "required_output_columns"
+    ],
+    "supported_calculators": [
+      "acute",
+      "adjust",
+      "community_mh",
+      "ed",
+      "mh",
+      "outpatients",
+      "subacute"
+    ],
+    "notes": "The Scala/Spark binding request and response structs mirror the public calculator contract fields and only add transport metadata for service, file-exchange, and SQL boundaries."
+  },
+  "transport_modes": [
+    {
+      "mode": "file-exchange",
+      "priority": "primary",
+      "notes": "Primary path for Spark DataFrame and Parquet/Arrow batch consumption in lakehouse workflows."
+    },
+    {
+      "mode": "sql-boundary",
+      "priority": "primary",
+      "notes": "Primary path for Spark SQL, DuckDB, or JDBC analytical queries against pre-computed outputs."
+    },
+    {
+      "mode": "service",
+      "priority": "fallback",
+      "notes": "Fallback path for callers that need online request/response behavior via HTTP/REST."
+    }
+  ],
+  "request_structs": [
+    {
+      "name": "ScalaSparkBindingRequest",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Binding schema version for the request envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Public calculator identifier from the shared contract."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "IHACPA pricing year or edition label."
+        },
+        {
+          "name": "input_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Version of the declared input schema expected by the calculator."
+        },
+        {
+          "name": "output_schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Version of the declared output schema returned by the calculator."
+        },
+        {
+          "name": "parquet_input_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-exchange"],
+          "notes": "Parquet-format input path for Spark DataFrame batch consumption."
+        },
+        {
+          "name": "parquet_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-exchange"],
+          "notes": "Parquet-format output path for Spark DataFrame batch consumption."
+        },
+        {
+          "name": "sql_connection_string",
+          "type": "string",
+          "required": false,
+          "modes": ["sql-boundary"],
+          "notes": "JDBC or DuckDB connection string for SQL-boundary queries."
+        },
+        {
+          "name": "sql_query",
+          "type": "string",
+          "required": false,
+          "modes": ["sql-boundary"],
+          "notes": "SQL query expression referencing pre-computed views."
+        },
+        {
+          "name": "service_url",
+          "type": "string",
+          "required": false,
+          "modes": ["service"],
+          "notes": "Configured service endpoint for the fallback transport path."
+        },
+        {
+          "name": "correlation_id",
+          "type": "string",
+          "required": false,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Traceable caller-provided request identifier."
+        },
+        {
+          "name": "metadata",
+          "type": "object",
+          "required": false,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Opaque caller metadata that must not carry calculator logic."
+        },
+        {
+          "name": "fixture_gate",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Declared fixture gate for synthetic-only or local-only payload handling."
+        }
+      ],
+      "notes": "Single versioned Scala/Spark request envelope that mirrors the public calculator contract and adds only transport metadata."
+    }
+  ],
+  "response_structs": [
+    {
+      "name": "ScalaSparkBindingResponse",
+      "status": "stable",
+      "fields": [
+        {
+          "name": "schema_version",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Binding schema version for the response envelope."
+        },
+        {
+          "name": "calculator_id",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Echoes the public calculator identifier."
+        },
+        {
+          "name": "pricing_year",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Echoes the pricing year used during execution."
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Declares the transport path that produced the result."
+        },
+        {
+          "name": "success",
+          "type": "boolean",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "True only when the request completed without a blocking error."
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Machine-readable execution state for the caller."
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Short human-readable summary of the result."
+        },
+        {
+          "name": "warnings",
+          "type": "array",
+          "required": false,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Non-blocking warnings attached to the response."
+        },
+        {
+          "name": "errors",
+          "type": "array",
+          "required": false,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Machine-readable error records emitted when the response does not succeed."
+        },
+        {
+          "name": "diagnostics",
+          "type": "object",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Structured diagnostic record with pass, fail, and blocked checks."
+        },
+        {
+          "name": "provenance",
+          "type": "object",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Provenance record for the request and any generated artifact."
+        },
+        {
+          "name": "service_url",
+          "type": "string",
+          "required": false,
+          "modes": ["service"],
+          "notes": "Service endpoint used to complete the request."
+        },
+        {
+          "name": "parquet_output_path",
+          "type": "string",
+          "required": false,
+          "modes": ["file-exchange"],
+          "notes": "Parquet output path used by the file-exchange boundary."
+        },
+        {
+          "name": "sql_result_path",
+          "type": "string",
+          "required": false,
+          "modes": ["sql-boundary"],
+          "notes": "Path or table reference for SQL query results."
+        },
+        {
+          "name": "fixture_gate_state",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Observed fixture-gate outcome for the request."
+        },
+        {
+          "name": "module_readiness_state",
+          "type": "string",
+          "required": true,
+          "modes": ["file-exchange", "sql-boundary", "service"],
+          "notes": "Observed Scala/Spark module readiness state for the binding bundle."
+        }
+      ],
+      "notes": "Single versioned Scala/Spark response envelope that captures success, diagnostics, provenance, and transport-specific outputs."
+    }
+  ],
+  "diagnostics": [
+    {"id": "contract_alignment", "status": "pass", "notes": "The Scala/Spark request and response structs mirror the public calculator contract fields."},
+    {"id": "file_exchange_sql_primary", "status": "pass", "notes": "File-exchange (Parquet/Arrow) and SQL boundary are the primary transport paths."},
+    {"id": "service_fallback", "status": "pass", "notes": "Service fallback is explicitly declared for online request/response callers."},
+    {"id": "fixture_gate_enforcement", "status": "pass", "notes": "Fixture gates remain synthetic-only or local-only and do not expose restricted payloads."},
+    {"id": "module_readiness_visibility", "status": "pass", "notes": "Module readiness distinguishes concrete transport-boundary code from release packaging status."}
+  ],
+  "provenance": [
+    {"field": "command", "required": true, "notes": "Name of the contract or validation command that produced the artifact."},
+    {"field": "binding_bundle_id", "required": true, "notes": "Stable identifier for the Scala/Spark binding contract bundle."},
+    {"field": "source_manifest_path", "required": true, "notes": "Path to the source manifest or fixture record used to derive the example."},
+    {"field": "source_url", "required": true, "notes": "Public source URL or local reference used for provenance."},
+    {"field": "retrieved_on", "required": true, "notes": "Retrieval date in ISO-8601 date form."},
+    {"field": "sha256", "required": true, "notes": "Checksum for the committed example."},
+    {"field": "bytes", "required": true, "notes": "Example size in bytes."},
+    {"field": "checksum_algorithm", "required": true, "notes": "Checksum algorithm used by the bundle."}
+  ],
+  "errors": [
+    {"code": "SCALA_SPARK_SCHEMA_MISMATCH", "severity": "error", "retryable": false, "condition": "request or response fields do not match the published Scala/Spark binding schema", "notes": "Use this when the envelope is structurally invalid."},
+    {"code": "SCALA_SPARK_SERVICE_UNAVAILABLE", "severity": "error", "retryable": true, "condition": "the fallback service boundary cannot be reached", "notes": "The caller may retry or switch to a file-exchange boundary."},
+    {"code": "SCALA_SPARK_FILE_EXCHANGE_FAILED", "severity": "error", "retryable": true, "condition": "Parquet/Arrow file handoff cannot be read or written", "notes": "Use for file-boundary errors in Spark DataFrame batch consumption."},
+    {"code": "SCALA_SPARK_SQL_BOUNDARY_FAILED", "severity": "error", "retryable": true, "condition": "SQL boundary query or connection fails", "notes": "Use for SQL-boundary errors in Spark SQL or JDBC analytical queries."},
+    {"code": "SCALA_SPARK_FIXTURE_GATE_BLOCKED", "severity": "error", "retryable": false, "condition": "synthetic-only or local-only fixture gate is not satisfied", "notes": "The request must stop before any restricted payload is handled."},
+    {"code": "SCALA_SPARK_MODULE_NOT_READY", "severity": "warning", "retryable": false, "condition": "the Scala/Spark adapter is unavailable or JVM publication promotion is deferred", "notes": "Use this when local transport-boundary code is not available, or when a caller asks for public JVM registry evidence that is not claimed."}
+  ],
+  "fixture_gates": [
+    {"id": "synthetic_only_examples", "state": "pass", "notes": "Committed examples must stay synthetic and metadata only."},
+    {"id": "local_only_licensed_assets", "state": "pass", "notes": "Any licensed payloads stay local-only and user-supplied outside the repository."},
+    {"id": "public_contract_pin", "state": "pass", "notes": "The binding must remain pinned to the public calculator contract field set."}
+  ],
+  "module_readiness": [
+    {"id": "scala_spark_transport_adapter", "state": "adapter_ready", "notes": "The workstream has concrete transport-boundary code but does not assert a published Scala/Spark module or Maven Central release."},
+    {"id": "file_exchange_boundary", "state": "ready", "notes": "The Parquet/Arrow file-exchange boundary is implemented for Spark DataFrame batch consumption."},
+    {"id": "sql_boundary", "state": "ready", "notes": "The SQL boundary is implemented for Spark SQL views and analytical queries."},
+    {"id": "service_fallback_boundary", "state": "ready", "notes": "The service fallback boundary is implemented with the JDK HTTP client and typed request/response envelopes."}
+  ],
+  "rules": [
+    "Keep all examples synthetic and metadata only.",
+    "Mirror the public calculator contract fields explicitly.",
+    "Do not duplicate calculator math, thresholds, or adjustment logic in the Scala/Spark binding.",
+    "Prefer Parquet/Arrow file exchange or SQL boundary first and use the service boundary for online request/response behavior.",
+    "Keep diagnostics, provenance, and errors explicit and machine readable.",
+    "Keep fixture gates local-only and user-supplied for any licensed assets.",
+    "Treat local Scala/Spark adapter readiness separately from public JVM publication, which remains deferred until registry and CI evidence are available."
+  ],
+  "examples": [
+    {"name": "parquet-file-pass", "path": "contracts/scala-spark-binding/examples/parquet-file.pass.json", "description": "Synthetic Parquet file-exchange primary example that passes Spark DataFrame batch consumption checks."},
+    {"name": "service-pass", "path": "contracts/scala-spark-binding/examples/service.pass.json", "description": "Synthetic service-bound fallback request and response example that passes the public calculator contract checks."},
+    {"name": "sql-boundary-pass", "path": "contracts/scala-spark-binding/examples/sql-boundary.pass.json", "description": "Synthetic SQL boundary example that passes analytical query checks."},
+    {"name": "binding-fail", "path": "contracts/scala-spark-binding/examples/binding.fail.json", "description": "Synthetic failure example showing a blocked module readiness or transport boundary."},
+    {"name": "diagnostics-fail", "path": "contracts/scala-spark-binding/examples/diagnostics.fail.json", "description": "Synthetic diagnostics example showing a blocked gate and explicit error codes."}
+  ]
+}

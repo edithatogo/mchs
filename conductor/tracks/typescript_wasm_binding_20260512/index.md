@@ -8,7 +8,8 @@
 
 ## Status
 
-Complete. The track now contains a conservative TypeScript adapter shell,
-browser-demo documentation, CI notes, and repository tests. It is not
-publication-ready: no npm package or browser calculator readiness is claimed
-until shared golden fixture parity runs through the WASM artifact.
+Complete. The track contains a conservative TypeScript WASM export adapter,
+browser-demo documentation, CI notes, repository tests, and a verified npm
+publication for `@edithatogo/mchs-wasm-binding@0.1.0`. Browser calculator
+readiness still depends on shared golden fixture parity through the WASM
+artifact; TypeScript remains a boundary layer and does not own formula logic.

@@ -3,7 +3,17 @@
   "extends": ["config:recommended"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Dependency update dashboard",
-  "enabledManagers": ["pep621", "pip_requirements", "github-actions", "cargo", "npm"],
+  "enabledManagers": [
+    "pep621",
+    "pip_requirements",
+    "github-actions",
+    "cargo",
+    "npm",
+    "gomod",
+    "gradle",
+    "nuget",
+    "dockerfile"
+  ],
   "labels": ["dependencies"],
   "rangeStrategy": "pin",
   "schedule": ["after 6am and before 9am on monday"],
@@ -57,6 +67,30 @@
     {
       "matchManagers": ["npm"],
       "groupName": "Node package dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["gomod"],
+      "groupName": "Go module dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["gradle"],
+      "groupName": "Gradle package dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["nuget"],
+      "groupName": "NuGet package dependencies",
+      "dependencyDashboardApproval": true,
+      "separateMinorPatch": true
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "groupName": "Dockerfile dependencies",
       "dependencyDashboardApproval": true,
       "separateMinorPatch": true
     }

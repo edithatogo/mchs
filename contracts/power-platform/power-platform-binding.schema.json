@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/contracts/power-platform/power-platform-binding.schema.json",
+  "title": "Power Platform binding contract",
+  "description": "Schema for a Power Platform orchestration-only binding contract that calls a shared calculator service boundary.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "contract_id",
+    "contract_version",
+    "bundle_type",
+    "surface",
+    "public_calculator_contract",
+    "openapi",
+    "capability_matrix",
+    "environment_variables",
+    "connection_references",
+    "operations",
+    "flow_actions",
+    "alm_gates",
+    "diagnostics",
+    "provenance",
+    "formula_logic_policy",
+    "examples"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "contract_id": {
+      "type": "string",
+      "const": "power_platform_binding_20260512"
+    },
+    "contract_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "bundle_type": {
+      "type": "string",
+      "enum": [
+        "synthetic"
+      ]
+    },
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "solution_name",
+        "publisher_prefix",
+        "mode",
+        "formula_logic_location"
+      ],
+      "properties": {
+        "platform": {
+          "type": "string",
+          "const": "Power Platform"
+        },
+        "solution_name": {
+          "type": "string"
+        },
+        "publisher_prefix": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string",
+          "const": "orchestration-only"
+        },
+        "formula_logic_location": {
+          "type": "string",
+          "const": "shared-service-boundary"
+        }
+      }
+    },
+    "public_calculator_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "version",
+        "source",
+        "alignment_mode"
+      ],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "alignment_mode": {
+          "type": "string",
+          "enum": [
+            "request-response-compatible"
+          ]
+        }
+      }
+    },
+    "openapi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "operation_ids"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "operation_ids": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "capability_matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "operation_id",
+        "selector_policy",
+        "enabled_states",
+        "disabled_states"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "operation_id": {
+          "type": "string",
+          "const": "listMchsCalculatorCapabilities"
+        },
+        "selector_policy": {
+          "type": "string"
+        },
+        "enabled_states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disabled_states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "environment_variables": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "type",
+          "required",
+          "secret",
+          "purpose"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "secret": {
+            "type": "boolean"
+          },
+          "purpose": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "connection_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object"
+      }
+    },
+    "flow_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "alm_gates": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object"
+      }
+    },
+    "diagnostics": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "formula_logic_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowed_in_power_platform",
+        "blocked_assets",
+        "blocked_terms",
+        "runtime_owner"
+      ],
+      "properties": {
+        "allowed_in_power_platform": {
+          "type": "boolean",
+          "const": false
+        },
+        "blocked_assets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blocked_terms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "runtime_owner": {
+          "type": "string",
+          "const": "shared calculator service"
+        }
+      }
+    },
+    "examples": {
+      "type": "object"
+    }
+  }
+}

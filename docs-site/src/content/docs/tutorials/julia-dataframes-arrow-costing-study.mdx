@@ -9,10 +9,10 @@ import { Aside } from '@astrojs/starlight/components';
 
 This page documents the initial Julia binding posture for costing-study
 reports. The selected strategy is a thin CLI/file wrapper with CSV as the
-current executable prototype. `DataFrames.jl` can handle local tabular shaping,
+current local adapter path. `DataFrames.jl` can handle local tabular shaping,
 and `Arrow.jl` is the target for fixture interchange and bulk file exchange
-once the shared file contract supports it. The calculator formulas remain in
-the shared engine.
+once the shared file contract is release-ready. The calculator formulas remain
+in the shared engine.
 
 <Aside type="caution" title="Synthetic fixtures only">
   The examples on this page use synthetic fixture data. Do not use them for
@@ -21,8 +21,8 @@ the shared engine.
 
 ## Installation posture
 
-The initial Julia path is an internal-use integration, not a General
-Registry-ready package claim.
+The initial Julia path is an internal-use local adapter, not a General
+Registry-ready package claim or a public-release claim.
 
 - Install the shared calculator core in the same environment or as a local CLI
   dependency.
@@ -35,8 +35,8 @@ Registry-ready package claim.
 
 1. Load synthetic costing-study fixtures into a `DataFrame`.
 2. Validate the required columns in the report script.
-3. Shape the batch input and write a CSV file for the current executable
-   prototype.
+3. Shape the batch input and write a CSV file for the current local adapter
+   path.
 4. Call the shared CLI through the Julia wrapper.
 5. Read the output CSV back into a `DataFrame` and render summary tables or
    charts.
@@ -76,7 +76,7 @@ engine, and formats the returned outputs.
 ## Selected strategy
 
 - Use `DataFrames.jl` for in-memory manipulation and presentation.
-- Use CSV for the current executable CLI/file prototype.
+- Use CSV for the current executable local CLI/file adapter path.
 - Use `Arrow.jl` for future fixture and batch interchange after the shared
   Arrow contract is implemented.
 - Use a thin wrapper over the shared CLI boundary.
@@ -99,4 +99,5 @@ engine, and formats the returned outputs.
 
 - Use the shared synthetic fixture pack to build a reusable Julia report
   template.
-- Add automated checks once the package skeleton and stable fixture set exist.
+- Add automated checks around the local adapter before making any General
+  Registry or public-release claim.

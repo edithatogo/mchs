@@ -1,9 +1,9 @@
 {
   "track_id": "csharp_dotnet_binding_20260512",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "track_class": "binding",
-  "current_state": "dotnet-binding-roadmap-complete",
+  "current_state": "complete",
   "primary_contract": "contracts/csharp-dotnet-binding/csharp-dotnet-binding.contract.json",
   "dependencies": [
     "polyglot_rust_core_roadmap_20260512",
@@ -17,5 +17,6 @@
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-13T00:00:00Z",
-  "description": "Finalize the C#/.NET binding roadmap for institutional services and Power Platform-adjacent workloads."
+  "description": "Finalize the C#/.NET binding roadmap for institutional services and Power Platform-adjacent workloads.",
+  "no_stub_enforce": true
 }

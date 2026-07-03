@@ -14,7 +14,7 @@
     - [x] Keep generated helpers limited to low-level bindings or export metadata.
     - [x] Validate included calculators against shared golden fixtures before widening scope.
     - [x] Add the browser docs demo and thin Node workflow as prototype surfaces only.
-    - [x] Add a wrapper-only TypeScript adapter shell that fails closed if WASM exports do not match the contract.
+    - [x] Add a wrapper-only TypeScript WASM export adapter that rejects modules whose exports do not match the contract.
     - [x] Add CI notes for future WASM artifact checks without publishing sensitive data.
-    - [x] Add repository tests for the scaffold, synthetic-only policy, no formula duplication, and conservative publication state.
+    - [x] Add repository tests for the adapter, synthetic-only policy, no formula duplication, and conservative publication state.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: WASM Build and TypeScript API' (Protocol in workflow.md)

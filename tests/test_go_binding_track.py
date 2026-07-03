@@ -64,26 +64,29 @@ def test_go_binding_track_metadata_docs_and_contract_bundle_are_conservative():
 
     assert metadata["track_id"] == "go_binding_20260512"
     assert metadata["type"] == "feature"
-    assert metadata["status"] == "in-progress"
+    assert metadata["status"] == "completed"
     assert metadata["track_class"] == "binding"
-    assert metadata["current_state"] == "go-binding-roadmap-complete"
+    assert metadata["current_state"] == "complete"
     assert metadata["primary_contract"] == (
         "contracts/go-binding/go-binding.contract.json"
     )
     assert metadata["publication_status"] == "not-applicable"
     assert metadata["completion_evidence"] == ["docs", "workflows", "tests"]
-    assert "Go binding roadmap" in str(metadata["description"])
+    assert "Go service and binding-file adapter path" in str(metadata["description"])
 
     for phrase in [
         "Provide a Go integration path for services, command-line tools, "
         "and data-pipeline systems.",
+        "The current Go surface is a concrete service adapter and binding-file "
+        "adapter over the shared contract",
         "Go should consume the shared Rust core through C ABI, service, or "
         "CLI/file contracts and must not reimplement formulas.",
         "Compare cgo C ABI, service, and CLI/file integration for Go.",
         "Define Go request/response structs aligned to the public contract.",
         "Reuse shared golden fixtures.",
         "Document module publication only after parity gates are stable.",
-        "Go roadmap identifies the initial supported integration strategy.",
+        "Go service and binding-file adapters identify the initial supported "
+        "integration strategy.",
         "Go examples validate against shared fixtures.",
         "No formula logic is implemented in Go.",
     ]:
@@ -92,6 +95,7 @@ def test_go_binding_track_metadata_docs_and_contract_bundle_are_conservative():
     for phrase in [
         "Select the lowest-maintenance initial path.",
         "Define packaging and cross-compilation constraints.",
+        "Add Go service and binding-file adapters with shared-fixture tests.",
     ]:
         assert phrase in plan
 
@@ -163,24 +167,14 @@ def test_go_binding_preserves_provenance_without_formula_logic():
     assert "publication" not in str(go_module["status"]).lower()
 
 
-def test_go_binding_if_a_scaffold_exists_it_stays_thin_and_non_formula():
-    candidate_roots = [
-        ROOT / "go-binding",
-        ROOT / "bindings" / "go",
-        ROOT / "src" / "go",
-        ROOT / "go",
-        ROOT / "go-binding-scaffold",
-        ROOT / "cmd" / "go-binding",
-    ]
-    scaffold_root = next((path for path in candidate_roots if path.exists()), None)
+def test_go_binding_if_an_adapter_exists_it_stays_thin_and_non_formula():
+    adapter_root = ROOT / "bindings" / "go"
+    assert adapter_root.exists(), adapter_root
 
-    if scaffold_root is None:
-        return
-
-    scaffold_text = _squash(
+    adapter_text = _squash(
         " ".join(
             _read_text(path)
-            for path in scaffold_root.rglob("*")
+            for path in adapter_root.rglob("*")
             if path.is_file()
             and "bin" not in path.parts
             and "vendor" not in path.parts
@@ -199,4 +193,4 @@ def test_go_binding_if_a_scaffold_exists_it_stays_thin_and_non_formula():
         "publication-ready",
         "production-ready",
     ]:
-        assert forbidden not in scaffold_text
+        assert forbidden not in adapter_text

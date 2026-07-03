@@ -16,14 +16,20 @@
 Machine-readable root manifest:
 
 - `source-controlled-metadata.json`: solution package identity and component map for source-control and tooling checks.
+- `power-platform/solution/app-surface.json`: app selector, capability discovery,
+  and no-formula surface contract validated by
+  `scripts/validate_power_platform_capabilities.py`.
 
-## Included Asset Placeholders
+## Included Source Assets
 
 - App surface manifest: `apps/mchs-orchestrator/app-surface-manifest.json`.
+- App capability surface: `app-surface.json`.
 - Environment variables: `environment-variables.json`.
 - Connection references: `connection-references.json`.
 - Flow definition: `flows/mchs-submit-calculation.json`.
-- Custom connector/service-boundary binding captured in connection references.
+- Custom connector/service-boundary binding:
+  `contracts/power-platform/power-platform-binding.contract.json` and
+  `contracts/power-platform/custom-connector.openapi.yaml`.
 
 ## Observed Deployed State
 

@@ -67,7 +67,7 @@
     },
     "service_url": "https://calculator.local/v1/execute",
     "fixture_gate_state": "pass",
-    "module_readiness_state": "scaffold_ready"
+    "module_readiness_state": "private_ready"
   },
   "privacy": {
     "classification": "synthetic",

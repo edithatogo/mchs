@@ -15,7 +15,6 @@
     "rootDir": ".",
     "resolvePackageJsonExports": true
   },
-  "include": ["src", "test"],
+  "include": ["src"],
   "exclude": ["dist"]
 }
-

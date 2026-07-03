@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *.egg-info/
 .pytest_cache/
@@ -19,6 +20,14 @@ uv.lock
 .cache/
 dist/
 build/
+node_modules/
+.gradle/
+.build/
+bin/
+obj/
+*.Rcheck/
+*.tar.gz
+scalene-profile.json
 
 # Raw external source archives are large provenance artifacts.
 # Store them via Git LFS, release assets, or external object storage once policy is finalized.

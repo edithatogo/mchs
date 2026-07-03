@@ -36,7 +36,7 @@ def _load_json(path: Path) -> dict[str, object]:
     return json.loads(_read(path))
 
 
-def test_typescript_wasm_binding_track_files_and_scaffold_exist():
+def test_typescript_wasm_binding_track_files_and_adapter_exist():
     for path in [
         TRACK / "spec.md",
         TRACK / "plan.md",
@@ -117,26 +117,27 @@ def test_typescript_wasm_binding_track_docs_require_synthetic_fixtures_and_parit
     assert "do not place phi" in ci_notes
 
 
-def test_typescript_wasm_binding_track_metadata_stays_roadmap_only():
+def test_typescript_wasm_binding_track_metadata_matches_published_adapter_state():
     metadata = _load_json(TRACK / "metadata.json")
 
     assert metadata["track_id"] == "typescript_wasm_binding_20260512"
     assert metadata["track_class"] == "binding"
-    assert metadata["current_state"] == "prototype"
-    assert metadata["publication_status"] == "not-ready"
+    assert metadata["current_state"] == "complete"
+    assert metadata["publication_status"] == "published_verified"
 
 
-def test_typescript_wasm_browser_scaffold_does_not_duplicate_formula_logic():
+def test_typescript_wasm_browser_adapter_does_not_duplicate_formula_logic():
     readme = _read(WASM_BINDING / "README.md").lower()
     adapter = _read(WASM_BINDING / "src" / "adapter.ts").lower()
     types = _read(WASM_BINDING / "src" / "types.ts").lower()
     package_json = _load_json(WASM_BINDING / "package.json")
 
-    assert package_json["private"] is True
     assert "strict" in _read(WASM_BINDING / "tsconfig.json").lower()
-    assert "adapter shell" in readme
+    assert "wasm export adapter" in readme
     assert "synthetic data only" in readme
-    assert "not publication-ready" in readme
+    assert package_json["name"] == "@edithatogo/mchs-wasm-binding"
+    assert "published to npm" in readme
+    assert "publication does not imply formula ownership" in readme
     assert "wasmadaptererror" in adapter
     assert "fails closed" not in adapter
     assert "futurewasmcalculatorexports" in types

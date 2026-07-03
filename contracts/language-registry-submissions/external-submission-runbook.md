@@ -2,6 +2,20 @@
 
 As of 2026-06-12, all language/distribution registry tracks have discovery and local preparation evidence. PyPI, npm, NuGet, the Homebrew personal tap, Julia General, Stata SSC, and the Go module are externally published and verified. The remaining items require direct authenticated publish, public listing evidence, legal/publisher agreement completion, upstream maintainer review, or registry policy changes.
 
+## Track Checklists And Notes
+
+- CRAN: `conductor/tracks/r_cran_registry_submission_20260524/submission_checklist.md`
+- conda-forge: `conductor/tracks/conda_forge_feedstock_submission_20260524/review_checklist.md`
+- Maven Central: `conductor/tracks/jvm_maven_central_registry_submission_20260524/submission_checklist.md`
+- Open VSX / Visual Studio Marketplace: `conductor/tracks/vscode_openvsx_registry_submission_20260524/access_checklist.md`
+- Swift Package Index: `conductor/tracks/swift_package_index_submission_20260524/public_probe_checklist.md`
+- vcpkg / ConanCenter: `conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`
+- Docker MCP Registry: `conductor/tracks/docker_mcp_registry_readiness_20260517/requirements_notes.md`
+- Smithery MCP Registry: `conductor/tracks/smithery_mcp_registry_readiness_20260517/requirements_notes.md`
+- MATLAB File Exchange: `conductor/tracks/matlab_file_exchange_submission_20260524/submission_checklist.md`
+- MATLAB File Exchange package copy: `conductor/tracks/matlab_file_exchange_submission_20260524/file_exchange_submission_notes.md`
+- Stata SSC: `conductor/tracks/stata_ssc_submission_20260524/submission_checklist.md`
+
 ## Already published and verified
 
 - PyPI: `nwau-py==0.2.2`
@@ -38,14 +52,14 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 ### Open VSX / Visual Studio Marketplace
 
 - Extension: `edithatogo.mchs-tools`
-- Required credentials: `OVSX_PAT` is configured for Open VSX publication; `VSCE_PAT` is still absent, so Marketplace automation remains unavailable, but the 0.1.1 Marketplace update was manually uploaded through the signed-in publisher portal.
-- Credential status: Open VSX Access Tokens became available after the Eclipse publisher agreement was accepted; `OVSX_PAT` was created and stored as a GitHub secret on 2026-06-13. The first authenticated publish failed until namespace `edithatogo` was created, then workflow run `https://github.com/edithatogo/mchs/actions/runs/27455601114` published `edithatogo.mchs-tools v0.1.0`. Workflow run `https://github.com/edithatogo/mchs/actions/runs/27457810800` later published `edithatogo.mchs-tools v0.1.1` to Open VSX. On 2026-06-16T00:24:00+10:00, `/tmp/mchs-tools-0.1.1.vsix` was uploaded through the Visual Studio Marketplace publisher portal; the portal reported "It's live!" and the publisher table showed `Verifying0.1.1`.
+- Required credentials: `OVSX_PAT` is configured for Open VSX publication; `VSCE_PAT` is still absent, so Marketplace automation remains unavailable, but the 0.1.1 Marketplace update was manually uploaded through the signed-in publisher portal and is now public.
+- Credential status: Open VSX Access Tokens became available after the Eclipse publisher agreement was accepted; `OVSX_PAT` was created and stored as a GitHub secret on 2026-06-13. The first authenticated publish failed until namespace `edithatogo` was created, then workflow run `https://github.com/edithatogo/mchs/actions/runs/27455601114` published `edithatogo.mchs-tools v0.1.0`. Workflow run `https://github.com/edithatogo/mchs/actions/runs/27457810800` later published `edithatogo.mchs-tools v0.1.1` to Open VSX. On 2026-06-16T00:24:00+10:00, `/tmp/mchs-tools-0.1.1.vsix` was uploaded through the Visual Studio Marketplace publisher portal; the portal reported "It's live!" and the public Marketplace Gallery API now verifies version `0.1.1`.
 - Prepared artifact: `/tmp/mchs-tools-0.1.1.vsix` packaged from `integrations/vscode` with `npx --yes --package @vscode/vsce vsce package --no-dependencies --out /tmp/mchs-tools-0.1.1.vsix`; workflow packaging still writes `integrations/vscode/mchs-tools.vsix` when using the explicit `--out` command.
 - Latest artifact evidence: merged workflow dry-run `https://github.com/edithatogo/mchs/actions/runs/27455041574` packaged the VSIX successfully on 2026-06-13; publish workflow `https://github.com/edithatogo/mchs/actions/runs/27455601114` packaged and published the same extension to Open VSX.
-- Latest public probe on 2026-06-16: Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` returns `edithatogo.mchs-tools` version `0.1.1`; the Visual Studio Marketplace publisher portal shows `Verifying0.1.1`, while repeated public Marketplace extension-query probes were not yet stable and mostly still returned version `0.1.0` after one transient `0.1.1` response.
+- Latest public probe on 2026-06-16: Open VSX API `https://open-vsx.org/api/edithatogo/mchs-tools` returns `edithatogo.mchs-tools` version `0.1.1`; the Visual Studio Marketplace Gallery `extensionquery` API returns public `edithatogo.mchs-tools` version `0.1.1`, last updated `2026-06-15T14:31:27.95Z`, with VSIX SHA-256 `1d20feaa22e66978d5259dfb7b83467ed803a776d3fcb101792f2f164a2807ad`.
 - Open VSX command: `cd integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package ovsx ovsx publish mchs-tools.vsix --pat "$OVSX_PAT"`
 - Marketplace command for future updates: `cd integrations/vscode && npx --yes --package @vscode/vsce vsce package --no-dependencies --out mchs-tools.vsix && npx --yes --package @vscode/vsce vsce publish --packagePath mchs-tools.vsix --pat "$VSCE_PAT"`
-- Remaining step: wait for Marketplace validation/public API propagation, then re-run the live monitor and verify both Open VSX and Marketplace expose `0.1.1`; configure `VSCE_PAT` later if automated Marketplace publication is required.
+- Remaining step: none for Open VSX / Visual Studio Marketplace `0.1.1` publication; configure `VSCE_PAT` later only if automated Marketplace publication is required.
 
 ## Maintainer-review or PR-gated submissions
 
@@ -55,7 +69,7 @@ As of 2026-06-12, all language/distribution registry tracks have discovery and l
 - Prepared artifact: `microcosting_healthservices/nwauR_0.1.0.tar.gz`
 - Local check: `R CMD check --no-manual nwauR_0.1.0.tar.gz` returned `Status: OK`.
 - Latest public probe on 2026-06-12: CRANDB, `https://cran.r-project.org/package=nwauR`, and `https://cran.r-project.org/src/contrib/Archive/nwauR/` all returned HTTP 404, so no public CRAN publication is claimed.
-- Submitted through CRAN maintainer upload workflow on 2026-06-13 as package id 344701; maintainer confirmation email was sent to Dylan Mordaunt <d.a.mordaunt@gmail.com> and must be confirmed before CRAN review proceeds.
+- Submitted through CRAN maintainer upload workflow on 2026-06-13 as package id 344701 with maintainer metadata for Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz>; maintainer confirmation evidence must be recorded before CRAN review/publication is claimed.
 
 ### Julia General
 

@@ -22,6 +22,7 @@ This checklist captures the external steps required to finish `io.github.edithat
   - `5fb01ae9-2609-4284-9427-5830e08bcbb5` validated after supported keyserver propagation and was published by Publisher API with HTTP 204.
 - Public metadata: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/maven-metadata.xml`
 - Public JAR: `https://repo1.maven.org/maven2/io/github/edithatogo/mchs-jvm-bindings/0.1.0/mchs-jvm-bindings-0.1.0.jar`
+- Adjacent coordinate note: `io.github.edithatogo:mchs` dry-run or publication work is separate from this track unless the contract target is intentionally changed.
 
 ## Required steps
 
@@ -50,6 +51,6 @@ This checklist captures the external steps required to finish `io.github.edithat
 
 ## Completion rule
 
-Do not mark the track complete until the Central Portal release is accepted and the public Maven metadata exposes version `0.1.0`.
+Do not mark the track complete until the Central Portal release for `io.github.edithatogo:mchs-jvm-bindings` is accepted and the public Maven metadata exposes version `0.1.0`.
 
 Completion evidence is now present: Maven Central metadata exposes version `0.1.0` and the public JAR hash matches the local artifact.

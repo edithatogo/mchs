@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0",
+  "app_id": "mchs_power_platform_orchestration",
+  "app_type": "canvas-or-model-driven-shell",
+  "mode": "orchestration-only",
+  "data_sources": [
+    {
+      "name": "MchsSharedCalculatorConnector",
+      "connection_reference": "mchs_shared_calculator_connector",
+      "operations": [
+        "listMchsCalculatorCapabilities",
+        "validateMchsCalculatorInput",
+        "runMchsCalculation"
+      ]
+    }
+  ],
+  "state": {
+    "capabilities_collection": "colMchsCalculatorCapabilities",
+    "selected_calculator_id": "varMchsSelectedCalculatorId",
+    "selected_pricing_year": "varMchsSelectedPricingYear",
+    "selected_year_state": "varMchsSelectedYearState",
+    "pricing_years_collection": "colMchsPricingYears",
+    "calculator_year_grid": "colMchsCalculatorYearGrid",
+    "enabled_states": [
+      "implemented",
+      "helper"
+    ],
+    "disabled_states": [
+      "source_available",
+      "shadow",
+      "planned",
+      "blocked",
+      "not_available"
+    ]
+  },
+  "screens": [
+    {
+      "name": "CalculatorSelector",
+      "purpose": "Render calculator and pricing-year choices from the service capability matrix.",
+      "on_visible": [
+        "Set(varMchsCapabilityResponse, MchsSharedCalculatorConnector.listMchsCalculatorCapabilities())",
+        "ClearCollect(colMchsCalculatorCapabilities, varMchsCapabilityResponse.calculators)",
+        "ClearCollect(colMchsPricingYears, varMchsCapabilityResponse.pricing_years)",
+        "ClearCollect(colMchsCalculatorYearGrid, ForAll(colMchsCalculatorCapabilities, ForAll(colMchsPricingYears, { calculator_id: ThisRecord.calculator_id, pricing_year: Value, state: LookUp(ThisRecord.year_states, pricing_year = Value) })))"
+      ],
+      "controls": [
+        {
+          "name": "CalculatorGallery",
+          "type": "gallery",
+          "items": "colMchsCalculatorCapabilities",
+          "display_fields": [
+            "display_name",
+            "stream",
+            "app_surface",
+            "variant_surfaces"
+          ]
+        },
+        {
+          "name": "PricingYearGallery",
+          "type": "gallery",
+          "items": "SelectedCalculator.year_states",
+          "display_fields": [
+            "pricing_year",
+            "state"
+          ],
+          "enable_rule": "state in [\"implemented\", \"helper\"]",
+          "disabled_rule": "state in [\"source_available\", \"shadow\", \"planned\", \"blocked\", \"not_available\"]"
+        },
+        {
+          "name": "CalculatorYearCoverageGrid",
+          "type": "matrix",
+          "items": "colMchsCalculatorYearGrid",
+          "display_fields": [
+            "calculator_id",
+            "pricing_year",
+            "state"
+          ],
+          "coverage_rule": "Every calculator from colMchsCalculatorCapabilities is crossed with every pricing year from colMchsPricingYears.",
+          "enable_rule": "state in [\"implemented\", \"helper\"]",
+          "disabled_rule": "state in [\"source_available\", \"shadow\", \"planned\", \"blocked\", \"not_available\"]"
+        },
+        {
+          "name": "StatusMessage",
+          "type": "label",
+          "text_rule": "Show disabled-state explanation from calculator notes and status_vocabulary."
+        }
+      ]
+    },
+    {
+      "name": "RequestReview",
+      "purpose": "Validate the selected calculator/year envelope before submission.",
+      "requires_state": [
+        "varMchsSelectedCalculatorId",
+        "varMchsSelectedPricingYear",
+        "varMchsSelectedYearState"
+      ],
+      "submit_guard": "varMchsSelectedYearState in [\"implemented\", \"helper\"]",
+      "operations": [
+        {
+          "name": "Validate",
+          "operation_id": "validateMchsCalculatorInput",
+          "passes_fields": [
+            "contract_version",
+            "calculator_id",
+            "pricing_year",
+            "fixture_gate",
+            "correlation_id",
+            "input"
+          ]
+        },
+        {
+          "name": "RunCalculation",
+          "operation_id": "runMchsCalculation",
+          "precondition": "Validate.status = \"pass\""
+        }
+      ]
+    },
+    {
+      "name": "ResultAndDiagnostics",
+      "purpose": "Display shared service results without recalculating values in Power Platform.",
+      "display_fields": [
+        "status",
+        "result",
+        "diagnostics",
+        "provenance",
+        "correlation_id"
+      ]
+    }
+  ],
+  "formula_logic_policy": {
+    "allowed_in_power_platform": false,
+    "allowed_formula_usage": [
+      "field binding",
+      "selector filtering",
+      "state display",
+      "submit guard"
+    ],
+    "blocked_formula_usage": [
+      "NWAU arithmetic",
+      "pricing-year support inference",
+      "classification grouping",
+      "source-bundle lookup",
+      "result recomputation"
+    ]
+  }
+}

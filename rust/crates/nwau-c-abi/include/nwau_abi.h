@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 /*
- * Minimal C ABI scaffold for the NWAU proof of concept.
+ * C ABI for the NWAU proof of concept.
  *
  * Ownership and lifetime rules:
  * - `nwau_abi_string_view.ptr` is a borrowed pointer. The callee never takes
@@ -25,10 +25,9 @@ extern "C" {
  *
  * Error semantics:
  * - All exported functions return plain status values or borrowed views.
- * - `nwau_abi_calculate_acute_2025()` currently acts as a wrapper-only
- *   prototype. It validates non-null pointers, zeroes the output on entry, and
- *   returns `NWAU_ABI_STATUS_UNIMPLEMENTED` because formula logic is not yet
- *   implemented.
+ * - `nwau_abi_calculate_acute_2025()` validates non-null pointers, delegates
+ *   to the Rust acute 2025 core, writes deterministic output, and returns
+ *   `NWAU_ABI_STATUS_OK` for valid pointer shapes.
  */
 
 #if defined(_WIN32)
@@ -101,7 +100,7 @@ typedef struct nwau_abi_episode_output {
 typedef uint32_t nwau_abi_status;
 
 #define NWAU_ABI_VERSION_MAJOR UINT32_C(0)
-#define NWAU_ABI_VERSION_MINOR UINT32_C(1)
+#define NWAU_ABI_VERSION_MINOR UINT32_C(2)
 #define NWAU_ABI_VERSION_PATCH UINT32_C(0)
 #define NWAU_ABI_STATUS_OK UINT32_C(0)
 #define NWAU_ABI_STATUS_INVALID_ARGUMENT UINT32_C(1)

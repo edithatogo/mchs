@@ -36,12 +36,25 @@ def test_julia_binding_track_files_exist():
         TRACK / "metadata.json",
         TRACK / "index.md",
         JULIA_BINDING / "Project.toml",
+        JULIA_BINDING / "LICENSE",
         JULIA_BINDING / "README.md",
-        JULIA_BINDING / "src" / "NWAUJulia.jl",
+        JULIA_BINDING / "src" / "NationalWeightedActivityUnitWrapper.jl",
         JULIA_BINDING / "test" / "runtests.jl",
         DOCS_TUTORIAL,
     ]:
         assert path.exists(), path
+
+
+def test_julia_package_metadata_matches_general_registry_guidelines():
+    project = _read(JULIA_BINDING / "Project.toml")
+    source = _read(JULIA_BINDING / "src" / "NationalWeightedActivityUnitWrapper.jl")
+    license_text = _read(JULIA_BINDING / "LICENSE")
+
+    assert 'name = "NationalWeightedActivityUnitWrapper"' in project
+    assert "NWAUJulia" not in project
+    assert "module NationalWeightedActivityUnitWrapper" in source
+    assert not (JULIA_BINDING / "src" / "NwauCore.jl").exists()
+    assert "MIT License" in license_text
 
 
 def test_julia_binding_records_the_selected_cli_file_strategy():
@@ -102,12 +115,14 @@ def test_julia_binding_package_and_binary_claims_stay_conservative():
     ]:
         assert phrase in strategy or phrase in packaging
 
-    assert metadata["current_state"] == "prototype"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
 
 
 def test_julia_package_is_wrapper_only_and_uses_the_shared_cli_boundary():
-    source = _read(JULIA_BINDING / "src" / "NWAUJulia.jl").lower()
+    source = _read(
+        JULIA_BINDING / "src" / "NationalWeightedActivityUnitWrapper.jl"
+    ).lower()
     readme = _read(JULIA_BINDING / "README.md").lower()
     tests = _read(JULIA_BINDING / "test" / "runtests.jl").lower()
 
@@ -122,11 +137,20 @@ def test_julia_package_is_wrapper_only_and_uses_the_shared_cli_boundary():
         assert forbidden not in source
 
     assert "nwau_py.cli.main" in source
-    assert "run(cmd(argv))" in source
+    assert "clifileadapter" in source
+    assert "calculationresult" in source
+    assert "serviceadapter" in source
+    assert "downloads.request" in source
+    assert "formula logic remains in the shared core" in source
     assert "formula logic stays in python" in readme
     assert "csv-only because that is the active shared cli contract" in readme
+    assert "captures stdout, stderr, exit code" in readme
+    assert "service requests remain opaque json transport envelopes" in readme
     assert "command assembly" in tests
     assert "missing input guard" in tests
+    assert "unsupported command guard" in tests
+    assert "cli result captures success and diagnostics" in tests
+    assert "using nationalweightedactivityunitwrapper" in tests
 
 
 def test_julia_docs_keep_arrow_as_target_not_current_release_claim():
@@ -134,10 +158,10 @@ def test_julia_docs_keep_arrow_as_target_not_current_release_claim():
     packaging = _read(PACKAGING_PLANS).lower()
     ci_notes = _read(TRACK / "ci_notes.md").lower()
 
-    assert (
-        "thin cli/file wrapper with csv as the\ncurrent executable prototype"
-        in tutorial
+    assert "thin cli/file wrapper with csv as the current local adapter path" in (
+        " ".join(tutorial.split())
     )
+    assert "public-release claim" in tutorial
     assert "arrow.jl` is the target" in tutorial
     assert "registry-ready package claim" in tutorial.replace("\n", " ")
     assert "recommended evaluation path: cli/file wrapper first" in packaging

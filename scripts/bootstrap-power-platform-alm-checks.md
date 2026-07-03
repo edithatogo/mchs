@@ -48,6 +48,14 @@ The bootstrap script can report auth readiness, but it does not create or persis
 
 ## Deterministic Check Surface
 
+Before tenant-bound `pac` operations, the local source gate also runs:
+
+- `python scripts/validate_power_platform_capabilities.py`
+- `uv run pytest tests/test_power_platform_binding_track.py tests/test_power_platform_alm_app_track.py`
+
+Those checks prove the capability matrix, app-surface model, connector contract,
+OpenAPI/schema files, and examples agree on calculator and pricing-year support.
+
 The bootstrap script verifies:
 
 - `command -v pac`
