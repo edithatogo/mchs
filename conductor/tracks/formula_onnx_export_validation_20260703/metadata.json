@@ -1,0 +1,27 @@
+{
+  "track_id": "formula_onnx_export_validation_20260703",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "binding",
+  "current_state": "complete",
+  "primary_contract": "nwau_py.calculators.formula_onnx optional ONNX export and parity validation for JSON AST formula programs",
+  "dependencies": [
+    "conductor/archive/formula_json_ast_ir_20260703",
+    "conductor/archive/formula_parameter_bundle_pipeline_20260512",
+    "conductor/archive/contract_schema_export_20260512"
+  ],
+  "completion_evidence": [
+    "tests",
+    "docs",
+    "formula_onnx_export_plan",
+    "parity_checks"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T08:18:37Z",
+  "updated_at": "2026-07-03T08:18:37Z",
+  "description": "Add optional ONNX export and parity validation for pure numeric JSON AST formula subgraphs without making ONNX canonical or required at install time.",
+  "no_stub_enforce": true,
+  "support_scope": "Optional ONNX export, deterministic parity validation, unsupported-node rejection, and docs for the non-canonical ONNX boundary.",
+  "github_issue_number": 208,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/208"
+}

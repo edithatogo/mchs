@@ -38,6 +38,12 @@ The canonical structured formula representation is JSON AST via
 but they are normalized into the AST program form before evaluation so the
 formula logic remains single-sourced. Unsupported nodes fail closed. ONNX export stays with the dependent ONNX track, and Mojo is not adopted for this implementation.
 
+optional ONNX export is available for pure numeric AST formula programs via
+`nwau_py.calculators.formula_onnx`. ONNX is not canonical; the exported model
+is a derived artifact, not the source of truth, and the default install path
+does not require ONNX. Parity checks compare the exported numeric subgraph
+with the Python evaluator when the optional dependency is installed.
+
 Community mental health still needs an official-source fixture pack before the
 `mh` surface can be validated against extracted IHACPA outputs. The current gap
 record and pricing-year caveats are documented in
