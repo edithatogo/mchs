@@ -1,0 +1,4 @@
+Plan update: marked the conda-forge public registry propagation query subtask complete for conda_forge_feedstock_submission_20260524.
+
+Task evidence commit: 1597c33.
+Remaining gates: staged-recipes PR #33452 is still open/unmerged, no feedstock is recorded, Anaconda API returns 404, and conda-forge noarch repodata contains no nwau-py entries. Track remains blocked and is not archive-eligible.
