@@ -89,7 +89,8 @@
             "type": "string",
             "enum": [
               "scan",
-              "add-year"
+              "add-year",
+              "audit"
             ]
           },
           "status": {
@@ -150,7 +151,8 @@
       "required": [
         "dry_run_format",
         "draft_manifest_format",
-        "gap_record_format"
+        "gap_record_format",
+        "audit_package_format"
       ],
       "properties": {
         "dry_run_format": {
@@ -167,6 +169,12 @@
           ]
         },
         "gap_record_format": {
+          "type": "string",
+          "enum": [
+            "json"
+          ]
+        },
+        "audit_package_format": {
           "type": "string",
           "enum": [
             "json"
@@ -223,4 +231,3 @@
     }
   }
 }
-

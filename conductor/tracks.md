@@ -196,6 +196,12 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
+- [~] **Track: IHACPA Source/License Audit Automation**
+*Link: [./tracks/ihacpa_source_license_audit_automation_20260703/](./tracks/ihacpa_source_license_audit_20260703/)*
+*Gate: turn IHACPA source-scanner output into review-only draft manifests, Conductor tracks, and GitHub issue updates without copying restricted assets into version control.*
+
+---
+
 - [x] **Track: Pricing-Year Validation Gates**
 *Link: [./archive/pricing_year_validation_gates_20260512/](./archive/pricing_year_validation_gates_20260512/)*
 *Gate: prevent pricing years from being marked supported or validated without required source, extraction, and fixture evidence.*

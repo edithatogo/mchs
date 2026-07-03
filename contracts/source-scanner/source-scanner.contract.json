@@ -41,6 +41,25 @@
         "gap_records"
       ],
       "notes": "Create or update a year manifest after review, using the scanner output as the source of truth."
+    },
+    {
+      "name": "sources audit",
+      "mode": "audit",
+      "status": "preview",
+      "inputs": [
+        "pricing_year",
+        "source_categories",
+        "review_mode",
+        "track_id",
+        "issue_reference"
+      ],
+      "outputs": [
+        "audit_package",
+        "draft_manifest",
+        "draft_track",
+        "draft_issue"
+      ],
+      "notes": "Build a review-only audit package with draft manifest, Conductor track, and GitHub issue text without copying restricted assets."
     }
   ],
   "source_categories": [
@@ -83,7 +102,8 @@
   "outputs": {
     "dry_run_format": "json",
     "draft_manifest_format": "yaml",
-    "gap_record_format": "json"
+    "gap_record_format": "json",
+    "audit_package_format": "json"
   },
   "provenance": {
     "fields": [

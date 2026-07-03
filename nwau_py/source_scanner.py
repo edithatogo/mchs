@@ -27,6 +27,11 @@ SUPPORTED_GAP_KINDS = (
     "license_unclear",
     "review_required",
 )
+DEFAULT_AUDIT_TRACK_TITLE = "IHACPA Source/License Audit Automation"
+DEFAULT_AUDIT_ISSUE_TITLE = (
+    "chore: automate IHACPA source and license audit with track and issue drafting"
+)
+DEFAULT_AUDIT_ISSUE_LABELS = ("enhancement", "ci", "docs", "codex")
 
 _URL_RE = re.compile(r"https?://[^\s<>'\"()]+", re.IGNORECASE)
 _YEAR_RE = re.compile(r"\b(20\d{2})(?:[-/](\d{2,4}))?\b")
@@ -170,6 +175,50 @@ class SourceScanResult:
         return {
             "manifest": self.manifest.to_dict(),
             "dry_run_output": self.dry_run_output,
+        }
+
+
+@dataclass(frozen=True, slots=True)
+class SourceAuditPackage:
+    """Review-only package for drafting source audit outputs."""
+
+    scan_manifest: SourceDraftManifest
+    track_id: str
+    track_title: str
+    github_issue_number: int | None
+    github_issue_url: str | None
+    draft_manifest_json: str
+    track_metadata: dict[str, Any]
+    track_spec: str
+    track_plan: str
+    track_index: str
+    tracks_registry_entry: str
+    github_issue_title: str
+    github_issue_body: str
+    github_issue_labels: tuple[str, ...]
+    summary: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "scan_manifest": self.scan_manifest.to_dict(),
+            "track_id": self.track_id,
+            "track_title": self.track_title,
+            "github_issue_number": self.github_issue_number,
+            "github_issue_url": self.github_issue_url,
+            "draft_manifest_json": self.draft_manifest_json,
+            "track": {
+                "metadata": self.track_metadata,
+                "spec": self.track_spec,
+                "plan": self.track_plan,
+                "index": self.track_index,
+                "tracks_registry_entry": self.tracks_registry_entry,
+            },
+            "github_issue": {
+                "title": self.github_issue_title,
+                "body": self.github_issue_body,
+                "labels": list(self.github_issue_labels),
+            },
+            "summary": self.summary,
         }
 
 
@@ -621,6 +670,342 @@ def scan_sources_dry_run(
     return SourceScanResult(manifest=manifest, dry_run_output=render_dry_run(manifest))
 
 
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace(
+        "+00:00",
+        "Z",
+    )
+
+
+def _render_source_audit_track_metadata(
+    manifest: SourceDraftManifest,
+    *,
+    track_id: str,
+    github_issue_number: int | None,
+    github_issue_url: str | None,
+) -> dict[str, Any]:
+    now = _utc_now_iso()
+    return {
+        "track_id": track_id,
+        "type": "chore",
+        "status": "in_progress",
+        "track_class": "audit",
+        "current_state": "in_progress",
+        "primary_contract": (
+            "nwau_py.source_scanner review-only source audit package generation for "
+            "manifest drafts, Conductor track scaffolds, and GitHub issue updates"
+        ),
+        "dependencies": [
+            "conductor/archive/ihacpa_source_scanner_20260512",
+            "conductor/roadmap-governance.md",
+            "conductor/track-archive-policy.md",
+        ],
+        "completion_evidence": [
+            "tests",
+            "cli",
+            "docs",
+            "draft-package-rendering",
+        ],
+        "publication_status": "not-ready",
+        "created_at": now,
+        "updated_at": now,
+        "description": (
+            "Automate IHACPA source and license audits that draft manifests, "
+            "Conductor tracks, and GitHub issue updates without committing "
+            "restricted assets."
+        ),
+        "no_stub_enforce": True,
+        "support_scope": (
+            "Review-only audit package generation, draft Conductor track "
+            "scaffolding, and GitHub issue update text for public or licensed "
+            "IHACPA source discovery."
+        ),
+        "github_issue_number": github_issue_number,
+        "github_issue_url": github_issue_url,
+        "scan_manifest_generated_at": manifest.generated_at,
+        "scan_manifest_id": manifest.scan_id,
+    }
+
+
+def _render_source_audit_spec(
+    manifest: SourceDraftManifest,
+    *,
+    github_issue_url: str | None,
+) -> str:
+    issue_line = github_issue_url or "(GitHub issue link not supplied)"
+    pricing_year = manifest.pricing_year or "unspecified"
+    return "\n".join(
+        [
+            f"# Specification: {DEFAULT_AUDIT_TRACK_TITLE}",
+            "",
+            "## Overview",
+            "Add review-only automation that turns IHACPA source-scanner output into",
+            "draft artifacts for source manifests, Conductor tracks, and GitHub",
+            "issue updates. The automation must preserve the existing",
+            "non-redistribution boundary: public metadata and review summaries may",
+            "be drafted, but restricted assets must never be copied into the",
+            "repository.",
+            "",
+            "## Contract",
+            "- Scanner output remains the source of truth for discovered URLs, gaps,",
+            "  and review status.",
+            "- Draft artifacts may include manifest text, Conductor track scaffolds,",
+            "  and GitHub issue bodies.",
+            "- Restricted or licensed source content must remain referenced, not",
+            "  copied.",
+            "- The audit package must be deterministic for the same scanner input.",
+            "- Draft outputs must not overstate validation, parity, or publication",
+            "  readiness.",
+            "",
+            "## Functional Requirements",
+            "- Build a review-only audit package from source scanner results.",
+            "- Render draft Conductor track metadata, spec, plan, and registry text",
+            "  from the scanner package.",
+            "- Render a GitHub issue body that summarizes the audit boundary and",
+            "  validation expectations.",
+            "- Preserve gap records, review notes, and licensing caveats in the",
+            "  generated drafts.",
+            "- Expose the package through the installed CLI so maintainers can",
+            "  generate drafts from offline fixtures or URL lists.",
+            "",
+            "## Non-Functional Requirements",
+            "- The automation must not require live IHACPA access in CI.",
+            "- The generated drafts must remain conservative and human-reviewable.",
+            "- The implementation must keep restricted content out of version",
+            "  control.",
+            "- The package should be easy to reuse for future audit or discovery",
+            "  tracks.",
+            "",
+            "## Acceptance Criteria",
+            "- A source scan can produce an audit package with manifest, track, and",
+            "  issue draft text.",
+            "- The draft issue body links to the local Conductor track path and",
+            "  states the licensing boundary.",
+            "- The draft Conductor track includes metadata, spec, plan, and registry",
+            "  entry text.",
+            "- The CLI can emit the audit package without mutating restricted source",
+            "  material.",
+            "- Tests prove the outputs are deterministic and do not embed restricted",
+            "  content.",
+            "",
+            "## Out of Scope",
+            "- Fetching or downloading restricted source assets.",
+            "- Auto-merging GitHub issues or committing draft outputs without",
+            "  review.",
+            "- Replacing the existing source scanner contract.",
+            "- Adding new licensing interpretations beyond explicit manifest and gap",
+            "  records.",
+            "",
+            "## Source Evidence",
+            f"- GitHub issue: {issue_line}",
+            "- Source scanner: `nwau_py.source_scanner`",
+            "- Licensed asset workflow: `nwau_py.licensed_product_workflow`",
+            "- Source scanner contract fixtures: `contracts/source-scanner/`",
+            "",
+            "## Scope Notes",
+            f"- Pricing-year coverage is draft-only for {pricing_year}; the package",
+            "  records gaps without claiming parity or publication readiness.",
+            "- The generated artifacts are intended for review and follow-up, not",
+            "  for direct publication.",
+        ]
+    )
+
+
+def _render_source_audit_plan() -> str:
+    return "\n".join(
+        [
+            f"# Plan: {DEFAULT_AUDIT_TRACK_TITLE}",
+            "",
+            "## Phase 1: Draft Package Contract",
+            "- [ ] Task: Define the review-only audit package shape and renderers.",
+            "    - [ ] Add failing tests for the audit package, track scaffold text,",
+            "      and GitHub issue draft.",
+            "    - [ ] Verify the outputs do not embed restricted assets or overclaim",
+            "      validation.",
+            "    - [ ] Keep the scanner manifest as the source of truth for draft",
+            "      generation.",
+            "- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Draft",
+            "  Package Contract' (Protocol in workflow.md)",
+            "",
+            "## Phase 2: CLI Integration and Docs",
+            "- [ ] Task: Add the audit package CLI surface and reusable writers.",
+            "    - [ ] Expose the audit package through the installed",
+            "      `funding-calculator` entrypoint.",
+            "    - [ ] Update source-scanner contract fixtures or docs to mention",
+            "      the audit package workflow.",
+            "    - [ ] Preserve review-only behavior for licensed or restricted",
+            "      source material.",
+            "- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: CLI",
+            "  Integration and Docs' (Protocol in workflow.md)",
+        ]
+    )
+
+
+def _render_source_audit_index(track_id: str, github_issue_url: str | None) -> str:
+    issue_link = (
+        f"- [GitHub Issue #209]({github_issue_url})"
+        if github_issue_url
+        else "- GitHub issue link pending"
+    )
+    return "\n".join(
+        [
+            f"# Track {track_id} Context",
+            "",
+            "- [Specification](./spec.md)",
+            "- [Implementation Plan](./plan.md)",
+            "- [Metadata](./metadata.json)",
+            issue_link,
+        ]
+    )
+
+
+def _render_source_audit_registry_entry(track_id: str) -> str:
+    return "\n".join(
+        [
+            f"- [~] **Track: {DEFAULT_AUDIT_TRACK_TITLE}**",
+            f"*Link: [./tracks/{track_id}/](./tracks/{track_id}/)*",
+            "*Gate: turn IHACPA source-scanner output into review-only draft",
+            "manifests, Conductor tracks, and GitHub issue updates without copying",
+            "restricted assets into version control.*",
+        ]
+    )
+
+
+def _render_source_audit_issue_body(
+    manifest: SourceDraftManifest,
+    *,
+    track_id: str,
+    github_issue_url: str | None,
+) -> str:
+    track_path = f"`conductor/tracks/{track_id}/`"
+    issue_link = github_issue_url or "(issue URL pending)"
+    pricing_year = manifest.pricing_year or "unspecified"
+    return "\n".join(
+        [
+            "## Summary",
+            "Automate IHACPA source/license audits that draft manifest, Conductor",
+            "track, and GitHub issue updates without committing restricted assets.",
+            "",
+            "## Conductor track",
+            track_path,
+            "",
+            f"GitHub issue: {issue_link}",
+            "",
+            "## Acceptance criteria",
+            "Audit fixtures cover public source, restricted source, removed source,",
+            "changed metadata, and validation drift; dry-run drafts are",
+            "deterministic; automation never uploads restricted content.",
+            "",
+            "## Licensing and support boundary",
+            "No automatic merging or automatic licensing decisions.",
+            "Restricted assets must never be copied into the repository.",
+            "They remain references or gap records only.",
+            "",
+            "## Validation expectations",
+            "Run the focused tests for this track plus the applicable repository",
+            "gates: `python conductor/scripts/stub_detector.py --root . --json`,",
+            "`uv run ruff check .`, `uv run ty check`, and focused `uv run pytest`.",
+            "",
+            "## Draft scope",
+            f"- Pricing year: {pricing_year}",
+            f"- Scanner discoveries: {len(manifest.discoveries)}",
+            f"- Gap records: {len(manifest.gaps)}",
+            "- Review posture: review-only draft outputs",
+        ]
+    )
+
+
+def build_source_audit_package(
+    manifest: SourceDraftManifest,
+    *,
+    track_id: str,
+    github_issue_number: int | None = None,
+    github_issue_url: str | None = None,
+    track_title: str = DEFAULT_AUDIT_TRACK_TITLE,
+    issue_labels: tuple[str, ...] = DEFAULT_AUDIT_ISSUE_LABELS,
+) -> SourceAuditPackage:
+    """Build a review-only package for source-scanner driven audit outputs."""
+    if not track_id:
+        raise SourceScannerError("track_id must not be blank")
+    manifest_dict = manifest.to_dict()
+    draft_manifest_json = json.dumps(manifest_dict, indent=2, sort_keys=True)
+    track_metadata = _render_source_audit_track_metadata(
+        manifest,
+        track_id=track_id,
+        github_issue_number=github_issue_number,
+        github_issue_url=github_issue_url,
+    )
+    track_spec = _render_source_audit_spec(
+        manifest,
+        github_issue_url=github_issue_url,
+    )
+    track_plan = _render_source_audit_plan()
+    track_index = _render_source_audit_index(track_id, github_issue_url)
+    tracks_registry_entry = _render_source_audit_registry_entry(track_id)
+    github_issue_body = _render_source_audit_issue_body(
+        manifest,
+        track_id=track_id,
+        github_issue_url=github_issue_url,
+    )
+    summary = (
+        f"{len(manifest.discoveries)} discoveries, {len(manifest.gaps)} gaps, "
+        f"pricing year {manifest.pricing_year or 'unspecified'}"
+    )
+    return SourceAuditPackage(
+        scan_manifest=manifest,
+        track_id=track_id,
+        track_title=track_title,
+        github_issue_number=github_issue_number,
+        github_issue_url=github_issue_url,
+        draft_manifest_json=draft_manifest_json,
+        track_metadata=track_metadata,
+        track_spec=track_spec,
+        track_plan=track_plan,
+        track_index=track_index,
+        tracks_registry_entry=tracks_registry_entry,
+        github_issue_title=DEFAULT_AUDIT_ISSUE_TITLE,
+        github_issue_body=github_issue_body,
+        github_issue_labels=issue_labels,
+        summary=summary,
+    )
+
+
+def source_audit_package_to_json(package: SourceAuditPackage) -> str:
+    """Serialize a source audit package for CLI and review usage."""
+    return json.dumps(package.to_dict(), indent=2, sort_keys=True)
+
+
+def write_source_audit_package(
+    package: SourceAuditPackage,
+    *,
+    root: Path,
+) -> dict[str, Path]:
+    """Write the draft package to review-only files under ``root``."""
+    root.mkdir(parents=True, exist_ok=True)
+    manifest_path = root / "draft-manifest.json"
+    issue_path = root / "github-issue.md"
+    track_root = root / "conductor" / "tracks" / package.track_id
+    track_root.mkdir(parents=True, exist_ok=True)
+    paths = {
+        "manifest": manifest_path,
+        "issue": issue_path,
+        "metadata": track_root / "metadata.json",
+        "spec": track_root / "spec.md",
+        "plan": track_root / "plan.md",
+        "index": track_root / "index.md",
+    }
+    paths["manifest"].write_text(package.draft_manifest_json, encoding="utf-8")
+    paths["issue"].write_text(package.github_issue_body, encoding="utf-8")
+    paths["metadata"].write_text(
+        json.dumps(package.track_metadata, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    paths["spec"].write_text(package.track_spec, encoding="utf-8")
+    paths["plan"].write_text(package.track_plan, encoding="utf-8")
+    paths["index"].write_text(package.track_index, encoding="utf-8")
+    return paths
+
+
 def manifest_to_json(manifest: SourceDraftManifest) -> str:
     """Serialize a draft manifest to pretty JSON."""
     return json.dumps(manifest.to_dict(), indent=2, sort_keys=True)
@@ -630,6 +1015,7 @@ __all__ = [
     "SUPPORTED_GAP_KINDS",
     "SUPPORTED_SOURCE_SCAN_SCHEMA_VERSION",
     "SUPPORTED_SOURCE_SCAN_STATUSES",
+    "SourceAuditPackage",
     "SourceDiscovery",
     "SourceDocument",
     "SourceDraftManifest",
@@ -637,8 +1023,11 @@ __all__ = [
     "SourceScanError",
     "SourceScanResult",
     "SourceScannerError",
+    "build_source_audit_package",
     "manifest_to_json",
     "render_dry_run",
     "scan_sources",
     "scan_sources_dry_run",
+    "source_audit_package_to_json",
+    "write_source_audit_package",
 ]

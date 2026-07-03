@@ -515,6 +515,72 @@ def sources_add_year(
         click.echo(result.dry_run_output)
 
 
+@sources.command(name="audit")
+@_source_scan_input_options
+@_scan_output_options
+@click.option(
+    "--track-id",
+    required=True,
+    help="Conductor track identifier for the draft package",
+)
+@click.option(
+    "--issue-number",
+    default=None,
+    type=int,
+    help="GitHub issue number to reference in the draft package",
+)
+@click.option(
+    "--issue-url",
+    default=None,
+    help="GitHub issue URL to reference in the draft package",
+)
+@click.option(
+    "--write-dir",
+    default=None,
+    type=click.Path(file_okay=False, dir_okay=True, path_type=Path),
+    help="Write the draft package to a directory",
+)
+def sources_audit(
+    html_files: tuple[Path, ...],
+    text_files: tuple[Path, ...],
+    urls: tuple[str, ...],
+    source_page_url: str | None,
+    year: str | None,
+    emit_json: bool,
+    track_id: str,
+    issue_number: int | None,
+    issue_url: str | None,
+    write_dir: Path | None,
+) -> None:
+    """Build a review-only source audit package from scanner output."""
+    from nwau_py.source_scanner import (
+        build_source_audit_package,
+        scan_sources_dry_run,
+        source_audit_package_to_json,
+        write_source_audit_package,
+    )
+
+    result = scan_sources_dry_run(
+        html_documents=html_files,
+        text_documents=text_files,
+        urls=urls,
+        source_page_url=source_page_url,
+        pricing_year=year,
+    )
+    package = build_source_audit_package(
+        result.manifest,
+        track_id=track_id,
+        github_issue_number=issue_number,
+        github_issue_url=issue_url,
+    )
+    if write_dir is not None:
+        write_source_audit_package(package, root=write_dir)
+    if emit_json:
+        click.echo(source_audit_package_to_json(package))
+    else:
+        click.echo(package.summary)
+
+
 @cli.command(name="validate-year")
 @click.argument("year")
 @click.option(

@@ -26,3 +26,6 @@ depending on network access or current IHACPA release availability.
 - Do not add patient-level data, private documents, or live archive payloads.
 - Do not treat these files as authoritative source data.
 
+The scanner contract also includes a review-only `sources audit` surface that
+packages source-scanner results into draft manifest, Conductor track, and
+GitHub issue text for offline review.

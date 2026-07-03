@@ -1,0 +1,27 @@
+{
+  "track_id": "ihacpa_source_license_audit_automation_20260703",
+  "type": "chore",
+  "status": "in_progress",
+  "track_class": "audit",
+  "current_state": "in_progress",
+  "primary_contract": "nwau_py.source_scanner review-only source audit package generation for manifest drafts, Conductor track scaffolds, and GitHub issue updates",
+  "dependencies": [
+    "conductor/archive/ihacpa_source_scanner_20260512",
+    "conductor/roadmap-governance.md",
+    "conductor/track-archive-policy.md"
+  ],
+  "completion_evidence": [
+    "tests",
+    "cli",
+    "docs",
+    "draft-package-rendering"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T08:31:00Z",
+  "updated_at": "2026-07-03T08:31:00Z",
+  "description": "Automate IHACPA source and license audits that draft manifests, Conductor tracks, and GitHub issue updates without committing restricted assets.",
+  "no_stub_enforce": true,
+  "support_scope": "Review-only audit package generation, draft Conductor track scaffolding, and GitHub issue update text for public or licensed IHACPA source discovery.",
+  "github_issue_number": 209,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/209"
+}
