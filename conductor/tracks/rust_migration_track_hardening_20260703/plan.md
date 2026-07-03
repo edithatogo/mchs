@@ -39,7 +39,7 @@
 
 ## Phase 4: Status Alignment and Additional Track Improvements
 
-- [ ] Task: Align Conductor registry and status matrix
+- [~] Task: Align Conductor registry and status matrix
     - [ ] Update `conductor/tracks.md` wording if needed to reflect hardened gates.
     - [ ] Update `conductor/status-matrix.json` if any status or recommended-next-track ordering changes.
     - [ ] Run the Conductor status-matrix validator.

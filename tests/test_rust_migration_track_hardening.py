@@ -111,3 +111,15 @@ def test_cli_and_mcp_plans_include_contract_hardening_prephase() -> None:
         assert "unsupported diagnostic codes" in plan
         assert "support-status wording" in plan
         assert "Rust canary, Rust opt-in, Python default, and Rust default" in plan
+
+
+def test_status_matrix_recommends_hardening_before_migration_tracks() -> None:
+    matrix = json.loads((ROOT / "conductor" / "status-matrix.json").read_text())
+    recommended = matrix["recommendedNextTracks"]
+
+    hardening = recommended.index("rust_migration_track_hardening_20260703")
+    cli = recommended.index("rust_cli_core_migration_20260703")
+    mcp = recommended.index("rust_mcp_core_migration_20260703")
+    promotion = recommended.index("rust_cli_mcp_promotion_evidence_20260703")
+
+    assert hardening < cli < mcp < promotion
