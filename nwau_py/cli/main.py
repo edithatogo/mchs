@@ -28,6 +28,14 @@ from nwau_py.coding_set_registry import (
     list_coding_set_families,
     validate_coding_set_compatibility,
 )
+from nwau_py.licensed_asset_registry import (
+    LicensedAssetRegistryError,
+    audit_restricted_asset_signatures,
+    doctor_licensed_assets,
+    licensed_asset_manifest_path,
+    register_licensed_asset_manifest,
+    validate_licensed_asset_manifest,
+)
 from nwau_py.pricing_year_diff import (
     compare_pricing_year_manifests,
     format_pricing_year_diff_report,
@@ -183,6 +191,162 @@ def sources() -> None:
 @cli.group(name="coding-set")
 def coding_set() -> None:
     """Inspect coding-set registry metadata."""
+
+
+@cli.group(name="licensed-assets")
+def licensed_assets() -> None:
+    """Inspect local-only licensed asset manifests and guards."""
+
+
+@licensed_assets.command(name="register")
+@click.option(
+    "--manifest",
+    "manifest_path",
+    type=click.Path(dir_okay=False, path_type=Path),
+    default=licensed_asset_manifest_path(),
+    show_default=True,
+    help="local-only manifest path",
+)
+@click.option("--system", required=True, help="licensed classification system")
+@click.option("--year", required=True, help="pricing year")
+@click.option(
+    "--local-path-hint",
+    required=True,
+    help="ignored local path hint for the licensed asset",
+)
+@click.option(
+    "--source-ref",
+    "source_refs",
+    multiple=True,
+    required=True,
+    help="source reference for the local licensed asset",
+)
+@click.option(
+    "--acknowledge-license/--no-acknowledge-license",
+    default=False,
+    show_default=True,
+    help="record that the user acknowledges the licensing boundary",
+)
+def licensed_assets_register(
+    manifest_path: Path,
+    system: str,
+    year: str,
+    local_path_hint: str,
+    source_refs: tuple[str, ...],
+    acknowledge_license: bool,
+) -> None:
+    """Create a local-only licensed asset manifest entry."""
+    try:
+        manifest = register_licensed_asset_manifest(
+            manifest_path=manifest_path,
+            system=system,
+            pricing_year=year,
+            source_refs=source_refs,
+            local_path_hint=local_path_hint,
+            acknowledge_license=acknowledge_license,
+        )
+    except LicensedAssetRegistryError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(json.dumps(manifest.to_dict(), indent=2, sort_keys=True))
+
+
+@licensed_assets.command(name="validate")
+@click.option(
+    "--manifest",
+    "manifest_path",
+    type=click.Path(dir_okay=False, path_type=Path),
+    default=licensed_asset_manifest_path(),
+    show_default=True,
+    help="local-only manifest path",
+)
+@click.option(
+    "--existing-path",
+    "existing_paths",
+    multiple=True,
+    help="relative path that is already present locally",
+)
+def licensed_assets_validate(
+    manifest_path: Path,
+    existing_paths: tuple[str, ...],
+) -> None:
+    """Validate a local-only licensed asset manifest."""
+    try:
+        report = validate_licensed_asset_manifest(
+            manifest_path,
+            existing_paths=existing_paths,
+        )
+    except LicensedAssetRegistryError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(json.dumps(report, indent=2, sort_keys=True))
+    if report["status"] != "validated":
+        raise SystemExit(1)
+
+
+def _manifest_root(manifest_path: Path) -> Path:
+    root = manifest_path
+    for _part in licensed_asset_manifest_path().parts:
+        root = root.parent
+    return root
+
+
+def _existing_relative_paths(root: Path) -> tuple[str, ...]:
+    return tuple(
+        path.relative_to(root).as_posix()
+        for path in root.rglob("*")
+        if path.is_file()
+    )
+
+
+@licensed_assets.command(name="doctor")
+@click.option(
+    "--manifest",
+    "manifest_path",
+    type=click.Path(dir_okay=False, path_type=Path),
+    default=licensed_asset_manifest_path(),
+    show_default=True,
+    help="local-only manifest path",
+)
+def licensed_assets_doctor(manifest_path: Path) -> None:
+    """Report whether the local licensed assets are currently available."""
+    try:
+        root = _manifest_root(manifest_path)
+        report = doctor_licensed_assets(
+            manifest_path,
+            existing_paths=_existing_relative_paths(root),
+        )
+    except LicensedAssetRegistryError as exc:
+        report = {
+            "status": "blocked_licensed",
+            "support_status": "blocked_licensed",
+            "missing_assets": [
+                {
+                    "asset_id": "manifest-record",
+                    "system": "licensed-assets",
+                    "pricing_year": "unknown",
+                    "local_path_hint": manifest_path.as_posix(),
+                    "missing_category": "licensed-local-manifest",
+                    "safe_message": str(exc),
+                }
+            ],
+        }
+    click.echo(json.dumps(report, indent=2, sort_keys=True))
+
+
+@licensed_assets.command(name="audit")
+@click.option(
+    "--root",
+    "root_path",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=Path("."),
+    show_default=True,
+    help="repository root or working tree to audit",
+)
+def licensed_assets_audit(root_path: Path) -> None:
+    """Audit the tree for restricted-asset signatures."""
+    report = audit_restricted_asset_signatures(root_path)
+    click.echo(json.dumps(report, indent=2, sort_keys=True))
+    if report["status"] != "pass":
+        raise SystemExit(1)
 
 
 @coding_set.group(name="registry")

@@ -24,6 +24,7 @@ ROOT_README_FILE = ROOT / "README.md"
 DEVELOPMENT_FILE = ROOT / "DEVELOPMENT.md"
 PACKAGE_README_FILE = ROOT / "nwau_py" / "README.md"
 CONDUCTOR_WORKFLOW_FILE = ROOT / "conductor" / "workflow.md"
+LICENSED_ASSET_GUARD = ROOT / "scripts" / "validate_licensed_assets.py"
 
 EXPECTED_GROUP_PACKAGES = {
     "dev": {"ruff"},
@@ -175,6 +176,15 @@ def test_pre_commit_configuration_matches_the_current_python_quality_gate():
     assert "uv run --with vale vale conductor README.md docs" in config
     assert "pre-commit/mirrors-mypy" not in config
     assert "mypy" not in config
+
+
+def test_licensed_asset_guard_script_is_wired_into_ci_and_pre_commit():
+    workflow = _read_text(PR_CI_WORKFLOW_FILE)
+    pre_commit = _read_text(PRE_COMMIT_FILE)
+
+    assert LICENSED_ASSET_GUARD.exists()
+    assert "validate_licensed_assets.py" in pre_commit
+    assert "validate_licensed_assets.py" in workflow
 
 
 def test_slow_validation_workflow_uses_the_expected_uv_group_commands():

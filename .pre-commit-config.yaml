@@ -51,3 +51,8 @@ repos:
         entry: uv run --with vale vale conductor README.md docs
         language: system
         pass_filenames: false
+      - id: licensed-asset-guard
+        name: licensed asset guard
+        entry: uv run python scripts/validate_licensed_assets.py --root .
+        language: system
+        pass_filenames: false

@@ -10,6 +10,8 @@ into every calculator or CLI entry point yet.
 The runtime support status for CLI, MCP, and docs is generated from
 `contracts/support/calculator-capability-matrix.json`, which is the single
 source of truth for current support claims.
+For the broader feature-to-tool summary, see the
+[IHACPA Tool Coverage Matrix](../../conductor/ihacpa-tool-coverage-matrix.md).
 
 ## Supported pricing years
 

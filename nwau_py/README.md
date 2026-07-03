@@ -37,6 +37,13 @@ The calculator implementation still uses pandas in places, while the
 longer-term data stack is moving toward Arrow-backed interchange and Polars
 where parity work allows it.
 
+Licensed IHACPA and classification assets are handled through an explicit
+local-only registry. The repo keeps the manifest boundary and validation
+helpers, but restricted tables, manuals, and grouper binaries remain
+user-supplied. See [docs/licensed_assets.md](docs/licensed_assets.md) for the
+registry workflow and the `licensed-assets` CLI group for register, validate,
+doctor, and audit commands.
+
 ## Data preparation
 
 The Python calculators load tables directly from the SAS releases archived under

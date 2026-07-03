@@ -71,6 +71,9 @@ jobs:
       - name: Run type check
         run: uv run ty check --error all
 
+      - name: Run licensed asset guard
+        run: uv run python scripts/validate_licensed_assets.py --root .
+
   security:
     name: Security checks (bandit + dependency audit + secret-prone patterns)
     runs-on: ubuntu-latest

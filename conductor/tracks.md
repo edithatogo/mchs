@@ -728,7 +728,7 @@ content alone is not sufficient evidence for marking a track complete.
 *Link: [./tracks/ihacpa_calculator_surface_incorporation_20260703/](./tracks/ihacpa_calculator_surface_incorporation_20260703/)*
 *Gate: Incorporate redistributable IHACPA calculator surfaces by year and stream while recording restricted and unavailable assets as explicit gaps.*
 
-- [ ] **Track: Licensed Asset Loader Framework**
+- [~] **Track: Licensed Asset Loader Framework**
 *Link: [./tracks/licensed_asset_loader_framework_20260703/](./tracks/licensed_asset_loader_framework_20260703/)*
 *Gate: Support local-only licensed asset registration, validation, diagnostics, and restricted-asset guards without redistributing licensed material.*
 
