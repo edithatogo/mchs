@@ -24,10 +24,51 @@ EXPECTED_METADATA = {
     },
 }
 
+REQUIRED_TEXT = {
+    "rust_cli_core_migration_20260703": {
+        "spec.md": (
+            "--runtime python|rust|auto",
+            "default runtime remains `python`",
+            "NWAU_RUNTIME",
+            "first Rust-backed implementation slice",
+            "existing Rust canary/kernel evidence",
+        ),
+        "plan.md": (
+            "Contract Hardening Pre-Phase",
+            "numeric tolerance and rounding policy",
+            "schema parity source",
+            "unsupported diagnostic codes",
+            "support-status wording",
+        ),
+    },
+    "rust_mcp_core_migration_20260703": {
+        "spec.md": (
+            "Python stdio transport",
+            "formula runtime",
+            "Rust-backed dispatcher",
+            "must not shell out to the CLI",
+            "first Rust-backed implementation slice",
+            "existing Rust canary/kernel evidence",
+        ),
+        "plan.md": (
+            "Contract Hardening Pre-Phase",
+            "numeric tolerance and rounding policy",
+            "schema parity source",
+            "unsupported diagnostic codes",
+            "support-status wording",
+            "must not shell out to the CLI",
+        ),
+    },
+}
+
 
 def _metadata(track_id: str) -> dict[str, object]:
     path = TRACKS / track_id / "metadata.json"
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _track_text(track_id: str, filename: str) -> str:
+    return (TRACKS / track_id / filename).read_text(encoding="utf-8")
 
 
 def main() -> int:
@@ -40,6 +81,15 @@ def main() -> int:
                 failures.append(
                     f"{track_id}: expected {key}={expected_value!r}, got {actual!r}"
                 )
+
+    for track_id, files in REQUIRED_TEXT.items():
+        for filename, snippets in files.items():
+            text = _track_text(track_id, filename)
+            failures.extend(
+                f"{track_id}/{filename}: missing required text {snippet!r}"
+                for snippet in snippets
+                if snippet not in text
+            )
 
     if failures:
         raise SystemExit("\n".join(failures))
