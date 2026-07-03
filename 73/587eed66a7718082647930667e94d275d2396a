@@ -1,0 +1,12 @@
+Phase checkpoint: Runtime Boundary Decisions
+
+Review result:
+- conductor-review phase inspection found no unresolved blockers.
+- CLI migration track now pins --runtime python|rust|auto, Python default, NWAU_RUNTIME override scope, CLI precedence, and fail-closed unsupported Rust requests.
+- MCP migration track now separates Python stdio transport from Rust-backed formula runtime and avoids implicit CLI shell-out.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
+- python3 scripts/validate_rust_migration_track_governance.py
+- python3 scripts/validate_conductor_status_matrix.py
+- git diff --check
