@@ -1,0 +1,1 @@
+Archived track rust_acute_python_poc_20260510 after confirming the implementation plan was already complete. Moved the track folder to conductor/archive and removed the active registry entry; no code, tests, or docs outside lifecycle cleanup were changed.
