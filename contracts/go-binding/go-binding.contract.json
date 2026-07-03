@@ -484,8 +484,8 @@
       "code": "GO_BINDING_MODULE_NOT_READY",
       "severity": "warning",
       "retryable": false,
-      "condition": "the Go module is only scaffold-ready or blocked",
-      "notes": "Use this while the binding is still in contract-only or scaffolded form."
+      "condition": "the Go service and binding-file adapters are private validation surfaces or blocked",
+      "notes": "Use this while adapter validation exists but Go module release readiness is still withheld."
     }
   ],
   "fixture_gates": [
@@ -507,9 +507,9 @@
   ],
   "module_readiness": [
     {
-      "id": "go_module_scaffold",
-      "state": "scaffold_ready",
-      "notes": "The workstream is contract-ready but does not assert a published Go module."
+      "id": "go_module_private",
+      "state": "private_ready",
+      "notes": "The workstream has private service and binding-file adapters but does not assert a published Go module."
     },
     {
       "id": "service_boundary",
