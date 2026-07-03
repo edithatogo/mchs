@@ -740,6 +740,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Rust Migration Track Hardening**
+- [~] **Track: Rust Migration Track Hardening**
 *Link: [./tracks/rust_migration_track_hardening_20260703/](./tracks/rust_migration_track_hardening_20260703/)*
 *Gate: Normalize and sharpen the Rust CLI, MCP, and promotion tracks before implementation by fixing governance metadata, first-slice scope, runtime-selection policy, MCP runtime boundaries, and track-quality validation.*

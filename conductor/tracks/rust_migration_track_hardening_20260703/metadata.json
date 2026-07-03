@@ -1,9 +1,9 @@
 {
   "track_id": "rust_migration_track_hardening_20260703",
   "type": "chore",
-  "status": "new",
+  "status": "in_progress",
   "track_class": "governance",
-  "current_state": "roadmap-only",
+  "current_state": "in-progress",
   "primary_contract": "conductor/roadmap-governance.md",
   "dependencies": [
     "rust_cli_core_migration_20260703",
@@ -22,6 +22,6 @@
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-07-03T09:44:18Z",
-  "updated_at": "2026-07-03T09:44:18Z",
+  "updated_at": "2026-07-03T09:49:26Z",
   "description": "Harden the Rust CLI/MCP migration tracks before implementation by normalizing governance metadata, pinning the acute 2025 first slice, making runtime-selection decisions explicit, and adding track-quality validation."
 }
