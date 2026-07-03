@@ -120,13 +120,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [x] **Track: AR-DRG Grouper Provider Runtime**
-*Link: [./tracks/ar_drg_grouper_provider_runtime_20260703/](./tracks/ar_drg_grouper_provider_runtime_20260703/)*
-*Depends on: AR-DRG grouper integration, AR-DRG mapping registry, and licensed-product workflow boundaries.*
-*Gate: support pluggable AR-DRG provider workflows with provenance-bearing outputs and explicit support-status reporting without redistributing proprietary logic.*
-
----
-
 - [x] **Track: IHACPA 2026-27 Support**
    *Link: [./archive/ihacpa_2026_27_support_20260512/](./archive/ihacpa_2026_27_support_20260512/)*
 *Gate: add current 2026-27 NEP, technical specification, price-weight, calculator, and classification-version support with explicit validation status.*

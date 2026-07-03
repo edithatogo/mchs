@@ -37,5 +37,7 @@
   "no_stub_enforce": true,
   "support_scope": "Pluggable AR-DRG provider metadata, fail-closed compatibility, support-status reporting, provenance-bearing outputs, and local-only command/service/file-exchange/container references.",
   "github_issue_number": 206,
-  "github_issue_url": "https://github.com/edithatogo/mchs/issues/206"
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/206",
+  "archived_at": "2026-07-03T07:49:51Z",
+  "archive_path": "conductor/archive/ar_drg_grouper_provider_runtime_20260703"
 }
