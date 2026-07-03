@@ -1,0 +1,1 @@
+Archived the classification mapping registry enrichment track into conductor/archive. Added the shared classification mapping registry data model, compatibility helpers, CLI surface, tests, and docs. Marked the archived track metadata and plan complete and updated the track registry/tests accordingly. Included the new runtime version helper used by nwau_py.__init__.
