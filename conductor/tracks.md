@@ -722,7 +722,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Rust CLI Core Migration**
+- [~] **Track: Rust CLI Core Migration**
 *Link: [./tracks/rust_cli_core_migration_20260703/](./tracks/rust_cli_core_migration_20260703/)*
 *Gate: Migrate current CLI calculation and validation execution to the shared Rust core behind parity, diagnostics, fallback, and documentation evidence before any default-runtime claim.*
 

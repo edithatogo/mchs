@@ -84,6 +84,13 @@ workflows, web demos, and Power Platform orchestration. Those surfaces must
 consume shared contracts and validation fixtures rather than duplicating formula
 logic.
 
+The CLI exposes an explicit runtime selector for calculation commands:
+`--runtime python|rust|auto`, with `NWAU_RUNTIME` available for CI or automation
+overrides. Python remains the default. The only Rust-backed CLI slice currently
+promoted is opt-in acute 2025 CSV execution; unsupported Rust requests fail
+closed rather than falling back silently. See
+`docs/roadmaps/rust-cli-runtime-boundary.md` for the support boundary.
+
 ## Calculator modules
 
 Each module below mirrors a SAS program from the IHACPA package.
