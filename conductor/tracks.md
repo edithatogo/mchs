@@ -721,7 +721,3 @@ content alone is not sufficient evidence for marking a track complete.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.
 
 ---
-
-- [~] **Track: Rust CLI/MCP Promotion Evidence**
-*Link: [./tracks/rust_cli_mcp_promotion_evidence_20260703/](./tracks/rust_cli_mcp_promotion_evidence_20260703/)*
-*Gate: Promote Rust-backed CLI and MCP execution to default only when cross-surface conformance, release gates, support-status documentation, and rollback evidence are complete.*

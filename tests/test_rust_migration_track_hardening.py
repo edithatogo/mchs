@@ -140,6 +140,11 @@ def test_status_matrix_orders_rust_migration_tracks_coherently() -> None:
     matrix = json.loads((ROOT / "conductor" / "status-matrix.json").read_text())
     recommended = matrix["recommendedNextTracks"]
 
+    if "rust_cli_mcp_promotion_evidence_20260703" not in recommended:
+        assert "rust_cli_core_migration_20260703" not in recommended
+        assert "rust_mcp_core_migration_20260703" not in recommended
+        return
+
     promotion = recommended.index("rust_cli_mcp_promotion_evidence_20260703")
 
     if "rust_cli_core_migration_20260703" in recommended:
