@@ -132,6 +132,73 @@ def test_cran_registry_contract_remains_submitted_not_published():
     assert "d.a.mordaunt@gmail.com" not in json.dumps(registry)
 
 
+def test_conda_forge_live_probe_requires_target_version_in_public_metadata():
+    module = _module()
+    registry = {"id": "conda_forge", "package": "nwau-py", "version": "0.2.2"}
+
+    assert (
+        module.conda_target_version_visible(
+            registry,
+            {
+                "public_probes": {
+                    "anaconda_api": {"http_status": 404, "body": "not found"},
+                    "anaconda_page": {"http_status": 200, "body": "nwau-py"},
+                },
+                "repodata_probe": {
+                    "http_status": 200,
+                    "package_matches": {},
+                },
+            },
+        )
+        is False
+    )
+
+    assert (
+        module.conda_target_version_visible(
+            registry,
+            {
+                "public_probes": {
+                    "anaconda_api": {"http_status": 404, "body": "not found"},
+                    "anaconda_page": {"http_status": 200, "body": "nwau-py"},
+                },
+                "repodata_probe": {
+                    "http_status": 200,
+                    "package_matches": {
+                        "nwau-py-0.2.2-pyhd8ed1ab_0.conda": {
+                            "name": "nwau-py",
+                            "version": "0.2.2",
+                        }
+                    },
+                },
+            },
+        )
+        is True
+    )
+
+
+def test_conda_forge_registry_contract_remains_submitted_not_published():
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    registry = next(
+        item for item in contract["registries"] if item["id"] == "conda_forge"
+    )
+
+    assert (
+        registry["current_status"]
+        == "submitted_checks_green_pending_conda_forge_review"
+    )
+    assert registry["publication_claimed"] is False
+    assert registry["submission_url"].endswith("/pull/33452")
+    assert (
+        registry["preparationEvidence"]["latestPublicProbe20260703"][
+            "evidenceFile"
+        ]
+        == (
+            "conductor/tracks/conda_forge_feedstock_submission_20260524/"
+            "public_probe_20260703.json"
+        )
+    )
+
+
 def test_vscode_registry_contract_records_marketplace_0_1_1_completion():
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     registry = next(

@@ -28,7 +28,7 @@
 ## Phase 4: Publication Evidence
 
 - [~] Task: Verify external publication. Pending conda-forge acceptance.
-    - [ ] Query public registry after propagation. 2026-06-12 Anaconda API query still returns 404 for `conda-forge/nwau-py`.
+    - [ ] Query public registry after propagation. 2026-07-03 Anaconda API query still returns 404 for `conda-forge/nwau-py`; conda-forge noarch repodata contains no `nwau-py` entries.
     - [x] Record immutable URL/API response/checksum.
     - [ ] Mark track complete only if publication or accepted-review evidence exists. Publication is not claimed; PR #33452 checks are green at `bffc5bf1a85389dc695adfd96c87bf2413f4db25` and maintainer review/merge remain pending.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md). Pending publication evidence.
