@@ -728,14 +728,6 @@ content alone is not sufficient evidence for marking a track complete.
 *Link: [./tracks/ihacpa_calculator_surface_incorporation_20260703/](./tracks/ihacpa_calculator_surface_incorporation_20260703/)*
 *Gate: Incorporate redistributable IHACPA calculator surfaces by year and stream while recording restricted and unavailable assets as explicit gaps.*
 
----
-
-- [~] **Track: IHACPA Capability Matrix Runtime Truth**
-*Link: [./tracks/ihacpa_capability_matrix_runtime_truth_20260703/](./tracks/ihacpa_capability_matrix_runtime_truth_20260703/)*
-*Gate: Generate runtime support status for CLI, MCP/API, docs, and deployed tools from canonical metadata without placeholder success paths.*
-
----
-
 - [ ] **Track: Licensed Asset Loader Framework**
 *Link: [./tracks/licensed_asset_loader_framework_20260703/](./tracks/licensed_asset_loader_framework_20260703/)*
 *Gate: Support local-only licensed asset registration, validation, diagnostics, and restricted-asset guards without redistributing licensed material.*

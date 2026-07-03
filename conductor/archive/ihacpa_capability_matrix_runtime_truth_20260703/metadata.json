@@ -1,9 +1,9 @@
 {
   "track_id": "ihacpa_capability_matrix_runtime_truth_20260703",
   "type": "feature",
-  "status": "new",
+  "status": "completed",
   "track_class": "validator",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "Generated support and capability matrices expose truthful runtime support states across CLI, MCP/API, docs, and deployed tools",
   "dependencies": [
     "support_status_matrix_20260513",
