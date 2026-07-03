@@ -7,6 +7,13 @@ Python remains the validated public runtime while the project moves toward a
 shared Rust calculator core with thin bindings. This page is a roadmap and
 contract summary; it is not a claim that Rust is already the default runtime.
 
+Rust canary and foundation evidence is recorded for the scoped migration
+surfaces, but it does not promote Rust to the default public runtime. Further
+language-adapter expansion remains gated by named audience, accountable owner,
+contract tests, parity fixtures, packaging posture, and release evidence.
+Scala/Spark, Swift, Stata, and MATLAB remain deferred until those
+surface-specific criteria are recorded.
+
 ## Target architecture
 
 The intended end state is one Rust calculator core exposed through thin

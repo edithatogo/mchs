@@ -121,7 +121,7 @@ Required evidence:
 
 Exit condition to Rust opt-in:
 
-- Fixture parity is complete for the stream’s agreed canonical inputs.
+- Fixture parity is validated for the stream's agreed canonical inputs.
 - Release packaging exists for the chosen delivery surface.
 - The stream’s validation record is stable enough for user-selected adoption.
 

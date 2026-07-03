@@ -1,12 +1,12 @@
 # Rust Acute 2025 Workspace
 
-This workspace is the acute 2025 Rust proof-of-concept scaffold.
+This workspace contains the Rust core canary for acute 2025 calculations.
 
 ## Crate Responsibilities
 
 - `nwau-core` holds the acute 2025 calculation kernel, schema contracts, and
   deterministic formula code.
-- `nwau-py` provides the PyO3/maturin binding scaffold that will surface the
+- `nwau-py` provides the PyO3/maturin binding that surfaces the opt-in
   Rust-backed acute path to Python.
 
 ## Python Binding Package
@@ -33,5 +33,6 @@ This workspace is the acute 2025 Rust proof-of-concept scaffold.
 ## Architecture Mapping
 
 This workspace implements the Rust-first core direction recorded in ADR 0007.
-It is a scaffold only; the Python package remains the default validated path
-until Rust parity is explicitly recorded.
+The acute 2025 path has canary parity evidence and remains opt-in from Python;
+the Python package remains the default validated runtime until stream-specific
+Rust parity and release evidence promote a broader default path.

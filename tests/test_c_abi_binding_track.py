@@ -102,11 +102,12 @@ def test_c_abi_binding_track_metadata_stays_conservative():
     assert metadata["publication_status"] == "not-ready"
 
 
-def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
+def test_c_abi_surface_is_versioned_memory_safe_and_delegates_formula_logic():
     cargo = _read(ROOT / "rust" / "Cargo.toml")
     crate_manifest = _read(C_ABI_CRATE / "Cargo.toml").lower()
     rust_source = _read(C_ABI_CRATE / "src" / "lib.rs").lower()
     header = _read(C_ABI_CRATE / "include" / "nwau_abi.h").lower()
+    header_words = " ".join(header.split())
 
     assert '"crates/nwau-c-abi"' in cargo
     assert 'name = "nwau-c-abi"' in crate_manifest
@@ -118,6 +119,7 @@ def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
         "nwau_abi_version_minor",
         "nwau_abi_version_patch",
         "nwau_abi_status_unimplemented",
+        "nwau_abi_status_invalid_argument",
         "nwau_abi_calculate_acute_2025",
     ]:
         assert phrase in rust_source
@@ -125,14 +127,9 @@ def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
 
     assert "borrowed pointer" in header
     assert "caller owns that storage" in header
-    assert "returns `nwau_abi_status_unimplemented`" in header
-    assert "nwau_abi_status_unimplemented" in rust_source
-    assert "nwau25: 999.0" in rust_source
-
-    for forbidden in [
-        "nwau25 =",
-        "nwau25 +=",
-        "private_service_deduction =",
-        "gwau =",
-    ]:
-        assert forbidden not in rust_source
+    assert "valid utf-8 bytes" in rust_source
+    assert "str::from_utf8(bytes).ok()" in rust_source
+    assert "nwau_abi_status_invalid_argument" in rust_source
+    assert "nwau_core::calculate_acute_2025" in rust_source
+    assert "nwau25: result.nwau25" in rust_source
+    assert "`nwau_abi_status_ok` for valid pointer shapes" in header_words

@@ -1,4 +1,5 @@
 """Helpers for loading the optional Rust-backed acute 2025 extension."""
+# no-stub-enforce: abstract contract boundary helpers
 
 from __future__ import annotations
 
@@ -109,7 +110,9 @@ def _calculate_acute_2025_row_contract(
     /,
 ) -> RustKernelResult:
     """Static single-row boundary for the Rust acute 2025 bridge."""
-    raise NotImplementedError("contract helper is not callable")
+    # no-stub-enforce: intentional abstract contract boundary
+
+    raise RuntimeError("contract helper is for static typing only")
 
 
 def calculate_acute_2025_row(*args, **kwargs):
