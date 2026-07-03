@@ -681,6 +681,7 @@ def _render_source_audit_track_metadata(
     manifest: SourceDraftManifest,
     *,
     track_id: str,
+    track_title: str,
     github_issue_number: int | None,
     github_issue_url: str | None,
 ) -> dict[str, Any]:
@@ -714,6 +715,7 @@ def _render_source_audit_track_metadata(
             "Conductor tracks, and GitHub issue updates without committing "
             "restricted assets."
         ),
+        "track_title": track_title,
         "no_stub_enforce": True,
         "support_scope": (
             "Review-only audit package generation, draft Conductor track "
@@ -730,13 +732,14 @@ def _render_source_audit_track_metadata(
 def _render_source_audit_spec(
     manifest: SourceDraftManifest,
     *,
+    track_title: str,
     github_issue_url: str | None,
 ) -> str:
     issue_line = github_issue_url or "(GitHub issue link not supplied)"
     pricing_year = manifest.pricing_year or "unspecified"
     return "\n".join(
         [
-            f"# Specification: {DEFAULT_AUDIT_TRACK_TITLE}",
+            f"# Specification: {track_title}",
             "",
             "## Overview",
             "Add review-only automation that turns IHACPA source-scanner output into",
@@ -811,10 +814,10 @@ def _render_source_audit_spec(
     )
 
 
-def _render_source_audit_plan() -> str:
+def _render_source_audit_plan(track_title: str) -> str:
     return "\n".join(
         [
-            f"# Plan: {DEFAULT_AUDIT_TRACK_TITLE}",
+            f"# Plan: {track_title}",
             "",
             "## Phase 1: Draft Package Contract",
             "- [ ] Task: Define the review-only audit package shape and renderers.",
@@ -841,9 +844,14 @@ def _render_source_audit_plan() -> str:
     )
 
 
-def _render_source_audit_index(track_id: str, github_issue_url: str | None) -> str:
+def _render_source_audit_index(
+    track_id: str,
+    *,
+    track_title: str,
+    github_issue_url: str | None,
+) -> str:
     issue_link = (
-        f"- [GitHub Issue #209]({github_issue_url})"
+        f"- [GitHub Issue]({github_issue_url})"
         if github_issue_url
         else "- GitHub issue link pending"
     )
@@ -859,10 +867,10 @@ def _render_source_audit_index(track_id: str, github_issue_url: str | None) -> s
     )
 
 
-def _render_source_audit_registry_entry(track_id: str) -> str:
+def _render_source_audit_registry_entry(track_id: str, *, track_title: str) -> str:
     return "\n".join(
         [
-            f"- [~] **Track: {DEFAULT_AUDIT_TRACK_TITLE}**",
+            f"- [~] **Track: {track_title}**",
             f"*Link: [./tracks/{track_id}/](./tracks/{track_id}/)*",
             "*Gate: turn IHACPA source-scanner output into review-only draft",
             "manifests, Conductor tracks, and GitHub issue updates without copying",
@@ -875,6 +883,7 @@ def _render_source_audit_issue_body(
     manifest: SourceDraftManifest,
     *,
     track_id: str,
+    track_title: str,
     github_issue_url: str | None,
 ) -> str:
     track_path = f"`conductor/tracks/{track_id}/`"
@@ -887,6 +896,7 @@ def _render_source_audit_issue_body(
             "track, and GitHub issue updates without committing restricted assets.",
             "",
             "## Conductor track",
+            f"Track title: {track_title}",
             track_path,
             "",
             f"GitHub issue: {issue_link}",
@@ -932,19 +942,29 @@ def build_source_audit_package(
     track_metadata = _render_source_audit_track_metadata(
         manifest,
         track_id=track_id,
+        track_title=track_title,
         github_issue_number=github_issue_number,
         github_issue_url=github_issue_url,
     )
     track_spec = _render_source_audit_spec(
         manifest,
+        track_title=track_title,
         github_issue_url=github_issue_url,
     )
-    track_plan = _render_source_audit_plan()
-    track_index = _render_source_audit_index(track_id, github_issue_url)
-    tracks_registry_entry = _render_source_audit_registry_entry(track_id)
+    track_plan = _render_source_audit_plan(track_title)
+    track_index = _render_source_audit_index(
+        track_id,
+        track_title=track_title,
+        github_issue_url=github_issue_url,
+    )
+    tracks_registry_entry = _render_source_audit_registry_entry(
+        track_id,
+        track_title=track_title,
+    )
     github_issue_body = _render_source_audit_issue_body(
         manifest,
         track_id=track_id,
+        track_title=track_title,
         github_issue_url=github_issue_url,
     )
     summary = (

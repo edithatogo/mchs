@@ -39,12 +39,27 @@ def test_source_audit_package_renders_review_only_drafts() -> None:
     assert rendered["track"]["metadata"]["track_class"] == "audit"
     assert rendered["track"]["metadata"]["github_issue_number"] == 209
     assert rendered["track"]["metadata"]["github_issue_url"] == ISSUE_URL
-    assert f"[GitHub Issue #209]({ISSUE_URL})" in rendered["track"]["index"]
+    assert f"[GitHub Issue]({ISSUE_URL})" in rendered["track"]["index"]
     assert rendered["github_issue"]["title"].startswith("chore:")
     body = rendered["github_issue"]["body"].lower()
     assert "restricted assets must never be copied" in body
     assert "box.com" not in body
     assert rendered["scan_manifest"]["pricing_year"] == "2027"
+
+
+def test_source_audit_package_uses_custom_track_title() -> None:
+    package = build_source_audit_package(
+        _scan_manifest(),
+        track_id=TRACK_ID,
+        github_issue_url=ISSUE_URL,
+        track_title="Custom Audit Track",
+    )
+    rendered = json.loads(source_audit_package_to_json(package))
+
+    assert rendered["track"]["metadata"]["track_title"] == "Custom Audit Track"
+    assert rendered["track"]["spec"].startswith("# Specification: Custom Audit Track")
+    assert rendered["track"]["plan"].startswith("# Plan: Custom Audit Track")
+    assert "Track title: Custom Audit Track" in rendered["github_issue"]["body"]
 
 
 def test_sources_audit_cli_writes_drafts_and_emits_json(tmp_path) -> None:
