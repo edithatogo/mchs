@@ -2,11 +2,11 @@
 
 ## Phase 1: Governance Normalization
 
-- [~] Task: Normalize metadata for the Rust migration track set
-    - [ ] Update CLI and MCP migration tracks to use `track_class: binding`, `current_state: roadmap-only`, and `publication_status: published-with-gaps`.
-    - [ ] Update the promotion evidence track to use `track_class: validator`, `current_state: roadmap-only`, and `publication_status: future-only`.
-    - [ ] Keep dependencies, primary contracts, and completion evidence explicit.
-- [ ] Task: Add governance validation for new Rust migration track metadata
+- [x] Task: Normalize metadata for the Rust migration track set [3a8f0e2]
+    - [x] Update CLI and MCP migration tracks to use `track_class: binding`, `current_state: roadmap-only`, and `publication_status: published-with-gaps`.
+    - [x] Update the promotion evidence track to use `track_class: validator`, `current_state: roadmap-only`, and `publication_status: future-only`.
+    - [x] Keep dependencies, primary contracts, and completion evidence explicit.
+- [~] Task: Add governance validation for new Rust migration track metadata
     - [ ] Extend an existing validator or add a focused test that rejects unknown track classes, unknown current states, and missing publication status.
     - [ ] Cover the three Rust migration track metadata files directly.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Governance Normalization' (Protocol in workflow.md)
