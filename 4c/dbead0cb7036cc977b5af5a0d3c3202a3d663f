@@ -1,0 +1,17 @@
+Task: Record upstream submission URL or external gate
+
+Summary:
+- Added CRAN live public probes to the language registry gate report.
+- Added conductor/tracks/r_cran_registry_submission_20260524/public_probe_20260703.json recording CRANDB/package-page/archive 404s for nwauR 0.1.0.
+- Kept publication_claimed=false and target_version_visible=false.
+- Corrected stale CRAN maintainer email references to dylan.mordaunt@vuw.ac.nz.
+
+Why:
+- The CRAN track can only progress with public CRAN publication or maintainer/review evidence. The repository now records the current external gate without overclaiming completion.
+
+Validation:
+- uv run ruff check scripts/language_registry_external_gate_report.py tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py
+- PYTHONPATH=. uv run pytest -q tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py
+- python scripts/language_registry_external_gate_report.py --promotion --live --json
+- python -m json.tool on contract, metadata, and public probe evidence
+- git diff --check
