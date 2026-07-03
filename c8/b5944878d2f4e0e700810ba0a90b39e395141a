@@ -1,0 +1,9 @@
+Task: Pin acute 2025 as the first migration slice
+
+Summary:
+- Added regression coverage requiring CLI and MCP migration tracks to name acute 2025 as the first Rust-backed implementation slice.
+- Updated CLI migration spec and plan to link acute 2025 to existing Rust canary/kernel evidence and mark other surfaces as follow-on coverage.
+- Updated MCP migration spec and plan to reuse the CLI acute 2025 fixture scope and mark other MCP surfaces as follow-on coverage.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
