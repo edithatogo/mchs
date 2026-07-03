@@ -26,7 +26,7 @@
 
 ## Phase 3: First-Slice and Contract Hardening
 
-- [ ] Task: Pin acute 2025 as the first migration slice
+- [~] Task: Pin acute 2025 as the first migration slice
     - [ ] Update the CLI and MCP migration specs to make acute 2025 the first Rust-backed implementation slice.
     - [ ] Link the first slice to existing Rust canary/kernel evidence and Rust Core Continuation dependencies.
     - [ ] Record other calculators and years as follow-on coverage until their fixtures are ready.

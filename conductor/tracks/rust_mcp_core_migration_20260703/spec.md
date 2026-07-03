@@ -4,6 +4,8 @@
 
 Migrate the MCP stdio server's core calculation and validation behaviour to the shared Rust calculator core while preserving the published MCP tool contract. The MCP layer may keep a Python stdio transport shim during transition, but promoted calculation behaviour must move to a Rust-backed dispatcher. The Python transport is not the formula runtime.
 
+The first Rust-backed implementation slice is acute 2025. It must build from existing Rust canary/kernel evidence and reuse the same fixture scope as the CLI migration track. Other calculators, years, tools, and response formats remain follow-on coverage until their fixtures and contracts are ready.
+
 ## Functional Requirements
 
 - Inventory current MCP tools, resources, schemas, registry metadata, diagnostics, and examples.
@@ -11,6 +13,7 @@ Migrate the MCP stdio server's core calculation and validation behaviour to the 
 - Distinguish Python stdio transport compatibility from the formula runtime in every support-status claim.
 - Preserve existing tool names, resource identifiers, schema shapes, error semantics, and registry-facing metadata unless a later contract update explicitly approves a change.
 - Add tests proving Rust-backed MCP outputs match CLI outputs and canonical fixtures for promoted calculators and pricing years.
+- Start with acute 2025 as the first Rust-backed implementation slice and record any non-acute or non-2025 MCP surface as follow-on coverage.
 - Fail closed when a caller requests a calculator, pricing year, or output mode that is not Rust validated.
 - Keep registry and documentation claims limited to validated stdio behaviour; do not claim Docker, hosted HTTP, or search-index readiness without separate evidence.
 - Reuse the CLI runtime policy and parity fixtures so MCP and CLI do not diverge, but MCP must not shell out to the CLI unless a later implementation decision records that boundary explicitly.
@@ -25,6 +28,7 @@ Migrate the MCP stdio server's core calculation and validation behaviour to the 
 
 - A committed MCP inventory maps every current tool/resource to Rust-backed, Python-only, or unsupported status.
 - Rust-backed MCP execution passes parity against CLI and canonical fixtures for the promoted surface.
+- Acute 2025 is the first promoted MCP calculation slice and links to existing Rust canary/kernel evidence before broader coverage is attempted.
 - MCP documentation distinguishes Python stdio transport from Rust-backed formula runtime.
 - CI includes a non-interactive MCP conformance command.
 - Registry and support-status documentation truthfully describe the runtime path and any remaining Python shim.

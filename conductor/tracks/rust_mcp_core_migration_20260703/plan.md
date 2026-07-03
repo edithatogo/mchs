@@ -12,6 +12,10 @@
     - [ ] Document that the Python stdio transport may remain during transition but is not the formula runtime.
     - [ ] Specify that promoted formula execution uses the Rust-backed dispatcher.
     - [ ] State that MCP should reuse the CLI runtime policy and parity fixtures but must not shell out to the CLI unless a later implementation decision records that boundary explicitly.
+- [ ] Task: Pin acute 2025 as the first Rust-backed implementation slice
+    - [ ] Link the slice to existing Rust canary/kernel evidence.
+    - [ ] Reuse the CLI migration fixture scope for acute 2025.
+    - [ ] Record non-acute calculators, non-2025 years, and unvalidated MCP tools or formats as follow-on coverage.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'MCP Contract Inventory and Dispatcher Design' (Protocol in workflow.md)
 
 ## Phase 2: Red Tests for MCP Parity

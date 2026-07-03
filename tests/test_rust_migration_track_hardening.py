@@ -77,3 +77,22 @@ def test_mcp_migration_track_separates_transport_from_formula_runtime() -> None:
     assert "Rust-backed dispatcher" in combined
     assert "reuse the CLI runtime policy and parity fixtures" in combined
     assert "must not shell out to the CLI" in combined
+
+
+def test_cli_and_mcp_tracks_pin_acute_2025_first_slice() -> None:
+    cli = (
+        _text("rust_cli_core_migration_20260703", "spec.md")
+        + "\n"
+        + _text("rust_cli_core_migration_20260703", "plan.md")
+    )
+    mcp = (
+        _text("rust_mcp_core_migration_20260703", "spec.md")
+        + "\n"
+        + _text("rust_mcp_core_migration_20260703", "plan.md")
+    )
+
+    for combined in (cli, mcp):
+        assert "acute 2025" in combined
+        assert "first Rust-backed implementation slice" in combined
+        assert "existing Rust canary/kernel evidence" in combined
+        assert "follow-on coverage" in combined

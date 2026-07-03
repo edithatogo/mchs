@@ -12,6 +12,9 @@
     - [ ] Specify `NWAU_RUNTIME` as an internal or CI override and state that the explicit CLI `--runtime` option takes precedence.
     - [ ] Specify fail closed behaviour when `--runtime rust` is requested for unsupported calculators, years, formats, or output modes.
     - [ ] Document when Python fallback is permitted during transition.
+- [ ] Task: Pin acute 2025 as the first Rust-backed implementation slice
+    - [ ] Link the slice to existing Rust canary/kernel evidence.
+    - [ ] Record non-acute calculators, non-2025 years, and unvalidated formats as follow-on coverage.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'CLI Surface Inventory and Migration Boundary' (Protocol in workflow.md)
 
 ## Phase 2: Red Tests for Rust-Backed CLI Parity
@@ -19,7 +22,7 @@
 - [ ] Task: Add failing CLI parity tests
     - [ ] Add golden-fixture tests comparing Python and Rust-backed CLI outputs.
     - [ ] Cover success, unsupported-surface, malformed-input, and diagnostics cases.
-    - [ ] Include at least one promoted acute 2025 fixture set and any already-validated Rust core streams.
+    - [ ] Include the promoted acute 2025 fixture set before any follow-on coverage expands.
 - [ ] Task: Add CI command coverage for Rust-backed CLI execution
     - [ ] Define a narrow non-interactive command suitable for PR CI.
     - [ ] Ensure tests fail before the Rust-backed execution path is implemented.
