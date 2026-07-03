@@ -114,9 +114,16 @@ content alone is not sufficient evidence for marking a track complete.
   *Gate: recover or explicitly gap-record the remaining Box-hosted SAS artifacts, keep the archive manifest truthful, and validate restore behavior against the committed provenance record.*
 
 - [x] **Track: IHACPA Feature Incorporation and Calculator Coverage Roadmap**
-  *Link: [./archive/ihacpa_feature_incorporation_roadmap_20260511/](./archive/ihacpa_feature_incorporation_roadmap_20260511/)*
-  *Depends on: source archive inventory and current calculator surfaces.*
-  *Gate: map archive families and helpers to executable surfaces, classify complexity/HAC/AHR status, and close any remaining parity gaps with tests and documented follow-on work.*
+*Link: [./archive/ihacpa_feature_incorporation_roadmap_20260511/](./archive/ihacpa_feature_incorporation_roadmap_20260511/)*
+*Depends on: source archive inventory and current calculator surfaces.*
+*Gate: map archive families and helpers to executable surfaces, classify complexity/HAC/AHR status, and close any remaining parity gaps with tests and documented follow-on work.*
+
+---
+
+- [x] **Track: AR-DRG Grouper Provider Runtime**
+*Link: [./tracks/ar_drg_grouper_provider_runtime_20260703/](./tracks/ar_drg_grouper_provider_runtime_20260703/)*
+*Depends on: AR-DRG grouper integration, AR-DRG mapping registry, and licensed-product workflow boundaries.*
+*Gate: support pluggable AR-DRG provider workflows with provenance-bearing outputs and explicit support-status reporting without redistributing proprietary logic.*
 
 ---
 

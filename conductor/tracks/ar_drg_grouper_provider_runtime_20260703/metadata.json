@@ -1,0 +1,41 @@
+{
+  "track_id": "ar_drg_grouper_provider_runtime_20260703",
+  "type": "feature",
+  "status": "completed",
+  "track_class": "classifier",
+  "current_state": "complete",
+  "requirements": [
+    "MUST-002",
+    "MUST-003",
+    "MUST-010",
+    "MUST-011",
+    "WONT-004"
+  ],
+  "design_refs": [
+    "System Design#Architecture Overview",
+    "System Design#Contract Enforcement Flow",
+    "System Design#Core Design Decisions"
+  ],
+  "primary_contract": "nwau_py.ar_drg_grouper_runtime provider runtime registry, compatibility results, and provenance-bearing group records",
+  "dependencies": [
+    "conductor/archive/ar_drg_grouper_integration_20260512",
+    "conductor/archive/ar_drg_icd_mapping_registry_20260512",
+    "conductor/archive/ar_drg_version_parity_fixtures_20260512",
+    "conductor/archive/icd_achi_acs_license_workflow_20260512",
+    "conductor/archive/classification_mapping_registry_enrichment_20260703"
+  ],
+  "completion_evidence": [
+    "tests",
+    "docs",
+    "cli",
+    "provider_runtime_registry"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T07:45:00Z",
+  "updated_at": "2026-07-03T07:49:16Z",
+  "description": "Support pluggable AR-DRG grouper providers without redistributing proprietary logic.",
+  "no_stub_enforce": true,
+  "support_scope": "Pluggable AR-DRG provider metadata, fail-closed compatibility, support-status reporting, provenance-bearing outputs, and local-only command/service/file-exchange/container references.",
+  "github_issue_number": 206,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/206"
+}

@@ -31,6 +31,8 @@ version-aware validation, but it does not bundle proprietary grouper logic or
 licensed mapping tables. For executable admitted-acute grouping, users must
 use local licensed tooling or precomputed DRG values.
 
+The AR-DRG provider runtime separates precomputed AR-DRG values from local command, local service, file exchange, and optional container workflows. The runtime reports status explicitly (`source_available`, `executable`, `validated`, `blocked_licensed`, or `out_of_scope`) and only accepts provenance-bearing inputs before calculator consumption.
+
 Community mental health still needs an official-source fixture pack before the
 `mh` surface can be validated against extracted IHACPA outputs. The current gap
 record and pricing-year caveats are documented in

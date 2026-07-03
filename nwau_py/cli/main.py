@@ -297,6 +297,118 @@ def classification_registry_validate_compatibility(
         raise SystemExit(1)
 
 
+@cli.group(name="ar-drg")
+def ar_drg() -> None:
+    """Inspect AR-DRG provider runtime metadata."""
+
+
+@ar_drg.group(name="provider")
+def ar_drg_provider() -> None:
+    """Inspect AR-DRG provider runtime profiles."""
+
+
+@ar_drg_provider.command(name="list")
+def ar_drg_provider_list() -> None:
+    """List provider runtime profiles."""
+    from nwau_py.ar_drg_grouper_runtime import list_ar_drg_grouper_provider_profiles
+
+    click.echo(
+        json.dumps(
+            {
+                "records": [
+                    profile.to_dict()
+                    for profile in list_ar_drg_grouper_provider_profiles()
+                ]
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+
+
+@ar_drg_provider.command(name="validate-compatibility")
+@click.option("--provider-type", required=True, help="provider workflow type")
+@click.option("--year", required=True, help="pricing year")
+@click.option("--ar-drg-version", default=None, help="declared AR-DRG version")
+@click.option("--icd-10-am-version", default=None, help="declared ICD-10-AM version")
+@click.option("--achi-version", default=None, help="declared ACHI version")
+@click.option("--acs-version", default=None, help="declared ACS version")
+@click.option("--reference-id", default=None, help="local reference identifier")
+@click.option("--reference-type", default=None, help="local provider reference type")
+@click.option("--command", default=None, help="local command reference")
+@click.option("--reference-uri", default=None, help="local reference URI")
+@click.option("--local-path-hint", default=None, help="local path hint")
+@click.option("--container-image", default=None, help="local container image")
+def ar_drg_provider_validate_compatibility(
+    provider_type: str,
+    year: str,
+    ar_drg_version: str | None,
+    icd_10_am_version: str | None,
+    achi_version: str | None,
+    acs_version: str | None,
+    reference_id: str | None,
+    reference_type: str | None,
+    command: str | None,
+    reference_uri: str | None,
+    local_path_hint: str | None,
+    container_image: str | None,
+) -> None:
+    """Validate a provider workflow against the runtime registry."""
+    from nwau_py.ar_drg_grouper import (
+        ARDRGGrouperVersionWindow,
+        build_ar_drg_external_reference,
+    )
+    from nwau_py.ar_drg_grouper_runtime import (
+        ARDRGGrouperError,
+        validate_ar_drg_grouper_provider_compatibility,
+    )
+
+    reference = None
+    if reference_id is not None or reference_type is not None or command is not None:
+        if reference_id is None or reference_type is None:
+            raise click.ClickException(
+                "reference-id and reference-type are required for local provider "
+                "references"
+            )
+        if reference_type not in {"local_command", "local_service", "file_exchange"}:
+            raise click.ClickException(
+                "reference-type must be local_command, local_service, or file_exchange"
+            )
+        window = ARDRGGrouperVersionWindow(
+            pricing_year=year,
+            ar_drg_version=ar_drg_version or "v12.0",
+            icd_10_am_version=icd_10_am_version or "12th edition",
+            achi_version=achi_version or "12th edition",
+            acs_version=acs_version or "12th edition",
+        )
+        reference = build_ar_drg_external_reference(
+            reference_id=reference_id,
+            reference_type=cast(Any, reference_type),
+            command=command,
+            reference_uri=reference_uri,
+            local_path_hint=local_path_hint,
+            supported_versions=(window,),
+            notes=("CLI reference",),
+        )
+
+    try:
+        result = validate_ar_drg_grouper_provider_compatibility(
+            provider_type,
+            year=year,
+            ar_drg_version=ar_drg_version,
+            icd_10_am_version=icd_10_am_version,
+            achi_version=achi_version,
+            acs_version=acs_version,
+            reference=reference,
+            container_image=container_image,
+        )
+    except ARDRGGrouperError as exc:
+        raise click.ClickException(str(exc)) from exc
+    click.echo(json.dumps(result.to_dict(), indent=2, sort_keys=True))
+    if not result.compatible:
+        raise SystemExit(1)
+
+
 def _source_scan_input_options(func):
     func = click.option(
         "--html-file",

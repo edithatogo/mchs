@@ -82,6 +82,7 @@ def test_tracks_registry_records_dependency_and_gate_language():
         "Power Platform CLI Tooling",
         "recover or explicitly gap-record the remaining Box-hosted SAS artifacts",
         "map archive families and helpers to executable surfaces",
+        "support pluggable AR-DRG provider workflows with provenance-bearing outputs",
     ]:
         assert phrase in text
 
