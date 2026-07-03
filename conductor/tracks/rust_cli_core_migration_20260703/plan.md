@@ -1,0 +1,46 @@
+# Rust CLI Core Migration Plan
+
+## Phase 1: CLI Surface Inventory and Migration Boundary
+
+- [ ] Task: Inventory public CLI commands and file contracts
+    - [ ] List current command names, options, input formats, output formats, exit codes, and diagnostics.
+    - [ ] Map each command to the Python implementation modules and existing contract files.
+    - [ ] Record the Rust core API surface needed by each command.
+- [ ] Task: Define runtime-selection and fallback policy
+    - [ ] Specify the opt-in mechanism for Rust-backed CLI execution.
+    - [ ] Specify fail-closed behaviour when Rust is requested for unsupported calculators or years.
+    - [ ] Document when Python fallback is permitted during transition.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'CLI Surface Inventory and Migration Boundary' (Protocol in workflow.md)
+
+## Phase 2: Red Tests for Rust-Backed CLI Parity
+
+- [ ] Task: Add failing CLI parity tests
+    - [ ] Add golden-fixture tests comparing Python and Rust-backed CLI outputs.
+    - [ ] Cover success, unsupported-surface, malformed-input, and diagnostics cases.
+    - [ ] Include at least one promoted acute 2025 fixture set and any already-validated Rust core streams.
+- [ ] Task: Add CI command coverage for Rust-backed CLI execution
+    - [ ] Define a narrow non-interactive command suitable for PR CI.
+    - [ ] Ensure tests fail before the Rust-backed execution path is implemented.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Red Tests for Rust-Backed CLI Parity' (Protocol in workflow.md)
+
+## Phase 3: Implement Rust-Backed CLI Execution
+
+- [ ] Task: Wire CLI calculation and validation calls to the Rust core
+    - [ ] Route supported calculator requests through Rust-backed bindings or process boundaries.
+    - [ ] Preserve existing CLI schemas, diagnostics, and exit codes.
+    - [ ] Avoid duplicating formula logic in CLI-specific adapters.
+- [ ] Task: Implement unsupported-surface handling
+    - [ ] Return explicit unsupported diagnostics when Rust is requested outside validated coverage.
+    - [ ] Preserve Python fallback only where the runtime-selection policy allows it.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Implement Rust-Backed CLI Execution' (Protocol in workflow.md)
+
+## Phase 4: Evidence, Documentation, and Release Readiness
+
+- [ ] Task: Produce CLI migration evidence
+    - [ ] Commit parity reports, command logs, or generated artifacts that prove promoted coverage.
+    - [ ] Update support-status documentation and README runtime wording.
+    - [ ] Record residual Python-only surfaces as explicit gaps.
+- [ ] Task: Run release-quality validation
+    - [ ] Run Python CLI tests, Rust tests, and formatting/lint checks relevant to the changed surfaces.
+    - [ ] Confirm documentation does not overclaim Rust default status.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Evidence, Documentation, and Release Readiness' (Protocol in workflow.md)

@@ -719,3 +719,21 @@ content alone is not sufficient evidence for marking a track complete.
 - **C/C++ vcpkg and Conan Submission** - Retain the upstream PR and local packaging evidence only; no new development outside evidence maintenance while this package surface is deprecated and the upstream policy gate remains unresolved.
 - **MATLAB Interoperability** - No new development outside already-scoped interop and File Exchange submission evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.
+
+---
+
+- [ ] **Track: Rust CLI Core Migration**
+*Link: [./tracks/rust_cli_core_migration_20260703/](./tracks/rust_cli_core_migration_20260703/)*
+*Gate: Migrate current CLI calculation and validation execution to the shared Rust core behind parity, diagnostics, fallback, and documentation evidence before any default-runtime claim.*
+
+---
+
+- [ ] **Track: Rust MCP Core Migration**
+*Link: [./tracks/rust_mcp_core_migration_20260703/](./tracks/rust_mcp_core_migration_20260703/)*
+*Gate: Migrate current MCP stdio calculation and validation tools to the shared Rust core while preserving the published MCP contract and registry-facing behaviour.*
+
+---
+
+- [ ] **Track: Rust CLI/MCP Promotion Evidence**
+*Link: [./tracks/rust_cli_mcp_promotion_evidence_20260703/](./tracks/rust_cli_mcp_promotion_evidence_20260703/)*
+*Gate: Promote Rust-backed CLI and MCP execution to default only when cross-surface conformance, release gates, support-status documentation, and rollback evidence are complete.*
