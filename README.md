@@ -60,10 +60,10 @@ Registry status snapshot from checked-in registry evidence:
 | CRAN (`nwauR`) | R package build/check artifacts | **Prepared, not published**; CRAN maintainer submission/review remains external |
 | Julia General (`NationalWeightedActivityUnitWrapper`) | `julia-binding/Project.toml` and merged General PR `156254` | **Published** in Julia General as `NationalWeightedActivityUnitWrapper 0.1.0`; merged registry PR is the authoritative publication evidence |
 | Maven Central (`io.github.edithatogo:mchs-jvm-bindings`) | JVM/Gradle build evidence | **Published** on Maven Central at `io.github.edithatogo:mchs-jvm-bindings 0.1.0` |
-| Open VSX / Visual Studio Marketplace (`mchs-tools`) | Packaged `.vsix` artifact and public registry API evidence | **Published** as `edithatogo.mchs-tools 0.1.1` on Open VSX and Visual Studio Marketplace |
+| Open VSX / Visual Studio Marketplace (`mchs-tools`) | Historical `.vsix` artifact and public registry API evidence retained | **Deprecated and cancelled** as of 2026-07-03; no further extension publishing or synchronization is planned unless re-chartered |
 | MATLAB File Exchange / Stata SSC | Prepared interop bundles and public registry evidence | **Published** as MATLAB File Exchange add-on `184067` and SSC package `mchs`; local MATLAB/Stata runtime execution is not claimed |
-| vcpkg / ConanCenter (`nwau-c-abi`) | Prepared portfile/recipe, local Conan create, and vcpkg overlay validation evidence | **Prepared, not published**; upstream vcpkg/ConanCenter PR/review remains external |
-| Swift Package Index (`MCHSBind`) | PackageList issue and Swift package metadata | **Published** on Swift Package Index at `MCHSBind 0.1.0` |
+| vcpkg / ConanCenter (`nwau-c-abi`) | Historical portfile/recipe, local Conan create, vcpkg overlay validation, and upstream PR evidence retained | **Deprecated and cancelled** as of 2026-07-03; no public vcpkg or ConanCenter publication is claimed |
+| Swift Package Index (`MCHSBind`) | Historical PackageList issue, merged PR, public page, and Swift package metadata retained | **Deprecated and cancelled** as of 2026-07-03; no further Swift Package Index work is planned unless re-chartered |
 | R / Julia / Scala / Spark / Swift / Stata / MATLAB / Kotlin-Native / Power Platform adapters | Private adapter code, contracts, or track specs in this repo | **No support claim beyond the specific registry states above** |
 
 Do not state registry submission success (including crates.io, npm, CRAN, NuGet,
@@ -261,7 +261,7 @@ equivalences.
 |`Calculate Adjusted NWAU.sas`|`nwau_py/calculators/adjust.py`|Applies HAC and AHR adjustments|
 |`Avoidable Hospital Readmission Grouper.sas`|`nwau_py/groupers/ahr.py`|Readmission grouper|
 |`Hospital Acquired Complication Grouper.sas`|`nwau_py/groupers/hac.py`|HAC grouper|
-|`Scorer_v3.py`|`src/nwau_py/scoring/scorer.py`|LightGBM readmission model|
+|`Scorer_v3.py`|`nwau_py/scoring/scorer.py`|LightGBM readmission model|
 
 ## Usage
 Weights and the pricing formula are stored in `excel_calculator/data`.
