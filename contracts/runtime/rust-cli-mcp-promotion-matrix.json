@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-07-03",
+  "defaultRuntimeDecision": "remain-python-default-rust-opt-in",
+  "rustDefaultAllowed": false,
+  "decisionReason": "Only acute 2025 has Rust-backed CLI and MCP opt-in evidence. Non-acute calculators, non-2025 years, and some response formats remain Python-only or unsupported.",
+  "requiredEvidenceForRustDefault": {
+    "rust_core_tests": "cargo test -p nwau-core -p nwau-c-abi",
+    "python_compatibility_tests": "PYTHONPATH=. uv run pytest -q tests/test_mcp_server.py tests/test_rust_cli_core_migration.py tests/test_rust_mcp_core_migration.py",
+    "cli_parity_tests": "tests/test_rust_cli_core_migration.py",
+    "mcp_parity_tests": "tests/test_rust_mcp_core_migration.py",
+    "unsupported_surface_inventory": "contracts/runtime/rust-cli-mcp-promotion-matrix.json"
+  },
+  "rollback": {
+    "cli": "--runtime python or unset NWAU_RUNTIME",
+    "mcp": "omit options.runtime or set \"python\"",
+    "policy": "Do not remove user-facing CLI or MCP contracts while Rust remains opt-in."
+  },
+  "surfaces": {
+    "cli.acute.2025.csv": {
+      "surface": "cli",
+      "command": "acute",
+      "calculator": "acute",
+      "year": "2025",
+      "inputFormat": "csv",
+      "outputFormat": "csv",
+      "status": "rust-opt-in",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-CLI-RUNTIME-INVALID",
+        "MCHS-CLI-RUST-UNSUPPORTED",
+        "MCHS-CLI-RUST-UNAVAILABLE"
+      ],
+      "evidence": [
+        "docs/release-evidence-rust-cli-core-migration.md",
+        "docs/roadmaps/rust-cli-runtime-boundary.md",
+        "tests/test_rust_cli_core_migration.py",
+        "tests/fixtures/golden/acute_2025"
+      ]
+    },
+    "cli.ed.2025.csv": {
+      "surface": "cli",
+      "command": "ed",
+      "calculator": "ed",
+      "year": "2025",
+      "inputFormat": "csv",
+      "outputFormat": "csv",
+      "status": "python-only",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-CLI-RUST-UNSUPPORTED"
+      ],
+      "evidence": [
+        "docs/roadmaps/rust-cli-surface-inventory.md",
+        "tests/test_rust_cli_core_migration.py"
+      ]
+    },
+    "cli.non-admitted.2025.csv": {
+      "surface": "cli",
+      "command": "non-admitted",
+      "calculator": "outpatients",
+      "year": "2025",
+      "inputFormat": "csv",
+      "outputFormat": "csv",
+      "status": "python-only",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-CLI-RUST-UNSUPPORTED"
+      ],
+      "evidence": [
+        "docs/roadmaps/rust-cli-surface-inventory.md",
+        "tests/test_rust_cli_core_migration.py"
+      ]
+    },
+    "mcp.calculate.acute.2025.json": {
+      "surface": "mcp",
+      "tool": "mchs.calculate",
+      "calculator": "acute",
+      "year": "2025",
+      "inputFormat": "json",
+      "outputFormat": "json",
+      "status": "rust-opt-in",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-MCP-RUNTIME-INVALID",
+        "MCHS-MCP-RUST-UNSUPPORTED",
+        "MCHS-MCP-RUST-UNAVAILABLE"
+      ],
+      "evidence": [
+        "docs/release-evidence-rust-mcp-core-migration.md",
+        "docs/roadmaps/rust-mcp-runtime-boundary.md",
+        "tests/test_rust_mcp_core_migration.py",
+        "tests/fixtures/golden/acute_2025"
+      ]
+    },
+    "mcp.validate_input.acute.2025.json": {
+      "surface": "mcp",
+      "tool": "mchs.validate_input",
+      "calculator": "acute",
+      "year": "2025",
+      "inputFormat": "json",
+      "outputFormat": "json",
+      "status": "rust-opt-in",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-MCP-RUNTIME-INVALID",
+        "MCHS-MCP-RUST-UNSUPPORTED",
+        "MCHS-MCP-RUST-UNAVAILABLE"
+      ],
+      "evidence": [
+        "docs/release-evidence-rust-mcp-core-migration.md",
+        "tests/test_rust_mcp_core_migration.py"
+      ]
+    },
+    "mcp.calculate.ed.2025.json": {
+      "surface": "mcp",
+      "tool": "mchs.calculate",
+      "calculator": "ed",
+      "year": "2025",
+      "inputFormat": "json",
+      "outputFormat": "json",
+      "status": "unsupported",
+      "defaultRuntime": "none",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-MCP-RUST-UNSUPPORTED"
+      ],
+      "evidence": [
+        "docs/roadmaps/rust-mcp-surface-inventory.md",
+        "tests/test_rust_mcp_core_migration.py"
+      ]
+    },
+    "mcp.metadata.tools.resources": {
+      "surface": "mcp",
+      "tools": [
+        "mchs.list_calculators",
+        "mchs.get_schema",
+        "mchs.explain_result",
+        "mchs.get_evidence"
+      ],
+      "resources": [
+        "mchs://schemas",
+        "mchs://support/status",
+        "mchs://calculators",
+        "mchs://evidence/{bundleId}"
+      ],
+      "status": "python-only",
+      "defaultRuntime": "python",
+      "rustDefault": false,
+      "diagnostics": [
+        "MCHS-ERR-NOTFOUND-001",
+        "MCHS-ERR-NOTFOUND-002",
+        "MCHS-ERR-NOTFOUND-003"
+      ],
+      "evidence": [
+        "contracts/mcp/tools.md",
+        "contracts/mcp/resources.md",
+        "tests/test_mcp_server.py"
+      ]
+    }
+  }
+}

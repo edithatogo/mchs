@@ -722,6 +722,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Rust CLI/MCP Promotion Evidence**
+- [~] **Track: Rust CLI/MCP Promotion Evidence**
 *Link: [./tracks/rust_cli_mcp_promotion_evidence_20260703/](./tracks/rust_cli_mcp_promotion_evidence_20260703/)*
 *Gate: Promote Rust-backed CLI and MCP execution to default only when cross-surface conformance, release gates, support-status documentation, and rollback evidence are complete.*

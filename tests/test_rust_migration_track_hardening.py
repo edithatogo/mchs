@@ -47,7 +47,11 @@ def test_rust_migration_tracks_have_normalized_metadata() -> None:
         },
         "rust_cli_mcp_promotion_evidence_20260703": {
             "track_class": "validator",
-            "current_state": "roadmap-only",
+            "current_state": {
+                "roadmap-only",
+                "implemented-awaiting-review",
+                "archived",
+            },
             "publication_status": "future-only",
         },
     }

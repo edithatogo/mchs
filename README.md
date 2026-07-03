@@ -95,6 +95,10 @@ The MCP stdio server keeps its Python transport shim for registry-compatible
 local execution, but `mchs.calculate` can opt into the same Rust acute 2025
 formula slice with `options.runtime = "rust"`. MCP support-status resources
 distinguish the Python stdio transport from Rust-backed formula execution.
+No CLI or MCP Rust-default claim is made; the promotion matrix in
+`contracts/runtime/rust-cli-mcp-promotion-matrix.json` keeps Rust default
+promotion blocked until cross-surface evidence covers unsupported calculators,
+years, formats, diagnostics, and rollback.
 
 ## Calculator modules
 
