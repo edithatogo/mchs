@@ -1,0 +1,9 @@
+Task: Normalize metadata for the Rust migration track set
+
+Summary:
+- Added a focused regression test for Rust migration track governance metadata.
+- Normalized CLI and MCP migration tracks to track_class=binding, current_state=roadmap-only, publication_status=published-with-gaps.
+- Normalized the promotion evidence track to track_class=validator, current_state=roadmap-only, publication_status=future-only.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
