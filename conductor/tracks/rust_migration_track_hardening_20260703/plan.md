@@ -18,11 +18,11 @@
     - [x] Document Python as the default until promotion evidence changes the default.
     - [x] Document `NWAU_RUNTIME` as an internal or CI override with explicit CLI options taking precedence.
     - [x] Document fail-closed behaviour when `rust` is requested outside validated coverage.
-- [~] Task: Harden the MCP runtime boundary
-    - [ ] Update the MCP migration spec and plan to distinguish Python stdio transport from formula runtime.
-    - [ ] Require promoted MCP calculation behaviour to use a Rust-backed dispatcher.
-    - [ ] State that MCP reuses CLI runtime policy and parity fixtures without implicitly shelling out to the CLI.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Runtime Boundary Decisions' (Protocol in workflow.md)
+- [x] Task: Harden the MCP runtime boundary [086c686]
+    - [x] Update the MCP migration spec and plan to distinguish Python stdio transport from formula runtime.
+    - [x] Require promoted MCP calculation behaviour to use a Rust-backed dispatcher.
+    - [x] State that MCP reuses CLI runtime policy and parity fixtures without implicitly shelling out to the CLI.
+- [~] Task: Conductor - Automated Review and Checkpoint 'Runtime Boundary Decisions' (Protocol in workflow.md)
 
 ## Phase 3: First-Slice and Contract Hardening
 
