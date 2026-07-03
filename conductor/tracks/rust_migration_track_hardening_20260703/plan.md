@@ -24,7 +24,7 @@
     - [x] State that MCP reuses CLI runtime policy and parity fixtures without implicitly shelling out to the CLI.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Runtime Boundary Decisions' (Protocol in workflow.md) [73587ee]
 
-## Phase 3: First-Slice and Contract Hardening
+## Phase 3: First-Slice and Contract Hardening [checkpoint: 5bbeb4b]
 
 - [x] Task: Pin acute 2025 as the first migration slice [c8b5944]
     - [x] Update the CLI and MCP migration specs to make acute 2025 the first Rust-backed implementation slice.
@@ -35,7 +35,7 @@
     - [x] Add schema parity source tasks.
     - [x] Add unsupported diagnostic-code tasks.
     - [x] Add support-status wording tasks for Rust canary, Rust opt-in, Python default, and Rust default.
-- [~] Task: Conductor - Automated Review and Checkpoint 'First-Slice and Contract Hardening' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'First-Slice and Contract Hardening' (Protocol in workflow.md) [5bbeb4b]
 
 ## Phase 4: Status Alignment and Additional Track Improvements
 
