@@ -1,0 +1,1 @@
+Archive note: moved the completed IHACPA source/license audit automation track to conductor/archive/ after review and registry cleanup. The archived track retains the review-only audit package implementation, tests, contract, docs, and completed plan evidence for issue #209.
