@@ -43,8 +43,8 @@
     - [x] Update `conductor/tracks.md` wording if needed to reflect hardened gates.
     - [x] Update `conductor/status-matrix.json` if any status or recommended-next-track ordering changes.
     - [x] Run the Conductor status-matrix validator.
-- [~] Task: Record additional track-quality improvements
-    - [ ] Decide whether to update the reusable `conductor-newtrack` skill/template wording so it matches the repo's automated-review workflow.
-    - [ ] Record whether a broader metadata-governance validator should cover all active tracks, not only the Rust migration set.
-    - [ ] Record whether project-board synchronization should explicitly include the new hardening track.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Status Alignment and Additional Track Improvements' (Protocol in workflow.md)
+- [x] Task: Record additional track-quality improvements [e50e622]
+    - [x] Decide whether to update the reusable `conductor-newtrack` skill/template wording so it matches the repo's automated-review workflow.
+    - [x] Record whether a broader metadata-governance validator should cover all active tracks, not only the Rust migration set.
+    - [x] Record whether project-board synchronization should explicitly include the new hardening track.
+- [~] Task: Conductor - Automated Review and Checkpoint 'Status Alignment and Additional Track Improvements' (Protocol in workflow.md)
