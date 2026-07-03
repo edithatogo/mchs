@@ -2,9 +2,9 @@
 
 ## Phase 1: Status Contract Tests
 
-- [ ] Task: Add failing tests for generated support statuses across CLI, MCP/API, and docs fixtures.
-- [ ] Task: Define drift checks for committed generated capability artifacts.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Status Contract Tests' (Protocol in workflow.md)
+- [x] Task: Add failing tests for generated support statuses across CLI, MCP/API, and docs fixtures.
+- [x] Task: Define drift checks for committed generated capability artifacts.
+- [~] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Status Contract Tests' (Protocol in workflow.md)
 
 ## Phase 2: Runtime and Docs Generation
 

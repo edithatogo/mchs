@@ -7,6 +7,9 @@ outputs unless tests explicitly establish it.
 The shared classification preflight validator is available in
 `nwau_py.classification_validation`, but this page does not claim it is wired
 into every calculator or CLI entry point yet.
+The runtime support status for CLI, MCP, and docs is generated from
+`contracts/support/calculator-capability-matrix.json`, which is the single
+source of truth for current support claims.
 
 ## Supported pricing years
 
@@ -34,9 +37,8 @@ For the 2026-27 NEP26 release, the calculators are listed as available
 documentation references, but validation parity is intentionally not claimed in
 this page unless tests establish it.
 
-For the current feature-to-tool incorporation summary, see the
-IHACPA Tool Coverage Matrix at
-[`conductor/ihacpa-tool-coverage-matrix.md`](../../conductor/ihacpa-tool-coverage-matrix.md).
+For the current feature-to-tool incorporation summary, see the generated
+capability matrix at `contracts/support/calculator-capability-matrix.json`.
 
 For cross-language parity work, the package also ships manifest-driven fixture packs under
 `tests/fixtures/golden/`, with the acute pilot pack at `tests/fixtures/golden/acute_2025/`. The

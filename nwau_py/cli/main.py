@@ -18,6 +18,10 @@ from nwau_py.calculators import (
     calculate_ed,
     calculate_outpatients,
 )
+from nwau_py.capability_matrix import (
+    build_capability_matrix,
+    format_capability_matrix_report,
+)
 from nwau_py.classification_validation import get_classification_requirement
 from nwau_py.coding_set_registry import (
     CodingSetRegistryError,
@@ -356,6 +360,23 @@ def validate_year(year: str, emit_json: bool) -> None:
         click.echo(format_pricing_year_validation_report(report))
     if not report.passed:
         raise SystemExit(1)
+
+
+@cli.command(name="capability-matrix")
+@click.option(
+    "--json/--text",
+    "emit_json",
+    default=False,
+    show_default=True,
+    help="emit JSON instead of the human-readable capability summary",
+)
+def capability_matrix(emit_json: bool) -> None:
+    """Print the generated capability matrix."""
+    matrix = build_capability_matrix()
+    if emit_json:
+        click.echo(json.dumps(matrix, indent=2, sort_keys=True))
+    else:
+        click.echo(format_capability_matrix_report(matrix))
 
 
 @cli.command(name="diff-year")

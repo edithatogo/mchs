@@ -730,7 +730,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: IHACPA Capability Matrix Runtime Truth**
+- [~] **Track: IHACPA Capability Matrix Runtime Truth**
 *Link: [./tracks/ihacpa_capability_matrix_runtime_truth_20260703/](./tracks/ihacpa_capability_matrix_runtime_truth_20260703/)*
 *Gate: Generate runtime support status for CLI, MCP/API, docs, and deployed tools from canonical metadata without placeholder success paths.*
 

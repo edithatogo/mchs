@@ -14,6 +14,8 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
+from .capability_matrix import load_capability_matrix
+
 try:
     from .contracts import CALCULATOR_IDENTIFIERS
 except ModuleNotFoundError as error:
@@ -123,7 +125,30 @@ def _calculator_display_name(calculator_id: str) -> str:
     return calculator_id.replace("_", " ").title()
 
 
+def _capability_rows() -> list[dict[str, Any]]:
+    return load_capability_matrix()["rows"]
+
+
+def _stream_support_status_by_year(calculator_id: str) -> dict[str, str]:
+    return {
+        str(row["year"]): str(row["status"])
+        for row in _capability_rows()
+        if row["dimension"] == "stream" and row["subject"] == calculator_id
+        and "year" in row
+    }
+
+
+def _stream_support_status(calculator_id: str, year: str | None = None) -> str:
+    by_year = _stream_support_status_by_year(calculator_id)
+    if year is not None and year in by_year:
+        return by_year[year]
+    if by_year:
+        return by_year[sorted(by_year)[-1]]
+    return "out_of_scope"
+
+
 def _calculator_record(calculator_id: str) -> dict[str, Any]:
+    support_status_by_year = _stream_support_status_by_year(calculator_id)
     return {
         "id": calculator_id,
         "displayName": _calculator_display_name(calculator_id),
@@ -141,7 +166,8 @@ def _calculator_record(calculator_id: str) -> dict[str, Any]:
             "$ref": "mchs://schemas/calculator",
             "format": "json-schema",
         },
-        "supportStatus": "validated-python-runtime",
+        "supportStatus": _stream_support_status(calculator_id),
+        "supportStatusByYear": support_status_by_year,
     }
 
 
@@ -159,6 +185,8 @@ def list_calculators(arguments: dict[str, Any] | None = None) -> list[dict[str, 
             for calculator in calculators
             if year in calculator["supportedYears"]
         ]
+        for calculator in calculators:
+            calculator["supportStatus"] = calculator["supportStatusByYear"][year]
     return calculators
 
 
@@ -237,6 +265,7 @@ def calculate(arguments: dict[str, Any]) -> dict[str, Any]:
     return {
         "calculatorId": calculator_id,
         "year": year,
+        "status": _stream_support_status(calculator_id, year),
         "result": None,
         "diagnostics": _diagnostics(
             severity="warning",
@@ -247,6 +276,7 @@ def calculate(arguments: dict[str, Any]) -> dict[str, Any]:
                 "the MCP adapter."
             ),
         ),
+        "supportStatus": _stream_support_status(calculator_id, year),
         "provenance": {
             "server": SERVER_NAME,
             "serverVersion": server_version(),
@@ -429,6 +459,12 @@ def list_resources() -> list[dict[str, str]]:
             "mimeType": "application/json",
         },
         {
+            "uri": "mchs://support/capability-matrix",
+            "name": "Capability matrix",
+            "description": "Generated calculator capability matrix.",
+            "mimeType": "application/json",
+        },
+        {
             "uri": "mchs://calculators",
             "name": "Calculators",
             "description": "Calculator definitions exposed by MCP.",
@@ -458,17 +494,22 @@ def read_resource(uri: str) -> dict[str, Any]:
     elif uri.startswith("mchs://schemas/"):
         payload = _read_schema(uri.rsplit("/", maxsplit=1)[-1])
     elif uri == "mchs://support/status":
+        matrix = load_capability_matrix()
         payload = {
             "surface": "MCP stdio server",
-            "status": "ready-for-local-use",
+            "status": "source_available",
             "dockerRequired": False,
             "years": list(SUPPORTED_YEARS),
+            "matrixUri": "mchs://support/capability-matrix",
             "knownLimitations": [
                 "Registry submission requires external account or review flow.",
                 "Formula execution is delegated; the MCP adapter does not "
                 "duplicate calculator logic.",
             ],
+            "summary": matrix["summary"],
         }
+    elif uri == "mchs://support/capability-matrix":
+        payload = load_capability_matrix()
     elif uri == "mchs://calculators":
         payload = list_calculators()
     elif uri.startswith("mchs://evidence/"):

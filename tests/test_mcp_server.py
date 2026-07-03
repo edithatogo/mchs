@@ -94,6 +94,7 @@ def test_mcp_calculate_does_not_duplicate_formula_logic():
 
     payload = _structured(result)
     assert payload["result"] is None
+    assert payload["status"] == "validated"
     assert payload["diagnostics"]["diagnostics"][0]["code"] == "MCHS-WARN-MCP-001"
     assert "delegated" in payload["diagnostics"]["diagnostics"][0]["message"]
 
@@ -130,7 +131,8 @@ def test_mcp_resource_read_returns_support_scope():
     payload = json.loads(result["contents"][0]["text"])
 
     assert payload["dockerRequired"] is False
-    assert payload["status"] == "ready-for-local-use"
+    assert payload["status"] == "source_available"
+    assert payload["matrixUri"] == "mchs://support/capability-matrix"
 
 
 def test_mcp_schema_resource_returns_canonical_packaged_schema():

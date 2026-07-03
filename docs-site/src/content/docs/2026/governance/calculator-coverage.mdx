@@ -21,6 +21,9 @@ coverage. The phase 1 matrix work is documenting AR-DRG, AECC, UDG, Tier 2,
 and AMHCC family transitions and licensed-input constraints. An initial shared
 preflight validator exists in `nwau_py.classification_validation`, but this page
 does not claim it is wired into calculator or CLI entry points end-to-end yet.
+The runtime truth for calculator support is generated from
+`contracts/support/calculator-capability-matrix.json`; CLI, MCP, and docs are
+views over the same source.
 For admitted acute, AR-DRG outcomes are versioned outputs of ICD-10-AM, ACHI,
 and ACS-coded episodes processed through licensed grouping tables or software;
 the registry docs track compatibility and provenance, not a proprietary
@@ -58,6 +61,12 @@ grouper reimplementation.
   <Card title="Source archive status">
     The archive manifest spans 2013-14 through 2026-27 and currently has 94
     entries, 92 of which are downloaded.
+  </Card>
+  <Card title="Runtime truth matrix">
+    Support states are read from the generated capability matrix so runtime
+    surfaces and docs stay aligned. The matrix uses the statuses
+    `validated`, `executable`, `source_available`, `blocked_licensed`, and
+    `out_of_scope`.
   </Card>
 </CardGrid>
 

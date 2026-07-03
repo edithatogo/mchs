@@ -1,0 +1,949 @@
+{
+  "rows": [
+    {
+      "dimension": "year",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "year.2025",
+      "metadata": {
+        "calculator": "nwau",
+        "coding_sets": {
+          "AECC": {
+            "status": "published",
+            "version": "v1.1"
+          },
+          "AMHCC": {
+            "status": "published",
+            "version": "v1"
+          },
+          "AR-DRG": {
+            "status": "published",
+            "version": "v11.0"
+          },
+          "Tier 2": {
+            "status": "needs-reconciliation",
+            "version": "v7"
+          },
+          "UDG": {
+            "status": "published",
+            "version": "UDG_v1.3"
+          }
+        },
+        "current_pricing_year": false,
+        "financial_year": "2025-26",
+        "nec": {
+          "note": "The repository does not model a 2025 NEC constant bundle; do not infer one here.",
+          "source": "nwau_py.pricing_constants.NEC_BY_YEAR['2025']",
+          "source_url": "https://www.ihacpa.gov.au/resources/national-efficient-cost-determination-2025-26",
+          "value": null
+        },
+        "nep": 7258,
+        "pricing_year": "2025",
+        "validation_status": "source-only"
+      },
+      "notes": [
+        "NEP25 comes from the reference-data manifest.",
+        "The manifest is source-backed but not yet a validated parity record."
+      ],
+      "status": "source_available",
+      "subject": "2025",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.acute.2025",
+      "metadata": {
+        "calculator": "acute",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest.",
+        "The acute 2025 path has local parity fixtures and validation coverage."
+      ],
+      "status": "validated",
+      "subject": "acute",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.ed.2025",
+      "metadata": {
+        "calculator": "ed",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "ed",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.mh.2025",
+      "metadata": {
+        "calculator": "mh",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "mh",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.community_mh.2025",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/202",
+      "linked_track": "ihacpa_calculator_surface_incorporation_20260703",
+      "metadata": {
+        "calculator": "community_mh",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest.",
+        "Community mental health remains source-backed with explicit validation gaps."
+      ],
+      "status": "source_available",
+      "subject": "community_mh",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.subacute.2025",
+      "metadata": {
+        "calculator": "subacute",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "subacute",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.outpatients.2025",
+      "metadata": {
+        "calculator": "outpatients",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "outpatients",
+      "year": "2025"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.adjust.2025",
+      "metadata": {
+        "calculator": "adjust",
+        "manifest_status": "source-only",
+        "year": "2025"
+      },
+      "notes": [
+        "Stream truth is generated from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "adjust",
+      "year": "2025"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.ar_drg.2025",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/206",
+      "linked_track": "ar_drg_grouper_provider_runtime_20260703",
+      "metadata": {
+        "expected_version": "v11.0",
+        "manifest_version": "v11.0",
+        "year": "2025"
+      },
+      "notes": [
+        "Classifier support is derived from the 2025 reference-data manifest.",
+        "Proprietary grouping logic is not redistributed; only metadata and integration hooks are tracked."
+      ],
+      "status": "blocked_licensed",
+      "subject": "ar_drg",
+      "version": "v11.0",
+      "year": "2025"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.aecc.2025",
+      "metadata": {
+        "expected_version": "v1.1",
+        "manifest_version": "v1.1",
+        "year": "2025"
+      },
+      "notes": [
+        "Classifier support is derived from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "aecc",
+      "version": "v1.1",
+      "year": "2025"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.udg.2025",
+      "metadata": {
+        "expected_version": "UDG_v1.3",
+        "manifest_version": "UDG_v1.3",
+        "year": "2025"
+      },
+      "notes": [
+        "Classifier support is derived from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "udg",
+      "version": "UDG_v1.3",
+      "year": "2025"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.tier_2.2025",
+      "metadata": {
+        "expected_version": "v7",
+        "manifest_version": "v7",
+        "year": "2025"
+      },
+      "notes": [
+        "Classifier support is derived from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "tier_2",
+      "version": "v7",
+      "year": "2025"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2025/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.amhcc.2025",
+      "metadata": {
+        "expected_version": "v1",
+        "manifest_version": "v1",
+        "year": "2025"
+      },
+      "notes": [
+        "Classifier support is derived from the 2025 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "amhcc",
+      "version": "v1",
+      "year": "2025"
+    },
+    {
+      "dimension": "year",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "year.2026",
+      "metadata": {
+        "calculator": "nwau",
+        "coding_sets": {
+          "AECC": {
+            "status": "published",
+            "version": "v1.1"
+          },
+          "AMHCC": {
+            "status": "published",
+            "version": "v1"
+          },
+          "AR-DRG": {
+            "status": "published",
+            "version": "v12.0"
+          },
+          "Tier 2": {
+            "status": "published",
+            "version": "v10.0"
+          },
+          "UDG": {
+            "status": "published",
+            "version": "UDG_v1.3"
+          }
+        },
+        "current_pricing_year": true,
+        "financial_year": "2026-27",
+        "nec": {
+          "source": "nwau_py.pricing_constants.NEC26",
+          "source_url": "https://www.ihacpa.gov.au/resources/national-efficient-cost-determination-2026-27",
+          "value": {
+            "fixed_cost_dollars": 3127000,
+            "in_scope_hospitals": 364,
+            "variable_cost_per_nwau": 8003
+          }
+        },
+        "nep": 7418,
+        "pricing_year": "2026",
+        "validation_status": "source-only"
+      },
+      "notes": [
+        "NEP26 comes from the reference-data manifest.",
+        "This is the current pricing year in the committed reference-data set.",
+        "The manifest is source-backed but not yet a validated parity record."
+      ],
+      "status": "source_available",
+      "subject": "2026",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.acute.2026",
+      "metadata": {
+        "calculator": "acute",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "acute",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.ed.2026",
+      "metadata": {
+        "calculator": "ed",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "ed",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.mh.2026",
+      "metadata": {
+        "calculator": "mh",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "mh",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.community_mh.2026",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/202",
+      "linked_track": "ihacpa_calculator_surface_incorporation_20260703",
+      "metadata": {
+        "calculator": "community_mh",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest.",
+        "Community mental health remains source-backed with explicit validation gaps."
+      ],
+      "status": "source_available",
+      "subject": "community_mh",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.subacute.2026",
+      "metadata": {
+        "calculator": "subacute",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "subacute",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.outpatients.2026",
+      "metadata": {
+        "calculator": "outpatients",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "outpatients",
+      "year": "2026"
+    },
+    {
+      "dimension": "stream",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "stream.adjust.2026",
+      "metadata": {
+        "calculator": "adjust",
+        "manifest_status": "source-only",
+        "year": "2026"
+      },
+      "notes": [
+        "Stream truth is generated from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "adjust",
+      "year": "2026"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.ar_drg.2026",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/206",
+      "linked_track": "ar_drg_grouper_provider_runtime_20260703",
+      "metadata": {
+        "expected_version": "v12.0",
+        "manifest_version": "v12.0",
+        "year": "2026"
+      },
+      "notes": [
+        "Classifier support is derived from the 2026 reference-data manifest.",
+        "Proprietary grouping logic is not redistributed; only metadata and integration hooks are tracked."
+      ],
+      "status": "blocked_licensed",
+      "subject": "ar_drg",
+      "version": "v12.0",
+      "year": "2026"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.aecc.2026",
+      "metadata": {
+        "expected_version": "v1.1",
+        "manifest_version": "v1.1",
+        "year": "2026"
+      },
+      "notes": [
+        "Classifier support is derived from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "aecc",
+      "version": "v1.1",
+      "year": "2026"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.udg.2026",
+      "metadata": {
+        "expected_version": "UDG_v1.3",
+        "manifest_version": "UDG_v1.3",
+        "year": "2026"
+      },
+      "notes": [
+        "Classifier support is derived from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "udg",
+      "version": "UDG_v1.3",
+      "year": "2026"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.tier_2.2026",
+      "metadata": {
+        "expected_version": "v10.0",
+        "manifest_version": "v10.0",
+        "year": "2026"
+      },
+      "notes": [
+        "Classifier support is derived from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "tier_2",
+      "version": "v10.0",
+      "year": "2026"
+    },
+    {
+      "dimension": "classifier",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "classifier.amhcc.2026",
+      "metadata": {
+        "expected_version": "v1",
+        "manifest_version": "v1",
+        "year": "2026"
+      },
+      "notes": [
+        "Classifier support is derived from the 2026 reference-data manifest."
+      ],
+      "status": "executable",
+      "subject": "amhcc",
+      "version": "v1",
+      "year": "2026"
+    },
+    {
+      "dimension": "surface",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "surface.library",
+      "metadata": {
+        "surface": "library"
+      },
+      "notes": [
+        "Python calculator entry points execute the supported calculator surface."
+      ],
+      "status": "executable",
+      "subject": "library"
+    },
+    {
+      "dimension": "surface",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "surface.cli",
+      "metadata": {
+        "surface": "cli"
+      },
+      "notes": [
+        "The CLI delegates to the same calculator implementation as the library."
+      ],
+      "status": "executable",
+      "subject": "cli"
+    },
+    {
+      "dimension": "surface",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "surface.mcp",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/203",
+      "linked_track": "ihacpa_capability_matrix_runtime_truth_20260703",
+      "metadata": {
+        "surface": "mcp"
+      },
+      "notes": [
+        "T",
+        "h",
+        "e",
+        " ",
+        "M",
+        "C",
+        "P",
+        " ",
+        "t",
+        "o",
+        "o",
+        "l",
+        " ",
+        "v",
+        "a",
+        "l",
+        "i",
+        "d",
+        "a",
+        "t",
+        "e",
+        "s",
+        " ",
+        "r",
+        "e",
+        "q",
+        "u",
+        "e",
+        "s",
+        "t",
+        "s",
+        " ",
+        "a",
+        "n",
+        "d",
+        " ",
+        "p",
+        "r",
+        "o",
+        "v",
+        "e",
+        "n",
+        "a",
+        "n",
+        "c",
+        "e",
+        " ",
+        "b",
+        "u",
+        "t",
+        " ",
+        "d",
+        "o",
+        "e",
+        "s",
+        " ",
+        "n",
+        "o",
+        "t",
+        " ",
+        "d",
+        "u",
+        "p",
+        "l",
+        "i",
+        "c",
+        "a",
+        "t",
+        "e",
+        " ",
+        "c",
+        "a",
+        "l",
+        "c",
+        "u",
+        "l",
+        "a",
+        "t",
+        "o",
+        "r",
+        " ",
+        "f",
+        "o",
+        "r",
+        "m",
+        "u",
+        "l",
+        "a",
+        " ",
+        "e",
+        "x",
+        "e",
+        "c",
+        "u",
+        "t",
+        "i",
+        "o",
+        "n",
+        ".",
+        "The MCP surface validates calculator requests and reports support status from the generated matrix."
+      ],
+      "status": "validated",
+      "subject": "mcp"
+    },
+    {
+      "dimension": "surface",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "surface.http_api",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/203",
+      "linked_track": "ihacpa_capability_matrix_runtime_truth_20260703",
+      "metadata": {
+        "surface": "http_api"
+      },
+      "notes": [
+        "N",
+        "o",
+        " ",
+        "H",
+        "T",
+        "T",
+        "P",
+        " ",
+        "A",
+        "P",
+        "I",
+        " ",
+        "r",
+        "u",
+        "n",
+        "t",
+        "i",
+        "m",
+        "e",
+        " ",
+        "i",
+        "s",
+        " ",
+        "d",
+        "e",
+        "p",
+        "l",
+        "o",
+        "y",
+        "e",
+        "d",
+        " ",
+        "i",
+        "n",
+        " ",
+        "t",
+        "h",
+        "i",
+        "s",
+        " ",
+        "r",
+        "e",
+        "p",
+        "o",
+        "s",
+        "i",
+        "t",
+        "o",
+        "r",
+        "y",
+        ";",
+        " ",
+        "t",
+        "h",
+        "e",
+        " ",
+        "c",
+        "o",
+        "n",
+        "t",
+        "r",
+        "a",
+        "c",
+        "t",
+        "-",
+        "o",
+        "n",
+        "l",
+        "y",
+        " ",
+        "s",
+        "u",
+        "r",
+        "f",
+        "a",
+        "c",
+        "e",
+        " ",
+        "r",
+        "e",
+        "m",
+        "a",
+        "i",
+        "n",
+        "s",
+        " ",
+        "o",
+        "u",
+        "t",
+        " ",
+        "o",
+        "f",
+        " ",
+        "s",
+        "c",
+        "o",
+        "p",
+        "e",
+        "."
+      ],
+      "status": "out_of_scope",
+      "subject": "http_api"
+    },
+    {
+      "dimension": "surface",
+      "evidence": {
+        "parity_claim": false,
+        "source": "/private/tmp/mchs-ihacpa-coverage-tracks/reference-data/2026/manifest.yaml",
+        "source_only": true,
+        "validation": "source-only"
+      },
+      "id": "surface.docs",
+      "linked_issue_url": "https://github.com/edithatogo/mchs/issues/203",
+      "linked_track": "ihacpa_capability_matrix_runtime_truth_20260703",
+      "metadata": {
+        "surface": "docs"
+      },
+      "notes": [
+        "The public docs are generated from the committed capability matrix."
+      ],
+      "status": "source_available",
+      "subject": "docs"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_manifests": [
+    "reference-data/2025/manifest.yaml",
+    "reference-data/2026/manifest.yaml"
+  ],
+  "summary": {
+    "by_status": {
+      "blocked_licensed": 2,
+      "executable": 21,
+      "out_of_scope": 1,
+      "source_available": 5,
+      "validated": 2
+    },
+    "total_rows": 31
+  }
+}
