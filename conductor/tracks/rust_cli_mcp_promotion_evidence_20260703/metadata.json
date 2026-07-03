@@ -2,8 +2,8 @@
   "track_id": "rust_cli_mcp_promotion_evidence_20260703",
   "type": "feature",
   "status": "new",
-  "track_class": "rust-core-migration",
-  "current_state": "planned",
+  "track_class": "validator",
+  "current_state": "roadmap-only",
   "primary_contract": "conductor/release-policy.md",
   "dependencies": [
     "rust_cli_core_migration_20260703",
@@ -17,7 +17,8 @@
     "Default-runtime decision record with rollback instructions",
     "Updated release notes and support-status documentation"
   ],
+  "publication_status": "future-only",
   "created_at": "2026-07-03T08:59:33Z",
-  "updated_at": "2026-07-03T08:59:33Z",
+  "updated_at": "2026-07-03T09:50:04Z",
   "description": "Create the evidence and release gates needed to decide when Rust-backed CLI and MCP execution can become the default runtime without overclaiming unsupported calculator coverage."
 }
