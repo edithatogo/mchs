@@ -737,3 +737,9 @@ content alone is not sufficient evidence for marking a track complete.
 - [ ] **Track: Rust CLI/MCP Promotion Evidence**
 *Link: [./tracks/rust_cli_mcp_promotion_evidence_20260703/](./tracks/rust_cli_mcp_promotion_evidence_20260703/)*
 *Gate: Promote Rust-backed CLI and MCP execution to default only when cross-surface conformance, release gates, support-status documentation, and rollback evidence are complete.*
+
+---
+
+- [ ] **Track: Rust Migration Track Hardening**
+*Link: [./tracks/rust_migration_track_hardening_20260703/](./tracks/rust_migration_track_hardening_20260703/)*
+*Gate: Normalize and sharpen the Rust CLI, MCP, and promotion tracks before implementation by fixing governance metadata, first-slice scope, runtime-selection policy, MCP runtime boundaries, and track-quality validation.*
