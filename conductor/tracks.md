@@ -721,3 +721,57 @@ content alone is not sufficient evidence for marking a track complete.
 - **Swift Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **MATLAB Interoperability** - No new development outside already-scoped interop and File Exchange submission evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.
+
+---
+
+- [ ] **Track: Pricing Metadata Single Source**
+*Link: [./tracks/pricing_metadata_single_source_20260703/](./tracks/pricing_metadata_single_source_20260703/)*
+*Gate: Correct NEP25, keep NEP26 current, and make pricing-year manifests the single source of truth for pricing constants and validation status.*
+
+---
+
+- [ ] **Track: IHACPA Calculator Surface Incorporation**
+*Link: [./tracks/ihacpa_calculator_surface_incorporation_20260703/](./tracks/ihacpa_calculator_surface_incorporation_20260703/)*
+*Gate: Incorporate redistributable IHACPA calculator surfaces by year and stream while recording restricted and unavailable assets as explicit gaps.*
+
+---
+
+- [ ] **Track: IHACPA Capability Matrix Runtime Truth**
+*Link: [./tracks/ihacpa_capability_matrix_runtime_truth_20260703/](./tracks/ihacpa_capability_matrix_runtime_truth_20260703/)*
+*Gate: Generate runtime support status for CLI, MCP/API, docs, and deployed tools from canonical metadata without placeholder success paths.*
+
+---
+
+- [ ] **Track: Licensed Asset Loader Framework**
+*Link: [./tracks/licensed_asset_loader_framework_20260703/](./tracks/licensed_asset_loader_framework_20260703/)*
+*Gate: Support local-only licensed asset registration, validation, diagnostics, and restricted-asset guards without redistributing licensed material.*
+
+---
+
+- [ ] **Track: Classification Mapping Registry Enrichment**
+*Link: [./tracks/classification_mapping_registry_enrichment_20260703/](./tracks/classification_mapping_registry_enrichment_20260703/)*
+*Gate: Enrich public classification mapping metadata and local mapping hooks while rejecting unsupported silent crosswalks.*
+
+---
+
+- [ ] **Track: AR-DRG Grouper Provider Runtime**
+*Link: [./tracks/ar_drg_grouper_provider_runtime_20260703/](./tracks/ar_drg_grouper_provider_runtime_20260703/)*
+*Gate: Provide pluggable AR-DRG providers for precomputed, command, service, file-exchange, and optional container workflows without proprietary grouper logic.*
+
+---
+
+- [ ] **Track: Formula JSON AST IR**
+*Link: [./tracks/formula_json_ast_ir_20260703/](./tracks/formula_json_ast_ir_20260703/)*
+*Gate: Add JSON AST as the canonical structured formula representation with evaluator parity and explicit unsupported-operation errors.*
+
+---
+
+- [ ] **Track: Formula ONNX Export Validation**
+*Link: [./tracks/formula_onnx_export_validation_20260703/](./tracks/formula_onnx_export_validation_20260703/)*
+*Gate: Add optional ONNX export and parity validation for pure numeric formula IR subgraphs without making ONNX canonical.*
+
+---
+
+- [ ] **Track: IHACPA Source License Audit Automation**
+*Link: [./tracks/ihacpa_source_license_audit_automation_20260703/](./tracks/ihacpa_source_license_audit_automation_20260703/)*
+*Gate: Automate IHACPA source and license audit dry-runs that draft manifest, track, and issue updates without committing restricted assets.*

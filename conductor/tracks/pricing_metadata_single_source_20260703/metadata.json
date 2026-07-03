@@ -1,0 +1,26 @@
+{
+  "track_id": "pricing_metadata_single_source_20260703",
+  "type": "bug",
+  "status": "new",
+  "track_class": "data-contract",
+  "current_state": "planned",
+  "primary_contract": "reference-data/<year>/manifest.yaml is the canonical source for NEP, NEC, classification versions, source provenance, and validation status",
+  "dependencies": [
+    "reference_data_manifest_schema_20260512",
+    "pricing_year_validation_gates_20260512",
+    "pricing_year_diff_tooling_20260512"
+  ],
+  "completion_evidence": [
+    "manifest-backed pricing constant loader",
+    "NEP25 and NEP26 regression tests",
+    "updated validation and diff outputs",
+    "documentation generated from canonical metadata"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Single-source IHACPA pricing constants and correct NEP25 while removing duplicate hardcoded pricing facts.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

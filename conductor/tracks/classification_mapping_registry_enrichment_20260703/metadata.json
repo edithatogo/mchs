@@ -1,0 +1,26 @@
+{
+  "track_id": "classification_mapping_registry_enrichment_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "classifier",
+  "current_state": "planned",
+  "primary_contract": "Public classification mapping metadata registry with local-only hooks for licensed mapping tables and versioned provenance",
+  "dependencies": [
+    "coding_set_version_registry_20260512",
+    "classification_input_validation_20260512",
+    "licensed_asset_loader_framework_20260703"
+  ],
+  "completion_evidence": [
+    "enriched public mapping metadata",
+    "local-only mapping hook tests",
+    "version compatibility validation",
+    "documentation and gap records"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Enrich public classification mapping metadata and local mapping hooks without bundling restricted mapping tables.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

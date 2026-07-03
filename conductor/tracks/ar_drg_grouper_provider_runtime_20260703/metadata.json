@@ -1,0 +1,26 @@
+{
+  "track_id": "ar_drg_grouper_provider_runtime_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "classifier",
+  "current_state": "planned",
+  "primary_contract": "Pluggable AR-DRG provider runtime for precomputed DRGs, local commands, local services, file exchange, and optional containers",
+  "dependencies": [
+    "ar_drg_grouper_integration_20260512",
+    "licensed_asset_loader_framework_20260703",
+    "classification_mapping_registry_enrichment_20260703"
+  ],
+  "completion_evidence": [
+    "provider interface tests",
+    "precomputed DRG fixture parity",
+    "local command/service fixture tests",
+    "provenance-bearing output schema"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Support pluggable AR-DRG grouper providers without redistributing proprietary logic.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

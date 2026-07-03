@@ -1,0 +1,26 @@
+{
+  "track_id": "licensed_asset_loader_framework_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "data-contract",
+  "current_state": "planned",
+  "primary_contract": "Local-only licensed asset registry and validation tooling for restricted IHACPA, ICD-10-AM, ACHI, ACS, and grouper assets",
+  "dependencies": [
+    "icd_achi_acs_license_workflow_20260512",
+    "ar_drg_icd_mapping_registry_20260512",
+    "ar_drg_grouper_integration_20260512"
+  ],
+  "completion_evidence": [
+    "ignored local asset manifest schema",
+    "register/validate/doctor/audit CLI tests",
+    "restricted asset commit guards",
+    "license acknowledgement documentation"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Add local-only licensed asset registry and restricted-asset guards without redistributing licensed material.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

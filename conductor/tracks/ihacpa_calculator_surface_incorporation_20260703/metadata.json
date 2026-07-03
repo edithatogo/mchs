@@ -1,0 +1,26 @@
+{
+  "track_id": "ihacpa_calculator_surface_incorporation_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "source-discovery",
+  "current_state": "planned",
+  "primary_contract": "Redistributable IHACPA calculator/source surfaces are incorporated as manifest-backed source records with explicit license and validation status",
+  "dependencies": [
+    "ihacpa_source_archive_gap_closure_20260511",
+    "historical_ihacpa_coverage_20260512",
+    "ihacpa_source_scanner_20260512"
+  ],
+  "completion_evidence": [
+    "year and stream source inventory",
+    "redistribution decision records",
+    "manifest-backed source additions",
+    "gap records for restricted or unavailable artifacts"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Incorporate redistributable IHACPA calculator surfaces by year and stream without overclaiming restricted or unvalidated assets.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

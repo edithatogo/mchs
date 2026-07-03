@@ -1,0 +1,26 @@
+{
+  "track_id": "ihacpa_source_license_audit_automation_20260703",
+  "type": "chore",
+  "status": "new",
+  "track_class": "audit",
+  "current_state": "planned",
+  "primary_contract": "Automated IHACPA source and license audit that drafts manifest, track, and issue updates without committing restricted assets",
+  "dependencies": [
+    "ihacpa_source_scanner_20260512",
+    "licensed_asset_loader_framework_20260703",
+    "ihacpa_capability_matrix_runtime_truth_20260703"
+  ],
+  "completion_evidence": [
+    "audit command tests",
+    "source/license drift fixtures",
+    "issue drafting dry-run output",
+    "CI or scheduled workflow documentation"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Automate IHACPA source and license audit with track and issue drafting for future updates.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

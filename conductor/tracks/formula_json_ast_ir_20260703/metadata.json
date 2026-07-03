@@ -1,0 +1,26 @@
+{
+  "track_id": "formula_json_ast_ir_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "data-contract",
+  "current_state": "planned",
+  "primary_contract": "JSON AST formula IR is the canonical structured representation for calculator formulas",
+  "dependencies": [
+    "formula_parameter_bundle_pipeline_20260512",
+    "calculator_core_abstractions_20260504",
+    "rust_core_architecture_20260510"
+  ],
+  "completion_evidence": [
+    "formula IR schema",
+    "Python evaluator tests",
+    "bundle migration fixtures",
+    "parity tests against existing formulas"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Add JSON AST formula IR for calculator formulas as a shared, inspectable formula contract.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}

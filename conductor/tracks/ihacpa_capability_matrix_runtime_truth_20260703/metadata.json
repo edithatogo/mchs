@@ -1,0 +1,26 @@
+{
+  "track_id": "ihacpa_capability_matrix_runtime_truth_20260703",
+  "type": "feature",
+  "status": "new",
+  "track_class": "validator",
+  "current_state": "planned",
+  "primary_contract": "Generated support and capability matrices expose truthful runtime support states across CLI, MCP/API, docs, and deployed tools",
+  "dependencies": [
+    "support_status_matrix_20260513",
+    "pricing_metadata_single_source_20260703",
+    "ihacpa_calculator_surface_incorporation_20260703"
+  ],
+  "completion_evidence": [
+    "generated capability matrix",
+    "runtime support API tests",
+    "MCP calculate status tests",
+    "documentation parity checks"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T00:00:00Z",
+  "updated_at": "2026-07-03T00:00:00Z",
+  "description": "Publish generated calculator capability matrix and runtime support status so deployed tools do not overclaim execution.",
+  "github_issue_number": null,
+  "github_issue_url": null,
+  "no_stub_enforce": true
+}
