@@ -1,0 +1,9 @@
+Review fix: aligned conductor/tracks/r_cran_registry_submission_20260524/spec.md current status with the checked-in language registry contract and metadata.
+
+Validation passed:
+- PYTHONPATH=. uv run pytest -q tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py tests/test_conductor_status_matrix.py
+- uv run ruff check scripts/language_registry_external_gate_report.py tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py
+- python scripts/language_registry_external_gate_report.py --promotion --live --json
+- git diff --check
+
+Residual blocker: CRAN public probes still return 404 for nwauR 0.1.0 and no maintainer confirmation/review evidence is recorded, so the track is not archive-eligible.
