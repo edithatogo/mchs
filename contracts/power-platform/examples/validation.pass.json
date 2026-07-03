@@ -1,0 +1,45 @@
+{
+  "result": "pass",
+  "contract_id": "power_platform_binding_20260512",
+  "surface": "Power Platform",
+  "mode": "orchestration-only",
+  "connector_operation_id": "runMchsCalculation",
+  "request": {
+    "contract_version": "1.0",
+    "calculator_id": "acute",
+    "pricing_year": "2025",
+    "fixture_gate": "synthetic",
+    "correlation_id": "pp-20260512-0001",
+    "input": {
+      "DRG": "A01A",
+      "LOS": 4,
+      "ICU_HOURS": 0,
+      "ICU_OTHER": 0,
+      "PAT_SAMEDAY_FLAG": false,
+      "PAT_PRIVATE_FLAG": false
+    }
+  },
+  "response": {
+    "status": "success",
+    "result": {
+      "NWAU25": 1.0
+    },
+    "diagnostics": [
+      {
+        "code": "PP-BND-001",
+        "severity": "info",
+        "message": "Request accepted by the shared calculator service boundary."
+      }
+    ],
+    "provenance": {
+      "contract_version": "1.0",
+      "calculator_id": "acute",
+      "pricing_year": "2025",
+      "fixture_gate": "synthetic",
+      "service_boundary": "shared calculator service"
+    },
+    "correlation_id": "pp-20260512-0001"
+  },
+  "formula_logic_location": "shared-service-boundary",
+  "power_platform_formula_logic": false
+}

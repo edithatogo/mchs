@@ -1,0 +1,20 @@
+{
+  "result": "fail",
+  "contract_id": "power_platform_binding_20260512",
+  "surface": "Power Platform",
+  "rejected_pattern": "Power Platform-owned calculation logic",
+  "reason": "Canvas apps, flows, custom connector policies, Dataverse plugins, DAX, and Power Query must not own formula logic, pricing-year mapping rules, classification grouping rules, or source-bundle lookup rules.",
+  "violations": [
+    {
+      "asset": "canvas app formula",
+      "code": "PP-BND-002",
+      "message": "Formula logic was placed in Power Fx instead of the shared service boundary."
+    },
+    {
+      "asset": "Power Automate expression",
+      "code": "PP-BND-003",
+      "message": "Pricing-year validation rules were duplicated in orchestration logic."
+    }
+  ],
+  "expected_remediation": "Move calculation and validation semantics back to the shared calculator service and keep Power Platform assets to mapping, submission, status, diagnostics, and presentation."
+}

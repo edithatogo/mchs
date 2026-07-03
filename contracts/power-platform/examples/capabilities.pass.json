@@ -1,0 +1,28 @@
+{
+  "result": "pass",
+  "contract_id": "power_platform_binding_20260512",
+  "operation_id": "listMchsCalculatorCapabilities",
+  "response_fixture": "contracts/power-platform/calculator-capability-matrix.json",
+  "assertions": [
+    {
+      "id": "all_app_calculators_declared",
+      "status": "pass",
+      "message": "Power Apps selector coverage includes acute, ED, MH, community MH, subacute, outpatients, adjusted NWAU, HAC, and AHR."
+    },
+    {
+      "id": "all_declared_years_stateful",
+      "status": "pass",
+      "message": "Every selector declares states for 2013 through 2026."
+    },
+    {
+      "id": "disabled_states_preserved",
+      "status": "pass",
+      "message": "Source-available, shadow, planned, blocked, and unavailable states are displayable but not enabled for calculation submission."
+    },
+    {
+      "id": "historical_ed_variants_recorded",
+      "status": "pass",
+      "message": "ED selector records historical variant surfaces for UDG, AECC, and emergency-service URG/ES without creating separate runnable operations."
+    }
+  ]
+}

@@ -20,7 +20,12 @@
 - Runtime execution must be proven through app-player smoke evidence before the
   app is described as runnable in the target tenant. The current runtime evidence
   records authenticated PAC access but not app-player execution.
+- Calculator selectors call `listMchsCalculatorCapabilities`, surface
+  source-available calculator/year coverage, and only enable submit when
+  `validateMchsCalculatorInput` and `runMchsCalculation` can be delegated with a
+  `correlation_id`.
 
 Machine-readable definition:
 
 - `power-platform/apps/mchs-orchestrator/app-surface-manifest.json`
+- `power-platform/solution/app-surface.json`
