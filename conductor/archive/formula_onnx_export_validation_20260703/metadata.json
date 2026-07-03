@@ -23,5 +23,7 @@
   "no_stub_enforce": true,
   "support_scope": "Optional ONNX export, deterministic parity validation, unsupported-node rejection, and docs for the non-canonical ONNX boundary.",
   "github_issue_number": 208,
-  "github_issue_url": "https://github.com/edithatogo/mchs/issues/208"
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/208",
+  "archived_at": "2026-07-03T08:18:37Z",
+  "archive_path": "conductor/archive/formula_onnx_export_validation_20260703"
 }

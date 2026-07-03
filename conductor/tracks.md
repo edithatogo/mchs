@@ -224,13 +224,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Formula ONNX Export Validation**
-*Link: [./tracks/formula_onnx_export_validation_20260703/](./tracks/formula_onnx_export_validation_20260703/)*
-*Depends on: formula JSON AST IR, formula and parameter bundle pipeline, and contract schema export.*
-*Gate: add optional ONNX export and parity validation for pure numeric JSON AST formula subgraphs without making ONNX canonical or required at install time.*
-
----
-
 - [x] **Track: AR-DRG ICD/ACHI/ACS Mapping Registry**
 *Link: [./archive/ar_drg_icd_mapping_registry_20260512/](./archive/ar_drg_icd_mapping_registry_20260512/)*
 *Gate: model version-specific relationships between ICD-10-AM, ACHI, ACS, AR-DRG versions, and mapping-table provenance before deriving or validating DRGs.*
