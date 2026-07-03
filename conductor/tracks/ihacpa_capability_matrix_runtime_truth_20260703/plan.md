@@ -6,15 +6,15 @@
 - [x] Task: Define drift checks for committed generated capability artifacts.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Status Contract Tests' (Protocol in workflow.md)
 
-## Phase 2: Runtime and Docs Generation
+## Phase 2: Runtime and Docs Generation [checkpoint: 11b6785]
 
-- [ ] Task: Implement manifest-backed capability matrix generation.
-- [ ] Task: Update CLI and MCP/API status surfaces to consume generated capability data.
-- [ ] Task: Update docs and examples to render the same statuses.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Runtime and Docs Generation' (Protocol in workflow.md)
+- [x] Task: Implement manifest-backed capability matrix generation.
+- [x] Task: Update CLI and MCP/API status surfaces to consume generated capability data.
+- [x] Task: Update docs and examples to render the same statuses.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Runtime and Docs Generation' (Protocol in workflow.md)
 
-## Phase 3: Validation
+## Phase 3: Validation [checkpoint: 11b6785]
 
-- [ ] Task: Run focused status, MCP/API, docs, lint, typing, and stub-detector checks.
-- [ ] Task: Record unsupported surfaces as explicit gaps linked to tracks and issues.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation' (Protocol in workflow.md)
+- [x] Task: Run focused status, MCP/API, docs, lint, typing, and stub-detector checks.
+- [x] Task: Record unsupported surfaces as explicit gaps linked to tracks and issues.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation' (Protocol in workflow.md)
