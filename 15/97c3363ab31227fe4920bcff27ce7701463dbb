@@ -1,0 +1,18 @@
+Task: Query public registry after propagation
+
+Summary:
+- Added conda-forge-specific live public probes to language_registry_external_gate_report.py.
+- Added conductor/tracks/conda_forge_feedstock_submission_20260524/public_probe_20260703.json.
+- Recorded Anaconda API 404, Anaconda page non-authoritative HTTP 200, noarch repodata HTTP 200 with no nwau-py matches, and staged-recipes PR #33452 open/unmerged.
+- Kept publication_claimed=false and target_version_visible=false.
+
+Why:
+- The conda-forge track can only close after public package/version evidence or accepted-review/merge evidence exists. This records the current external gate without overclaiming publication.
+
+Validation:
+- uv run ruff check scripts/language_registry_external_gate_report.py tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py
+- PYTHONPATH=. uv run pytest -q tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py tests/test_conductor_status_matrix.py
+- python scripts/language_registry_external_gate_report.py --promotion --live --json with conda_forge assertions
+- python -m json.tool on contract, conda metadata, and public probe evidence
+- python3 scripts/validate_conductor_status_matrix.py
+- git diff --check
