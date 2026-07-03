@@ -18,6 +18,10 @@ def test_renovate_package_rules_pin_the_phase_4_maintenance_contract():
 
     assert "cargo" in renovate["enabledManagers"]
     assert "npm" in renovate["enabledManagers"]
+    assert "gomod" in renovate["enabledManagers"]
+    assert "gradle" in renovate["enabledManagers"]
+    assert "nuget" in renovate["enabledManagers"]
+    assert "dockerfile" in renovate["enabledManagers"]
 
     expected_package_rules = [
         {
@@ -68,6 +72,30 @@ def test_renovate_package_rules_pin_the_phase_4_maintenance_contract():
         {
             "matchManagers": ["npm"],
             "groupName": "Node package dependencies",
+            "dependencyDashboardApproval": True,
+            "separateMinorPatch": True,
+        },
+        {
+            "matchManagers": ["gomod"],
+            "groupName": "Go module dependencies",
+            "dependencyDashboardApproval": True,
+            "separateMinorPatch": True,
+        },
+        {
+            "matchManagers": ["gradle"],
+            "groupName": "Gradle package dependencies",
+            "dependencyDashboardApproval": True,
+            "separateMinorPatch": True,
+        },
+        {
+            "matchManagers": ["nuget"],
+            "groupName": "NuGet package dependencies",
+            "dependencyDashboardApproval": True,
+            "separateMinorPatch": True,
+        },
+        {
+            "matchManagers": ["dockerfile"],
+            "groupName": "Dockerfile dependencies",
             "dependencyDashboardApproval": True,
             "separateMinorPatch": True,
         },
