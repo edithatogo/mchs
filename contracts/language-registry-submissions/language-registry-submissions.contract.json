@@ -147,7 +147,7 @@
       "current_status": "submitted_pending_cran_maintainer_confirmation",
       "track": "r_cran_registry_submission_20260524",
       "submission_url": "cran-submit:344701",
-      "blocker": "CRAN upload package id 344701 remains pending external confirmation/review. Follow-up public probes on 2026-06-13 still show CRAN DB 404, CRAN package page 404, CRAN archive 404, and no Gmail-visible confirmation email.",
+      "blocker": "CRAN upload package id 344701 remains pending external confirmation/review. Follow-up public probes on 2026-06-13 and 2026-07-03 still show CRAN DB 404, CRAN package page 404, CRAN archive 404, and no Gmail-visible confirmation email.",
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "https://crandb.r-pkg.org/nwauR returned not_found/document not found.",
@@ -204,6 +204,17 @@
           "cranArchiveHttpStatus": 404,
           "gmailSearch": "No Gmail messages matched CRAN/cransubmit/nwauR confirmation terms in the last 3 days using in:anywhere search.",
           "result": "nwauR remains unpublished on public CRAN and CRAN archive; maintainer email confirmation/review remains pending."
+        },
+        "latestPublicProbe20260703": {
+          "asOf": "2026-07-03T05:16:13Z",
+          "crandbUrl": "https://crandb.r-pkg.org/nwauR",
+          "crandbHttpStatus": 404,
+          "crandbResult": "not_found",
+          "cranPackageUrl": "https://cran.r-project.org/web/packages/nwauR/index.html",
+          "cranPackageHttpStatus": 404,
+          "cranArchiveUrl": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
+          "cranArchiveHttpStatus": 404,
+          "result": "nwauR remains unpublished on public CRAN and CRAN archive as of the 2026-07-03 live probe."
         }
       }
     },
