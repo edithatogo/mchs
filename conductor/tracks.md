@@ -724,12 +724,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Pricing Metadata Single Source**
-*Link: [./tracks/pricing_metadata_single_source_20260703/](./tracks/pricing_metadata_single_source_20260703/)*
-*Gate: Correct NEP25, keep NEP26 current, and make pricing-year manifests the single source of truth for pricing constants and validation status.*
-
----
-
 - [ ] **Track: IHACPA Calculator Surface Incorporation**
 *Link: [./tracks/ihacpa_calculator_surface_incorporation_20260703/](./tracks/ihacpa_calculator_surface_incorporation_20260703/)*
 *Gate: Incorporate redistributable IHACPA calculator surfaces by year and stream while recording restricted and unavailable assets as explicit gaps.*

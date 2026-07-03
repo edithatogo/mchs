@@ -1,9 +1,9 @@
 {
   "track_id": "pricing_metadata_single_source_20260703",
   "type": "bug",
-  "status": "new",
+  "status": "completed",
   "track_class": "data-contract",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "reference-data/<year>/manifest.yaml is the canonical source for NEP, NEC, classification versions, source provenance, and validation status",
   "dependencies": [
     "reference_data_manifest_schema_20260512",
