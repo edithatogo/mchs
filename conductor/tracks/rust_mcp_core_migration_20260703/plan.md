@@ -1,5 +1,16 @@
 # Rust MCP Core Migration Plan
 
+## Phase 0: Contract Hardening Pre-Phase
+
+- [ ] Task: Pin MCP comparison and schema contracts
+    - [ ] Define the numeric tolerance and rounding policy for acute 2025 MCP parity checks.
+    - [ ] Name the schema parity source for MCP requests, responses, diagnostics, and provenance fields.
+    - [ ] Name the unsupported diagnostic codes for unsupported calculators, years, tools, and response formats.
+- [ ] Task: Pin MCP support-status wording
+    - [ ] Define support-status wording for Rust canary, Rust opt-in, Python default, and Rust default.
+    - [ ] Confirm wording separates Python stdio transport from Rust-backed formula runtime.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Contract Hardening Pre-Phase' (Protocol in workflow.md)
+
 ## Phase 1: MCP Contract Inventory and Dispatcher Design
 
 - [ ] Task: Inventory MCP tools, resources, and registry-facing metadata

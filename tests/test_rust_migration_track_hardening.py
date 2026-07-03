@@ -96,3 +96,18 @@ def test_cli_and_mcp_tracks_pin_acute_2025_first_slice() -> None:
         assert "first Rust-backed implementation slice" in combined
         assert "existing Rust canary/kernel evidence" in combined
         assert "follow-on coverage" in combined
+
+
+def test_cli_and_mcp_plans_include_contract_hardening_prephase() -> None:
+    for track_id in (
+        "rust_cli_core_migration_20260703",
+        "rust_mcp_core_migration_20260703",
+    ):
+        plan = _text(track_id, "plan.md")
+
+        assert "Contract Hardening Pre-Phase" in plan
+        assert "numeric tolerance and rounding policy" in plan
+        assert "schema parity source" in plan
+        assert "unsupported diagnostic codes" in plan
+        assert "support-status wording" in plan
+        assert "Rust canary, Rust opt-in, Python default, and Rust default" in plan

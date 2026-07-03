@@ -1,5 +1,16 @@
 # Rust CLI Core Migration Plan
 
+## Phase 0: Contract Hardening Pre-Phase
+
+- [ ] Task: Pin CLI comparison and schema contracts
+    - [ ] Define the numeric tolerance and rounding policy for acute 2025 CLI parity checks.
+    - [ ] Name the schema parity source for CLI input, output, diagnostics, and provenance fields.
+    - [ ] Name the unsupported diagnostic codes for unsupported calculators, years, formats, and output modes.
+- [ ] Task: Pin CLI support-status wording
+    - [ ] Define support-status wording for Rust canary, Rust opt-in, Python default, and Rust default.
+    - [ ] Confirm wording separates current default behaviour from intended Rust migration state.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Contract Hardening Pre-Phase' (Protocol in workflow.md)
+
 ## Phase 1: CLI Surface Inventory and Migration Boundary
 
 - [ ] Task: Inventory public CLI commands and file contracts
