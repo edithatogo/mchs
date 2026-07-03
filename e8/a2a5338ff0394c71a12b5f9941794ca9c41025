@@ -1,0 +1,11 @@
+Review fix: tightened conda_forge_feedstock_submission_20260524/plan.md so current blocker wording matches live evidence and avoids broad CI-green overclaiming.
+
+Validation passed:
+- uv run ruff check scripts/language_registry_external_gate_report.py tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py
+- PYTHONPATH=. uv run pytest -q tests/test_language_registry_external_gate_report.py tests/test_registry_submission_checklists.py tests/test_conductor_status_matrix.py
+- python scripts/language_registry_external_gate_report.py --promotion --live --json with conda_forge assertions
+- python -m json.tool on contract, conda metadata, and public probe evidence
+- python3 scripts/validate_conductor_status_matrix.py
+- git diff --check
+
+Residual blocker: staged-recipes PR #33452 remains open/unmerged, Anaconda API returns 404, and no nwau-py entries are visible in conda-forge noarch repodata. Track remains not archive-eligible.
