@@ -104,9 +104,15 @@ def test_cran_metadata_uses_reachable_maintainer_email() -> None:
     description = _read(ROOT / "r-binding" / "DESCRIPTION")
     metadata = _read(TRACKS / "r_cran_registry_submission_20260524" / "metadata.json")
     runbook = _read(RUNBOOK)
+    checklist = _read(CHECKLISTS["cran"])
+    cran_comments = _read(ROOT / "r-binding" / "cran-comments.md")
 
     assert "dylan.mordaunt@vuw.ac.nz" in description
     assert "dylan.mordaunt@vuw.ac.nz" in metadata
     assert "dylan.mordaunt@vuw.ac.nz" in runbook
+    assert "dylan.mordaunt@vuw.ac.nz" in checklist
+    assert "dylan.mordaunt@vuw.ac.nz" in cran_comments
     assert "d.a.mordaunt@gmail.com" not in description
     assert "d.a.mordaunt@gmail.com" not in metadata
+    assert "d.a.mordaunt@gmail.com" not in checklist
+    assert "d.a.mordaunt@gmail.com" not in cran_comments

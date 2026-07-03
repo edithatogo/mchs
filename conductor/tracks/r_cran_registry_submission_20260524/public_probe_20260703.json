@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "r_cran_publication_probe",
+  "asOf": "2026-07-03",
+  "package": "nwauR",
+  "version": "0.1.0",
+  "registry": "CRAN",
+  "submissionId": "344701",
+  "status": "submitted_pending_cran_maintainer_confirmation",
+  "publicationClaimed": false,
+  "targetVersionVisible": false,
+  "publicProbes": {
+    "crandb": {
+      "url": "https://crandb.r-pkg.org/nwauR",
+      "httpStatus": 404,
+      "targetVersionVisible": false
+    },
+    "packagePage": {
+      "url": "https://cran.r-project.org/web/packages/nwauR/index.html",
+      "httpStatus": 404,
+      "targetVersionVisible": false
+    },
+    "archive": {
+      "url": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
+      "httpStatus": 404,
+      "targetVersionVisible": false
+    }
+  },
+  "claimBoundary": {
+    "maintainerConfirmationRecorded": false,
+    "cranReviewAccepted": false,
+    "publicPackagePageVisible": false,
+    "targetVersionPublished": false,
+    "trackComplete": false,
+    "archiveEligible": false
+  },
+  "nextAction": "Record CRAN maintainer confirmation/review evidence, then rerun the public probes and only claim publication when CRAN exposes nwauR 0.1.0."
+}

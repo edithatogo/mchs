@@ -9,7 +9,7 @@
 
 `R CMD check --as-cran` produced 1 NOTE:
 
-* CRAN incoming feasibility reports this as a new submission. Maintainer is `Dylan Mordaunt <d.a.mordaunt@gmail.com>` for CRAN confirmation.
+* CRAN incoming feasibility reports this as a new submission. Maintainer is `Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz>` for CRAN confirmation.
 
 Latest `--as-cran` checked artifact was built from `r-binding` on 2026-06-13.
 
