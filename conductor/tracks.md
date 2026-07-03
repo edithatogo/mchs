@@ -196,7 +196,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: IHACPA Source/License Audit Automation**
+- [x] **Track: IHACPA Source/License Audit Automation**
 *Link: [./tracks/ihacpa_source_license_audit_automation_20260703/](./tracks/ihacpa_source_license_audit_20260703/)*
 *Gate: turn IHACPA source-scanner output into review-only draft manifests, Conductor tracks, and GitHub issue updates without copying restricted assets into version control.*
 
