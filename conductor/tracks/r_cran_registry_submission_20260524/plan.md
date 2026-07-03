@@ -13,7 +13,7 @@
 ## Phase 3: Submission or Publication
 
 - [ ] Verify target-version publication in the public registry.
-- [ ] Record upstream submission URL or external gate.
+- [x] Record upstream submission URL or external gate. `4cdbead`
 - [x] Record remaining blocker explicitly.
 
 ## Phase 4: Closure
