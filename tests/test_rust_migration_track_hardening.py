@@ -7,14 +7,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKS = ROOT / "conductor" / "tracks"
+ARCHIVE = ROOT / "conductor" / "archive"
+
+
+def _track_root(track_id: str) -> Path:
+    active = TRACKS / track_id
+    if active.exists():
+        return active
+    return ARCHIVE / track_id
 
 
 def _metadata(track_id: str) -> dict[str, object]:
-    return json.loads((TRACKS / track_id / "metadata.json").read_text())
+    return json.loads((_track_root(track_id) / "metadata.json").read_text())
 
 
 def _text(track_id: str, filename: str) -> str:
-    return (TRACKS / track_id / filename).read_text()
+    return (_track_root(track_id) / filename).read_text()
 
 
 def test_rust_migration_tracks_have_normalized_metadata() -> None:
@@ -128,8 +136,7 @@ def test_status_matrix_orders_rust_migration_tracks_coherently() -> None:
 
 def test_hardening_track_records_follow_on_improvements() -> None:
     path = (
-        TRACKS
-        / "rust_migration_track_hardening_20260703"
+        _track_root("rust_migration_track_hardening_20260703")
         / "additional_improvements.md"
     )
     text = path.read_text()
