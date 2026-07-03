@@ -1,0 +1,11 @@
+Task: Align Conductor registry and status matrix
+
+Summary:
+- Added regression coverage requiring rust_migration_track_hardening_20260703 to be recommended before the CLI, MCP, and promotion implementation tracks.
+- Updated conductor/status-matrix.json recommendedNextTracks ordering accordingly.
+- Confirmed the status matrix validator and JSON validity.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
+- python3 scripts/validate_conductor_status_matrix.py
+- python3 -m json.tool conductor/status-matrix.json
