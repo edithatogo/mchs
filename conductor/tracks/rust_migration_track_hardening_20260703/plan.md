@@ -13,7 +13,7 @@
 
 ## Phase 2: Runtime Boundary Decisions
 
-- [ ] Task: Harden the CLI runtime-selection contract
+- [~] Task: Harden the CLI runtime-selection contract
     - [ ] Update the CLI migration spec and plan to define `--runtime python|rust|auto`.
     - [ ] Document Python as the default until promotion evidence changes the default.
     - [ ] Document `NWAU_RUNTIME` as an internal or CI override with explicit CLI options taking precedence.

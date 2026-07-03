@@ -9,10 +9,11 @@ The CLI may keep a Python launcher or compatibility shim during transition, but 
 ## Functional Requirements
 
 - Inventory every public CLI command, option, input mode, output mode, and documented file contract that is currently supported.
-- Add an explicit Rust-backed execution path for supported calculators behind a feature flag, environment variable, or command option before any default switch.
+- Add an explicit Rust-backed execution path for supported calculators behind `--runtime python|rust|auto`; the default runtime remains `python` until the promotion-evidence track proves and records a default change.
+- Allow `NWAU_RUNTIME` only as an internal or CI override. When both are present, the explicit CLI `--runtime` option takes precedence over `NWAU_RUNTIME`.
 - Preserve existing CLI command names, option spelling, schema names, file formats, exit codes, and user-facing diagnostics unless a later compatibility note explicitly approves a breaking change.
 - Compare Rust-backed CLI results against canonical Python/reference fixtures for every promoted calculator, pricing year, and output format.
-- Fail closed for calculators, pricing years, or output modes that are not yet Rust validated; do not silently fall back when the caller has explicitly requested Rust execution.
+- Fail closed for calculators, pricing years, formats, or output modes that are not yet Rust validated; do not silently fall back when the caller has explicitly requested `--runtime rust`.
 - Keep Python fallback available until the promotion-evidence track proves that Rust-backed CLI execution is ready to become the default.
 - Update runtime support-status documentation so users can distinguish Python-default, Rust-opt-in, and Rust-default behaviour.
 
@@ -27,7 +28,7 @@ The CLI may keep a Python launcher or compatibility shim during transition, but 
 - A committed CLI inventory identifies all current public commands and options and maps them to Rust-backed, Python-only, or unsupported statuses.
 - Rust-backed CLI execution passes golden-fixture parity for the promoted calculator/year set.
 - CI includes a non-interactive Rust-backed CLI conformance command.
-- Documentation states the runtime selection mechanism, current support matrix, and rollback path.
+- Documentation states `--runtime python|rust|auto`, `NWAU_RUNTIME`, the current support matrix, and the rollback path.
 - No README, docs, or registry text claims Rust is the default CLI engine until promotion evidence exists.
 
 ## Out of Scope

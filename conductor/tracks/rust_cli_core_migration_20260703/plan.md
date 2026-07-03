@@ -7,8 +7,10 @@
     - [ ] Map each command to the Python implementation modules and existing contract files.
     - [ ] Record the Rust core API surface needed by each command.
 - [ ] Task: Define runtime-selection and fallback policy
-    - [ ] Specify the opt-in mechanism for Rust-backed CLI execution.
-    - [ ] Specify fail-closed behaviour when Rust is requested for unsupported calculators or years.
+    - [ ] Specify `--runtime python|rust|auto` as the user-facing runtime selector.
+    - [ ] Document that the default runtime remains `python` until promotion evidence records a default change.
+    - [ ] Specify `NWAU_RUNTIME` as an internal or CI override and state that the explicit CLI `--runtime` option takes precedence.
+    - [ ] Specify fail closed behaviour when `--runtime rust` is requested for unsupported calculators, years, formats, or output modes.
     - [ ] Document when Python fallback is permitted during transition.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'CLI Surface Inventory and Migration Boundary' (Protocol in workflow.md)
 
