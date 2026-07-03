@@ -1,10 +1,10 @@
 # Implementation Plan
 
-## Phase 1: Contract and Guard Tests
+## Phase 1: Contract and Guard Tests [checkpoint: db0e306]
 
 - [x] Task: Define local-only asset manifest schema and ignored storage paths.
 - [x] Task: Add failing tests for asset registration, validation, missing assets, and restricted-file guards.
-- [~] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Contract and Guard Tests' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Contract and Guard Tests' (Protocol in workflow.md)
 
 ## Phase 2: CLI and Runtime Integration
 
