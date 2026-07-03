@@ -23,5 +23,7 @@
   "no_stub_enforce": true,
   "support_scope": "Review-only audit package generation, draft Conductor track scaffolding, and GitHub issue update text for public or licensed IHACPA source discovery.",
   "github_issue_number": 209,
-  "github_issue_url": "https://github.com/edithatogo/mchs/issues/209"
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/209",
+  "archived_at": "2026-07-03T08:31:00Z",
+  "archive_path": "conductor/archive/ihacpa_source_license_audit_automation_20260703"
 }
