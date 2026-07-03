@@ -719,5 +719,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 - **Scala/Spark Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **Swift Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **Swift Package Index Submission** - Retain the submitted `MCHSBind` evidence only; no new development outside evidence maintenance while this package surface is deprecated.
+- **VS Code/Open VSX Extension Submission** - Retain the published `mchs-tools` evidence only; no new development outside evidence maintenance while this package surface is deprecated.
+- **C/C++ vcpkg and Conan Submission** - Retain the upstream PR and local packaging evidence only; no new development outside evidence maintenance while this package surface is deprecated and the upstream policy gate remains unresolved.
 - **MATLAB Interoperability** - No new development outside already-scoped interop and File Exchange submission evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.

@@ -317,10 +317,10 @@
       "package": "MCHSBind",
       "version": "0.1.0",
       "local_surface": "bindings/swift/Package.swift",
-      "current_status": "submitted_packagelist_present_public_listing_version_unverified",
+      "current_status": "deprecated_maintenance_only_public_listing_version_unverified",
       "track": "swift_package_index_submission_20260524",
       "submission_url": "https://github.com/SwiftPackageIndex/PackageList/issues/13717",
-      "blocker": "Swift Package Index PackageList contains the repository, but public SPI page/API/version evidence remains unavailable from this environment due Cloudflare/unauthorized/API host failures.",
+      "blocker": "Swift Package Index PackageList contains the repository, but this surface is now deprecated and retained only for maintenance; public SPI page/API/version evidence remains unclaimed.",
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "https://swiftpackageindex.com/edithatogo/mchs-swift returned Cloudflare challenge/HTTP 403 from this environment after the PackageList issue was closed as completed, so public listing could not be verified.",
@@ -328,7 +328,7 @@
         "buildResult": "Build complete.",
         "testAttempt": "swift test exits with no tests found because the package has no Tests target; package readiness is gated by swift build.",
         "fixedPublicationMetadata": "Added MIT LICENSE to the public package repo, set Swift package topics, and created GitHub release v0.1.0.",
-        "remainingExternalBlocker": "Swift Package Index PackageList contains the repository, but public SPI page/API/version evidence remains unavailable from this environment due Cloudflare/unauthorized/API host failures.",
+        "remainingExternalBlocker": "Swift Package Index PackageList contains the repository, but this surface is now deprecated and retained only for maintenance; public SPI page/API/version evidence remains unclaimed.",
         "repository": "https://github.com/edithatogo/mchs-swift.git",
         "tag": "v0.1.0",
         "release": "https://github.com/edithatogo/mchs-swift/releases/tag/v0.1.0",
@@ -598,6 +598,7 @@
       "version": "0.1.1",
       "local_surface": "integrations/vscode/package.json",
       "current_status": "published_verified",
+      "deprecation_note": "Published and retained as a maintenance-only surface; no new extension development is planned unless a new evidence-backed need is opened.",
       "track": "vscode_openvsx_registry_submission_20260524",
       "submission_url": "https://open-vsx.org/extension/edithatogo/mchs-tools",
       "blocker": null,
@@ -846,10 +847,10 @@
       "package": "nwau-c-abi",
       "version": "0.1.0",
       "local_surface": "rust/crates/nwau-c-abi/Cargo.toml",
-      "current_status": "conancenter_cla_signed_pending_job_scheduler_vcpkg_closed_policy_unsupported",
+      "current_status": "deprecated_maintenance_only_conancenter_pending_vcpkg_policy_unsupported",
       "track": "c_cpp_vcpkg_conan_submission_20260524",
       "submission_url": "https://github.com/microsoft/vcpkg/pull/51965",
-      "blocker": "ConanCenter PR #30262 is open and mergeable at head c635b0f9d2f1619d9149e4fa964185658c063f5d; CLA Assistant reports all committers signed, but Job scheduler remains ACTION_REQUIRED pending maintainer approval/scheduling. vcpkg PR #51965 is closed after maintainer guidance that vcpkg does not currently support building Rust libraries, so vcpkg publication remains policy-blocked unless vcpkg Rust support or a different accepted artifact strategy becomes available.",
+      "blocker": "This surface is now deprecated and retained only for maintenance; ConanCenter PR #30262 remains open and mergeable at head c635b0f9d2f1619d9149e4fa964185658c063f5d, and vcpkg PR #51965 remains closed after maintainer guidance that vcpkg does not currently support building Rust libraries.",
       "localReadinessResolved": true,
       "preparationEvidence": {
         "vcpkgDiscovery": "https://raw.githubusercontent.com/microsoft/vcpkg/master/ports/nwau-c-abi/vcpkg.json returned 404 Not Found.",
@@ -859,7 +860,7 @@
         "buildCommand": "cargo build",
         "buildResult": "Finished dev profile for nwau-c-abi v0.1.0.",
         "fixedLocalBlocker": "Added version=0.1.0 to the nwau-core path dependency for publishable Cargo metadata.",
-        "remainingExternalBlocker": "ConanCenter maintainer job scheduling/review remains pending; vcpkg is closed/policy-blocked because vcpkg does not currently support building Rust libraries.",
+        "remainingExternalBlocker": "This surface is now deprecated and retained only for maintenance; ConanCenter maintainer job scheduling/review remains pending and vcpkg is closed/policy-blocked because vcpkg does not currently support building Rust libraries.",
         "cargoPackageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
         "cargoPackageResult": "Packaged 6 files, 14.3KiB (4.2KiB compressed); verification downloaded nwau-core v0.1.0 from crates.io and compiled nwau-c-abi v0.1.0 successfully.",
         "fixedDependencyBlocker": "nwau-core v0.1.0 is published on crates.io and cargo package verification for nwau-c-abi now resolves it from the registry.",
@@ -908,10 +909,10 @@
         "conanCenterLastLiveCheck": "2026-06-12T12:38:52Z: PR #30262 open/mergeable at head c635b0f9d2f1619d9149e4fa964185658c063f5d; license/cla success; review required; Job scheduler ACTION_REQUIRED/fail."
       },
       "repoSideReadinessBlockers": {
-        "upstreamReview": "Wait for ConanCenter registry review/merge before claiming publication.",
-        "vcpkgCargoPolicy": "vcpkg PR #51965 is closed because vcpkg does not currently support building Rust libraries; publication needs upstream Rust support or a different accepted artifact strategy.",
-        "conanCenterJobScheduler": "Wait for ConanCenter maintainer job-scheduler approval and upstream CI before publication can be claimed.",
-        "vcpkgPolicyClosure": "Track vcpkg Rust-library support policy before reopening or replacing the upstream submission."
+        "upstreamReview": "This surface is deprecated and retained only for maintenance; ConanCenter review/merge is kept as evidence, not an active publication target.",
+        "vcpkgCargoPolicy": "vcpkg PR #51965 is closed because vcpkg does not currently support building Rust libraries; this remains an evidence-only historical gate unless the package surface is revived.",
+        "conanCenterJobScheduler": "ConanCenter maintainer job-scheduler approval is retained as historical evidence, not an active publication target.",
+        "vcpkgPolicyClosure": "Track vcpkg Rust-library support policy only if this package surface is revived."
       }
     }
   ],
