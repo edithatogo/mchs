@@ -1,0 +1,9 @@
+Task: Harden the MCP runtime boundary
+
+Summary:
+- Added a regression test requiring MCP migration docs to separate Python stdio transport from formula runtime.
+- Updated the MCP migration spec and plan to allow Python stdio transport while requiring promoted formula execution through a Rust-backed dispatcher.
+- Recorded that MCP should reuse CLI runtime policy and parity fixtures without implicitly shelling out to the CLI.
+
+Validation:
+- uv run pytest -q tests/test_rust_migration_track_hardening.py
