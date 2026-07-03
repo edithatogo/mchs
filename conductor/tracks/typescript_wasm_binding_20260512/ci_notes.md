@@ -1,6 +1,6 @@
 # CI and Build Notes: TypeScript / WASM Track
 
-This track is roadmap-only today. Keep CI conservative until the binding package, generated TypeScript contract, and fixture set exist together in the repo.
+This track has a private TypeScript WASM export adapter today. Keep CI conservative until the generated WASM artifact, generated TypeScript contract, and fixture set exist together in the repo.
 
 ## Current stance
 
