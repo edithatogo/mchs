@@ -1,0 +1,15 @@
+Task: Create Conductor tracks for Rust CLI/MCP migration
+
+Summary:
+- Added Rust CLI Core Migration track for moving public CLI calculation and validation execution to the shared Rust core behind parity and fallback gates.
+- Added Rust MCP Core Migration track for moving published MCP stdio calculation and validation tools to Rust-backed execution while preserving the MCP contract.
+- Added Rust CLI/MCP Promotion Evidence track for cross-surface release gates, support-status documentation, default-runtime decisions, and rollback evidence.
+- Updated conductor/tracks.md and conductor/status-matrix.json so the new incomplete tracks are reflected in the portfolio status matrix.
+
+Validation:
+- python3 scripts/validate_conductor_status_matrix.py
+- python3 -m json.tool on all new metadata files and conductor/status-matrix.json
+- git diff --check
+
+Why:
+- The repository already had Rust foundation, CLI/file contract, and MCP contract tracks, but no active tracks that specifically complete the core CLI/MCP runtime migration to Rust and prove default-runtime readiness without overclaiming unsupported surfaces.
