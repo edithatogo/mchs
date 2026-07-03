@@ -1,7 +1,7 @@
 {
   "pricing_year": "2025",
   "constants": {
-    "nep": 7434,
+    "nep": 7258,
     "nec_fixed": 3000000,
     "shared_flag": "stable"
   },

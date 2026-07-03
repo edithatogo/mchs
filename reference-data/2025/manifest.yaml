@@ -50,7 +50,7 @@ source_artifacts:
 
 constants:
   nep:
-    value: 7434
+    value: 7258
     unit: "AUD per NWAU"
     source: "nwau_py.pricing_constants.NEP_BY_YEAR['2025']"
     source_url: "https://www.ihacpa.gov.au/resources/national-efficient-price-determination-2025-26"

@@ -2,7 +2,7 @@
 
 ## Phase 1: Contract and Tests
 
-- [ ] Task: Identify all pricing metadata sources and duplicate NEP/NEC constants.
+- [~] Task: Identify all pricing metadata sources and duplicate NEP/NEC constants.
 - [ ] Task: Add failing tests for NEP25, NEP26, missing metadata, and support-state generation.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Contract and Tests' (Protocol in workflow.md)
 

@@ -60,7 +60,7 @@ synthetic["ObservedCost"] = (
 
 # ── 2. Calculate NWAU and notional funding ──────────────────────────
 result = calculate_acute(synthetic, AcuteParams())
-nep = get_nep("2025")  # 7434
+nep = get_nep("2025")  # 7258
 nwau_col = "NWAU25"
 result["NotionalFunding"] = (result[nwau_col] * nep).round(2)
 

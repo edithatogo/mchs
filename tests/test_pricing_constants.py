@@ -1,4 +1,5 @@
 from datetime import date
+from pathlib import Path
 
 from nwau_py.pricing_constants import (
     NEC26,
@@ -11,6 +12,10 @@ from nwau_py.pricing_constants import (
     get_nep,
     get_supported_pricing_years,
 )
+from nwau_py.reference_manifest import load_reference_manifest
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST_2025 = ROOT / "reference-data" / "2025" / "manifest.yaml"
 
 
 def test_nep26_value():
@@ -24,8 +29,10 @@ def test_nep26_value():
 
 
 def test_nep25_value():
-    assert NEP_BY_YEAR["2025"] == 7434
-    assert get_nep("2025") == 7434
+    assert NEP_BY_YEAR["2025"] == 7258
+    assert get_nep("2025") == 7258
+    manifest = load_reference_manifest(MANIFEST_2025)
+    assert manifest.constants["nep"]["value"] == 7258
 
 
 def test_get_nep_unknown_year():
@@ -48,6 +55,7 @@ def test_nec26_components():
         "/resources/national-efficient-cost-determination-2026-27"
     )
     assert NEC26_SOURCE.published_on == date(2026, 3, 11)
+    assert NEP26_SOURCE.notes[0] == "Loaded from reference-data/2026/manifest.yaml."
 
 
 def test_get_supported_years():

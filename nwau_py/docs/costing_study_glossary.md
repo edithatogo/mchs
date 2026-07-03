@@ -6,12 +6,12 @@ A measure of hospital activity cost-weight. Each episode of care is assigned an 
 
 ## NEP (National Efficient Price)
 
-The price per NWAU set annually by IHACPA for admitted acute and related activity. For NEP26 (2026-27) the price is **$7,418 per NWAU(26)**. For NEP25 it was **$7,434 per NWAU(25)**. The NEP is published in IHACPA's *National Efficient Price Determination* each year.
+The price per NWAU set annually by IHACPA for admitted acute and related activity. For NEP26 (2026-27) the price is **$7,418 per NWAU(26)**. For NEP25 it was **$7,258 per NWAU(25)**. The NEP is published in IHACPA's *National Efficient Price Determination* each year.
 
 ```python
 from nwau_py.pricing_constants import get_nep, NEP_BY_YEAR
 
-nep_2025 = get_nep("2025")  # 7434
+nep_2025 = get_nep("2025")  # 7258
 nep_2026 = get_nep("2026")  # 7418
 ```
 

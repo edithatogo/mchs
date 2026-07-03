@@ -104,7 +104,7 @@ streams = {
 }
 
 # ── 3. Notional funding ──────────────────────────────────────────────
-nep = get_nep("2025")  # 7434
+nep = get_nep("2025")  # 7258
 
 # ── 4. Synthetic cost benchmarks (imitating NHCDC stream averages) ───
 # In a real study these would come from NHCDC data extracts.

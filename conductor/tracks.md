@@ -724,7 +724,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [ ] **Track: Pricing Metadata Single Source**
+- [~] **Track: Pricing Metadata Single Source**
 *Link: [./tracks/pricing_metadata_single_source_20260703/](./tracks/pricing_metadata_single_source_20260703/)*
 *Gate: Correct NEP25, keep NEP26 current, and make pricing-year manifests the single source of truth for pricing constants and validation status.*
 

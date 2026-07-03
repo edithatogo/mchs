@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-06-14",
+  "asOf": "2026-07-03",
   "statusVocabulary": [
     "complete",
     "in_progress",
@@ -17,6 +17,15 @@
     "allExternalRuntimeOutcomesProven": false
   },
   "incompleteTracksFromIndex": [
+    "ar_drg_grouper_provider_runtime_20260703",
+    "classification_mapping_registry_enrichment_20260703",
+    "formula_json_ast_ir_20260703",
+    "formula_onnx_export_validation_20260703",
+    "ihacpa_calculator_surface_incorporation_20260703",
+    "ihacpa_capability_matrix_runtime_truth_20260703",
+    "ihacpa_source_license_audit_automation_20260703",
+    "licensed_asset_loader_framework_20260703",
+    "pricing_metadata_single_source_20260703",
     "c_cpp_vcpkg_conan_submission_20260524",
     "conda_forge_feedstock_submission_20260524",
     "jvm_maven_central_registry_submission_20260524",

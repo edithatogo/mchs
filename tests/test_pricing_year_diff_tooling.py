@@ -134,7 +134,7 @@ def test_pricing_year_diff_cli_json_and_markdown_are_reviewable():
     for phrase in [
         "# Pricing-year diff: 2025 -> 2026",
         "## Constants",
-        "`nep.value`: `7434` -> `7418`",
+        "`nep.value`: `7258` -> `7418`",
         "`AR-DRG`",
         "source_artifacts.published_on :: scope_unknown",
     ]:
