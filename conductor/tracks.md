@@ -154,6 +154,13 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
+- [~] **Track: Formula JSON AST IR**
+*Link: [./tracks/formula_json_ast_ir_20260703/](./tracks/formula_json_ast_ir_20260703/)*
+*Depends on: formula and parameter bundle pipeline, contract schema export, and Rust-core formula boundary decisions.*
+*Gate: make JSON AST the canonical structured representation for calculator formulas with evaluator parity and clear unsupported-operation errors, without adopting Mojo or ONNX in this track.*
+
+---
+
 - [x] **Track: R Binding**
 *Link: [./archive/r_binding_20260512/](./archive/r_binding_20260512/)*
 *Gate: support health-economics and costing-study R users without duplicating calculator formula logic.*

@@ -1,0 +1,38 @@
+{
+  "track_id": "formula_json_ast_ir_20260703",
+  "type": "feature",
+  "status": "in_progress",
+  "track_class": "data-contract",
+  "current_state": "in-progress",
+  "requirements": [
+    "MUST-002",
+    "MUST-003",
+    "MUST-010",
+    "MUST-011"
+  ],
+  "design_refs": [
+    "System Design#Architecture Overview",
+    "System Design#Contract Enforcement Flow",
+    "System Design#Core Design Decisions"
+  ],
+  "primary_contract": "nwau_py.calculators.formula_ir JSON AST formula program, validation, and evaluator parity",
+  "dependencies": [
+    "conductor/archive/formula_parameter_bundle_pipeline_20260512",
+    "conductor/archive/contract_schema_export_20260512",
+    "conductor/archive/rust_core_architecture_20260510"
+  ],
+  "completion_evidence": [
+    "tests",
+    "docs",
+    "formula_ir_registry",
+    "parity_checks"
+  ],
+  "publication_status": "not-ready",
+  "created_at": "2026-07-03T07:54:48Z",
+  "updated_at": "2026-07-03T07:54:48Z",
+  "description": "Add JSON AST as the canonical structured representation for calculator formulas, with evaluator parity and explicit unsupported-operation errors.",
+  "no_stub_enforce": true,
+  "support_scope": "JSON AST formula programs, legacy formula compatibility, evaluator parity, schema validation, and docs for the AST boundary.",
+  "github_issue_number": 207,
+  "github_issue_url": "https://github.com/edithatogo/mchs/issues/207"
+}
