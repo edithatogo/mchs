@@ -1,0 +1,1 @@
+Archive summary:\n- Archived the completed capability matrix runtime truth track into conductor/archive/.\n- Removed the active-track registry entry.\n- The implementation, validation, and docs parity evidence remain in the archived track folder.
