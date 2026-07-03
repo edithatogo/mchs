@@ -1,0 +1,1 @@
+Registry deprecation update. Marked Swift Package Index, Open VSX, and vcpkg/ConanCenter surfaces as maintenance-only in the language-registry contract and supporting roadmap docs. Existing publication evidence remains intact; the intent is to stop treating these as active target packages unless a new evidence-backed need is opened.
