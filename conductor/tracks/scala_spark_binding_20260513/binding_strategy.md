@@ -21,8 +21,8 @@ contract established by the shared core for language-neutral exchange.
   and fixture gates needed for Spark consumption.
 - Lakehouse patterns (Delta Lake, Apache Iceberg, Apache Hudi) can ingest
   shared-core Parquet outputs without custom connectors.
-- No Scala/Spark build tooling (sbt, Mill, Coursier) or Spark version pinning
-  is needed for design-only validation.
+- Scala/Spark build tooling is now present for the local transport adapter, but
+  public module release still depends on JVM CI and owner evidence.
 
 ## Contract shape
 
@@ -52,10 +52,13 @@ explicit DDL matching the CLI/file contract.
 ### Lakehouse publication pattern
 
 ```scala
-// Illustrative — not implemented here
-val df = spark.read.parquet("s3://shared-core-outputs/2026/nwau/")
-df.createOrReplaceTempView("nwau_2026")
-spark.sql("SELECT * FROM nwau_2026 WHERE drg_code LIKE 'A%'").show()
+import mchs.spark.adapter.{ParquetFileExchangeAdapter, SparkSqlBoundaryAdapter}
+
+val files = new ParquetFileExchangeAdapter()
+files.loadAsView("s3://shared-core-outputs/2026/nwau/", "nwau_2026")
+
+val sql = new SparkSqlBoundaryAdapter()
+sql.query("SELECT * FROM nwau_2026 WHERE drg_code LIKE 'A%'").show()
 ```
 
 ## Supported calculators
@@ -112,9 +115,10 @@ Prefer CLI/file interop or native bindings when:
 
 ## Readiness bar
 
-- This track is design-only. No Scala/Spark code is being written.
+- This track has concrete transport-boundary adapters for Parquet loading,
+  Spark SQL view/query access, and HTTP service fallback.
 - Integration workflows are documented and validated against shared golden
-  fixtures.
-- Do not claim Spark integration as production-ready until the CLI/file
-  Parquet contract is stable and a Spark read example has been validated
-  against synthetic fixtures.
+  fixtures and static Scala source checks.
+- Do not promote Spark integration to release status until the CLI/file Parquet
+  contract is stable and a Spark read example has been validated against
+  synthetic fixtures in a JVM CI matrix.
