@@ -1,0 +1,75 @@
+schema_version: "1.0"
+dataset_id: mimic-iv-demo-2.2
+name: MIMIC-IV Clinical Database Demo
+version: "2.2"
+source_url: https://physionet.org/content/mimic-iv-demo/2.2/
+doi: https://doi.org/10.13026/dp1f-ex47
+citation: "Johnson, A., Bulgarelli, L., Pollard, T., Horng, S., Celi, L. A., & Mark, R. (2023). MIMIC-IV Clinical Database Demo (version 2.2). PhysioNet. RRID:SCR_007345."
+license_name: Open Data Commons Open Database License v1.0
+access_policy: open-access
+raw_data_git_policy: forbidden
+local_cache_policy:
+  cache_root_env: MCHS_MIMIC_IV_DEMO_DIR
+  allowed_roots:
+    - reference-data/public-datasets/mimic-iv-demo/raw
+    - .cache/public-datasets/mimic-iv-demo
+  raw_data_git_policy: forbidden
+  instructions:
+    - "Download locally with: wget -r -N -c -np https://physionet.org/files/mimic-iv-demo/2.2/"
+    - "Set MCHS_MIMIC_IV_DEMO_DIR to the directory containing hosp/ and icu/."
+    - "Do not commit raw MIMIC CSV, CSV.GZ, Parquet, NDJSON, or derived patient-level outputs."
+expected_files:
+  - path: hosp/admissions.csv.gz
+    table: admissions
+    required: true
+    patient_level: true
+    sha256:
+    description: Hospital admissions table used for episode staging.
+  - path: hosp/patients.csv.gz
+    table: patients
+    required: true
+    patient_level: true
+    sha256:
+    description: Patient demographics table used only for provenance-aware staging.
+  - path: hosp/diagnoses_icd.csv.gz
+    table: diagnoses_icd
+    required: true
+    patient_level: true
+    sha256:
+    description: US ICD diagnosis rows; not ICD-10-AM.
+  - path: hosp/procedures_icd.csv.gz
+    table: procedures_icd
+    required: true
+    patient_level: true
+    sha256:
+    description: US ICD procedure rows; not ACHI.
+  - path: hosp/drgcodes.csv.gz
+    table: drgcodes
+    required: true
+    patient_level: true
+    sha256:
+    description: US DRG/billing metadata; not authoritative Australian AR-DRG.
+  - path: hosp/transfers.csv.gz
+    table: transfers
+    required: false
+    patient_level: true
+    sha256:
+    description: Transfer metadata for optional episode flow summaries.
+  - path: icu/icustays.csv.gz
+    table: icustays
+    required: true
+    patient_level: true
+    sha256:
+    description: ICU stays used to aggregate ICU hours per admission.
+output_classes:
+  raw: local-only
+  staged: local-only-unless-disclosure-reviewed
+  calculator_ready: local-only-unless-synthetic-overlay
+  calculated: local-only-unless-synthetic-overlay
+  reports: commit-safe-when-aggregate
+  docs: commit-safe-when-synthetic-or-aggregate
+classification_boundary:
+  support_state: blocked_licensed
+  australian_ar_drg_required: "true"
+  synthetic_overlay_allowed: "true"
+  message: MIMIC US DRGs and ICD-9-CM/ICD-10-CM/ICD-10-PCS fields are not authoritative Australian AR-DRG, ICD-10-AM, ACHI, or ACS inputs.

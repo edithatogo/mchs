@@ -7,12 +7,29 @@ download or bundle patient-level data.
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import asdict, dataclass
-from typing import Literal
+from pathlib import Path
+from typing import Any, Literal
+
+import pandas as pd
+import yaml
 
 __all__ = [
+    "LocalCachePolicy",
     "PublicClinicalDatasetCandidate",
+    "PublicDatasetCacheDiagnostic",
+    "PublicDatasetExpectedFile",
+    "PublicDatasetManifest",
+    "PublicDatasetManifestError",
+    "PublicDatasetPolicyError",
+    "build_public_dataset_data_quality_report",
+    "build_public_dataset_disclosure_risk_summary",
+    "build_public_dataset_provenance_report",
+    "diagnose_public_dataset_cache",
     "list_public_dataset_candidates",
+    "load_public_dataset_manifest",
+    "scan_public_dataset_paths_for_restricted_assets",
     "select_initial_worked_example",
 ]
 
@@ -55,6 +72,349 @@ class PublicClinicalDatasetCandidate:
     def to_dict(self) -> dict[str, object]:
         """Return a JSON-serializable candidate record."""
         return asdict(self)
+
+
+class PublicDatasetManifestError(ValueError):
+    """Raised when a public dataset manifest is invalid."""
+
+
+class PublicDatasetPolicyError(ValueError):
+    """Raised when public dataset local-only policy is violated."""
+
+
+@dataclass(frozen=True, slots=True)
+class PublicDatasetExpectedFile:
+    """Expected local file metadata from a public clinical dataset."""
+
+    path: str
+    table: str
+    required: bool
+    patient_level: bool
+    description: str
+    sha256: str | None = None
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a JSON-serializable expected-file record."""
+        return asdict(self)
+
+
+@dataclass(frozen=True, slots=True)
+class LocalCachePolicy:
+    """Local-only cache policy for public clinical data."""
+
+    cache_root_env: str
+    allowed_roots: tuple[str, ...]
+    raw_data_git_policy: str
+    instructions: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a JSON-serializable cache policy."""
+        return asdict(self)
+
+
+@dataclass(frozen=True, slots=True)
+class PublicDatasetManifest:
+    """Committed metadata manifest for a public clinical dataset."""
+
+    dataset_id: str
+    name: str
+    version: str
+    source_url: str
+    doi: str | None
+    citation: str
+    license_name: str
+    access_policy: str
+    raw_data_git_policy: str
+    local_cache_policy: LocalCachePolicy
+    expected_files: tuple[PublicDatasetExpectedFile, ...]
+    output_classes: Mapping[str, str]
+    classification_boundary: Mapping[str, str]
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a JSON-serializable manifest record."""
+        payload = asdict(self)
+        payload["output_classes"] = dict(self.output_classes)
+        payload["classification_boundary"] = dict(self.classification_boundary)
+        return payload
+
+
+@dataclass(frozen=True, slots=True)
+class PublicDatasetCacheDiagnostic:
+    """Diagnostic for a local public dataset cache."""
+
+    dataset_id: str
+    cache_root: str
+    status: str
+    present_files: tuple[str, ...]
+    missing_files: tuple[str, ...]
+    instructions: tuple[str, ...]
+
+    def to_dict(self) -> dict[str, object]:
+        """Return a JSON-serializable cache diagnostic."""
+        return asdict(self)
+
+
+def _require_mapping(value: object, *, field: str) -> Mapping[str, Any]:
+    if not isinstance(value, Mapping):
+        raise PublicDatasetManifestError(f"{field} must be a mapping")
+    return value
+
+
+def _require_sequence(value: object, *, field: str) -> Sequence[object]:
+    if not isinstance(value, Sequence) or isinstance(value, (str, bytes)):
+        raise PublicDatasetManifestError(f"{field} must be a sequence")
+    return value
+
+
+def _require_str(value: object, *, field: str) -> str:
+    if not isinstance(value, str) or not value.strip() or value != value.strip():
+        raise PublicDatasetManifestError(f"{field} must be a non-empty trimmed string")
+    return value
+
+
+def _optional_str(value: object, *, field: str) -> str | None:
+    if value is None:
+        return None
+    return _require_str(value, field=field)
+
+
+def _require_bool(value: object, *, field: str) -> bool:
+    if not isinstance(value, bool):
+        raise PublicDatasetManifestError(f"{field} must be a boolean")
+    return value
+
+
+def _tuple_of_str(value: object, *, field: str) -> tuple[str, ...]:
+    items = _require_sequence(value, field=field)
+    return tuple(_require_str(item, field=field) for item in items)
+
+
+def _expected_file_from_mapping(
+    value: object,
+    *,
+    field: str,
+) -> PublicDatasetExpectedFile:
+    record = _require_mapping(value, field=field)
+    return PublicDatasetExpectedFile(
+        path=_require_str(record.get("path"), field=f"{field}.path"),
+        table=_require_str(record.get("table"), field=f"{field}.table"),
+        required=_require_bool(record.get("required"), field=f"{field}.required"),
+        patient_level=_require_bool(
+            record.get("patient_level"),
+            field=f"{field}.patient_level",
+        ),
+        description=_require_str(
+            record.get("description"),
+            field=f"{field}.description",
+        ),
+        sha256=_optional_str(record.get("sha256"), field=f"{field}.sha256"),
+    )
+
+
+def load_public_dataset_manifest(path: str | Path) -> PublicDatasetManifest:
+    """Load a committed public clinical dataset manifest."""
+    manifest_path = Path(path)
+    raw_payload = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    payload = _require_mapping(raw_payload, field="manifest")
+    cache_policy = _require_mapping(
+        payload.get("local_cache_policy"),
+        field="local_cache_policy",
+    )
+    expected_files = tuple(
+        _expected_file_from_mapping(item, field=f"expected_files[{index}]")
+        for index, item in enumerate(
+            _require_sequence(payload.get("expected_files"), field="expected_files")
+        )
+    )
+    if not expected_files:
+        raise PublicDatasetManifestError("expected_files must not be empty")
+    return PublicDatasetManifest(
+        dataset_id=_require_str(payload.get("dataset_id"), field="dataset_id"),
+        name=_require_str(payload.get("name"), field="name"),
+        version=_require_str(payload.get("version"), field="version"),
+        source_url=_require_str(payload.get("source_url"), field="source_url"),
+        doi=_optional_str(payload.get("doi"), field="doi"),
+        citation=_require_str(payload.get("citation"), field="citation"),
+        license_name=_require_str(payload.get("license_name"), field="license_name"),
+        access_policy=_require_str(payload.get("access_policy"), field="access_policy"),
+        raw_data_git_policy=_require_str(
+            payload.get("raw_data_git_policy"),
+            field="raw_data_git_policy",
+        ),
+        local_cache_policy=LocalCachePolicy(
+            cache_root_env=_require_str(
+                cache_policy.get("cache_root_env"),
+                field="local_cache_policy.cache_root_env",
+            ),
+            allowed_roots=_tuple_of_str(
+                cache_policy.get("allowed_roots"),
+                field="local_cache_policy.allowed_roots",
+            ),
+            raw_data_git_policy=_require_str(
+                cache_policy.get("raw_data_git_policy"),
+                field="local_cache_policy.raw_data_git_policy",
+            ),
+            instructions=_tuple_of_str(
+                cache_policy.get("instructions"),
+                field="local_cache_policy.instructions",
+            ),
+        ),
+        expected_files=expected_files,
+        output_classes=dict(
+            _require_mapping(payload.get("output_classes"), field="output_classes")
+        ),
+        classification_boundary=dict(
+            _require_mapping(
+                payload.get("classification_boundary"),
+                field="classification_boundary",
+            )
+        ),
+    )
+
+
+def scan_public_dataset_paths_for_restricted_assets(
+    paths: Iterable[str | Path],
+) -> list[str]:
+    """Fail closed when raw public clinical dataset files are in commit paths."""
+    restricted: list[str] = []
+    restricted_markers = (
+        "reference-data/public-datasets/mimic-iv-demo/raw/",
+        "reference-data/public-datasets/mimic-iv-demo/cache/",
+        "reference-data/public-datasets/mimic-iv-demo/local/",
+        "examples/mimic_demo/local-data/",
+        "examples/mimic_demo/output/local-real-data/",
+    )
+    restricted_suffixes = (
+        ".csv",
+        ".csv.gz",
+        ".parquet",
+        ".ndjson",
+        ".ndjson.gz",
+        ".json.gz",
+    )
+    for path in paths:
+        normalized = Path(path).as_posix()
+        has_marker = any(marker in normalized for marker in restricted_markers)
+        if has_marker and normalized.endswith(restricted_suffixes):
+            restricted.append(normalized)
+    if restricted:
+        raise PublicDatasetPolicyError(
+            "raw public clinical dataset files must remain local-only: "
+            + ", ".join(restricted)
+        )
+    return []
+
+
+def diagnose_public_dataset_cache(
+    manifest: PublicDatasetManifest,
+    cache_root: str | Path,
+) -> PublicDatasetCacheDiagnostic:
+    """Return present/missing expected file diagnostics for a local cache."""
+    root = Path(cache_root)
+    present: list[str] = []
+    missing: list[str] = []
+    for expected in manifest.expected_files:
+        destination = root / expected.path
+        if destination.exists():
+            present.append(expected.path)
+        elif expected.required:
+            missing.append(expected.path)
+    status = "ready" if not missing else "missing-files"
+    return PublicDatasetCacheDiagnostic(
+        dataset_id=manifest.dataset_id,
+        cache_root=str(root),
+        status=status,
+        present_files=tuple(present),
+        missing_files=tuple(missing),
+        instructions=manifest.local_cache_policy.instructions,
+    )
+
+
+def build_public_dataset_provenance_report(
+    manifest: PublicDatasetManifest,
+    *,
+    local_files: Iterable[str],
+    derivation_steps: Iterable[str],
+    overlay_status: str,
+    support_state: str,
+) -> dict[str, object]:
+    """Build a provenance report for a public dataset example run."""
+    return {
+        "dataset_id": manifest.dataset_id,
+        "dataset_name": manifest.name,
+        "version": manifest.version,
+        "source_url": manifest.source_url,
+        "doi": manifest.doi,
+        "license": manifest.license_name,
+        "local_files": list(local_files),
+        "derivation_steps": list(derivation_steps),
+        "overlay_status": overlay_status,
+        "classification_boundary": {
+            "support_state": support_state,
+            "australian_ar_drg_required": True,
+            "message": manifest.classification_boundary.get("message", ""),
+        },
+    }
+
+
+def _non_empty_string_mask(series: pd.Series) -> pd.Series:
+    return series.fillna("").astype(str).str.strip().ne("")
+
+
+def build_public_dataset_data_quality_report(df: pd.DataFrame) -> dict[str, object]:
+    """Summarize data quality for a staged public dataset frame."""
+    required = ("episode_id", "subject_id", "hadm_id", "los_days", "icu_hours")
+    missing_required = [column for column in required if column not in df.columns]
+    duplicate_episode_ids = (
+        int(df["episode_id"].duplicated().sum()) if "episode_id" in df.columns else 0
+    )
+    negative_los_rows = int((df.get("los_days", pd.Series(dtype=float)) < 0).sum())
+    icu_rows = int((df.get("icu_hours", pd.Series(dtype=float)) > 0).sum())
+    if "australian_ar_drg" in df.columns and _non_empty_string_mask(
+        df["australian_ar_drg"]
+    ).any():
+        provenance_state = "present"
+    elif "synthetic_ar_drg" in df.columns and _non_empty_string_mask(
+        df["synthetic_ar_drg"]
+    ).any():
+        provenance_state = "synthetic-overlay"
+    else:
+        provenance_state = "missing"
+    return {
+        "row_count": len(df),
+        "missing_required_fields": missing_required,
+        "duplicate_episode_ids": duplicate_episode_ids,
+        "negative_los_rows": negative_los_rows,
+        "icu_rows": icu_rows,
+        "icu_coverage_ratio": 0.0 if len(df) == 0 else icu_rows / len(df),
+        "classification_provenance_state": provenance_state,
+    }
+
+
+def build_public_dataset_disclosure_risk_summary(
+    df: pd.DataFrame,
+) -> dict[str, object]:
+    """Classify whether a derived output is safe to commit."""
+    risk_reasons: list[str] = []
+    if len(df) < 10:
+        risk_reasons.append("small cell count below commit-safe threshold")
+    identifier_columns = {"subject_id", "hadm_id", "stay_id"}
+    if identifier_columns.intersection(df.columns):
+        risk_reasons.append("direct subject, admission IDs, or stay identifiers")
+    date_columns = [
+        column for column in df.columns if "time" in column or "date" in column
+    ]
+    if date_columns:
+        risk_reasons.append("date/time columns derived from public patient records")
+    joined_clinical = {"mimic_drg_code", "diagnosis_codes", "procedure_codes"}
+    if joined_clinical.intersection(df.columns):
+        risk_reasons.append("joined clinical classification features")
+    return {
+        "row_count": len(df),
+        "commit_safe": not risk_reasons,
+        "safe_output_class": "commit-safe" if not risk_reasons else "local-only",
+        "risk_reasons": risk_reasons,
+    }
 
 
 def list_public_dataset_candidates() -> tuple[PublicClinicalDatasetCandidate, ...]:

@@ -32,3 +32,10 @@ coverage/
 # Store them via Git LFS, release assets, or external object storage once policy is finalized.
 archive/ihacpa/raw/
 !archive/ihacpa/raw/manifest.json
+
+# Public clinical dataset worked examples keep real/raw patient-level data local.
+reference-data/public-datasets/**/raw/
+reference-data/public-datasets/**/cache/
+reference-data/public-datasets/**/local/
+examples/mimic_demo/local-data/
+examples/mimic_demo/output/local-real-data/
