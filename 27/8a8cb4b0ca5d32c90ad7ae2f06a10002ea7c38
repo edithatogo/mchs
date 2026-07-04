@@ -1,0 +1,12 @@
+Public clinical dataset track refinement
+
+Added explicit per-task commit, Commit notes, git notes, push, conductor-review, whole-track review, and GitHub Actions review requirements. Expanded the worked example to demonstrate provenance, data-quality, support-status, and CLI/file interop outputs where existing tooling supports them. Created and linked follow-up issues:
+- #346 MIMIC-IV-ED public dataset worked example
+- #347 FHIR and MEDS public dataset interop worked examples
+- #348 public dataset suitability registry
+- #349 public dataset downloader and cache guard
+
+Validation:
+- jq metadata parse
+- git diff --check
+- python conductor/scripts/stub_detector.py --root . --json
