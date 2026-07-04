@@ -1,0 +1,15 @@
+Task: Mark Public Clinical Dataset Worked Example track complete
+
+Summary:
+- Updated conductor/tracks.md to mark the track complete.
+- Completion state is complete-with-gaps because local implementation, docs, and validation are complete while the branch workflow-file CI gate remains tracked by issue #354.
+
+Files:
+- conductor/tracks.md
+
+Why:
+- Conductor completion requires the registry status to match the completed track metadata before final review and archive.
+
+Validation:
+- metadata.json status=completed and current_state=complete-with-gaps
+- plan.md contains Phase 1-4 checkpoint records
