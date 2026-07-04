@@ -36,9 +36,15 @@ PUBLIC_PROBES = {
     "typescript_npm": "https://registry.npmjs.org/@edithatogo%2fmchs-wasm-binding/0.1.0",
     "dotnet_nuget": "https://api.nuget.org/v3-flatcontainer/mchs.bindings.dotnet/0.1.0/mchs.bindings.dotnet.0.1.0.nupkg",
     "go_module_proxy": "https://proxy.golang.org/github.com/edithatogo/mchs/bindings/go/@v/v0.1.0.info",
-    "conda_forge": "https://api.anaconda.org/package/conda-forge/nwau-py",
     "julia_general": "https://juliahub.com/ui/Packages/General/NationalWeightedActivityUnitWrapper",
 }
+CONDA_FORGE_PUBLIC_PROBES = {
+    "anaconda_api": "https://api.anaconda.org/package/conda-forge/nwau-py",
+    "anaconda_page": "https://anaconda.org/conda-forge/nwau-py",
+}
+CONDA_FORGE_NOARCH_REPODATA = (
+    "https://conda.anaconda.org/conda-forge/noarch/repodata.json"
+)
 CRAN_PUBLIC_PROBES = {
     "crandb": "https://crandb.r-pkg.org/nwauR",
     "package_page": "https://cran.r-project.org/web/packages/nwauR/index.html",
@@ -99,6 +105,43 @@ def fetch_post_json(url: str, payload: dict[str, Any]) -> dict[str, Any]:
         return {"url": url, "error": type(exc).__name__, "message": str(exc)}
 
 
+def fetch_conda_noarch_repodata_matches(registry: dict[str, Any]) -> dict[str, Any]:
+    package = str(registry.get("package") or "")
+    request = urllib.request.Request(
+        CONDA_FORGE_NOARCH_REPODATA,
+        headers={"User-Agent": "mchs-registry-gate-report/1.0"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:  # nosec B310
+            repodata = json.load(response)
+    except urllib.error.HTTPError as exc:
+        body = exc.read(2_000).decode("utf-8", errors="replace")
+        return {
+            "url": CONDA_FORGE_NOARCH_REPODATA,
+            "http_status": exc.code,
+            "body": body,
+            "package_matches": [],
+        }
+    except Exception as exc:
+        return {
+            "url": CONDA_FORGE_NOARCH_REPODATA,
+            "error": type(exc).__name__,
+            "message": str(exc),
+            "package_matches": [],
+        }
+
+    matches = {
+        filename: payload
+        for filename, payload in repodata.get("packages", {}).items()
+        if filename.startswith(f"{package}-")
+    }
+    return {
+        "url": CONDA_FORGE_NOARCH_REPODATA,
+        "http_status": response.status,
+        "package_matches": matches,
+    }
+
+
 def version_visible(registry: dict[str, Any], probe: dict[str, Any]) -> bool:
     if probe.get("http_status") != 200:
         return False
@@ -142,6 +185,24 @@ def cran_target_version_visible(
     return any(
         version_visible(registry, probe)
         for probe in observation.get("public_probes", {}).values()
+    )
+
+
+def conda_target_version_visible(
+    registry: dict[str, Any], observation: dict[str, Any]
+) -> bool:
+    if any(
+        version_visible(registry, probe)
+        for probe in observation.get("public_probes", {}).values()
+    ):
+        return True
+    version = str(registry.get("version") or "")
+    package = str(registry.get("package") or "")
+    repodata = observation.get("repodata_probe", {})
+    matches = repodata.get("package_matches", {})
+    return any(
+        payload.get("version") == version and payload.get("name") == package
+        for payload in matches.values()
     )
 
 
@@ -195,6 +256,17 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
                     name: fetch(url) for name, url in CRAN_PUBLIC_PROBES.items()
                 }
                 observation["target_version_visible"] = cran_target_version_visible(
+                    registry, observation
+                )
+            elif registry_id == "conda_forge":
+                observation["public_probes"] = {
+                    name: fetch(url)
+                    for name, url in CONDA_FORGE_PUBLIC_PROBES.items()
+                }
+                observation["repodata_probe"] = fetch_conda_noarch_repodata_matches(
+                    registry
+                )
+                observation["target_version_visible"] = conda_target_version_visible(
                     registry, observation
                 )
             elif registry_id in PUBLIC_PROBES:

@@ -36,7 +36,16 @@
         "repodataPackageMatches": [],
         "stagedRecipesPr": "https://github.com/conda-forge/staged-recipes/pull/33452",
         "stagedRecipesPrState": "OPEN",
-        "stagedRecipesChecks": "green as of latest GitHub/Azure status check rollup",
+        "stagedRecipesHeadSha": "bffc5bf1a85389dc695adfd96c87bf2413f4db25",
+        "stagedRecipesStatusApiState": "success",
+        "stagedRecipesStatusApiContexts": [
+          {
+            "context": "conda-forge-linter",
+            "state": "success",
+            "description": "All recipes are excellent."
+          }
+        ],
+        "evidenceFile": "conductor/tracks/conda_forge_feedstock_submission_20260524/public_probe_20260703.json",
         "result": "No public conda-forge package is available yet as of the 2026-07-03 live probe; staged-recipes PR remains maintainer-review/merge pending."
       }
   }

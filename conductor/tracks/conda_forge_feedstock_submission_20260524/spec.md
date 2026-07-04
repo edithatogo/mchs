@@ -24,7 +24,7 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The latest live poll on 2026-06-12 shows PR #33452 open at head `bffc5bf1a85389dc695adfd96c87bf2413f4db25` with conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks all green. The remaining blocker is external: conda-forge review, merge, feedstock publication, and public Anaconda propagation.
+Resolved locally and submitted upstream. A conda-forge recipe exists, its source SHA256 matches the published PyPI sdist for `nwau-py==0.2.2`, and a staged-recipes PR is open. Automated lint feedback was addressed and pushed to the PR branch in commit `e6ff7985c94b78471457e446e8fe3abfbe61fa41`. The latest live poll on 2026-07-03 shows PR #33452 open and unmerged at head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`; the GitHub status API reports `conda-forge-linter` success. The public Anaconda API still returns 404 and conda-forge noarch repodata contains no `nwau-py` entries. The remaining blocker is external: conda-forge review, merge, feedstock publication, and public Anaconda propagation.
 
 ## Preparation Evidence
 
@@ -40,7 +40,7 @@ Resolved locally and submitted upstream. A conda-forge recipe exists, its source
 
 - PR: `https://github.com/conda-forge/staged-recipes/pull/33452`
 - Fork branch: `edithatogo/staged-recipes:add-nwau-py-0.2.2`
-- State: open, current head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`, all visible linter/build/check jobs green, pending review/merge.
+- State: open, current head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`, GitHub status API reports `conda-forge-linter` success, pending review/merge.
 
 ## Acceptance Criteria
 

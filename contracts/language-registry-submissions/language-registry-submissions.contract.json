@@ -507,6 +507,7 @@
       "track": "conda_forge_feedstock_submission_20260524",
       "submission_url": "https://github.com/conda-forge/staged-recipes/pull/33452",
       "blocker": "conda-forge staged-recipes PR #33452 remains open with green checks. Follow-up public probes on 2026-07-03 still show Anaconda API 404 and no nwau-py entries in conda-forge noarch repodata.",
+      "publication_claimed": false,
       "localReadinessResolved": true,
       "preparationEvidence": {
         "discovery": "https://api.anaconda.org/package/conda-forge/nwau-py returned package not found.",
@@ -532,7 +533,16 @@
           "repodataPackageMatches": [],
           "stagedRecipesPr": "https://github.com/conda-forge/staged-recipes/pull/33452",
           "stagedRecipesPrState": "OPEN",
-          "stagedRecipesChecks": "green as of latest GitHub/Azure status check rollup",
+          "stagedRecipesHeadSha": "bffc5bf1a85389dc695adfd96c87bf2413f4db25",
+          "stagedRecipesStatusApiState": "success",
+          "stagedRecipesStatusApiContexts": [
+            {
+              "context": "conda-forge-linter",
+              "state": "success",
+              "description": "All recipes are excellent."
+            }
+          ],
+          "evidenceFile": "conductor/tracks/conda_forge_feedstock_submission_20260524/public_probe_20260703.json",
           "result": "No public conda-forge package is available yet as of the 2026-07-03 live probe; staged-recipes PR remains maintainer-review/merge pending."
         }
       },
@@ -545,7 +555,7 @@
         "state": "open_checks_green_pending_conda_forge_review",
         "lintFeedbackComment": "https://github.com/conda-forge/staged-recipes/pull/33452#issuecomment-4528020623",
         "branchUpdate": "GitHub update-branch API accepted on 2026-05-26.",
-        "latestPoll": "2026-07-03T06:43:53Z: PR #33452 remains OPEN at head bffc5bf1a85389dc695adfd96c87bf2413f4db25; conda-forge-linter, GitHub linter, Azure staged-recipes, linux_64, osx_64, win_64, build status, fast-finish, and check-skip checks all green; Anaconda API still returns 404 and no nwau-py entries appear in conda-forge noarch repodata. Remaining blocker is conda-forge maintainer review/merge and feedstock publication."
+        "latestPoll": "2026-07-03T06:43:53Z: PR #33452 remains OPEN and unmerged at head bffc5bf1a85389dc695adfd96c87bf2413f4db25; the GitHub status API reports conda-forge-linter success. Anaconda API still returns 404 and no nwau-py entries appear in conda-forge noarch repodata. Remaining blocker is conda-forge maintainer review/merge and feedstock publication."
       }
     },
     {

@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "conda_forge_publication_probe",
+  "asOf": "2026-07-03T06:43:53Z",
+  "package": "nwau-py",
+  "version": "0.2.2",
+  "registry": "conda-forge",
+  "submissionUrl": "https://github.com/conda-forge/staged-recipes/pull/33452",
+  "status": "submitted_checks_green_pending_conda_forge_review",
+  "publicationClaimed": false,
+  "targetVersionVisible": false,
+  "publicProbes": {
+    "anacondaApi": {
+      "url": "https://api.anaconda.org/package/conda-forge/nwau-py",
+      "httpStatus": 404,
+      "targetVersionVisible": false
+    },
+    "anacondaPage": {
+      "url": "https://anaconda.org/conda-forge/nwau-py",
+      "httpStatus": 200,
+      "targetVersionVisible": false,
+      "note": "The package-level page route returns HTTP 200 from this environment, but it does not prove the target version. Anaconda API and repodata are authoritative for target-version evidence."
+    },
+    "noarchRepodata": {
+      "url": "https://conda.anaconda.org/conda-forge/noarch/repodata.json",
+      "httpStatus": 200,
+      "packageMatches": [],
+      "targetVersionVisible": false
+    }
+  },
+  "submissionProbe": {
+    "url": "https://github.com/conda-forge/staged-recipes/pull/33452",
+    "state": "open",
+    "merged": false,
+    "headSha": "bffc5bf1a85389dc695adfd96c87bf2413f4db25",
+    "headRef": "add-nwau-py-0.2.2",
+    "headRepository": "edithatogo/staged-recipes",
+    "baseRef": "main",
+    "updatedAt": "2026-06-11T13:24:37Z",
+    "statusApiState": "success",
+    "statusApiContexts": [
+      {
+        "context": "conda-forge-linter",
+        "state": "success",
+        "description": "All recipes are excellent."
+      }
+    ]
+  },
+  "claimBoundary": {
+    "stagedRecipesPrMerged": false,
+    "feedstockCreated": false,
+    "publicAnacondaApiVisible": false,
+    "publicRepodataVisible": false,
+    "targetVersionPublished": false,
+    "trackComplete": false,
+    "archiveEligible": false
+  },
+  "nextAction": "Wait for conda-forge maintainer review/merge, then verify the feedstock and public Anaconda API or repodata expose nwau-py 0.2.2 before claiming publication."
+}
