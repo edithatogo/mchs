@@ -1,0 +1,10 @@
+Plan update: Phase 5 checkpoint recorded
+
+Checkpoint:
+- 3ebec45 conductor(checkpoint): Checkpoint end of Phase 5
+
+Validation:
+- uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py -q
+- uv run ruff check tests/test_end_to_end_validated_canary_track.py
+- uv run ty check tests/test_end_to_end_validated_canary_track.py
+- python conductor/scripts/stub_detector.py --root . --json
