@@ -16,17 +16,46 @@
   ],
   "publication_status": "not-ready",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Define a safe AR-DRG grouper integration track for admitted acute workflows that can ingest precomputed DRGs or call a user-supplied licensed external grouper without claiming proprietary grouper support.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/ar_drg_grouper_integration_20260512",
-  "support_scope": "Local external-grouper reference and precomputed AR-DRG provenance interface; proprietary grouper support remains unclaimed.",
+  "completion_policy": "complete-with-gaps means the repository owns metadata-only AR-DRG grouper integration contracts, precomputed AR-DRG provenance records, local-only external reference declarations, and fail-closed compatibility checks; it does not bundle, reimplement, validate, or claim proprietary AR-DRG grouping logic.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "precomputed AR-DRG provenance records",
+      "local-only external grouper reference metadata",
+      "version compatibility validation",
+      "fail-closed diagnostics for unsupported or missing licensed groupers"
+    ],
+    "not_implemented": [
+      "bundled proprietary AR-DRG grouping logic",
+      "redistributed licensed ICD-10-AM/ACHI/ACS tables",
+      "vendor-certified grouper parity",
+      "automatic ICD-to-AR-DRG calculation without a licensed local provider"
+    ],
+    "claim_boundary": "Local external-grouper reference and precomputed AR-DRG provenance interface; proprietary grouper support remains unclaimed."
+  },
+  "archive_evidence": {
+    "spec": "conductor/archive/ar_drg_grouper_integration_20260512/spec.md",
+    "plan": "conductor/archive/ar_drg_grouper_integration_20260512/plan.md",
+    "review": "conductor/archive/ar_drg_grouper_integration_20260512/review.md",
+    "tests": "tests/test_ar_drg_grouper_integration_track.py",
+    "module": "nwau_py/ar_drg_grouper.py",
+    "contract": "contracts/ar-drg-icd-mapping-registry/ar-drg-icd-mapping-registry.contract.json"
+  },
   "gap_register": [
     {
-      "id": "post-archive-evidence-gate",
+      "id": "licensed-grouper-parity",
       "status": "deferred",
-      "summary": "licensed external grouper parity and publication remain deferred"
+      "summary": "Licensed external grouper parity remains deferred to local licensed product workflow and parity fixture tracks."
+    },
+    {
+      "id": "proprietary-grouper-implementation",
+      "status": "out-of-scope",
+      "summary": "The repository does not reimplement or redistribute proprietary AR-DRG grouping logic, licensed classification tables, or official vendor tooling."
     }
   ]
 }

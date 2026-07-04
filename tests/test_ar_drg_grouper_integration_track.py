@@ -68,11 +68,39 @@ def test_ar_drg_grouper_track_contract_and_docs_are_complete() -> None:
     assert metadata["status"] == "completed"
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
+    assert metadata["completion_policy"].startswith("complete-with-gaps means")
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+    assert metadata["support_scope"]["implemented"] == [
+        "precomputed AR-DRG provenance records",
+        "local-only external grouper reference metadata",
+        "version compatibility validation",
+        "fail-closed diagnostics for unsupported or missing licensed groupers",
+    ]
+    assert metadata["archive_evidence"]["review"] == (
+        "conductor/archive/ar_drg_grouper_integration_20260512/review.md"
+    )
+    assert all(
+        item["status"] in {"deferred", "out-of-scope"}
+        for item in metadata["gap_register"]
+    )
     assert "nwau_py.ar_drg_grouper" in metadata["primary_contract"]
     assert "- [x] **Track: AR-DRG Grouper Integration**" in tracks
     assert "precomputed AR-DRG inputs" in spec
     assert "does not reimplement proprietary grouping logic" in spec
     assert contract["registry_entry_types"][1]["id"] == "precomputed_input_record"
+
+
+def test_ar_drg_grouper_plan_has_checkpointed_archive_repair_detail() -> None:
+    plan = _read_text(TRACK / "plan.md")
+
+    assert "[checkpoint:" in plan
+    assert "Phase 1: Interface Design [checkpoint:" in plan
+    assert "Phase 2: Adapter Prototype [checkpoint:" in plan
+    assert "Phase 3: Workflow Documentation [checkpoint:" in plan
+    assert "Archive Repair" in plan
+    assert "metadata.json" in plan
+    assert "plan.md" in plan
+    assert "proprietary grouper support remains unclaimed" in plan
 
 
 def test_precomputed_ar_drg_group_record_validates_versions_and_provenance() -> None:
