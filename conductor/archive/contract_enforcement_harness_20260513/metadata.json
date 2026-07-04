@@ -3,14 +3,34 @@
   "type": "feature",
   "status": "completed",
   "track_class": "validator",
-  "current_state": "complete",
+  "current_state": "complete-with-gaps",
   "primary_contract": "conductor/contract-enforcement.md, conductor/archive/contract_enforcement_harness_20260513/spec.md, and contracts/",
-  "support_scope": "Governance and validation plan for contract enforcement across canonical schemas, CLI/file, HTTP API, MCP, OpenAI adapter, bindings, release evidence, and no-stub checks. The archived scope preserves the enforcement plan and required gate definitions; dependent tracks own implementation-specific validators.",
+  "completion_policy": "Complete means the repository has a contract enforcement governance plan, required check definitions, completion gate criteria, archive evidence, and focused validation proving the plan exists. Complete-with-gaps means this track does not itself wire every surface-specific validator into CI, generate every public schema, or enforce every downstream adapter at runtime; dependent surface, release, and package tracks own those implementation-specific gates.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "contract enforcement governance plan in conductor/contract-enforcement.md",
+      "required checks for schema drift, fixture conformance, negative conformance, documentation conformance, release conformance, and stub/fake detection",
+      "completion gate definitions for versioned contracts, examples, tests, documentation, compatibility notes, and release evidence",
+      "archive evidence contract for the harness governance track"
+    ],
+    "not_implemented": [
+      "every surface-specific validator wired into CI by this track",
+      "generated schemas for all public surfaces",
+      "release-boundary enforcement for every package registry",
+      "runtime validation for downstream adapters outside the repository contracts"
+    ]
+  },
   "gap_register": [
     {
       "gap": "This track defines the enforcement harness requirements and gate plan; not every surface-specific validator is implemented here.",
-      "status": "accepted-non-blocking",
+      "status": "out-of-scope",
       "rationale": "Surface tracks and release-boundary tracks own their concrete validation commands and CI wiring."
+    },
+    {
+      "gap": "Generated-schema and release-boundary drift gates are incomplete for surfaces whose implementation tracks are not locally complete.",
+      "status": "deferred",
+      "rationale": "Those gates require the corresponding surface contracts, package metadata, or registry workflow to exist before the harness can enforce them."
     }
   ],
   "dependencies": [
@@ -26,9 +46,18 @@
     "conductor/archive/contract_enforcement_harness_20260513/index.md",
     "tests/test_contract_enforcement_harness_track.py"
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/contract_enforcement_harness_20260513/spec.md",
+    "plan": "conductor/archive/contract_enforcement_harness_20260513/plan.md",
+    "review": "conductor/archive/contract_enforcement_harness_20260513/review.md",
+    "contract_enforcement_plan": "conductor/contract-enforcement.md",
+    "workflow": "conductor/workflow.md",
+    "archive_policy": "conductor/track-archive-policy.md",
+    "tests": "tests/test_contract_enforcement_harness_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Turn public contracts into generated, validated, drift-checked artifacts across schemas, CLI/file, API, MCP, OpenAI tools, and bindings.",
   "no_stub_enforce": true
 }
