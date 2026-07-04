@@ -1,0 +1,12 @@
+Task: Phase 2 manifest, license boundary, tests, and report contracts
+
+Summary:
+- Added reference-data/public-datasets/mimic-iv-demo/manifest.yaml.
+- Added local-only raw/public-data ignore rules.
+- Added manifest loader, restricted path guard, cache diagnostics, provenance report, data-quality report, and disclosure-risk summary helpers.
+- Extended tests for manifest and license/access guardrails.
+
+Validation:
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q
+- uv run ruff check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- git diff --check for touched files
