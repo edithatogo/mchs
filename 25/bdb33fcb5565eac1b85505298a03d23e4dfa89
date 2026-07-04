@@ -1,0 +1,9 @@
+Conductor public dataset requirements/design update
+
+Added requirements MUST-013, SHOULD-006, COULD-004, and WONT-005 for public clinical dataset examples. Added the Public Dataset Worked Example design flow and design rules. Updated the public_clinical_dataset_worked_example_20260704 track to reference the requirements/design authority and linked follow-up issue #350 for reusable public dataset provenance/data-quality report contracts.
+
+Validation:
+- jq metadata parse
+- git diff --check
+- rg requirement/design references
+- python conductor/scripts/stub_detector.py --root . --json
