@@ -1,0 +1,17 @@
+Task: Record residual gates
+
+Summary:
+- Updated track metadata to completed / complete-with-gaps.
+- Recorded explicit support scope, included/excluded boundaries, and gap register entries.
+- Updated review notes and governance tests for complete-with-gaps archive eligibility.
+
+Files:
+- conductor/tracks/outer_wrapper_retirement_migration_20260624/metadata.json
+- conductor/tracks/outer_wrapper_retirement_migration_20260624/review.md
+- tests/test_repository_topology_governance.py
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
+
+Why:
+- The track is locally complete only if remaining parent-wrapper cleanup and unrelated external gates are explicit and non-overclaimed.
