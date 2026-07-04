@@ -1,0 +1,6 @@
+Plan update: Retire wrapper-only artifacts
+
+Recorded task completion for commit 8e680f9 in the outer wrapper retirement migration plan.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_migration_manifest_records_final_preservation_decision tests/test_repository_topology_governance.py::test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper -q
