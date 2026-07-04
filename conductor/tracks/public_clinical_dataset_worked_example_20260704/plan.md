@@ -7,10 +7,10 @@
     - [x] Push the branch and `refs/notes/commits` after each task and phase checkpoint.
     - [x] Run `conductor-review` after each phase and at whole-track completion.
     - [x] Review GitHub Actions after the completed track is pushed and record the result in track evidence.
-- [ ] Task: Keep requirements and design authority synchronized.
-    - [ ] Maintain references to `MUST-013`, `SHOULD-006`, `COULD-004`, and `WONT-005` from `conductor/requirements.md`.
-    - [ ] Maintain references to the Public Dataset Worked Example design section in `conductor/design.md`.
-    - [ ] Update requirements/design again if implementation discovers new public-dataset contract or governance needs.
+- [x] Task: Keep requirements and design authority synchronized. `f347697`
+    - [x] Maintain references to `MUST-013`, `SHOULD-006`, `COULD-004`, and `WONT-005` from `conductor/requirements.md`.
+    - [x] Maintain references to the Public Dataset Worked Example design section in `conductor/design.md`.
+    - [x] Update requirements/design again if implementation discovers new public-dataset contract or governance needs.
 
 ## Phase 1: Dataset Discovery and Access Assessment [checkpoint: edbd88c]
 - [x] Task: Inventory candidate public clinical datasets. `b3352d5`
