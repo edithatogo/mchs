@@ -13,18 +13,18 @@
     - [ ] Update requirements/design again if implementation discovers new public-dataset contract or governance needs.
 
 ## Phase 1: Dataset Discovery and Access Assessment
-- [ ] Task: Inventory candidate public clinical datasets.
-    - [ ] Record dataset name, URL, DOI/citation, license, access policy, credential requirements, download path, size, and update cadence.
-    - [ ] Assess required fields for acute, ED, and costing-study examples.
-    - [ ] Record pros, cons, risks, and whether each dataset can be used in committed fixtures, local-only downloads, docs, or runtime examples.
-    - [ ] Include current-source checks for PhysioNet access, license, file tables, citation, and whether local credentialing or terms acceptance are required.
-- [ ] Task: Select the initial worked-example dataset and record rationale.
-    - [ ] Default to MIMIC-IV Clinical Database Demo v2.2 unless the assessment finds a better fit.
-    - [ ] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
-    - [ ] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
-- [ ] Task: Open GitHub issues for warranted follow-on examples and infrastructure.
-    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, worked-example surface conformance harness, disclosure-risk policy, and scenario/sensitivity report work only when evidence shows they are useful and separate.
-    - [ ] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
+- [x] Task: Inventory candidate public clinical datasets. `b3352d5`
+    - [x] Record dataset name, URL, DOI/citation, license, access policy, credential requirements, download path, size, and update cadence.
+    - [x] Assess required fields for acute, ED, and costing-study examples.
+    - [x] Record pros, cons, risks, and whether each dataset can be used in committed fixtures, local-only downloads, docs, or runtime examples.
+    - [x] Include current-source checks for PhysioNet access, license, file tables, citation, and whether local credentialing or terms acceptance are required.
+- [x] Task: Select the initial worked-example dataset and record rationale. `b3352d5`
+    - [x] Default to MIMIC-IV Clinical Database Demo v2.2 unless the assessment finds a better fit.
+    - [x] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
+    - [x] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
+- [x] Task: Open GitHub issues for warranted follow-on examples and infrastructure. `b3352d5`
+    - [x] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, worked-example surface conformance harness, disclosure-risk policy, and scenario/sensitivity report work only when evidence shows they are useful and separate.
+    - [x] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
 
 ## Phase 2: Dataset Manifest and License Boundary
