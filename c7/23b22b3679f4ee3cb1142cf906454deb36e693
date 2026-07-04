@@ -1,0 +1,16 @@
+Task: Keep requirements and design authority synchronized
+
+Summary:
+- Marked the requirements/design synchronization task complete.
+- Verified conductor/requirements.md already contains MUST-013, SHOULD-006, COULD-004, and WONT-005 for this track.
+- Verified conductor/design.md already contains the Public Dataset Worked Example design section.
+- No additional authority-file changes were required after implementation.
+
+Files:
+- conductor/tracks/public_clinical_dataset_worked_example_20260704/plan.md
+
+Why:
+- The track cannot be closed while authority synchronization remains open in the Conductor plan.
+
+Validation:
+- rg -n 'MUST-013|SHOULD-006|COULD-004|WONT-005|Public Dataset Worked Example' conductor/requirements.md conductor/design.md
