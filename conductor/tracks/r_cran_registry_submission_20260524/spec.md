@@ -24,11 +24,11 @@ Work this registry one by one using a fail-closed process: discover existing pub
 
 ## Current Blocker
 
-Resolved locally, submitted, and confirmed. `R CMD build r-binding` created `nwauR_0.1.0.tar.gz`, `R CMD check --no-manual nwauR_0.1.0.tar.gz` completed with `Status: OK`, package-local CRAN-style `_R_CHECK_CRAN_INCOMING_REMOTE_=false R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz` completed with `Status: OK`, and live `R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz` completed with `Status: 1 NOTE`; the only reported NOTE is the expected CRAN incoming `New submission` note. The package was submitted through the CRAN web upload workflow on 2026-06-12. The CRAN maintainer confirmation email was received in Outlook at 02:17 Australia/Sydney on 2026-06-12, and the user clicked the confirmation link. The CRAN confirmation result page displayed: `The package has been uploaded successfully to CRAN submission team.` The remaining blocker is incoming/pretest evidence, reviewer response if requested, and public package publication.
+Resolved locally, submitted, and confirmed. `R CMD build r-binding` created `nwauR_0.1.0.tar.gz`, `R CMD check --no-manual nwauR_0.1.0.tar.gz` completed with `Status: OK`, package-local CRAN-style `_R_CHECK_CRAN_INCOMING_REMOTE_=false R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz` completed with `Status: OK`, and live `R CMD check --as-cran --no-manual nwauR_0.1.0.tar.gz` completed with `Status: 1 NOTE`; the only reported NOTE is the expected CRAN incoming `New submission` note. The package was submitted through the CRAN web upload workflow on 2026-06-12. The CRAN maintainer confirmation email was received in Outlook at 02:17 Australia/Sydney on 2026-06-12, and the user clicked the confirmation link. The CRAN confirmation result page displayed: `The package has been uploaded successfully to CRAN submission team.` A refreshed public probe on 2026-07-05 is recorded in `live_probe_20260705.json`: the CRAN package page and CRANDB still return HTTP 404, and `src/contrib/PACKAGES` still does not contain `Package: nwauR`. The remaining blocker is incoming/pretest evidence, reviewer response if requested, and public package publication.
 
 ## Preparation Evidence
 
-- Public registry discovery: `https://crandb.r-pkg.org/nwauR` returned `not_found`; `https://cran.r-project.org/package=nwauR` redirected to `/web/packages/nwauR/index.html`, which returned HTTP 404 on 2026-06-12.
+- Public registry discovery: `https://crandb.r-pkg.org/nwauR` returned `not_found`; `https://cran.r-project.org/package=nwauR` redirected to `/web/packages/nwauR/index.html`, which returned HTTP 404 on 2026-06-12 and again on 2026-07-05.
 - Build command: `R CMD build r-binding`
 - Package artifact: `microcosting_healthservices/nwauR_0.1.0.tar.gz`
 - Check command: `R CMD check --no-manual nwauR_0.1.0.tar.gz`
@@ -41,6 +41,7 @@ Resolved locally, submitted, and confirmed. `R CMD build r-binding` created `nwa
 - Confirmation email: received in Outlook on 2026-06-12 02:17 Australia/Sydney from `CRAN Package Submission Form <root-xmpalantir@xmbombadil.wu.ac.at>` with subject `CRAN Submission of nwauR 0.1.0 - Confirmation Link`; the link/code is not stored in repository evidence.
 - Confirmation result: CRAN page `https://xmpalantir.wu.ac.at/cransubmit/index.php?strErr=96&redirect=1` displayed `The package has been uploaded successfully to CRAN submission team.`
 - Remaining external blocker: incoming/pretest evidence, reviewer response if requested, and public package publication.
+- Latest live probe artifact: `conductor/tracks/r_cran_registry_submission_20260524/live_probe_20260705.json`.
 
 ## Acceptance Criteria
 

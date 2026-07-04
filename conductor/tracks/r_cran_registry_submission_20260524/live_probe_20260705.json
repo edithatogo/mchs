@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-07-05T00:00:00+10:00",
+  "package": "nwauR",
+  "version": "0.1.0",
+  "publication_claimed": false,
+  "external_gate": "CRAN incoming/pretest evidence, reviewer response if requested, and public package publication remain pending.",
+  "next_action": "wait-for-cran-incoming-pretest-review-or-publication",
+  "probes": {
+    "package_page": {
+      "url": "https://cran.r-project.org/package=nwauR",
+      "status": 404,
+      "final_url": "https://cran.r-project.org/web/packages/nwauR/index.html",
+      "contains_package": false
+    },
+    "canonical_page": {
+      "url": "https://cran.r-project.org/web/packages/nwauR/index.html",
+      "status": 404,
+      "final_url": "https://cran.r-project.org/web/packages/nwauR/index.html",
+      "contains_package": false
+    },
+    "packages_index": {
+      "url": "https://cran.r-project.org/src/contrib/PACKAGES",
+      "status": 200,
+      "contains_package": false
+    },
+    "crandb": {
+      "url": "https://crandb.r-pkg.org/nwauR",
+      "status": 404,
+      "final_url": "https://crandb.r-pkg.org/nwauR",
+      "contains_package": false,
+      "response": "{\"error\":\"not_found\",\"reason\":\"document not found\"}"
+    }
+  },
+  "summary": "CRAN public package page and CRANDB still return HTTP 404, and the CRAN source package index still does not contain Package: nwauR. Publication is not claimed."
+}

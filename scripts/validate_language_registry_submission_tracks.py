@@ -14,6 +14,8 @@ TRACKS = ROOT / "conductor" / "tracks"
 ARCHIVE = ROOT / "conductor" / "archive"
 TRACKS_MD = ROOT / "conductor" / "tracks.md"
 REQUIRED_PHASES = ["Discovery", "Preparation", "Submission", "Publication Evidence"]
+CANCELLED_RETAINED_STATUSES = {"deprecated_cancelled_publication_retained"}
+CANCELLED_NOT_PUBLISHED_STATUSES = {"deprecated_cancelled_not_published"}
 
 
 def main() -> None:
@@ -55,6 +57,18 @@ def main() -> None:
             assert metadata["publication_claimed"] is True, track_id
             assert metadata["publication_status"] == "published_verified", track_id
             assert f"- [x] **Track: {registry['title']}**" in tracks_md, track_id
+        elif registry["current_status"] in CANCELLED_RETAINED_STATUSES:
+            assert registry["blocker"], registry["id"]
+            assert metadata["status"] == "completed", track_id
+            assert metadata["publication_claimed"] is True, track_id
+            assert (
+                metadata["publication_status"] == registry["current_status"]
+            ), track_id
+        elif registry["current_status"] in CANCELLED_NOT_PUBLISHED_STATUSES:
+            assert registry["blocker"], registry["id"]
+            assert metadata["status"] == "cancelled", track_id
+            assert metadata["publication_claimed"] is False, track_id
+            assert metadata["publication_status"] == "cancelled_not_published", track_id
         else:
             assert registry["blocker"], registry["id"]
             assert metadata["status"] in {"blocked", "submitted"}, track_id
@@ -68,7 +82,9 @@ def main() -> None:
         assert registry["package"] in spec
         for phase in REQUIRED_PHASES:
             assert "## Phase" in plan and phase in plan, f"{track_id} missing {phase}"
-        expected_link = f"./archive/{track_id}/" if archived else f"./tracks/{track_id}/"
+        expected_link = (
+            f"./archive/{track_id}/" if archived else f"./tracks/{track_id}/"
+        )
         assert expected_link in tracks_md
 
     print("Language registry submission tracks contract passed.")

@@ -34,8 +34,8 @@
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication. Pending CRAN incoming/pretest evidence, CRAN acceptance, and public package propagation.
-    - [ ] Query public registry after propagation. Current CRAN DB query returns 404/not found.
-    - [ ] Record immutable URL/API response/checksum. Pending publication.
+- [~] Task: Verify external publication. Pending CRAN incoming/pretest evidence, CRAN acceptance, and public package propagation.
+    - [x] Query public registry after propagation. 2026-07-05 live probe: CRAN package page and CRANDB return HTTP 404/not found; `src/contrib/PACKAGES` returns HTTP 200 but does not contain `Package: nwauR`.
+    - [x] Record immutable URL/API response/checksum. Current absence evidence is recorded in `live_probe_20260705.json`; publication checksum remains pending because no public package exists.
     - [ ] Mark track complete only if publication or accepted-review evidence exists. Publication is not claimed.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Publication Evidence' (Protocol in workflow.md). Pending publication evidence.

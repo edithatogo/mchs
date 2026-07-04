@@ -14,6 +14,7 @@ CONTRACT = (
     / "language-registry-submissions.contract.json"
 )
 PACKAGE = ROOT / "nwauR_0.1.0.tar.gz"
+LIVE_PROBE = TRACK / "live_probe_20260705.json"
 
 
 def _read(path: Path) -> str:
@@ -52,7 +53,8 @@ def test_r_cran_track_is_submitted_pending_external_publication_review():
     )
     assert registry["submission_url"] == "https://cran.r-project.org/submit.html"
     assert registry["localReadinessResolved"] is True
-    assert "confirmation link has been clicked" in registry["blocker"]
+    assert "Live probe on 2026-07-05" in registry["blocker"]
+    assert "public package publication remain pending" in registry["blocker"]
 
 
 def test_r_cran_package_evidence_is_recorded_without_publication_claim():
@@ -120,6 +122,36 @@ def test_r_cran_package_evidence_is_recorded_without_publication_claim():
     )
     assert "Publication is not claimed" in plan
     assert "submitted_confirmed_pending_cran_pretest_review_publication" in plan
+
+
+def test_r_cran_latest_live_probe_records_external_gate():
+    metadata = json.loads(_read(TRACK / "metadata.json"))
+    registry = _r_registry()
+    probe = json.loads(_read(LIVE_PROBE))
+
+    evidence = metadata["package_evidence"]
+    assert evidence["latest_live_probe_file"].endswith("live_probe_20260705.json")
+    assert probe["checked_at"] == "2026-07-05T00:00:00+10:00"
+    assert probe["publication_claimed"] is False
+    assert probe["external_gate"] == (
+        "CRAN incoming/pretest evidence, reviewer response if requested, "
+        "and public package publication remain pending."
+    )
+    assert probe["probes"]["package_page"]["status"] == 404
+    assert probe["probes"]["canonical_page"]["status"] == 404
+    assert probe["probes"]["crandb"]["status"] == 404
+    assert probe["probes"]["packages_index"]["status"] == 200
+    assert probe["probes"]["packages_index"]["contains_package"] is False
+    assert (
+        "2026-07-05: https://cran.r-project.org/package=nwauR"
+        in evidence["latest_publication_probe"]
+    )
+    assert "HTTP 404" in evidence["latest_publication_probe"]
+    assert "Package: nwauR" in evidence["latest_publication_probe"]
+    assert registry["preparationEvidence"]["latestLiveProbeFile"].endswith(
+        "live_probe_20260705.json"
+    )
+    assert "2026-07-05" in registry["preparationEvidence"]["latestPublicationProbe"]
 
 
 def test_r_package_source_matches_cran_ready_boundary():
