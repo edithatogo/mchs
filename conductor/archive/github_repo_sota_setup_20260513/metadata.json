@@ -5,6 +5,7 @@
   "track_class": "publication",
   "current_state": "complete-with-gaps",
   "primary_contract": "GitHub repo settings, labels, branch protection, releases, packages, Pages, security",
+  "completion_policy": "Complete-with-gaps means the repository has local workflow evidence plus current credentialed gh evidence for repository metadata, homepage, labels, GitHub Pages, master branch protection, releases, tags, workflows, and the github-pages environment. Security and package publication gaps remain explicit where GitHub reports disabled security features, package proof is ecosystem-specific, or a setting is not exposed to the current token.",
   "dependencies": [
     "release_evidence_automation_20260512",
     "strict_quality_gates_20260513"
@@ -15,27 +16,159 @@
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Local docs-site and GitHub Pages workflow evidence.",
-      "Repository setup checklist for labels, branch protection, security, releases, tags, packages, Pages, and homepage metadata.",
-      "Local tooling tests that keep repository workflow expectations visible."
+    "implemented": [
+      "remote repository metadata and homepage verified through gh",
+      "labels verified through gh",
+      "GitHub Pages configuration verified through gh",
+      "master branch protection verified through gh",
+      "release, tag, workflow, and github-pages environment evidence verified through gh",
+      "local workflow and tooling configuration evidence retained"
     ],
-    "excluded": [
-      "Credentialed proof of remote GitHub labels, milestones, branch protection, releases, environments, packages, and security settings.",
-      "Homepage and publication evidence verified through GitHub APIs.",
-      "A final remote repository settings audit."
+    "not_implemented": [
+      "enabled Dependabot vulnerability alerts",
+      "enabled GitHub secret scanning and push protection",
+      "complete package registry publication proof for every planned ecosystem",
+      "manual repository settings that GitHub does not expose to this token"
     ]
   },
   "gap_register": [
     {
       "id": "remote-github-settings-proof",
+      "status": "deferred",
+      "description": "The prior remote GitHub evidence gap is narrowed by current gh checks for repository metadata, labels, Pages, branch protection, releases, tags, workflows, and the github-pages environment.",
+      "rationale": "Current credentialed API evidence is recorded in remote_evidence; remaining gaps are limited to disabled security features, ecosystem-specific package proof, and settings unavailable to this token."
+    },
+    {
+      "id": "security-feature-enablements",
       "status": "external-gate",
-      "description": "Remote GitHub repository labels, branch protection, releases, packages, Pages, homepage, and security settings require credentialed API evidence before archive."
+      "description": "GitHub reports Dependabot vulnerability alerts, secret scanning, non-provider patterns, push protection, and validity checks as disabled or not enabled for this repository.",
+      "rationale": "Enabling those features is a repository/plan/settings action outside this archive metadata repair."
+    },
+    {
+      "id": "package-publication-proof",
+      "status": "external-gate",
+      "description": "Complete package registry publication proof is ecosystem-specific and belongs to the language registry publication tracks.",
+      "rationale": "This track records repository-level setup evidence and does not replace registry-specific publication evidence."
     }
   ],
+  "remote_evidence": {
+    "captured_at": "2026-07-05T00:00:00+10:00",
+    "commands": [
+      "gh repo view edithatogo/mchs --json nameWithOwner,description,homepageUrl,visibility,hasIssuesEnabled,hasProjectsEnabled,hasWikiEnabled,defaultBranchRef,isArchived,url",
+      "gh label list --repo edithatogo/mchs --limit 100 --json name,color,description",
+      "gh api repos/edithatogo/mchs/pages",
+      "gh api repos/edithatogo/mchs/branches/master/protection",
+      "gh release list --repo edithatogo/mchs --limit 20",
+      "gh api repos/edithatogo/mchs/tags",
+      "gh api repos/edithatogo/mchs/actions/workflows",
+      "gh api repos/edithatogo/mchs/environments",
+      "gh api repos/edithatogo/mchs --jq '{security_and_analysis, visibility, has_issues, has_projects, has_wiki, homepage, default_branch}'"
+    ],
+    "repo": {
+      "nameWithOwner": "edithatogo/mchs",
+      "visibility": "PUBLIC",
+      "defaultBranch": "master",
+      "homepageUrl": "https://edithatogo.github.io/mchs/",
+      "issuesEnabled": true,
+      "projectsEnabled": false,
+      "wikiEnabled": false,
+      "isArchived": false
+    },
+    "labels": {
+      "verified": true,
+      "notable": [
+        "bug",
+        "documentation",
+        "enhancement",
+        "codex",
+        "release",
+        "ci",
+        "docs",
+        "dependencies",
+        "security",
+        "conductor",
+        "track-active",
+        "track-complete",
+        "track-blocked"
+      ]
+    },
+    "pages": {
+      "html_url": "https://edithatogo.github.io/mchs/",
+      "build_type": "workflow",
+      "source_branch": "master",
+      "https_enforced": true,
+      "public": true
+    },
+    "branch_protection": {
+      "branch": "master",
+      "strict_status_checks": true,
+      "required_reviews": 1,
+      "dismiss_stale_reviews": true,
+      "require_last_push_approval": true,
+      "enforce_admins": true,
+      "required_linear_history": true,
+      "force_pushes_allowed": false,
+      "deletions_allowed": false,
+      "conversation_resolution_required": true
+    },
+    "release_and_tag_evidence": {
+      "releases_seen": [
+        "language-interop-v0.1.0",
+        "nwau-c-abi-v0.1.0",
+        "v0.2.3",
+        "v0.2.2",
+        "v0.2.1",
+        "v0.2.0"
+      ],
+      "tags_seen": [
+        "v0.2.2",
+        "v0.2.1",
+        "v0.2.0",
+        "nwau-c-abi-v0.1.0",
+        "language-interop-v0.1.0",
+        "bindings/go/v0.1.0"
+      ]
+    },
+    "workflows": {
+      "active_workflow_count": 22,
+      "notable": [
+        "PR CI",
+        "Docs Site",
+        "CodeQL",
+        "Publish Python package",
+        "Release",
+        "Release Drafter",
+        "Publish registry packages",
+        "Publish MCP Registry metadata",
+        "Publish Maven Central package",
+        "Language Registry Live Monitor"
+      ]
+    },
+    "environments": [
+      {
+        "name": "github-pages",
+        "branch_policy": true
+      }
+    ],
+    "security_and_analysis": {
+      "dependabot_security_updates": "disabled",
+      "secret_scanning": "disabled",
+      "secret_scanning_non_provider_patterns": "disabled",
+      "secret_scanning_push_protection": "disabled",
+      "secret_scanning_validity_checks": "disabled"
+    }
+  },
+  "archive_evidence": {
+    "spec": "conductor/archive/github_repo_sota_setup_20260513/spec.md",
+    "plan": "conductor/archive/github_repo_sota_setup_20260513/plan.md",
+    "review": "conductor/archive/github_repo_sota_setup_20260513/review.md",
+    "tooling_tests": "tests/test_tooling_configuration.py",
+    "archive_tests": "tests/test_github_repo_sota_setup_track.py",
+    "tracks_registry": "conductor/tracks.md"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Audit and complete GitHub repository setup including labels, tags, releases, security, homepage, packages, Pages, and publication evidence.",
   "no_stub_enforce": true
 }

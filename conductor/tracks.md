@@ -560,7 +560,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: GitHub Repository SOTA Setup**
+- [x] **Track: GitHub Repository SOTA Setup**
 *Link: [./archive/github_repo_sota_setup_20260513/](./archive/github_repo_sota_setup_20260513/)*
 *Gate: Complete GitHub labels, milestones, branch protections, security settings, homepage, releases, tags, packages, Pages, and publication evidence.*
 
