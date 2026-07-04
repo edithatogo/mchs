@@ -1,0 +1,9 @@
+Conductor archive repair validation for historical_ihacpa_coverage_20260512:
+- uv run pytest tests/test_historical_ihacpa_coverage_track.py tests/test_ihacpa_2026_27_track.py -q: 10 passed
+- uv run python scripts/validate_historical_ihacpa_inventory.py: passed
+- python -m json.tool conductor/archive/historical_ihacpa_coverage_20260512/metadata.json >/dev/null: passed
+- uv run ruff check tests/test_historical_ihacpa_coverage_track.py: passed
+- uv run ty check tests/test_historical_ihacpa_coverage_track.py: passed
+- python conductor/scripts/stub_detector.py --root . --json: total_findings=0, stubs_detected=false
+- git diff --check -- conductor/archive/historical_ihacpa_coverage_20260512 tests/test_historical_ihacpa_coverage_track.py: passed
+Review outcome: fixed a test line-length issue during conductor-review loop; archive remains complete-with-gaps with direct 2012-13 calculator artifact proof and full historical hash census gaps explicit.
