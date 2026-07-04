@@ -36,6 +36,10 @@ grouper is supplied.
   Database Demo v2.2 unless discovery finds a better fit.
 - Keep raw public dataset files out of git; use local download/cache paths,
   committed manifests, and tiny safe fixtures only.
+- Classify raw, staged, calculator-ready, calculated, report, and docs outputs
+  as commit-safe or local-only, with disclosure-risk checks for small cells,
+  rare combinations, direct identifiers, admission IDs, dates, and joined
+  clinical features.
 - Build a real-data staging example from MIMIC admissions, ICU stays,
   diagnoses, procedures, and available DRG or billing metadata.
 - Fail closed when Australian AR-DRG provenance is missing.
@@ -47,6 +51,9 @@ grouper is supplied.
   support-status output, Python API execution, CLI/file interop, MCP boundary
   validation, API/OpenAI contract documentation, and comparison between raw
   staging, calculator-ready input, and calculated output.
+- Add a bounded scenario/sensitivity appendix that compares baseline,
+  fail-closed/no-provenance, and synthetic-overlay cases without implying that
+  synthetic overlays are authoritative.
 - Do not overclaim MCP, API, or OpenAI runtime execution; demonstrate boundary
   validation or documented contract examples where those surfaces do not yet
   execute formulas.
@@ -67,6 +74,8 @@ grouper is supplied.
   licensing boundaries.
 - The worked example must preserve provenance fields and make synthetic overlay
   behavior visible in outputs and docs.
+- The worked example must keep real public-data derived outputs local-only
+  unless a disclosure-risk review classifies them as commit-safe.
 - Documentation must distinguish real deidentified source data from synthetic
   Australian classification overlays.
 - Follow-on examples must be separate tracks unless Phase 1 proves they reuse
@@ -87,6 +96,8 @@ grouper is supplied.
 - The example exposes at least one advanced feature beyond a basic CSV run:
   provenance report, data-quality summary, support-status summary, or
   CLI/file-interoperability bundle.
+- The example includes a safe-output/disclosure-risk summary and a bounded
+  scenario/sensitivity comparison using tiny fixtures or synthetic overlays.
 - The example explicitly covers the safe core surfaces available at the time of
   implementation: Python API execution, CLI/file execution, docs tutorial
   output, MCP boundary validation, and API/OpenAI contract documentation where

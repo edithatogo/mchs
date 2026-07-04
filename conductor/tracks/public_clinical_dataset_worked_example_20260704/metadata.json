@@ -19,7 +19,7 @@
     "examples/mimic_demo/",
     "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
     "tests/test_public_clinical_dataset_worked_example_track.py",
-    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, downloader/cache, and surface conformance work",
+    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, downloader/cache, surface conformance, disclosure-risk, and scenario/sensitivity work",
     "GitHub Actions review evidence for the completed track branch or PR"
   ],
   "support_scope": {
@@ -30,6 +30,8 @@
       "Fail-closed calculator-input preparation when Australian AR-DRG provenance is missing.",
       "Synthetic AR-DRG overlay fixture for runnable documentation only.",
       "Provenance, data-quality, support-status, Python API, CLI/file interop, MCP boundary validation, and API/OpenAI contract documentation outputs that demonstrate existing advanced tooling.",
+      "Disclosure-risk summary and safe-output classification for public-data-derived artifacts.",
+      "Scenario/sensitivity comparison for fail-closed, synthetic-overlay, and locally supplied classification-provenance paths.",
       "Issue-backed follow-on feature discovery for examples or infrastructure that should not be bundled into the initial track."
     ],
     "excluded": [
@@ -88,10 +90,22 @@
       "number": 351,
       "url": "https://github.com/edithatogo/mchs/issues/351",
       "reason": "Reusable surface conformance checks across Python API, CLI/file, MCP, API, OpenAI, and docs examples are shared validation infrastructure beyond the first MIMIC worked example."
+    },
+    {
+      "title": "feat: add public dataset disclosure-risk and safe-output policy",
+      "number": 352,
+      "url": "https://github.com/edithatogo/mchs/issues/352",
+      "reason": "Reusable disclosure-risk and safe-output rules are needed across public dataset examples and docs workflows."
+    },
+    {
+      "title": "feat: add worked-example scenario and sensitivity report",
+      "number": 353,
+      "url": "https://github.com/edithatogo/mchs/issues/353",
+      "reason": "Reusable scenario and sensitivity reports should be shared infrastructure for examples that compare assumptions without overclaiming authority."
     }
   ],
   "created_at": "2026-07-04T10:09:03Z",
-  "updated_at": "2026-07-04T10:09:03Z",
+  "updated_at": "2026-07-04T11:11:18Z",
   "description": "Assess public clinical datasets and add a conservative real-data worked example that uses MIMIC-IV Demo staging while failing closed around Australian classification limits.",
   "no_stub_enforce": true
 }

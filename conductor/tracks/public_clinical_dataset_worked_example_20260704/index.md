@@ -16,19 +16,25 @@
 - The worked example should demonstrate useful existing advanced features:
   provenance reporting, data-quality summaries, support-status output, Python
   API execution, CLI/file interoperability, MCP boundary validation, and
-  API/OpenAI contract documentation where available. New feature needs
-  discovered during implementation should become GitHub issues rather than
-  unbounded scope.
+  API/OpenAI contract documentation where available. It should also include
+  safe-output/disclosure-risk classification and a bounded scenario/sensitivity
+  appendix using synthetic overlays or locally supplied provenance. New feature
+  needs discovered during implementation should become GitHub issues rather
+  than unbounded scope.
 - Follow-up GitHub issues created from scope review:
   [#346](https://github.com/edithatogo/mchs/issues/346) MIMIC-IV-ED example,
   [#347](https://github.com/edithatogo/mchs/issues/347) FHIR/MEDS examples,
   [#348](https://github.com/edithatogo/mchs/issues/348) dataset suitability
-  registry, and [#349](https://github.com/edithatogo/mchs/issues/349)
-  downloader/cache guard, and
+  registry,
+  [#349](https://github.com/edithatogo/mchs/issues/349) downloader/cache guard,
   [#350](https://github.com/edithatogo/mchs/issues/350) reusable
-  provenance/data-quality report contract, and
+  provenance/data-quality report contract,
   [#351](https://github.com/edithatogo/mchs/issues/351) worked-example surface
-  conformance harness.
+  conformance harness,
+  [#352](https://github.com/edithatogo/mchs/issues/352) disclosure-risk and
+  safe-output policy, and
+  [#353](https://github.com/edithatogo/mchs/issues/353) scenario/sensitivity
+  report pattern.
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)

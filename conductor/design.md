@@ -120,12 +120,12 @@ flowchart LR
     Candidate[Candidate public datasets] --> Assess[Suitability assessment\naccess + license + fields + risks]
     Assess --> Manifest[Committed manifest\nsource + citation + local-cache policy]
     Manifest --> LocalData[Local raw files\nignored, never committed]
-    LocalData --> Stage[Episode staging\nlineage + quality checks]
+    LocalData --> Stage[Episode staging\nlineage + quality checks + disclosure review]
     Stage --> Classify{Australian classification provenance?}
     Classify -->|Precomputed or local licensed| Input[Calculator-ready input]
     Classify -->|Missing| Block[Fail-closed diagnostic]
     Classify -->|Synthetic overlay for docs| DemoInput[Demo-only calculator input]
-    Input --> Output[Calculated output + provenance report]
+    Input --> Output[Calculated output + provenance report + scenario summary]
     DemoInput --> Output
     Block --> Docs[Docs caveats + support status]
     Output --> Docs
@@ -138,6 +138,10 @@ Design rules:
   and update cadence.
 - Raw public patient-level files stay local-only and must be guarded against
   accidental commits.
+- Derived outputs must be classified as commit-safe or local-only. Small cells,
+  rare combinations, direct identifiers, admission IDs, dates, and joined
+  clinical features require disclosure-risk review before any example artifact
+  is committed.
 - MIMIC US DRG, ICD-9-CM, ICD-10-CM, and ICD-10-PCS fields must not be treated
   as validated Australian AR-DRG, ICD-10-AM, ACHI, or ACS equivalents.
 - Worked examples should expose provenance, data-quality, support-status,
@@ -145,6 +149,9 @@ Design rules:
   contract documentation where existing tooling supports them. MCP, API, or
   OpenAI surfaces must not claim formula execution when their current contracts
   only validate or document the boundary.
+- Worked examples may include scenario or sensitivity comparisons when they are
+  explicitly educational, use synthetic overlays or user-supplied local
+  provenance, and report support-state caveats alongside the changed results.
 - New reusable capabilities discovered by examples must become separate
   GitHub issues or Conductor tracks rather than expanding a single tutorial
   track without bounds.

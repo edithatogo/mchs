@@ -23,7 +23,7 @@
     - [ ] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
     - [ ] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
 - [ ] Task: Open GitHub issues for warranted follow-on examples and infrastructure.
-    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, and worked-example surface conformance harness work only when evidence shows they are useful and separate.
+    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, worked-example surface conformance harness, disclosure-risk policy, and scenario/sensitivity report work only when evidence shows they are useful and separate.
     - [ ] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
 
@@ -31,6 +31,7 @@
 - [ ] Task: Add public dataset manifest and local cache policy.
     - [ ] Add source URL, DOI, license, expected file list, checksums where available, and citation text.
     - [ ] Ensure raw dataset files are ignored and never required in git.
+    - [ ] Define commit-safe versus local-only paths for raw, staged, calculator-ready, calculated, report, and docs outputs.
     - [ ] Add diagnostics for missing local data and clear download instructions.
 - [ ] Task: Add tests for manifest parsing and license/access guardrails.
     - [ ] Public metadata must pass.
@@ -38,6 +39,7 @@
 - [ ] Task: Add data-quality and provenance contract outputs.
     - [ ] Emit a machine-readable provenance report for dataset source, local file inventory, derivation steps, overlay status, and support-state claims.
     - [ ] Emit a data-quality summary covering row counts, missing required fields, duplicate identifiers, date/LOS sanity checks, ICU aggregation coverage, and classification provenance state.
+    - [ ] Emit a disclosure-risk summary covering small cells, rare combinations, direct identifiers, admission IDs, dates, and joined clinical features.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md)
 
 ## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
@@ -53,6 +55,7 @@
     - [ ] Produce raw staging, calculator-ready CSV, calculated CSV, provenance report, data-quality report, and support-status summary.
     - [ ] Exercise Python API and CLI/file interoperability where they are already supported, without adding a new runtime surface.
     - [ ] Exercise MCP boundary validation and API/OpenAI contract documentation where those surfaces are available, without claiming formula execution if the existing contract does not support it.
+    - [ ] Add a scenario/sensitivity appendix comparing no-provenance fail-closed behavior, synthetic-overlay behavior, and any local precomputed AR-DRG path if supplied.
     - [ ] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
@@ -62,7 +65,7 @@
     - [ ] Provide commands for users with local MIMIC-IV Demo files.
 - [ ] Task: Publish docs-site tutorial and improvement backlog.
     - [ ] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
-    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, and optional ED/FHIR/MEDS tutorial tracks.
+    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, disclosure-risk policy, scenario/sensitivity report patterns, and optional ED/FHIR/MEDS tutorial tracks.
 - [ ] Task: Review GitHub Actions and finalize track evidence.
     - [ ] Push the branch and git notes before reviewing GitHub Actions.
     - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.

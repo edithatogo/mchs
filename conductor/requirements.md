@@ -24,7 +24,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | MUST-010 | No task or track may be marked complete because stubs, scaffolds, TODOs, or docs-only placeholders exist. | No-stub audit, completeness gates, implementation evidence, tests exercising real behavior. | `no_stub_completion_enforcement_20260513` |
 | MUST-011 | Every phase must automatically run `conductor-review`, apply high-confidence fixes, rerun narrow validation, checkpoint, and continue unless blocked. | Plan checkpoint records, git notes, review reports, validation commands. | `multilevel_agent_execution_20260513`, `conductor_requirements_design_authority_20260513` |
 | MUST-012 | Every track completion must publish or record release/push evidence when it affects public repository state, packages, documentation, or contracts. | Commit SHA, remote push evidence, CI status, release evidence bundle. | `release_evidence_bundle_20260513`, `github_repo_sota_setup_20260513` |
-| MUST-013 | Public clinical dataset examples must be access- and license-assessed before implementation, keep raw patient-level files local-only, and fail closed when Australian classification provenance is missing. | Dataset assessment, source/license manifest, local-cache policy, raw-data commit guards, fail-closed tests, provenance report. | `public_clinical_dataset_worked_example_20260704` |
+| MUST-013 | Public clinical dataset examples must be access- and license-assessed before implementation, keep raw patient-level files and disclosure-risk outputs local-only, and fail closed when Australian classification provenance is missing. | Dataset assessment, source/license manifest, local-cache policy, safe-output policy, raw-data commit guards, fail-closed tests, provenance report. | `public_clinical_dataset_worked_example_20260704` |
 
 ### Should Have
 
@@ -35,7 +35,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | SHOULD-003 | Recursive SOTA audits should periodically compare this repository against high-quality scientific/data-engineering OSS projects and create remediation tracks. | Audit report, updated requirements/design/workflow, remediation tracks. | `recursive_sota_contract_audit_20260513` |
 | SHOULD-004 | Release evidence should include SBOMs, checksums, provenance attestations, signed tags where available, dependency review, and security scan outcomes. | Release artifacts and workflow logs. | `release_workflow_validation_20260513` |
 | SHOULD-005 | Tutorials should cover costing studies, HWAU valuation, jurisdiction/local pricing overlays, synthetic examples, and policy caveats. | Versioned docs pages and runnable notebooks/examples. | `costing_study_tutorials_20260512`, `parallel_valuation_outputs_20260513` |
-| SHOULD-006 | Worked examples should demonstrate advanced existing features when useful: provenance reports, data-quality summaries, support-status outputs, Python API execution, CLI/file interop, MCP boundary validation, API/OpenAI contract documentation, and classification provenance diagnostics. | MIMIC-IV Demo tutorial outputs, machine-readable reports, docs screenshots or command transcripts, validation tests, surface conformance evidence. | `public_clinical_dataset_worked_example_20260704` |
+| SHOULD-006 | Worked examples should demonstrate advanced existing features when useful: provenance reports, data-quality summaries, disclosure-risk summaries, support-status outputs, Python API execution, CLI/file interop, MCP boundary validation, API/OpenAI contract documentation, scenario/sensitivity comparisons, and classification provenance diagnostics. | MIMIC-IV Demo tutorial outputs, machine-readable reports, docs screenshots or command transcripts, validation tests, surface conformance evidence, scenario report. | `public_clinical_dataset_worked_example_20260704` |
 
 ### Could Have
 
@@ -44,7 +44,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | COULD-001 | Additional deferred bindings may remain visible as roadmap context without active development. | Deferred status records and no-new-development docs. | `deferred_surface_cleanup_20260513` |
 | COULD-002 | Optional web demos may use TypeScript/WASM for synthetic-data-only interactive documentation. | WASM demo contract and privacy boundary docs. | `typescript_wasm_binding_20260512`, `github_pages_api_architecture_20260513` |
 | COULD-003 | External service deployment recipes may be added after local contracts and release evidence are stable. | Deployment docs and threat model. | Future track only |
-| COULD-004 | Additional public dataset examples or reusable example harnesses may be added as separate tracks after suitability evidence shows a distinct access, classification, data model, surface-conformance, or workflow value. | Follow-up GitHub issues, dataset suitability records, separate Conductor tracks for ED, FHIR/MEDS, downloader/cache, surface conformance, or registry work. | `public_clinical_dataset_worked_example_20260704` |
+| COULD-004 | Additional public dataset examples or reusable example harnesses may be added as separate tracks after suitability evidence shows a distinct access, classification, data model, surface-conformance, disclosure-risk, scenario-reporting, or workflow value. | Follow-up GitHub issues, dataset suitability records, separate Conductor tracks for ED, FHIR/MEDS, downloader/cache, surface conformance, disclosure-risk, scenario-reporting, or registry work. | `public_clinical_dataset_worked_example_20260704` |
 
 ### Won't Have for Current GA
 
@@ -54,7 +54,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | WONT-002 | No SQL/DuckDB active surface for current GA. | User explicitly deprioritised it. | `deferred_surface_cleanup_20260513` |
 | WONT-003 | No Scala/Spark, Swift, MATLAB, or Go active implementation before Rust Core GA unless a new evidence-backed owner appears. | Avoid language sprawl and scaffold-only work. | `deferred_surface_cleanup_20260513` |
 | WONT-004 | No reimplementation or redistribution of proprietary licensed groupers/classification tables. | Licensing and correctness boundaries. | `icd_achi_acs_license_workflow_20260512`, `ar_drg_grouper_integration_20260512` |
-| WONT-005 | No raw public patient-level dataset files in git and no treatment of MIMIC US DRG, ICD-9-CM, ICD-10-CM, or ICD-10-PCS fields as validated Australian AR-DRG, ICD-10-AM, ACHI, or ACS equivalents. | Raw-data guard tests, docs caveats, fail-closed classification diagnostics. | `public_clinical_dataset_worked_example_20260704` |
+| WONT-005 | No raw public patient-level dataset files or disclosure-risk derived outputs in git, and no treatment of MIMIC US DRG, ICD-9-CM, ICD-10-CM, or ICD-10-PCS fields as validated Australian AR-DRG, ICD-10-AM, ACHI, or ACS equivalents. | Raw-data guard tests, safe-output checks, docs caveats, fail-closed classification diagnostics. | `public_clinical_dataset_worked_example_20260704` |
 
 ## Completion Semantics
 
