@@ -1,0 +1,8 @@
+Plan update: Phase 1 checkpoint
+
+Summary:
+- Appended checkpoint edbd88c to the Phase 1 heading.
+- Marked the conductor-review checkpoint task complete.
+
+Validation:
+- git diff --check conductor/tracks/public_clinical_dataset_worked_example_20260704/plan.md
