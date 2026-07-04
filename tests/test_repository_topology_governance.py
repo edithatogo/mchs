@@ -495,9 +495,10 @@ def test_outer_wrapper_manifest_records_validation_results_and_residual_gates() 
 def test_outer_wrapper_track_metadata_records_complete_with_outer_cleanup_gate() -> (
     None
 ):
-    metadata = _load_json(
-        TRACKS / "outer_wrapper_retirement_migration_20260624" / "metadata.json"
-    )
+    track_dir = TRACKS / "outer_wrapper_retirement_migration_20260624"
+    if not track_dir.exists():
+        track_dir = ROOT / "conductor" / "archive" / track_dir.name
+    metadata = _load_json(track_dir / "metadata.json")
 
     assert metadata["status"] == "completed"
     assert metadata["current_state"] == "complete-with-gaps"
