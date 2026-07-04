@@ -1,0 +1,17 @@
+Task: Retire wrapper-only artifacts
+
+Summary:
+- Recorded cleanup gates for generated logs, local caches, and the unmanaged outer gitlink.
+- Documented that this canonical-repo track performs no automated deletion in /Volumes/PortableSSD/GitHub/mchs.
+- Added governance test coverage for the cleanup contract.
+
+Files:
+- conductor/outer-wrapper-migration-manifest.json
+- conductor/outer-wrapper-retirement.md
+- tests/test_repository_topology_governance.py
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_migration_manifest_records_final_preservation_decision tests/test_repository_topology_governance.py::test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper -q
+
+Why:
+- Wrapper retirement must fail closed around user-owned outer files while still giving a deterministic cleanup path.
