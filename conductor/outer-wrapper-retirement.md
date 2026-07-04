@@ -42,6 +42,35 @@ local-only/generated.
    valid superproject with `.gitmodules`.
 6. Record remaining user or external gates separately from local repo cleanup.
 
+## Final Canonical Decision
+
+The canonical repository preservation decision is complete for this track:
+source and governance slices needed for continued implementation are represented
+in `microcosting_healthservices`, and evidence-bearing wrapper files are
+manifested with checksums instead of being silently discarded. The recommended
+wrapper outcome is `retire-wrapper-after-canonical-preservation`.
+
+The parent `/Volumes/PortableSSD/GitHub/mchs` checkout still has user-owned
+cleanup work because it is a dirty outer repository containing an unmanaged
+`microcosting_healthservices` gitlink, generated Playwright logs, local caches,
+and evidence files. This track does not delete those outer files. Cleanup must
+use `conductor/outer-wrapper-migration-manifest.json` as the authority for
+whether each file is already preserved, should be retained externally, can be
+ignored, or can be deleted after evidence review.
+
+Run these validations when making the outer cleanup decision:
+
+```bash
+uv run python scripts/validate_repository_topology.py --json
+uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs
+uv run pytest tests/test_repository_topology_governance.py -q
+```
+
+The explicit `--outer-root` validation is expected to fail until the parent
+wrapper is actually retired or formalized as a valid superproject with
+`.gitmodules`. That failure is an outer-wrapper cleanup gate, not evidence that
+the canonical repo preservation work is incomplete.
+
 ## Non-Goals
 
 Wrapper retirement does not publish packages, complete external reviews, or

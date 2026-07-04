@@ -399,6 +399,45 @@ def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
     assert any(entry["path"].startswith("power-platform/") for entry in source_slices)
 
 
+def test_outer_wrapper_migration_manifest_records_final_preservation_decision() -> None:
+    manifest = _load_json(OUTER_MANIFEST)
+
+    assert manifest["decision_boundary"] == (
+        "Canonical preservation and retirement decision recorded; no "
+        "outer-wrapper files are deleted by this canonical-repo track."
+    )
+    assert manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
+
+    preservation = manifest["preservation"]
+    assert preservation["canonical_source_status"] == "preserved-in-canonical-root"
+    assert preservation["evidence_status"] == "manifested-retain-external"
+    assert preservation["generated_log_status"] == "eligible-for-outer-cleanup"
+    assert preservation["gitlink_status"] == "user-owned-retirement-gate"
+    assert "outer-wrapper-cleanup" in preservation["residual_gates"]
+
+    assert set(preservation["validation_commands"]) >= {
+        "uv run python scripts/validate_repository_topology.py --json",
+        "uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs",
+    }
+
+    entries = {entry["path"]: entry for entry in manifest["entries"]}
+    for required_path in {
+        "conductor/requirements.md",
+        "conductor/design.md",
+        "conductor/scripts/stub_detector.py",
+        "docs/power-platform/responsive-form-factor-readiness.md",
+        "power-platform/README.md",
+        "tests/test_stub_detector.py",
+    }:
+        assert entries[required_path]["destination"].startswith(
+            "microcosting_healthservices/"
+        )
+
+    gitlink = entries["microcosting_healthservices"]
+    assert gitlink["retirement_decision"] == "retire-wrapper"
+    assert gitlink["residual_gate"] == "outer-wrapper-cleanup"
+
+
 def test_pr_ci_runs_repository_topology_validator() -> None:
     workflow = _read(ROOT / ".github" / "workflows" / "pr-ci.yml")
     assert "Validate repository topology" in workflow
