@@ -23,3 +23,10 @@
     - [x] Add Starlight docs page.
     - [x] Convert lessons into reusable implementation checklist.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Documentation and Template Extraction' (Protocol in workflow.md)
+
+## Phase 5: Complete-with-Gaps Closeout
+- [~] Task: Record bounded canary lifecycle closeout.
+    - [x] Add machine-readable canary lifecycle evidence.
+    - [x] Commit Starlight docs page and reusable template guidance.
+    - [x] Keep official SAS and Excel workbook-output parity as explicit gaps.
+- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 5: Complete-with-Gaps Closeout' (Protocol in workflow.md)

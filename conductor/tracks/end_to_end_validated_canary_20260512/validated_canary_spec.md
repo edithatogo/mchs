@@ -5,9 +5,10 @@
 - **Stream:** Acute admitted
 - **Pricing Year:** 2025 (2025-26 financial year)
 - **Rationale:** Acute 2025 has source metadata, a source-only formula
-  parameter bundle, synthetic golden fixtures, a Python baseline, and a Rust
-  canary. It remains the best candidate to prove the full lifecycle, but the
-  full lifecycle is not yet complete.
+  parameter bundle, synthetic golden fixtures, a Python baseline, a Rust
+  canary, Arrow/Parquet fixture-bundle evidence, Starlight documentation, and a
+  reusable template. It is locally complete as a lifecycle template with
+  explicit official parity gaps.
 
 ## Lifecycle Phases
 
@@ -34,8 +35,9 @@
 - **Evidence:**
   - SAS source parity: **blocked** until official SAS comparison evidence is
     recorded.
-  - Excel formula parity: **blocked** until official workbook comparison
-    evidence is recorded.
+  - Excel formula parity: **source-formula-only** because the workbook and
+    extracted formula/weights are committed, but workbook-output comparison
+    evidence is not recorded.
   - Formula bundle schema validated against manifest schema contract.
 
 ### Phase 3: Fixture Parity
@@ -58,14 +60,15 @@
 |---|---|---|
 | Python (nwau_py) | Baseline | Synthetic acute 2025 golden fixtures pass |
 | Rust canary | Candidate | Opt-in Rust wrapper matches Python on synthetic acute 2025 fixtures |
-| CLI (`funding-calculator`) | Blocked | Full CLI conformance report not recorded |
-| Arrow/Parquet file output | Blocked | Arrow/Parquet output parity not recorded |
+| CLI (`funding-calculator`) | Gap-recorded | Full official CLI conformance report not recorded |
+| Arrow/Parquet file output | Local fixture pass | Arrow/Parquet output parity not recorded for official sources; synthetic fixture bundle loads |
 
 ### Phase 5: Documentation and Template
 
-- **Starlight docs page:** blocked; no canary page is currently committed.
-- **Template guidance:** blocked; no reusable canary template is currently
-  committed.
+- **Starlight docs page:** complete; Starlight canary page committed at
+  `docs-site/src/content/docs/governance/end-to-end-validated-canary.mdx`.
+- **Template guidance:** complete; Reusable canary template committed at
+  `conductor/tracks/end_to_end_validated_canary_20260512/template.md`.
 - **Contents:**
   - Canary lifecycle overview.
   - Source manifest and extraction process.
@@ -84,8 +87,8 @@ Current ladder position for acute 2025:
 | Extracted | Source-only | Formula parameter bundle loads but does not claim parity |
 | Source-parity-checked | Blocked | Official SAS/Excel parity not recorded |
 | Fixture-parity-checked | Partial | Python/Rust agree on synthetic golden fixtures |
-| Cross-engine-checked | Partial | Python and Rust agree; CLI/Arrow report blocked |
-| Validated | Blocked | Starlight canary docs, template, and official parity remain incomplete |
+| Cross-engine-checked | Partial | Python and Rust agree; Arrow/Parquet fixture bundle passes; official CLI report remains gap-recorded |
+| Validated | Blocked | Official SAS/Excel parity not recorded |
 
 ## Template for Future Years
 
@@ -114,6 +117,9 @@ Future years can follow the same lifecycle by:
 - `reference-data/2025/manifest.yaml`
 - `reference-data/2025/formula-bundle/`
 - `tests/fixtures/golden/acute_2025/`
+- `tests/fixtures/bundles/acute_2025/`
+- `conductor/tracks/end_to_end_validated_canary_20260512/canary_lifecycle_evidence.json`
+- `docs-site/src/content/docs/governance/end-to-end-validated-canary.mdx`
 - `conductor/archive/formula_parameter_bundle_pipeline_20260512/`
 - `conductor/archive/pricing_year_validation_gates_20260512/`
 - `conductor/archive/rust_acute_python_poc_20260510/`

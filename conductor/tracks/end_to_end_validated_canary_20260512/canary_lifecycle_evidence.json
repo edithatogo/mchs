@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "track_id": "end_to_end_validated_canary_20260512",
+  "canary_id": "acute-2025",
+  "calculator": "acute",
+  "pricing_year": "2025",
+  "validation_status": "complete-with-gaps",
+  "scope": {
+    "validated": [
+      "source-only formula parameter bundle loads",
+      "synthetic golden CSV fixture is committed",
+      "Python and Rust acute 2025 outputs agree on the synthetic fixture",
+      "Arrow/Parquet bundle contract loads the synthetic fixture",
+      "Starlight documentation and reusable template are committed"
+    ],
+    "not_validated": [
+      "official SAS calculator output parity",
+      "official Excel workbook output parity",
+      "licensed AR-DRG grouping from ICD-10-AM/ACHI inputs",
+      "generalisation to other streams or years"
+    ]
+  },
+  "source_bundle": {
+    "status": "pass",
+    "bundle": "reference-data/2025/parameter-bundles/acute/acute-2025-canary/v1/bundle.json",
+    "parity_claim": false
+  },
+  "official_sas_parity": {
+    "status": "blocked",
+    "reason": "No committed official SAS output fixture is available for the acute 2025 canary.",
+    "required_to_promote": true
+  },
+  "official_excel_parity": {
+    "status": "source-formula-only",
+    "evidence": [
+      "excel_calculator/archive/2025/nwau25_calculator_for_acute_activity.xlsb",
+      "excel_calculator/data/2025/formula.json",
+      "excel_calculator/data/2025/weights.csv"
+    ],
+    "reason": "The workbook and extracted formula/weights are committed, but a separately recorded workbook-output parity run is not present.",
+    "required_to_promote": true
+  },
+  "fixture_parity": {
+    "status": "pass",
+    "input": "tests/fixtures/golden/acute_2025/input.csv",
+    "expected_output": "tests/fixtures/golden/acute_2025/expected.csv",
+    "manifest": "tests/fixtures/golden/acute_2025/manifest.json",
+    "privacy_classification": "synthetic"
+  },
+  "python_rust_parity": {
+    "status": "pass",
+    "evidence_tests": [
+      "tests/test_rust_acute_binding.py",
+      "tests/test_rust_acute_parity.py"
+    ],
+    "scope": "synthetic acute 2025 fixture agreement"
+  },
+  "arrow_parquet_bundle": {
+    "status": "pass",
+    "manifest": "tests/fixtures/bundles/acute_2025/manifest.json",
+    "payloads": [
+      "tests/fixtures/bundles/acute_2025/input.parquet",
+      "tests/fixtures/bundles/acute_2025/expected_output.parquet"
+    ],
+    "scope": "bundle-contract load and fixture interchange, not official output parity"
+  },
+  "documentation": {
+    "status": "pass",
+    "starlight_page": "docs-site/src/content/docs/governance/end-to-end-validated-canary.mdx",
+    "template": "conductor/tracks/end_to_end_validated_canary_20260512/template.md"
+  },
+  "validation_commands": [
+    "uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py -q",
+    "uv run ruff check tests/test_end_to_end_validated_canary_track.py",
+    "uv run ty check tests/test_end_to_end_validated_canary_track.py",
+    "python conductor/scripts/stub_detector.py --root . --json"
+  ]
+}

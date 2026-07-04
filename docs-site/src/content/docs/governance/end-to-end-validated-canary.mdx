@@ -1,0 +1,50 @@
+---
+title: End-to-End Validated Canary
+description: Acute 2025 canary lifecycle evidence and remaining official parity gaps.
+---
+
+The acute 2025 canary is the repository's bounded lifecycle example for taking
+one calculator stream through source discovery, formula-bundle loading,
+synthetic fixture parity, Python/Rust comparison, Arrow/Parquet fixture
+interchange, and documentation.
+
+This page is deliberately narrow. It does not generalise acute 2025 evidence to
+other years or streams.
+
+## Current Status
+
+| Area | Status | Evidence |
+|---|---|---|
+| Source bundle | Source-only | `reference-data/2025/parameter-bundles/acute/acute-2025-canary/v1/bundle.json` |
+| Synthetic fixture parity | Pass | `tests/fixtures/golden/acute_2025/` |
+| Python and Rust canary | Pass on fixture | `tests/test_rust_acute_binding.py`, `tests/test_rust_acute_parity.py` |
+| Arrow/Parquet bundle | Pass on fixture | `tests/fixtures/bundles/acute_2025/manifest.json` |
+| Documentation/template | Pass | this page and the Conductor track template |
+| Official SAS parity | Blocked | no committed official SAS output fixture |
+| Official Excel output parity | Source-formula only | workbook and extracted formula exist, but no output parity run is recorded |
+
+Official SAS parity remains blocked. The canary is therefore
+`complete-with-gaps`: it is useful as a local lifecycle template, but it is not
+an official SAS/Excel validated implementation claim.
+
+## Caveats
+
+- Do not claim full official parity from this canary.
+- Synthetic fixtures use precomputed DRGs and do not redistribute licensed
+  classification or grouping logic.
+- The Excel workbook archive and extracted formula/weights support source
+  traceability, not a workbook-output parity claim by themselves.
+- The Arrow/Parquet evidence covers committed fixture interchange, not official
+  production output parity.
+
+## Promotion Checklist
+
+Before a future stream/year can be promoted beyond this canary state:
+
+1. Attach official SAS output parity evidence.
+2. Attach official Excel workbook-output parity evidence.
+3. Record fixture tolerance and rounding policy.
+4. Run the claimed Python, Rust, CLI/file, and Arrow/Parquet surfaces against
+   the same fixture pack.
+5. Keep licensed grouper and coding assets local-only unless redistribution is
+   explicitly permitted.

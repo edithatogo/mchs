@@ -2,13 +2,16 @@
 
 ## Review Result
 
-Not archive eligible.
+Archive eligible as `complete-with-gaps`.
 
-The track has been corrected from an overclaimed completion state to a blocked
-state. Current evidence supports source-only formula bundle loading and
-Python/Rust agreement on synthetic acute 2025 fixtures. It does not yet support
-official SAS parity, official Excel workbook formula parity, CLI/Arrow output
-parity, or a published Starlight canary page/template.
+The track is locally complete as a bounded acute 2025 canary lifecycle
+template. Current evidence supports source-only formula bundle loading,
+Python/Rust agreement on synthetic acute 2025 fixtures, Arrow/Parquet fixture
+bundle loading, Starlight documentation, and reusable template guidance.
+
+It does not support a full official parity claim. Official SAS output parity
+and official Excel workbook-output parity remain blocked and are recorded in
+metadata and `canary_lifecycle_evidence.json`.
 
 ## Evidence Reviewed
 
@@ -18,16 +21,21 @@ parity, or a published Starlight canary page/template.
 - `tests/test_rust_acute_binding.py`
 - `tests/test_rust_acute_parity.py`
 - `tests/test_end_to_end_validated_canary_track.py`
+- `conductor/tracks/end_to_end_validated_canary_20260512/canary_lifecycle_evidence.json`
+- `docs-site/src/content/docs/governance/end-to-end-validated-canary.mdx`
+- `conductor/tracks/end_to_end_validated_canary_20260512/template.md`
 
 ## Remaining Gates
 
-- Record official SAS and Excel workbook parity evidence.
-- Add full CLI and Arrow/Parquet conformance evidence.
-- Add the Starlight canary page and reusable future-year template.
-- Re-run the canary review before marking the track completed or moving it to
-  the archive.
+- Record official SAS output parity before claiming official SAS parity.
+- Record official Excel workbook-output parity before claiming full Excel
+  parity.
+- Treat CLI/Arrow evidence as local synthetic fixture evidence only until an
+  official output parity run is recorded.
 
 ## Validation
 
-- `uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py`
+- `uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py -q`
+- `uv run ruff check tests/test_end_to_end_validated_canary_track.py`
+- `uv run ty check tests/test_end_to_end_validated_canary_track.py`
 - `python conductor/scripts/stub_detector.py --root . --json`

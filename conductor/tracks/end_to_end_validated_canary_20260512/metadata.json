@@ -1,30 +1,39 @@
 {
   "track_id": "end_to_end_validated_canary_20260512",
   "type": "feature",
-  "status": "blocked",
+  "status": "completed",
   "track_class": "calculator",
-  "current_state": "overclaim-remediated-blocked",
+  "current_state": "complete-with-gaps",
   "primary_contract": "one stream/year validated lifecycle evidence package",
   "support_scope": {
-    "local_completion": "Current evidence covers source-only formula parameter bundle loading, Python/Rust fixture comparison against synthetic golden fixtures, and explicit caveats for the acute admitted 2025 canary.",
-    "external_gate": "blocked; official SAS parity, official Excel workbook formula parity, CLI/Arrow lifecycle parity, and the Starlight canary page/template are not complete.",
-    "runtime_support_claim": "No end-to-end validated canary, official parity, Arrow output parity, or published documentation-template support claim is made."
+    "local_completion": "Acute 2025 local canary lifecycle is complete for source-only formula bundle loading, synthetic fixture parity, Python/Rust fixture agreement, Arrow/Parquet fixture bundle loading, Starlight documentation, and reusable template guidance.",
+    "external_gate": "Official SAS output parity and official Excel workbook-output parity remain blocking gaps before any full official parity claim.",
+    "runtime_support_claim": "Validated local canary template only; no broad official SAS/Excel parity or other stream/year support claim is made."
   },
   "gap_register": [
     {
-      "id": "official-sas-excel-parity-missing",
+      "id": "official-sas-parity-missing",
       "status": "blocked",
-      "description": "Official SAS parity and Excel workbook parity are not complete; current formula bundle validation is source-only and `parity_claim` remains false."
+      "blocking_scope": "official-parity",
+      "description": "No committed official SAS output fixture is available for the acute 2025 canary; full official parity cannot be claimed."
     },
     {
-      "id": "starlight-canary-page-template-missing",
+      "id": "official-excel-output-parity-missing",
       "status": "blocked",
-      "description": "The claimed Starlight canary page and reusable track template do not exist; documentation and template extraction must be implemented before this track can close."
+      "blocking_scope": "official-parity",
+      "description": "The workbook and extracted formula/weights are committed, but a workbook-output parity run is not recorded."
     },
     {
-      "id": "cli-arrow-output-parity-missing",
-      "status": "blocked",
-      "description": "CLI/Arrow output parity is not complete; existing evidence covers Python/Rust synthetic fixture agreement, not a full CLI/Arrow lifecycle."
+      "id": "local-canary-docs-template",
+      "status": "complete",
+      "blocking_scope": "none",
+      "description": "Starlight canary documentation and reusable future-year template are committed."
+    },
+    {
+      "id": "cli-arrow-output-parity",
+      "status": "complete-local-fixture",
+      "blocking_scope": "official-parity",
+      "description": "Arrow/Parquet fixture bundle evidence is present for the synthetic acute 2025 fixture; official CLI/Arrow output parity remains outside the local canary claim."
     }
   ],
   "dependencies": [
@@ -39,11 +48,15 @@
     "tests/test_formula_parameter_bundle_pipeline.py",
     "tests/test_rust_acute_binding.py",
     "tests/test_rust_acute_parity.py",
-    "tests/test_end_to_end_validated_canary_track.py"
+    "tests/test_end_to_end_validated_canary_track.py",
+    "conductor/tracks/end_to_end_validated_canary_20260512/canary_lifecycle_evidence.json",
+    "conductor/tracks/end_to_end_validated_canary_20260512/template.md",
+    "docs-site/src/content/docs/governance/end-to-end-validated-canary.mdx",
+    "tests/fixtures/bundles/acute_2025/manifest.json"
   ],
-  "publication_status": "future-only",
+  "publication_status": "local-complete-with-gaps",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Prove the full SOTA implementation lifecycle for one calculator stream and pricing year before scaling the roadmap.",
   "no_stub_enforce": true
 }
