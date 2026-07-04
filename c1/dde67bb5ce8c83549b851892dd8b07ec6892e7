@@ -1,0 +1,20 @@
+Final conductor-review: Public Clinical Dataset Worked Example
+
+Findings:
+- No unresolved local implementation blockers.
+- No additional high-confidence fixes required at final track scope.
+- External gate remains: pushed branch GitHub Actions Docs Site and Release Rust fail before job scheduling due branch workflow-file issue tracked by #354.
+
+Validated surfaces:
+- Public dataset candidate inventory and MIMIC-IV Demo selection.
+- Manifest/local-cache policy and raw-data guards.
+- MIMIC-shaped staging, fail-closed Australian AR-DRG provenance checks, synthetic overlay path, local precomputed overlay path, worked-example reports.
+- Runnable example script and current/2026 docs-site tutorial.
+- Track metadata, phase checkpoint ledger, and GitHub Actions review evidence.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json => total_findings 0
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q => 17 passed
+- uv run ruff check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
+- uv run ty check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
+- CI=true npm --prefix docs-site run build => passed, 94 pages built
