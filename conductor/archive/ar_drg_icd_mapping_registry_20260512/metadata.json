@@ -15,17 +15,47 @@
   ],
   "publication_status": "not-ready",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Add versioned AR-DRG mapping registry capability for ICD-10-AM, ACHI, ACS, and AR-DRG table relationships with conservative source and licensing handling.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/ar_drg_icd_mapping_registry_20260512",
-  "support_scope": "Versioned AR-DRG ICD/ACHI/ACS mapping metadata registry with explicit provenance and licensing boundaries.",
+  "completion_policy": "complete-with-gaps means the repository owns versioned AR-DRG, ICD-10-AM, ACHI, and ACS relationship metadata, pricing-year compatibility validation, local-only licensed asset references, and fail-closed diagnostics; it does not redistribute licensed mapping tables, code lists, grouping logic, or official grouper assets.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "versioned AR-DRG, ICD-10-AM, ACHI, and ACS relationship metadata",
+      "pricing-year compatibility validation",
+      "local-only licensed asset reference placeholders",
+      "fail-closed diagnostics for missing or incompatible version bindings"
+    ],
+    "not_implemented": [
+      "redistributed licensed ICD-10-AM/ACHI/ACS tables",
+      "redistributed AR-DRG mapping or grouping tables",
+      "proprietary grouper logic",
+      "validated public ICD-to-AR-DRG crosswalks without licensed local evidence"
+    ],
+    "claim_boundary": "Versioned AR-DRG ICD/ACHI/ACS mapping metadata registry with explicit provenance and licensing boundaries."
+  },
+  "archive_evidence": {
+    "spec": "conductor/archive/ar_drg_icd_mapping_registry_20260512/spec.md",
+    "plan": "conductor/archive/ar_drg_icd_mapping_registry_20260512/plan.md",
+    "review": "conductor/archive/ar_drg_icd_mapping_registry_20260512/review.md",
+    "tests": "tests/test_ar_drg_icd_mapping_registry_track.py",
+    "module": "nwau_py/ar_drg_mapping_registry.py",
+    "contract": "contracts/ar-drg-icd-mapping-registry/ar-drg-icd-mapping-registry.contract.json",
+    "docs": "docs-site/src/content/docs/governance/ar-drg-icd-achi-acs-mapping-registry.mdx"
+  },
   "gap_register": [
     {
-      "id": "post-archive-evidence-gate",
+      "id": "licensed-mapping-table-evidence",
       "status": "deferred",
-      "summary": "official licensed mapping evidence remains local-only or deferred"
+      "summary": "Official licensed ICD-10-AM, ACHI, ACS, AR-DRG mapping, and grouping-table evidence remains local-only or deferred to licensed workflow tracks."
+    },
+    {
+      "id": "proprietary-crosswalk-redistribution",
+      "status": "out-of-scope",
+      "summary": "The repository does not redistribute proprietary mapping tables or present a public ICD-to-AR-DRG crosswalk as validated official grouper output."
     }
   ]
 }

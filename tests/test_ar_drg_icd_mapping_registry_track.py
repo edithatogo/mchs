@@ -63,12 +63,40 @@ def test_ar_drg_mapping_track_docs_and_contract_are_complete() -> None:
     assert metadata["status"] == "completed"
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
+    assert metadata["completion_policy"].startswith("complete-with-gaps means")
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+    assert metadata["support_scope"]["implemented"] == [
+        "versioned AR-DRG, ICD-10-AM, ACHI, and ACS relationship metadata",
+        "pricing-year compatibility validation",
+        "local-only licensed asset reference placeholders",
+        "fail-closed diagnostics for missing or incompatible version bindings",
+    ]
+    assert metadata["archive_evidence"]["review"] == (
+        "conductor/archive/ar_drg_icd_mapping_registry_20260512/review.md"
+    )
+    assert all(
+        item["status"] in {"deferred", "out-of-scope"}
+        for item in metadata["gap_register"]
+    )
     assert "nwau_py.ar_drg_mapping_registry" in metadata["primary_contract"]
     assert "- [x] **Track: AR-DRG ICD/ACHI/ACS Mapping Registry**" in tracks
     assert "licensed grouping" in docs.lower()
     assert "does not reimplement" in docs.lower()
     assert contract["tool"]["name"] == "nwau_py.ar_drg_mapping_registry"
     assert contract["privacy"]["contains_phi"] is False
+
+
+def test_ar_drg_mapping_plan_has_checkpointed_archive_repair_detail() -> None:
+    plan = (TRACK / "plan.md").read_text(encoding="utf-8")
+
+    assert "[checkpoint:" in plan
+    assert "Phase 1: Contract and Relationship Model [checkpoint:" in plan
+    assert "Phase 2: Registry Records and Compatibility Validation [checkpoint:" in plan
+    assert "Phase 3: Documentation and Governance Notes [checkpoint:" in plan
+    assert "Archive Repair" in plan
+    assert "metadata.json" in plan
+    assert "plan.md" in plan
+    assert "licensed mapping tables remain local-only" in plan
 
 
 def test_ar_drg_mapping_registry_records_are_metadata_only() -> None:
