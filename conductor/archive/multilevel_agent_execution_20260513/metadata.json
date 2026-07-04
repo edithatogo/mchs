@@ -12,31 +12,52 @@
     "conductor/subagent-orchestration.md",
     "conductor/design.md (multi-level agent model)",
     "tests/test_tooling_configuration.py",
-    "tests/test_governance_contracts.py"
+    "tests/test_governance_contracts.py",
+    "tests/test_multilevel_agent_execution_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Subagent orchestration governance and multi-level agent model.",
-      "Design rules for bounded ownership, handoffs, review loops, commits, and push gates.",
-      "Local governance tests for tooling and contract surfaces."
+    "implemented": [
+      "subagent orchestration governance document",
+      "multi-level agent execution model in conductor/design.md",
+      "bounded ownership and disjoint write-set rules",
+      "handoff requirements for changed files, validation commands, docs, review findings, residual risks, and next action",
+      "phase-end conductor-review, auto-fix, validation, checkpoint, commit, and push gate rules"
     ],
-    "excluded": [
-      "Final archived evidence from actual multilevel subagent handoffs.",
-      "Changed-file lists, validation commands, residual risks, and review outcomes for each delegated work package.",
-      "Proof that every active track followed the multilevel execution protocol."
+    "not_implemented": [
+      "final archived evidence from actual multilevel subagent handoffs",
+      "proof that every active track followed the multilevel execution protocol",
+      "per-work-package handoff evidence bundles for delegated tasks"
     ]
   },
   "gap_register": [
     {
       "id": "actual-handoff-evidence",
-      "status": "evidence-gap",
-      "description": "The governance document exists, but archive should wait for concrete subagent handoff logs or evidence bundles with changed files, validation commands, and residual risks."
+      "status": "deferred",
+      "description": "The governance document exists, but concrete subagent handoff logs or evidence bundles with changed files, validation commands, and residual risks are not attached to this track.",
+      "rationale": "This archive is closed as a governance-only track. Actual handoff evidence belongs to the implementation tracks that used delegated work."
+    },
+    {
+      "id": "universal-protocol-proof",
+      "status": "out-of-scope",
+      "description": "This track does not prove that every active track followed the multilevel execution protocol.",
+      "rationale": "Protocol adoption must be validated per track or through a separate cross-track audit."
     }
   ],
+  "completion_policy": "Complete-with-gaps means the repository has a governance-only multi-level agent execution contract: subagent orchestration rules, a design model, bounded ownership rules, handoff requirements, and phase-end conductor-review/checkpoint/commit/push gates. It does not claim final archived handoff evidence from actual delegated execution, proof that every active track followed the protocol, or per-work-package evidence bundles.",
+  "archive_evidence": {
+    "spec": "conductor/archive/multilevel_agent_execution_20260513/spec.md",
+    "plan": "conductor/archive/multilevel_agent_execution_20260513/plan.md",
+    "review": "conductor/archive/multilevel_agent_execution_20260513/review.md",
+    "orchestration": "conductor/subagent-orchestration.md",
+    "design": "conductor/design.md",
+    "workflow": "conductor/workflow.md",
+    "governance_tests": "tests/test_governance_contracts.py",
+    "archive_tests": "tests/test_multilevel_agent_execution_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Make tracks executable by many agents at multiple levels with bounded ownership, handoffs, review loops, commits, and push gates.",
   "no_stub_enforce": true
 }
