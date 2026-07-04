@@ -1,0 +1,9 @@
+Task: Apply Conductor task lifecycle to every implementation task
+
+Summary:
+- Marked the public clinical dataset worked example track in progress.
+- Confirmed this run will commit each task with Commit notes, attach git notes, push branch and notes, run conductor-review at checkpoints, and review GitHub Actions before final evidence.
+
+Validation:
+- jq metadata parse
+- git diff --check for touched Conductor files
