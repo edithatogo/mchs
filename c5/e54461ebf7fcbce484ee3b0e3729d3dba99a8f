@@ -1,0 +1,6 @@
+Plan update: Preserve source slices
+
+Recorded task completion for commit 6ca7d06 in the outer wrapper retirement migration plan.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_migration_manifest_records_final_preservation_decision -q
