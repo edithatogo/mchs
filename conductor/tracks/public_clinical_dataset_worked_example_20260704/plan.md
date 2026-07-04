@@ -1,12 +1,12 @@
 # Plan: Public Clinical Dataset Worked Example
 
 ## Required Execution Discipline
-- [ ] Task: Apply Conductor task lifecycle to every implementation task.
-    - [ ] Commit after each task with a `Commit notes:` body section.
-    - [ ] Attach equivalent git notes to each task commit.
-    - [ ] Push the branch and `refs/notes/commits` after each task and phase checkpoint.
-    - [ ] Run `conductor-review` after each phase and at whole-track completion.
-    - [ ] Review GitHub Actions after the completed track is pushed and record the result in track evidence.
+- [x] Task: Apply Conductor task lifecycle to every implementation task.
+    - [x] Commit after each task with a `Commit notes:` body section.
+    - [x] Attach equivalent git notes to each task commit.
+    - [x] Push the branch and `refs/notes/commits` after each task and phase checkpoint.
+    - [x] Run `conductor-review` after each phase and at whole-track completion.
+    - [x] Review GitHub Actions after the completed track is pushed and record the result in track evidence.
 - [ ] Task: Keep requirements and design authority synchronized.
     - [ ] Maintain references to `MUST-013`, `SHOULD-006`, `COULD-004`, and `WONT-005` from `conductor/requirements.md`.
     - [ ] Maintain references to the Public Dataset Worked Example design section in `conductor/design.md`.

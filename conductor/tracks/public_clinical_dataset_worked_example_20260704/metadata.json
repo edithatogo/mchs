@@ -1,9 +1,9 @@
 {
   "track_id": "public_clinical_dataset_worked_example_20260704",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "track_class": "example",
-  "current_state": "planned",
+  "current_state": "in-progress",
   "primary_contract": "public dataset discovery, access/licensing assessment, fail-closed real-data ETL, MIMIC-IV Demo worked example, provenance/data-quality outputs, and Conductor review/push discipline",
   "dependencies": [
     "ar_drg_grouper_provider_runtime_20260703",
@@ -105,7 +105,7 @@
     }
   ],
   "created_at": "2026-07-04T10:09:03Z",
-  "updated_at": "2026-07-04T11:11:18Z",
+  "updated_at": "2026-07-04T23:48:00Z",
   "description": "Assess public clinical datasets and add a conservative real-data worked example that uses MIMIC-IV Demo staging while failing closed around Australian classification limits.",
   "no_stub_enforce": true
 }
