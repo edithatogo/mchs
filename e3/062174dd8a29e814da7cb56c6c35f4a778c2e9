@@ -1,0 +1,14 @@
+Task: Mark Phase 3 public clinical dataset tasks complete
+
+Summary:
+- Updated plan.md so the MIMIC-IV Demo staging, calculator-input provenance, and advanced worked-example tasks are complete.
+- Recorded implementation commit f27a15c against each Phase 3 task.
+
+Files:
+- conductor/tracks/public_clinical_dataset_worked_example_20260704/plan.md
+
+Why:
+- Keeps the Conductor plan as the source of truth after the Phase 3 implementation commit.
+
+Validation:
+- Plan-only update; implementation validations are recorded on f27a15c.
