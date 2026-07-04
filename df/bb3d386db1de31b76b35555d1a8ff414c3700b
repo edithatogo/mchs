@@ -1,0 +1,17 @@
+Task: Verify external CRAN publication gate refresh
+
+Summary:
+- Refreshed r_cran_registry_submission_20260524 with 2026-07-05 public CRAN probes.
+- Recorded live_probe_20260705.json: package page HTTP 404, canonical page HTTP 404, CRANDB HTTP 404, src/contrib/PACKAGES HTTP 200 without Package: nwauR.
+- Kept publication_claimed=false, publication_status=not_published, and track status [~]/submitted-external-review-pending.
+- Updated metadata, spec, plan, review, contract, focused tests, and registry validator handling for explicit cancelled governance states.
+
+Validation:
+- uv run pytest tests/test_r_cran_registry_submission_track.py tests/test_swift_package_index_submission_track.py -q
+- python scripts/validate_language_registry_submission_tracks.py
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run ruff check tests/test_r_cran_registry_submission_track.py scripts/validate_language_registry_submission_tracks.py
+- uv run ty check tests/test_r_cran_registry_submission_track.py scripts/validate_language_registry_submission_tracks.py
+
+Residual gate:
+- CRAN incoming/pretest evidence, reviewer response if requested, and public package publication remain outside local control; track is not archive-eligible.
