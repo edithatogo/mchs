@@ -1,0 +1,13 @@
+Task progress: Verify external conda-forge publication
+
+Summary:
+- Refreshed live upstream evidence on 2026-07-05.
+- PR 33452 remains open at bffc5bf1a85389dc695adfd96c87bf2413f4db25 with recorded checks passing.
+- Anaconda package API and conda-forge/nwau-py-feedstock repository still return 404.
+- Publication remains unclaimed and the task remains in progress pending external maintainer merge/publication.
+
+Validation:
+- uv run pytest tests/test_conda_forge_feedstock_submission_track.py -q
+- uv run ruff check tests/test_conda_forge_feedstock_submission_track.py
+- uv run ty check tests/test_conda_forge_feedstock_submission_track.py
+- python conductor/scripts/stub_detector.py --root . --json
