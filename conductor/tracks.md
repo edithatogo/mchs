@@ -758,6 +758,6 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Public Clinical Dataset Worked Example**
+- [x] **Track: Public Clinical Dataset Worked Example**
 *Link: [./tracks/public_clinical_dataset_worked_example_20260704/](./tracks/public_clinical_dataset_worked_example_20260704/)*
 *Gate: assess public clinical dataset access, licensing, provenance, and fitness before adding a real-data worked example that fails closed around Australian classification limits.*
