@@ -1,0 +1,14 @@
+Track completion: Outer Wrapper Retirement Migration
+
+Summary:
+- All plan tasks and Phase 2/Phase 3 checkpoints are complete.
+- Track metadata is completed / complete-with-gaps.
+- Canonical repo validation passes; parent-wrapper cleanup remains a documented user-owned gate.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run pytest tests/test_repository_topology_governance.py -q
+- uv run python scripts/validate_repository_topology.py --json
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs (expected fail as cleanup gate)
