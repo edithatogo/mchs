@@ -1,0 +1,17 @@
+Archive: Outer Wrapper Retirement Migration
+
+Summary:
+- Archived conductor/tracks/outer_wrapper_retirement_migration_20260624 to conductor/archive/outer_wrapper_retirement_migration_20260624.
+- Updated conductor/tracks.md to point to the archive location.
+- Adjusted governance tests to resolve archived track metadata.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json -> 0 findings
+- uv run pytest tests/test_repository_topology_governance.py -q -> 15 passed
+- uv run python scripts/validate_repository_topology.py --json -> ok true
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py -> passed
+- uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py -> passed
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs -> expected unmanaged_gitlink and outer_wrapper_contains_nested_repo diagnostics
+
+Residual gate:
+- Physical parent-wrapper cleanup remains user-owned outside this canonical repo track.
