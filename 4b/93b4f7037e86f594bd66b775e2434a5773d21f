@@ -1,0 +1,9 @@
+Conductor public dataset safety/scenario update
+
+Added disclosure-risk/safe-output and scenario/sensitivity requirements for public dataset worked examples. Updated the Public Dataset Worked Example design and track plan/spec/metadata/index. Created and linked issues #352 and #353.
+
+Validation:
+- jq metadata parse
+- git diff --check
+- rg safety/scenario references
+- python conductor/scripts/stub_detector.py --root . --json
