@@ -28,18 +28,18 @@
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md) `edbd88c`
 
 ## Phase 2: Dataset Manifest and License Boundary
-- [ ] Task: Add public dataset manifest and local cache policy.
-    - [ ] Add source URL, DOI, license, expected file list, checksums where available, and citation text.
-    - [ ] Ensure raw dataset files are ignored and never required in git.
-    - [ ] Define commit-safe versus local-only paths for raw, staged, calculator-ready, calculated, report, and docs outputs.
-    - [ ] Add diagnostics for missing local data and clear download instructions.
-- [ ] Task: Add tests for manifest parsing and license/access guardrails.
-    - [ ] Public metadata must pass.
-    - [ ] Raw patient-level dataset files in committed paths must fail guard checks.
-- [ ] Task: Add data-quality and provenance contract outputs.
-    - [ ] Emit a machine-readable provenance report for dataset source, local file inventory, derivation steps, overlay status, and support-state claims.
-    - [ ] Emit a data-quality summary covering row counts, missing required fields, duplicate identifiers, date/LOS sanity checks, ICU aggregation coverage, and classification provenance state.
-    - [ ] Emit a disclosure-risk summary covering small cells, rare combinations, direct identifiers, admission IDs, dates, and joined clinical features.
+- [x] Task: Add public dataset manifest and local cache policy. `4f322c2`
+    - [x] Add source URL, DOI, license, expected file list, checksums where available, and citation text.
+    - [x] Ensure raw dataset files are ignored and never required in git.
+    - [x] Define commit-safe versus local-only paths for raw, staged, calculator-ready, calculated, report, and docs outputs.
+    - [x] Add diagnostics for missing local data and clear download instructions.
+- [x] Task: Add tests for manifest parsing and license/access guardrails. `4f322c2`
+    - [x] Public metadata must pass.
+    - [x] Raw patient-level dataset files in committed paths must fail guard checks.
+- [x] Task: Add data-quality and provenance contract outputs. `4f322c2`
+    - [x] Emit a machine-readable provenance report for dataset source, local file inventory, derivation steps, overlay status, and support-state claims.
+    - [x] Emit a data-quality summary covering row counts, missing required fields, duplicate identifiers, date/LOS sanity checks, ICU aggregation coverage, and classification provenance state.
+    - [x] Emit a disclosure-risk summary covering small cells, rare combinations, direct identifiers, admission IDs, dates, and joined clinical features.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md)
 
 ## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
