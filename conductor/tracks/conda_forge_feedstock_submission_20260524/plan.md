@@ -27,7 +27,7 @@
 
 ## Phase 4: Publication Evidence
 
-- [ ] Task: Verify external publication. Pending conda-forge acceptance.
+- [~] Task: Verify external publication. Pending conda-forge acceptance.
     - [ ] Query public registry after propagation. Current Anaconda API query returns 404.
     - [x] Record immutable URL/API response/checksum.
     - [ ] Mark track complete only if publication or accepted-review evidence exists. Publication is not claimed.

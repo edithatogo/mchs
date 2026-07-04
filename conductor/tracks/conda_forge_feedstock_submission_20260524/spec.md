@@ -34,7 +34,15 @@ Resolved locally and submitted upstream. A conda-forge recipe exists, its source
 - SHA256: `c0998035a2e0ceebe913717170994ef668159c6e384524932c55c18fc1ce0480`
 - Tooling note: `conda` is installed; `conda-build`, `boa`, and `rattler-build` are not installed locally.
 - Fixed lint feedback: added recipe maintainers, tests, build number, `license_file`, `setuptools` build backend, noarch Python minimum pins, `pypi.org` source URL, runtime dependencies, and entry points.
-- Latest live PR probe: 2026-06-25 authenticated live monitor returned `state=open`, `mergedAt=null`, `draft=False`, `mergeable=MERGEABLE`, `mergeStateStatus=BLOCKED`, head `bffc5bf1a85389dc695adfd96c87bf2413f4db25`, successful current check rollup, no review decision, and no actionable comments after the 2026-06-11 status follow-up. Anaconda API and the `conda-forge/nwau-py-feedstock` repository still return HTTP 404.
+- Latest live PR probe: 2026-07-05 live probe returned `state=open`,
+  `mergedAt=null`, `draft=False`, `mergeable=UNKNOWN`,
+  `mergeStateStatus=UNKNOWN`, head
+  `bffc5bf1a85389dc695adfd96c87bf2413f4db25`, successful current check
+  rollup, no review decision, and no actionable comments after the
+  2026-06-11 status follow-up. Anaconda API and the
+  `conda-forge/nwau-py-feedstock` repository still return HTTP 404.
+- Latest probe artifact:
+  `conductor/tracks/conda_forge_feedstock_submission_20260524/live_probe_20260705.json`
 - Remaining external blocker: staged-recipes maintainer review, merge, and feedstock publication.
 
 ## Submission Evidence

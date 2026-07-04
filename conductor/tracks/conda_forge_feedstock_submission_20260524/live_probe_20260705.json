@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-07-05T00:00:00+10:00",
+  "submission_pr": {
+    "url": "https://github.com/conda-forge/staged-recipes/pull/33452",
+    "state": "OPEN",
+    "merged_at": null,
+    "draft": false,
+    "mergeable": "UNKNOWN",
+    "merge_state_status": "UNKNOWN",
+    "head_ref": "add-nwau-py-0.2.2",
+    "head_sha": "bffc5bf1a85389dc695adfd96c87bf2413f4db25",
+    "checks": "passing",
+    "successful_checks": [
+      "linter",
+      "conda-forge-linter",
+      "staged-recipes",
+      "staged-recipes (build fast finish)",
+      "staged-recipes (build linux_64)",
+      "staged-recipes (build osx osx_64)",
+      "staged-recipes (build win_64 win)",
+      "staged-recipes (build status)",
+      "staged-recipes (check skip)"
+    ],
+    "latest_actionable_comment": null,
+    "latest_author_follow_up": "2026-06-11T13:24:37Z",
+    "review_decision": "none"
+  },
+  "anaconda_package": {
+    "url": "https://api.anaconda.org/package/conda-forge/nwau-py",
+    "status_code": 404,
+    "response": "{\"error\":\"\\\"nwau-py\\\" could not be found\"}"
+  },
+  "feedstock_repository": {
+    "url": "https://api.github.com/repos/conda-forge/nwau-py-feedstock",
+    "status_code": 404,
+    "response": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/repos#get-a-repository\",\"status\":\"404\"}"
+  },
+  "publication_claimed": false,
+  "external_gate": "conda-forge staged-recipes maintainer review, merge, feedstock creation, and Anaconda package publication",
+  "next_action": "wait-for-conda-forge-maintainer-review"
+}

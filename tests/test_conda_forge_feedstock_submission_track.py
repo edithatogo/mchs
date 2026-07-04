@@ -13,6 +13,7 @@ CONTRACT = (
     / "language-registry-submissions.contract.json"
 )
 RECIPE = ROOT / "packaging" / "conda-forge" / "meta.yaml"
+LIVE_PROBE = TRACK / "live_probe_20260705.json"
 
 
 def _read(path: Path) -> str:
@@ -90,15 +91,29 @@ def test_conda_forge_recipe_evidence_is_recorded_without_publication_claim():
         in metadata["package_evidence"]["branch_update"]
     )
     assert "conda-forge-linter" in metadata["package_evidence"]["branch_update"]
-    assert (
-        "mergeable=MERGEABLE" in metadata["package_evidence"]["latest_live_pr_probe"]
-    )
-    assert (
-        "mergeStateStatus=BLOCKED"
-        in metadata["package_evidence"]["latest_live_pr_probe"]
-    )
+    assert "state=open" in metadata["package_evidence"]["latest_live_pr_probe"]
     assert (
         "nwau-py-feedstock repository still return HTTP 404"
         in metadata["package_evidence"]["latest_live_pr_probe"]
     )
     assert "Publication is not claimed" in plan
+
+
+def test_conda_forge_latest_live_probe_records_external_gate():
+    metadata = json.loads(_read(TRACK / "metadata.json"))
+    probe = json.loads(_read(LIVE_PROBE))
+
+    assert probe["checked_at"] == "2026-07-05T00:00:00+10:00"
+    assert probe["submission_pr"]["state"] == "OPEN"
+    assert probe["submission_pr"]["merged_at"] is None
+    assert probe["submission_pr"]["head_sha"] == (
+        "bffc5bf1a85389dc695adfd96c87bf2413f4db25"
+    )
+    assert probe["submission_pr"]["checks"] == "passing"
+    assert probe["anaconda_package"]["status_code"] == 404
+    assert probe["feedstock_repository"]["status_code"] == 404
+    assert probe["publication_claimed"] is False
+    assert probe["next_action"] == "wait-for-conda-forge-maintainer-review"
+    assert metadata["package_evidence"]["latest_live_probe_file"] == str(
+        LIVE_PROBE.relative_to(ROOT)
+    )
