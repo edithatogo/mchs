@@ -1,0 +1,22 @@
+Task: Phase 3 MIMIC-IV Demo ETL, fail-closed calculator input, and advanced worked-example bundle
+
+Summary:
+- Added synthetic MIMIC-shaped fixtures for admissions, ICU stays, diagnoses, procedures, DRG metadata, and synthetic AR-DRG overlay.
+- Implemented episode staging with lineage fields and code preservation.
+- Implemented fail-closed calculator input preparation for missing Australian AR-DRG provenance.
+- Added local precomputed AR-DRG overlay support with explicit provenance fields.
+- Added synthetic-overlay preparation for runnable documentation only.
+- Added a worked-example bundle producing staging, calculator input, calculated output, provenance, data quality, disclosure risk, support status, MCP boundary, surface contract, and scenario/sensitivity outputs.
+
+Files:
+- examples/mimic_demo/fixtures/*.csv
+- nwau_py/public_clinical_datasets.py
+- tests/test_public_clinical_dataset_worked_example_track.py
+
+Why:
+- The public dataset example needs to show real-data-shaped ETL and advanced existing surfaces while failing closed around Australian classification provenance and avoiding raw public patient-level data in git.
+
+Validation:
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q
+- uv run ruff check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- uv run ty check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
