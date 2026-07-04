@@ -1,0 +1,7 @@
+Validation fix: Align outer wrapper inventory assertion
+
+Summary:
+- Adjusted the existing inventory test to accept the final canonical preservation decision recorded by the manifest.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
