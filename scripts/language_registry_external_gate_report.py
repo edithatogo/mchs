@@ -39,6 +39,11 @@ PUBLIC_PROBES = {
     "conda_forge": "https://api.anaconda.org/package/conda-forge/nwau-py",
     "julia_general": "https://juliahub.com/ui/Packages/General/NationalWeightedActivityUnitWrapper",
 }
+CRAN_PUBLIC_PROBES = {
+    "crandb": "https://crandb.r-pkg.org/nwauR",
+    "package_page": "https://cran.r-project.org/web/packages/nwauR/index.html",
+    "archive": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
+}
 
 OPEN_VSX_API = "https://open-vsx.org/api/edithatogo/mchs-tools"
 VSCODE_MARKETPLACE_QUERY_URL = (
@@ -131,6 +136,15 @@ def vscode_target_version_visible(
     )
 
 
+def cran_target_version_visible(
+    registry: dict[str, Any], observation: dict[str, Any]
+) -> bool:
+    return any(
+        version_visible(registry, probe)
+        for probe in observation.get("public_probes", {}).values()
+    )
+
+
 def classify(registry: dict[str, Any], live: dict[str, Any] | None = None) -> str:
     status = str(registry.get("current_status") or "").lower()
     blocker = registry.get("blocker")
@@ -174,6 +188,13 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
                     vscode_marketplace_payload(),
                 )
                 observation["target_version_visible"] = vscode_target_version_visible(
+                    registry, observation
+                )
+            elif registry_id == "r_cran":
+                observation["public_probes"] = {
+                    name: fetch(url) for name, url in CRAN_PUBLIC_PROBES.items()
+                }
+                observation["target_version_visible"] = cran_target_version_visible(
                     registry, observation
                 )
             elif registry_id in PUBLIC_PROBES:

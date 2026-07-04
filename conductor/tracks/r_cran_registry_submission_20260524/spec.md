@@ -11,7 +11,7 @@ Track discovery, local preparation, submission, and publication evidence for the
 - Package candidate: `nwauR`
 - Version candidate: `0.1.0`
 - Local surface: `r-binding/DESCRIPTION`
-- Current status: `prepared_pending_cran_maintainer_submission`
+- Current status: `submitted_pending_cran_maintainer_confirmation`
 
 ## Functional Requirements
 

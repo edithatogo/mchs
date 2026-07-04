@@ -85,7 +85,7 @@ temporary build directory; no public CRAN listing exists.
 
 Required external action:
 
-- Maintainer metadata uses `Dylan Mordaunt <d.a.mordaunt@gmail.com>`; CRAN upload was submitted on 2026-06-13 as package id 344701 and the maintainer confirmation email was sent.
+- Maintainer metadata uses `Dylan Mordaunt <dylan.mordaunt@vuw.ac.nz>`; CRAN upload was submitted on 2026-06-13 as package id 344701 and the maintainer confirmation email was sent.
 - CRAN maintainer email confirmation for submitted package id 344701.
 - CRAN review response and acceptance.
 

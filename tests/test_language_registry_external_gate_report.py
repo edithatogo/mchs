@@ -85,6 +85,53 @@ def test_classify_uses_multi_probe_target_version_visibility():
     )
 
 
+def test_cran_live_probe_requires_target_version_on_public_cran_surface():
+    module = _module()
+    registry = {"id": "r_cran", "version": "0.1.0"}
+
+    assert (
+        module.cran_target_version_visible(
+            registry,
+            {
+                "public_probes": {
+                    "crandb": {"http_status": 404, "body": "not found"},
+                    "package_page": {"http_status": 404, "body": "not found"},
+                    "archive": {"http_status": 404, "body": "not found"},
+                }
+            },
+        )
+        is False
+    )
+
+    assert (
+        module.cran_target_version_visible(
+            registry,
+            {
+                "public_probes": {
+                    "crandb": {"http_status": 200, "body": '"Version":"0.1.0"'},
+                    "package_page": {"http_status": 404, "body": "not found"},
+                    "archive": {"http_status": 404, "body": "not found"},
+                }
+            },
+        )
+        is True
+    )
+
+
+def test_cran_registry_contract_remains_submitted_not_published():
+    contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    registry = next(item for item in contract["registries"] if item["id"] == "r_cran")
+
+    assert (
+        registry["current_status"]
+        == "submitted_pending_cran_maintainer_confirmation"
+    )
+    assert registry["publication_claimed"] is False
+    assert registry["submission_url"] == "cran-submit:344701"
+    assert "dylan.mordaunt@vuw.ac.nz" in json.dumps(registry)
+    assert "d.a.mordaunt@gmail.com" not in json.dumps(registry)
+
+
 def test_vscode_registry_contract_records_marketplace_0_1_1_completion():
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     registry = next(
