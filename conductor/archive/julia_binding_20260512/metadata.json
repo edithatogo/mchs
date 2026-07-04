@@ -4,26 +4,67 @@
   "status": "completed",
   "track_class": "binding",
   "current_state": "complete-with-gaps",
-  "primary_contract": "Track julia_binding_20260512 contract",
+  "primary_contract": "conductor/archive/julia_binding_20260512/spec.md, strategy.md, ci_notes.md, and wrapper-only julia-binding package scaffold",
   "dependencies": [],
   "completion_evidence": [
-    "docs",
-    "workflows",
-    "tests"
+    "conductor/archive/julia_binding_20260512/spec.md",
+    "conductor/archive/julia_binding_20260512/strategy.md",
+    "conductor/archive/julia_binding_20260512/ci_notes.md",
+    "julia-binding/Project.toml",
+    "julia-binding/src/NationalWeightedActivityUnitWrapper.jl",
+    "julia-binding/test/runtests.jl",
+    "docs-site/src/content/docs/tutorials/julia-dataframes-arrow-costing-study.mdx",
+    "tests/test_julia_binding_track.py"
   ],
   "publication_status": "not-ready",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Add a wrapper-only Julia binding prototype for high-performance analysis through CLI/file interop while preserving single-sourced calculator logic.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/julia_binding_20260512",
-  "support_scope": "Wrapper-only Julia binding prototype through CLI/file interop with single-sourced calculator logic.",
+  "completion_policy": "Complete-with-gaps means the repository has a documented Julia binding strategy, wrapper-only package scaffold, CSV CLI/file executable prototype, Arrow target documentation, no-formula-duplication guardrails, and CI posture notes. Publication readiness, a required Julia Actions matrix, deterministic shared fixture parity in CI, and a stable language-neutral Arrow/file release gate remain explicit future gates.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "CLI/file-based Julia wrapper strategy",
+      "CSV executable prototype around python -m nwau_py.cli.main",
+      "Arrow target interchange documentation",
+      "wrapper-only Julia package scaffold",
+      "repository guardrail tests preventing formula duplication",
+      "CI posture documentation that avoids overstating release readiness"
+    ],
+    "not_implemented": [
+      "required Julia GitHub Actions matrix",
+      "deterministic shared fixture parity in CI",
+      "stable language-neutral Arrow/file contract release gate",
+      "Julia package publication readiness"
+    ]
+  },
   "gap_register": [
     {
-      "id": "post-archive-evidence-gate",
+      "id": "julia-ci-fixture-parity",
       "status": "deferred",
-      "summary": "Julia CI matrix and stable file-fixture proof remain future gates"
+      "summary": "Julia CI matrix and stable file-fixture proof remain future gates.",
+      "rationale": "The wrapper can assemble commands and preserve single-sourced logic, but CI should wait until deterministic shared fixture parity exists."
+    },
+    {
+      "id": "julia-package-publication-readiness",
+      "status": "external-gate",
+      "summary": "Julia package publication readiness remains outside this wrapper-prototype archive.",
+      "rationale": "Registry publication needs a stable language-neutral file contract, executable fixture parity, and release evidence beyond this prototype track."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "spec": "conductor/archive/julia_binding_20260512/spec.md",
+    "plan": "conductor/archive/julia_binding_20260512/plan.md",
+    "review": "conductor/archive/julia_binding_20260512/review.md",
+    "strategy": "conductor/archive/julia_binding_20260512/strategy.md",
+    "ci_notes": "conductor/archive/julia_binding_20260512/ci_notes.md",
+    "package_project": "julia-binding/Project.toml",
+    "package_source": "julia-binding/src/NationalWeightedActivityUnitWrapper.jl",
+    "package_tests": "julia-binding/test/runtests.jl",
+    "docs_tutorial": "docs-site/src/content/docs/tutorials/julia-dataframes-arrow-costing-study.mdx",
+    "tests": "tests/test_julia_binding_track.py"
+  }
 }
