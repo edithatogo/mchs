@@ -1,0 +1,12 @@
+Task: Record bounded canary lifecycle closeout
+
+Summary:
+- Added canary_lifecycle_evidence.json, Starlight documentation, and template.md.
+- Updated metadata, validated_canary_spec.md, review.md, and plan.md for complete-with-gaps closeout.
+- Updated tests to prove local canary completion without official parity overclaiming.
+
+Validation:
+- uv run pytest tests/test_end_to_end_validated_canary_track.py -q
+
+Why:
+- The track can be finished locally only by separating validated local fixture evidence from missing official SAS/Excel parity evidence.
