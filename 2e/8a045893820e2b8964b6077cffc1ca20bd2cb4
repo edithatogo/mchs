@@ -1,0 +1,17 @@
+Task: Archive cancelled C/C++ vcpkg and Conan registry track
+
+Summary:
+- Moved c_cpp_vcpkg_conan_submission_20260524 from conductor/tracks to conductor/archive.
+- Marked metadata status=completed and current_state=complete-with-gaps while preserving current_status=deprecated_cancelled_not_published, publication_status=cancelled_not_published, and publication_claimed=false.
+- Updated conductor/tracks.md, language-registry runbook, language-registry contract, repository topology evidence paths, focused tests, and validator handling.
+- conductor-review finding fixed: Conan recipe topology state now matches cancellation rather than active submitted review.
+
+Validation:
+- uv run pytest tests/test_c_cpp_vcpkg_conan_submission_track.py tests/test_repository_topology_governance.py -q
+- python scripts/validate_language_registry_submission_tracks.py
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run ruff check tests/test_c_cpp_vcpkg_conan_submission_track.py scripts/validate_language_registry_submission_tracks.py
+- uv run ty check tests/test_c_cpp_vcpkg_conan_submission_track.py scripts/validate_language_registry_submission_tracks.py
+
+Residual gate:
+- None for the cancelled track scope. ConanCenter PR 30262 and vcpkg PR 51965 are retained as historical evidence only; no public vcpkg or ConanCenter publication is claimed.
