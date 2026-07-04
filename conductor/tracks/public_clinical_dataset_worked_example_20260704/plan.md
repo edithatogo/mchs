@@ -59,7 +59,7 @@
     - [x] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
-## Phase 4: Worked Example, Docs, and Additional Improvements
+## Phase 4: Worked Example, Docs, and Additional Improvements [checkpoint: ff41c5a]
 - [x] Task: Add a runnable worked example. `cc6c2f1`
     - [x] Generate staging, calculator input, and synthetic-overlay NWAU output from tiny committed fixtures.
     - [x] Provide commands for users with local MIMIC-IV Demo files.
