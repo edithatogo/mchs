@@ -24,7 +24,7 @@
     - [x] Convert lessons into reusable implementation checklist.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Documentation and Template Extraction' (Protocol in workflow.md)
 
-## Phase 5: Complete-with-Gaps Closeout
+## Phase 5: Complete-with-Gaps Closeout [checkpoint: 3ebec45]
 - [x] Task: Record bounded canary lifecycle closeout. [89f40d9]
     - [x] Add machine-readable canary lifecycle evidence.
     - [x] Commit Starlight docs page and reusable template guidance.
