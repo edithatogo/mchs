@@ -352,11 +352,11 @@ def test_repository_topology_validator_detects_unmanaged_outer_gitlink(
 def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
     manifest = _load_json(OUTER_MANIFEST)
     assert manifest["track_id"] == "outer_wrapper_retirement_migration_20260624"
-    assert manifest["recommended_option"] == "retire-wrapper-after-preservation"
+    assert manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
     assert (
         manifest["decision_boundary"]
-        == "Inventory and manifest only; no outer-wrapper files are deleted by "
-        "this phase."
+        == "Canonical preservation and retirement decision recorded; no "
+        "outer-wrapper files are deleted by this canonical-repo track."
     )
 
     entries = {entry["path"]: entry for entry in manifest["entries"]}
