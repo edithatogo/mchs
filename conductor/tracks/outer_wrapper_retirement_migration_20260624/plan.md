@@ -29,7 +29,7 @@
     - [x] Run topology validator against canonical repo.
     - [x] Run topology validator against the outer wrapper with explicit `--outer-root`.
     - [x] Run focused tests for migrated source artifacts.
-- [ ] Task: Record residual gates.
-    - [ ] Separate local cleanup from external registry or account blockers.
-    - [ ] Update support docs only for migrated, validated artifacts.
+- [x] Task: Record residual gates. [a7e662c]
+    - [x] Separate local cleanup from external registry or account blockers.
+    - [x] Update support docs only for migrated, validated artifacts.
 - [ ] Task: Conductor - User Manual Verification 'Validation' (Protocol in workflow.md)
