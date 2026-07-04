@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = ROOT / "conductor" / "archive" / "docs_sota_starlight_completion_20260513"
@@ -24,6 +26,53 @@ GOVERNANCE_INDEX = DOCS_SITE / "governance" / "index.mdx"
 
 def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def _load_metadata() -> dict[str, Any]:
+    return json.loads(_read(TRACK / "metadata.json"))
+
+
+def test_docs_site_sota_archive_metadata_is_explicit():
+    metadata = _load_metadata()
+
+    assert metadata["track_id"] == "docs_sota_starlight_completion_20260513"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
+    assert metadata["completion_policy"].startswith("Complete-with-gaps means")
+
+    support_scope = metadata["support_scope"]
+    assert support_scope["state"] == "complete-with-gaps"
+    assert support_scope["implemented"] == [
+        "Starlight/Astro documentation homepage and navigation",
+        "versioned documentation model and 2025 active version page",
+        "calculator coverage and conservative support-status documentation",
+        "public calculator contract page and machine-readable schema artifact",
+        "source archive status page with explicit documented gaps",
+        "Starlight extension guidance and governance reading order",
+    ]
+    assert support_scope["not_implemented"] == [
+        "external GitHub Pages publication proof",
+        "package or registry publication claims",
+        "new calculator parity evidence",
+        "runtime support beyond source archive and calculator validation tracks",
+    ]
+    assert {gap["status"] for gap in metadata["gap_register"]} == {
+        "deferred",
+        "out-of-scope",
+    }
+    assert metadata["archive_evidence"]["review"] == (
+        "conductor/archive/docs_sota_starlight_completion_20260513/review.md"
+    )
+
+
+def test_docs_site_sota_plan_records_archive_review_checkpoints():
+    plan = _read(TRACK / "plan.md")
+
+    assert "[checkpoint:" in plan
+    assert "Archive Repair" in plan
+    assert "metadata.json" in plan
+    assert "plan.md" in plan
+    assert "does not claim external publication or new runtime parity" in plan
 
 
 def test_docs_site_homepage_positions_the_current_public_contract():

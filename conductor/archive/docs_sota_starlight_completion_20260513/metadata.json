@@ -5,14 +5,33 @@
   "track_class": "publication",
   "current_state": "complete-with-gaps",
   "primary_contract": "docs-site Starlight documentation contract",
-  "support_scope": "Starlight/Astro documentation site completion for homepage, versioned docs, calculator coverage, governance navigation, public contract page and schema, source archive status, tutorials, and conservative support-status language. The track validates docs content and navigation; it does not claim external publication or unsupported runtime parity.",
+  "completion_policy": "Complete-with-gaps means the repository has Starlight/Astro documentation content, versioning, calculator coverage, governance navigation, public contract documentation, a machine-readable schema artifact, source archive status, extension guidance, focused validation, and final review evidence. The track validates committed docs content and navigation; it does not claim external publication, package or registry publication, new calculator parity evidence, or runtime support beyond source archive and calculator validation tracks.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "Starlight/Astro documentation homepage and navigation",
+      "versioned documentation model and 2025 active version page",
+      "calculator coverage and conservative support-status documentation",
+      "public calculator contract page and machine-readable schema artifact",
+      "source archive status page with explicit documented gaps",
+      "Starlight extension guidance and governance reading order"
+    ],
+    "not_implemented": [
+      "external GitHub Pages publication proof",
+      "package or registry publication claims",
+      "new calculator parity evidence",
+      "runtime support beyond source archive and calculator validation tracks"
+    ]
+  },
   "gap_register": [
     {
       "gap": "External publication and registry claims remain outside this Starlight completion track.",
+      "status": "out-of-scope",
       "rationale": "The track validates docs-site content and governance alignment, not release artifact publication."
     },
     {
       "gap": "Docs pages describe current support and documented gaps; they do not create new calculator parity evidence.",
+      "status": "deferred",
       "rationale": "Runtime support claims remain governed by source archive, support matrix, and calculator validation tracks."
     }
   ],
@@ -31,9 +50,22 @@
     "docs-site/src/content/docs/governance/index.mdx",
     "tests/test_docs_site_sota_refresh.py"
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/docs_sota_starlight_completion_20260513/spec.md",
+    "plan": "conductor/archive/docs_sota_starlight_completion_20260513/plan.md",
+    "review": "conductor/archive/docs_sota_starlight_completion_20260513/review.md",
+    "homepage": "docs-site/src/content/docs/index.mdx",
+    "versioning": "docs-site/src/content/docs/versions/index.mdx",
+    "calculator_coverage": "docs-site/src/content/docs/governance/calculator-coverage.mdx",
+    "public_contract": "docs-site/src/content/docs/governance/public-calculator-contract.mdx",
+    "contract_schema": "docs-site/public/contracts/public-calculator-contract.v1.schema.json",
+    "source_archive": "docs-site/src/content/docs/governance/source-archive.md",
+    "governance_index": "docs-site/src/content/docs/governance/index.mdx",
+    "tests": "tests/test_docs_site_sota_refresh.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Make documentation comprehensive, versioned, support-status aware, tutorial-rich, and aligned with Starlight/Astro.",
   "no_stub_enforce": true
 }
