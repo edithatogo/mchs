@@ -716,7 +716,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Outer Wrapper Retirement Migration**
+- [x] **Track: Outer Wrapper Retirement Migration**
 *Link: [./tracks/outer_wrapper_retirement_migration_20260624/](./tracks/outer_wrapper_retirement_migration_20260624/)*
 *Gate: Inventory the transitional outer wrapper, preserve source and Power Platform evidence, and retire or formalize the broken gitlink wrapper without data loss.*
 
