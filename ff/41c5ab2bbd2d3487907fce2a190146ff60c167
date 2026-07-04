@@ -1,0 +1,19 @@
+Phase 4 checkpoint: worked example, docs, and evidence
+
+Scope since Phase 3 checkpoint 2bfd7eb:
+- Added runnable example script under examples/mimic_demo/run_worked_example.py.
+- Added current and 2026 docs-site tutorials and sidebar entry.
+- Added GitHub Actions review evidence and metadata.
+- Updated focused tests for script execution and docs boundaries.
+
+conductor-review findings and fixes:
+- Findings: none requiring code/docs changes at checkpoint.
+- External gate recorded: Docs Site run 28713315483 and Release Rust run 28713315735 failed with jobs=[] and no logs; tracked by issue #354.
+- Unresolved track blockers: none for local implementation; external workflow-file gate remains outside this track scope.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json => total_findings 0
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q => 17 passed
+- uv run ruff check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
+- uv run ty check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
+- CI=true npm --prefix docs-site run build => passed, 94 pages built
