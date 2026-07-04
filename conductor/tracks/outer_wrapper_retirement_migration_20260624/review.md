@@ -27,6 +27,8 @@ Reviewed; locally complete with an explicit outer-wrapper cleanup gate.
 - `uv run pytest tests/test_repository_topology_governance.py -q`
 - `uv run python scripts/validate_repository_topology.py --json`
 - `uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs` currently fails with unmanaged gitlink and nested-repo diagnostics, as recorded in the cleanup gate.
+- `uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py`
+- `uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py`
 - `python conductor/scripts/stub_detector.py --root . --json`
 
 ## Archive Blockers
