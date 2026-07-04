@@ -9,35 +9,55 @@
     "conductor_requirements_design_authority_20260513",
     "strict_quality_gates_20260513"
   ],
+  "completion_policy": "Complete-with-gaps means the repository has a governance-only recursive SOTA audit contract: SHOULD-003 in requirements, the requirements-design-audit loop in design, governance/tooling tests, and explicit gap records for missing current audit outputs. It does not claim a completed current SOTA comparison report, remediation finding list, external benchmark proof, or periodic audit automation.",
   "completion_evidence": [
     "conductor/requirements.md (SHOULD-003)",
     "conductor/design.md (recursive audit flow)",
     "tests/test_tooling_configuration.py",
-    "tests/test_governance_contracts.py"
+    "tests/test_governance_contracts.py",
+    "tests/test_recursive_sota_contract_audit_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Recurring SOTA audit requirement and design-loop definition.",
-      "Governance references that describe the recursive audit flow.",
-      "Local tests for governance and tooling surfaces."
+    "implemented": [
+      "recursive SOTA audit requirement in conductor/requirements.md",
+      "recursive requirements-design-audit loop in conductor/design.md",
+      "governance tests for contract and tooling surfaces",
+      "explicit gap register for missing current audit outputs"
     ],
-    "excluded": [
-      "A completed current SOTA comparison report.",
-      "Finding list with remediation links and owner tracks.",
-      "Publication or external benchmark proof."
+    "not_implemented": [
+      "completed current SOTA comparison report",
+      "finding list with remediation links and owner tracks",
+      "external benchmark or publication proof",
+      "periodic audit automation"
     ]
   },
   "gap_register": [
     {
       "id": "actual-sota-audit-report",
-      "status": "audit-gap",
-      "description": "The track defines the recurring audit contract but does not yet contain a completed audit report, findings baseline, or spawned remediation links."
+      "status": "deferred",
+      "description": "The track defines the recurring audit contract but does not contain a completed current SOTA audit report, findings baseline, or spawned remediation links.",
+      "rationale": "This archive is closed as a governance-only contract. The actual audit report should be produced by a separate execution track."
+    },
+    {
+      "id": "external-benchmark-publication-proof",
+      "status": "out-of-scope",
+      "description": "External benchmark or publication proof is not part of this governance contract archive.",
+      "rationale": "External proof belongs to the future SOTA audit execution output, not the contract definition."
     }
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/recursive_sota_contract_audit_20260513/spec.md",
+    "plan": "conductor/archive/recursive_sota_contract_audit_20260513/plan.md",
+    "review": "conductor/archive/recursive_sota_contract_audit_20260513/review.md",
+    "requirements": "conductor/requirements.md",
+    "design": "conductor/design.md",
+    "governance_tests": "tests/test_governance_contracts.py",
+    "archive_tests": "tests/test_recursive_sota_contract_audit_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Periodically compare the repo against SOTA scientific/software project practices, update the project contract, and spawn remediation tracks.",
   "no_stub_enforce": true
 }
