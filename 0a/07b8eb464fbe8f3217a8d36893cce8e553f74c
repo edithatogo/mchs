@@ -1,0 +1,12 @@
+Archive: End-to-End Validated Canary
+
+Summary:
+- Archived conductor/tracks/end_to_end_validated_canary_20260512 to conductor/archive/end_to_end_validated_canary_20260512.
+- Updated conductor/tracks.md and tests to use the archive location.
+- Retained complete-with-gaps scope with official SAS/Excel parity gaps explicit.
+
+Validation:
+- uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py -q -> 28 passed
+- uv run ruff check tests/test_end_to_end_validated_canary_track.py -> passed
+- uv run ty check tests/test_end_to_end_validated_canary_track.py -> passed
+- python conductor/scripts/stub_detector.py --root . --json -> 0 findings
