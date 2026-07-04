@@ -49,18 +49,38 @@ def test_historical_ihacpa_coverage_track_metadata_and_registry_stay_conservativ
     assert metadata["track_id"] == "historical_ihacpa_coverage_20260512"
     assert metadata["status"] == "completed"
     assert metadata["track_class"] == "governance"
-    assert metadata["current_state"] == "complete"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-applicable"
+    assert metadata["completion_policy"].startswith("Complete-with-gaps means")
     assert "NHCDC cost evidence" in metadata["description"]
     assert "calculator support" in metadata["description"]
-    assert metadata["support_scope"]["state"] == "provenance-audit"
-    assert "2012-13 calculator support remains an explicit gap" in metadata[
-        "support_scope"
-    ]["summary"]
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+    assert metadata["support_scope"]["implemented"] == [
+        "2012-13 through 2026-27 historical IHACPA source provenance audit",
+        (
+            "separate NEP determination, technical specification, NWAU "
+            "calculator, price-weight, NHCDC, and validation-status coverage"
+        ),
+        "foundational 2012-13 NEP and technical-specification PDF hashes",
+        "executable historical inventory validation script",
+        "explicit documentation that NHCDC is costing evidence only",
+    ]
+    assert metadata["support_scope"]["not_implemented"] == [
+        "direct 2012-13 NWAU calculator artifact proof",
+        "full hash census for every historical downloadable artifact",
+        "calculator parity validation for every historical year",
+    ]
     assert {gap["id"] for gap in metadata["gap_register"]} >= {
         "historical-2012-13-calculator-artifact",
         "historical-full-hash-census",
     }
+    assert {gap["status"] for gap in metadata["gap_register"]} == {
+        "deferred",
+        "out-of-scope",
+    }
+    assert metadata["archive_evidence"]["review"] == (
+        "conductor/archive/historical_ihacpa_coverage_20260512/review.md"
+    )
 
     assert "historical_ihacpa_coverage_20260512" in track_index
     assert "Historical IHACPA Coverage Audit" in registry
@@ -76,6 +96,8 @@ def test_historical_ihacpa_coverage_track_metadata_and_registry_stay_conservativ
         "calculator parity"
     ) in plan
     assert "Add foundational 2012-13 PDF hashes" in plan
+    assert "[checkpoint:" in plan
+    assert "Archive Repair" in plan
     assert "executable historical inventory validation" in metadata[
         "primary_contract"
     ]

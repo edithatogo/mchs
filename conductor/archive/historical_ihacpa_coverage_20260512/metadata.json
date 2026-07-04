@@ -3,33 +3,62 @@
   "type": "feature",
   "status": "completed",
   "track_class": "governance",
-  "current_state": "complete",
-  "primary_contract": "conductor/tracks/historical_ihacpa_coverage_20260512/historical_source_inventory.md plus executable historical inventory validation",
+  "current_state": "complete-with-gaps",
+  "primary_contract": "conductor/archive/historical_ihacpa_coverage_20260512/historical_source_inventory.md plus executable historical inventory validation",
   "dependencies": [],
   "completion_evidence": [
-    "docs",
-    "workflows",
-    "tests"
+    "conductor/archive/historical_ihacpa_coverage_20260512/historical_source_inventory.md",
+    "conductor/archive/historical_ihacpa_coverage_20260512/manifest_gap_notes.md",
+    "conductor/archive/historical_ihacpa_coverage_20260512/validation_roadmap.md",
+    "conductor/ihacpa-archive-matrix.md",
+    "conductor/ihacpa-tool-coverage-matrix.md",
+    "conductor/source-archive.md",
+    "scripts/validate_historical_ihacpa_inventory.py",
+    "tests/test_historical_ihacpa_coverage_track.py"
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Double-check and extend historical IHACPA coverage back to 2012-13 where official pricing specifications exist, while distinguishing older NHCDC cost evidence from NWAU calculator support.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository has a historical IHACPA provenance audit from 2012-13 through 2026-27, separate source-family matrices, foundational 2012-13 NEP and technical-specification hashes, executable inventory validation, and explicit caveats that NHCDC is costing evidence only. The track does not claim direct 2012-13 NWAU calculator support, full historical hash census coverage, or calculator parity validation for every historical year.",
   "support_scope": {
-    "state": "provenance-audit",
-    "summary": "Covers 2012-13 through 2026-27 historical provenance for NEP determinations, pricing specifications, calculator availability, price weights, and NHCDC costing evidence. NHCDC is cost evidence only, and 2012-13 calculator support remains an explicit gap."
+    "state": "complete-with-gaps",
+    "implemented": [
+      "2012-13 through 2026-27 historical IHACPA source provenance audit",
+      "separate NEP determination, technical specification, NWAU calculator, price-weight, NHCDC, and validation-status coverage",
+      "foundational 2012-13 NEP and technical-specification PDF hashes",
+      "executable historical inventory validation script",
+      "explicit documentation that NHCDC is costing evidence only"
+    ],
+    "not_implemented": [
+      "direct 2012-13 NWAU calculator artifact proof",
+      "full hash census for every historical downloadable artifact",
+      "calculator parity validation for every historical year"
+    ]
   },
   "gap_register": [
     {
       "id": "historical-2012-13-calculator-artifact",
-      "status": "open-gap",
-      "summary": "No direct 2012-13 NWAU calculator artifact is proven; support must not be inferred from pricing specifications or NHCDC evidence."
+      "status": "deferred",
+      "summary": "No direct 2012-13 NWAU calculator artifact is proven; support must not be inferred from pricing specifications or NHCDC evidence.",
+      "rationale": "The provenance audit confirms 2012-13 NEP and technical-specification sources but does not find a calculator artifact."
     },
     {
       "id": "historical-full-hash-census",
-      "status": "deferred",
-      "summary": "Foundational PDF hashes are recorded, but a full hash census across every historical artifact remains outside this provenance-audit closure."
+      "status": "out-of-scope",
+      "summary": "Foundational PDF hashes are recorded, but a full hash census across every historical artifact remains outside this provenance-audit closure.",
+      "rationale": "This track records foundational hashes and existing local archive evidence; a full historical hash census should be a separate source-archive hardening track."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "spec": "conductor/archive/historical_ihacpa_coverage_20260512/spec.md",
+    "plan": "conductor/archive/historical_ihacpa_coverage_20260512/plan.md",
+    "review": "conductor/archive/historical_ihacpa_coverage_20260512/review.md",
+    "historical_inventory": "conductor/archive/historical_ihacpa_coverage_20260512/historical_source_inventory.md",
+    "manifest_gap_notes": "conductor/archive/historical_ihacpa_coverage_20260512/manifest_gap_notes.md",
+    "validation_roadmap": "conductor/archive/historical_ihacpa_coverage_20260512/validation_roadmap.md",
+    "validation_script": "scripts/validate_historical_ihacpa_inventory.py",
+    "tests": "tests/test_historical_ihacpa_coverage_track.py"
+  }
 }

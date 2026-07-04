@@ -6,16 +6,22 @@
     - [x] Confirm NWAU calculator availability by year and stream.
     - [x] Inventory pre-2012-13 NHCDC/cost-weight evidence separately.
     - [x] Add foundational 2012-13 PDF hashes and executable inventory validation.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Historical Source Verification' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Historical Source Verification' (Protocol in workflow.md) [checkpoint: archived]
 
 ## Phase 2: Manifest and Matrix Updates
 - [x] Task: Update manifests and docs with historical coverage distinctions.
     - [x] Add separate matrix columns for specifications, calculators, price weights, NHCDC evidence, and validation.
     - [x] Add explicit gap records for missing 2012-13 calculator artifacts if unresolved.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Manifest and Matrix Updates' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Manifest and Matrix Updates' (Protocol in workflow.md) [checkpoint: archived]
 
 ## Phase 3: Validation Roadmap
 - [x] Task: Create a validation roadmap for historical years.
     - [x] Prioritize 2012-13 specification extraction separately from calculator parity.
     - [x] Define evidence required before claiming support for older years.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation Roadmap' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation Roadmap' (Protocol in workflow.md) [checkpoint: archived]
+
+## Phase 4: Archive Repair
+- [x] Task: Repair metadata.json to record a structured complete-with-gaps support scope, completion policy, archive evidence, and explicit gap register.
+- [x] Task: Repair plan.md to preserve phase checkpoints and state that direct 2012-13 NWAU calculator support and full hash census remain bounded gaps.
+- [x] Task: Tighten focused validation for archive metadata, plan checkpoints, historical source inventory, manifest gap notes, and executable inventory validation.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Archive Repair' (Protocol in workflow.md) [checkpoint: repaired]
