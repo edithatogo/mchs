@@ -1,0 +1,12 @@
+Review: Phase 2 outer wrapper retirement migration
+
+Findings:
+- Canonical preservation and cleanup gates are recorded and tested.
+- No high-confidence fixes remain after updating the stale inventory assertion.
+- Outer-root validation still fails with unmanaged gitlink/nested-repo diagnostics by design; this is the documented parent-wrapper cleanup gate.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run pytest tests/test_repository_topology_governance.py -q
+- uv run python scripts/validate_repository_topology.py --json
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs (expected fail)
