@@ -25,10 +25,10 @@
 
 ## Phase 3: Validation
 
-- [ ] Task: Validate migration results.
-    - [ ] Run topology validator against canonical repo.
-    - [ ] Run topology validator against the outer wrapper with explicit `--outer-root`.
-    - [ ] Run focused tests for migrated source artifacts.
+- [x] Task: Validate migration results. [7e66349]
+    - [x] Run topology validator against canonical repo.
+    - [x] Run topology validator against the outer wrapper with explicit `--outer-root`.
+    - [x] Run focused tests for migrated source artifacts.
 - [ ] Task: Record residual gates.
     - [ ] Separate local cleanup from external registry or account blockers.
     - [ ] Update support docs only for migrated, validated artifacts.
