@@ -43,20 +43,20 @@
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md) `043cf0c`
 
 ## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
-- [ ] Task: Implement MIMIC-IV Demo staging from local CSV files.
-    - [ ] Derive episode-level facts from admissions, ICU stays, diagnoses, procedures, and hospital metadata.
-    - [ ] Emit a staging table that preserves MIMIC provenance and does not claim Australian classification.
-    - [ ] Include stable episode lineage from source files and row identifiers to staged rows.
-- [ ] Task: Add calculator-input preparation with classification provenance checks.
-    - [ ] Fail closed when no Australian AR-DRG or approved synthetic overlay is supplied.
-    - [ ] Support a committed synthetic AR-DRG overlay fixture for runnable documentation only.
-    - [ ] Make overlay provenance visible in every calculator-ready and calculated output.
-- [ ] Task: Demonstrate advanced calculator-tooling features in the worked example.
-    - [ ] Produce raw staging, calculator-ready CSV, calculated CSV, provenance report, data-quality report, and support-status summary.
-    - [ ] Exercise Python API and CLI/file interoperability where they are already supported, without adding a new runtime surface.
-    - [ ] Exercise MCP boundary validation and API/OpenAI contract documentation where those surfaces are available, without claiming formula execution if the existing contract does not support it.
-    - [ ] Add a scenario/sensitivity appendix comparing no-provenance fail-closed behavior, synthetic-overlay behavior, and any local precomputed AR-DRG path if supplied.
-    - [ ] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
+- [x] Task: Implement MIMIC-IV Demo staging from local CSV files. `f27a15c`
+    - [x] Derive episode-level facts from admissions, ICU stays, diagnoses, procedures, and hospital metadata.
+    - [x] Emit a staging table that preserves MIMIC provenance and does not claim Australian classification.
+    - [x] Include stable episode lineage from source files and row identifiers to staged rows.
+- [x] Task: Add calculator-input preparation with classification provenance checks. `f27a15c`
+    - [x] Fail closed when no Australian AR-DRG or approved synthetic overlay is supplied.
+    - [x] Support a committed synthetic AR-DRG overlay fixture for runnable documentation only.
+    - [x] Make overlay provenance visible in every calculator-ready and calculated output.
+- [x] Task: Demonstrate advanced calculator-tooling features in the worked example. `f27a15c`
+    - [x] Produce raw staging, calculator-ready CSV, calculated CSV, provenance report, data-quality report, and support-status summary.
+    - [x] Exercise Python API and CLI/file interoperability where they are already supported, without adding a new runtime surface.
+    - [x] Exercise MCP boundary validation and API/OpenAI contract documentation where those surfaces are available, without claiming formula execution if the existing contract does not support it.
+    - [x] Add a scenario/sensitivity appendix comparing no-provenance fail-closed behavior, synthetic-overlay behavior, and any local precomputed AR-DRG path if supplied.
+    - [x] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
 ## Phase 4: Worked Example, Docs, and Additional Improvements
