@@ -1,0 +1,130 @@
+---
+title: MIMIC-IV Demo worked example
+description: Stage a public clinical dataset example while failing closed around Australian AR-DRG provenance.
+sidebar:
+  label: MIMIC-IV Demo example
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This tutorial shows how to stage MIMIC-IV Clinical Database Demo v2.2-shaped
+data for the acute calculator contract without treating US classifications as
+Australian classification evidence.
+
+<Aside type="caution" title="Classification boundary">
+  MIMIC US DRGs, ICD-9-CM, ICD-10-CM, and ICD-10-PCS fields are not
+  authoritative Australian AR-DRG, ICD-10-AM, ACHI, or ACS inputs. The runnable
+  example uses a synthetic Australian AR-DRG overlay for documentation only.
+</Aside>
+
+MIMIC is not authoritative Australian AR-DRG evidence.
+
+## Dataset
+
+The selected dataset is the [MIMIC-IV Clinical Database Demo v2.2](https://physionet.org/content/mimic-iv-demo/2.2/).
+It is an open-access PhysioNet demo release under the Open Data Commons Open Database License v1.0.
+The repository records source metadata in
+`reference-data/public-datasets/mimic-iv-demo/manifest.yaml`; raw MIMIC files
+stay local-only.
+
+The first implementation uses the hospital and ICU table shapes because they
+support admitted-episode staging:
+
+* `hosp/admissions.csv.gz`
+* `hosp/diagnoses_icd.csv.gz`
+* `hosp/procedures_icd.csv.gz`
+* `hosp/drgcodes.csv.gz`
+* `icu/icustays.csv.gz`
+
+The committed files under `examples/mimic_demo/fixtures/` are tiny synthetic
+rows with MIMIC-like columns. They are not copied from MIMIC.
+
+## Runnable Fixture Workflow
+
+Run the synthetic fixture workflow from the repository root:
+
+```bash
+uv run python examples/mimic_demo/run_worked_example.py \
+  --output-dir .cache/mchs/mimic-demo-worked-example
+```
+
+The script writes local outputs:
+
+* `staged.csv`
+* `calculator_input.csv`
+* `calculated.csv`
+* `provenance_report.json`
+* `data_quality_report.json`
+* `disclosure_risk_summary.json`
+* `support_status_summary.json`
+* `surface_contract_report.json`
+* `mcp_boundary_validation.json`
+* `scenario_sensitivity_report.json`
+
+The calculated output is executable only because
+`examples/mimic_demo/fixtures/synthetic_overlay.csv` supplies synthetic
+Australian AR-DRGs. It is suitable for testing the workflow shape, not for
+authoritative Australian NWAU claims.
+
+## Local MIMIC Files
+
+Users with local MIMIC-IV Demo files can point the runner at their own cache:
+
+```bash
+MCHS_MIMIC_IV_DEMO_DIR=/path/to/mimic-iv-demo/2.2
+
+uv run python examples/mimic_demo/run_worked_example.py \
+  --input-dir "$MCHS_MIMIC_IV_DEMO_DIR" \
+  --output-dir .cache/mchs/mimic-demo-local
+```
+
+That path still fails closed for authoritative calculator input unless an
+Australian AR-DRG source is supplied. If a local precomputed Australian AR-DRG
+overlay is available, keep it out of git and provide it explicitly:
+
+```bash
+uv run python examples/mimic_demo/run_worked_example.py \
+  --input-dir "$MCHS_MIMIC_IV_DEMO_DIR" \
+  --local-ar-drg-overlay /secure/local/ar_drg_overlay.csv \
+  --output-dir .cache/mchs/mimic-demo-local
+```
+
+The local overlay must contain `episode_id`, `australian_ar_drg`, and
+`classification_provenance`. The repository does not provide or derive those
+values.
+
+## Surfaces Demonstrated
+
+The worked example exercises the safe core surfaces available in this repo:
+
+* Python API execution through `run_mimic_demo_worked_example()`.
+* CLI/file interoperability by writing standard CSV and JSON artifacts.
+* MCP boundary validation without claiming MCP formula execution.
+* HTTP API and OpenAI adapter contract documentation references without
+  claiming public-dataset runtime execution on those surfaces.
+* Provenance, data-quality, disclosure-risk, support-status, and
+  scenario/sensitivity reports.
+
+The support states deliberately distinguish `source_available`, `executable`,
+`validated`, `blocked_licensed`, and `out_of_scope`.
+
+## Disclosure Boundary
+
+Raw public patient-level files and real public-data-derived outputs are
+local-only unless a disclosure-risk review classifies them as commit-safe. The
+example reports small cells, direct identifiers, date/time fields, admission
+IDs, and joined clinical features as local-only risk factors.
+
+## Follow-Up Work
+
+Separate GitHub issues cover improvements that should not be bundled into this
+first acute example:
+
+* [#346](https://github.com/edithatogo/mchs/issues/346): MIMIC-IV-ED example.
+* [#347](https://github.com/edithatogo/mchs/issues/347): FHIR and MEDS examples.
+* [#348](https://github.com/edithatogo/mchs/issues/348): public dataset suitability registry.
+* [#349](https://github.com/edithatogo/mchs/issues/349): public dataset downloader and cache guard.
+* [#350](https://github.com/edithatogo/mchs/issues/350): reusable provenance and data-quality report contract.
+* [#351](https://github.com/edithatogo/mchs/issues/351): worked-example surface conformance harness.
+* [#352](https://github.com/edithatogo/mchs/issues/352): disclosure-risk and safe-output policy.
+* [#353](https://github.com/edithatogo/mchs/issues/353): scenario/sensitivity report pattern.

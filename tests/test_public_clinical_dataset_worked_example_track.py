@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+import subprocess
+import sys
 from pathlib import Path
 from typing import Any, cast
 
@@ -359,3 +362,44 @@ def test_mimic_demo_worked_example_writes_local_outputs(tmp_path: Path) -> None:
     }.issubset(bundle.written_files)
     for output_path in bundle.written_files.values():
         assert Path(output_path).exists()
+
+
+def test_mimic_demo_worked_example_script_runs(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "examples/mimic_demo/run_worked_example.py",
+            "--output-dir",
+            str(tmp_path),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    payload = json.loads(result.stdout)
+    assert payload["row_count"] == 2
+    assert payload["support_status"]["blocked_licensed"] == [
+        "authoritative_australian_ar_drg_from_mimic_alone"
+    ]
+    assert Path(payload["outputs"]["calculated"]).exists()
+
+
+def test_mimic_demo_docs_tutorial_records_boundaries() -> None:
+    docs_paths = [
+        Path("docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx"),
+        Path(
+            "docs-site/src/content/docs/2026/tutorials/"
+            "mimic-iv-demo-worked-example.mdx"
+        ),
+    ]
+
+    for docs_path in docs_paths:
+        assert docs_path.exists()
+        text = docs_path.read_text(encoding="utf-8")
+        assert "MIMIC-IV Clinical Database Demo v2.2" in text
+        assert "Open Data Commons Open Database License v1.0" in text
+        assert "not authoritative Australian AR-DRG" in text
+        assert "examples/mimic_demo/run_worked_example.py" in text
+        assert "#346" in text
+        assert "#349" in text

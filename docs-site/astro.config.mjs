@@ -47,6 +47,7 @@ export default defineConfig({
                 'tutorials/costing-study-nwau-nep',
                 'tutorials/costing-study-cost-vs-price',
                 'tutorials/costing-study-stream-benchmarking',
+                'tutorials/mimic-iv-demo-worked-example',
               ],
             },
             {
