@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "c_abi_binding_20260512"
+TRACK = ROOT / "conductor" / "archive" / "c_abi_binding_20260512"
 TRACKS_REGISTRY = ROOT / "conductor" / "tracks.md"
 DOWNSTREAM_PACKAGING_PLANS = ROOT / "conductor" / "downstream-packaging-plans.md"
 C_ABI_CRATE = ROOT / "rust" / "crates" / "nwau-c-abi"
@@ -23,7 +24,7 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def _load_json(path: Path) -> dict[str, object]:
+def _load_json(path: Path) -> dict[str, Any]:
     return json.loads(_read(path))
 
 
@@ -70,13 +71,13 @@ def test_c_abi_binding_track_requires_versioned_memory_safe_arrow_contract():
         "document arrow c data interface usage and the file-based arrow boundary",
         "abi compatibility checks",
         "shared golden fixture parity as the gate before any readiness claim",
+        "delegate valid scalar acute 2025 pointer-shaped calls to `nwau-core`",
     ]:
         assert phrase in plan
 
     assert (
         "define a stable institutional embedding abi only after core schemas "
-        "and calculator parity are stable."
-        in registry
+        "and calculator parity are stable." in registry
     )
     assert "c abi wrapper or secured service boundary" in packaging
     assert "arrow c data interface" in strategy
@@ -84,6 +85,8 @@ def test_c_abi_binding_track_requires_versioned_memory_safe_arrow_contract():
     assert "header generation" in ci_notes
     assert "exported symbols" in ci_notes
     assert "null pointer handling" in ci_notes
+    assert "private preview implementation and contract definition" in strategy
+    assert "pointer-shaped calls that delegate to `nwau-core`" in ci_notes
     assert "thin and explicit" in tutorial
     assert "version the abi independently from implementation internals." in tutorial
     assert "make every output shape deterministic and easy to free" in tutorial
@@ -99,8 +102,35 @@ def test_c_abi_binding_track_metadata_stays_conservative():
 
     assert metadata["track_id"] == "c_abi_binding_20260512"
     assert metadata["track_class"] == "binding"
-    assert metadata["current_state"] == "prototype"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["publication_status"] == "not-ready"
+    assert metadata["completion_policy"].startswith("complete-with-gaps means")
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+    assert metadata["support_scope"]["implemented"] == [
+        "versioned C ABI strategy and committed header",
+        "FFI-safe ownership and error semantics",
+        "scalar acute 2025 preview entry point delegated to nwau-core",
+        "Arrow C Data Interface and file-based Arrow boundary policy",
+    ]
+    assert metadata["archive_evidence"]["review"] == (
+        "conductor/archive/c_abi_binding_20260512/review.md"
+    )
+    assert all(
+        item["status"] in {"deferred", "out-of-scope"}
+        for item in metadata["gap_register"]
+    )
+
+
+def test_c_abi_binding_plan_has_checkpointed_archive_repair_detail():
+    plan = _read(TRACK / "plan.md")
+
+    assert "[checkpoint:" in plan
+    assert "Phase 1: ABI Contract and Boundary Design [checkpoint:" in plan
+    assert "Phase 2: Preview Implementation and Fixture Parity [checkpoint:" in plan
+    assert "Archive Repair" in plan
+    assert "metadata.json" in plan
+    assert "plan.md" in plan
+    assert "not a production-ready ABI promise" in plan
 
 
 def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
@@ -112,7 +142,8 @@ def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
     assert '"crates/nwau-c-abi"' in cargo
     assert 'name = "nwau-c-abi"' in crate_manifest
     assert 'crate-type = ["cdylib", "staticlib", "rlib"]' in crate_manifest
-    assert "publish = false" in crate_manifest
+    assert "publish = false" not in crate_manifest
+    assert 'nwau-core = { version = "0.1.0", path = "../nwau-core" }' in crate_manifest
 
     for phrase in [
         "nwau_abi_version_major",
@@ -126,9 +157,12 @@ def test_c_abi_scaffold_is_versioned_and_fails_closed_without_formula_logic():
 
     assert "borrowed pointer" in header
     assert "caller owns that storage" in header
-    assert "returns `nwau_abi_status_unimplemented`" in header
+    assert "`nwau_abi_status_ok` for valid pointer shapes" in header
+    assert "nwau_core::calculate_acute_2025" in rust_source
+    assert "nwau_abi_status_ok" in rust_source
     assert "nwau_abi_status_unimplemented" in rust_source
-    assert "nwau25: 999.0" in rust_source
+    assert "nwau25: result.nwau25" in rust_source
+    assert "#define nwau_abi_version_minor uint32_c(2)" in header
 
     for forbidden in [
         "nwau25 =",

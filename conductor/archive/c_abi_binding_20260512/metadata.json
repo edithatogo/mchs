@@ -13,17 +13,49 @@
   ],
   "publication_status": "not-ready",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Add a conservative, versioned C ABI scaffold for institutional embedding and downstream language bindings.",
   "no_stub_enforce": true,
   "archived_at": "2026-06-24T00:00:00Z",
   "archive_path": "conductor/archive/c_abi_binding_20260512",
-  "support_scope": "Conservative versioned C ABI strategy and readiness scaffold for institutional embedding and downstream language bindings.",
+  "completion_policy": "complete-with-gaps means the repository owns a private-preview C ABI strategy, committed header, FFI-safe ownership and error semantics, scalar acute 2025 preview entry point delegated to nwau-core, and Arrow boundary policy; it is not a production-ready ABI promise until header generation, exported-symbol diffs, sanitizer coverage, platform matrix, and golden fixture parity are enforced.",
+  "support_scope": {
+    "state": "complete-with-gaps",
+    "implemented": [
+      "versioned C ABI strategy and committed header",
+      "FFI-safe ownership and error semantics",
+      "scalar acute 2025 preview entry point delegated to nwau-core",
+      "Arrow C Data Interface and file-based Arrow boundary policy"
+    ],
+    "not_implemented": [
+      "production-ready ABI stability guarantee",
+      "deterministic generated-header CI gate",
+      "exported-symbol diff gate",
+      "sanitizer or Valgrind-style memory checks",
+      "cross-platform ABI matrix coverage"
+    ],
+    "claim_boundary": "Conservative versioned C ABI strategy and private-preview readiness scaffold for institutional embedding and downstream language bindings."
+  },
+  "archive_evidence": {
+    "spec": "conductor/archive/c_abi_binding_20260512/spec.md",
+    "plan": "conductor/archive/c_abi_binding_20260512/plan.md",
+    "review": "conductor/archive/c_abi_binding_20260512/review.md",
+    "strategy": "conductor/archive/c_abi_binding_20260512/strategy.md",
+    "ci_notes": "conductor/archive/c_abi_binding_20260512/ci_notes.md",
+    "tests": "tests/test_c_abi_binding_track.py",
+    "crate": "rust/crates/nwau-c-abi",
+    "header": "rust/crates/nwau-c-abi/include/nwau_abi.h"
+  },
   "gap_register": [
     {
-      "id": "post-archive-evidence-gate",
+      "id": "abi-production-readiness",
       "status": "deferred",
-      "summary": "generated headers, exported-symbol diffs, sanitizers, and cross-platform ABI parity remain future gates"
+      "summary": "Generated headers, exported-symbol diffs, sanitizer or Valgrind-style checks, Windows and Linux matrix coverage, and C-boundary golden fixture parity remain future gates before production ABI readiness."
+    },
+    {
+      "id": "formula-logic-duplication",
+      "status": "out-of-scope",
+      "summary": "The C ABI wrapper must not duplicate calculator formula logic; supported calculations delegate to nwau-core."
     }
   ]
 }
