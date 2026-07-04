@@ -1,0 +1,17 @@
+Task: Repair ar_drg_icd_mapping_registry_20260512 archive metadata and plan
+
+Summary:
+- Repaired metadata.json with completion_policy, structured support_scope, archive_evidence pointers, and explicit gap_register entries.
+- Repaired plan.md with archived checkpoint markers and a Phase 4 archive-repair record.
+- Preserved the claim boundary: versioned relationship metadata and compatibility validation are supported; licensed mapping tables, code lists, grouping logic, official grouper assets, and public ICD-to-AR-DRG crosswalk claims remain unclaimed unless supplied and validated locally under licence.
+- Added focused tests for repaired metadata and plan evidence.
+
+Validation:
+- uv run pytest tests/test_ar_drg_icd_mapping_registry_track.py -q
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run ruff check tests/test_ar_drg_icd_mapping_registry_track.py
+- uv run ty check tests/test_ar_drg_icd_mapping_registry_track.py
+- python -m json.tool conductor/archive/ar_drg_icd_mapping_registry_20260512/metadata.json
+
+Review:
+- conductor-review found no unresolved blockers after the repair; no licensed mapping tables, classification code lists, or proprietary grouper assets were added.
