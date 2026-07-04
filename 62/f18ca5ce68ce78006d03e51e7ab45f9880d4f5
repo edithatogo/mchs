@@ -1,0 +1,9 @@
+Conductor public dataset surface coverage update
+
+Expanded public dataset worked-example requirements/design and track scope to require safe core-surface coverage: Python API execution, CLI/file execution, docs tutorial outputs, MCP boundary validation, and API/OpenAI contract documentation. Explicitly avoids overclaiming formula execution on MCP/API/OpenAI surfaces where current contracts only validate or document the boundary. Created and linked issue #351 for a reusable worked-example surface conformance harness.
+
+Validation:
+- jq metadata parse
+- git diff --check
+- rg surface coverage references
+- python conductor/scripts/stub_detector.py --root . --json
