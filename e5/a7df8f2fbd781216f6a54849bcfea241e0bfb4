@@ -1,0 +1,14 @@
+Review: Final outer wrapper retirement validation
+
+Findings:
+- Canonical repo validation passes.
+- No high-confidence fixes remain after Ruff formatting.
+- Explicit outer-root validation fails with unmanaged_gitlink and outer_wrapper_contains_nested_repo, which is the documented user-owned cleanup gate.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run pytest tests/test_repository_topology_governance.py -q
+- uv run python scripts/validate_repository_topology.py --json
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs (expected fail)
