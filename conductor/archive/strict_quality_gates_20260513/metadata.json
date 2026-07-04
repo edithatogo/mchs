@@ -10,43 +10,57 @@
     "rust_ci_supply_chain_hardening_20260510",
     "release_workflow_validation_20260513"
   ],
+  "completion_policy": "Complete-with-gaps means the repository has an executable strict quality-gate contract and local validation for coverage, workflow, security, and no-stub expectations, while explicitly not claiming that every Rust, release, registry, or external publication gate is currently green.",
   "completion_evidence": [
     "conductor/workflow.md (quality gates section)",
     "conductor/requirements.md (MUST-004, MUST-005)",
     "contracts/quality-gates/strict-quality-gates.contract.json",
     "tests/test_strict_quality_gates_contract.py",
+    "tests/test_strict_quality_gates_archive_track.py",
     ".github/workflows/coverage.yml",
     ".github/workflows/security.yml"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Repository quality-gate contract for Python coverage, Rust checks, typing/linting, docs, security, release, and no-stub enforcement.",
-      "Workflow and contract tests proving the enforced Python coverage threshold is 90%.",
-      "Security and hosted-delivery workflow checks used as local policy evidence.",
-      "Explicit review boundary for blocked broader gates that depend on unrelated Rust formatting or supply-chain state."
+    "implemented": [
+      "strict quality-gate contract with >=90% coverage threshold",
+      "Conductor workflow requirements for strict coverage and no-stub checks",
+      "local contract tests for quality gate classes and workflow thresholds",
+      "explicit gap records for Rust formatting and external release gates"
     ],
-    "excluded": [
-      "Claiming the full Rust quality chain is currently green while `cargo fmt --all --check` fails in the working tree.",
-      "Treating external registry or release publication checks as locally completed quality gates.",
-      "Using generic Conductor plan text as a substitute for executable gate evidence."
+    "not_implemented": [
+      "claiming the full Rust quality chain is currently green",
+      "claiming external registry or release publication gates are complete",
+      "treating generic Conductor plan text as executable gate evidence"
     ]
   },
   "gap_register": [
     {
       "id": "rust-quality-chain-currently-blocked",
-      "status": "active-blocker",
-      "description": "The broader Rust gate is not archive-clean while `cd rust && cargo fmt --all --check` reports formatting drift in `rust/crates/nwau-core/src/types.rs`; Rust CI hardening and Rust-core tracks own that remediation."
+      "status": "blocked-external-track",
+      "description": "The broader Rust gate is not archive-clean while `cd rust && cargo fmt --all --check` reports formatting drift in `rust/crates/nwau-core/src/types.rs`; Rust CI hardening and Rust-core tracks own that remediation.",
+      "rationale": "This archive records the strict gate contract and local validation but does not remediate unrelated Rust formatting drift."
     },
     {
       "id": "full-release-publication-gates",
       "status": "external-or-release-gate",
-      "description": "Release and registry publication gates require their own evidence tracks and cannot be closed solely by this local quality-gate contract."
+      "description": "Release and registry publication gates require their own evidence tracks and cannot be closed solely by this local quality-gate contract.",
+      "rationale": "External release and registry proof belongs to release-boundary and registry-submission tracks."
     }
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/strict_quality_gates_20260513/spec.md",
+    "plan": "conductor/archive/strict_quality_gates_20260513/plan.md",
+    "review": "conductor/archive/strict_quality_gates_20260513/review.md",
+    "requirements": "conductor/requirements.md",
+    "workflow": "conductor/workflow.md",
+    "quality_gate_contract": "contracts/quality-gates/strict-quality-gates.contract.json",
+    "contract_tests": "tests/test_strict_quality_gates_contract.py",
+    "archive_tests": "tests/test_strict_quality_gates_archive_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-15T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Raise and enforce repository quality gates to SOTA expectations for calculator-core, binding, docs, and release work.",
   "no_stub_enforce": true
 }

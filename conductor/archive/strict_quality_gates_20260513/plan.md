@@ -5,7 +5,7 @@
 - [x] Task: Map this track to MoSCoW requirement IDs and design sections.
 - [x] Task: Identify the explicit contract, owning files, dependencies, and out-of-scope areas.
 - [x] Task: Define positive, negative, and publication evidence required before completion.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Scope and Contract' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Scope and Contract' (Protocol in workflow.md) [checkpoint: archived]
 
 ## Phase 2: Parallel Work Packages
 
@@ -15,7 +15,7 @@
     - [x] Work package C: documentation and examples.
     - [x] Work package D: release, GitHub, or publication checks where applicable.
 - [x] Task: Require each subagent handoff to include changed files, validation commands, docs updates, review findings, and residual risks.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Parallel Work Packages' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Parallel Work Packages' (Protocol in workflow.md) [checkpoint: archived]
 
 ## Phase 3: Integration and Evidence
 
@@ -23,4 +23,12 @@
 - [x] Task: Run strict validation or record why a validation is blocked.
 - [x] Task: Update Conductor index, tracks registry, docs, and contract references.
 - [x] Task: Commit phase evidence and prepare push or release evidence if public state changed.
-- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Integration and Evidence' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Integration and Evidence' (Protocol in workflow.md) [checkpoint: archived]
+
+## Phase 4: Archive Repair
+
+- [x] Task: Repair metadata.json to record the bounded complete-with-gaps scope, completion policy, archive evidence, and explicit Rust/release-gate gaps.
+- [x] Task: Repair plan.md to preserve checkpoint evidence and state that the archived scope is the quality-gate contract, not a claim that every downstream gate is green.
+- [x] Task: Update conductor/tracks.md so the archived track is marked complete instead of in progress.
+- [x] Task: Add focused validation for archive metadata, plan checkpoints, quality-gate requirements/workflow contract, and archived registry status.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Archive Repair' (Protocol in workflow.md) [checkpoint: repaired]
