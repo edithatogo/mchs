@@ -1,0 +1,17 @@
+Task: Repair ar_drg_grouper_integration_20260512 archive metadata and plan
+
+Summary:
+- Repaired metadata.json with completion_policy, structured support_scope, archive_evidence pointers, and explicit gap_register entries.
+- Repaired plan.md with archived checkpoint markers and a Phase 4 archive-repair record.
+- Preserved the claim boundary: precomputed AR-DRG records and local-only external grouper metadata are supported; proprietary grouper logic, licensed tables, vendor parity, and automatic ICD-to-AR-DRG calculation remain unclaimed.
+- Added focused tests for repaired metadata and plan evidence.
+
+Validation:
+- uv run pytest tests/test_ar_drg_grouper_integration_track.py -q
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run ruff check tests/test_ar_drg_grouper_integration_track.py
+- uv run ty check tests/test_ar_drg_grouper_integration_track.py
+- python -m json.tool conductor/archive/ar_drg_grouper_integration_20260512/metadata.json
+
+Review:
+- conductor-review found no unresolved blockers after the repair; no proprietary grouping logic or licensed assets were added.
