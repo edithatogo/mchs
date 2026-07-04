@@ -836,6 +836,7 @@ def _build_mimic_demo_scenario_sensitivity_report(
     *,
     fail_closed_error: str,
     calculated: pd.DataFrame,
+    local_precomputed_calculated: pd.DataFrame | None = None,
     year: str,
 ) -> list[dict[str, object]]:
     nwau_column = f"NWAU{str(year)[-2:]}"
@@ -844,7 +845,7 @@ def _build_mimic_demo_scenario_sensitivity_report(
         if nwau_column in calculated.columns
         else None
     )
-    return [
+    scenarios: list[dict[str, object]] = [
         {
             "scenario": "missing_australian_ar_drg",
             "status": "blocked_licensed",
@@ -864,6 +865,27 @@ def _build_mimic_demo_scenario_sensitivity_report(
             ),
         },
     ]
+    if local_precomputed_calculated is not None:
+        local_total_nwau = (
+            float(local_precomputed_calculated[nwau_column].sum())
+            if nwau_column in local_precomputed_calculated.columns
+            else None
+        )
+        scenarios.append(
+            {
+                "scenario": "local_precomputed_ar_drg",
+                "status": "executable_user_supplied_provenance",
+                "row_count": len(local_precomputed_calculated),
+                "nwau_column": nwau_column,
+                "total_nwau": local_total_nwau,
+                "authoritative_australian_output": "depends_on_local_provenance",
+                "message": (
+                    "Runs only when the user supplies local Australian AR-DRG "
+                    "provenance from a licensed or otherwise approved source."
+                ),
+            }
+        )
+    return scenarios
 
 
 def _write_json(path: Path, payload: object) -> None:
@@ -877,6 +899,7 @@ def run_mimic_demo_worked_example(
     root: str | Path,
     *,
     synthetic_overlay_path: str | Path,
+    local_ar_drg_path: str | Path | None = None,
     reference_weights_path: str | Path,
     manifest_path: str | Path = (
         "reference-data/public-datasets/mimic-iv-demo/manifest.yaml"
@@ -919,6 +942,18 @@ def run_mimic_demo_worked_example(
         year=year,
         reference_bundle=reference_bundle,
     )
+    local_precomputed_calculated: pd.DataFrame | None = None
+    if local_ar_drg_path is not None:
+        local_calculator_input = prepare_mimic_demo_calculator_input(
+            staged,
+            local_ar_drg_path=local_ar_drg_path,
+        )
+        local_precomputed_calculated = calculate_acute(
+            local_calculator_input,
+            AcuteParams(),
+            year=year,
+            reference_bundle=reference_bundle,
+        )
 
     mcp_boundary = _mcp_boundary_validation(calculator_input, year=year)
     support_status = _build_mimic_demo_support_status_summary(
@@ -930,6 +965,7 @@ def run_mimic_demo_worked_example(
     scenario_report = _build_mimic_demo_scenario_sensitivity_report(
         fail_closed_error=fail_closed_error,
         calculated=calculated,
+        local_precomputed_calculated=local_precomputed_calculated,
         year=year,
     )
     provenance = build_public_dataset_provenance_report(

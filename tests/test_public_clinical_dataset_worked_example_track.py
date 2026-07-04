@@ -303,6 +303,38 @@ def test_mimic_demo_worked_example_bundle_exercises_core_surfaces() -> None:
     assert bundle.disclosure_risk_summary["safe_output_class"] == "local-only"
 
 
+def test_mimic_demo_worked_example_reports_local_precomputed_scenario(
+    tmp_path: Path,
+) -> None:
+    from nwau_py.public_clinical_datasets import run_mimic_demo_worked_example
+
+    overlay_path = tmp_path / "local_ar_drg.csv"
+    pd.DataFrame(
+        {
+            "episode_id": ["mimic-1001-2001", "mimic-1002-2002"],
+            "australian_ar_drg": ["801A", "801B"],
+            "classification_provenance": ["local_precomputed_ar_drg"] * 2,
+        }
+    ).to_csv(overlay_path, index=False)
+
+    bundle = run_mimic_demo_worked_example(
+        Path("examples/mimic_demo/fixtures"),
+        synthetic_overlay_path=Path("examples/mimic_demo/fixtures/synthetic_overlay.csv"),
+        local_ar_drg_path=overlay_path,
+        reference_weights_path=Path("tests/data/nep25_aa_price_weights.csv"),
+    )
+
+    scenario_names = [
+        scenario["scenario"]
+        for scenario in cast(list[dict[str, Any]], bundle.scenario_sensitivity_report)
+    ]
+    assert scenario_names == [
+        "missing_australian_ar_drg",
+        "synthetic_overlay",
+        "local_precomputed_ar_drg",
+    ]
+
+
 def test_mimic_demo_worked_example_writes_local_outputs(tmp_path: Path) -> None:
     from nwau_py.public_clinical_datasets import run_mimic_demo_worked_example
 
