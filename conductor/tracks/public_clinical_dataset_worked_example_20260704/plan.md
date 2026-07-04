@@ -66,8 +66,8 @@
 - [x] Task: Publish docs-site tutorial and improvement backlog. `cc6c2f1`
     - [x] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
     - [x] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, disclosure-risk policy, scenario/sensitivity report patterns, and optional ED/FHIR/MEDS tutorial tracks.
-- [ ] Task: Review GitHub Actions and finalize track evidence.
-    - [ ] Push the branch and git notes before reviewing GitHub Actions.
-    - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.
-    - [ ] Record pass/fail/blocked status, run URLs, and any external gates in metadata, review notes, or final evidence docs.
+- [x] Task: Review GitHub Actions and finalize track evidence. `93d46d6`
+    - [x] Push the branch and git notes before reviewing GitHub Actions.
+    - [x] Review relevant GitHub Actions runs for the pushed branch or PR.
+    - [x] Record pass/fail/blocked status, run URLs, and any external gates in metadata, review notes, or final evidence docs.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Worked Example, Docs, and Additional Improvements' (Protocol in workflow.md)
