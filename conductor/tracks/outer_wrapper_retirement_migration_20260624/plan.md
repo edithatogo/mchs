@@ -23,7 +23,7 @@
     - [x] Record any user-owned cleanup that cannot be automated.
 - [x] Task: Conductor - User Manual Verification 'Preservation and Retirement' (Protocol in workflow.md) [684e5c9]
 
-## Phase 3: Validation
+## Phase 3: Validation [checkpoint: 5ce7c31]
 
 - [x] Task: Validate migration results. [7e66349]
     - [x] Run topology validator against canonical repo.
