@@ -17,10 +17,10 @@
     - [x] Move or copy approved unique source artifacts into canonical paths.
     - [x] Add tests or documentation references for migrated artifacts.
     - [x] Confirm no canonical file is overwritten without review.
-- [ ] Task: Retire wrapper-only artifacts.
-    - [ ] Remove generated logs and browser state from source control when approved.
-    - [ ] Resolve the unmanaged gitlink by retiring the wrapper or adding valid superproject metadata.
-    - [ ] Record any user-owned cleanup that cannot be automated.
+- [x] Task: Retire wrapper-only artifacts. [8e680f9]
+    - [x] Remove generated logs and browser state from source control when approved.
+    - [x] Resolve the unmanaged gitlink by retiring the wrapper or adding valid superproject metadata.
+    - [x] Record any user-owned cleanup that cannot be automated.
 - [ ] Task: Conductor - User Manual Verification 'Preservation and Retirement' (Protocol in workflow.md)
 
 ## Phase 3: Validation
