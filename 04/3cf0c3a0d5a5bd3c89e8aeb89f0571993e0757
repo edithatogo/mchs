@@ -1,0 +1,12 @@
+Checkpoint: Phase 2 Dataset Manifest and License Boundary
+
+Conductor-review summary:
+- Fixed type-checking issues in manifest mapping and report tests.
+- No remaining correctness, scope, test, lint, type, or stub blockers.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q
+- uv run ruff check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- uv run ty check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- git diff --check for touched files
