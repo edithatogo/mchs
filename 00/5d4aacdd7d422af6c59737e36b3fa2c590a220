@@ -1,0 +1,17 @@
+Task: Finalize public clinical dataset worked example metadata
+
+Summary:
+- Updated metadata to status completed and current_state complete-with-gaps.
+- Updated support_scope state and gap register to record the external branch workflow-file CI gate tracked by #354.
+- Marked Phase 3 and Phase 4 checkpoint tasks complete in plan.md.
+
+Files:
+- conductor/tracks/public_clinical_dataset_worked_example_20260704/metadata.json
+- conductor/tracks/public_clinical_dataset_worked_example_20260704/plan.md
+
+Why:
+- Archive eligibility requires explicit completion status, completed checkpoint tasks, and bounded gap records.
+
+Validation:
+- python -m json.tool conductor/tracks/public_clinical_dataset_worked_example_20260704/metadata.json >/dev/null
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q => 17 passed
