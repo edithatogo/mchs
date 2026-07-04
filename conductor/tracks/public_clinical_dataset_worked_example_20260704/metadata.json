@@ -1,9 +1,9 @@
 {
   "track_id": "public_clinical_dataset_worked_example_20260704",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "track_class": "example",
-  "current_state": "in-progress",
+  "current_state": "complete-with-gaps",
   "primary_contract": "public dataset discovery, access/licensing assessment, fail-closed real-data ETL, MIMIC-IV Demo worked example, provenance/data-quality outputs, and Conductor review/push discipline",
   "dependencies": [
     "ar_drg_grouper_provider_runtime_20260703",
@@ -20,10 +20,11 @@
     "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
     "tests/test_public_clinical_dataset_worked_example_track.py",
     "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, downloader/cache, surface conformance, disclosure-risk, and scenario/sensitivity work",
-    "GitHub Actions review evidence for the completed track branch or PR"
+    "GitHub Actions review evidence for the completed track branch or PR",
+    "conductor/tracks/public_clinical_dataset_worked_example_20260704/github_actions_review.md"
   ],
   "support_scope": {
-    "state": "planned",
+    "state": "complete-with-gaps",
     "included": [
       "Public clinical dataset discovery and access assessment.",
       "MIMIC-IV Demo local-file ETL for admitted-episode staging.",
@@ -51,9 +52,14 @@
       "id": "raw-public-dataset-local-only",
       "status": "policy-boundary",
       "description": "Raw public clinical dataset files must remain local-only and must not be committed to the repository."
+    },
+    {
+      "id": "branch-workflow-file-gate",
+      "status": "external-ci-gate",
+      "description": "Pushed Docs Site and Release Rust GitHub Actions fail before job scheduling because of the branch workflow-file issue tracked in #354; local track validation and docs build pass."
     }
   ],
-  "publication_status": "future-only",
+  "publication_status": "local-complete-external-ci-gate",
   "github_follow_up_issues": [
     {
       "title": "feat: add MIMIC-IV-ED public dataset worked example",
@@ -114,7 +120,7 @@
     "interpretation": "Both pushed workflow runs failed before job scheduling and produced no logs; this matches the existing branch workflow-file hardening issue rather than a track-level validation failure."
   },
   "created_at": "2026-07-04T10:09:03Z",
-  "updated_at": "2026-07-04T23:49:00Z",
+  "updated_at": "2026-07-04T23:50:00Z",
   "description": "Assess public clinical datasets and add a conservative real-data worked example that uses MIMIC-IV Demo staging while failing closed around Australian classification limits.",
   "no_stub_enforce": true
 }

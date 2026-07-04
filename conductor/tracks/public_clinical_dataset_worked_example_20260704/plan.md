@@ -57,7 +57,7 @@
     - [x] Exercise MCP boundary validation and API/OpenAI contract documentation where those surfaces are available, without claiming formula execution if the existing contract does not support it.
     - [x] Add a scenario/sensitivity appendix comparing no-provenance fail-closed behavior, synthetic-overlay behavior, and any local precomputed AR-DRG path if supplied.
     - [x] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md) `2bfd7eb`
 
 ## Phase 4: Worked Example, Docs, and Additional Improvements [checkpoint: ff41c5a]
 - [x] Task: Add a runnable worked example. `cc6c2f1`
@@ -70,4 +70,4 @@
     - [x] Push the branch and git notes before reviewing GitHub Actions.
     - [x] Review relevant GitHub Actions runs for the pushed branch or PR.
     - [x] Record pass/fail/blocked status, run URLs, and any external gates in metadata, review notes, or final evidence docs.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Worked Example, Docs, and Additional Improvements' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Worked Example, Docs, and Additional Improvements' (Protocol in workflow.md) `ff41c5a`
