@@ -21,7 +21,7 @@
     - [x] Remove generated logs and browser state from source control when approved.
     - [x] Resolve the unmanaged gitlink by retiring the wrapper or adding valid superproject metadata.
     - [x] Record any user-owned cleanup that cannot be automated.
-- [ ] Task: Conductor - User Manual Verification 'Preservation and Retirement' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Preservation and Retirement' (Protocol in workflow.md) [684e5c9]
 
 ## Phase 3: Validation
 
