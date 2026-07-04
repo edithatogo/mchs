@@ -27,7 +27,7 @@
     - [x] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md) `edbd88c`
 
-## Phase 2: Dataset Manifest and License Boundary
+## Phase 2: Dataset Manifest and License Boundary [checkpoint: 043cf0c]
 - [x] Task: Add public dataset manifest and local cache policy. `4f322c2`
     - [x] Add source URL, DOI, license, expected file list, checksums where available, and citation text.
     - [x] Ensure raw dataset files are ignored and never required in git.
@@ -40,7 +40,7 @@
     - [x] Emit a machine-readable provenance report for dataset source, local file inventory, derivation steps, overlay status, and support-state claims.
     - [x] Emit a data-quality summary covering row counts, missing required fields, duplicate identifiers, date/LOS sanity checks, ICU aggregation coverage, and classification provenance state.
     - [x] Emit a disclosure-risk summary covering small cells, rare combinations, direct identifiers, admission IDs, dates, and joined clinical features.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md) `043cf0c`
 
 ## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
 - [ ] Task: Implement MIMIC-IV Demo staging from local CSV files.
