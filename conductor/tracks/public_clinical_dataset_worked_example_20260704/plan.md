@@ -42,7 +42,7 @@
     - [x] Emit a disclosure-risk summary covering small cells, rare combinations, direct identifiers, admission IDs, dates, and joined clinical features.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md) `043cf0c`
 
-## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
+## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract [checkpoint: 2bfd7eb]
 - [x] Task: Implement MIMIC-IV Demo staging from local CSV files. `f27a15c`
     - [x] Derive episode-level facts from admissions, ICU stays, diagnoses, procedures, and hospital metadata.
     - [x] Emit a staging table that preserves MIMIC provenance and does not claim Australian classification.
