@@ -1,0 +1,22 @@
+Task: Add runnable MIMIC-IV Demo worked example and docs tutorial
+
+Summary:
+- Added examples/mimic_demo/run_worked_example.py for local output generation.
+- Added current and 2026 docs-site tutorials with dataset access, ODbL license, raw-data local-only rules, classification fail-closed caveats, synthetic overlay workflow, output list, and follow-up issue links.
+- Added the tutorial to the docs sidebar.
+- Added focused tests proving the script runs and docs preserve the boundary statements.
+
+Files:
+- examples/mimic_demo/run_worked_example.py
+- docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx
+- docs-site/src/content/docs/2026/tutorials/mimic-iv-demo-worked-example.mdx
+- docs-site/astro.config.mjs
+- tests/test_public_clinical_dataset_worked_example_track.py
+
+Why:
+- Phase 4 requires a runnable worked example and docs-site tutorial that demonstrate useful existing surfaces without overclaiming Australian AR-DRG/NWAU authority from MIMIC alone.
+
+Validation:
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q => 17 passed
+- uv run ruff check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
+- uv run ty check nwau_py/public_clinical_datasets.py examples/mimic_demo/run_worked_example.py tests/test_public_clinical_dataset_worked_example_track.py => passed
