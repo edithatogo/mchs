@@ -1,0 +1,12 @@
+Track completion: End-to-End Validated Canary
+
+Summary:
+- Marked the track complete in conductor/tracks.md.
+- Track metadata remains complete-with-gaps for bounded local canary evidence.
+- Official SAS/Excel parity remains explicitly blocked.
+
+Validation:
+- uv run pytest tests/test_end_to_end_validated_canary_track.py tests/test_formula_parameter_bundle_pipeline.py tests/test_rust_acute_binding.py tests/test_rust_acute_parity.py tests/test_reference_data_manifest_schema.py -q
+- uv run ruff check tests/test_end_to_end_validated_canary_track.py
+- uv run ty check tests/test_end_to_end_validated_canary_track.py
+- python conductor/scripts/stub_detector.py --root . --json
