@@ -12,7 +12,7 @@
     - [ ] Maintain references to the Public Dataset Worked Example design section in `conductor/design.md`.
     - [ ] Update requirements/design again if implementation discovers new public-dataset contract or governance needs.
 
-## Phase 1: Dataset Discovery and Access Assessment
+## Phase 1: Dataset Discovery and Access Assessment [checkpoint: edbd88c]
 - [x] Task: Inventory candidate public clinical datasets. `b3352d5`
     - [x] Record dataset name, URL, DOI/citation, license, access policy, credential requirements, download path, size, and update cadence.
     - [x] Assess required fields for acute, ED, and costing-study examples.
@@ -25,7 +25,7 @@
 - [x] Task: Open GitHub issues for warranted follow-on examples and infrastructure. `b3352d5`
     - [x] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, worked-example surface conformance harness, disclosure-risk policy, and scenario/sensitivity report work only when evidence shows they are useful and separate.
     - [x] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
-- [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md) `edbd88c`
 
 ## Phase 2: Dataset Manifest and License Boundary
 - [ ] Task: Add public dataset manifest and local cache policy.
