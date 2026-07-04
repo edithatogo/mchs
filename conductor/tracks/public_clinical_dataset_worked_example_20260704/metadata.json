@@ -4,7 +4,7 @@
   "status": "new",
   "track_class": "example",
   "current_state": "planned",
-  "primary_contract": "public dataset discovery, access/licensing assessment, fail-closed real-data ETL, and MIMIC-IV Demo worked example",
+  "primary_contract": "public dataset discovery, access/licensing assessment, fail-closed real-data ETL, MIMIC-IV Demo worked example, provenance/data-quality outputs, and Conductor review/push discipline",
   "dependencies": [
     "ar_drg_grouper_provider_runtime_20260703",
     "classification_mapping_registry_enrichment_20260703",
@@ -16,7 +16,9 @@
     "reference-data/public-datasets/mimic-iv-demo/manifest.yaml",
     "examples/mimic_demo/",
     "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
-    "tests/test_public_clinical_dataset_worked_example_track.py"
+    "tests/test_public_clinical_dataset_worked_example_track.py",
+    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, and downloader/cache work",
+    "GitHub Actions review evidence for the completed track branch or PR"
   ],
   "support_scope": {
     "state": "planned",
@@ -24,7 +26,9 @@
       "Public clinical dataset discovery and access assessment.",
       "MIMIC-IV Demo local-file ETL for admitted-episode staging.",
       "Fail-closed calculator-input preparation when Australian AR-DRG provenance is missing.",
-      "Synthetic AR-DRG overlay fixture for runnable documentation only."
+      "Synthetic AR-DRG overlay fixture for runnable documentation only.",
+      "Provenance, data-quality, support-status, and CLI/file interop outputs that demonstrate existing advanced tooling.",
+      "Issue-backed follow-on feature discovery for examples or infrastructure that should not be bundled into the initial track."
     ],
     "excluded": [
       "Bundling raw MIMIC files or patient-level public dataset extracts.",
@@ -46,6 +50,32 @@
     }
   ],
   "publication_status": "future-only",
+  "github_follow_up_issues": [
+    {
+      "title": "feat: add MIMIC-IV-ED public dataset worked example",
+      "number": 346,
+      "url": "https://github.com/edithatogo/mchs/issues/346",
+      "reason": "ED worked examples require different classification and support-state handling from the admitted-acute MIMIC-IV Demo example."
+    },
+    {
+      "title": "feat: add FHIR and MEDS public dataset interop worked examples",
+      "number": 347,
+      "url": "https://github.com/edithatogo/mchs/issues/347",
+      "reason": "FHIR and MEDS examples use different data models and should not expand the first CSV-based admitted-acute example."
+    },
+    {
+      "title": "feat: add public dataset suitability registry",
+      "number": 348,
+      "url": "https://github.com/edithatogo/mchs/issues/348",
+      "reason": "Reusable dataset suitability scoring is shared governance infrastructure beyond a single worked example."
+    },
+    {
+      "title": "feat: add public dataset downloader and cache guard",
+      "number": 349,
+      "url": "https://github.com/edithatogo/mchs/issues/349",
+      "reason": "Reusable local-only download/cache guardrails affect multiple public datasets and need their own security validation."
+    }
+  ],
   "created_at": "2026-07-04T10:09:03Z",
   "updated_at": "2026-07-04T10:09:03Z",
   "description": "Assess public clinical datasets and add a conservative real-data worked example that uses MIMIC-IV Demo staging while failing closed around Australian classification limits.",

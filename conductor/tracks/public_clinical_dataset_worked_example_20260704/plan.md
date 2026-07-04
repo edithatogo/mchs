@@ -1,13 +1,26 @@
 # Plan: Public Clinical Dataset Worked Example
 
+## Required Execution Discipline
+- [ ] Task: Apply Conductor task lifecycle to every implementation task.
+    - [ ] Commit after each task with a `Commit notes:` body section.
+    - [ ] Attach equivalent git notes to each task commit.
+    - [ ] Push the branch and `refs/notes/commits` after each task and phase checkpoint.
+    - [ ] Run `conductor-review` after each phase and at whole-track completion.
+    - [ ] Review GitHub Actions after the completed track is pushed and record the result in track evidence.
+
 ## Phase 1: Dataset Discovery and Access Assessment
 - [ ] Task: Inventory candidate public clinical datasets.
     - [ ] Record dataset name, URL, DOI/citation, license, access policy, credential requirements, download path, size, and update cadence.
     - [ ] Assess required fields for acute, ED, and costing-study examples.
     - [ ] Record pros, cons, risks, and whether each dataset can be used in committed fixtures, local-only downloads, docs, or runtime examples.
+    - [ ] Include current-source checks for PhysioNet access, license, file tables, citation, and whether local credentialing or terms acceptance are required.
 - [ ] Task: Select the initial worked-example dataset and record rationale.
     - [ ] Default to MIMIC-IV Clinical Database Demo v2.2 unless the assessment finds a better fit.
     - [ ] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
+    - [ ] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
+- [ ] Task: Open GitHub issues for warranted follow-on examples and infrastructure.
+    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, and downloader/cache guard work only when Phase 1 evidence shows they are useful and separate.
+    - [ ] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
 
 ## Phase 2: Dataset Manifest and License Boundary
@@ -18,15 +31,24 @@
 - [ ] Task: Add tests for manifest parsing and license/access guardrails.
     - [ ] Public metadata must pass.
     - [ ] Raw patient-level dataset files in committed paths must fail guard checks.
+- [ ] Task: Add data-quality and provenance contract outputs.
+    - [ ] Emit a machine-readable provenance report for dataset source, local file inventory, derivation steps, overlay status, and support-state claims.
+    - [ ] Emit a data-quality summary covering row counts, missing required fields, duplicate identifiers, date/LOS sanity checks, ICU aggregation coverage, and classification provenance state.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Dataset Manifest and License Boundary' (Protocol in workflow.md)
 
 ## Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract
 - [ ] Task: Implement MIMIC-IV Demo staging from local CSV files.
-    - [ ] Derive episode-level facts from admissions, ICU stays, and hospital metadata.
+    - [ ] Derive episode-level facts from admissions, ICU stays, diagnoses, procedures, and hospital metadata.
     - [ ] Emit a staging table that preserves MIMIC provenance and does not claim Australian classification.
+    - [ ] Include stable episode lineage from source files and row identifiers to staged rows.
 - [ ] Task: Add calculator-input preparation with classification provenance checks.
     - [ ] Fail closed when no Australian AR-DRG or approved synthetic overlay is supplied.
     - [ ] Support a committed synthetic AR-DRG overlay fixture for runnable documentation only.
+    - [ ] Make overlay provenance visible in every calculator-ready and calculated output.
+- [ ] Task: Demonstrate advanced calculator-tooling features in the worked example.
+    - [ ] Produce raw staging, calculator-ready CSV, calculated CSV, provenance report, data-quality report, and support-status summary.
+    - [ ] Exercise CLI/file interoperability where it is already supported, without adding a new runtime surface.
+    - [ ] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
 ## Phase 4: Worked Example, Docs, and Additional Improvements
@@ -36,4 +58,8 @@
 - [ ] Task: Publish docs-site tutorial and improvement backlog.
     - [ ] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
     - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, provenance reports, and optional ED/FHIR/MEDS tutorial tracks.
+- [ ] Task: Review GitHub Actions and finalize track evidence.
+    - [ ] Push the branch and git notes before reviewing GitHub Actions.
+    - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.
+    - [ ] Record pass/fail/blocked status, run URLs, and any external gates in metadata, review notes, or final evidence docs.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Worked Example, Docs, and Additional Improvements' (Protocol in workflow.md)
