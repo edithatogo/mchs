@@ -1,0 +1,12 @@
+Plan update: Phase 3 checkpoint recorded
+
+Checkpoint:
+- 5ce7c31 conductor(checkpoint): Checkpoint end of Phase 3
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run pytest tests/test_repository_topology_governance.py -q
+- uv run python scripts/validate_repository_topology.py --json
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs (expected fail as cleanup gate)
