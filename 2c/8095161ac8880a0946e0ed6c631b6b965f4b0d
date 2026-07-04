@@ -1,0 +1,6 @@
+Plan update: Record residual gates
+
+Recorded task completion for commit a7e662c in the outer wrapper retirement migration plan.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py -q
