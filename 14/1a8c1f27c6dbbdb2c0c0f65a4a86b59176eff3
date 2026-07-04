@@ -1,0 +1,17 @@
+Task: Repair c_abi_binding_20260512 archive metadata and plan
+
+Summary:
+- Repaired metadata.json with completion_policy, structured support_scope, archive_evidence pointers, and explicit gap_register entries.
+- Repaired plan.md with archived checkpoint markers and a Phase 3 archive-repair record.
+- Preserved the claim boundary: private-preview C ABI strategy, committed header, FFI-safe ownership/error semantics, Arrow boundary policy, and scalar acute 2025 delegation to nwau-core are in scope; production ABI stability, generated-header CI gates, exported-symbol diffs, sanitizer checks, cross-platform matrix coverage, and C-boundary golden fixture parity remain deferred.
+- Added focused tests for repaired metadata and plan evidence.
+
+Validation:
+- uv run pytest tests/test_c_abi_binding_track.py -q
+- python conductor/scripts/stub_detector.py --root . --json
+- uv run ruff check tests/test_c_abi_binding_track.py
+- uv run ty check tests/test_c_abi_binding_track.py
+- python -m json.tool conductor/archive/c_abi_binding_20260512/metadata.json
+
+Review:
+- conductor-review found no unresolved blockers after repair; no production ABI readiness claim was added.
