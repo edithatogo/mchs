@@ -5,12 +5,32 @@
   "track_class": "governance",
   "current_state": "complete",
   "primary_contract": "conductor/index.md, conductor/requirements.md, conductor/design.md, and conductor/archive/conductor_requirements_design_authority_20260513/spec.md",
-  "support_scope": "Conductor requirements and design authority for MoSCoW requirements, system design, track evidence requirements, subagent handoff requirements, no-stub completion semantics, and automatic conductor-review phase boundaries.",
+  "completion_policy": "Complete means the repository has an explicit Conductor requirements and design authority, workflow-level review/checkpoint rules, no-stub completion semantics, archive evidence for this governance track, and focused validation proving those documents exist. This track does not complete every dependent implementation track or replace each track's own validation, release, publication, or runtime evidence.",
+  "support_scope": {
+    "state": "complete",
+    "implemented": [
+      "Conductor requirements authority in conductor/requirements.md",
+      "Conductor design authority in conductor/design.md",
+      "workflow rules requiring conductor-review at phase and track boundaries",
+      "no-stub completion semantics linked to requirements and workflow evidence",
+      "archive evidence contract for this governance track"
+    ],
+    "not_implemented": [
+      "automatic completion of dependent implementation tracks",
+      "replacement of per-track validation, release, or publication evidence",
+      "runtime enforcement outside the repository Conductor workflow"
+    ]
+  },
   "gap_register": [
     {
       "gap": "This track governs Conductor authority documents and workflow rules; it does not complete every dependent implementation track.",
-      "status": "accepted-non-blocking",
+      "status": "out-of-scope",
       "rationale": "Dependent tracks consume the authority and provide their own implementation, validation, and release evidence."
+    },
+    {
+      "gap": "Runtime enforcement outside the repository's Conductor workflow remains future work.",
+      "status": "deferred",
+      "rationale": "The completed scope is repository-local governance, tests, and workflow documentation. External enforcement would need a separate implementation track with its own contracts and validation."
     }
   ],
   "dependencies": [
@@ -27,9 +47,18 @@
     "conductor/archive/conductor_requirements_design_authority_20260513/plan.md",
     "tests/test_conductor_requirements_design_authority_track.py"
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/conductor_requirements_design_authority_20260513/spec.md",
+    "plan": "conductor/archive/conductor_requirements_design_authority_20260513/plan.md",
+    "review": "conductor/archive/conductor_requirements_design_authority_20260513/review.md",
+    "requirements": "conductor/requirements.md",
+    "design": "conductor/design.md",
+    "workflow": "conductor/workflow.md",
+    "tests": "tests/test_conductor_requirements_design_authority_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Create and enforce the MoSCoW requirements and system design authority for Conductor-driven development.",
   "no_stub_enforce": true
 }
