@@ -188,3 +188,142 @@ def test_public_dataset_reports_are_machine_readable() -> None:
     assert disclosure["commit_safe"] is False
     risk_reasons = cast(list[str], disclosure["risk_reasons"])
     assert "admission IDs" in " ".join(risk_reasons)
+
+
+def test_mimic_demo_staging_preserves_episode_lineage() -> None:
+    from nwau_py.public_clinical_datasets import stage_mimic_demo_episodes
+
+    staged = stage_mimic_demo_episodes(Path("examples/mimic_demo/fixtures"))
+
+    assert list(staged["episode_id"]) == ["mimic-1001-2001", "mimic-1002-2002"]
+    assert list(staged["los_days"]) == [2.0, 1.0]
+    assert list(staged["icu_hours"]) == [12.0, 0.0]
+    assert staged.loc[0, "mimic_drg_code"] == "001"
+    assert staged.loc[0, "diagnosis_codes"] == "I10;E119"
+    assert staged.loc[0, "procedure_codes"] == "5A1955Z"
+    assert "hosp/admissions.csv" in staged.loc[0, "lineage_source_files"]
+
+
+def test_mimic_demo_calculator_input_fails_closed_without_ar_drg() -> None:
+    from nwau_py.public_clinical_datasets import (
+        PublicDatasetClassificationError,
+        prepare_mimic_demo_calculator_input,
+        stage_mimic_demo_episodes,
+    )
+
+    staged = stage_mimic_demo_episodes(Path("examples/mimic_demo/fixtures"))
+
+    with pytest.raises(
+        PublicDatasetClassificationError,
+        match="Australian AR-DRG provenance",
+    ):
+        prepare_mimic_demo_calculator_input(staged)
+
+
+def test_mimic_demo_synthetic_overlay_prepares_acute_input() -> None:
+    from nwau_py.public_clinical_datasets import (
+        prepare_mimic_demo_calculator_input,
+        stage_mimic_demo_episodes,
+    )
+
+    staged = stage_mimic_demo_episodes(Path("examples/mimic_demo/fixtures"))
+    calculator_input = prepare_mimic_demo_calculator_input(
+        staged,
+        synthetic_overlay_path=Path("examples/mimic_demo/fixtures/synthetic_overlay.csv"),
+        allow_synthetic_overlay=True,
+    )
+
+    assert list(calculator_input["DRG"]) == ["801A", "801B"]
+    assert list(calculator_input["LOS"]) == [2.0, 1.0]
+    assert list(calculator_input["ICU_HOURS"]) == [12.0, 0.0]
+    assert set(calculator_input["classification_provenance"]) == {
+        "synthetic_demo_overlay"
+    }
+    assert calculator_input["overlay_is_synthetic"].all()
+
+
+def test_mimic_demo_local_precomputed_overlay_requires_provenance(
+    tmp_path: Path,
+) -> None:
+    from nwau_py.public_clinical_datasets import (
+        prepare_mimic_demo_calculator_input,
+        stage_mimic_demo_episodes,
+    )
+
+    overlay_path = tmp_path / "local_ar_drg.csv"
+    pd.DataFrame(
+        {
+            "episode_id": ["mimic-1001-2001", "mimic-1002-2002"],
+            "australian_ar_drg": ["801A", "801B"],
+            "classification_provenance": ["local_precomputed_ar_drg"] * 2,
+        }
+    ).to_csv(overlay_path, index=False)
+    staged = stage_mimic_demo_episodes(Path("examples/mimic_demo/fixtures"))
+
+    calculator_input = prepare_mimic_demo_calculator_input(
+        staged,
+        local_ar_drg_path=overlay_path,
+    )
+
+    assert list(calculator_input["DRG"]) == ["801A", "801B"]
+    assert set(calculator_input["classification_provenance"]) == {
+        "local_precomputed_ar_drg"
+    }
+    assert not calculator_input["overlay_is_synthetic"].any()
+
+
+def test_mimic_demo_worked_example_bundle_exercises_core_surfaces() -> None:
+    from nwau_py.public_clinical_datasets import run_mimic_demo_worked_example
+
+    bundle = run_mimic_demo_worked_example(
+        Path("examples/mimic_demo/fixtures"),
+        synthetic_overlay_path=Path("examples/mimic_demo/fixtures/synthetic_overlay.csv"),
+        reference_weights_path=Path("tests/data/nep25_aa_price_weights.csv"),
+    )
+
+    assert list(bundle.staged["episode_id"]) == [
+        "mimic-1001-2001",
+        "mimic-1002-2002",
+    ]
+    assert "NWAU25" in bundle.calculated.columns
+    assert bundle.support_status_summary["validated"] == [
+        "python_api_acute_runtime_with_fixture_weights"
+    ]
+    assert bundle.support_status_summary["blocked_licensed"] == [
+        "authoritative_australian_ar_drg_from_mimic_alone"
+    ]
+    mcp_report = cast(dict[str, Any], bundle.surface_contract_report["mcp"])
+    assert mcp_report["status"] == "boundary_validated"
+    assert mcp_report["runtime_formula_execution"] == "not_claimed"
+    scenario_names = [
+        scenario["scenario"]
+        for scenario in cast(list[dict[str, Any]], bundle.scenario_sensitivity_report)
+    ]
+    assert scenario_names == ["missing_australian_ar_drg", "synthetic_overlay"]
+    assert bundle.disclosure_risk_summary["safe_output_class"] == "local-only"
+
+
+def test_mimic_demo_worked_example_writes_local_outputs(tmp_path: Path) -> None:
+    from nwau_py.public_clinical_datasets import run_mimic_demo_worked_example
+
+    bundle = run_mimic_demo_worked_example(
+        Path("examples/mimic_demo/fixtures"),
+        synthetic_overlay_path=Path("examples/mimic_demo/fixtures/synthetic_overlay.csv"),
+        reference_weights_path=Path("tests/data/nep25_aa_price_weights.csv"),
+        output_dir=tmp_path,
+    )
+
+    assert {
+        "staged",
+        "calculator_input",
+        "calculated",
+        "provenance_report",
+        "data_quality_report",
+        "disclosure_risk_summary",
+        "support_status_summary",
+        "surface_contract_report",
+        "mcp_boundary_validation",
+        "scenario_sensitivity_report",
+    }.issubset(bundle.written_files)
+    for output_path in bundle.written_files.values():
+        assert Path(output_path).exists()

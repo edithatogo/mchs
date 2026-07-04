@@ -1,0 +1,3 @@
+subject_id,hadm_id,drg_type,drg_code,description
+1001,2001,APR,001,Synthetic MIMIC-style US DRG metadata
+1002,2002,APR,002,Synthetic MIMIC-style US DRG metadata

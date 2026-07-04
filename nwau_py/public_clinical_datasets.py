@@ -7,6 +7,7 @@ download or bundle patient-level data.
 
 from __future__ import annotations
 
+import json
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -17,8 +18,10 @@ import yaml
 
 __all__ = [
     "LocalCachePolicy",
+    "MimicDemoWorkedExampleBundle",
     "PublicClinicalDatasetCandidate",
     "PublicDatasetCacheDiagnostic",
+    "PublicDatasetClassificationError",
     "PublicDatasetExpectedFile",
     "PublicDatasetManifest",
     "PublicDatasetManifestError",
@@ -29,8 +32,11 @@ __all__ = [
     "diagnose_public_dataset_cache",
     "list_public_dataset_candidates",
     "load_public_dataset_manifest",
+    "prepare_mimic_demo_calculator_input",
+    "run_mimic_demo_worked_example",
     "scan_public_dataset_paths_for_restricted_assets",
     "select_initial_worked_example",
+    "stage_mimic_demo_episodes",
 ]
 
 InitialRole = Literal[
@@ -80,6 +86,10 @@ class PublicDatasetManifestError(ValueError):
 
 class PublicDatasetPolicyError(ValueError):
     """Raised when public dataset local-only policy is violated."""
+
+
+class PublicDatasetClassificationError(ValueError):
+    """Raised when calculator input lacks Australian classification provenance."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -152,6 +162,23 @@ class PublicDatasetCacheDiagnostic:
     def to_dict(self) -> dict[str, object]:
         """Return a JSON-serializable cache diagnostic."""
         return asdict(self)
+
+
+@dataclass(frozen=True, slots=True)
+class MimicDemoWorkedExampleBundle:
+    """Outputs from the conservative MIMIC-IV Demo worked example."""
+
+    staged: pd.DataFrame
+    calculator_input: pd.DataFrame
+    calculated: pd.DataFrame
+    provenance_report: Mapping[str, object]
+    data_quality_report: Mapping[str, object]
+    disclosure_risk_summary: Mapping[str, object]
+    support_status_summary: Mapping[str, object]
+    surface_contract_report: Mapping[str, object]
+    mcp_boundary_validation: Mapping[str, object]
+    scenario_sensitivity_report: Sequence[Mapping[str, object]]
+    written_files: Mapping[str, str]
 
 
 def _require_mapping(value: object, *, field: str) -> Mapping[str, Any]:
@@ -415,6 +442,575 @@ def build_public_dataset_disclosure_risk_summary(
         "safe_output_class": "commit-safe" if not risk_reasons else "local-only",
         "risk_reasons": risk_reasons,
     }
+
+
+def _read_mimic_table(root: str | Path, filename: str, subdir: str) -> pd.DataFrame:
+    base = Path(root)
+    candidates = (
+        base / filename,
+        base / f"{filename}.gz",
+        base / subdir / filename,
+        base / subdir / f"{filename}.gz",
+    )
+    for candidate in candidates:
+        if candidate.exists():
+            return pd.read_csv(
+                candidate,
+                dtype={
+                    "drg_code": "string",
+                    "icd_code": "string",
+                },
+            )
+    raise FileNotFoundError(
+        f"missing MIMIC demo table {filename!r}; searched "
+        + ", ".join(path.as_posix() for path in candidates)
+    )
+
+
+def _join_codes(frame: pd.DataFrame, *, value_column: str = "icd_code") -> pd.DataFrame:
+    if frame.empty:
+        return pd.DataFrame(columns=["hadm_id", value_column])
+    ordered = frame.sort_values(["hadm_id", "seq_num"])
+    return (
+        ordered.groupby("hadm_id", as_index=False)[value_column]
+        .agg(lambda values: ";".join(values.astype(str)))
+        .rename(columns={value_column: f"{value_column}s"})
+    )
+
+
+def _aggregate_icu_hours(icustays: pd.DataFrame) -> pd.DataFrame:
+    if icustays.empty:
+        return pd.DataFrame({"hadm_id": [], "icu_hours": []})
+    if "los" in icustays.columns:
+        working = icustays.assign(icu_hours=icustays["los"].astype(float) * 24.0)
+    else:
+        intime = pd.to_datetime(icustays["intime"])
+        outtime = pd.to_datetime(icustays["outtime"])
+        working = icustays.assign(
+            icu_hours=(outtime - intime).dt.total_seconds() / 3600.0
+        )
+    return working.groupby("hadm_id", as_index=False)["icu_hours"].sum()
+
+
+def stage_mimic_demo_episodes(root: str | Path) -> pd.DataFrame:
+    """Stage episode-level facts from local MIMIC-IV Demo-shaped CSV files."""
+    admissions = _read_mimic_table(root, "admissions.csv", "hosp").reset_index()
+    diagnoses = _read_mimic_table(root, "diagnoses_icd.csv", "hosp")
+    procedures = _read_mimic_table(root, "procedures_icd.csv", "hosp")
+    drgcodes = _read_mimic_table(root, "drgcodes.csv", "hosp")
+    icustays = _read_mimic_table(root, "icustays.csv", "icu")
+
+    staged = admissions.rename(columns={"index": "admissions_row_id"}).copy()
+    staged["admittime"] = pd.to_datetime(staged["admittime"])
+    staged["dischtime"] = pd.to_datetime(staged["dischtime"])
+    staged["episode_id"] = (
+        "mimic-"
+        + staged["subject_id"].astype(str)
+        + "-"
+        + staged["hadm_id"].astype(str)
+    )
+    staged["los_days"] = (
+        (staged["dischtime"] - staged["admittime"]).dt.total_seconds() / 86_400.0
+    )
+
+    icu_hours = _aggregate_icu_hours(icustays)
+    diagnosis_codes = _join_codes(diagnoses).rename(
+        columns={"icd_codes": "diagnosis_codes"}
+    )
+    procedure_codes = _join_codes(procedures).rename(
+        columns={"icd_codes": "procedure_codes"}
+    )
+    drg_first = (
+        drgcodes.sort_values(["hadm_id", "drg_code"])
+        .groupby("hadm_id", as_index=False)
+        .first()[["hadm_id", "drg_code"]]
+        .rename(columns={"drg_code": "mimic_drg_code"})
+    )
+
+    staged = staged.merge(icu_hours, on="hadm_id", how="left")
+    staged = staged.merge(diagnosis_codes, on="hadm_id", how="left")
+    staged = staged.merge(procedure_codes, on="hadm_id", how="left")
+    staged = staged.merge(drg_first, on="hadm_id", how="left")
+    staged["icu_hours"] = staged["icu_hours"].fillna(0.0)
+    staged["diagnosis_codes"] = staged["diagnosis_codes"].fillna("")
+    staged["procedure_codes"] = staged["procedure_codes"].fillna("")
+    staged["mimic_drg_code"] = staged["mimic_drg_code"].fillna("")
+    staged["australian_ar_drg"] = ""
+    staged["classification_provenance"] = "missing"
+    staged["lineage_source_files"] = (
+        "hosp/admissions.csv;hosp/diagnoses_icd.csv;hosp/procedures_icd.csv;"
+        "hosp/drgcodes.csv;icu/icustays.csv"
+    )
+    staged["lineage_row_ids"] = "admissions:" + staged["admissions_row_id"].astype(str)
+
+    columns = [
+        "episode_id",
+        "subject_id",
+        "hadm_id",
+        "admittime",
+        "dischtime",
+        "admission_type",
+        "los_days",
+        "icu_hours",
+        "mimic_drg_code",
+        "diagnosis_codes",
+        "procedure_codes",
+        "australian_ar_drg",
+        "classification_provenance",
+        "lineage_source_files",
+        "lineage_row_ids",
+    ]
+    return staged[columns].reset_index(drop=True)
+
+
+def _has_australian_ar_drg(frame: pd.DataFrame) -> pd.Series:
+    if "australian_ar_drg" not in frame.columns:
+        return pd.Series(False, index=frame.index)
+    return _non_empty_string_mask(frame["australian_ar_drg"])
+
+
+def prepare_mimic_demo_calculator_input(
+    staged: pd.DataFrame,
+    *,
+    synthetic_overlay_path: str | Path | None = None,
+    local_ar_drg_path: str | Path | None = None,
+    allow_synthetic_overlay: bool = False,
+) -> pd.DataFrame:
+    """Prepare acute calculator input from staged MIMIC Demo episodes.
+
+    The function fails closed unless Australian AR-DRG provenance is already
+    present or an explicitly allowed synthetic overlay is supplied.
+    """
+    working = staged.copy()
+    if synthetic_overlay_path is not None and local_ar_drg_path is not None:
+        raise PublicDatasetClassificationError(
+            "provide either a synthetic overlay or a local precomputed AR-DRG "
+            "overlay, not both"
+        )
+
+    if not _has_australian_ar_drg(working).all():
+        if local_ar_drg_path is not None:
+            overlay = pd.read_csv(
+                local_ar_drg_path,
+                dtype={
+                    "episode_id": "string",
+                    "australian_ar_drg": "string",
+                    "classification_provenance": "string",
+                },
+            )
+            required_overlay_columns = {
+                "episode_id",
+                "australian_ar_drg",
+                "classification_provenance",
+            }
+            missing = required_overlay_columns.difference(overlay.columns)
+            if missing:
+                raise PublicDatasetClassificationError(
+                    "local AR-DRG overlay is missing required columns: "
+                    + ", ".join(sorted(missing))
+                )
+            working = working.drop(
+                columns=[
+                    "australian_ar_drg",
+                    "classification_provenance",
+                    "classification_provenance_detail",
+                    "overlay_is_synthetic",
+                ],
+                errors="ignore",
+            ).merge(
+                overlay[
+                    [
+                        "episode_id",
+                        "australian_ar_drg",
+                        "classification_provenance",
+                    ]
+                ],
+                on="episode_id",
+                how="left",
+            )
+            if not _has_australian_ar_drg(working).all():
+                raise PublicDatasetClassificationError(
+                    "local AR-DRG overlay does not cover every staged episode"
+                )
+            if not _non_empty_string_mask(working["classification_provenance"]).all():
+                raise PublicDatasetClassificationError(
+                    "local AR-DRG overlay must include classification provenance "
+                    "for every staged episode"
+                )
+            working["classification_provenance_detail"] = (
+                "local precomputed Australian AR-DRG; source stays local-only"
+            )
+            working["overlay_is_synthetic"] = False
+        elif synthetic_overlay_path is None:
+            raise PublicDatasetClassificationError(
+                "Australian AR-DRG provenance is required before MIMIC-derived "
+                "episodes can be converted to calculator input."
+            )
+        elif not allow_synthetic_overlay:
+            raise PublicDatasetClassificationError(
+                "Synthetic overlay use must be explicitly enabled for runnable "
+                "documentation examples."
+            )
+        else:
+            overlay = pd.read_csv(
+                synthetic_overlay_path,
+                dtype={"episode_id": "string", "australian_ar_drg": "string"},
+            )
+            required_overlay_columns = {"episode_id", "australian_ar_drg"}
+            missing = required_overlay_columns.difference(overlay.columns)
+            if missing:
+                raise PublicDatasetClassificationError(
+                    "synthetic overlay is missing required columns: "
+                    + ", ".join(sorted(missing))
+                )
+            working = working.drop(
+                columns=[
+                    "australian_ar_drg",
+                    "classification_provenance",
+                    "classification_provenance_detail",
+                    "overlay_is_synthetic",
+                ],
+                errors="ignore",
+            ).merge(
+                overlay[["episode_id", "australian_ar_drg"]],
+                on="episode_id",
+                how="left",
+            )
+            if not _has_australian_ar_drg(working).all():
+                raise PublicDatasetClassificationError(
+                    "synthetic overlay does not cover every staged episode"
+                )
+            working["classification_provenance"] = "synthetic_demo_overlay"
+            working["classification_provenance_detail"] = (
+                "synthetic Australian AR-DRG overlay for documentation only"
+            )
+            working["overlay_is_synthetic"] = True
+    elif (
+        "classification_provenance" not in working.columns
+        or not _non_empty_string_mask(working["classification_provenance"]).all()
+        or working["classification_provenance"]
+        .astype(str)
+        .str.strip()
+        .eq("missing")
+        .any()
+    ):
+        raise PublicDatasetClassificationError(
+            "Australian AR-DRG provenance detail is required for every staged episode"
+        )
+    elif "classification_provenance_detail" not in working.columns:
+        working["classification_provenance_detail"] = (
+            "local precomputed Australian AR-DRG"
+        )
+    if "overlay_is_synthetic" not in working.columns:
+        working["overlay_is_synthetic"] = False
+
+    output = pd.DataFrame(
+        {
+            "episode_id": working["episode_id"],
+            "DRG": working["australian_ar_drg"].astype(str),
+            "LOS": working["los_days"].astype(float),
+            "ICU_HOURS": working["icu_hours"].astype(float),
+            "ICU_OTHER": 0,
+            "PAT_SAMEDAY_FLAG": (working["los_days"].astype(float) < 1.0).astype(int),
+            "PAT_PRIVATE_FLAG": 0,
+            "classification_provenance": working["classification_provenance"].astype(
+                str
+            ),
+            "classification_provenance_detail": working[
+                "classification_provenance_detail"
+            ].astype(str),
+            "overlay_is_synthetic": working["overlay_is_synthetic"].astype(bool),
+            "source_dataset_id": "mimic-iv-demo-2.2",
+        }
+    )
+    return output
+
+
+def _clean_acute_weights(path: str | Path) -> pd.DataFrame:
+    weights = pd.read_csv(path)
+    weights["DRG"] = weights["DRG"].astype(str).str.strip("b'")
+    return weights
+
+
+def _mcp_boundary_validation(
+    calculator_input: pd.DataFrame,
+    *,
+    year: str,
+) -> dict[str, object]:
+    from nwau_py import mcp_server
+
+    row_payload = (
+        calculator_input.iloc[0].to_dict() if not calculator_input.empty else {}
+    )
+    validation = mcp_server.validate_input(
+        {
+            "calculatorId": "acute",
+            "year": year,
+            "inputs": row_payload,
+        }
+    )
+    calculation_boundary = mcp_server.calculate(
+        {
+            "calculatorId": "acute",
+            "year": year,
+            "inputs": row_payload,
+        }
+    )
+    return {
+        "validation": validation,
+        "calculation_boundary": calculation_boundary,
+        "runtime_formula_execution": "not_claimed",
+    }
+
+
+def _build_mimic_demo_support_status_summary(
+    *,
+    mcp_boundary_validation: Mapping[str, object],
+) -> dict[str, object]:
+    return {
+        "source_available": [
+            "mimic_iv_demo_manifest",
+            "mimic_shaped_synthetic_fixtures",
+        ],
+        "executable": [
+            "mimic_demo_staging",
+            "synthetic_overlay_calculator_input_preparation",
+            "local_file_output_bundle",
+        ],
+        "validated": [
+            "python_api_acute_runtime_with_fixture_weights",
+        ],
+        "blocked_licensed": [
+            "authoritative_australian_ar_drg_from_mimic_alone",
+        ],
+        "out_of_scope": [
+            "us_drg_or_icd_mapping_to_australian_classifications_as_validated_truth",
+        ],
+        "mcp_boundary": mcp_boundary_validation,
+        "api_openai_contracts": {
+            "http_api": "contracts/http-api/openapi.yaml",
+            "openai_adapter": "contracts/openai-adapter/tool-definitions.md",
+            "formula_execution_claim": "not_claimed_for_public_dataset_example",
+        },
+    }
+
+
+def _build_mimic_demo_surface_contract_report(
+    *,
+    mcp_boundary_validation: Mapping[str, object],
+) -> dict[str, object]:
+    return {
+        "python_api": {
+            "status": "validated",
+            "entrypoint": (
+                "nwau_py.public_clinical_datasets.run_mimic_demo_worked_example"
+            ),
+        },
+        "cli_file_interop": {
+            "status": "contract_documented",
+            "contract_path": "contracts/interop/cli-file-interop.contract.json",
+            "prepared_input": "calculator_input.csv",
+            "runtime_note": (
+                "The prepared CSV uses the existing acute input columns; CLI "
+                "execution still requires user-supplied reference assets."
+            ),
+        },
+        "mcp": {
+            "status": "boundary_validated",
+            "runtime_formula_execution": "not_claimed",
+            "validation": mcp_boundary_validation["validation"],
+            "calculation_boundary": mcp_boundary_validation["calculation_boundary"],
+        },
+        "http_api": {
+            "status": "documented_contract_only",
+            "contract_path": "contracts/http-api/openapi.yaml",
+        },
+        "openai_adapter": {
+            "status": "documented_contract_only",
+            "contract_path": "contracts/openai-adapter/tool-definitions.md",
+        },
+    }
+
+
+def _build_mimic_demo_scenario_sensitivity_report(
+    *,
+    fail_closed_error: str,
+    calculated: pd.DataFrame,
+    year: str,
+) -> list[dict[str, object]]:
+    nwau_column = f"NWAU{str(year)[-2:]}"
+    total_nwau = (
+        float(calculated[nwau_column].sum())
+        if nwau_column in calculated.columns
+        else None
+    )
+    return [
+        {
+            "scenario": "missing_australian_ar_drg",
+            "status": "blocked_licensed",
+            "message": fail_closed_error,
+            "authoritative_australian_output": False,
+        },
+        {
+            "scenario": "synthetic_overlay",
+            "status": "executable_non_authoritative",
+            "row_count": len(calculated),
+            "nwau_column": nwau_column,
+            "total_nwau": total_nwau,
+            "authoritative_australian_output": False,
+            "message": (
+                "Runs end-to-end only because a synthetic Australian AR-DRG "
+                "overlay is explicitly supplied for documentation."
+            ),
+        },
+    ]
+
+
+def _write_json(path: Path, payload: object) -> None:
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True, default=str),
+        encoding="utf-8",
+    )
+
+
+def run_mimic_demo_worked_example(
+    root: str | Path,
+    *,
+    synthetic_overlay_path: str | Path,
+    reference_weights_path: str | Path,
+    manifest_path: str | Path = (
+        "reference-data/public-datasets/mimic-iv-demo/manifest.yaml"
+    ),
+    output_dir: str | Path | None = None,
+    year: str = "2025",
+) -> MimicDemoWorkedExampleBundle:
+    """Run the conservative MIMIC-IV Demo worked example with safe fixtures.
+
+    The calculation path requires an explicitly labelled synthetic AR-DRG
+    overlay and fixture price weights. It is a runnable tutorial, not
+    authoritative Australian classification evidence.
+    """
+    from nwau_py.calculators import AcuteParams, calculate_acute
+    from nwau_py.calculators.acute import AcuteReferenceBundle
+
+    manifest = load_public_dataset_manifest(manifest_path)
+    staged = stage_mimic_demo_episodes(root)
+    try:
+        prepare_mimic_demo_calculator_input(staged)
+    except PublicDatasetClassificationError as exc:
+        fail_closed_error = str(exc)
+    else:  # pragma: no cover - defensive; staging intentionally lacks AR-DRG
+        fail_closed_error = "missing Australian AR-DRG was unexpectedly accepted"
+
+    calculator_input = prepare_mimic_demo_calculator_input(
+        staged,
+        synthetic_overlay_path=synthetic_overlay_path,
+        allow_synthetic_overlay=True,
+    )
+    weights = _clean_acute_weights(reference_weights_path)
+    reference_bundle = AcuteReferenceBundle(
+        year=year,
+        ref_dir=Path(reference_weights_path).parent,
+        weights=weights,
+    )
+    calculated = calculate_acute(
+        calculator_input,
+        AcuteParams(),
+        year=year,
+        reference_bundle=reference_bundle,
+    )
+
+    mcp_boundary = _mcp_boundary_validation(calculator_input, year=year)
+    support_status = _build_mimic_demo_support_status_summary(
+        mcp_boundary_validation=mcp_boundary
+    )
+    surface_contract = _build_mimic_demo_surface_contract_report(
+        mcp_boundary_validation=mcp_boundary
+    )
+    scenario_report = _build_mimic_demo_scenario_sensitivity_report(
+        fail_closed_error=fail_closed_error,
+        calculated=calculated,
+        year=year,
+    )
+    provenance = build_public_dataset_provenance_report(
+        manifest,
+        local_files=(
+            "hosp/admissions.csv",
+            "hosp/diagnoses_icd.csv",
+            "hosp/procedures_icd.csv",
+            "hosp/drgcodes.csv",
+            "icu/icustays.csv",
+        ),
+        derivation_steps=(
+            "stage_mimic_demo_episodes",
+            "prepare_mimic_demo_calculator_input",
+            "calculate_acute",
+        ),
+        overlay_status="synthetic_demo_overlay",
+        support_state="executable_non_authoritative",
+    )
+    data_quality = build_public_dataset_data_quality_report(staged)
+    disclosure_risk = build_public_dataset_disclosure_risk_summary(staged)
+
+    written_files: dict[str, str] = {}
+    if output_dir is not None:
+        destination = Path(output_dir)
+        destination.mkdir(parents=True, exist_ok=True)
+        csv_outputs = {
+            "staged": (destination / "staged.csv", staged),
+            "calculator_input": (
+                destination / "calculator_input.csv",
+                calculator_input,
+            ),
+            "calculated": (destination / "calculated.csv", calculated),
+        }
+        for name, (path, frame) in csv_outputs.items():
+            frame.to_csv(path, index=False)
+            written_files[name] = path.as_posix()
+        json_outputs = {
+            "provenance_report": (destination / "provenance_report.json", provenance),
+            "data_quality_report": (
+                destination / "data_quality_report.json",
+                data_quality,
+            ),
+            "disclosure_risk_summary": (
+                destination / "disclosure_risk_summary.json",
+                disclosure_risk,
+            ),
+            "support_status_summary": (
+                destination / "support_status_summary.json",
+                support_status,
+            ),
+            "surface_contract_report": (
+                destination / "surface_contract_report.json",
+                surface_contract,
+            ),
+            "mcp_boundary_validation": (
+                destination / "mcp_boundary_validation.json",
+                mcp_boundary,
+            ),
+            "scenario_sensitivity_report": (
+                destination / "scenario_sensitivity_report.json",
+                scenario_report,
+            ),
+        }
+        for name, (path, payload) in json_outputs.items():
+            _write_json(path, payload)
+            written_files[name] = path.as_posix()
+
+    return MimicDemoWorkedExampleBundle(
+        staged=staged,
+        calculator_input=calculator_input,
+        calculated=calculated,
+        provenance_report=provenance,
+        data_quality_report=data_quality,
+        disclosure_risk_summary=disclosure_risk,
+        support_status_summary=support_status,
+        surface_contract_report=surface_contract,
+        mcp_boundary_validation=mcp_boundary,
+        scenario_sensitivity_report=scenario_report,
+        written_files=written_files,
+    )
 
 
 def list_public_dataset_candidates() -> tuple[PublicClinicalDatasetCandidate, ...]:

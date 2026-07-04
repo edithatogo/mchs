@@ -1,0 +1,4 @@
+subject_id,hadm_id,seq_num,icd_code,icd_version
+1001,2001,1,I10,10
+1001,2001,2,E119,10
+1002,2002,1,J189,10
