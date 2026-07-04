@@ -1,0 +1,17 @@
+Archive: Public Clinical Dataset Worked Example
+
+Summary:
+- Archived public_clinical_dataset_worked_example_20260704 to conductor/archive/.
+- Removed the live track entry from conductor/tracks.md.
+- Updated archived metadata paths for dataset_assessment.md and github_actions_review.md.
+
+Archive eligibility:
+- metadata.json status=completed and current_state=complete-with-gaps.
+- plan.md has all tasks complete and Phase 1-4 checkpoints recorded.
+- Final conductor-review passed with no unresolved local implementation blockers.
+- External CI workflow-file gate is explicitly recorded and tracked by issue #354.
+
+Validation:
+- python -m json.tool conductor/archive/public_clinical_dataset_worked_example_20260704/metadata.json >/dev/null
+- no stale conductor/tracks/public_clinical_dataset_worked_example_20260704 paths found in archived track/tracks.md
+- python conductor/scripts/stub_detector.py --root . --json => total_findings 0
