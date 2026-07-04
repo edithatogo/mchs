@@ -1,0 +1,16 @@
+Task: Validate migration results
+
+Summary:
+- Added manifest validation_results for canonical topology, explicit outer-root topology, focused tests, and stub detector.
+- Recorded residual gates split into local canonical repo, user-owned wrapper cleanup, and external non-wrapper gates.
+- Added governance test coverage for the validation-result contract.
+
+Files:
+- conductor/outer-wrapper-migration-manifest.json
+- tests/test_repository_topology_governance.py
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_manifest_records_validation_results_and_residual_gates -q
+
+Why:
+- The track needs auditable proof that canonical validation passed while the parent wrapper still fails closed as a cleanup gate.
