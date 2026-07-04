@@ -1,0 +1,11 @@
+Task: Inventory candidate public clinical datasets / select initial worked example / verify follow-up issue scope
+
+Summary:
+- Added nwau_py.public_clinical_datasets with metadata-only candidate records.
+- Added dataset_assessment.md with access, license, field, suitability, risk, and selection rationale.
+- Confirmed follow-up issue scope for ED, FHIR/MEDS, registry, downloader/cache, provenance/data-quality, surface conformance, disclosure-risk, scenario/sensitivity, and CI workflow drift.
+
+Validation:
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q
+- uv run ruff check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- git diff --check for touched files
