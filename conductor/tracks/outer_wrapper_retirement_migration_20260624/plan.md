@@ -32,4 +32,4 @@
 - [x] Task: Record residual gates. [a7e662c]
     - [x] Separate local cleanup from external registry or account blockers.
     - [x] Update support docs only for migrated, validated artifacts.
-- [ ] Task: Conductor - User Manual Verification 'Validation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Validation' (Protocol in workflow.md) [e5a7df8]
