@@ -10,7 +10,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 import pandas as pd
 import yaml
@@ -157,7 +157,7 @@ class PublicDatasetCacheDiagnostic:
 def _require_mapping(value: object, *, field: str) -> Mapping[str, Any]:
     if not isinstance(value, Mapping):
         raise PublicDatasetManifestError(f"{field} must be a mapping")
-    return value
+    return cast(Mapping[str, Any], value)
 
 
 def _require_sequence(value: object, *, field: str) -> Sequence[object]:

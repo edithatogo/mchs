@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any, cast
 
 import pandas as pd
 import pytest
@@ -177,8 +178,13 @@ def test_public_dataset_reports_are_machine_readable() -> None:
     disclosure = build_public_dataset_disclosure_risk_summary(staged)
 
     assert provenance["dataset_id"] == "mimic-iv-demo-2.2"
-    assert provenance["classification_boundary"]["support_state"] == "blocked_licensed"
+    classification_boundary = cast(
+        dict[str, Any],
+        provenance["classification_boundary"],
+    )
+    assert classification_boundary["support_state"] == "blocked_licensed"
     assert quality["row_count"] == 2
     assert quality["classification_provenance_state"] == "missing"
     assert disclosure["commit_safe"] is False
-    assert "admission IDs" in " ".join(disclosure["risk_reasons"])
+    risk_reasons = cast(list[str], disclosure["risk_reasons"])
+    assert "admission IDs" in " ".join(risk_reasons)
