@@ -11,7 +11,7 @@
     - [x] Require evidence checksums for files that are archived or migrated.
 - [x] Task: Conductor - User Manual Verification 'Inventory' (Protocol in workflow.md)
 
-## Phase 2: Preservation and Retirement
+## Phase 2: Preservation and Retirement [checkpoint: a659bd4]
 
 - [x] Task: Preserve source slices. [6ca7d06]
     - [x] Move or copy approved unique source artifacts into canonical paths.
