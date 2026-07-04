@@ -71,6 +71,21 @@ wrapper is actually retired or formalized as a valid superproject with
 `.gitmodules`. That failure is an outer-wrapper cleanup gate, not evidence that
 the canonical repo preservation work is incomplete.
 
+## Outer Cleanup Actions
+
+No automated deletion of `/Volumes/PortableSSD/GitHub/mchs` files is performed
+by this canonical-repo track. The cleanup actions are:
+
+1. Review evidence entries in the migration manifest before deleting outer
+   files.
+2. Remove or archive generated Playwright logs and local caches from the parent
+   wrapper.
+3. Retire the parent wrapper or formalize it as a superproject by adding
+   `.gitmodules` metadata for the `microcosting_healthservices` gitlink.
+4. Rerun the explicit `--outer-root` topology validation and treat any remaining
+   unmanaged gitlink or nested-repo diagnostic as an outer-wrapper cleanup
+   blocker.
+
 ## Non-Goals
 
 Wrapper retirement does not publish packages, complete external reviews, or

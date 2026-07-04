@@ -438,6 +438,27 @@ def test_outer_wrapper_migration_manifest_records_final_preservation_decision() 
     assert gitlink["residual_gate"] == "outer-wrapper-cleanup"
 
 
+def test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper() -> None:
+    manifest = _load_json(OUTER_MANIFEST)
+
+    cleanup = manifest["cleanup_actions"]
+    assert cleanup["automated_outer_deletion_performed"] is False
+    assert cleanup["generated_logs"]["action"] == "delete-or-ignore-in-outer-repo"
+    assert cleanup["generated_logs"]["manifested_count"] >= 40
+    assert cleanup["gitlink"]["action"] == "remove-outer-gitlink-or-add-gitmodules"
+    assert cleanup["gitlink"]["current_state"] == "unmanaged-gitlink"
+    assert cleanup["user_owned_steps"] == [
+        "Review evidence entries before deleting outer files.",
+        "Remove or archive outer generated logs and local caches.",
+        "Retire the parent wrapper or formalize it with .gitmodules.",
+        "Rerun explicit --outer-root topology validation.",
+    ]
+
+    assert manifest["preservation"]["cleanup_policy"].startswith(
+        "Do not remove outer-wrapper files from this canonical repo track."
+    )
+
+
 def test_pr_ci_runs_repository_topology_validator() -> None:
     workflow = _read(ROOT / ".github" / "workflows" / "pr-ci.yml")
     assert "Validate repository topology" in workflow

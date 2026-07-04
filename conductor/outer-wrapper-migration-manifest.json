@@ -4698,5 +4698,29 @@
       "uv run pytest tests/test_repository_topology_governance.py -q"
     ],
     "cleanup_policy": "Do not remove outer-wrapper files from this canonical repo track. Use this manifest to archive or delete wrapper-only files from the outer repository after confirming no user-local evidence is needed."
+  },
+  "cleanup_actions": {
+    "automated_outer_deletion_performed": false,
+    "generated_logs": {
+      "action": "delete-or-ignore-in-outer-repo",
+      "current_state": "tracked-generated-wrapper-logs",
+      "manifested_count": 40,
+      "guardrail": "Delete only from the parent wrapper after confirming no entry is needed as evidence."
+    },
+    "gitlink": {
+      "action": "remove-outer-gitlink-or-add-gitmodules",
+      "current_state": "unmanaged-gitlink",
+      "guardrail": "The canonical repo must remain the implementation root; a parent superproject is valid only with explicit .gitmodules metadata."
+    },
+    "local_caches": {
+      "action": "ignore-or-delete-in-outer-repo",
+      "guardrail": "Do not commit browser state, pytest caches, virtual environments, or local tool history."
+    },
+    "user_owned_steps": [
+      "Review evidence entries before deleting outer files.",
+      "Remove or archive outer generated logs and local caches.",
+      "Retire the parent wrapper or formalize it with .gitmodules.",
+      "Rerun explicit --outer-root topology validation."
+    ]
   }
 }
