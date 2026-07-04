@@ -1,0 +1,74 @@
+# Specification: Public Clinical Dataset Worked Example
+
+## Overview
+
+Create a conservative worked example that shows how real public clinical data
+can be prepared for the NWAU calculator contract without overclaiming
+Australian classification support.
+
+The track must first evaluate candidate public datasets, then default to a
+worked example around MIMIC-IV Clinical Database Demo v2.2 if the assessment
+continues to support that choice. MIMIC-IV Demo can support real-data ETL and
+episode staging, but it cannot produce authoritative Australian AR-DRG or NWAU
+outputs unless precomputed Australian grouping provenance or a local licensed
+grouper is supplied.
+
+## Functional Requirements
+
+- Inventory plausible public datasets, including at least:
+  - MIMIC-IV Clinical Database Demo v2.2
+  - MIMIC-IV-ED Demo v2.2
+  - MIMIC-IV Demo in MEDS
+  - MIMIC-IV Clinical Database Demo on FHIR
+  - Synthea or another fully synthetic FHIR/EHR candidate as a comparison point
+- For each candidate, record access path, license, citation, file size,
+  required credentials, redistribution rules, clinical fields available, update
+  cadence, and fit for NWAU calculator examples.
+- Select one initial worked-example dataset, defaulting to MIMIC-IV Clinical
+  Database Demo v2.2 unless discovery finds a better fit.
+- Keep raw public dataset files out of git; use local download/cache paths,
+  committed manifests, and tiny safe fixtures only.
+- Build a real-data staging example from MIMIC admissions, ICU stays, and
+  available DRG or billing metadata.
+- Fail closed when Australian AR-DRG provenance is missing.
+- Allow an explicitly labelled synthetic AR-DRG overlay fixture so the tutorial
+  can run end-to-end without licensed assets.
+- Document that MIMIC US DRGs, ICD-9-CM, ICD-10-CM, and ICD-10-PCS are not
+  authoritative Australian AR-DRG, ICD-10-AM, ACHI, or ACS inputs.
+- Publish a docs-site tutorial explaining dataset access rules, ETL,
+  provenance, caveats, and the runnable workflow.
+
+## Non-Functional Requirements
+
+- Do not commit raw MIMIC files or other public patient-level dataset extracts.
+- Do not redistribute restricted clinical classification assets, mapping
+  tables, or proprietary grouping logic.
+- Data access diagnostics must be explicit about local prerequisites and
+  licensing boundaries.
+- The worked example must preserve provenance fields and make synthetic overlay
+  behavior visible in outputs and docs.
+- Documentation must distinguish real deidentified source data from synthetic
+  Australian classification overlays.
+
+## Acceptance Criteria
+
+- A dataset assessment records candidates, access rules, pros, cons, and
+  suitability decisions.
+- MIMIC-IV Demo or the selected alternative has a committed manifest and
+  local-cache policy.
+- Raw public dataset files are ignored and guarded from accidental commits.
+- MIMIC-shaped tiny fixtures prove episode staging, local-file diagnostics, and
+  fail-closed classification behavior.
+- An end-to-end example runs with a synthetic AR-DRG overlay and existing acute
+  test weights.
+- Docs explain how users with local MIMIC-IV Demo files can run the workflow
+  and why authoritative NWAU claims require Australian classification
+  provenance.
+
+## Out of Scope
+
+- Bundling raw MIMIC files.
+- Redistributing restricted clinical or grouping assets.
+- Claiming authoritative Australian NWAU calculation from MIMIC alone.
+- Implementing a proprietary AR-DRG grouper.
+- Mapping US classifications to Australian classifications as if validated.

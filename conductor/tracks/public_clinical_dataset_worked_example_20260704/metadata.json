@@ -1,0 +1,53 @@
+{
+  "track_id": "public_clinical_dataset_worked_example_20260704",
+  "type": "feature",
+  "status": "new",
+  "track_class": "example",
+  "current_state": "planned",
+  "primary_contract": "public dataset discovery, access/licensing assessment, fail-closed real-data ETL, and MIMIC-IV Demo worked example",
+  "dependencies": [
+    "ar_drg_grouper_provider_runtime_20260703",
+    "classification_mapping_registry_enrichment_20260703",
+    "licensed_asset_loader_framework_20260703",
+    "ihacpa_capability_matrix_runtime_truth_20260703"
+  ],
+  "completion_evidence": [
+    "conductor/tracks/public_clinical_dataset_worked_example_20260704/dataset_assessment.md",
+    "reference-data/public-datasets/mimic-iv-demo/manifest.yaml",
+    "examples/mimic_demo/",
+    "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
+    "tests/test_public_clinical_dataset_worked_example_track.py"
+  ],
+  "support_scope": {
+    "state": "planned",
+    "included": [
+      "Public clinical dataset discovery and access assessment.",
+      "MIMIC-IV Demo local-file ETL for admitted-episode staging.",
+      "Fail-closed calculator-input preparation when Australian AR-DRG provenance is missing.",
+      "Synthetic AR-DRG overlay fixture for runnable documentation only."
+    ],
+    "excluded": [
+      "Bundling raw MIMIC files or patient-level public dataset extracts.",
+      "Redistributing restricted clinical classification tables or grouping assets.",
+      "Claiming authoritative Australian NWAU calculation from MIMIC alone.",
+      "Implementing or reimplementing proprietary AR-DRG grouping logic."
+    ]
+  },
+  "gap_register": [
+    {
+      "id": "mimic-not-australian-classification",
+      "status": "known-limitation",
+      "description": "MIMIC US DRG and diagnosis/procedure fields are not Australian AR-DRG, ICD-10-AM, ACHI, or ACS inputs; authoritative NWAU examples require local AR-DRG provenance or an explicitly synthetic overlay."
+    },
+    {
+      "id": "raw-public-dataset-local-only",
+      "status": "policy-boundary",
+      "description": "Raw public clinical dataset files must remain local-only and must not be committed to the repository."
+    }
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-07-04T10:09:03Z",
+  "updated_at": "2026-07-04T10:09:03Z",
+  "description": "Assess public clinical datasets and add a conservative real-data worked example that uses MIMIC-IV Demo staging while failing closed around Australian classification limits.",
+  "no_stub_enforce": true
+}
