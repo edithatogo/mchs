@@ -1,0 +1,8 @@
+Conductor archive repair validation for recursive_sota_contract_audit_20260513:
+- uv run pytest tests/test_recursive_sota_contract_audit_track.py tests/test_governance_contracts.py -q: 8 passed
+- python -m json.tool conductor/archive/recursive_sota_contract_audit_20260513/metadata.json >/dev/null: passed
+- uv run ruff check tests/test_recursive_sota_contract_audit_track.py: passed
+- uv run ty check tests/test_recursive_sota_contract_audit_track.py: passed
+- python conductor/scripts/stub_detector.py --root . --json: total_findings=0, stubs_detected=false
+- git diff --check -- conductor/archive/recursive_sota_contract_audit_20260513 tests/test_recursive_sota_contract_audit_track.py conductor/tracks.md: passed
+Review outcome: archive is complete-with-gaps as governance-only and does not claim a completed current SOTA audit report or remediation links.
