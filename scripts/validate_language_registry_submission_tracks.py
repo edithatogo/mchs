@@ -66,7 +66,7 @@ def main() -> None:
             ), track_id
         elif registry["current_status"] in CANCELLED_NOT_PUBLISHED_STATUSES:
             assert registry["blocker"], registry["id"]
-            assert metadata["status"] == "cancelled", track_id
+            assert metadata["status"] in {"cancelled", "completed"}, track_id
             assert metadata["publication_claimed"] is False, track_id
             assert metadata["publication_status"] == "cancelled_not_published", track_id
         else:

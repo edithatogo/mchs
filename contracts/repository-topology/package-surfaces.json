@@ -111,7 +111,7 @@
         "target": "CRAN",
         "workflow": "manual CRAN submission",
         "version_source": "r-binding/DESCRIPTION",
-        "registry_state": "submitted",
+        "registry_state": "deprecated_cancelled_not_published",
         "evidence": [
           "conductor/tracks/r_cran_registry_submission_20260524/"
         ],
@@ -508,13 +508,13 @@
         "version_source": "packaging/conan/conanfile.py",
         "registry_state": "submitted",
         "evidence": [
-          "conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/"
+          "conductor/archive/c_cpp_vcpkg_conan_submission_20260524/"
         ],
-        "external_gate": "CLA, scheduler, and ConanCenter review"
+        "external_gate": "deprecated and cancelled on 2026-07-03; ConanCenter PR 30262 retained as historical evidence only"
       },
       "artifact_policy": "source",
       "formula_logic": "not-applicable",
-      "claim_boundary": "ConanCenter remains external-review-gated."
+      "claim_boundary": "ConanCenter publication is deprecated and cancelled; local recipe and PR evidence is retained historically and no public registry publication is claimed."
     },
     {
       "id": "vcpkg-port",
@@ -535,7 +535,7 @@
         "version_source": "packaging/vcpkg/ports/nwau-c-abi/vcpkg.json",
         "registry_state": "deprecated_cancelled_not_published",
         "evidence": [
-          "conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/"
+          "conductor/archive/c_cpp_vcpkg_conan_submission_20260524/"
         ],
         "external_gate": "deprecated and cancelled on 2026-07-03; vcpkg PR 51965 and ConanCenter PR 30262 retained as historical evidence only"
       },

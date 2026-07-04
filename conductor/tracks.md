@@ -692,8 +692,8 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: C/C++ vcpkg and Conan Submission (deprecated and cancelled)**
-*Link: [./tracks/c_cpp_vcpkg_conan_submission_20260524/](./tracks/c_cpp_vcpkg_conan_submission_20260524/)*
+- [x] **Track: C/C++ vcpkg and Conan Submission (deprecated and cancelled)**
+*Link: [./archive/c_cpp_vcpkg_conan_submission_20260524/](./archive/c_cpp_vcpkg_conan_submission_20260524/)*
 *Gate: Deprecated and cancelled on 2026-07-03. ConanCenter PR 30262 and vcpkg PR 51965 are retained as historical evidence only; no further upstream review, publication, or monitoring work is planned unless re-chartered.*
 
 ---

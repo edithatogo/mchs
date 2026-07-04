@@ -203,7 +203,7 @@ Stata SSC public-proof note: the live monitor checks the Boston College SSC/RePE
 - vcpkg validation: bootstrapped vcpkg under `/tmp/mchs-vcpkg-validation` and ran `/tmp/mchs-vcpkg-validation/vcpkg install nwau-c-abi --overlay-ports=/Volumes/PortableSSD/GitHub/mchs/microcosting_healthservices/packaging/vcpkg/ports --triplet arm64-osx --clean-after-build --binarysource=clear`; install completed successfully with release/debug static libraries, header, copyright, and SPDX metadata.
 - vcpkg submission: PR `https://github.com/microsoft/vcpkg/pull/51965` was closed unmerged on 2026-05-26. The actionable port-quality feedback was addressed in fork commit `58ff86fe`, but maintainers closed the PR because vcpkg does not currently support building Rust libraries.
 - ConanCenter submission: PR `https://github.com/conan-io/conan-center-index/pull/30262` is open. Portability fixes were pushed in commit `c635b0f9d2f1619d9149e4fa964185658c063f5d`; CLA/recheck is resolved. The PR is now retained as historical evidence only after cancellation.
-- Track-specific checklist: `conductor/tracks/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`.
+- Track-specific checklist: `conductor/archive/c_cpp_vcpkg_conan_submission_20260524/upstream_pr_checklist.md`.
 - Next-action checklist:
   1. Treat vcpkg / ConanCenter as deprecated and cancelled as of 2026-07-03.
   2. Retain PRs and local packaging evidence as historical evidence only.

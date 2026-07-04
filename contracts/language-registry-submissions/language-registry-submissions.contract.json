@@ -646,6 +646,7 @@
                 "fixedLocalBlocker": "Added version=0.1.0 to the nwau-core path dependency for publishable Cargo metadata.",
                 "remainingExternalBlocker": "Cancelled on 2026-07-03; no further ConanCenter or vcpkg upstream review is planned unless re-chartered.",
                 "publicationClaim": "No public vcpkg or ConanCenter publication is claimed; the surface is deprecated and cancelled.",
+                "archivedTrack": "conductor/archive/c_cpp_vcpkg_conan_submission_20260524/",
                 "cargoPackageCommand": "cargo package --allow-dirty --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",
                 "cargoPackageResult": "Packaged 6 files, 14.2KiB (4.2KiB compressed); verification compiled nwau-c-abi v0.1.0 successfully.",
                 "cargoTestCommand": "cargo test --locked --manifest-path rust/crates/nwau-c-abi/Cargo.toml",

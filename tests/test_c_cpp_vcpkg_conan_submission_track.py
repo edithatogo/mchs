@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "c_cpp_vcpkg_conan_submission_20260524"
+TRACK = ROOT / "conductor" / "archive" / "c_cpp_vcpkg_conan_submission_20260524"
 TRACK_INDEX = TRACK / "index.md"
 TRACK_CHECKLIST = TRACK / "upstream_pr_checklist.md"
 CONTRACT = (
@@ -39,7 +39,8 @@ def test_c_cpp_track_records_cancelled_not_publication():
     registry = _registry()
 
     assert (TRACK / "review.md").exists()
-    assert metadata["status"] == "cancelled"
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["current_status"] == "deprecated_cancelled_not_published"
     assert metadata["publication_claimed"] is False
     assert metadata["publication_status"] == "cancelled_not_published"
@@ -56,6 +57,9 @@ def test_c_cpp_track_records_cancelled_not_publication():
     assert registry["cancelled_at"] == "2026-07-03"
     assert "historical evidence only" in registry["blocker"]
     assert "cargoPackageResult" in registry["preparationEvidence"]
+    assert registry["preparationEvidence"]["archivedTrack"].endswith(
+        "conductor/archive/c_cpp_vcpkg_conan_submission_20260524/"
+    )
     assert (
         "compiled nwau-c-abi v0.1.0 successfully"
         in registry["preparationEvidence"]["cargoPackageResult"]
