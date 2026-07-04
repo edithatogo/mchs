@@ -301,9 +301,7 @@ def test_generated_artifact_policy_detects_package_artifacts() -> None:
     assert _validator._is_generated_path(
         "bindings/matlab/mchs-matlab-interop-0.1.0.zip"
     )
-    assert _validator._is_generated_path(
-        "bindings/stata/mchs-stata-interop-0.1.0.zip"
-    )
+    assert _validator._is_generated_path("bindings/stata/mchs-stata-interop-0.1.0.zip")
     assert not _validator._is_evidence_artifact("dist/nwau_py-0.1.0.tar.gz")
     assert _validator._is_evidence_artifact("integrations/vscode/mchs-tools-0.1.1.vsix")
     assert _validator._is_evidence_artifact(
@@ -352,7 +350,9 @@ def test_repository_topology_validator_detects_unmanaged_outer_gitlink(
 def test_outer_wrapper_migration_manifest_records_phase_one_inventory() -> None:
     manifest = _load_json(OUTER_MANIFEST)
     assert manifest["track_id"] == "outer_wrapper_retirement_migration_20260624"
-    assert manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
+    assert (
+        manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
+    )
     assert (
         manifest["decision_boundary"]
         == "Canonical preservation and retirement decision recorded; no "
@@ -406,7 +406,9 @@ def test_outer_wrapper_migration_manifest_records_final_preservation_decision() 
         "Canonical preservation and retirement decision recorded; no "
         "outer-wrapper files are deleted by this canonical-repo track."
     )
-    assert manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
+    assert (
+        manifest["recommended_option"] == "retire-wrapper-after-canonical-preservation"
+    )
 
     preservation = manifest["preservation"]
     assert preservation["canonical_source_status"] == "preserved-in-canonical-root"
@@ -417,7 +419,10 @@ def test_outer_wrapper_migration_manifest_records_final_preservation_decision() 
 
     assert set(preservation["validation_commands"]) >= {
         "uv run python scripts/validate_repository_topology.py --json",
-        "uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs",
+        (
+            "uv run python scripts/validate_repository_topology.py --json "
+            "--outer-root /Volumes/PortableSSD/GitHub/mchs"
+        ),
     }
 
     entries = {entry["path"]: entry for entry in manifest["entries"]}
@@ -438,7 +443,9 @@ def test_outer_wrapper_migration_manifest_records_final_preservation_decision() 
     assert gitlink["residual_gate"] == "outer-wrapper-cleanup"
 
 
-def test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper() -> None:
+def test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper() -> (
+    None
+):
     manifest = _load_json(OUTER_MANIFEST)
 
     cleanup = manifest["cleanup_actions"]
@@ -479,12 +486,15 @@ def test_outer_wrapper_manifest_records_validation_results_and_residual_gates() 
     gates = manifest["residual_gates"]
     assert gates["local_canonical_repo"] == []
     assert "outer-wrapper-cleanup" in gates["user_owned"]
-    assert "registry/account/publishing gates are not part of wrapper retirement" in gates[
-        "external"
-    ]
+    assert (
+        "registry/account/publishing gates are not part of wrapper retirement"
+        in gates["external"]
+    )
 
 
-def test_outer_wrapper_track_metadata_records_complete_with_outer_cleanup_gate() -> None:
+def test_outer_wrapper_track_metadata_records_complete_with_outer_cleanup_gate() -> (
+    None
+):
     metadata = _load_json(
         TRACKS / "outer_wrapper_retirement_migration_20260624" / "metadata.json"
     )
