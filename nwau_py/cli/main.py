@@ -9,6 +9,8 @@ from typing import IO, Any, Protocol, cast
 
 import click
 
+from nwau_py.calculators import acute as acute_calculator
+
 
 class _CsvFrame(Protocol):
     def to_csv(self, outfh: IO[str], *, index: bool) -> None: ...
@@ -25,6 +27,8 @@ _INTEROP_CONTRACT_PATH = (
     / "interop"
     / "cli-file-interop.contract.json"
 )
+_RUNTIME_ENV = "NWAU_RUNTIME"
+_VALID_RUNTIMES = {"python", "rust", "auto"}
 
 
 def _write_output(df: _CsvFrame, outfh: IO[str]) -> None:
@@ -35,6 +39,36 @@ def _load_interop_contract() -> dict[str, Any]:
     return json.loads(_INTEROP_CONTRACT_PATH.read_text(encoding="utf-8"))
 
 
+def _resolve_runtime(runtime: str | None) -> str:
+    import os
+
+    selected = runtime or os.environ.get(_RUNTIME_ENV) or "python"
+    selected = selected.strip().lower()
+    if selected not in _VALID_RUNTIMES:
+        raise click.ClickException(
+            "MCHS-CLI-RUNTIME-INVALID: runtime must be one of "
+            "python, rust, or auto"
+        )
+    return selected
+
+
+def _select_runtime_calculator(
+    *,
+    stream: str,
+    calculator,
+    year: str,
+    runtime: str,
+):
+    if runtime in {"python", "auto"}:
+        return calculator
+    if stream == "acute" and year == "2025":
+        return acute_calculator.calculate_acute_rust_2025
+    raise click.ClickException(
+        "MCHS-CLI-RUST-UNSUPPORTED: Rust runtime is only validated for "
+        f"acute 2025 CLI execution; requested {stream} {year}."
+    )
+
+
 def _run(
     stream: str,
     calculator,
@@ -43,6 +77,7 @@ def _run(
     output: str,
     year: str | None,
     ref_dir: str | None,
+    runtime: str | None = None,
 ) -> None:
     import pandas as pd
 
@@ -50,6 +85,13 @@ def _run(
     from nwau_py.runtime import run_csv_calculation
 
     validation_year = year or "2025"
+    selected_runtime = _resolve_runtime(runtime)
+    selected_calculator = _select_runtime_calculator(
+        stream=stream,
+        calculator=calculator,
+        year=validation_year,
+        runtime=selected_runtime,
+    )
     try:
         input_df = pd.read_csv(input_csv)
         requirement = get_classification_requirement(
@@ -70,16 +112,23 @@ def _run(
     except ValueError as exc:
         raise click.ClickException(str(exc)) from exc
 
-    run_csv_calculation(
-        input_csv=input_csv,
-        output=output,
-        calculator=calculator,
-        params=params,
-        year=year,
-        ref_dir=ref_dir,
-        read_csv=pd.read_csv,
-        write_csv=_write_output,
-    )
+    try:
+        run_csv_calculation(
+            input_csv=input_csv,
+            output=output,
+            calculator=selected_calculator,
+            params=params,
+            year=year,
+            ref_dir=ref_dir,
+            read_csv=pd.read_csv,
+            write_csv=_write_output,
+        )
+    except ImportError as exc:
+        if selected_runtime == "rust":
+            raise click.ClickException(
+                f"MCHS-CLI-RUST-UNAVAILABLE: {exc}"
+            ) from exc
+        raise
 
 
 def _common_options(func):
@@ -91,6 +140,12 @@ def _common_options(func):
         help="Directory containing SAS tables",
     )(func)
     func = click.option("--year", default=None, help="NEP/NWAU edition year")(func)
+    func = click.option(
+        "--runtime",
+        default=None,
+        type=click.Choice(["python", "rust", "auto"], case_sensitive=False),
+        help="Calculation runtime; defaults to python unless NWAU_RUNTIME is set",
+    )(func)
     func = click.option(
         "--output",
         default="-",
@@ -388,26 +443,51 @@ def diff_year(from_year: str, to_year: str, emit_json: bool) -> None:
 
 @cli.command()
 @_common_options
-def acute(input_csv: str, params: str | None, output: str, year: str | None) -> None:
+def acute(
+    input_csv: str,
+    params: str | None,
+    output: str,
+    runtime: str | None,
+    year: str | None,
+) -> None:
     """Calculate NWAU for acute care."""
     from nwau_py.calculators import AcuteParams, calculate_acute
 
-    _run("acute", calculate_acute, AcuteParams(), input_csv, output, year, params)
+    _run(
+        "acute",
+        calculate_acute,
+        AcuteParams(),
+        input_csv,
+        output,
+        year,
+        params,
+        runtime,
+    )
 
 
 @cli.command()
 @_common_options
-def ed(input_csv: str, params: str | None, output: str, year: str | None) -> None:
+def ed(
+    input_csv: str,
+    params: str | None,
+    output: str,
+    runtime: str | None,
+    year: str | None,
+) -> None:
     """Calculate NWAU for emergency department care."""
     from nwau_py.calculators import EDParams, calculate_ed
 
-    _run("ed", calculate_ed, EDParams(), input_csv, output, year, params)
+    _run("ed", calculate_ed, EDParams(), input_csv, output, year, params, runtime)
 
 
 @cli.command(name="non-admitted")
 @_common_options
 def non_admitted(
-    input_csv: str, params: str | None, output: str, year: str | None
+    input_csv: str,
+    params: str | None,
+    output: str,
+    runtime: str | None,
+    year: str | None,
 ) -> None:
     """Calculate NWAU for non-admitted care."""
     from nwau_py.calculators import OutpatientParams, calculate_outpatients
@@ -420,6 +500,7 @@ def non_admitted(
         output,
         year,
         params,
+        runtime,
     )
 
 

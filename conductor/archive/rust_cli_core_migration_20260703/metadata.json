@@ -1,0 +1,24 @@
+{
+  "track_id": "rust_cli_core_migration_20260703",
+  "type": "feature",
+  "status": "archived",
+  "track_class": "binding",
+  "current_state": "archived",
+  "primary_contract": "contracts/interop/cli-file-interop.contract.json",
+  "dependencies": [
+    "rust_core_ga_20260513",
+    "rust_core_continuation_20260524",
+    "cli_file_contracts_20260513",
+    "python_rust_binding_stabilization_20260512"
+  ],
+  "completion_evidence": [
+    "CLI command inventory covering current public entry points",
+    "Golden-fixture parity report comparing Python and Rust-backed CLI execution",
+    "CI jobs for Rust-backed CLI conformance and fallback behaviour",
+    "Updated CLI/runtime support-status documentation"
+  ],
+  "publication_status": "published-with-gaps",
+  "created_at": "2026-07-03T08:59:33Z",
+  "updated_at": "2026-07-03T11:10:00Z",
+  "description": "Migrate the core command line calculation and validation functionality from the Python execution path to the shared Rust calculator core while preserving the current CLI contract and rollback path."
+}

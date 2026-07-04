@@ -15,6 +15,7 @@ FLOW_SMOKE_TEMPLATE = EVIDENCE / "flow-smoke-evidence-template.json"
 FLOW_SMOKE_EVIDENCE = EVIDENCE / "power-automate-flow-smoke-20260521.json"
 POWERAPP_RUNTIME_LAUNCH = EVIDENCE / "powerapp-runtime-launch-20260525.json"
 TENANT_CLI_OBSERVATION = EVIDENCE / "tenant-cli-observation-20260525.json"
+CURRENT_PREFLIGHT_READINESS = EVIDENCE / "preflight-readiness-20260703.json"
 FLOW_ROOT = ROOT / "power-platform" / "flows"
 REQUIRED_MONITORING_FIELDS = (
     ("monitoring", "owner"),
@@ -540,6 +541,66 @@ def _validate_tenant_cli_observation(
         _require_false(data, claim, path)
 
 
+def _validate_current_preflight_readiness(data: dict, path: Path) -> None:
+    _require(
+        data["evidenceType"] == "power_platform_preflight_readiness_summary",
+        f"{path}: unexpected evidenceType",
+    )
+    _require(
+        data["asOf"] == "2026-07-03",
+        f"{path}: current preflight readiness must record the 2026-07-03 refresh",
+    )
+    _require(
+        data["status"] == "blocked_pending_power_platform_readiness_evidence",
+        f"{path}: status must remain blocked until live readiness evidence exists",
+    )
+    _require(
+        data["readinessClaimed"] is False and data["allChecksBlocked"] is True,
+        f"{path}: readiness must be unclaimed with all checks blocked",
+    )
+    expected_statuses = {
+        "endpoint": "blocked_pending_real_https_endpoint",
+        "github": "blocked_pending_repository_secrets_and_workflow_run",
+        "pac": "blocked_pending_required_pac_observations",
+        "flow_smoke": "blocked_pending_sample_capture",
+        "dlp": "blocked_pending_shape_or_placeholder_validation",
+        "subrepo": "blocked_pending_remote_or_explicit_waiver",
+    }
+    checks = {item["name"]: item for item in data["checks"]}
+    _require(
+        set(checks) == set(expected_statuses),
+        f"{path}: current preflight checks must cover every readiness gate",
+    )
+    for name, status in expected_statuses.items():
+        check = checks[name]
+        _require(
+            check["status"] == status,
+            f"{path}: {name} status must remain {status}",
+        )
+        _require(check["ok"] is True, f"{path}: {name} contract must be valid")
+        _require(
+            bool(check.get("nextAction")),
+            f"{path}: {name} must include an actionable nextAction",
+        )
+    _require(
+        data["claimBoundary"]
+        == {
+            "productionReadinessClaimed": False,
+            "endpointConfigured": False,
+            "githubLiveGateCompleted": False,
+            "pacRuntimeObservationsCaptured": False,
+            "flowSmokeCaptured": False,
+            "dlpMonitoringCaptured": False,
+            "subrepoClosureComplete": False,
+        },
+        f"{path}: claim boundary must remain fail-closed",
+    )
+    _require(
+        data["archiveEligibility"]["eligible"] is False,
+        f"{path}: track must not become archive-eligible while checks are blocked",
+    )
+
+
 def main() -> int:
     publication = _json(CANVAS_APP_PUBLICATION)
     deployment = _json(EVIDENCE / "deployment-status.json")
@@ -552,6 +613,7 @@ def main() -> int:
     monitoring = _json(EVIDENCE / "monitoring-dlp-evidence-template.json")
     flow_smoke_template = _json(FLOW_SMOKE_TEMPLATE)
     flow_smoke_evidence = _json(FLOW_SMOKE_EVIDENCE)
+    current_preflight = _json(CURRENT_PREFLIGHT_READINESS)
     connection_reference = _load_connection_reference()
     required_ref_map = {
         ref["name"]: ref for ref in _json(CONNECTION_REFERENCES)["connectionReferences"]
@@ -617,6 +679,10 @@ def main() -> int:
         TENANT_CLI_OBSERVATION,
         deployment,
         expected_connector,
+    )
+    _validate_current_preflight_readiness(
+        current_preflight,
+        CURRENT_PREFLIGHT_READINESS,
     )
     _require_list_contains(
         publication,

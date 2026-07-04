@@ -67,6 +67,9 @@ GITHUB_LIVE_GATE_TEMPLATE = (
 GITHUB_LIVE_GATE = (
     ROOT / "power-platform" / "evidence" / ("github-live-gate-20260521.json")
 )
+CURRENT_PREFLIGHT_READINESS = (
+    ROOT / "power-platform" / "evidence" / "preflight-readiness-20260703.json"
+)
 REMAINING_BLOCKERS = (
     ROOT / "power-platform" / "evidence" / "remaining-blockers-20260521.json"
 )
@@ -162,6 +165,7 @@ def test_power_platform_evidence_templates_exist():
         FLOW_SMOKE_EVIDENCE,
         POWERAPP_RUNTIME_LAUNCH,
         TENANT_CLI_OBSERVATION,
+        CURRENT_PREFLIGHT_READINESS,
         ENDPOINT,
         GITHUB_LIVE_GATE_TEMPLATE,
         GITHUB_LIVE_GATE,
@@ -180,6 +184,7 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     flow_smoke_runbook = _text(FLOW_SMOKE_RUNBOOK)
     flow_smoke_sample = _json(FLOW_SMOKE_SAMPLE_CAPTURE)
     flow_smoke_evidence = _json(FLOW_SMOKE_EVIDENCE)
+    current_preflight = _json(CURRENT_PREFLIGHT_READINESS)
 
     assert runtime["claimBoundary"]["runtimeSmokePassed"] is False
     assert runtime["claimBoundary"]["productionReadinessClaimed"] is False
@@ -202,6 +207,19 @@ def test_power_platform_operational_evidence_contracts_are_precise():
     }
     assert monitoring["claimBoundary"]["monitoringConfigured"] is False
     assert monitoring["claimBoundary"]["dlpEvidenceCaptured"] is False
+    assert current_preflight["asOf"] == "2026-07-03"
+    assert current_preflight["readinessClaimed"] is False
+    assert current_preflight["allChecksBlocked"] is True
+    assert current_preflight["archiveEligibility"]["eligible"] is False
+    assert current_preflight["claimBoundary"] == {
+        "productionReadinessClaimed": False,
+        "endpointConfigured": False,
+        "githubLiveGateCompleted": False,
+        "pacRuntimeObservationsCaptured": False,
+        "flowSmokeCaptured": False,
+        "dlpMonitoringCaptured": False,
+        "subrepoClosureComplete": False,
+    }
     live_gate_template = _json(GITHUB_LIVE_GATE_TEMPLATE)
     live_gate = _json(GITHUB_LIVE_GATE)
     assert live_gate_template["requiredSecrets"] == [

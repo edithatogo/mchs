@@ -127,6 +127,11 @@ recorded here.
   custom connector connection is still absent from the connection inventory,
   and the official GitHub live-gate secrets are absent. This is blocker
   evidence only; it does not claim runtime readiness.
+- `preflight-readiness-20260703.json`: current aggregate preflight refresh. It
+  records that all six local readiness gates are contract-valid but still
+  blocked: endpoint, GitHub live gate, PAC runtime observations, flow smoke,
+  monitoring/DLP, and subrepo closure. This file is explicitly not
+  archive-eligible and keeps all production readiness claims false.
 
 ## Evidence import mapping
 
@@ -251,6 +256,11 @@ GitHub, PAC, flow-smoke, DLP, and subrepo checks together and prints one JSON
 summary. It is a reporting wrapper only and does not mutate the checked-in
 evidence files. Each check is expected to carry both a short `help` hint and a
 concrete `nextAction` so blocked output stays actionable.
+
+The latest checked-in aggregate refresh is
+`power-platform/evidence/preflight-readiness-20260703.json`. It was produced
+from the same local preflight surface and remains blocked; it is a closeout
+record for the current state, not a production readiness claim.
 
 Aggregate preflight check handoffs:
 

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "power_platform_preflight_readiness_summary",
+  "asOf": "2026-07-03",
+  "status": "blocked_pending_power_platform_readiness_evidence",
+  "readinessClaimed": false,
+  "allChecksBlocked": true,
+  "checkCount": 6,
+  "sourceCommand": "python3 scripts/preflight_power_platform_readiness.py",
+  "checks": [
+    {
+      "name": "endpoint",
+      "status": "blocked_pending_real_https_endpoint",
+      "ok": true,
+      "nextAction": "Provide a real public HTTPS base URL, publish /healthz and /.well-known/mcp/server-card.json, then rerun the endpoint probe."
+    },
+    {
+      "name": "github",
+      "status": "blocked_pending_repository_secrets_and_workflow_run",
+      "ok": true,
+      "nextAction": "Configure the required repository secrets and run the official Power Platform Actions workflow to capture a real run URL."
+    },
+    {
+      "name": "pac",
+      "status": "blocked_pending_required_pac_observations",
+      "ok": true,
+      "missingRequiredObservations": [
+        "appId",
+        "playUrl",
+        "connectionId"
+      ],
+      "nextAction": "Run PAC auth and recapture real appId, playUrl, and custom connector connectionId values."
+    },
+    {
+      "name": "flow_smoke",
+      "status": "blocked_pending_sample_capture",
+      "ok": true,
+      "nextAction": "Provide real flowId, runId, runStatus, and HTTPS runUrl values for every source-controlled flow."
+    },
+    {
+      "name": "dlp",
+      "status": "blocked_pending_shape_or_placeholder_validation",
+      "ok": true,
+      "nextAction": "Supply real monitoring and DLP evidence fields from the NSW tenant/admin source of record."
+    },
+    {
+      "name": "subrepo",
+      "status": "blocked_pending_remote_or_explicit_waiver",
+      "ok": true,
+      "nextAction": "Supply either a complete standalone remote record or a complete explicit waiver record."
+    }
+  ],
+  "claimBoundary": {
+    "productionReadinessClaimed": false,
+    "endpointConfigured": false,
+    "githubLiveGateCompleted": false,
+    "pacRuntimeObservationsCaptured": false,
+    "flowSmokeCaptured": false,
+    "dlpMonitoringCaptured": false,
+    "subrepoClosureComplete": false
+  },
+  "archiveEligibility": {
+    "eligible": false,
+    "reason": "Live Power Platform endpoint, GitHub live gate, PAC runtime observations, flow smoke, DLP/monitoring, and subrepo closure evidence remain blocked."
+  }
+}

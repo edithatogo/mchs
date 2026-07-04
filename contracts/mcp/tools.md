@@ -119,6 +119,8 @@ Run a micro-costing calculation.
     "admissionType": "emergency"
   },
   "options": {
+    "runtime": "rust",
+    "refDir": "tests/data/2025",
     "includeEvidence": true,
     "includeExplanation": true
   }
@@ -148,6 +150,18 @@ Run a micro-costing calculation.
   }
 }
 ```
+
+Runtime selection is bounded during the Rust migration:
+
+- missing `options.runtime`, `python`, and `auto` preserve Python/default MCP
+  compatibility behaviour;
+- `rust` is supported only for `calculatorId = "acute"` and `year = "2025"`;
+- unsupported Rust requests fail closed with `MCHS-MCP-RUST-UNSUPPORTED`;
+- unavailable local Rust extensions fail closed with `MCHS-MCP-RUST-UNAVAILABLE`.
+
+The `mchs-mcp` stdio process may still be launched by Python during this
+transition. That is a transport shim, not a claim that Python owns formula
+runtime for promoted Rust-backed requests.
 
 ---
 

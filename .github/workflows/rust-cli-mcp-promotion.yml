@@ -1,0 +1,55 @@
+name: Rust CLI/MCP Promotion Gate
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/rust-cli-mcp-promotion.yml"
+      - "contracts/runtime/rust-cli-mcp-promotion-matrix.json"
+      - "docs/release-evidence-rust-cli-mcp-promotion.md"
+      - "docs/adr/0008-rust-cli-mcp-runtime-promotion.md"
+      - "nwau_py/cli/**"
+      - "nwau_py/mcp_server.py"
+      - "rust/**"
+      - "scripts/validate_rust_cli_mcp_promotion.py"
+      - "scripts/validate_rust_migration_track_governance.py"
+      - "tests/test_rust_cli_core_migration.py"
+      - "tests/test_rust_mcp_core_migration.py"
+      - "tests/test_rust_cli_mcp_promotion_evidence.py"
+      - "tests/test_mcp_server.py"
+      - "tests/test_rust_migration_track_hardening.py"
+  workflow_dispatch:
+
+jobs:
+  promotion-gate:
+    name: Promotion conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Python dependencies
+        run: uv sync --locked --group dev --group test
+
+      - name: Validate promotion matrix
+        run: python3 scripts/validate_rust_cli_mcp_promotion.py --json
+
+      - name: Run Python CLI/MCP promotion tests
+        run: >-
+          PYTHONPATH=. uv run pytest -q
+          tests/test_rust_cli_mcp_promotion_evidence.py
+          tests/test_rust_cli_core_migration.py
+          tests/test_rust_mcp_core_migration.py
+          tests/test_mcp_server.py
+          tests/test_rust_migration_track_hardening.py
+
+      - name: Run Rust core promotion tests
+        working-directory: rust
+        run: cargo test -p nwau-core -p nwau-c-abi

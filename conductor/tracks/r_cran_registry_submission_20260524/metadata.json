@@ -3,13 +3,13 @@
   "type": "chore",
   "status": "blocked",
   "created_at": "2026-05-24T08:28:21Z",
-  "updated_at": "2026-06-13T06:00:00Z",
+  "updated_at": "2026-07-03T05:16:13Z",
   "description": "R CRAN Registry Submission: discover, prepare, submit, and evidence CRAN publication for nwauR.",
   "registry_id": "r_cran",
   "current_status": "submitted_pending_cran_maintainer_confirmation",
   "publication_status": "not_published",
   "local_readiness_resolved": true,
-  "blocker": "CRAN upload package id 344701 remains pending external confirmation/review. Follow-up public probes on 2026-06-13 still show CRAN DB 404, CRAN package page 404, CRAN archive 404, and no recorded maintainer-confirmation evidence.",
+    "blocker": "CRAN upload package id 344701 remains pending external confirmation/review. Follow-up public probes on 2026-06-13 and 2026-07-03 still show CRAN DB 404, CRAN package page 404, CRAN archive 404, and no recorded maintainer-confirmation evidence.",
   "submission_url": "cran-submit:344701",
   "publication_claimed": false,
   "package_evidence": {
@@ -73,6 +73,17 @@
         "cranArchiveHttpStatus": 404,
         "gmailSearch": "No Gmail messages matched CRAN/cransubmit/nwauR confirmation terms in the last 3 days using in:anywhere search.",
         "result": "nwauR remains unpublished on public CRAN and CRAN archive; maintainer email confirmation/review remains pending."
+      },
+      "latestPublicProbe20260703": {
+        "asOf": "2026-07-03T05:16:13Z",
+        "crandbUrl": "https://crandb.r-pkg.org/nwauR",
+        "crandbHttpStatus": 404,
+        "crandbResult": "not_found",
+        "cranPackageUrl": "https://cran.r-project.org/web/packages/nwauR/index.html",
+        "cranPackageHttpStatus": 404,
+        "cranArchiveUrl": "https://cran.r-project.org/src/contrib/Archive/nwauR/",
+        "cranArchiveHttpStatus": 404,
+        "result": "nwauR remains unpublished on public CRAN and CRAN archive as of the 2026-07-03 live probe."
       }
     },
     "submission_evidence": null,
