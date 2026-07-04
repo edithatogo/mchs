@@ -1,0 +1,6 @@
+Plan update: Validate migration results
+
+Recorded task completion for commit 7e66349 in the outer wrapper retirement migration plan.
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_manifest_records_validation_results_and_residual_gates -q
