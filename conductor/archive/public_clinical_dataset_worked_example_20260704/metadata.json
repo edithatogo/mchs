@@ -12,7 +12,7 @@
     "ihacpa_capability_matrix_runtime_truth_20260703"
   ],
   "completion_evidence": [
-    "conductor/tracks/public_clinical_dataset_worked_example_20260704/dataset_assessment.md",
+    "conductor/archive/public_clinical_dataset_worked_example_20260704/dataset_assessment.md",
     "conductor/requirements.md",
     "conductor/design.md",
     "reference-data/public-datasets/mimic-iv-demo/manifest.yaml",
@@ -21,7 +21,7 @@
     "tests/test_public_clinical_dataset_worked_example_track.py",
     "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, downloader/cache, surface conformance, disclosure-risk, and scenario/sensitivity work",
     "GitHub Actions review evidence for the completed track branch or PR",
-    "conductor/tracks/public_clinical_dataset_worked_example_20260704/github_actions_review.md"
+    "conductor/archive/public_clinical_dataset_worked_example_20260704/github_actions_review.md"
   ],
   "support_scope": {
     "state": "complete-with-gaps",

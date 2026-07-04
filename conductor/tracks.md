@@ -755,9 +755,3 @@ content alone is not sufficient evidence for marking a track complete.
 - [x] **Track: Future Repo Split Playbook**
 *Link: [./archive/future_repo_split_playbook_20260624/](./archive/future_repo_split_playbook_20260624/)*
 *Gate: Define when a surface may leave the monorepo and how to extract it with history, registry continuity, CI proof, and rollback.*
-
----
-
-- [x] **Track: Public Clinical Dataset Worked Example**
-*Link: [./tracks/public_clinical_dataset_worked_example_20260704/](./tracks/public_clinical_dataset_worked_example_20260704/)*
-*Gate: assess public clinical dataset access, licensing, provenance, and fitness before adding a real-data worked example that fails closed around Australian classification limits.*
