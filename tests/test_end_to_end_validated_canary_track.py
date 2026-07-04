@@ -4,7 +4,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TRACK = ROOT / "conductor" / "tracks" / "end_to_end_validated_canary_20260512"
+TRACK_ID = "end_to_end_validated_canary_20260512"
+TRACK = ROOT / "conductor" / "tracks" / TRACK_ID
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / TRACK_ID
 EVIDENCE = TRACK / "canary_lifecycle_evidence.json"
 CANARY_BUNDLE = (
     ROOT

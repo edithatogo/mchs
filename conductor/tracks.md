@@ -483,7 +483,7 @@ content alone is not sufficient evidence for marking a track complete.
 ---
 
 - [x] **Track: End-to-End Validated Canary**
-*Link: [./tracks/end_to_end_validated_canary_20260512/](./tracks/end_to_end_validated_canary_20260512/)*
+*Link: [./archive/end_to_end_validated_canary_20260512/](./archive/end_to_end_validated_canary_20260512/)*
 *Gate: prove one stream/year lifecycle from source archive through SAS/Excel parity, formula bundles, Rust canary, Python/CLI conformance, and Starlight documentation before scaling implementation claims.*
 
 ---
