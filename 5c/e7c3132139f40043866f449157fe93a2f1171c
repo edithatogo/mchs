@@ -1,0 +1,16 @@
+Checkpoint: Phase 3 Validation
+
+Automated review:
+- Final conductor-review found no unresolved canonical-repo blockers.
+- Ruff formatting fix was applied and validation rerun.
+
+Validation:
+- python conductor/scripts/stub_detector.py --root . --json -> 0 findings
+- uv run pytest tests/test_repository_topology_governance.py -q -> 15 passed
+- uv run python scripts/validate_repository_topology.py --json -> ok true
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py -> passed
+- uv run ty check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py -> passed
+- uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs -> expected unmanaged_gitlink and outer_wrapper_contains_nested_repo diagnostics
+
+Residual gate:
+- Parent wrapper cleanup remains user-owned outside the canonical repo.
