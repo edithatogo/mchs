@@ -60,12 +60,12 @@
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
 ## Phase 4: Worked Example, Docs, and Additional Improvements
-- [ ] Task: Add a runnable worked example.
-    - [ ] Generate staging, calculator input, and synthetic-overlay NWAU output from tiny committed fixtures.
-    - [ ] Provide commands for users with local MIMIC-IV Demo files.
-- [ ] Task: Publish docs-site tutorial and improvement backlog.
-    - [ ] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
-    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, disclosure-risk policy, scenario/sensitivity report patterns, and optional ED/FHIR/MEDS tutorial tracks.
+- [x] Task: Add a runnable worked example. `cc6c2f1`
+    - [x] Generate staging, calculator input, and synthetic-overlay NWAU output from tiny committed fixtures.
+    - [x] Provide commands for users with local MIMIC-IV Demo files.
+- [x] Task: Publish docs-site tutorial and improvement backlog. `cc6c2f1`
+    - [x] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
+    - [x] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, disclosure-risk policy, scenario/sensitivity report patterns, and optional ED/FHIR/MEDS tutorial tracks.
 - [ ] Task: Review GitHub Actions and finalize track evidence.
     - [ ] Push the branch and git notes before reviewing GitHub Actions.
     - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.
