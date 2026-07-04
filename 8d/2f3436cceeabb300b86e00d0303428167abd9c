@@ -1,0 +1,11 @@
+Conductor-review fix: Phase 2 public dataset manifest guards
+
+Summary:
+- Added explicit casts after runtime validation so ty accepts manifest/report payload indexing.
+- Wrapped test casts to keep ruff line-length clean.
+
+Validation:
+- uv run pytest tests/test_public_clinical_dataset_worked_example_track.py -q
+- uv run ruff check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- uv run ty check nwau_py/public_clinical_datasets.py tests/test_public_clinical_dataset_worked_example_track.py
+- git diff --check
