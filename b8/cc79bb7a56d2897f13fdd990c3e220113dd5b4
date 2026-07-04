@@ -1,0 +1,8 @@
+Validation fix: Format outer wrapper governance tests
+
+Summary:
+- Applied Ruff formatting and wrapped the explicit outer-root validation command string.
+
+Validation:
+- uv run ruff check tests/test_repository_topology_governance.py scripts/validate_repository_topology.py
+- uv run pytest tests/test_repository_topology_governance.py -q
