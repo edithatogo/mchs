@@ -1,0 +1,9 @@
+Conductor archive repair validation for github_repo_sota_setup_20260513:
+- uv run pytest tests/test_github_repo_sota_setup_track.py tests/test_tooling_configuration.py -q: 20 passed
+- python -m json.tool conductor/archive/github_repo_sota_setup_20260513/metadata.json >/dev/null: passed
+- uv run ruff check tests/test_github_repo_sota_setup_track.py: passed
+- uv run ty check tests/test_github_repo_sota_setup_track.py: passed
+- python conductor/scripts/stub_detector.py --root . --json: total_findings=0, stubs_detected=false
+- git diff --check -- conductor/archive/github_repo_sota_setup_20260513 tests/test_github_repo_sota_setup_track.py conductor/tracks.md: passed
+Remote gh evidence captured: repo metadata/homepage, labels, Pages, master branch protection, releases/tags, workflows, github-pages environment, and security-analysis state.
+Review outcome: fixed the new test line-length issue during conductor-review loop; archive remains complete-with-gaps with security enablement and ecosystem package publication proof gaps explicit.
