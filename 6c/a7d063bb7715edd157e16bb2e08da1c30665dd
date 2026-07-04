@@ -1,0 +1,18 @@
+Task: Preserve source slices
+
+Summary:
+- Recorded the final canonical preservation decision for the outer wrapper retirement migration.
+- Added manifest-level preservation state, residual gates, validation commands, and explicit retire-wrapper decision for the unmanaged gitlink.
+- Updated the human-readable retirement guide and added a governance regression test.
+
+Files:
+- conductor/outer-wrapper-migration-manifest.json
+- conductor/outer-wrapper-retirement.md
+- conductor/tracks.md
+- tests/test_repository_topology_governance.py
+
+Validation:
+- uv run pytest tests/test_repository_topology_governance.py::test_outer_wrapper_migration_manifest_records_final_preservation_decision -q
+
+Why:
+- The track can be completed from the canonical repo only if preserved source/evidence and remaining outer cleanup gates are explicit and machine-tested.
