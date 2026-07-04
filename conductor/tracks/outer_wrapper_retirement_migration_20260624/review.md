@@ -2,7 +2,7 @@
 
 ## Verdict
 
-Phase 2 reviewed; continue to validation.
+Reviewed; locally complete with an explicit outer-wrapper cleanup gate.
 
 ## Findings
 
@@ -17,6 +17,10 @@ Phase 2 reviewed; continue to validation.
 5. Current outer-root topology validation is expected to fail until the wrapper
    gitlink is retired or formalized and tracked generated logs are removed or
    archived.
+6. Phase 3 validation is recorded in
+   `conductor/outer-wrapper-migration-manifest.json`: canonical topology passes,
+   focused governance tests pass, the stub detector reports zero findings, and
+   the explicit outer-root validation fails closed with the expected diagnostics.
 
 ## Validation
 
@@ -27,6 +31,7 @@ Phase 2 reviewed; continue to validation.
 
 ## Archive Blockers
 
-- Re-run Phase 3 validation and record the residual gates.
-- Retire or formalize `/Volumes/PortableSSD/GitHub/mchs` outside this canonical
-  repo track when the user is ready to remove the local wrapper.
+No local canonical-repo archive blocker remains. The only residual gate is
+user-owned parent-wrapper cleanup: retire or formalize
+`/Volumes/PortableSSD/GitHub/mchs` outside this canonical repo track when the
+user is ready to remove the local wrapper.

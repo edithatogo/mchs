@@ -1,10 +1,10 @@
 {
   "track_id": "outer_wrapper_retirement_migration_20260624",
   "type": "chore",
-  "status": "new",
+  "status": "completed",
   "track_class": "governance",
   "priority": "immediate",
-  "current_state": "in-progress",
+  "current_state": "complete-with-gaps",
   "primary_contract": "conductor/outer-wrapper-retirement.md",
   "dependencies": [
     "repository_topology_authority_20260624",
@@ -15,19 +15,23 @@
     "conductor/outer-wrapper-retirement.md",
     "conductor/outer-wrapper-migration-manifest.json",
     "scripts/validate_repository_topology.py",
-    "tests/test_repository_topology_governance.py"
+    "tests/test_repository_topology_governance.py",
+    "conductor/outer-wrapper-migration-manifest.json#preservation",
+    "conductor/outer-wrapper-migration-manifest.json#validation_results",
+    "conductor/tracks/outer_wrapper_retirement_migration_20260624/review.md"
   ],
   "support_scope": {
-    "state": "in-progress",
+    "state": "complete-with-gaps",
     "included": [
-      "Track definition for outer wrapper inventory, preservation, migration manifest, and retirement decision.",
-      "Phase 1 inventory manifest at conductor/outer-wrapper-migration-manifest.json with checksums for tracked and untracked outer-wrapper files.",
-      "Repository topology validator and governance tests that keep the canonical-root policy visible.",
-      "Explicit dependency on topology authority, generated artifact retention, and worktree hygiene tracks."
+      "Final canonical preservation decision for outer-wrapper source/governance slices.",
+      "Manifested external evidence and generated-log cleanup policy with checksums retained in the migration manifest.",
+      "Explicit retire-wrapper decision for the unmanaged gitlink and recorded user-owned cleanup steps.",
+      "Canonical topology validation, stub detector, and focused governance tests passing."
     ],
     "excluded": [
-      "Final wrapper deletion/archive/formalization decision.",
-      "Outer-root validation result after migration."
+      "Physical deletion or formalization of /Volumes/PortableSSD/GitHub/mchs.",
+      "Registry/account/publishing gates unrelated to wrapper retirement.",
+      "Removal of user-local evidence files, browser logs, caches, or outer git history."
     ]
   },
   "gap_register": [
@@ -38,13 +42,18 @@
     },
     {
       "id": "wrapper-preservation-and-retirement",
-      "status": "in-progress",
-      "description": "Source/evidence migration, generated-artifact cleanup, and final retire/formalize decision remain open."
+      "status": "complete",
+      "description": "Canonical preservation, cleanup policy, and retire-wrapper decision are recorded and tested."
+    },
+    {
+      "id": "outer-wrapper-cleanup",
+      "status": "external-user-owned",
+      "description": "The outer-root validator still reports unmanaged_gitlink and outer_wrapper_contains_nested_repo until the parent wrapper is deleted or formalized outside this canonical repo track."
     }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-06-24T02:50:05Z",
-  "updated_at": "2026-06-25T00:00:00+10:00",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Inventory the outer wrapper repo, preserve source and evidence slices, and retire or formalize the broken gitlink wrapper without data loss.",
   "no_stub_enforce": true
 }

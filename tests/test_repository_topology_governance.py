@@ -130,12 +130,12 @@ def test_repository_topology_track_family_is_registered() -> None:
         assert metadata["no_stub_enforce"] is True
         if archived:
             assert metadata["status"] == "completed"
-            assert metadata["current_state"] == "complete"
+            assert metadata["current_state"] in {"complete", "complete-with-gaps"}
             assert (track_dir / "review.md").exists(), track_id
             assert f"./archive/{track_id}/" in tracks_md
         else:
-            assert metadata["status"] == "new"
-            assert metadata["current_state"] == "in-progress"
+            assert metadata["status"] in {"new", "completed"}
+            assert metadata["current_state"] in {"in-progress", "complete-with-gaps"}
             assert f"./tracks/{track_id}/" in tracks_md
 
         plan = _read(track_dir / "plan.md")
@@ -482,6 +482,21 @@ def test_outer_wrapper_manifest_records_validation_results_and_residual_gates() 
     assert "registry/account/publishing gates are not part of wrapper retirement" in gates[
         "external"
     ]
+
+
+def test_outer_wrapper_track_metadata_records_complete_with_outer_cleanup_gate() -> None:
+    metadata = _load_json(
+        TRACKS / "outer_wrapper_retirement_migration_20260624" / "metadata.json"
+    )
+
+    assert metadata["status"] == "completed"
+    assert metadata["current_state"] == "complete-with-gaps"
+    assert metadata["support_scope"]["state"] == "complete-with-gaps"
+
+    gaps = {gap["id"]: gap for gap in metadata["gap_register"]}
+    assert gaps["wrapper-preservation-and-retirement"]["status"] == "complete"
+    assert gaps["outer-wrapper-cleanup"]["status"] == "external-user-owned"
+    assert "outer-root validator" in gaps["outer-wrapper-cleanup"]["description"]
 
 
 def test_pr_ci_runs_repository_topology_validator() -> None:
