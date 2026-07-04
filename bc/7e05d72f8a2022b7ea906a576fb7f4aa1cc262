@@ -1,0 +1,8 @@
+Plan update: Phase 2 public dataset manifest tasks
+
+Summary:
+- Marked manifest/local-cache, tests/guardrails, and report contract tasks complete.
+- Recorded implementation commit 4f322c2 in the plan.
+
+Validation:
+- git diff --check conductor/tracks/public_clinical_dataset_worked_example_20260704/plan.md
