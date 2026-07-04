@@ -13,10 +13,10 @@
 
 ## Phase 2: Preservation and Retirement
 
-- [ ] Task: Preserve source slices.
-    - [ ] Move or copy approved unique source artifacts into canonical paths.
-    - [ ] Add tests or documentation references for migrated artifacts.
-    - [ ] Confirm no canonical file is overwritten without review.
+- [x] Task: Preserve source slices. [6ca7d06]
+    - [x] Move or copy approved unique source artifacts into canonical paths.
+    - [x] Add tests or documentation references for migrated artifacts.
+    - [x] Confirm no canonical file is overwritten without review.
 - [ ] Task: Retire wrapper-only artifacts.
     - [ ] Remove generated logs and browser state from source control when approved.
     - [ ] Resolve the unmanaged gitlink by retiring the wrapper or adding valid superproject metadata.
