@@ -23,7 +23,7 @@
     - [ ] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
     - [ ] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
 - [ ] Task: Open GitHub issues for warranted follow-on examples and infrastructure.
-    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, and reusable provenance/data-quality report work only when evidence shows they are useful and separate.
+    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, reusable provenance/data-quality report, and worked-example surface conformance harness work only when evidence shows they are useful and separate.
     - [ ] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
 
@@ -51,7 +51,8 @@
     - [ ] Make overlay provenance visible in every calculator-ready and calculated output.
 - [ ] Task: Demonstrate advanced calculator-tooling features in the worked example.
     - [ ] Produce raw staging, calculator-ready CSV, calculated CSV, provenance report, data-quality report, and support-status summary.
-    - [ ] Exercise CLI/file interoperability where it is already supported, without adding a new runtime surface.
+    - [ ] Exercise Python API and CLI/file interoperability where they are already supported, without adding a new runtime surface.
+    - [ ] Exercise MCP boundary validation and API/OpenAI contract documentation where those surfaces are available, without claiming formula execution if the existing contract does not support it.
     - [ ] Record any missing feature needed for a better public-dataset workflow as a GitHub issue rather than expanding this track.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 3: MIMIC-IV Demo ETL and Fail-Closed Contract' (Protocol in workflow.md)
 
@@ -61,7 +62,7 @@
     - [ ] Provide commands for users with local MIMIC-IV Demo files.
 - [ ] Task: Publish docs-site tutorial and improvement backlog.
     - [ ] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
-    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, and optional ED/FHIR/MEDS tutorial tracks.
+    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, worked-example surface conformance harnesses, and optional ED/FHIR/MEDS tutorial tracks.
 - [ ] Task: Review GitHub Actions and finalize track evidence.
     - [ ] Push the branch and git notes before reviewing GitHub Actions.
     - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.

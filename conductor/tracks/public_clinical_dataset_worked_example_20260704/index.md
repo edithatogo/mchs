@@ -14,9 +14,11 @@
   `MUST-013`, `SHOULD-006`, `COULD-004`, and `WONT-005`; `conductor/design.md`
   now defines the Public Dataset Worked Example design.
 - The worked example should demonstrate useful existing advanced features:
-  provenance reporting, data-quality summaries, support-status output, and
-  CLI/file interoperability where available. New feature needs discovered during
-  implementation should become GitHub issues rather than unbounded scope.
+  provenance reporting, data-quality summaries, support-status output, Python
+  API execution, CLI/file interoperability, MCP boundary validation, and
+  API/OpenAI contract documentation where available. New feature needs
+  discovered during implementation should become GitHub issues rather than
+  unbounded scope.
 - Follow-up GitHub issues created from scope review:
   [#346](https://github.com/edithatogo/mchs/issues/346) MIMIC-IV-ED example,
   [#347](https://github.com/edithatogo/mchs/issues/347) FHIR/MEDS examples,
@@ -24,7 +26,9 @@
   registry, and [#349](https://github.com/edithatogo/mchs/issues/349)
   downloader/cache guard, and
   [#350](https://github.com/edithatogo/mchs/issues/350) reusable
-  provenance/data-quality report contract.
+  provenance/data-quality report contract, and
+  [#351](https://github.com/edithatogo/mchs/issues/351) worked-example surface
+  conformance harness.
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)

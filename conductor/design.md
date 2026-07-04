@@ -140,8 +140,11 @@ Design rules:
   accidental commits.
 - MIMIC US DRG, ICD-9-CM, ICD-10-CM, and ICD-10-PCS fields must not be treated
   as validated Australian AR-DRG, ICD-10-AM, ACHI, or ACS equivalents.
-- Worked examples should expose provenance, data-quality, support-status, and
-  CLI/file interop outputs where existing tooling supports them.
+- Worked examples should expose provenance, data-quality, support-status,
+  Python API, CLI/file interop, MCP boundary validation, and API/OpenAI
+  contract documentation where existing tooling supports them. MCP, API, or
+  OpenAI surfaces must not claim formula execution when their current contracts
+  only validate or document the boundary.
 - New reusable capabilities discovered by examples must become separate
   GitHub issues or Conductor tracks rather than expanding a single tutorial
   track without bounds.

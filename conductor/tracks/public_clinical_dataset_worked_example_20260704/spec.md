@@ -44,8 +44,12 @@ grouper is supplied.
 - Demonstrate advanced provenance and data-quality features where they help the
   worked example: source manifests, local-file diagnostics, schema validation,
   episode lineage, field-completeness reports, classification provenance,
-  support-status output, CLI/file interop, and comparison between raw staging,
-  calculator-ready input, and calculated output.
+  support-status output, Python API execution, CLI/file interop, MCP boundary
+  validation, API/OpenAI contract documentation, and comparison between raw
+  staging, calculator-ready input, and calculated output.
+- Do not overclaim MCP, API, or OpenAI runtime execution; demonstrate boundary
+  validation or documented contract examples where those surfaces do not yet
+  execute formulas.
 - Record any new feature gaps found while building the worked example and open
   GitHub issues for follow-on work that should not be bundled into the initial
   MIMIC-IV Demo acute example.
@@ -83,6 +87,10 @@ grouper is supplied.
 - The example exposes at least one advanced feature beyond a basic CSV run:
   provenance report, data-quality summary, support-status summary, or
   CLI/file-interoperability bundle.
+- The example explicitly covers the safe core surfaces available at the time of
+  implementation: Python API execution, CLI/file execution, docs tutorial
+  output, MCP boundary validation, and API/OpenAI contract documentation where
+  runtime execution is not yet supported.
 - GitHub issues exist for warranted follow-on features discovered by the track,
   including ED, FHIR/MEDS, dataset suitability registry, and reusable
   downloader/cache guard work if still justified by Phase 1.

@@ -19,7 +19,7 @@
     "examples/mimic_demo/",
     "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
     "tests/test_public_clinical_dataset_worked_example_track.py",
-    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, and downloader/cache work",
+    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, downloader/cache, and surface conformance work",
     "GitHub Actions review evidence for the completed track branch or PR"
   ],
   "support_scope": {
@@ -29,7 +29,7 @@
       "MIMIC-IV Demo local-file ETL for admitted-episode staging.",
       "Fail-closed calculator-input preparation when Australian AR-DRG provenance is missing.",
       "Synthetic AR-DRG overlay fixture for runnable documentation only.",
-      "Provenance, data-quality, support-status, and CLI/file interop outputs that demonstrate existing advanced tooling.",
+      "Provenance, data-quality, support-status, Python API, CLI/file interop, MCP boundary validation, and API/OpenAI contract documentation outputs that demonstrate existing advanced tooling.",
       "Issue-backed follow-on feature discovery for examples or infrastructure that should not be bundled into the initial track."
     ],
     "excluded": [
@@ -82,6 +82,12 @@
       "number": 350,
       "url": "https://github.com/edithatogo/mchs/issues/350",
       "reason": "Reusable provenance and data-quality report contracts should be shared infrastructure across public dataset examples."
+    },
+    {
+      "title": "feat: add worked-example surface conformance harness",
+      "number": 351,
+      "url": "https://github.com/edithatogo/mchs/issues/351",
+      "reason": "Reusable surface conformance checks across Python API, CLI/file, MCP, API, OpenAI, and docs examples are shared validation infrastructure beyond the first MIMIC worked example."
     }
   ],
   "created_at": "2026-07-04T10:09:03Z",

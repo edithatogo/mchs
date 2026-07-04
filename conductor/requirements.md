@@ -35,7 +35,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | SHOULD-003 | Recursive SOTA audits should periodically compare this repository against high-quality scientific/data-engineering OSS projects and create remediation tracks. | Audit report, updated requirements/design/workflow, remediation tracks. | `recursive_sota_contract_audit_20260513` |
 | SHOULD-004 | Release evidence should include SBOMs, checksums, provenance attestations, signed tags where available, dependency review, and security scan outcomes. | Release artifacts and workflow logs. | `release_workflow_validation_20260513` |
 | SHOULD-005 | Tutorials should cover costing studies, HWAU valuation, jurisdiction/local pricing overlays, synthetic examples, and policy caveats. | Versioned docs pages and runnable notebooks/examples. | `costing_study_tutorials_20260512`, `parallel_valuation_outputs_20260513` |
-| SHOULD-006 | Worked examples should demonstrate advanced existing features when useful: provenance reports, data-quality summaries, support-status outputs, CLI/file interop, and classification provenance diagnostics. | MIMIC-IV Demo tutorial outputs, machine-readable reports, docs screenshots or command transcripts, validation tests. | `public_clinical_dataset_worked_example_20260704` |
+| SHOULD-006 | Worked examples should demonstrate advanced existing features when useful: provenance reports, data-quality summaries, support-status outputs, Python API execution, CLI/file interop, MCP boundary validation, API/OpenAI contract documentation, and classification provenance diagnostics. | MIMIC-IV Demo tutorial outputs, machine-readable reports, docs screenshots or command transcripts, validation tests, surface conformance evidence. | `public_clinical_dataset_worked_example_20260704` |
 
 ### Could Have
 
@@ -44,7 +44,7 @@ This file defines the MoSCoW requirements for the `mchs`/`microcosting-healthser
 | COULD-001 | Additional deferred bindings may remain visible as roadmap context without active development. | Deferred status records and no-new-development docs. | `deferred_surface_cleanup_20260513` |
 | COULD-002 | Optional web demos may use TypeScript/WASM for synthetic-data-only interactive documentation. | WASM demo contract and privacy boundary docs. | `typescript_wasm_binding_20260512`, `github_pages_api_architecture_20260513` |
 | COULD-003 | External service deployment recipes may be added after local contracts and release evidence are stable. | Deployment docs and threat model. | Future track only |
-| COULD-004 | Additional public dataset examples may be added as separate tracks after suitability evidence shows a distinct access, classification, data model, or workflow value. | Follow-up GitHub issues, dataset suitability records, separate Conductor tracks for ED, FHIR/MEDS, downloader/cache, or registry work. | `public_clinical_dataset_worked_example_20260704` |
+| COULD-004 | Additional public dataset examples or reusable example harnesses may be added as separate tracks after suitability evidence shows a distinct access, classification, data model, surface-conformance, or workflow value. | Follow-up GitHub issues, dataset suitability records, separate Conductor tracks for ED, FHIR/MEDS, downloader/cache, surface conformance, or registry work. | `public_clinical_dataset_worked_example_20260704` |
 
 ### Won't Have for Current GA
 
