@@ -459,6 +459,31 @@ def test_outer_wrapper_manifest_records_cleanup_actions_without_deleting_wrapper
     )
 
 
+def test_outer_wrapper_manifest_records_validation_results_and_residual_gates() -> None:
+    manifest = _load_json(OUTER_MANIFEST)
+
+    results = manifest["validation_results"]
+    assert results["canonical_topology"]["status"] == "pass"
+    assert results["canonical_topology"]["command"] == (
+        "uv run python scripts/validate_repository_topology.py --json"
+    )
+    assert results["outer_topology"]["status"] == "expected-fail"
+    assert set(results["outer_topology"]["diagnostic_codes"]) == {
+        "unmanaged_gitlink",
+        "outer_wrapper_contains_nested_repo",
+    }
+    assert results["outer_topology"]["residual_gate"] == "outer-wrapper-cleanup"
+    assert results["focused_tests"]["status"] == "pass"
+    assert results["stub_detector"]["status"] == "pass"
+
+    gates = manifest["residual_gates"]
+    assert gates["local_canonical_repo"] == []
+    assert "outer-wrapper-cleanup" in gates["user_owned"]
+    assert "registry/account/publishing gates are not part of wrapper retirement" in gates[
+        "external"
+    ]
+
+
 def test_pr_ci_runs_repository_topology_validator() -> None:
     workflow = _read(ROOT / ".github" / "workflows" / "pr-ci.yml")
     assert "Validate repository topology" in workflow

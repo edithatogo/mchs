@@ -4722,5 +4722,46 @@
       "Retire the parent wrapper or formalize it with .gitmodules.",
       "Rerun explicit --outer-root topology validation."
     ]
+  },
+  "validation_results": {
+    "canonical_topology": {
+      "status": "pass",
+      "command": "uv run python scripts/validate_repository_topology.py --json",
+      "evidence": {
+        "ok": true,
+        "diagnostics": []
+      }
+    },
+    "outer_topology": {
+      "status": "expected-fail",
+      "command": "uv run python scripts/validate_repository_topology.py --json --outer-root /Volumes/PortableSSD/GitHub/mchs",
+      "diagnostic_codes": [
+        "unmanaged_gitlink",
+        "outer_wrapper_contains_nested_repo"
+      ],
+      "residual_gate": "outer-wrapper-cleanup",
+      "interpretation": "The parent wrapper still contains an unmanaged gitlink and nested canonical repo. This is expected until user-owned outer cleanup is performed."
+    },
+    "focused_tests": {
+      "status": "pass",
+      "command": "uv run pytest tests/test_repository_topology_governance.py -q",
+      "result": "13 passed before adding this final validation-results assertion"
+    },
+    "stub_detector": {
+      "status": "pass",
+      "command": "python conductor/scripts/stub_detector.py --root . --json",
+      "result": "0 findings"
+    }
+  },
+  "residual_gates": {
+    "local_canonical_repo": [],
+    "user_owned": [
+      "outer-wrapper-cleanup",
+      "outer-generated-log-removal",
+      "outer-gitlink-removal-or-superproject-formalization"
+    ],
+    "external": [
+      "registry/account/publishing gates are not part of wrapper retirement"
+    ]
   }
 }
