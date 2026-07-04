@@ -8,6 +8,9 @@ Agent coordination note: this file is the design authority for architecture and 
 - Keep public behavior contract-first, versioned, and machine-verifiable.
 - Preserve researcher workflows through Python, R, Julia, Stata interop, CLI/file contracts, and tutorials.
 - Preserve enterprise workflows through C#, API, MCP, OpenAI tool adapter, Power Platform, release automation, and GitHub governance.
+- Enable safe real-public-data tutorials only through explicit access/licensing
+  assessment, local-only raw data handling, provenance reports, and fail-closed
+  classification boundaries.
 - Prevent scaffold-only completion by requiring executable evidence and review loops.
 - Enable safe parallel work by splitting tracks into bounded contracts, implementations, validation, docs, and release work packages.
 
@@ -16,6 +19,9 @@ Agent coordination note: this file is the design authority for architecture and 
 ```mermaid
 flowchart LR
     Sources[Official sources\nIHACPA, jurisdictions, public reports] --> Archive[Source archive\nmanifest + hashes + gap records]
+    PublicData[Public clinical datasets\nMIMIC, FHIR, MEDS, synthetic EHR] --> DatasetManifest[Dataset suitability\naccess + license + local cache policy]
+    DatasetManifest --> Staging[Worked-example staging\nlineage + data quality + provenance]
+    Staging --> Contracts
     Archive --> Bundles[Formula, parameter, coding-set, price bundles]
     Bundles --> Contracts[Canonical versioned contracts\nJSON Schema + OpenAPI + CLI/file + MCP]
     Contracts --> Rust[Rust calculator core]
@@ -100,6 +106,45 @@ stateDiagram-v2
 | Agent work | Multi-agent work must be granular, owned, reviewed, and evidence-backed. | Subagent orchestration and no-stub enforcement. |
 | Docs | Starlight/Astro is the documentation platform. | Docs SOTA Starlight track. |
 | GitHub setup | Repository metadata, security, branch protection, releases, package publishing, and Pages are part of Done. | GitHub repo SOTA setup track. |
+| Public dataset examples | Public clinical datasets are tutorial inputs only after dataset suitability, licensing, local-only cache policy, provenance, data-quality, and classification fail-closed behavior are explicit. | Public clinical dataset worked example track and follow-up GitHub issues. |
+
+## Public Dataset Worked Example Design
+
+Public dataset examples are deliberately separate from official IHACPA source
+validation. They demonstrate how the calculator contracts can be used with
+real deidentified public data while preserving licensing, privacy, and
+Australian classification boundaries.
+
+```mermaid
+flowchart LR
+    Candidate[Candidate public datasets] --> Assess[Suitability assessment\naccess + license + fields + risks]
+    Assess --> Manifest[Committed manifest\nsource + citation + local-cache policy]
+    Manifest --> LocalData[Local raw files\nignored, never committed]
+    LocalData --> Stage[Episode staging\nlineage + quality checks]
+    Stage --> Classify{Australian classification provenance?}
+    Classify -->|Precomputed or local licensed| Input[Calculator-ready input]
+    Classify -->|Missing| Block[Fail-closed diagnostic]
+    Classify -->|Synthetic overlay for docs| DemoInput[Demo-only calculator input]
+    Input --> Output[Calculated output + provenance report]
+    DemoInput --> Output
+    Block --> Docs[Docs caveats + support status]
+    Output --> Docs
+```
+
+Design rules:
+
+- Candidate datasets must be assessed before implementation, including access,
+  license, citation, credentialing, redistribution, field coverage, file size,
+  and update cadence.
+- Raw public patient-level files stay local-only and must be guarded against
+  accidental commits.
+- MIMIC US DRG, ICD-9-CM, ICD-10-CM, and ICD-10-PCS fields must not be treated
+  as validated Australian AR-DRG, ICD-10-AM, ACHI, or ACS equivalents.
+- Worked examples should expose provenance, data-quality, support-status, and
+  CLI/file interop outputs where existing tooling supports them.
+- New reusable capabilities discovered by examples must become separate
+  GitHub issues or Conductor tracks rather than expanding a single tutorial
+  track without bounds.
 
 ## Stub Detector Integration
 

@@ -15,6 +15,9 @@ grouper is supplied.
 
 ## Functional Requirements
 
+- Reference and satisfy Conductor requirements `MUST-013`, `SHOULD-006`,
+  `COULD-004`, and `WONT-005`, and follow the Public Dataset Worked Example
+  design in `conductor/design.md`.
 - Follow the Conductor workflow strictly: commit after every implementation
   task, include `Commit notes:` in each task commit body, attach equivalent git
   notes, push the branch and `refs/notes/commits` after each task and phase,
@@ -83,6 +86,8 @@ grouper is supplied.
 - GitHub issues exist for warranted follow-on features discovered by the track,
   including ED, FHIR/MEDS, dataset suitability registry, and reusable
   downloader/cache guard work if still justified by Phase 1.
+- Requirements and design references in `conductor/requirements.md` and
+  `conductor/design.md` are updated before implementation claims completion.
 - Each implementation task and phase has commit, git-note, push,
   `conductor-review`, and validation evidence recorded.
 - The completed track includes a GitHub Actions review note for the pushed

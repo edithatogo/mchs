@@ -13,11 +13,13 @@
   ],
   "completion_evidence": [
     "conductor/tracks/public_clinical_dataset_worked_example_20260704/dataset_assessment.md",
+    "conductor/requirements.md",
+    "conductor/design.md",
     "reference-data/public-datasets/mimic-iv-demo/manifest.yaml",
     "examples/mimic_demo/",
     "docs-site/src/content/docs/tutorials/mimic-iv-demo-worked-example.mdx",
     "tests/test_public_clinical_dataset_worked_example_track.py",
-    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, and downloader/cache work",
+    "GitHub issue links for deferred ED, FHIR/MEDS, dataset registry, provenance/data-quality report, and downloader/cache work",
     "GitHub Actions review evidence for the completed track branch or PR"
   ],
   "support_scope": {
@@ -74,6 +76,12 @@
       "number": 349,
       "url": "https://github.com/edithatogo/mchs/issues/349",
       "reason": "Reusable local-only download/cache guardrails affect multiple public datasets and need their own security validation."
+    },
+    {
+      "title": "feat: add reusable public dataset provenance and data-quality report contract",
+      "number": 350,
+      "url": "https://github.com/edithatogo/mchs/issues/350",
+      "reason": "Reusable provenance and data-quality report contracts should be shared infrastructure across public dataset examples."
     }
   ],
   "created_at": "2026-07-04T10:09:03Z",

@@ -7,6 +7,10 @@
     - [ ] Push the branch and `refs/notes/commits` after each task and phase checkpoint.
     - [ ] Run `conductor-review` after each phase and at whole-track completion.
     - [ ] Review GitHub Actions after the completed track is pushed and record the result in track evidence.
+- [ ] Task: Keep requirements and design authority synchronized.
+    - [ ] Maintain references to `MUST-013`, `SHOULD-006`, `COULD-004`, and `WONT-005` from `conductor/requirements.md`.
+    - [ ] Maintain references to the Public Dataset Worked Example design section in `conductor/design.md`.
+    - [ ] Update requirements/design again if implementation discovers new public-dataset contract or governance needs.
 
 ## Phase 1: Dataset Discovery and Access Assessment
 - [ ] Task: Inventory candidate public clinical datasets.
@@ -19,7 +23,7 @@
     - [ ] Record why MIMIC-IV-ED, MEDS, FHIR, and Synthea are deferred or secondary.
     - [ ] Record whether each deferred dataset warrants a separate follow-on track or only a backlog note.
 - [ ] Task: Open GitHub issues for warranted follow-on examples and infrastructure.
-    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, and downloader/cache guard work only when Phase 1 evidence shows they are useful and separate.
+    - [ ] Create issues for ED, FHIR/MEDS, dataset suitability registry, downloader/cache guard, and reusable provenance/data-quality report work only when evidence shows they are useful and separate.
     - [ ] Link created issue numbers and URLs from track metadata or dataset assessment evidence.
 - [ ] Task: Conductor - Automated Review and Checkpoint 'Phase 1: Dataset Discovery and Access Assessment' (Protocol in workflow.md)
 
@@ -57,7 +61,7 @@
     - [ ] Provide commands for users with local MIMIC-IV Demo files.
 - [ ] Task: Publish docs-site tutorial and improvement backlog.
     - [ ] Explain dataset access, license, citation, field mapping, limitations, and Australian classification caveats.
-    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, provenance reports, and optional ED/FHIR/MEDS tutorial tracks.
+    - [ ] Recommend follow-on improvements: dataset suitability registry, reusable public-dataset downloader, reusable provenance/data-quality report contracts, and optional ED/FHIR/MEDS tutorial tracks.
 - [ ] Task: Review GitHub Actions and finalize track evidence.
     - [ ] Push the branch and git notes before reviewing GitHub Actions.
     - [ ] Review relevant GitHub Actions runs for the pushed branch or PR.
