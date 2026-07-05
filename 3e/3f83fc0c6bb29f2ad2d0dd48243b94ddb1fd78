@@ -1,0 +1,9 @@
+Task: Parallel Valuation Outputs archive repair
+Summary:
+- Reconciled the archived track with the runtime PriceRegistry and NSW parallel valuation helper already implemented in the repo.
+- Added an archive-track regression test that proves the valuation contract and archive metadata.
+- Updated archive metadata, plan, and review to reflect the executable library-level valuation contract and the remaining surface-level gaps.
+Validation:
+- uv run pytest tests/test_parallel_valuation_outputs_archive_track.py tests/test_price_registry.py tests/test_nsw_funding_model.py -q
+- uv run ruff check tests/test_parallel_valuation_outputs_archive_track.py
+- python -m json.tool conductor/archive/parallel_valuation_outputs_20260513/metadata.json
