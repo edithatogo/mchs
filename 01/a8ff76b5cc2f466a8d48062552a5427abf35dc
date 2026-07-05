@@ -1,0 +1,4 @@
+Plan update for Release Evidence Bundle archive repair.
+- Recorded checkpoint SHA 6c5a8b3 on the archive plan.
+- No code changes were introduced in this commit.
+- Keeps the archive plan aligned with the implementation commit and validation evidence.
