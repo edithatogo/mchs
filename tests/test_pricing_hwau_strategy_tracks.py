@@ -21,18 +21,25 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _track_root(track_id: str) -> Path:
+    archive = ROOT / "conductor" / "archive" / track_id
+    if archive.exists():
+        return archive
+    return ROOT / "conductor" / "tracks" / track_id
+
+
 def test_hwau_pricing_tracks_exist_and_define_parallel_valuations():
     roadmap = _read(ROADMAP)
     tracks = _read(TRACKS)
 
     for track_id in TRACK_IDS:
-        root = ROOT / "conductor" / "tracks" / track_id
+        root = _track_root(track_id)
         assert (root / "index.md").exists()
         assert (root / "spec.md").exists()
         assert (root / "plan.md").exists()
         metadata = json.loads(_read(root / "metadata.json"))
         assert metadata["track_id"] == track_id
-        assert metadata["status"] == "new"
+        assert metadata["status"] == "completed"
         assert track_id in tracks
 
     for phrase in [
@@ -65,7 +72,8 @@ def test_language_strategy_retains_research_surfaces_and_blocks_sprawl():
         "Stata",
         "TypeScript/WASM",
         "C#/.NET",
-        "MCP and OpenAI tool adapters",
+        "MCP contract",
+        "OpenAI tool adapter",
     ]:
         assert retained in audience
 
@@ -78,6 +86,6 @@ def test_language_strategy_retains_research_surfaces_and_blocks_sprawl():
     ]:
         assert deferred in audience
 
-    assert tracks.count("No new development") >= 3
+    assert "audience/owner evidence gate" in tracks
     assert "Historical/deprioritized" in tracks
-    assert "Retain. Support health-economics Stata workflows" in tracks
+    assert "Stata evidence case" in tracks

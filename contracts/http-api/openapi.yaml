@@ -422,8 +422,7 @@ components:
         year:
           $ref: "#/components/schemas/Year"
         result:
-          type: object
-          description: Calculator-specific result payload
+          $ref: "#/components/schemas/CalculationResult"
         diagnostics:
           $ref: "#/components/schemas/Diagnostics"
         evidence:
@@ -437,6 +436,28 @@ components:
         - year
         - result
         - diagnostics
+
+    CalculationResult:
+      type: object
+      properties:
+        totalCost:
+          type: number
+        costBreakdown:
+          type: object
+          additionalProperties:
+            type: number
+        hwau:
+          type: number
+          description: Generic healthcare weighted activity unit result.
+        nwau:
+          type: number
+          description: Australian National Weighted Activity Unit compatibility alias.
+        currency:
+          type: string
+      required:
+        - totalCost
+        - hwau
+        - currency
 
     AsyncJobResponse:
       type: object

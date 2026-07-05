@@ -332,7 +332,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: HWAU Terminology Migration**
+- [x] **Track: HWAU Terminology Migration**
 *Link: [./archive/hwau_terminology_migration_20260513/](./archive/hwau_terminology_migration_20260513/)*
 *Gate: Use HWAU as the generic healthcare weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias.*
 

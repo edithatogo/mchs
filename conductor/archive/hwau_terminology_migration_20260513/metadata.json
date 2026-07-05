@@ -11,23 +11,30 @@
     "rust_core_ga_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Adopt HWAU as the generic weighted activity unit abstraction while preserving NWAU as Australian source terminology and compatibility alias.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means HWAU is now the generic result terminology in the public result contract and runtime helper, while NWAU remains a compatibility alias for Australian source terminology. It does not claim every historical NWAU-named calculator column, package name, or adapter surface has been renamed.",
   "completion_evidence": [
     "docs/roadmaps/audience-language-strategy.md (HWAU migration sequencing)",
     "contracts/canonical/ (nwau/hwau schema fields)",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
-    "tests/test_pricing_hwau_strategy_tracks.py"
+    "nwau_py/hwau.py",
+    "contracts/http-api/openapi.yaml",
+    "contracts/http-api/examples/calculation-response.json",
+    "contracts/openai-adapter/examples.md",
+    "tests/test_pricing_hwau_strategy_tracks.py",
+    "tests/test_hwau_terminology_migration_archive_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
+    "implemented": [
       "Terminology rule that HWAU is the generic abstraction and NWAU remains Australian source terminology.",
-      "Roadmap and audience-language documentation for HWAU/NWAU sequencing.",
+      "Runtime result normalizer that adds the missing HWAU/NWAU alias and rejects conflicts.",
+      "HTTP API and OpenAI adapter examples exposing `hwau` while preserving `nwau`.",
       "Pricing strategy vocabulary including `price_per_hwau`."
     ],
-    "excluded": [
+    "not_implemented": [
       "Runtime alias coverage across every calculator and adapter.",
       "Generated schema migration proof for all public contracts.",
       "Deprecation rollout for every historical NWAU-named API."
@@ -36,8 +43,19 @@
   "gap_register": [
     {
       "id": "runtime-alias-tests",
-      "status": "implementation-gap",
-      "description": "Tests currently cover roadmap wording; runtime/schema alias tests for HWAU and NWAU compatibility remain to be added before archive."
+      "status": "partially-resolved",
+      "description": "Runtime and schema-level alias tests now cover the shared result normalizer, HTTP API result schema, and public examples. Broader adapter-by-adapter rename/deprecation work remains out of scope for this archive.",
+      "rationale": "This closes the archive blocker without claiming a bulk rename of historical NWAU calculator columns or package identifiers."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "spec": "conductor/archive/hwau_terminology_migration_20260513/spec.md",
+    "plan": "conductor/archive/hwau_terminology_migration_20260513/plan.md",
+    "review": "conductor/archive/hwau_terminology_migration_20260513/review.md",
+    "runtime_helper": "nwau_py/hwau.py",
+    "http_api_schema": "contracts/http-api/openapi.yaml",
+    "http_api_example": "contracts/http-api/examples/calculation-response.json",
+    "openai_adapter_example": "contracts/openai-adapter/examples.md",
+    "archive_tests": "tests/test_hwau_terminology_migration_archive_track.py"
+  }
 }

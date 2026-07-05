@@ -1,0 +1,113 @@
+{
+  "calculatorId": "icu-bed-day",
+  "year": "2025-26",
+  "result": {
+    "totalCost": 4520.75,
+    "costBreakdown": {
+      "nursing": 2100.00,
+      "medical": 875.50,
+      "consumables": 345.25,
+      "overhead": 1200.00
+    },
+    "hwau": 4.85,
+    "nwau": 4.85,
+    "currency": "AUD"
+  },
+  "diagnostics": {
+    "diagnostics": [
+      {
+        "severity": "info",
+        "code": "MCHS-INF-001",
+        "message": "Calculation completed successfully",
+        "path": "",
+        "rule": "calculation"
+      }
+    ],
+    "summary": {
+      "errorCount": 0,
+      "warningCount": 0,
+      "infoCount": 1
+    }
+  },
+  "evidence": {
+    "bundleId": "evb-icu-2025-q2",
+    "calculatorId": "icu-bed-day",
+    "references": [
+      {
+        "id": "ref-nwa-2025-table-4.2",
+        "type": "cost_weight",
+        "title": "National Weighted Activity Unit Schedule 2025-26, Table 4.2",
+        "url": "https://ihacpa.example.gov.au/nwau/2025-26/table-4.2"
+      }
+    ],
+    "costWeightVersion": "CW-2025-v2",
+    "dataSources": [
+      {
+        "name": "IHACPA NWAU Schedule",
+        "version": "2025-26"
+      }
+    ],
+    "assumptions": [
+      {
+        "key": "nurse-patient-ratio",
+        "description": "Assumed nurse-to-patient ratio for ICU",
+        "value": "1:1"
+      }
+    ],
+    "provenance": {
+      "source": "mchs-api-server",
+      "schemaVersion": "1.0.0",
+      "generatedAt": "2025-06-30T14:30:00Z",
+      "generatedBy": "mchs-api-server/2.1.0"
+    }
+  },
+  "explanation": {
+    "calculatorId": "icu-bed-day",
+    "year": "2025-26",
+    "steps": [
+      {
+        "step": 1,
+        "label": "Identify AR-DRG weight",
+        "description": "Lookup NWAU weight for AR-DRG A01A in 2025-26 schedule",
+        "value": "4.85"
+      },
+      {
+        "step": 2,
+        "label": "Adjust for length of stay",
+        "description": "Apply LOS adjustment factor of 1.15 for 4-day stay",
+        "value": "5.58"
+      },
+      {
+        "step": 3,
+        "label": "Apply ventilator modifier",
+        "description": "Add ventilator hourly surcharge of $45.50 for 12 hours",
+        "value": "$546.00"
+      },
+      {
+        "step": 4,
+        "label": "Calculate base cost",
+        "description": "Multiply adjusted NWAU by national efficient price of $4,500",
+        "value": "$21,825.00"
+      },
+      {
+        "step": 5,
+        "label": "Apply overhead allocation",
+        "description": "Allocate 12% overhead for facility and administrative costs",
+        "value": "$2,619.00"
+      },
+      {
+        "step": 6,
+        "label": "Compute final total",
+        "description": "Sum base cost, ventilator surcharge, and overhead",
+        "value": "$4,520.75"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "mchs-api-server",
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2025-06-30T14:30:00Z",
+    "generatedBy": "mchs-api-server/2.1.0",
+    "inputDigest": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1"
+  }
+}
