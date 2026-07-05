@@ -1,0 +1,10 @@
+HWAU terminology migration validation:
+- uv run pytest tests/test_hwau_terminology_migration_archive_track.py tests/test_pricing_hwau_strategy_tracks.py tests/test_price_registry.py -q: 9 passed
+- python -m json.tool conductor/archive/hwau_terminology_migration_20260513/metadata.json >/dev/null: passed
+- python -m json.tool contracts/http-api/examples/calculation-response.json >/dev/null: passed
+- YAML parse check for contracts/http-api/openapi.yaml CalculationResult: passed
+- uv run ruff check nwau_py/hwau.py tests/test_hwau_terminology_migration_archive_track.py tests/test_pricing_hwau_strategy_tracks.py: passed
+- uv run ty check nwau_py/hwau.py tests/test_hwau_terminology_migration_archive_track.py tests/test_pricing_hwau_strategy_tracks.py: passed
+- python conductor/scripts/stub_detector.py --root . --json: total_findings=0, stubs_detected=false
+- git diff --check for HWAU scoped files: passed
+Review outcome: runtime/schema alias blocker is partially resolved with shared HWAU/NWAU normalizer and public schema/example evidence; broader adapter-by-adapter rename remains explicitly out of scope.
