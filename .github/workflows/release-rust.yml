@@ -114,35 +114,35 @@ jobs:
             --json \
             --output-path "${coverage_json}"
           python3 - "${coverage_json}" "${COVERAGE_SUMMARY_PATH}" <<'PY'
-import json
-import pathlib
-import sys
+          import json
+          import pathlib
+          import sys
 
-input_path = pathlib.Path(sys.argv[1])
-output_path = pathlib.Path(sys.argv[2])
-payload = json.loads(input_path.read_text(encoding="utf-8"))
-totals = payload.get("data", [{}])[0].get("totals", {})
-coverage = float(totals.get("percent_covered", 0))
-output_path.write_text(
-    json.dumps({"actual": coverage, "threshold": 90.0}, indent=2) + "\n",
-    encoding="utf-8",
-)
-PY
+          input_path = pathlib.Path(sys.argv[1])
+          output_path = pathlib.Path(sys.argv[2])
+          payload = json.loads(input_path.read_text(encoding="utf-8"))
+          totals = payload.get("data", [{}])[0].get("totals", {})
+          coverage = float(totals.get("percent_covered", 0))
+          output_path.write_text(
+              json.dumps({"actual": coverage, "threshold": 90.0}, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
           coverage="$(python3 - "${COVERAGE_SUMMARY_PATH}" <<'PY'
-import json
-import sys
+          import json
+          import sys
 
-summary = json.loads(open(sys.argv[1], encoding="utf-8").read())
-print(summary["actual"])
-PY
-)"
+          summary = json.loads(open(sys.argv[1], encoding="utf-8").read())
+          print(summary["actual"])
+          PY
+          )"
           python3 - "${coverage}" <<'PY'
-import sys
+          import sys
 
-coverage = float(sys.argv[1])
-if coverage < 90.0:
-    raise SystemExit(1)
-PY
+          coverage = float(sys.argv[1])
+          if coverage < 90.0:
+              raise SystemExit(1)
+          PY
           echo "Coverage summary: ${coverage}%"
 
       - name: Collect release artefacts
@@ -173,104 +173,104 @@ PY
         run: |
           set -euo pipefail
           python3 - <<'PY'
-import json
-import os
-import subprocess
-from pathlib import Path
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
 
-tag = os.environ["TAG"]
-commit = os.environ["COMMIT"]
-version = os.environ["VERSION"]
-coverage_path = Path("../dist/coverage-summary.json")
-coverage = json.loads(coverage_path.read_text(encoding="utf-8"))
+          tag = os.environ["TAG"]
+          commit = os.environ["COMMIT"]
+          version = os.environ["VERSION"]
+          coverage_path = Path("../dist/coverage-summary.json")
+          coverage = json.loads(coverage_path.read_text(encoding="utf-8"))
 
-metadata = json.loads(
-    subprocess.check_output(
-        ["cargo", "metadata", "--no-deps", "--locked", "--format-version", "1"],
-        text=True,
-    )
-)
-package_versions = {
-    pkg["name"]: pkg["version"]
-    for pkg in metadata.get("packages", [])
-    if pkg["name"] in {"nwau-core", "nwau-c-abi", "nwau-py"}
-}
+          metadata = json.loads(
+              subprocess.check_output(
+                  ["cargo", "metadata", "--no-deps", "--locked", "--format-version", "1"],
+                  text=True,
+              )
+          )
+          package_versions = {
+              pkg["name"]: pkg["version"]
+              for pkg in metadata.get("packages", [])
+              if pkg["name"] in {"nwau-core", "nwau-c-abi", "nwau-py"}
+          }
 
-evidence = {
-    "release_id": f"rust-core-{version}",
-    "git_commit": commit,
-    "git_tag": tag,
-    "packages": [f"{name}:{package_versions[name]}" for name in sorted(package_versions)],
-    "supported_scope": {
-        "runtime": "rust-core",
-        "surfaces": [
-            "rust-core",
-            "c-abi",
-            "python-binding",
-            "file-contract",
-            "cli",
-            "http-api",
-            "mcp",
-        ],
-        "streams": ["icu-bed-day"],
-        "jurisdictions": ["national", "state", "local", "hwu"],
-    },
-    "source_manifests": [
-        "reference-data/2025/manifest.yaml",
-        "reference-data/2026/manifest.yaml",
-    ],
-    "schema_versions": {
-        "canonical": "contracts/canonical/evidence.schema.json",
-        "provenance": "contracts/canonical/provenance.schema.json",
-        "support_status": "contracts/support/support-status.schema.json",
-        "release_evidence": "contracts/release/evidence-bundle.schema.json",
-    },
-    "fixture_results": [],
-    "parity_reports": [],
-    "coverage": coverage,
-    "sbom": {
-        "file": "sbom.cdx.json",
-    },
-    "security": {
-        "cargo_audit": "passed",
-        "cargo_deny_advisories": "passed",
-        "workflow": "rust_security",
-    },
-    "provenance": {
-        "builder": "github-actions",
-        "source_dir": ".",
-        "source_commit_timestamp": os.environ.get("SOURCE_DATE_EPOCH", ""),
-        "repository": os.environ.get("GITHUB_REPOSITORY", ""),
-        "ref": os.environ.get("GITHUB_REF_NAME", ""),
-    },
-    "known_limitations": [],
-    "rollback": {
-        "enabled": true,
-        "plan": "Disable rust-backed opt-in execution and route through default Python runtime while rerunning parity and release checks.",
-    },
-}
-Path("../dist/release-evidence-bundle.json").write_text(
-    json.dumps(evidence, indent=2, sort_keys=True) + "\n",
-    encoding="utf-8",
-)
-print(f"release evidence generated for {tag} @ {commit}")
-PY
+          evidence = {
+              "release_id": f"rust-core-{version}",
+              "git_commit": commit,
+              "git_tag": tag,
+              "packages": [f"{name}:{package_versions[name]}" for name in sorted(package_versions)],
+              "supported_scope": {
+                  "runtime": "rust-core",
+                  "surfaces": [
+                      "rust-core",
+                      "c-abi",
+                      "python-binding",
+                      "file-contract",
+                      "cli",
+                      "http-api",
+                      "mcp",
+                  ],
+                  "streams": ["icu-bed-day"],
+                  "jurisdictions": ["national", "state", "local", "hwu"],
+              },
+              "source_manifests": [
+                  "reference-data/2025/manifest.yaml",
+                  "reference-data/2026/manifest.yaml",
+              ],
+              "schema_versions": {
+                  "canonical": "contracts/canonical/evidence.schema.json",
+                  "provenance": "contracts/canonical/provenance.schema.json",
+                  "support_status": "contracts/support/support-status.schema.json",
+                  "release_evidence": "contracts/release/evidence-bundle.schema.json",
+              },
+              "fixture_results": [],
+              "parity_reports": [],
+              "coverage": coverage,
+              "sbom": {
+                  "file": "sbom.cdx.json",
+              },
+              "security": {
+                  "cargo_audit": "passed",
+                  "cargo_deny_advisories": "passed",
+                  "workflow": "rust_security",
+              },
+              "provenance": {
+                  "builder": "github-actions",
+                  "source_dir": ".",
+                  "source_commit_timestamp": os.environ.get("SOURCE_DATE_EPOCH", ""),
+                  "repository": os.environ.get("GITHUB_REPOSITORY", ""),
+                  "ref": os.environ.get("GITHUB_REF_NAME", ""),
+              },
+              "known_limitations": [],
+              "rollback": {
+                  "enabled": true,
+                  "plan": "Disable rust-backed opt-in execution and route through default Python runtime while rerunning parity and release checks.",
+              },
+          }
+          Path("../dist/release-evidence-bundle.json").write_text(
+              json.dumps(evidence, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          print(f"release evidence generated for {tag} @ {commit}")
+          PY
 
       - name: Validate release evidence bundle fields
         run: |
           python3 - <<'PY'
-import json
-from pathlib import Path
+          import json
+          from pathlib import Path
 
-schema = json.loads(Path("../contracts/release/evidence-bundle.schema.json").read_text(encoding="utf-8"))
-bundle = json.loads(Path("../dist/release-evidence-bundle.json").read_text(encoding="utf-8"))
-missing = [field for field in schema["required"] if field not in bundle]
-if missing:
-    raise SystemExit(f"Release evidence bundle missing required fields: {missing}")
-if bundle["coverage"].get("actual", 0) < bundle["coverage"].get("threshold", 0):
-    raise SystemExit("Coverage result below threshold in release evidence bundle")
-print("Release evidence bundle validated.")
-PY
+          schema = json.loads(Path("../contracts/release/evidence-bundle.schema.json").read_text(encoding="utf-8"))
+          bundle = json.loads(Path("../dist/release-evidence-bundle.json").read_text(encoding="utf-8"))
+          missing = [field for field in schema["required"] if field not in bundle]
+          if missing:
+              raise SystemExit(f"Release evidence bundle missing required fields: {missing}")
+          if bundle["coverage"].get("actual", 0) < bundle["coverage"].get("threshold", 0):
+              raise SystemExit("Coverage result below threshold in release evidence bundle")
+          print("Release evidence bundle validated.")
+          PY
 
       - name: Generate checksums
         working-directory: dist
@@ -319,34 +319,34 @@ PY
         run: |
           TAG="${{ needs.build.outputs.tag }}"
           COVERAGE="$(python3 - <<'PY'
-import json
-print(json.load(open('dist/release-evidence-bundle.json', encoding='utf-8'))['coverage']['actual'])
-PY
-)"
+          import json
+          print(json.load(open('dist/release-evidence-bundle.json', encoding='utf-8'))['coverage']['actual'])
+          PY
+          )"
           RUST_CORE_CRATE_TAG="${{ needs.build.outputs.tag }}"
           cat > dist/RELEASE_NOTES.md <<'EOF'
-# Rust Core GA Release Artefacts
+          # Rust Core GA Release Artefacts
 
-## Release
-- Tag: ${RUST_CORE_CRATE_TAG}
-- Git commit: ${{ needs.build.outputs.commit }}
+          ## Release
+          - Tag: ${RUST_CORE_CRATE_TAG}
+          - Git commit: ${{ needs.build.outputs.commit }}
 
-## Artefacts
-- Library artifacts (.so/.dylib/.dll)
-- Source and lockfile manifests (for reproducibility)
-- SBOM (CycloneDX)
-- Coverage summary (JSON)
-- Release evidence bundle (`release-evidence-bundle.json`)
-- Checksums (SHA-256)
+          ## Artefacts
+          - Library artifacts (.so/.dylib/.dll)
+          - Source and lockfile manifests (for reproducibility)
+          - SBOM (CycloneDX)
+          - Coverage summary (JSON)
+          - Release evidence bundle (`release-evidence-bundle.json`)
+          - Checksums (SHA-256)
 
-## Release evidence
-- Package evidence bundle coverage: ${COVERAGE}%
-- Evidence file: `release-evidence-bundle.json`
+          ## Release evidence
+          - Package evidence bundle coverage: ${COVERAGE}%
+          - Evidence file: `release-evidence-bundle.json`
 
-## Provenance
-- Build attestation requested via `actions/attest-build-provenance@v2`.
-- Signed tag verification is required before release cut.
-EOF
+          ## Provenance
+          - Build attestation requested via `actions/attest-build-provenance@v2`.
+          - Signed tag verification is required before release cut.
+          EOF
 
       - name: Assert evidence bundle was released
         run: |
