@@ -1,0 +1,11 @@
+Validated the conda-forge evidence tests after aligning them with the current live documentation and fixing the typing helper.
+
+Files changed:
+- tests/test_external_followup_checklists.py
+- tests/test_remaining_language_registry_submission_tracks.py
+
+Validation:
+- uv run pytest tests/test_conda_forge_feedstock_submission_track.py tests/test_external_followup_checklists.py tests/test_remaining_language_registry_submission_tracks.py -q
+- uv run ruff check tests/test_conda_forge_feedstock_submission_track.py tests/test_external_followup_checklists.py tests/test_remaining_language_registry_submission_tracks.py
+- uv run ty check tests/test_conda_forge_feedstock_submission_track.py tests/test_external_followup_checklists.py tests/test_remaining_language_registry_submission_tracks.py
+- python conductor/scripts/stub_detector.py --root . --json
