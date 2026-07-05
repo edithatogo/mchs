@@ -1,0 +1,1 @@
+NHCDC Cost Report Ingestion archive review: archive-ready as complete. Validation: uv run pytest tests/test_nhcdc_ingestion.py -q; uv run ruff check nwau_py/nhcdc_ingestion.py tests/test_nhcdc_ingestion.py; uv run ty check nwau_py/nhcdc_ingestion.py tests/test_nhcdc_ingestion.py; python conductor/scripts/stub_detector.py --root . --json
