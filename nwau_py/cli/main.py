@@ -9,6 +9,9 @@ from typing import IO, Any, Protocol, cast
 
 import click
 
+from nwau_py.logging import configure_logging
+from nwau_py.version import __version__
+
 
 class _CsvFrame(Protocol):
     def to_csv(self, outfh: IO[str], *, index: bool) -> None: ...
@@ -139,8 +142,10 @@ def common_options(func: Callable[..., Any]) -> Callable[..., Any]:
 
 
 @click.group()
+@click.version_option(version=__version__, prog_name="funding-calculator")
 def cli() -> None:
     """NWAU calculation commands."""
+    configure_logging()
 
 
 @cli.group()

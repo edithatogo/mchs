@@ -1,5 +1,6 @@
 import importlib
 import json
+import subprocess
 import sys
 import types
 from pathlib import Path
@@ -12,6 +13,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import pytest
 
+import nwau_py.cli.main as cli_main
+from nwau_py.cli.main import cli as _cli
+from nwau_py.version import __version__
+
 PYREADSTAT: Any = types.ModuleType("pyreadstat")
 PYREADSTAT.ReadstatError = Exception
 PYREADSTAT._readstat_parser = types.SimpleNamespace(
@@ -20,7 +25,7 @@ PYREADSTAT._readstat_parser = types.SimpleNamespace(
 
 
 def _missing_sas7bdat(*_args, **_kwargs):
-    raise FileNotFoundError("synthetic test stub")
+    raise FileNotFoundError("synthetic missing SAS fixture")
 
 
 PYREADSTAT.read_sas7bdat = _missing_sas7bdat
@@ -29,21 +34,54 @@ sys.modules.setdefault("pyreadstat", PYREADSTAT)
 acute = importlib.import_module("nwau_py.calculators.acute")
 _ACUTE_ERR = None
 
-_cli: Any | None
-try:  # cli may fail to import if optional deps are missing
-    from nwau_py.cli.main import cli as imported_cli
 
-    _cli = imported_cli
-    _CLI_ERR = None
-except Exception as exc:  # pragma: no cover - environment dependent
-    _cli = None
-    _CLI_ERR = exc
+def test_cli_help_import_does_not_eagerly_load_scientific_stack():
+    code = """
+import sys
+from click.testing import CliRunner
+from nwau_py.cli.main import cli
+result = CliRunner().invoke(cli, ["--help"])
+print(f"exit={result.exit_code}")
+for name in ["pandas", "numpy", "pydantic", "pyreadstat"]:
+    print(f"{name}={name in sys.modules}")
+"""
+    result = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=Path(__file__).resolve().parents[1],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    assert "exit=0" in result.stdout
+    for name in ["pandas", "numpy", "pydantic", "pyreadstat"]:
+        assert f"{name}=False" in result.stdout
 
 
-@pytest.mark.skipif(
-    _cli is None or acute is None,
-    reason=(f"CLI import failed: {_CLI_ERR} | acute import failed: {_ACUTE_ERR}"),
-)
+def test_cli_version_flag_reports_the_runtime_version():
+    runner = CliRunner()
+    result = runner.invoke(cast(Any, _cli), ["--version"])
+
+    assert result.exit_code == 0
+    assert __version__ in result.output
+    assert "funding-calculator" in result.output
+
+
+def test_cli_invocation_configures_logging(monkeypatch):
+    calls: list[dict[str, Any]] = []
+
+    def _configure_logging(**kwargs: Any) -> None:
+        calls.append(kwargs)
+
+    monkeypatch.setattr(cli_main, "configure_logging", _configure_logging)
+
+    runner = CliRunner()
+    result = runner.invoke(cast(Any, _cli), ["interop", "contract"])
+
+    assert result.exit_code == 0
+    assert calls == [{}]
+
+
 def test_cli_acute_matches_library_output(monkeypatch, tmp_path):
     def _weights(*_args, **_kwargs) -> pd.DataFrame:
         df = pd.read_csv("tests/data/nep25_aa_price_weights.csv")
@@ -142,10 +180,6 @@ def test_cli_rejects_unavailable_classification_year(tmp_path):
     assert "not available for pricing year 2021" in result.output
 
 
-@pytest.mark.skipif(
-    _cli is None,
-    reason=f"CLI import failed: {_CLI_ERR}",
-)
 def test_cli_interop_contract_is_machine_readable():
     runner = CliRunner()
     result = runner.invoke(cast(Any, _cli), ["interop", "contract"])
