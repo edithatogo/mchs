@@ -5,6 +5,7 @@ import io
 import json
 import subprocess
 import sys
+from email.message import Message
 from pathlib import Path
 from urllib.error import HTTPError
 
@@ -65,11 +66,14 @@ def _http_error(
     body: str = "",
     headers: dict[str, str] | None = None,
 ) -> HTTPError:
+    message = Message()
+    for key, value in (headers or {}).items():
+        message[key] = value
     return HTTPError(
         url,
         code,
         "test error",
-        headers or {},
+        message,
         io.BytesIO(body.encode("utf-8")),
     )
 
