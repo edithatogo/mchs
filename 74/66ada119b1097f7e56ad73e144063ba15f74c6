@@ -1,0 +1,1 @@
+Roadmap Portfolio Governance Backfill archive review: archive-ready as complete-with-gaps. Validation: uv run pytest tests/test_roadmap_portfolio_governance_backfill_track.py -q; uv run ruff check tests/test_roadmap_portfolio_governance_backfill_track.py; python conductor/scripts/stub_detector.py --root . --json
