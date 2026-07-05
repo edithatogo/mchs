@@ -25,7 +25,7 @@
     - [x] Add fail-closed tests for unavailable jurisdiction/year combinations.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation and Parallel Use' (Protocol in workflow.md)
 
-## Phase 4: Runtime Jurisdiction Registry [checkpoint: pending]
+## Phase 4: Runtime Jurisdiction Registry [checkpoint: f15ce61]
 - [x] Task: Add a runtime jurisdiction funding-model registry.
     - [x] Add explicit rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.
     - [x] Preserve source term, source unit, mapped unit, source URL, checksum, status, and provenance.
