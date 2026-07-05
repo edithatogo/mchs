@@ -51,7 +51,7 @@ def test_parallel_valuation_archive_plan_and_registry_are_complete() -> None:
 
     assert "Runtime Registry API" in plan
     assert "[checkpoint:" in plan
-    assert "Parallel Valuation Outputs" in registry
+    assert "- [x] **Track: Parallel Valuation Outputs**" in registry
     assert (
         "Parallel comparison output across national, state, local, and discounted"
         in roadmap

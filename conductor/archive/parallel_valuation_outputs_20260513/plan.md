@@ -21,7 +21,7 @@
     - [x] Test missing schedule and unsupported jurisdiction behavior.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation' (Protocol in workflow.md)
 
-## Phase 4: Runtime Registry API [checkpoint: repaired]
+## Phase 4: Runtime Registry API [checkpoint: 3e3f83f]
 - [x] Task: Implement the runtime price registry and parallel valuation helper.
     - [x] Add public-safe national, state, local, discounted, missing, and blocked rows.
     - [x] Preserve provenance and support status for valuation outputs.
