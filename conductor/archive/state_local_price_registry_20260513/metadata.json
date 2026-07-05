@@ -12,39 +12,54 @@
     "canonical_contract_foundation_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Source and version state, jurisdictional, local, and discounted HWAU price schedules over time with provenance and support status.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository now has a runtime PriceRegistry API, public NEP-backed national rows, public-safe synthetic state/local/discounted fixtures, and fail-closed unavailable/blocked behavior. It does not claim complete official sourced state/local price coverage or redistribution rights for restricted local schedules.",
   "completion_evidence": [
-    "conductor/tracks/state_local_price_registry_20260513/index.md",
+    "conductor/archive/state_local_price_registry_20260513/index.md",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
-    "conductor/tracks/state_local_price_registry_20260513/spec.md",
+    "conductor/archive/state_local_price_registry_20260513/spec.md",
+    "nwau_py/price_registry.py",
     "tests/test_pricing_hwau_strategy_tracks.py",
-    "tests/test_price_registry.py"
+    "tests/test_price_registry.py",
+    "tests/test_state_local_price_registry_archive_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Roadmap and contract shape for national, state, local, discounted, blocked, and missing price schedules.",
-      "Synthetic serialization checks for price schedule records.",
-      "Support-state vocabulary for provenance-aware price schedule work."
+    "implemented": [
+      "runtime PriceRegistry API for national, state, local, and discounted rows",
+      "public NEP-backed national rows from shared pricing constants",
+      "local-only synthetic state, local, discounted, missing, and blocked fixtures",
+      "fail-closed lookup behavior for unavailable or non-redistributable schedules"
     ],
-    "excluded": [
-      "Complete sourced registry implementation for every jurisdiction and year.",
-      "Runtime APIs such as PriceRegistry, get_state_price, get_national_price, or list_available_jurisdictions.",
-      "Public claims that synthetic constants are official sourced prices."
+    "not_implemented": [
+      "complete official sourced registry for every jurisdiction and year",
+      "redistribution of restricted local or licensed price schedules",
+      "public claim that synthetic state/local constants are official prices"
     ]
   },
   "gap_register": [
     {
       "id": "runtime-price-registry-api",
-      "status": "implementation-gap",
-      "description": "The price_registry module currently has synthetic constants and record helpers, but does not expose PriceRegistry, get_state_price, get_national_price, or list_available_jurisdictions APIs."
+      "status": "partially-resolved",
+      "description": "The price_registry module now exposes PriceRegistry, get_state_price, get_national_price, get_local_price, get_discounted_price, list_available_years, and list_available_jurisdictions APIs with public-safe fixture coverage.",
+      "rationale": "Runtime behavior is implemented for public NEP rows and synthetic/local-only fixtures; official state/local source coverage remains a separate source gap."
     },
     {
       "id": "official-source-coverage",
       "status": "source-gap",
-      "description": "National, state, local, discounted, missing, and blocked schedule rows still need official provenance records and behavior tests before archive."
+      "description": "State, local, discounted, missing, and blocked schedule rows still need official provenance records before any public sourced support claim beyond the national NEP rows.",
+      "rationale": "Synthetic and local-only fixtures exercise behavior without redistributing or overclaiming official state/local prices."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "spec": "conductor/archive/state_local_price_registry_20260513/spec.md",
+    "plan": "conductor/archive/state_local_price_registry_20260513/plan.md",
+    "review": "conductor/archive/state_local_price_registry_20260513/review.md",
+    "runtime_registry": "nwau_py/price_registry.py",
+    "runtime_tests": "tests/test_price_registry.py",
+    "archive_tests": "tests/test_state_local_price_registry_archive_track.py",
+    "roadmap": "docs/roadmaps/pricing-and-hwau-strategy.md"
+  }
 }

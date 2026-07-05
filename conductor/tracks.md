@@ -338,7 +338,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: State and Local Price Registry**
+- [x] **Track: State and Local Price Registry**
 *Link: [./archive/state_local_price_registry_20260513/](./archive/state_local_price_registry_20260513/)*
 *Gate: Source and version national, state, local, and discounted HWAU price schedules over time with provenance, licence status, and fail-closed support metadata.*
 
