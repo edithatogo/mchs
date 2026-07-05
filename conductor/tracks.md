@@ -452,7 +452,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: NHCDC Cost Report Ingestion**
+- [x] **Track: NHCDC Cost Report Ingestion**
 *Link: [./archive/nhcdc_cost_report_ingestion_20260512/](./archive/nhcdc_cost_report_ingestion_20260512/)*
 *Gate: ingest public NHCDC cost report appendices and data request specifications with provenance while distinguishing aggregate reports from patient-level costing data.*
 

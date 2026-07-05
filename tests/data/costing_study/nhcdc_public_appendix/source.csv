@@ -1,0 +1,6 @@
+stream,ar_drg_version,average_cost_per_episode,average_nwau,cost_per_nwau
+acute,AR-DRG v11.0,8500,4.2,2024
+ed,UDG v1.0,520,0.62,839
+mental_health,AMHCC v1.0,7200,5.8,1241
+subacute,AN-SNAP v5.0,11000,9.5,1158
+outpatient,TIER2 v2.0,380,0.15,2533

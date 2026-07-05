@@ -3,39 +3,42 @@
   "type": "feature",
   "status": "completed",
   "track_class": "costing",
-  "current_state": "complete-with-gaps",
+  "current_state": "complete",
   "primary_contract": "NHCDC ingestion pipeline documentation and provenance contract",
   "dependencies": [],
   "completion_evidence": [
-    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/nhcdc_ingestion_pipeline.md",
-    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/spec.md",
-    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/plan.md",
-    "conductor/tracks/nhcdc_cost_report_ingestion_20260512/index.md",
+    "conductor/archive/nhcdc_cost_report_ingestion_20260512/nhcdc_ingestion_pipeline.md",
+    "conductor/archive/nhcdc_cost_report_ingestion_20260512/spec.md",
+    "conductor/archive/nhcdc_cost_report_ingestion_20260512/plan.md",
+    "conductor/archive/nhcdc_cost_report_ingestion_20260512/index.md",
+    "nwau_py/nhcdc_ingestion.py",
+    "tests/data/costing_study/nhcdc_public_appendix/manifest.yaml",
+    "tests/data/costing_study/nhcdc_public_appendix/source.csv",
+    "tests/data/costing_study/nhcdc_public_appendix/normalized_output.csv",
     "tests/test_nhcdc_ingestion.py"
   ],
   "support_scope": {
-    "state": "complete-with-gaps",
+    "state": "complete",
     "included": [
       "NHCDC source inventory, provenance, normalization, gap handling, and interpretation-limit documentation.",
+      "Manifest-backed public appendix parsing, normalization, and reproducible fixture output.",
       "Cost bucket registry linkage and pipeline design for CSV, XLSX, Arrow, and Parquet outputs.",
-      "Tests proving the pipeline documentation includes required fields and limits."
+      "Tests proving the pipeline documentation, parser behavior, and normalized output are consistent."
     ],
     "excluded": [
-      "Executable NHCDC appendix parser.",
-      "At least one normalized manifest/output fixture from a public NHCDC appendix.",
       "Patient-level costing data ingestion or compliance certification claims."
     ]
   },
   "gap_register": [
     {
       "id": "executable-ingestion-fixture",
-      "status": "implementation-gap",
-      "description": "The current evidence is documentation-only; archive requires at least one manifest-backed normalized NHCDC appendix ingestion fixture and parser validation."
+      "status": "complete",
+      "description": "Manifest-backed normalized appendix fixture and parser validation are committed."
     }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Add ingestion and provenance support for public NHCDC cost report appendix tables and data request specifications.",
   "no_stub_enforce": true
 }

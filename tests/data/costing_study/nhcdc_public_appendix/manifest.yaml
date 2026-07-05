@@ -1,0 +1,29 @@
+appendix_id: nhcdc-public-sector-2023-24-summary
+title: NHCDC public sector benchmark appendix fixture
+source_url: https://www.ihacpa.gov.au/resources/national-hospital-cost-data-collection-nhcdc-public-sector-2023-24
+file_type: csv
+publication_date: 2024-06-30
+retrieval_date: 2026-07-05
+source_path: source.csv
+normalized_path: normalized_output.csv
+table_categories:
+  - stream benchmark summary
+required_columns:
+  - stream
+  - ar_drg_version
+  - average_cost_per_episode
+  - average_nwau
+  - cost_per_nwau
+provenance_columns:
+  - appendix_id
+  - appendix_title
+  - source_url
+  - publication_date
+  - retrieval_date
+  - table_category
+  - source_row_number
+  - source_path
+status: available
+notes:
+  - Public appendix-shaped aggregate fixture used to prove manifest-backed normalization.
+  - No patient-level NHCDC submissions are bundled or inferred.

@@ -60,6 +60,19 @@ Each ingested table is normalized to Arrow/Parquet or CSV with:
 - Cost bucket distribution tables
 - Data request specification field dictionaries
 
+### Manifest-Backed Fixture Example
+
+The repository includes a conservative fixture pack at
+`tests/data/costing_study/nhcdc_public_appendix/` with:
+
+- `manifest.yaml` describing the appendix source, schema, and provenance
+- `source.csv` as the local appendix-shaped input
+- `normalized_output.csv` as the committed normalized result
+
+The executable helper `nwau_py.nhcdc_ingestion.normalize_nhcdc_appendix_table`
+loads the manifest, validates the source columns, and produces the
+provenance-rich normalized table used by the archive tests.
+
 ## Interpretation Limits
 
 ### What Public Reports Support
