@@ -470,7 +470,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Roadmap Portfolio Governance Backfill**
+- [x] **Track: Roadmap Portfolio Governance Backfill**
 *Link: [./archive/roadmap_portfolio_governance_backfill_20260512/](./archive/roadmap_portfolio_governance_backfill_20260512/)*
 *Gate: backfill class, dependency, explicit contract, current-state, and completion-evidence metadata across the expanded Conductor roadmap before further broad implementation claims.*
 
