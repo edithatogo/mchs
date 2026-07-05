@@ -1,0 +1,8 @@
+State and Local Price Registry validation:
+- uv run pytest tests/test_state_local_price_registry_archive_track.py tests/test_price_registry.py tests/test_pricing_hwau_strategy_tracks.py tests/test_coordination_and_evidence_tracks.py -q: 15 passed
+- python -m json.tool conductor/archive/state_local_price_registry_20260513/metadata.json >/dev/null: passed
+- uv run ruff check nwau_py/price_registry.py tests/test_price_registry.py tests/test_pricing_hwau_strategy_tracks.py tests/test_state_local_price_registry_archive_track.py: passed
+- uv run ty check nwau_py/price_registry.py tests/test_price_registry.py tests/test_pricing_hwau_strategy_tracks.py tests/test_state_local_price_registry_archive_track.py: passed
+- python conductor/scripts/stub_detector.py --root . --json: total_findings=0, stubs_detected=false
+- git diff --check for scoped pricing registry files: passed
+Review outcome: runtime API blocker is partially resolved with public NEP-backed national rows, local-only synthetic state/local/discounted fixtures, and fail-closed blocked/missing behavior; official state/local source coverage remains explicitly gap-recorded.
