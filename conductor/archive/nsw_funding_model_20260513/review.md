@@ -2,20 +2,24 @@
 
 ## Verdict
 
-Reviewed; keep live as `complete-with-gaps`.
+Reviewed; archive-ready as `complete-with-gaps`.
 
 ## Findings
 
-1. The track is not archive-ready because NSW-specific evidence remains roadmap-level.
-2. Current price values in `nwau_py.price_registry` are synthetic and do not prove sourced NSW State Price support.
-3. Acceptance still requires at least one public-safe NSW source fixture, missing-year blocked handling, and tests for parallel application.
+No unresolved local implementation blockers remain.
+
+The NSW registry now exposes public-source fixtures for 2025 and 2026, plus
+fail-closed missing-year handling and parallel valuation output. Remaining gaps
+are limited to broader historical coverage and any restricted service-agreement
+artefacts that should not be redistributed.
 
 ## Validation
 
-- `uv run pytest tests/test_pricing_hwau_strategy_tracks.py tests/test_price_registry.py -q`
+- `uv run pytest tests/test_nsw_funding_model.py tests/test_nsw_funding_model_archive_track.py -q`
 - `python conductor/scripts/stub_detector.py --root . --json`
 
-## Archive Blockers
+## Residual External Gates
 
-- Add official or public-safe NSW source fixtures.
-- Add behavior tests for sourced NSW rows, missing years, blocked/unknown statuses, and parallel valuation output.
+- Official review for additional historical NSW years.
+- Licence review for restricted NSW service-agreement artefacts.
+- District/network-specific adjustment validation beyond the public fixture notes.

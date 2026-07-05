@@ -350,7 +350,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: NSW Funding Model**
+- [x] **Track: NSW Funding Model**
 *Link: [./archive/nsw_funding_model_20260513/](./archive/nsw_funding_model_20260513/)*
 *Gate: Model NSW State Price per NWAU/HWAU, LHD/SHN service agreement notes, adjustments, blocked years, and provenance before applying NSW-specific valuations.*
 

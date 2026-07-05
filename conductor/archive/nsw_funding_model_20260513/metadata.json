@@ -11,34 +11,50 @@
     "hwau_terminology_migration_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Create an explicit NSW funding model registry for State Price per NWAU/HWAU, local health district notes, adjustments, and provenance over time.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository now has a runtime NSWFundingModelRegistry with public-source NSW State Price fixtures for 2025 and 2026, plus fail-closed missing-year handling and a parallel valuation helper. It does not claim full official coverage for all historical NSW years or redistribute restricted service-agreement artefacts.",
   "completion_evidence": [
-    "conductor/tracks/jurisdiction_funding_model_registry_20260513/index.md",
-    "conductor/tracks/nsw_funding_model_20260513/index.md",
+    "conductor/archive/nsw_funding_model_20260513/index.md",
+    "conductor/archive/nsw_funding_model_20260513/spec.md",
+    "conductor/archive/nsw_funding_model_20260513/plan.md",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "nwau_py/nsw_funding_model.py",
+    "tests/test_nsw_funding_model.py",
+    "tests/test_nsw_funding_model_archive_track.py",
     "tests/test_pricing_hwau_strategy_tracks.py",
     "tests/test_price_registry.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "NSW funding-model roadmap and registry intent for State Price per NWAU/HWAU.",
-      "Governance documentation for missing-year, blocked-source, and provenance-aware valuation behavior.",
-      "Synthetic price-record validation used as a placeholder for future sourced fixtures."
+    "implemented": [
+      "runtime NSWFundingModelRegistry API for source-backed years",
+      "public NSW State Price rows for 2025 and 2026",
+      "fail-closed missing-year handling for unavailable NSW years",
+      "parallel valuation helper combining NSW and national prices"
     ],
-    "excluded": [
-      "Official NSW State Price fixture rows.",
-      "Validated NSW-specific adjustment logic.",
-      "Parallel application of sourced NSW funding model outputs."
+    "not_implemented": [
+      "full official NSW source coverage for all historical and future years",
+      "validated NSW-specific adjustment modelling for every district/network note",
+      "redistribution of restricted NSW service-agreement artefacts"
     ]
   },
   "gap_register": [
     {
       "id": "nsw-official-source-fixtures",
       "status": "source-gap",
-      "description": "NSW funding-model support still needs at least one public-safe sourced fixture, missing-year blocked handling, and tests over sourced NSW rows."
+      "description": "NSW funding-model support now has public-source fixtures for 2025 and 2026, but the archive still does not claim exhaustive historical coverage or redistribution of restricted artefacts.",
+      "rationale": "The track is complete-with-gaps because the public fixtures are source-backed yet deliberately limited to the years and caveats visible in the repository."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "archive_ready": true,
+    "archive_location": "conductor/archive/nsw_funding_model_20260513",
+    "remaining_external_gates": [
+      "official source review for additional historical NSW years",
+      "licence review for restricted service-agreement artefacts",
+      "district/network-specific adjustment validation beyond the public fixture notes"
+    ]
+  }
 }
