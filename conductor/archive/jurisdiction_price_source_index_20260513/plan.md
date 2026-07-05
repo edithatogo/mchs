@@ -18,7 +18,7 @@
     - [x] Prevent unknown source status from appearing as supported.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation' (Protocol in workflow.md)
 
-## Phase 4: Runtime Source Index API [checkpoint: pending]
+## Phase 4: Runtime Source Index API [checkpoint: dce20ad]
 - [x] Task: Add a machine-readable jurisdiction source-index API.
     - [x] Add public-safe metadata or explicit blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.
     - [x] Preserve source title, URL/path, checksum, licence, redistribution, unit, stream, status, and extraction notes.
