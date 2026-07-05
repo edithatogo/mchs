@@ -380,7 +380,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Release Evidence Bundle**
+- [x] **Track: Release Evidence Bundle**
 *Link: [./archive/release_evidence_bundle_20260513/](./archive/release_evidence_bundle_20260513/)*
 *Gate: Define required release evidence bundles before any stream, jurisdiction, or surface can be promoted to release-candidate or GA.*
 

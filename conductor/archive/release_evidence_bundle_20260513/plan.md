@@ -12,7 +12,7 @@
     - [x] Validate required fields before GA.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 2: Release Integration' (Protocol in workflow.md)
 
-## Phase 3: Documentation
+## Phase 3: Documentation [checkpoint: archived]
 - [x] Task: Document evidence requirements.
     - [x] Add release checklist.
     - [x] Add examples for blocked, RC, and GA releases.

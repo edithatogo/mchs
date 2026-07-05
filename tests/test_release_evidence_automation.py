@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import json
 import importlib.util
+import json
 import sys
 from pathlib import Path
 from typing import Any
@@ -267,7 +267,7 @@ def test_release_evidence_bundle_complete_with_gaps_is_blocked_explicitly():
     assert metadata["status"] == "completed"
     assert metadata["current_state"] == "complete-with-gaps"
     assert metadata["gap_blockers"]
-    assert metadata["completion_policy"].startswith("complete-with-gaps means")
+    assert metadata["completion_policy"].startswith("Complete-with-gaps means")
     assert "registries" in schema["required"]
     registry_statuses = schema["properties"]["registries"]["items"]["properties"][
         "status"

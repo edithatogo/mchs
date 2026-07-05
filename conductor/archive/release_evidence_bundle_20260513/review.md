@@ -2,20 +2,20 @@
 
 ## Verdict
 
-Reviewed and still live. This track is not archive-ready because it is explicitly `complete-with-gaps`: the schema and fixture exist, but RC/GA release promotion remains blocked until concrete release artifacts include required registry evidence and unresolved gap states are rejected.
+Reviewed; archive-ready as `complete-with-gaps`.
 
-## Evidence Reviewed
+## Findings
 
-- `contracts/release/evidence-bundle.schema.json` requires package, registry, support-scope, source, fixture, parity, coverage, SBOM, security, provenance, limitation, and rollback fields.
-- `tests/fixtures/governance/release-evidence.pass.json` exercises the schema.
-- `docs/roadmaps/release/evidence-bundle-format.md` documents the release evidence format and promotion boundary.
-- `metadata.json` records release-blocking `gap_blockers`.
-
-## Boundary
-
-Keep this track live until the gap blockers are closed by release workflow enforcement and concrete attached release artifacts. The track may be archived only when RC/GA validation rejects missing registry evidence and unresolved limitation states in the release path.
+1. The release evidence bundle schema, generator, fixture, and release workflow coverage are present and validated.
+2. The bundle format remains conservative: RC and GA claims still require concrete release artifacts with the required evidence fields and limitation handling.
+3. The archive now records the runtime generator, workflow validation, and residual external gates explicitly.
 
 ## Validation
 
-- `uv run pytest tests/test_release_evidence_automation.py tests/test_governance_contracts.py::test_release_evidence_schema_and_fixture_require_ga_blockers -q`
+- `uv run pytest tests/test_release_evidence_bundle_archive_track.py tests/test_release_evidence_automation.py tests/test_governance_contracts.py::test_release_evidence_schema_and_fixture_require_ga_blockers -q`
 - `python conductor/scripts/stub_detector.py --root . --json`
+
+## Residual External Gates
+
+- RC/GA promotion still depends on concrete release artifacts carrying the required bundle evidence.
+- Limitation handling remains a release-path gate, not a schema-only claim.

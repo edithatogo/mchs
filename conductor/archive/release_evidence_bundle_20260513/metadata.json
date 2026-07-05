@@ -10,18 +10,30 @@
         "release_evidence_automation_20260512",
         "release_workflow_validation_20260513"
     ],
+    "completion_policy": "Complete-with-gaps means the release evidence bundle schema and fixture exist, release automation validates required fields before GA, and generated reports record registry states and warnings. It does not claim RC or GA support when required release evidence or limitation handling is missing from concrete release artifacts.",
     "completion_evidence": [
         "contracts/release/evidence-bundle.schema.json",
         "tests/fixtures/governance/release-evidence.pass.json",
-        "docs/roadmaps/release/evidence-bundle-format.md"
+        "docs/roadmaps/release/evidence-bundle-format.md",
+        "scripts/generate_release_evidence.py",
+        "tests/test_release_evidence_automation.py",
+        "tests/test_release_evidence_bundle_archive_track.py",
+        ".github/workflows/release-rust.yml"
     ],
     "support_scope": {
-        "local_completion": "The evidence bundle schema, fixture, and documentation are present and validated.",
-        "external_gate": "not applicable, but RC/GA release promotion is blocked until gap_blockers are closed in concrete release artifacts.",
+        "local_completion": "The evidence bundle schema, generator, fixture, and documentation are present and validated.",
+        "external_gate": "not applicable, but RC/GA promotion still depends on concrete release artifacts carrying the required bundle evidence and limitation handling.",
         "runtime_support_claim": "No release-candidate, GA, package, stream, or calculator support claim is made by this bundle format alone."
     },
     "publication_status": "not-applicable",
-    "completion_policy": "complete-with-gaps means the release evidence bundle schema and fixture exist, but no RC or GA release claim is allowed unless required evidence is present and gap_blockers are closed",
+    "archive_evidence": {
+        "archive_ready": true,
+        "archive_location": "conductor/archive/release_evidence_bundle_20260513",
+        "remaining_external_gates": [
+            "RC/GA release claims must still be backed by concrete release artifacts with the required bundle evidence",
+            "limitation handling remains a release-path gate, not a schema-only claim"
+        ]
+    },
     "gap_blockers": [
         {
             "id": "registry-evidence-required",
@@ -34,7 +46,7 @@
             "severity": "release-blocking",
             "evidence": "docs/roadmaps/release/evidence-bundle-format.md",
             "description": "Release automation must reject RC or GA claims when required bundle evidence is missing or marked with unresolved limitations."
-    }
+        }
   ],
   "gap_register": [
     {
