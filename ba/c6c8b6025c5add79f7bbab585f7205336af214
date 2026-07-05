@@ -1,0 +1,11 @@
+Enabled CLI logging and dynamic version reporting.
+
+Files changed:
+- nwau_py/cli/main.py
+- tests/test_cli.py
+
+Validation:
+- uv run pytest tests/test_cli.py tests/test_validation_tooling.py -q
+- uv run ruff check nwau_py/cli/main.py tests/test_cli.py
+- uv run ty check nwau_py/cli/main.py tests/test_cli.py
+- python conductor/scripts/stub_detector.py --root . --json
