@@ -1,0 +1,6 @@
+Workflow syntax repair validation:
+- uv run pytest tests/test_github_workflow_syntax.py -q: 1 passed
+- uv run ruff check tests/test_github_workflow_syntax.py: passed
+- uv run ty check tests/test_github_workflow_syntax.py: passed
+- git diff --check -- .github/workflows/docs-site.yml .github/workflows/release-rust.yml tests/test_github_workflow_syntax.py: passed
+Review outcome: docs-site.yml no longer has duplicate push.tags keys, and release-rust.yml heredoc bodies are valid YAML block content with non-empty jobs.
