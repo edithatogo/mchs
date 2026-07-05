@@ -2,21 +2,20 @@
 
 ## Verdict
 
-Reviewed; keep live as `complete-with-gaps`.
+Reviewed; archive-ready as `complete-with-gaps`.
 
 ## Findings
 
-1. The output contract intent is documented, including HWAU-only, national, state, local, and discounted valuations.
-2. The track is not archive-ready because there is no executable valuation schema or surface behavior test matrix for the claimed output classes.
-3. Pricing application remains correctly separated from formula execution, but source/provenance-backed valuation behavior is still pending.
+1. The repository now exposes a runtime PriceRegistry API for national, state, local, and discounted rows.
+2. The parallel NSW/national valuation helper and archive-track tests prove the executable valuation contract at the library boundary.
+3. Surface-level valuation adapters remain a follow-on gap, but they do not block archive readiness for the library contract.
 
 ## Validation
 
-- `uv run pytest tests/test_pricing_hwau_strategy_tracks.py tests/test_price_registry.py -q`
+- `uv run pytest tests/test_parallel_valuation_outputs_archive_track.py tests/test_price_registry.py tests/test_nsw_funding_model.py -q`
 - `python conductor/scripts/stub_detector.py --root . --json`
 
 ## Archive Blockers
 
-- Add valuation output schema fields for price source, rule, year, jurisdiction, and checksum.
-- Add tests for national, state, local, discounted, missing schedule, and unsupported jurisdiction behavior.
-- Prove CLI/file, HTTP API, MCP, and OpenAI adapter surfaces preserve the valuation contract.
+- Surface-level valuation adapters are not yet first-class output surfaces in the CLI/file, HTTP API, MCP, or OpenAI adapters.
+- Official sourced state/local coverage remains incomplete beyond the public-safe fixtures committed here.

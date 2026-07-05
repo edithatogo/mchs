@@ -13,35 +13,59 @@
     "mcp_contract_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Produce HWAU-only, national, state, local, and discounted valuation outputs in parallel from the same normalized activity result.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository now has a runtime PriceRegistry API, public NEP-backed national rows, public-safe synthetic state/local/discounted fixtures, a parallel NSW/national valuation helper, and fail-closed unavailable/blocked behavior. It does not claim complete official sourced state/local price coverage or direct valuation adapters in every surface.",
   "completion_evidence": [
-    "conductor/tracks/parallel_valuation_outputs_20260513/index.md",
-    "conductor/tracks/parallel_valuation_outputs_20260513/spec.md",
-    "conductor/tracks/parallel_valuation_outputs_20260513/plan.md",
-    "conductor/tracks/hwau_terminology_migration_20260513/index.md",
+    "conductor/archive/parallel_valuation_outputs_20260513/index.md",
+    "conductor/archive/parallel_valuation_outputs_20260513/spec.md",
+    "conductor/archive/parallel_valuation_outputs_20260513/plan.md",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
-    "tests/test_pricing_hwau_strategy_tracks.py"
+    "nwau_py/price_registry.py",
+    "nwau_py/nsw_funding_model.py",
+    "tests/test_price_registry.py",
+    "tests/test_nsw_funding_model.py",
+    "tests/test_state_local_price_registry_archive_track.py",
+    "tests/test_nsw_funding_model_archive_track.py",
+    "tests/test_parallel_valuation_outputs_archive_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Parallel valuation output contract intent for HWAU-only, national, state, local, and discounted values.",
-      "Separation rule between formula execution and pricing application.",
-      "Roadmap evidence that required surfaces should consume the valuation contract."
+    "implemented": [
+      "runtime PriceRegistry API for national, state, local, and discounted rows",
+      "public NEP-backed national rows from shared pricing constants",
+      "public-safe synthetic state, local, discounted, missing, and blocked fixtures",
+      "parallel NSW/national valuation helper combining priced schedules"
     ],
-    "excluded": [
-      "Implemented valuation output schema with source, rule, year, jurisdiction, and checksum fields.",
-      "CLI/file, HTTP API, MCP, and OpenAI adapter behavior tests for parallel valuation outputs.",
-      "Tests covering national, state, local, discounted, missing schedule, and unsupported jurisdiction behavior."
+    "not_implemented": [
+      "complete official sourced registry for every jurisdiction and year",
+      "direct valuation adapters in CLI/file, HTTP API, MCP, and OpenAI surfaces",
+      "public claim that synthetic state/local constants are official prices"
     ]
   },
   "gap_register": [
     {
-      "id": "parallel-valuation-runtime-contract",
-      "status": "implementation-gap",
-      "description": "The current evidence is roadmap-level; executable schema and surface tests for parallel valuations are still required before archive."
+      "id": "runtime-price-registry-api",
+      "status": "partially-resolved",
+      "description": "The PriceRegistry and NSW parallel valuation helper now expose executable public-safe valuation rows, but they remain intentionally synthetic for state/local/discounted coverage.",
+      "rationale": "Runtime behavior is implemented for public NEP rows and synthetic/local-only fixtures; official state/local source coverage remains a separate source gap."
+    },
+    {
+      "id": "surface-adapters",
+      "status": "source-gap",
+      "description": "Dedicated valuation adapters are still not exposed as first-class output surfaces in the CLI/file, HTTP API, MCP, or OpenAI adapters.",
+      "rationale": "The repository proves the valuation contract at the library boundary, but surface-level parallel valuation adapters remain a follow-on concern."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "spec": "conductor/archive/parallel_valuation_outputs_20260513/spec.md",
+    "plan": "conductor/archive/parallel_valuation_outputs_20260513/plan.md",
+    "review": "conductor/archive/parallel_valuation_outputs_20260513/review.md",
+    "runtime_registry": "nwau_py/price_registry.py",
+    "runtime_helper": "nwau_py/nsw_funding_model.py",
+    "runtime_tests": "tests/test_price_registry.py",
+    "archive_tests": "tests/test_parallel_valuation_outputs_archive_track.py",
+    "roadmap": "docs/roadmaps/pricing-and-hwau-strategy.md"
+  }
 }

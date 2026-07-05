@@ -20,3 +20,11 @@
     - [x] Test national, state, local, and discounted outputs.
     - [x] Test missing schedule and unsupported jurisdiction behavior.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: Validation' (Protocol in workflow.md)
+
+## Phase 4: Runtime Registry API [checkpoint: repaired]
+- [x] Task: Implement the runtime price registry and parallel valuation helper.
+    - [x] Add public-safe national, state, local, discounted, missing, and blocked rows.
+    - [x] Preserve provenance and support status for valuation outputs.
+- [x] Task: Add archive evidence for the runtime valuation contract.
+    - [x] Record `nwau_py/price_registry.py`, `nwau_py/nsw_funding_model.py`, and the archive tests.
+- [x] Task: Conductor - Automated Review and Checkpoint 'Phase 4: Runtime Registry API' (Protocol in workflow.md)
