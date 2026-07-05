@@ -1,0 +1,6 @@
+Jurisdiction Price Source Index plan checkpoint:
+- Recorded Phase 4 Runtime Source Index API checkpoint as dce20ad.
+- This commit only updates the archived track plan checkpoint marker.
+Validation:
+- Implementation validation is recorded on dce20ad.
+- No runtime files changed in this plan checkpoint.
