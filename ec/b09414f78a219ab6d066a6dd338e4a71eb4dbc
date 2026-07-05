@@ -1,0 +1,6 @@
+NSW Funding Model plan checkpoint:
+- Recorded Phase 4 Runtime NSW Funding Registry checkpoint as b51a134.
+- This commit only updates the archived track plan checkpoint marker.
+Validation:
+- Implementation validation is recorded on b51a134.
+- No runtime files changed in this plan checkpoint.
