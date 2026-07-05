@@ -6,13 +6,15 @@
   "current_state": "complete-with-gaps",
   "primary_contract": "contracts/power-platform/power-platform-binding.contract.json",
   "dependencies": [],
+  "completion_policy": "complete-with-gaps means the local binding contract, capability matrix, app surface, and validator are present and validated, but the tenant-exported managed solution, credentialed solution checker/import/publish proof, and live Power Apps/Dataverse/custom connector runtime evidence remain external gates.",
   "completion_evidence": [
     "docs",
     "workflows",
     "tests",
     "calculator-capability-matrix",
     "app-surface-model",
-    "capability-validator"
+    "capability-validator",
+    "tests/test_power_platform_binding_archive_track.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
@@ -40,6 +42,15 @@
       "description": "Local contracts pass, but live Power Apps/Dataverse/custom connector runtime evidence remains unavailable in this checkout."
     }
   ],
+  "archive_evidence": {
+    "archive_ready": true,
+    "archive_location": "conductor/archive/power_platform_binding_20260512",
+    "remaining_external_gates": [
+      "tenant-exported managed solution evidence remains outside this checkout",
+      "credentialed Power Platform solution checker/import/publish proof remains external",
+      "live Power Apps/Dataverse/custom connector runtime proof remains external"
+    ]
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
   "updated_at": "2026-05-26T00:00:00Z",

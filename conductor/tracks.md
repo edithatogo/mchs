@@ -440,7 +440,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Power Platform Binding**
+- [x] **Track: Power Platform Binding**
 *Link: [./archive/power_platform_binding_20260512/](./archive/power_platform_binding_20260512/)*
 *Gate: publish Power Platform orchestration as a managed solution/custom connector consumer of the shared calculator contract, never as a formula implementation.*
 

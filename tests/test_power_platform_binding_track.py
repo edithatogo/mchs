@@ -10,6 +10,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACK = ROOT / "conductor" / "tracks" / "power_platform_binding_20260512"
+if not TRACK.exists():
+    TRACK = ROOT / "conductor" / "archive" / "power_platform_binding_20260512"
 CONTRACT_ROOT = ROOT / "contracts" / "power-platform"
 CONTRACT = CONTRACT_ROOT / "power-platform-binding.contract.json"
 SCHEMA = CONTRACT_ROOT / "power-platform-binding.schema.json"
@@ -199,7 +201,9 @@ def test_power_platform_capability_matrix_covers_all_app_calculators_and_years()
         for row in _as_sequence(matrix["calculators"])
     }
 
-    assert capability["path"] == "contracts/power-platform/calculator-capability-matrix.json"
+    assert capability["path"] == (
+        "contracts/power-platform/calculator-capability-matrix.json"
+    )
     assert capability["operation_id"] == "listMchsCalculatorCapabilities"
     assert set(_as_sequence(capability["enabled_states"])) == {"implemented", "helper"}
     assert set(_as_sequence(capability["disabled_states"])) == {
@@ -349,7 +353,10 @@ def test_power_platform_app_surface_uses_capability_matrix_for_selectors():
     assert "SelectedCalculator.year_states" in selector_text
     assert "state in [\\\"implemented\\\", \\\"helper\\\"]" in selector_text
     assert "source_available" in selector_text
-    assert "varMchsSelectedYearState in [\\\"implemented\\\", \\\"helper\\\"]" in request_text
+    assert (
+        "varMchsSelectedYearState in [\\\"implemented\\\", \\\"helper\\\"]"
+        in request_text
+    )
     assert set(calculators) == {
         "acute",
         "ed",

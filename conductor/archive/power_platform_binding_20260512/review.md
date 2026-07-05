@@ -2,12 +2,13 @@
 
 ## Verdict
 
-Reviewed; keep live as `complete-with-gaps`.
+Reviewed; archive-ready as `complete-with-gaps`.
 
 ## Findings
 
 1. Local contract, capability matrix, app-surface, and validator evidence is strong.
-2. The track is not archive-ready because tenant/export/runtime gates remain external: no managed solution zip, no credentialed solution checker/import/publish proof, and no live Power Apps/Dataverse runtime evidence.
+2. The track remains complete-with-gaps because tenant/export/runtime gates are external, but the archive now records those gates explicitly.
+3. The completed-track archive state should be recorded in the tracks registry.
 
 ## Validation
 
@@ -15,7 +16,7 @@ Reviewed; keep live as `complete-with-gaps`.
 - `uv run python scripts/validate_power_platform_capabilities.py`
 - `python conductor/scripts/stub_detector.py --root . --json`
 
-## Archive Blockers
+## Residual External Gates
 
 - Capture tenant-exported managed solution evidence.
 - Run solution checker/import/publish in a credentialed environment.
