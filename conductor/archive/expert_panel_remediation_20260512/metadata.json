@@ -11,10 +11,10 @@
     "conductor/roadmap-governance.md"
   ],
   "completion_evidence": [
-    "prioritised remediation checklist",
-    "updated dependent tracks",
-    "registry ordering or dependency notes",
-    "conductor/tracks/expert_panel_remediation_20260512/expert_panel_remediation.md",
+    "conductor/archive/expert_panel_remediation_20260512/expert_panel_remediation.md",
+    "conductor/archive/expert_panel_remediation_20260512/spec.md",
+    "conductor/archive/expert_panel_remediation_20260512/plan.md",
+    "conductor/archive/expert_panel_remediation_20260512/index.md",
     "tests/test_tracks_registry.py"
   ],
   "support_scope": {
@@ -34,12 +34,12 @@
     {
       "id": "downstream-remediation-still-open",
       "status": "delegated",
-      "description": "The remediation map still records downstream owner tracks and in-progress work; archive should wait until those open items are complete or explicitly closed."
+      "description": "The remediation map still records downstream owner tracks and portfolio sequencing, but the archived record now points at the durable backfill artifact set."
     }
   ],
   "publication_status": "not-applicable",
   "created_at": "2026-05-12T00:00:00Z",
-  "updated_at": "2026-05-12T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00+10:00",
   "description": "Convert the simulated expert panel findings into actionable Conductor remediation priorities and track updates.",
   "no_stub_enforce": true
 }
