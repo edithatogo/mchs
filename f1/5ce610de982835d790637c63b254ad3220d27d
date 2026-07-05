@@ -1,0 +1,13 @@
+Task: Jurisdiction Funding Model Registry
+Summary:
+- Added a runtime jurisdiction funding-model registry with explicit support/status rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.
+- Added parallel valuation helpers and package exports.
+- Added tests for provenance, support-status coverage, fail-closed lookup behavior, and archive-track alignment.
+- Updated archive metadata, plan, review, and tracks registry to reflect the completed track scope.
+Validation:
+- uv run pytest tests/test_jurisdiction_funding_model_registry.py tests/test_jurisdiction_funding_model_registry_archive_track.py -q
+- uv run ruff check nwau_py/jurisdiction_funding_model_registry.py nwau_py/__init__.py tests/test_jurisdiction_funding_model_registry.py tests/test_jurisdiction_funding_model_registry_archive_track.py
+- uv run ty check nwau_py/jurisdiction_funding_model_registry.py nwau_py/__init__.py tests/test_jurisdiction_funding_model_registry.py tests/test_jurisdiction_funding_model_registry_archive_track.py
+- python conductor/scripts/stub_detector.py --root . --json
+- python -m py_compile nwau_py/jurisdiction_funding_model_registry.py nwau_py/__init__.py
+- python -m json.tool conductor/archive/jurisdiction_funding_model_registry_20260513/metadata.json
