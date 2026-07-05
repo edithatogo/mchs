@@ -1,0 +1,1 @@
+Expert Panel Remediation archive review: archive-ready as complete-with-gaps. Validation: uv run pytest tests/test_expert_panel_remediation_track.py -q; uv run ruff check tests/test_expert_panel_remediation_track.py; uv run ty check tests/test_expert_panel_remediation_track.py; python conductor/scripts/stub_detector.py --root . --json
