@@ -47,3 +47,28 @@
 Extract only values with source provenance and licence status. If a source is
 not public or redistribution is uncertain, record metadata and mark values
 `blocked` or `local_only` rather than committing restricted data.
+
+## Implemented runtime index
+
+The canonical machine-readable runtime source index is
+`nwau_py.jurisdiction_price_sources`. It exposes source rows through
+`JurisdictionPriceSourceIndex`, `list_jurisdiction_price_sources()`,
+`get_jurisdiction_price_source()`, and `validate_price_source_coverage()`.
+
+The built-in 2025 rows cover NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. Each row
+records public-safe source metadata or an explicit blocked status, plus a
+deterministic checksum and extraction notes. No source-index row contains a committed jurisdiction price value; value extraction remains a separate
+source/licence/unit-mapping gate.
+
+Current row status:
+
+| Jurisdiction | Status | Boundary |
+|---|---|---|
+| NSW | `blocked` | Source discovery row only; no redistributable NSW price value is committed. |
+| VIC | `public_metadata` | Public National Funding Model metadata; numeric price extraction remains gated. |
+| QLD | `public_metadata` | Public QWAU/funding-model metadata; QWAU-to-HWAU mapping remains gated. |
+| WA | `public_metadata` | Public ABF metadata; reusable price schedule extraction remains gated. |
+| SA | `public_metadata` | Public funding-allocation bulletin metadata; numeric extraction remains gated. |
+| TAS | `blocked` | Source discovery row only; no redistributable Tasmanian price value is committed. |
+| ACT | `public_metadata` | Public ABF service-agreement metadata; numeric extraction remains gated. |
+| NT | `blocked` | Source discovery row only; no redistributable Northern Territory price value is committed. |

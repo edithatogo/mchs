@@ -344,7 +344,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Jurisdiction Price Source Index**
+- [x] **Track: Jurisdiction Price Source Index**
 *Link: [./archive/jurisdiction_price_source_index_20260513/](./archive/jurisdiction_price_source_index_20260513/)*
 *Gate: Build a source index for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT before extracting or committing jurisdiction price values.*
 

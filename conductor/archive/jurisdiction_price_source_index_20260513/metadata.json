@@ -12,34 +12,55 @@
     "support_status_matrix_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Create a source index for jurisdiction price models before extracting values.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository now has a machine-readable jurisdiction source-index API with public-safe metadata or explicit blocked rows for every state and territory. It does not claim extracted official state or territory price values, redistribution rights for restricted schedules, or validated local-unit-to-HWAU mappings.",
   "completion_evidence": [
-    "conductor/tracks/jurisdiction_price_source_index_20260513/index.md",
-    "conductor/tracks/jurisdiction_price_source_index_20260513/spec.md",
-    "conductor/tracks/jurisdiction_price_source_index_20260513/plan.md",
+    "conductor/archive/jurisdiction_price_source_index_20260513/index.md",
+    "conductor/archive/jurisdiction_price_source_index_20260513/spec.md",
+    "conductor/archive/jurisdiction_price_source_index_20260513/plan.md",
     "docs/roadmaps/jurisdiction-price-source-index.md",
+    "nwau_py/jurisdiction_price_sources.py",
+    "tests/test_jurisdiction_price_sources.py",
+    "tests/test_jurisdiction_price_source_index_archive_track.py",
     "tests/test_coordination_and_evidence_tracks.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Source-index field design for jurisdiction price-model discovery.",
-      "Documentation that separates public-safe, local-only, blocked, and unknown source states.",
-      "Governance tests proving the roadmap and track artifacts are present."
+    "implemented": [
+      "runtime JurisdictionPriceSourceIndex API",
+      "public-safe metadata or blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT",
+      "fail-closed missing source coverage validation",
+      "source rows that do not redistribute jurisdiction price values"
     ],
-    "excluded": [
-      "Machine-readable source rows for every state and territory.",
-      "Official source URLs, local-only references, or blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.",
-      "Extraction or validation of jurisdiction price values."
+    "not_implemented": [
+      "official extracted state and territory price values",
+      "redistribution of restricted state or local funding schedules",
+      "validated mapping from QWAU, WIES, WAU, or local activity terms to HWAU"
     ]
   },
   "gap_register": [
     {
       "id": "jurisdiction-source-rows",
+      "status": "partially-resolved",
+      "description": "Public-safe or blocked source-index rows exist for every state and territory, but the rows intentionally do not extract numeric price values.",
+      "rationale": "The source-index API closes the missing-row blocker while preserving fail-closed behavior for official price extraction."
+    },
+    {
+      "id": "jurisdiction-price-extraction",
       "status": "source-gap",
-      "description": "The roadmap defines index fields, but actual public-safe or blocked-source rows for all states and territories are not yet implemented."
+      "description": "Official state and territory price values remain unextracted until each source licence, unit definition, and mapping rule is validated.",
+      "rationale": "The track indexes sources before extraction; it must not claim public support for restricted or unvalidated price schedules."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "archive_ready": true,
+    "archive_location": "conductor/archive/jurisdiction_price_source_index_20260513",
+    "remaining_external_gates": [
+      "official source review and value extraction for jurisdiction-specific price schedules",
+      "licence review for restricted or unclear state and local schedules",
+      "validated unit mappings for QWAU, WIES, WAU, and local activity terms"
+    ]
+  }
 }

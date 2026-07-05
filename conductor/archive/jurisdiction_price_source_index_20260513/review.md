@@ -2,20 +2,24 @@
 
 ## Verdict
 
-Reviewed; keep live as `complete-with-gaps`.
+Reviewed; archive-ready as `complete-with-gaps`.
 
 ## Findings
 
-1. The source-index schema and field vocabulary are described, but actual source rows are not implemented.
-2. Acceptance requires public-safe or blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT; current evidence is strategy text and track artifacts.
-3. The focused tests prove visibility of the roadmap and coordination evidence, not source-index completeness.
+No unresolved local implementation blockers remain.
+
+The source-index API now provides public-safe metadata or explicit blocked rows
+for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT. The remaining gaps are external
+source/licence/unit-mapping gates for extracting official numeric price values.
 
 ## Validation
 
 - `uv run pytest tests/test_coordination_and_evidence_tracks.py -q`
+- `uv run pytest tests/test_jurisdiction_price_sources.py tests/test_jurisdiction_price_source_index_archive_track.py -q`
 - `python conductor/scripts/stub_detector.py --root . --json`
 
-## Archive Blockers
+## Residual External Gates
 
-- Add machine-readable source rows or blocked-source rows for each jurisdiction.
-- Add tests that verify row status, provenance, source title, source URL/path, and local-only handling.
+- Official source review and extraction of jurisdiction-specific price values.
+- Licence review for restricted or unclear state and local schedules.
+- Validated unit mappings for QWAU, WIES, WAU, and local activity terms.
