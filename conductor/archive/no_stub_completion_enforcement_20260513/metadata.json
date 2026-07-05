@@ -7,28 +7,52 @@
   "no_stub_enforce": true,
   "primary_contract": "completion evidence and anti-placeholder gate",
   "dependencies": ["roadmap-governance.md", "workflow.md"],
+  "completion_policy": "Complete-with-gaps means the repository has an active Conductor no-stub completion rule, phase-boundary stub detector execution, archive policy evidence requirements, and an explicit delegated gap for detector expansion and backlog burn-down. It does not claim that every scaffold, placeholder, or backlog item has already been remediated.",
   "completion_evidence": [
-    "conductor/tracks/no_stub_completion_enforcement_20260513/spec.md",
-    "conductor/tracks/no_stub_completion_enforcement_20260513/plan.md",
-    "conductor/tracks/no_stub_completion_enforcement_20260513/index.md",
+    "conductor/archive/no_stub_completion_enforcement_20260513/spec.md",
+    "conductor/archive/no_stub_completion_enforcement_20260513/plan.md",
+    "conductor/archive/no_stub_completion_enforcement_20260513/index.md",
+    "conductor/archive/no_stub_completion_enforcement_20260513/review.md",
     "conductor/track-archive-policy.md",
     "conductor/workflow.md",
-    "conductor/roadmap-governance.md"
+    "conductor/roadmap-governance.md",
+    "tests/test_no_stub_completion_enforcement_archive_track.py"
   ],
   "support_scope": {
-    "local_completion": "The no-stub policy is wired into workflow and archive policy, and the current stub detector reports no unresolved findings.",
-    "external_gate": "not applicable",
-    "runtime_support_claim": "No runtime support claim is made; this track governs Conductor completion evidence."
+    "state": "complete-with-gaps",
+    "implemented": [
+      "Conductor workflow no-stub completion rule",
+      "phase checkpoint requirement to run the stub detector",
+      "archive policy requiring implementation and validation evidence",
+      "explicit delegation of detector expansion and backlog burn-down"
+    ],
+    "not_implemented": [
+      "claiming every scaffold/backlog item has been remediated",
+      "claiming detector expansion is complete",
+      "treating docs-only or placeholder artifacts as completion evidence"
+    ]
   },
   "gap_register": [
     {
       "id": "validator-owned-by-backlog-track",
       "status": "delegated",
-      "description": "Executable stub-detector expansion and backlog burn-down are owned by scaffold_stub_completion_backlog_20260524."
+      "description": "Executable stub-detector expansion and backlog burn-down are owned by scaffold_stub_completion_backlog_20260524.",
+      "rationale": "This archive closes the governance enforcement contract; ongoing detector expansion belongs to the dedicated backlog track."
     }
   ],
+  "archive_evidence": {
+    "spec": "conductor/archive/no_stub_completion_enforcement_20260513/spec.md",
+    "plan": "conductor/archive/no_stub_completion_enforcement_20260513/plan.md",
+    "index": "conductor/archive/no_stub_completion_enforcement_20260513/index.md",
+    "review": "conductor/archive/no_stub_completion_enforcement_20260513/review.md",
+    "requirements": "conductor/requirements.md",
+    "workflow": "conductor/workflow.md",
+    "archive_policy": "conductor/track-archive-policy.md",
+    "stub_detector": "conductor/scripts/stub_detector.py",
+    "archive_tests": "tests/test_no_stub_completion_enforcement_archive_track.py"
+  },
   "publication_status": "not-applicable",
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Prevent agents from marking tracks complete when they only created stubs, fakes, scaffolds, TODOs, or docs-only placeholders."
 }
