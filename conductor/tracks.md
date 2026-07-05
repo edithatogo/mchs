@@ -356,7 +356,7 @@ content alone is not sufficient evidence for marking a track complete.
 
 ---
 
-- [~] **Track: Jurisdiction Funding Model Registry**
+- [x] **Track: Jurisdiction Funding Model Registry**
 *Link: [./archive/jurisdiction_funding_model_registry_20260513/](./archive/jurisdiction_funding_model_registry_20260513/)*
 *Gate: Cover NSW, VIC, QLD, WA, SA, TAS, ACT, and NT funding model sources with jurisdiction-specific terminology, provenance, support status, and blocked-source handling.*
 

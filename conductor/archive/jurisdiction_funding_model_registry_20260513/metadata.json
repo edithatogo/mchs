@@ -11,34 +11,49 @@
     "nsw_funding_model_20260513"
   ],
   "created_at": "2026-05-13T00:00:00Z",
-  "updated_at": "2026-05-13T00:00:00Z",
+  "updated_at": "2026-07-05T00:00:00Z",
   "description": "Create state and territory funding model registry coverage for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT with provenance and blocked-source handling.",
   "no_stub_enforce": true,
+  "completion_policy": "Complete-with-gaps means the repository now has a runtime JurisdictionFundingModelRegistry with explicit rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT, plus fail-closed blocked and missing handling. It does not claim official extracted funding-model rows for every year or redistribute restricted state and territory schedules.",
   "completion_evidence": [
-    "conductor/tracks/jurisdiction_funding_model_registry_20260513/index.md",
-    "conductor/tracks/jurisdiction_funding_model_registry_20260513/spec.md",
-    "conductor/tracks/jurisdiction_funding_model_registry_20260513/plan.md",
+    "conductor/archive/jurisdiction_funding_model_registry_20260513/index.md",
+    "conductor/archive/jurisdiction_funding_model_registry_20260513/spec.md",
+    "conductor/archive/jurisdiction_funding_model_registry_20260513/plan.md",
     "docs/roadmaps/pricing-and-hwau-strategy.md",
+    "nwau_py/jurisdiction_funding_model_registry.py",
+    "tests/test_jurisdiction_funding_model_registry.py",
+    "tests/test_jurisdiction_funding_model_registry_archive_track.py",
     "tests/test_pricing_hwau_strategy_tracks.py"
   ],
   "support_scope": {
     "state": "complete-with-gaps",
-    "included": [
-      "Jurisdiction funding-model registry design for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.",
-      "Provenance and blocked-source handling requirements.",
-      "Roadmap tests proving the jurisdictional strategy remains visible."
+    "implemented": [
+      "runtime JurisdictionFundingModelRegistry API",
+      "explicit source-status rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT",
+      "parallel jurisdiction valuation helper for priced rows",
+      "fail-closed blocked and missing jurisdiction handling"
     ],
-    "excluded": [
-      "Implemented registry rows or blocked-source rows for all states and territories.",
-      "Behavior tests covering NSW, QLD, VIC, WA, SA, TAS, ACT, and NT statuses.",
-      "Official state and territory funding-model extraction."
+    "not_implemented": [
+      "official extracted funding model rows for every state and territory year",
+      "redistribution of restricted state and territory funding schedules",
+      "full validated adjustment logic for every jurisdiction-specific caveat"
     ]
   },
   "gap_register": [
     {
       "id": "all-jurisdiction-registry-rows",
-      "status": "implementation-gap",
-      "description": "The current implementation has limited synthetic state constants and does not yet provide full registry/status rows for every state and territory."
+      "status": "source-gap",
+      "description": "The registry now exposes explicit rows for every state and territory, but the public fixture set remains intentionally limited to the source and valuation cases visible in the repository.",
+      "rationale": "The track is complete-with-gaps because the registry exists and is explicit, but the repository still does not claim exhaustive official funding coverage."
     }
-  ]
+  ],
+  "archive_evidence": {
+    "archive_ready": true,
+    "archive_location": "conductor/archive/jurisdiction_funding_model_registry_20260513",
+    "remaining_external_gates": [
+      "official state and territory funding-model extraction for additional years",
+      "licence review for restricted funding schedules",
+      "validation of every jurisdiction-specific adjustment caveat"
+    ]
+  }
 }
