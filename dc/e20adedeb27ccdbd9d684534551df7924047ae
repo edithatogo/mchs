@@ -1,0 +1,11 @@
+Jurisdiction Price Source Index implementation:
+- Added nwau_py.jurisdiction_price_sources with a public-safe source-index API.
+- Registered 2025 public metadata or blocked rows for NSW, VIC, QLD, WA, SA, TAS, ACT, and NT.
+- Source rows include provenance metadata, checksums, licence/redistribution status, units, streams, support status, and extraction notes without price values.
+- Added fail-closed lookup and coverage validation for missing jurisdiction/year rows.
+- Updated archived metadata, review, roadmap, and tracks registry.
+Validation:
+- uv run pytest tests/test_jurisdiction_price_sources.py tests/test_jurisdiction_price_source_index_archive_track.py tests/test_coordination_and_evidence_tracks.py tests/test_state_local_price_registry_archive_track.py tests/test_price_registry.py -q: 21 passed
+- ruff/ty focused checks: passed
+- stub_detector: total_findings=0, stubs_detected=false
+- metadata JSON and scoped diff check: passed
