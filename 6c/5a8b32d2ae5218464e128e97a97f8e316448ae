@@ -1,0 +1,10 @@
+Task: Release Evidence Bundle archive repair
+Summary:
+- Aligned the archived release evidence bundle track with the generator, schema, fixture, and release workflow already present in the repository.
+- Added an archive-track regression test for the bundle metadata, archive plan/review, registry status, and release evidence generator.
+- Updated archive metadata, plan, and review to record completion policy, archive evidence, and residual release-path gates.
+- Marked the track complete in conductor/tracks.md.
+Validation:
+- uv run pytest tests/test_release_evidence_bundle_archive_track.py tests/test_release_evidence_automation.py tests/test_governance_contracts.py::test_release_evidence_schema_and_fixture_require_ga_blockers -q
+- uv run ruff check tests/test_release_evidence_automation.py tests/test_release_evidence_bundle_archive_track.py
+- python -m json.tool conductor/archive/release_evidence_bundle_20260513/metadata.json
