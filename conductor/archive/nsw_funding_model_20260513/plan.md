@@ -20,7 +20,7 @@
     - [x] Add parallel valuation fixture.
 - [x] Task: Conductor - Automated Review and Checkpoint 'Phase 3: NSW Valuation Fixtures' (Protocol in workflow.md)
 
-## Phase 4: Runtime NSW Funding Registry [checkpoint: pending]
+## Phase 4: Runtime NSW Funding Registry [checkpoint: b51a134]
 - [x] Task: Add a public-source NSW funding registry API.
     - [x] Add public-source NSW State Price fixtures for 2025 and 2026.
     - [x] Preserve source term, source URL, retrieved date, checksum, licence, scope, adjustments, exclusions, and provenance.
