@@ -1,0 +1,10 @@
+NSW Funding Model implementation:
+- Added nwau_py.nsw_funding_model with public-source NSW funding fixtures for 2025 and 2026.
+- Source notes capture State Efficient Price, NWAU24/NWAU25 terminology, DNR costing basis, and LHD/SHN scope.
+- Added fail-closed missing-year handling and parallel NSW/national valuation output.
+- Updated archived NSW Funding Model metadata, review, plan, and tracks registry.
+Validation:
+- uv run pytest tests/test_nsw_funding_model.py tests/test_nsw_funding_model_archive_track.py -q: 7 passed
+- ruff/ty focused checks: passed
+- stub_detector: total_findings=0, stubs_detected=false
+- metadata JSON and scoped diff check: passed
