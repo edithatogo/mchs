@@ -1,5 +1,9 @@
 # Project Tracks
 
+## [ ] Track: research_software_registry_readiness_20260721
+
+[Specification and plan](./tracks/research_software_registry_readiness_20260721/)
+
 This file tracks the delivery order for the project. The focused tracks below are the implementation source of truth. The modernization foundation track is retained only as an umbrella coordination track and must not duplicate work owned by the focused tracks.
 
 New tracks must follow the governance rules in
