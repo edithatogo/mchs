@@ -22,9 +22,7 @@ def _structured(result: dict[str, Any]) -> dict[str, Any]:
 def _acute_fixture_row() -> dict[str, Any]:
     return cast(
         dict[str, Any],
-        pd.read_csv("tests/fixtures/golden/acute_2025/input.csv")
-        .iloc[0]
-        .to_dict(),
+        pd.read_csv("tests/fixtures/golden/acute_2025/input.csv").iloc[0].to_dict(),
     )
 
 
