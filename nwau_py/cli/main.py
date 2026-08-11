@@ -46,8 +46,7 @@ def _resolve_runtime(runtime: str | None) -> str:
     selected = selected.strip().lower()
     if selected not in _VALID_RUNTIMES:
         raise click.ClickException(
-            "MCHS-CLI-RUNTIME-INVALID: runtime must be one of "
-            "python, rust, or auto"
+            "MCHS-CLI-RUNTIME-INVALID: runtime must be one of python, rust, or auto"
         )
     return selected
 
@@ -125,9 +124,7 @@ def _run(
         )
     except ImportError as exc:
         if selected_runtime == "rust":
-            raise click.ClickException(
-                f"MCHS-CLI-RUST-UNAVAILABLE: {exc}"
-            ) from exc
+            raise click.ClickException(f"MCHS-CLI-RUST-UNAVAILABLE: {exc}") from exc
         raise
 
 

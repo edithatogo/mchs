@@ -260,8 +260,7 @@ def build_report(contract: dict[str, Any], live: bool) -> dict[str, Any]:
                 )
             elif registry_id == "conda_forge":
                 observation["public_probes"] = {
-                    name: fetch(url)
-                    for name, url in CONDA_FORGE_PUBLIC_PROBES.items()
+                    name: fetch(url) for name, url in CONDA_FORGE_PUBLIC_PROBES.items()
                 }
                 observation["repodata_probe"] = fetch_conda_noarch_repodata_matches(
                     registry

@@ -14,9 +14,7 @@ from nwau_py.cli import main as cli_main
 
 
 def test_runtime_boundary_document_pins_contract_terms():
-    doc = Path("docs/roadmaps/rust-cli-runtime-boundary.md").read_text(
-        encoding="utf-8"
-    )
+    doc = Path("docs/roadmaps/rust-cli-runtime-boundary.md").read_text(encoding="utf-8")
 
     assert "Python default" in doc
     assert "Rust opt-in" in doc
@@ -95,9 +93,7 @@ def test_cli_accepts_rust_runtime_for_acute_2025(monkeypatch, tmp_path):
     assert pd.read_csv(output_csv)["NWAU25"].tolist() == [1.25]
 
 
-def test_cli_rust_acute_2025_matches_python_cli_golden_fixture(
-    monkeypatch, tmp_path
-):
+def test_cli_rust_acute_2025_matches_python_cli_golden_fixture(monkeypatch, tmp_path):
     try:
         rust_bridge.load_rust_extension()
     except ImportError as exc:
