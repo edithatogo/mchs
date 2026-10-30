@@ -119,3 +119,11 @@ def test_invalid_native_binary_retains_loader_diagnostic(tmp_path):
     assert failure is not None
     assert str(path) in failure
     assert "ImportError" in failure
+
+
+def test_non_text_native_kernel_label_is_rejected(monkeypatch):
+    module = ModuleType("nwau_py._rust")
+    module.kernel_label = lambda: 123
+    monkeypatch.setattr(rust_bridge, "load_rust_extension", lambda: module)
+    with pytest.raises(TypeError, match="Rust kernel label must be text"):
+        rust_bridge.kernel_label()
