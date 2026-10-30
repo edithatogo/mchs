@@ -44,14 +44,16 @@ from nwau_py.pricing_constants import get_nep
 # ── 1. Synthetic activity + cost data ────────────────────────────────
 np.random.seed(1)
 n = 30
-synthetic = pd.DataFrame({
-    "DRG": np.random.choice(["E62A", "E62B", "F62A", "F62B", "G02A"], size=n),
-    "LOS": np.random.randint(1, 12, size=n),
-    "ICU_HOURS": np.random.choice([0, 0, 0, 0, 2, 6], size=n),
-    "ICU_OTHER": 0,
-    "PAT_SAMEDAY_FLAG": 0,
-    "PAT_PRIVATE_FLAG": 0,
-})
+synthetic = pd.DataFrame(
+    {
+        "DRG": np.random.choice(["E62A", "E62B", "F62A", "F62B", "G02A"], size=n),
+        "LOS": np.random.randint(1, 12, size=n),
+        "ICU_HOURS": np.random.choice([0, 0, 0, 0, 2, 6], size=n),
+        "ICU_OTHER": 0,
+        "PAT_SAMEDAY_FLAG": 0,
+        "PAT_PRIVATE_FLAG": 0,
+    }
+)
 # Create synthetic observed costs with some noise around a plausible rate
 synthetic["ObservedCost"] = (
     synthetic["LOS"] * np.random.uniform(1200, 2200, size=n)
@@ -75,16 +77,19 @@ print("── Per-episode sample (first 8 rows) ──")
 cols = ["DRG", "LOS", nwau_col, "ObservedCost", "NotionalFunding", "CostRatio"]
 print(result[cols].head(8).to_string(index=False))
 
-summary = pd.DataFrame({
-    "Episodes": len(result),
-    "Total Observed Cost": result["ObservedCost"].sum().round(2),
-    "Total Notional Funding": result["NotionalFunding"].sum().round(2),
-    "Aggregate Cost Ratio": (
-        result["ObservedCost"].sum() / result["NotionalFunding"].sum()
-    ).round(4),
-    "Episodes Over-Priced (ratio>1)": (result["CostRatio"] > 1).sum(),
-    "Episodes Under-Priced (ratio<1)": (result["CostRatio"] < 1).sum(),
-}, index=["Acute"])
+summary = pd.DataFrame(
+    {
+        "Episodes": len(result),
+        "Total Observed Cost": result["ObservedCost"].sum().round(2),
+        "Total Notional Funding": result["NotionalFunding"].sum().round(2),
+        "Aggregate Cost Ratio": (
+            result["ObservedCost"].sum() / result["NotionalFunding"].sum()
+        ).round(4),
+        "Episodes Over-Priced (ratio>1)": (result["CostRatio"] > 1).sum(),
+        "Episodes Under-Priced (ratio<1)": (result["CostRatio"] < 1).sum(),
+    },
+    index=["Acute"],
+)
 
 print("\n── Aggregate Summary ──")
 print(summary.to_string(index=True))
@@ -94,8 +99,10 @@ print("\n⚠  This is a synthetic example. Real costing studies must:")
 print("   - Use validated, AHPCS-compliant observed costs")
 print("   - Apply appropriate risk / case-mix adjustment")
 print("   - Account for jurisdictional variation in pricing")
-print("   - Consider that a single-episode cost ratio is noisy; "
-      "aggregate ratios are more reliable")
+print(
+    "   - Consider that a single-episode cost ratio is noisy; "
+    "aggregate ratios are more reliable"
+)
 ```
 
 ## Interpreting the cost ratio

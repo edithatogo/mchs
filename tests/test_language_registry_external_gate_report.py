@@ -123,8 +123,7 @@ def test_cran_registry_contract_remains_submitted_not_published():
     registry = next(item for item in contract["registries"] if item["id"] == "r_cran")
 
     assert (
-        registry["current_status"]
-        == "submitted_pending_cran_maintainer_confirmation"
+        registry["current_status"] == "submitted_pending_cran_maintainer_confirmation"
     )
     assert registry["publication_claimed"] is False
     assert registry["submission_url"] == "cran-submit:344701"
@@ -188,14 +187,11 @@ def test_conda_forge_registry_contract_remains_submitted_not_published():
     )
     assert registry["publication_claimed"] is False
     assert registry["submission_url"].endswith("/pull/33452")
-    assert (
-        registry["preparationEvidence"]["latestPublicProbe20260703"][
-            "evidenceFile"
-        ]
-        == (
-            "conductor/tracks/conda_forge_feedstock_submission_20260524/"
-            "public_probe_20260703.json"
-        )
+    assert registry["preparationEvidence"]["latestPublicProbe20260703"][
+        "evidenceFile"
+    ] == (
+        "conductor/tracks/conda_forge_feedstock_submission_20260524/"
+        "public_probe_20260703.json"
     )
 
 

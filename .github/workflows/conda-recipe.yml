@@ -76,7 +76,7 @@ jobs:
         with:
           environment-name: conda-recipe
           create-args: >-
-            python=3.11
+            python=3.15.1
             conda-build
             conda-verify
           condarc: |

@@ -10,10 +10,10 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, override
 from urllib.parse import urljoin, urlsplit
 
 from nwau_py.provenance import ArtifactKind
@@ -185,6 +185,7 @@ class _HTMLLinkParser(HTMLParser):
         self._heading_chunks: list[str] = []
         self._current_heading: str = ""
 
+    @override
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         normalized_tag = tag.lower()
         if normalized_tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
@@ -197,12 +198,14 @@ class _HTMLLinkParser(HTMLParser):
         self._href = attr_map.get("href")
         self._chunks = []
 
+    @override
     def handle_data(self, data: str) -> None:
         if self._href is not None:
             self._chunks.append(data)
         elif self._heading_tag is not None:
             self._heading_chunks.append(data)
 
+    @override
     def handle_endtag(self, tag: str) -> None:
         normalized_tag = tag.lower()
         if normalized_tag == self._heading_tag:
@@ -540,7 +543,7 @@ def scan_sources(
         if gaps and any(g.kind != "source_missing" for g in gaps)
         else "source-discovered"
     )
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated_at = datetime.now(UTC).isoformat()
     return SourceDraftManifest(
         schema_version=SUPPORTED_SOURCE_SCAN_SCHEMA_VERSION,
         generated_at=generated_at,
@@ -580,7 +583,7 @@ def render_dry_run(manifest: SourceDraftManifest) -> str:
                 f"- {item.label} | {item.source_url} | {item.artifact_kind} | "
                 f"{item.source_kind}"
             )
-            if item.year_label:
+            if item.year_label is not None and bool(item.year_label):
                 line += f" | year={item.year_label}"
             if item.review_required:
                 line += " | review-required"

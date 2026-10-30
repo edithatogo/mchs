@@ -17,7 +17,7 @@ OPEN_TRACK_PLANS = [
         / "multi_surface_binding_delivery_20260510"
         / "plan.md"
     ),
-    ROOT / "conductor" / "tracks" / "rust_acute_python_poc_20260510" / "plan.md",
+    ROOT / "conductor" / "archive" / "rust_acute_python_poc_20260510" / "plan.md",
     ROOT
     / "conductor"
     / "tracks"

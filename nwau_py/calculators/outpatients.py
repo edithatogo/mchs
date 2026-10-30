@@ -223,7 +223,7 @@ def calculate_outpatients(
 
     try:
         adj_multi_val = _load_multi_prov_adj(ref_dir, year)
-    except (FileNotFoundError, KeyError, ValueError):
+    except FileNotFoundError, KeyError, ValueError:
         adj_multi_val = 0.0
     adj_multi_series = merged.get(
         "adj_multiprov",
@@ -262,7 +262,7 @@ def calculate_outpatients(
             try:
                 hosp_df = _load_hospital_ra(ref_dir, year)
                 merged = merged.merge(hosp_df, on="APCID", how="left")
-            except (FileNotFoundError, KeyError, ValueError):
+            except FileNotFoundError, KeyError, ValueError:
                 merged[hosp_col] = np.nan
         else:
             merged[hosp_col] = np.nan
@@ -293,7 +293,7 @@ def calculate_outpatients(
                     on=pat_pc,
                     how="left",
                 )
-            except (FileNotFoundError, KeyError, ValueError):
+            except FileNotFoundError, KeyError, ValueError:
                 merged[pat_ra_col] = np.nan
         else:
             merged[pat_ra_col] = np.nan
@@ -320,7 +320,7 @@ def calculate_outpatients(
                     )
                 else:
                     merged[sa2_ra_col] = np.nan
-            except (FileNotFoundError, KeyError, ValueError):
+            except FileNotFoundError, KeyError, ValueError:
                 merged[sa2_ra_col] = np.nan
         else:
             merged[sa2_ra_col] = np.nan
@@ -347,7 +347,7 @@ def calculate_outpatients(
             try:
                 paed_df = _load_icu_list(ref_dir, year)
                 merged = merged.merge(paed_df, on="APCID", how="left")
-            except (FileNotFoundError, KeyError, ValueError):
+            except FileNotFoundError, KeyError, ValueError:
                 merged["_est_eligible_paed_flag"] = 0
         else:
             merged["_est_eligible_paed_flag"] = merged.get("EST_ELIGIBLE_PAED_FLAG", 0)
@@ -416,7 +416,10 @@ def calculate_outpatients(
     except Exception:
         if "adj_treat_remoteness" not in merged.columns:
             merged["adj_treat_remoteness"] = 0
-    if params.indigenous_distribution and not ind_df.empty:
+    if (
+        params.indigenous_distribution is not None
+        and bool(params.indigenous_distribution)
+    ) and not ind_df.empty:
         imputed = impute_adjustment(
             ind_df,
             "_pat_ind_flag",
@@ -424,7 +427,10 @@ def calculate_outpatients(
             params.indigenous_distribution,
         )
         merged["adj_indigenous"] = merged["adj_indigenous"].fillna(imputed)
-    if params.remoteness_distribution and not pat_rem_df.empty:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and not pat_rem_df.empty:
         imputed = impute_adjustment(
             pat_rem_df,
             "_pat_remoteness",
@@ -432,7 +438,10 @@ def calculate_outpatients(
             params.remoteness_distribution,
         )
         merged["adj_remoteness"] = merged["adj_remoteness"].fillna(imputed)
-    if params.remoteness_distribution and not treat_rem_df.empty:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and not treat_rem_df.empty:
         imputed = impute_adjustment(
             treat_rem_df,
             "_treat_remoteness",

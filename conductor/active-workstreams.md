@@ -24,3 +24,12 @@
 - Validation commands and results are recorded.
 - Remaining blockers are explicit.
 - Next owner is named or set to `unassigned`.
+
+## 2026-10-31 isolated qualification lane
+
+Current GHA chat owns `/Users/doughnut/Documents/mchs-qualified`, branch
+`codex/python315-qualification`, runtime/dependency qualification and subsequent
+NEP26 and mapping PR branches under parent #396. This is a fresh verified remote
+clone, not the unrelated dirty local checkout. Earlier assignments above remain
+history; no changes to their local files or native operations. No deployment,
+registry submission or patient-data publication is part of this lane.

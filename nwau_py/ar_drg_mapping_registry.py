@@ -158,7 +158,7 @@ class ARDRGMappingAssetReference:
                 raise ARDRGMappingRegistryError(
                     "user-supplied-licensed-file assets must be restricted"
                 )
-        elif self.kind == "derived-validation-fixture":
+        else:
             if self.local_path_hint is None:
                 raise ARDRGMappingRegistryError(
                     "derived-validation-fixture assets require a local_path_hint"

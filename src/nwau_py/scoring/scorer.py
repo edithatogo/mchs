@@ -11,7 +11,7 @@ _DEFAULT_YEAR = "2025"
 
 def _model_vars(n: int, risk_factors_df: pd.DataFrame) -> list[str]:
     """Return list of risk factors for the ``n``th readmission category."""
-    ret = [x for x in risk_factors_df[str(n)].dropna().tolist() if str(x) != "nan"]
+    ret = [str(x) for x in risk_factors_df[str(n)].dropna().tolist() if str(x) != "nan"]
     common = [
         "an110mdc_ra",
         "agegroup_rm",

@@ -289,7 +289,10 @@ def calculate_subacute(
         merged = merged.merge(ind_adj, on="_pat_ind_flag", how="left")
     except Exception:
         merged["adj_indigenous"] = 0
-    if params.indigenous_distribution and ind_adj is not None:
+    if (
+        params.indigenous_distribution is not None
+        and bool(params.indigenous_distribution)
+    ) and ind_adj is not None:
         imputed = impute_adjustment(
             ind_adj,
             "_pat_ind_flag",
@@ -310,7 +313,10 @@ def calculate_subacute(
         merged = merged.merge(pat_adj, on="_pat_remoteness", how="left")
     except Exception:
         merged["adj_remoteness"] = 0
-    if params.remoteness_distribution and pat_adj is not None:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and pat_adj is not None:
         imputed = impute_adjustment(
             pat_adj,
             "_pat_remoteness",
@@ -331,7 +337,10 @@ def calculate_subacute(
         merged = merged.merge(treat_adj, on="_treat_remoteness", how="left")
     except Exception:
         merged["adj_treat_remoteness"] = 0
-    if params.remoteness_distribution and treat_adj is not None:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and treat_adj is not None:
         imputed = impute_adjustment(
             treat_adj,
             "_treat_remoteness",
