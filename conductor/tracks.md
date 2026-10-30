@@ -1,5 +1,9 @@
 # Project Tracks
 
+## [ ] Track: research_software_registry_readiness_20260721
+
+[Specification and plan](./tracks/research_software_registry_readiness_20260721/)
+
 This file tracks the delivery order for the project. The focused tracks below are the implementation source of truth. The modernization foundation track is retained only as an umbrella coordination track and must not duplicate work owned by the focused tracks.
 
 New tracks must follow the governance rules in
@@ -7,6 +11,7 @@ New tracks must follow the governance rules in
 metadata should include track class, current state, dependencies, primary
 contract, completion evidence, and publication status. Roadmap or scaffold
 content alone is not sufficient evidence for marking a track complete.
+
 
 ## Delivery Order
 
@@ -68,6 +73,11 @@ content alone is not sufficient evidence for marking a track complete.
    *Link: [./tracks/rust_core_architecture_20260510/](./tracks/rust_core_architecture_20260510/)*
    *Depends on: public calculator contracts, Arrow/Parquet bundle guidance, golden fixtures, ecosystem readiness, and existing C# and Power Platform boundary documentation.*
    *Gate: define Rust as the intended future calculator core and document formula, parameter, schema, reference data, provenance, validation, and adapter boundaries before Rust implementation begins.*
+
+Archived: [Rust Acute 2025 Proof of Concept with Python Bindings](archive/rust_acute_python_poc_20260510/index.md). Historical evidence remains retained.
+
+Historical dependency: Depends on: Rust core architecture, acute 2025 golden fixtures.
+Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 13. [x] **Track: Multi-Surface Binding and Delivery Roadmap**
    *Link: [./tracks/multi_surface_binding_delivery_20260510/](./tracks/multi_surface_binding_delivery_20260510/)*

@@ -109,3 +109,21 @@ def test_rust_bridge_kernel_row_contract_is_scalar_and_positional_only():
     kwargs: dict[str, Any] = {"row": {}, "reference": {}, "adjustments": {}}
     with pytest.raises(TypeError, match="positional arguments"):
         rust_bridge.calculate_acute_2025_row(**kwargs)
+
+
+def test_invalid_native_binary_retains_loader_diagnostic(tmp_path):
+    path = tmp_path / "invalid.so"
+    path.write_bytes(b"not a native extension")
+    module, failure = rust_bridge._load_module_if_available(path)
+    assert module is None
+    assert failure is not None
+    assert str(path) in failure
+    assert "ImportError" in failure
+
+
+def test_non_text_native_kernel_label_is_rejected(monkeypatch):
+    module = ModuleType("nwau_py._rust")
+    module.kernel_label = lambda: 123
+    monkeypatch.setattr(rust_bridge, "load_rust_extension", lambda: module)
+    with pytest.raises(TypeError, match="Rust kernel label must be text"):
+        rust_bridge.kernel_label()

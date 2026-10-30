@@ -111,7 +111,7 @@ def test_registry_facade_lists_and_resolves_schedules():
     assert registry.list_years() == ["2025", "2026"]
     assert "NSW" in registry.list_jurisdictions(price_registry.PriceScheduleType.STATE)
     assert "Sydney_LHN" in registry.list_jurisdictions("local")
-    assert registry.national("2025").price_per_hwau == 7434
+    assert registry.national("2025").price_per_hwau == 7258
     assert registry.state("VIC", "2026").price_per_hwau == 7550
     assert registry.local("Brisbane_LHN", "2026").price_per_hwau == 7000
     assert registry.discounted("VIC_fixed_discount", "2025").price_per_hwau == 6800.0

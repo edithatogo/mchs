@@ -407,30 +407,38 @@ The individual calculators can be invoked directly when you need fine grained co
 
 ```python
 from nwau_py.calculators import AcuteParams, calculate_acute
+
 result = calculate_acute(acute_df, AcuteParams())
 ```
 
 ```python
 from nwau_py.calculators import EDParams, calculate_ed
+
 result = calculate_ed(ed_df, EDParams())
 ```
 
 ```python
 from nwau_py.calculators import MHParams, calculate_mh
+
 result = calculate_mh(mh_df, MHParams())
 ```
 
 ```python
 from nwau_py.calculators import SubacuteParams, calculate_subacute
+
 result = calculate_subacute(sa_df, SubacuteParams())
 ```
 
 ```python
 from nwau_py.calculators import OutpatientParams, calculate_outpatients
+
 result = calculate_outpatients(op_df, OutpatientParams())
 ```
 
 ```python
 from nwau_py.calculators import calculate_adjusted_nwau
+
 result = calculate_adjusted_nwau(weight_df)
 ```
+
+Current development runtime: repository-local Python 3.15.1, selected by `.python-version`. See [runtime qualification](docs/runtime-qualification-2026-10.md), [NEP26 scope](docs/nep26-equation-qualification.md) and [NEP25 correction](docs/nep25-correction.md). No new release or full official-calculator parity is claimed by these changes.

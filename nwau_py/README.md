@@ -10,13 +10,13 @@ The project is standardizing on `uv` for local development and validation.
 Install and sync the environment with:
 
 ```bash
-uv sync --locked --group dev --group test --group coverage --group typing --group property --group mutation --group profiling --group docs
+uv sync --locked --python 3.15.1 --group dev --group test --group coverage --group typing --group property --group mutation --group profiling --group docs
 ```
 
 The SAS calculators for each pricing year should be extracted under
 `archive/sas/<YEAR>/` so the modules can read the reference tables.
 
-Development targets Python 3.10 through 3.14. The current quality-gate stack
+Development targets the repository-selected Python 3.15.1. The current quality-gate stack
 uses `uv`, `Ruff`, `pytest`, `pytest-cov`, `ty`, `Codecov`, `Hypothesis`,
 `mutmut`, `Scalene`, and on-demand `Vale` alongside the calculator
 libraries. `ty` is the active type checker in this phase; `mypy` remains only

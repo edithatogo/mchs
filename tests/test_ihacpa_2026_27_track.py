@@ -127,10 +127,10 @@ def test_ihacpa_2026_27_phase_2_pricing_constants_api_exposes_nep26():
     assert PRICING_CONSTANTS_SCHEMA_VERSION == "1.0"
     assert tuple(get_supported_pricing_years()) == ("2025", "2026")
     assert NEP26 == 7418
-    assert NEP_BY_YEAR == {"2025": 7434, "2026": 7418}
+    assert NEP_BY_YEAR == {"2025": 7258, "2026": 7418}
     assert NEC_BY_YEAR == {"2025": None, "2026": NEC26}
     assert get_nep("2026") == 7418
-    assert get_nep("2025") == 7434
+    assert get_nep("2025") == 7258
     assert get_nep("2024") is None
     assert get_nec("2026") == NEC26
     assert NEC26.fixed_cost_dollars == 3_127_000

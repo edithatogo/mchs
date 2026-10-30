@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 from datetime import date
+from importlib.resources import files
 from typing import Final
 
 __all__ = [
@@ -43,7 +45,21 @@ class NecPricing:
     source: PricingConstantSource
 
 
-NEP26: Final[int] = 7418
+def _load_nep_values() -> dict[str, int]:
+    payload = json.loads(
+        files("nwau_py").joinpath("data/pricing_constants.json").read_text()
+    )
+    values: dict[str, int] = {}
+    for year, record in payload.items():
+        value = record["value"]
+        if not isinstance(value, int) or isinstance(value, bool) or value <= 0:
+            raise ValueError(f"Invalid packaged NEP for {year}")
+        values[str(year)] = value
+    return values
+
+
+NEP_BY_YEAR: Final[dict[str, int]] = _load_nep_values()
+NEP26: Final[int] = NEP_BY_YEAR["2026"]
 NEP26_SOURCE: Final[PricingConstantSource] = PricingConstantSource(
     resource_url="https://www.ihacpa.gov.au/resources/national-efficient-price-determination-2026-27",
     artifact_url="https://www.ihacpa.gov.au/sites/default/files/2026-03/national_efficient_price_determination_2026-27_2.pdf",
@@ -72,12 +88,6 @@ NEC26: Final[NecPricing] = NecPricing(
     in_scope_hospitals=364,
     source=NEC26_SOURCE,
 )
-
-# NEP (National Efficient Price) per NWAU by pricing year.
-NEP_BY_YEAR: Final[dict[str, int]] = {
-    "2025": 7_434,
-    "2026": NEP26,
-}
 
 # NEC (National Efficient Cost) by pricing year.
 NEC_BY_YEAR: Final[dict[str, NecPricing | None]] = {

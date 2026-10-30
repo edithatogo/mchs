@@ -35,6 +35,10 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Select Python for metadata validation
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.15.1"
       - name: Validate release tag and package version metadata
         shell: bash
         run: |
@@ -68,26 +72,19 @@ jobs:
                   f"Conda recipe version {recipe_version} does not match pyproject version {expected_version}"
               )
 
+          modern_text = Path("conda/recipe/recipe.yaml").read_text(encoding="utf-8")
+          modern_match = re.search(r"(?m)^  version: ['\"]?([0-9.]+)", modern_text)
+          if modern_match is None or modern_match.group(1) != expected_version:
+              raise SystemExit("Rattler recipe version does not match pyproject")
           print(f"Release metadata validated for {expected_version}")
           PY
 
-      - name: Set up Micromamba
-        uses: mamba-org/setup-micromamba@d7c9bd84e824b79d2af72a2d4196c7f4300d3476 # v3.0.0
+      - name: Install Rust-based packaging tools
+        uses: prefix-dev/setup-pixi@ad1da6449d9e506fd127fd67ab2d054a769f6a94
         with:
-          environment-name: conda-recipe
-          create-args: >-
-            python=3.11
-            conda-build
-            conda-verify
-          condarc: |
-            channels:
-              - conda-forge
-            channel_priority: strict
-
+          pixi-version: v0.83.0
+          run-install: false
       - name: Render recipe
-        shell: bash -el {0}
-        run: conda render conda/recipe --channel conda-forge --override-channels
-
-      - name: Build recipe
-        shell: bash -el {0}
-        run: conda build conda/recipe --channel conda-forge --override-channels --no-anaconda-upload
+        run: pixi exec --spec rattler-build=0.77.0 -- rattler-build build --recipe conda/recipe/recipe.yaml --render-only
+      - name: Build and test installed package
+        run: pixi exec --spec rattler-build=0.77.0 -- rattler-build build --recipe conda/recipe/recipe.yaml --channel conda-forge

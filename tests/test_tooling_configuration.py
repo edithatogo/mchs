@@ -54,10 +54,10 @@ def test_pyproject_declares_the_expected_dependency_groups():
         assert expected_packages.issubset(group_packages)
 
 
-def test_pyproject_supports_python_310_through_314():
+def test_pyproject_supports_python_315():
     project = _load_toml(PROJECT_FILE)["project"]
     assert isinstance(project, dict)
-    assert project["requires-python"] == ">=3.10,<3.15"
+    assert project["requires-python"] == ">=3.15.1,<3.16"
 
 
 def test_uv_lock_records_the_supported_python_window_and_tooling_packages():
@@ -65,7 +65,7 @@ def test_uv_lock_records_the_supported_python_window_and_tooling_packages():
     packages = {package["name"] for package in lock["package"]}
     resolution_markers = lock["resolution-markers"]
 
-    assert lock["requires-python"] == ">=3.10, <3.15"
+    assert lock["requires-python"] == ">=3.15.1, <3.16"
     assert EXPECTED_GROUP_PACKAGES["dev"].issubset(packages)
     assert EXPECTED_GROUP_PACKAGES["test"].issubset(packages)
     assert EXPECTED_GROUP_PACKAGES["coverage"].issubset(packages)
@@ -75,18 +75,8 @@ def test_uv_lock_records_the_supported_python_window_and_tooling_packages():
     assert EXPECTED_GROUP_PACKAGES["profiling"].issubset(packages)
     assert EXPECTED_GROUP_PACKAGES["docs"].issubset(packages)
 
-    assert any(
-        "python_full_version < '3.11'" in marker for marker in resolution_markers
-    )
-    assert any(
-        "python_full_version >= '3.11' and python_full_version < '3.13'" in marker
-        for marker in resolution_markers
-    )
-    assert any(
-        "python_full_version == '3.13.*'" in marker for marker in resolution_markers
-    )
-    assert any(
-        "python_full_version >= '3.14'" in marker for marker in resolution_markers
+    assert all(
+        "python_full_version < '3.11'" not in marker for marker in resolution_markers
     )
 
 
@@ -109,7 +99,7 @@ def test_ty_toml_matches_the_current_top_level_shape():
 
     environment = ty_config["environment"]
     assert isinstance(environment, dict)
-    assert environment["python-version"] == "3.11"
+    assert environment["python-version"] == "3.15"
     assert environment["root"] == [".", "./src", "./excel_calculator/src"]
 
     src = ty_config["src"]
@@ -129,16 +119,16 @@ def test_ty_toml_matches_the_current_top_level_shape():
 def test_pr_ci_workflow_runs_the_expected_quality_and_test_sequence():
     workflow = _read_text(PR_CI_WORKFLOW_FILE)
 
-    assert 'python-version: "3.11"' in workflow
+    assert 'python-version: "3.15.1"' in workflow
     assert "branches:" in workflow
     assert "      - master" in workflow
     assert "      - main" not in workflow
-    assert '  - "3.10"' in workflow
-    assert '  - "3.14"' in workflow
+    assert '  - "3.15.1"' in workflow
+    assert '  - "3.14"' not in workflow
     assert "run: uv sync --locked" in workflow
-    assert "Phase 1 quality checks (Python 3.11)" in workflow
+    assert "Phase 1 quality checks (Python 3.15.1)" in workflow
     assert "Phase 2 tests (Python ${{ matrix.python-version }})" in workflow
-    assert "Phase 3 coverage and Codecov (Python 3.11)" in workflow
+    assert "Phase 3 coverage and Codecov (Python 3.15.1)" in workflow
     assert "Phase 3 Rust checks" in workflow
     assert "run: uv run ruff format --check ." in workflow
     assert "run: uv run ruff check ." in workflow
@@ -310,9 +300,9 @@ def test_development_docs_pin_the_current_tooling_contract():
     )
 
     assert (
-        "uv sync --locked --group dev --group test --group coverage --group typing "
-        "--group property --group mutation --group profiling --group docs"
-        in normalized_readme
+        "uv sync --locked --python 3.15.1 --group dev --group test --group coverage "
+        "--group typing --group property --group mutation --group profiling "
+        "--group docs" in normalized_readme
     )
     assert "Codecov" in normalized_readme
     assert "ty" in normalized_readme

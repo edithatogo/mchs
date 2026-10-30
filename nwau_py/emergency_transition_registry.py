@@ -793,17 +793,10 @@ def validate_emergency_classification_compatibility(
         )
 
     if declared_version is None:
-        if expected_version is None:
-            reason = (
-                f"{record.display_name} is not available for pricing year "
-                f"{normalized_year} and no emergency_classification_version was "
-                "supplied"
-            )
-        else:
-            reason = (
-                f"{record.display_name} {normalized_year} requires an explicit "
-                f"emergency_classification_version of {expected_version}"
-            )
+        reason = (
+            f"{record.display_name} {normalized_year} requires an explicit "
+            f"emergency_classification_version of {expected_version}"
+        )
         return EmergencyClassificationCompatibilityResult(
             system=record.system,
             display_name=record.display_name,
