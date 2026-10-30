@@ -92,7 +92,7 @@ def test_current_workflows_enforce_strict_quality_security_and_coverage() -> Non
     assert "uv run ty check --error all" in pr_ci
     assert "uv run ruff check --select S ." in pr_ci
     assert "uv run bandit -r nwau_py scripts -x tests" in pr_ci
-    assert "uv run --with pip-audit --with pip==26.1.2 pip-audit" in pr_ci
+    assert "uv run --locked pip-audit" in pr_ci
     assert "cargo fmt --all --check" in pr_ci
     assert "cargo audit" in pr_ci
     assert "cargo clippy --all-targets --all-features -- -D warnings" in pr_ci
