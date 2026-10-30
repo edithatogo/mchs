@@ -12,7 +12,7 @@ WHO ICD-10 and Australian ICD-10-AM are not interchangeable maps.
 
 A diagnosis group is not a full AECC class. The
 [AECC definitions manual](https://www.ihacpa.gov.au/sites/default/files/2022-08/aecc_definitions_manual_version_4_0.pdf)
-requires age, end status, triage and arrival transport for complexity and clinical
+requires visit type, age, end status, triage and arrival transport for complexity and clinical
 care commencement for relevant episode branching. Referral source is not arrival
 transport; departure time is not end status. The helper returns missing inputs,
 not invented fields or zero resource use. It does not assert that supplied values

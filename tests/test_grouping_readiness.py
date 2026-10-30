@@ -4,6 +4,7 @@ from nwau_py.grouping_readiness import AECC_INPUTS, assess_aecc_inputs
 def test_absent_attributes_are_not_inferred_from_dates_or_referral():
     result = assess_aecc_inputs(
         {
+            "visit_type": 1,
             "principal_diagnosis": "synthetic",
             "age": 0,
             "triage_category": 3,
