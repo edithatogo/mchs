@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-07-03",
+  "asOf": "2026-10-31",
   "statusVocabulary": [
     "complete",
     "in_progress",
@@ -22,7 +22,8 @@
     "power_platform_operational_evidence_20260518",
     "r_cran_registry_submission_20260524",
     "swift_package_index_submission_20260524",
-    "vscode_openvsx_registry_submission_20260524"
+    "vscode_openvsx_registry_submission_20260524",
+    "research_software_registry_readiness_20260721"
   ],
   "recommendedNextTracks": [
     "canonical_contract_foundation_20260513",
