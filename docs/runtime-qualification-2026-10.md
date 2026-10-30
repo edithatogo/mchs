@@ -24,3 +24,9 @@ Remaining evidence: remote CI and cross-platform wheel checks must pass before
 merge; local success alone is insufficient. Historical SAS decoding deprecation
 warnings remain visible. No registry submission, credentials or study records are
 included. Unrelated dirty local work is preserved outside this isolated clone.
+
+Pinned third-party Conductor code is excluded from project Ruff formatting;
+its upstream bytes are preserved rather than rewritten. Project-owned code
+retains the same lint/format rules. The integrated registry-readiness track is
+explicitly incomplete in the status matrix. NEP25 correction is documented in
+nep25-correction.md; broader #201 consolidation remains open.

@@ -79,7 +79,7 @@ nwau_py = [
 [tool.ruff]
 target-version = "py315"
 line-length = 88
-exclude = ["archive/*"]
+exclude = ["archive/*", ".agents/plugins/**"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "PERF", "S", "RUF", "NPY"]
