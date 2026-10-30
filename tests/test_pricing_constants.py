@@ -76,3 +76,21 @@ def test_packaged_prices_match_canonical_manifests():
         assert record == {
             key: manifest["constants"]["nep"][key] for key in ["value", "source_url"]
         }
+
+
+def test_invalid_packaged_price_is_rejected(tmp_path, monkeypatch):
+    import json
+
+    import pytest
+
+    from nwau_py import pricing_constants
+
+    data = tmp_path / "data"
+    data.mkdir()
+    monkeypatch.setattr(pricing_constants, "files", lambda _: tmp_path)
+    for invalid in [True, 0, -1, "7258", 7258.5]:
+        (data / "pricing_constants.json").write_text(
+            json.dumps({"2025": {"value": invalid}})
+        )
+        with pytest.raises(ValueError, match="Invalid packaged NEP for 2025"):
+            pricing_constants._load_nep_values()

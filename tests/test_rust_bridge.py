@@ -109,3 +109,13 @@ def test_rust_bridge_kernel_row_contract_is_scalar_and_positional_only():
     kwargs: dict[str, Any] = {"row": {}, "reference": {}, "adjustments": {}}
     with pytest.raises(TypeError, match="positional arguments"):
         rust_bridge.calculate_acute_2025_row(**kwargs)
+
+
+def test_invalid_native_binary_retains_loader_diagnostic(tmp_path):
+    path = tmp_path / "invalid.so"
+    path.write_bytes(b"not a native extension")
+    module, failure = rust_bridge._load_module_if_available(path)
+    assert module is None
+    assert failure is not None
+    assert str(path) in failure
+    assert "ImportError" in failure
