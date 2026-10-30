@@ -52,7 +52,7 @@ constants:
   nep:
     value: 7418
     unit: "AUD per NWAU"
-    source: "nwau_py.pricing_constants.NEP26"
+    source: "IHACPA National Efficient Price Determination; canonical reference manifest"
     source_url: "https://www.ihacpa.gov.au/resources/national-efficient-price-determination-2026-27"
   nec:
     value:

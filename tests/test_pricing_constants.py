@@ -24,8 +24,8 @@ def test_nep26_value():
 
 
 def test_nep25_value():
-    assert NEP_BY_YEAR["2025"] == 7434
-    assert get_nep("2025") == 7434
+    assert NEP_BY_YEAR["2025"] == 7258
+    assert get_nep("2025") == 7258
 
 
 def test_get_nep_unknown_year():
@@ -59,3 +59,20 @@ def test_get_supported_years():
 
 def test_get_nep_returns_int():
     assert isinstance(get_nep("2026"), int)
+
+
+def test_packaged_prices_match_canonical_manifests():
+    import json
+    from pathlib import Path
+
+    import yaml
+
+    root = Path(__file__).resolve().parents[1]
+    packaged = json.loads((root / "nwau_py/data/pricing_constants.json").read_text())
+    for year, record in packaged.items():
+        manifest = yaml.safe_load(
+            (root / "reference-data" / year / "manifest.yaml").read_text()
+        )
+        assert record == {
+            key: manifest["constants"]["nep"][key] for key in ["value", "source_url"]
+        }
