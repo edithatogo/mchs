@@ -35,14 +35,16 @@ from nwau_py.pricing_constants import get_nep
 # ── 1. Synthetic acute activity data ──────────────────────────────────
 np.random.seed(42)
 n = 20
-synthetic_acute = pd.DataFrame({
-    "DRG": np.random.choice(["E62A", "E62B", "F62A", "F62B", "G02A"], size=n),
-    "LOS": np.random.randint(1, 15, size=n),
-    "ICU_HOURS": np.random.choice([0, 0, 0, 0, 2, 4, 8], size=n),
-    "ICU_OTHER": 0,
-    "PAT_SAMEDAY_FLAG": np.random.choice([0, 1], size=n, p=[0.8, 0.2]),
-    "PAT_PRIVATE_FLAG": np.random.choice([0, 1], size=n, p=[0.85, 0.15]),
-})
+synthetic_acute = pd.DataFrame(
+    {
+        "DRG": np.random.choice(["E62A", "E62B", "F62A", "F62B", "G02A"], size=n),
+        "LOS": np.random.randint(1, 15, size=n),
+        "ICU_HOURS": np.random.choice([0, 0, 0, 0, 2, 4, 8], size=n),
+        "ICU_OTHER": 0,
+        "PAT_SAMEDAY_FLAG": np.random.choice([0, 1], size=n, p=[0.8, 0.2]),
+        "PAT_PRIVATE_FLAG": np.random.choice([0, 1], size=n, p=[0.85, 0.15]),
+    }
+)
 
 # ── 2. Calculate NWAU ────────────────────────────────────────────────
 result = calculate_acute(synthetic_acute, AcuteParams())
@@ -51,29 +53,34 @@ print(f"NWAU column: {nwau_col}")
 print(result[[nwau_col]].describe())
 
 # ── 3. Calculate notional funding ────────────────────────────────────
-nep = get_nep("2025")          # 7 434
+nep = get_nep("2025")  # 7 434
 result["NotionalFunding"] = result[nwau_col] * nep
 result["NotionalFunding"] = result["NotionalFunding"].round(2)
 
 # ── 4. Stream-level summary ──────────────────────────────────────────
-summary = pd.DataFrame({
-    "Episodes": len(result),
-    "Total NWAU": result[nwau_col].sum().round(4),
-    "Mean NWAU": result[nwau_col].mean().round(4),
-    "Total Notional Funding": result["NotionalFunding"].sum().round(2),
-    "Mean Notional Funding": result["NotionalFunding"].mean().round(2),
-}, index=["Acute"])
+summary = pd.DataFrame(
+    {
+        "Episodes": len(result),
+        "Total NWAU": result[nwau_col].sum().round(4),
+        "Mean NWAU": result[nwau_col].mean().round(4),
+        "Total Notional Funding": result["NotionalFunding"].sum().round(2),
+        "Mean Notional Funding": result["NotionalFunding"].mean().round(2),
+    },
+    index=["Acute"],
+)
 
 print("\n── Stream Summary ──")
 print(summary.to_string(index=True))
 
 # ── 5. Caveat ────────────────────────────────────────────────────────
-print("\n⚠  Notional funding (NWAU × NEP) is a benchmark, not actual "
-      "hospital funding.")
-print("   Real hospital funding depends on jurisdiction activity-based "
-      "pricing policies,")
-print("   block grants, cross-border adjustments, and other "
-      "jurisdiction-specific factors.")
+print("\n⚠  Notional funding (NWAU × NEP) is a benchmark, not actual hospital funding.")
+print(
+    "   Real hospital funding depends on jurisdiction activity-based pricing policies,"
+)
+print(
+    "   block grants, cross-border adjustments, and other "
+    "jurisdiction-specific factors."
+)
 ```
 
 ## Expected output outline

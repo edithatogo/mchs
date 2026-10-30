@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import asdict, dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any
@@ -62,9 +62,7 @@ class ComparisonReport:
     """Aggregate report of all Rust-vs-SAS/Excel comparisons."""
 
     report_version: str = "1.0"
-    generated_at: str = field(
-        default_factory=lambda: datetime.now(timezone.utc).isoformat()
-    )
+    generated_at: str = field(default_factory=lambda: datetime.now(UTC).isoformat())
     source_version: str = ""
     git_commit: str = ""
     records: list[dict[str, Any]] = field(default_factory=list)

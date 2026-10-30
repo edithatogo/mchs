@@ -63,14 +63,18 @@ def calculate_adjusted_nwau(
     result = df.copy()
     covid_flag = (
         result[covid_flag_col].fillna(0)
-        if covid_flag_col and covid_flag_col in result.columns
+        if covid_flag_col is not None
+        and bool(covid_flag_col)
+        and covid_flag_col in result.columns
         else 0
     )
 
     # ------------------------------------------------------------------
     # AHR risk adjustment
     # ------------------------------------------------------------------
-    if ahr_flag_cols and ahr_adj_cols:
+    if (ahr_flag_cols is not None and bool(ahr_flag_cols)) and (
+        ahr_adj_cols is not None and bool(ahr_adj_cols)
+    ):
         if len(ahr_flag_cols) != len(ahr_adj_cols):
             raise ValueError("AHR flag and adjustment column counts differ")
         ahr_values = [
@@ -89,7 +93,11 @@ def calculate_adjusted_nwau(
         ahr_adj = ahr_adj.where(covid_flag == 0, 0)
         ahr_group = ahr_group.where(covid_flag == 0, "")
 
-    weight_ahr = result[ahr_weight_col] if ahr_weight_col else result[weight_col]
+    weight_ahr = (
+        result[ahr_weight_col]
+        if ahr_weight_col is not None and bool(ahr_weight_col)
+        else result[weight_col]
+    )
     result["riskAdjustment_AHR"] = weight_ahr.fillna(0) * ahr_adj
     result["AHRgroup"] = ahr_group
 
@@ -97,7 +105,9 @@ def calculate_adjusted_nwau(
     # HAC risk adjustment
     # ------------------------------------------------------------------
     hac_df: pd.DataFrame | None = None
-    if hac_flag_cols and hac_adj_cols:
+    if (hac_flag_cols is not None and bool(hac_flag_cols)) and (
+        hac_adj_cols is not None and bool(hac_adj_cols)
+    ):
         if len(hac_flag_cols) != len(hac_adj_cols):
             raise ValueError("HAC flag and adjustment column counts differ")
         hac_values = [
@@ -116,14 +126,16 @@ def calculate_adjusted_nwau(
         hac_adj = hac_adj.where(covid_flag == 0, 0)
         hac_group = hac_group.where(covid_flag == 0, "")
 
-    if error_col and error_col in result.columns:
+    if (error_col is not None and bool(error_col)) and error_col in result.columns:
         hac_adj = hac_adj.where(result[error_col].fillna(0) == 0, 0)
 
     if (
-        hac_point_cols
+        hac_point_cols is not None
+        and bool(hac_point_cols)
         and complexity_df is not None
         and hac_df is not None
-        and hac_adj_cols
+        and hac_adj_cols is not None
+        and bool(hac_adj_cols)
     ):
         if len(hac_point_cols) != len(hac_adj_cols):
             raise ValueError("HAC point and adjustment column counts differ")
@@ -154,10 +166,14 @@ def calculate_adjusted_nwau(
     result["nwau25_adjusted"] = adjusted
 
     if drop_intermediate:
-        cols_to_drop = list(hac_flag_cols or []) + list(hac_adj_cols or [])
-        cols_to_drop += list(ahr_flag_cols or []) + list(ahr_adj_cols or [])
+        cols_to_drop = list(hac_flag_cols if hac_flag_cols is not None else []) + list(
+            hac_adj_cols if hac_adj_cols is not None else []
+        )
+        cols_to_drop += list(ahr_flag_cols if ahr_flag_cols is not None else []) + list(
+            ahr_adj_cols if ahr_adj_cols is not None else []
+        )
         cols_to_drop += [weight_col]
-        if ahr_weight_col:
+        if ahr_weight_col is not None and bool(ahr_weight_col):
             cols_to_drop.append(ahr_weight_col)
         cols_to_drop += [
             "riskAdjustment_HAC",

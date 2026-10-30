@@ -75,8 +75,8 @@ def test_track_docs_cover_opt_in_fallback_golden_fixtures_and_maturin_ci():
     assert "opt-in rust-backed acute 2025 adapter" in package_docs
     assert "uv run --with maturin maturin build --release" in workflow
     assert "pip install --no-deps" in workflow
-    assert '  - "3.10"' in workflow
-    assert '  - "3.14"' in workflow
+    assert '  - "3.15.1"' in workflow
+    assert '  - "3.14"' not in workflow
 
 
 def test_default_acute_execution_stays_on_the_pure_python_path(monkeypatch):

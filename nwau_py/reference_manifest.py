@@ -225,7 +225,7 @@ class ReferenceValidation(StrictModel):
         items = _as_list(value, "validation.notes")
         if not all(isinstance(item, str) and item for item in items):
             raise ValueError("validation.notes must contain non-empty strings")
-        return tuple(items)
+        return tuple(item for item in items if isinstance(item, str))
 
 
 class ReferenceGap(StrictModel):

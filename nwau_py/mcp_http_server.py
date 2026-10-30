@@ -13,7 +13,7 @@ import argparse
 import json
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any
+from typing import Any, override
 
 from . import mcp_server
 
@@ -69,6 +69,7 @@ class McpHttpHandler(BaseHTTPRequestHandler):
 
     server_version = "MCHS-MCP-HTTP/0.1"
 
+    @override
     def log_message(self, format: str, *args: Any) -> None:
         """Suppress default stderr logging to avoid leaking request context."""
 

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from collections.abc import Callable
 from pathlib import Path
-from typing import IO, Any, Protocol, cast
+from typing import IO, Any, Protocol, cast, overload
 
 import click
 
@@ -46,8 +46,7 @@ def _resolve_runtime(runtime: str | None) -> str:
     selected = selected.strip().lower()
     if selected not in _VALID_RUNTIMES:
         raise click.ClickException(
-            "MCHS-CLI-RUNTIME-INVALID: runtime must be one of "
-            "python, rust, or auto"
+            "MCHS-CLI-RUNTIME-INVALID: runtime must be one of python, rust, or auto"
         )
     return selected
 
@@ -125,13 +124,11 @@ def _run(
         )
     except ImportError as exc:
         if selected_runtime == "rust":
-            raise click.ClickException(
-                f"MCHS-CLI-RUST-UNAVAILABLE: {exc}"
-            ) from exc
+            raise click.ClickException(f"MCHS-CLI-RUST-UNAVAILABLE: {exc}") from exc
         raise
 
 
-def _common_options(func):
+def _common_options[F: Callable[..., Any]](func: F) -> F:
     func = click.argument("input_csv", type=click.Path(exists=True))(func)
     func = click.option(
         "--params",
@@ -281,7 +278,7 @@ def coding_set_registry_validate_compatibility(
         raise SystemExit(1)
 
 
-def _source_scan_input_options(func):
+def _source_scan_input_options(func: Callable[..., Any]) -> Callable[..., Any]:
     func = click.option(
         "--html-file",
         "html_files",
@@ -310,8 +307,22 @@ def _source_scan_input_options(func):
     return func
 
 
-def _scan_output_options(func=None, *, include_year: bool = True):
-    def decorate(inner):
+@overload
+def _scan_output_options[F: Callable[..., Any]](
+    func: F, *, include_year: bool = True
+) -> F: ...
+
+
+@overload
+def _scan_output_options(
+    func: None = None, *, include_year: bool = True
+) -> Callable[[Callable[..., Any]], Callable[..., Any]]: ...
+
+
+def _scan_output_options(
+    func: Callable[..., Any] | None = None, *, include_year: bool = True
+) -> Callable[..., Any]:
+    def decorate(inner: Callable[..., Any]) -> Callable[..., Any]:
         if include_year:
             inner = click.option(
                 "--year",

@@ -13,7 +13,7 @@ import json
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, Final, Literal
 from urllib.parse import urlsplit
@@ -348,11 +348,7 @@ class EmergencyGrouperReference:
                 raise EmergencyGrouperError(
                     "local_service references require a reference_uri"
                 )
-        elif (
-            self.reference_type == "file_exchange"
-            and self.local_path_hint is None
-            and self.reference_uri is None
-        ):
+        elif self.local_path_hint is None and self.reference_uri is None:
             raise EmergencyGrouperError(
                 "file_exchange references require a local_path_hint or reference_uri"
             )
@@ -1036,7 +1032,7 @@ def build_emergency_provenance(
         tool_version=tool_version,
         table_version=resolved_table_version,
         input_sha256=input_sha256,
-        generated_at=generated_at or datetime.now(timezone.utc).isoformat(),
+        generated_at=generated_at or datetime.now(UTC).isoformat(),
         mapping_stage=mapping_stage,
         mapping_bundle_id=mapping_bundle_id,
         mapping_bundle_version=mapping_bundle_version,

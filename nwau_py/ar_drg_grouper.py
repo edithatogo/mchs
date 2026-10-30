@@ -18,7 +18,7 @@ import json
 import re
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any, Final, Literal
 
 from .ar_drg_mapping_registry import (
@@ -135,7 +135,7 @@ def _normalize_sha256(value: str) -> str:
 
 
 def _utc_now_isoformat() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def _canonical_json(value: Any) -> str:
@@ -289,11 +289,7 @@ class ARDRGGrouperReference:
                 raise ARDRGGrouperError(
                     "local_service references require a reference_uri"
                 )
-        elif (
-            self.reference_type == "file_exchange"
-            and self.local_path_hint is None
-            and self.reference_uri is None
-        ):
+        elif self.local_path_hint is None and self.reference_uri is None:
             raise ARDRGGrouperError(
                 "file_exchange references require a local_path_hint or reference_uri"
             )

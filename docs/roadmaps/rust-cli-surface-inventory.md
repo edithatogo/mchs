@@ -59,3 +59,5 @@ The first slice uses the existing Python binding over the Rust kernel:
 Follow-on migration requires Rust kernels and binding adapters for ED,
 non-admitted, governance validation, and any promoted Parquet/file-contract
 surface before those commands can move beyond Python-only status.
+
+The acute pilot output is input columns plus NWAU25; Python also returns reference/diagnostic columns. Numerical parity covers all shared contracted columns, not identical diagnostic schemas. Full diagnostic-schema equivalence is not claimed.

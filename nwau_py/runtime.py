@@ -15,11 +15,11 @@ from __future__ import annotations
 import sys
 from collections.abc import Callable
 from pathlib import Path
-from typing import Protocol, TextIO, TypeVar
+from typing import Protocol, TextIO, TypeVar, cast
 
-InputTableT = TypeVar("InputTableT")
-ParamsT = TypeVar("ParamsT")
-OutputTableT = TypeVar("OutputTableT")
+InputTableT = TypeVar("InputTableT", contravariant=True)
+ParamsT = TypeVar("ParamsT", contravariant=True)
+OutputTableT = TypeVar("OutputTableT", covariant=True)
 
 
 class CalculatorCallable(Protocol[InputTableT, ParamsT, OutputTableT]):
@@ -38,11 +38,11 @@ class CalculatorCallable(Protocol[InputTableT, ParamsT, OutputTableT]):
 def open_output_stream(output: str | Path) -> TextIO:
     """Open the target output stream for CSV writing."""
     if str(output) == "-":
-        return sys.stdout
+        return cast(TextIO, sys.stdout)
     return open(Path(output), "w", newline="", encoding="utf-8")
 
 
-def run_csv_calculation(
+def run_csv_calculation[InputTableT, ParamsT, OutputTableT](
     input_csv: str | Path,
     output: str | Path,
     calculator: CalculatorCallable[InputTableT, ParamsT, OutputTableT],

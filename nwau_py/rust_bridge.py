@@ -33,10 +33,10 @@ def _candidate_extension_paths() -> list[Path]:
 
 
 def _load_from_path(path: Path) -> ModuleType:
-    spec = util.spec_from_file_location(
+    spec = machinery.ModuleSpec(
         "nwau_py._rust",
-        path,
-        loader=machinery.ExtensionFileLoader("nwau_py._rust", str(path)),
+        machinery.ExtensionFileLoader("nwau_py._rust", str(path)),
+        origin=str(path),
     )
     if spec is None or spec.loader is None:
         raise ImportError(f"unable to load Rust extension from {path}")
@@ -100,7 +100,10 @@ def load_rust_extension() -> ModuleType:
 
 
 def kernel_label() -> str:
-    return load_rust_extension().kernel_label()
+    label = load_rust_extension().kernel_label()
+    if not isinstance(label, str):
+        raise TypeError("Rust kernel label must be text")
+    return label
 
 
 def _calculate_acute_2025_row_contract(
