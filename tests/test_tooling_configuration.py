@@ -300,8 +300,8 @@ def test_development_docs_pin_the_current_tooling_contract():
     )
 
     assert (
-        "uv sync --locked --group dev --group test --group coverage --group typing "
-        "--group property --group mutation --group profiling --group docs"
+        "uv sync --locked --python 3.15.1 --group dev --group test --group coverage "
+        "--group typing --group property --group mutation --group profiling --group docs"
         in normalized_readme
     )
     assert "Codecov" in normalized_readme
