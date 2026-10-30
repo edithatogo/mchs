@@ -9,9 +9,9 @@
     "linkcheck": "astro build"
   },
   "dependencies": {
-    "@astrojs/starlight": "0.39.2",
-    "astro": "6.3.1",
-    "starlight-links-validator": "0.24.0",
-    "starlight-versions": "0.9.0"
+    "@astrojs/starlight": "0.42.8",
+    "astro": "7.4.4",
+    "starlight-links-validator": "0.27.0",
+    "starlight-versions": "0.10.1"
   }
 }

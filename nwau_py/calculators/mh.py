@@ -103,7 +103,9 @@ def calculate_mh(
     result = result.merge(tables["adj_rem"], on="_pat_remoteness", how="left")
     result = result.merge(tables["adj_treat"], on="_treat_remoteness", how="left")
 
-    if params.indigenous_distribution:
+    if params.indigenous_distribution is not None and bool(
+        params.indigenous_distribution
+    ):
         imputed = impute_adjustment(
             tables["adj_ind"],
             "_pat_ind_flag",
@@ -111,7 +113,9 @@ def calculate_mh(
             params.indigenous_distribution,
         )
         result["adj_indigenous"] = result["adj_indigenous"].fillna(imputed)
-    if params.remoteness_distribution:
+    if params.remoteness_distribution is not None and bool(
+        params.remoteness_distribution
+    ):
         imputed = impute_adjustment(
             tables["adj_rem"],
             "_pat_remoteness",

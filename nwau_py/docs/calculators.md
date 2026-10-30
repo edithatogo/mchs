@@ -50,36 +50,42 @@ Below are minimal examples for each calculator. Dataframes should provide the co
 ### Acute
 ```python
 from nwau_py.calculators import AcuteParams, calculate_acute
+
 result = calculate_acute(acute_df, AcuteParams())
 ```
 
 ### Emergency department
 ```python
 from nwau_py.calculators import EDParams, calculate_ed
+
 result = calculate_ed(ed_df, EDParams())
 ```
 
 ### Mental health
 ```python
 from nwau_py.calculators import MHParams, calculate_mh
+
 result = calculate_mh(mh_df, MHParams())
 ```
 
 ### Subacute
 ```python
 from nwau_py.calculators import SubacuteParams, calculate_subacute
+
 result = calculate_subacute(sa_df, SubacuteParams())
 ```
 
 ### Outpatients
 ```python
 from nwau_py.calculators import OutpatientParams, calculate_outpatients
+
 result = calculate_outpatients(op_df, OutpatientParams())
 ```
 
 ### Adjustment
 ```python
 from nwau_py.calculators import calculate_adjusted_nwau
+
 result = calculate_adjusted_nwau(weight_df)
 ```
 

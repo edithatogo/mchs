@@ -129,9 +129,16 @@ def test_cli_rust_acute_2025_matches_python_cli_golden_fixture(monkeypatch, tmp_
         )
         assert result.exit_code == 0, result.output
 
+    rust_table = pd.read_csv(rust_output)
+    python_table = pd.read_csv(python_output)
+    expected_columns = [*pd.read_csv(input_csv).columns, "NWAU25"]
+    assert list(rust_table.columns) == expected_columns
+    assert set(expected_columns).issubset(python_table.columns)
+    # The documented pilot returns input + NWAU; Python additionally exposes
+    # reference/diagnostic columns. Compare every contracted input and result.
     pd.testing.assert_frame_equal(
-        pd.read_csv(rust_output),
-        pd.read_csv(python_output),
+        rust_table,
+        python_table[expected_columns],
         check_dtype=False,
         check_exact=False,
         rtol=1e-4,

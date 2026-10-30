@@ -198,7 +198,11 @@ class WeightRecord(StrictModel):
                 raise ValueError(
                     "parameters must contain JSON-serializable scalar values"
                 )
-        return mapping
+        return {
+            key: item
+            for key, item in mapping.items()
+            if isinstance(item, (str, int, float, bool)) or item is None
+        }
 
 
 class FormulaRecord(StrictModel):
@@ -236,7 +240,9 @@ class FormulaRecord(StrictModel):
         for key, item in mapping.items():
             _non_blank(key, "variables key")
             _non_blank(item, f"variables.{key}")
-        return mapping
+        return {
+            key: _non_blank(item, f"variables.{key}") for key, item in mapping.items()
+        }
 
 
 class AdjustmentRecord(StrictModel):
@@ -274,7 +280,11 @@ class AdjustmentRecord(StrictModel):
                 raise ValueError(
                     "parameters must contain JSON-serializable scalar values"
                 )
-        return mapping
+        return {
+            key: item
+            for key, item in mapping.items()
+            if isinstance(item, (str, int, float, bool)) or item is None
+        }
 
 
 class FormulaParameterBundle(StrictModel):

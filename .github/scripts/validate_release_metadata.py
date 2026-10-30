@@ -5,10 +5,9 @@ from __future__ import annotations
 
 import os
 import re
+import tomllib
 from pathlib import Path
 from typing import Final
-
-import tomllib
 
 REF_NAME_ENV: Final[str] = "GITHUB_REF_NAME"
 REF_NAME_OVERRIDE: Final[str] = "RELEASE_REF_NAME"

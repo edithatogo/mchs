@@ -35,7 +35,7 @@ def count_hac_diagnoses(
         ICD-10-AM edition number used to select the mapping table.
     """
     df = load_hac_mapping(edition, year=year).set_index("DDX")
-    counts = {col: 0 for col in df.columns if col != "DDX"}
+    counts: dict[str, int] = {str(col): 0 for col in df.columns if col != "DDX"}
     for code in diagnoses:
         if code in df.index:
             row = df.loc[code]

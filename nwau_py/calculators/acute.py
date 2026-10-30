@@ -725,7 +725,10 @@ def calculate_acute(
         ValueError,
     ):
         merged["adj_indigenous"] = 0
-    if params.indigenous_distribution and ind_adj is not None:
+    if (
+        params.indigenous_distribution is not None
+        and bool(params.indigenous_distribution)
+    ) and ind_adj is not None:
         imputed = impute_adjustment(
             ind_adj,
             "_pat_ind_flag",
@@ -755,7 +758,10 @@ def calculate_acute(
         merged["adj_remoteness"] = merged.get(
             "adj_remoteness", pd.Series(0, index=merged.index)
         )
-    if params.remoteness_distribution and pat_adj is not None:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and pat_adj is not None:
         imputed = impute_adjustment(
             pat_adj,
             "_pat_remoteness",
@@ -785,7 +791,10 @@ def calculate_acute(
         merged["adj_treat_remoteness"] = merged.get(
             "adj_treat_remoteness", pd.Series(0, index=merged.index)
         )
-    if params.remoteness_distribution and treat_adj is not None:
+    if (
+        params.remoteness_distribution is not None
+        and bool(params.remoteness_distribution)
+    ) and treat_adj is not None:
         imputed = impute_adjustment(
             treat_adj,
             "_treat_remoteness",
