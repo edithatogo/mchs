@@ -5,6 +5,7 @@ from dataclasses import dataclass
 
 AECC_INPUTS = frozenset(
     {
+        "episode_id",
         "visit_type",
         "principal_diagnosis",
         "age",

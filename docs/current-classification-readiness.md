@@ -11,8 +11,8 @@ Short List → ECDG spreadsheet alone does not resolve SNOMED. US ICD-10-CM,
 WHO ICD-10 and Australian ICD-10-AM are not interchangeable maps.
 
 A diagnosis group is not a full AECC class. The
-[AECC definitions manual](https://www.ihacpa.gov.au/sites/default/files/2022-08/aecc_definitions_manual_version_4_0.pdf)
-requires visit type, age, end status, triage and arrival transport for complexity and clinical
+[AECC 1.1 application 1.6 guide](https://www.ihacpa.gov.au/sites/default/files/2025-06/AECC_Grouper_v1.6_User_Guide.PDF)
+requires an episode identifier, visit type, age, end status, triage and arrival transport for complexity and clinical
 care commencement for relevant episode branching. Referral source is not arrival
 transport; departure time is not end status. The helper returns missing inputs,
 not invented fields or zero resource use. It does not assert that supplied values
@@ -28,3 +28,5 @@ Alternative: explicitly provisional coarse diagnosis summaries, without full
 AECC/DRG or patient cost claims. Probabilistic mapping requires validated training
 pairs and propagated uncertainty. Unmapped records remain included in inventory.
 No licensed asset or patient record is committed here.
+
+CSIRO SnoMAP Starter is an alternative requiring valid ICD-10-AM/SNOMED licences and acceptance of service terms; its published target is ICD-10-AM12, not EPD13. It is not an automatic current-edition substitute. No terminology uploads or service consent are performed by these helpers.
