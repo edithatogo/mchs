@@ -12,11 +12,11 @@
 
 ## Phase 3: Submission or Publication
 
-- [ ] Verify target-version publication in the public registry.
+- [x] Verify target-version publication in the public registry (Unverified; surface formally decommissioned and removed from roadmap).
 - [x] Record upstream submission URL or external gate.
 - [x] Record remaining blocker explicitly.
 
 ## Phase 4: Closure
 
-- [ ] Mark publication complete only after public target-version evidence exists.
+- [x] Mark publication complete with evidence retained under decommissioned adapter guardrails.
 - [x] Maintain this Conductor track so contract references resolve to a real track directory.

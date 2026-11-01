@@ -13,6 +13,6 @@ Encoding: UTF-8
 URL: https://github.com/edithatogo/mchs
 BugReports: https://github.com/edithatogo/mchs/issues
 LazyData: false
-Depends: R (>= 4.1.0)
+Depends: R (>= 4.5.0)
 Suggests: testthat
 SystemRequirements: Python (>= 3.10) and the 'nwau-py' Python package

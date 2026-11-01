@@ -1,0 +1,23 @@
+{
+  "track_id": "rust_core_first_multi_stream_20261101",
+  "type": "feature",
+  "status": "planned",
+  "track_class": "core",
+  "priority": "immediate",
+  "current_state": "planned",
+  "primary_contract": "docs/roadmaps/rust-core-ga.md",
+  "dependencies": [
+    "rust_core_continuation_20260524"
+  ],
+  "created_at": "2026-11-01T12:55:00Z",
+  "updated_at": "2026-11-01T12:55:00Z",
+  "description": "Establish nwau-core as the single canonical source of truth for all national ABF calculation streams (Acute, ED, MH, Outpatients, Subacute) using 128-bit decimal arithmetic.",
+  "completion_evidence_required": [
+    "Emergency Department AECC and UDG models implemented in nwau-core",
+    "Admitted Mental Health AMHCC phase and adjustment models implemented in nwau-core",
+    "Outpatient Tier 2 clinic models implemented in nwau-core",
+    "Subacute AN-SNAP v5.0 models implemented in nwau-core",
+    "128-bit rust_decimal exact accumulator verified across all streams with zero drift",
+    "Full differential parity against SAS golden fixtures for all 5 streams"
+  ]
+}

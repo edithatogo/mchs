@@ -5,6 +5,7 @@
 
 use crate::diagnostics::{Diagnostic, DiagnosticLevel};
 use crate::types::{AdjustmentFactors, EpisodeOutput, EpisodeRow, ReferenceRow};
+use rust_decimal::Decimal;
 
 /// The formula kernel trait. Every calculator version provides an
 /// implementation that maps (episode, reference, adjustments) → output.
@@ -23,6 +24,76 @@ pub trait Kernel {
     /// Return the well-known calculator ID for this kernel.
     fn calculator_id(&self) -> crate::types::CalculatorId {
         crate::types::CalculatorId(self.label().to_string())
+    }
+}
+
+/// The acute 2026 kernel implementation.
+#[derive(Debug, Clone, Copy)]
+pub struct Acute2026Kernel;
+
+impl Acute2026Kernel {
+    /// Construct a new acute 2026 kernel.
+    pub fn new() -> Self {
+        Self
+    }
+}
+
+impl Default for Acute2026Kernel {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Kernel for Acute2026Kernel {
+    fn label(&self) -> &'static str {
+        "acute-2026"
+    }
+
+    fn calculate(
+        &self,
+        episode: &EpisodeRow,
+        reference: &ReferenceRow,
+        adjustments: &AdjustmentFactors,
+    ) -> EpisodeOutput {
+        let validation = crate::acute::AcuteValidationState::valid();
+        let f_to_d = |v: f64| Decimal::from_f64_retain(v).unwrap_or_default();
+        let input = crate::acute::AcuteEpisodeInputDecimal {
+            drg: &episode.drg,
+            los: f_to_d(episode.los),
+            icu_hours: f_to_d(episode.icu_hours),
+            icu_other: f_to_d(episode.icu_other),
+            pat_sameday_flag: episode.flags.same_day,
+            pat_private_flag: episode.flags.private_patient,
+            pat_covid_flag: episode.flags.covid,
+            eligible_paed_flag: episode.flags.eligible_paediatric,
+            validation,
+        };
+        let acute_ref = crate::acute::AcuteReferenceRowDecimal {
+            drg: reference.drg.as_str(),
+            inlier_lower_bound: f_to_d(reference.inlier_lower_bound),
+            inlier_upper_bound: f_to_d(reference.inlier_upper_bound),
+            paediatric_multiplier: f_to_d(reference.paediatric_multiplier),
+            same_day_list_flag: reference.same_day_list_flag,
+            bundled_icu_flag: reference.bundled_icu_flag,
+            same_day_base_weight: f_to_d(reference.same_day_base_weight),
+            same_day_per_diem: f_to_d(reference.same_day_per_diem),
+            inlier_weight: f_to_d(reference.inlier_weight),
+            long_stay_per_diem: f_to_d(reference.long_stay_per_diem),
+            private_service_adjustment: f_to_d(reference.private_service_adjustment),
+        };
+        let acute_adj = crate::acute::AcuteAdjustmentFactorsDecimal {
+            icu_rate: f_to_d(adjustments.icu_rate),
+            covid_adjustment: f_to_d(adjustments.covid_adjustment),
+            indigenous_adjustment: f_to_d(adjustments.indigenous_adjustment),
+            remoteness_adjustment: f_to_d(adjustments.remoteness_adjustment),
+            treatment_remoteness_adjustment: f_to_d(adjustments.treatment_remoteness_adjustment),
+            radiotherapy_adjustment: f_to_d(adjustments.radiotherapy_adjustment),
+            dialysis_adjustment: f_to_d(adjustments.dialysis_adjustment),
+            private_accommodation_same_day: f_to_d(adjustments.private_accommodation_same_day),
+            private_accommodation_overnight: f_to_d(adjustments.private_accommodation_overnight),
+        };
+        let acute_out = crate::acute::calculate_acute_2026(input, acute_ref, acute_adj);
+        acute_out.into()
     }
 }
 
@@ -238,6 +309,7 @@ impl KernelRegistry {
 
     /// Register the default built-in kernels.
     pub fn with_defaults(mut self) -> Self {
+        self.register(Box::new(Acute2026Kernel::new()));
         self.register(Box::new(Acute2025Kernel::new()));
         self.register(Box::new(SubAcuteKernel::new()));
         self
@@ -254,6 +326,12 @@ impl Default for KernelRegistry {
 mod tests {
     use super::*;
     use crate::types::EpisodeFlags;
+
+    #[test]
+    fn acute_2026_kernel_label() {
+        let kernel = Acute2026Kernel::new();
+        assert_eq!(kernel.label(), "acute-2026");
+    }
 
     #[test]
     fn acute_kernel_label() {

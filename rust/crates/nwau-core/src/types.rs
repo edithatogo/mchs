@@ -1,6 +1,7 @@
 //! Core calculator types — identifiers, streams, pricing years, and episode
 //! metadata used across all formula kernels.
 
+use rust_decimal::prelude::ToPrimitive;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
@@ -290,6 +291,28 @@ impl From<crate::acute::AcuteEpisodeOutput> for EpisodeOutput {
             private_service_deduction: o.private_service_deduction,
             private_accommodation_deduction: o.private_accommodation_deduction,
             nwau: o.nwau25,
+        }
+    }
+}
+
+impl From<crate::acute::AcuteEpisodeOutputDecimal> for EpisodeOutput {
+    fn from(o: crate::acute::AcuteEpisodeOutputDecimal) -> Self {
+        Self {
+            error_code: o.error_code,
+            separation_category: o.separation_category.map(|s| s as u8),
+            eligible_icu_hours: o.eligible_icu_hours.to_f64().unwrap_or(0.0),
+            los_icu_removed: o.los_icu_removed.to_f64().unwrap_or(0.0),
+            w01: o.w01.to_f64().unwrap_or(0.0),
+            w02: o.w02.to_f64().unwrap_or(0.0),
+            w03: o.w03.to_f64().unwrap_or(0.0),
+            w04: o.w04.to_f64().unwrap_or(0.0),
+            gwau: o.gwau.to_f64().unwrap_or(0.0),
+            private_service_deduction: o.private_service_deduction.to_f64().unwrap_or(0.0),
+            private_accommodation_deduction: o
+                .private_accommodation_deduction
+                .to_f64()
+                .unwrap_or(0.0),
+            nwau: o.nwau.to_f64().unwrap_or(0.0),
         }
     }
 }

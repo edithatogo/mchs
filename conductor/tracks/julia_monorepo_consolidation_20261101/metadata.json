@@ -1,0 +1,21 @@
+{
+  "track_id": "julia_monorepo_consolidation_20261101",
+  "type": "feature",
+  "status": "planned",
+  "track_class": "binding",
+  "priority": "high",
+  "current_state": "planned",
+  "primary_contract": "julia-binding/Project.toml",
+  "dependencies": [
+    "rust_core_continuation_20260524"
+  ],
+  "created_at": "2026-11-01T12:55:00Z",
+  "updated_at": "2026-11-01T12:55:00Z",
+  "description": "Consolidate the Julia wrapper into the MCHS monorepo, migrate from shell CLI invoking to zero-overhead C-ABI ccall into libnwau_c_abi, and automate Julia General Registry sync.",
+  "completion_evidence_required": [
+    "Julia package lives canonical in julia-binding/ within monorepo",
+    "Direct ccall binding to libnwau_c_abi for in-memory NWAU calculation",
+    "Automated subtree/subrepo workflow for General Registry tagging",
+    "Bleeding-edge Julia unit tests pass with zero CLI shell dependencies"
+  ]
+}

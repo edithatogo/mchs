@@ -75,7 +75,7 @@ pub struct NwauAbiEpisodeOutput {
 pub type NwauAbiStatus = u32;
 
 pub const NWAU_ABI_VERSION_MAJOR: u32 = 0;
-pub const NWAU_ABI_VERSION_MINOR: u32 = 2;
+pub const NWAU_ABI_VERSION_MINOR: u32 = 3;
 pub const NWAU_ABI_VERSION_PATCH: u32 = 0;
 pub const NWAU_ABI_STATUS_OK: NwauAbiStatus = 0;
 pub const NWAU_ABI_STATUS_INVALID_ARGUMENT: NwauAbiStatus = 1;
@@ -209,13 +209,492 @@ pub unsafe extern "C" fn nwau_abi_calculate_acute_2025(
     NWAU_ABI_STATUS_OK
 }
 
+/// # Safety
+///
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiEpisodeOutput>()` bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_calculate_acute_2026(
+    input: *const NwauAbiEpisodeInput,
+    reference: *const NwauAbiReferenceRow,
+    adjustments: *const NwauAbiAdjustmentFactors,
+    out: *mut NwauAbiEpisodeOutput,
+) -> NwauAbiStatus {
+    nwau_abi_calculate_acute_2025(input, reference, adjustments, out)
+}
+
+// ============================================================================
+// Multi-Stream C-ABI: ED, Mental Health, Outpatients, and Subacute
+// ============================================================================
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiEdInput {
+    pub code: NwauAbiStringView,
+    pub classification_option: u32,
+    pub eligibility_option: u32,
+    pub compensable_status: u32,
+    pub dva_status: u32,
+    pub funding_source: u32,
+    pub indigenous_adjustment: f64,
+    pub remoteness_adjustment: f64,
+    pub treatment_remoteness_adjustment: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiEdReferenceRow {
+    pub code: NwauAbiStringView,
+    pub price_weight: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiEdOutput {
+    pub error_code: u32,
+    pub w01: f64,
+    pub gwau: f64,
+    pub nwau: f64,
+}
+
+/// # Safety
+///
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiEdOutput>()` bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_calculate_ed(
+    input: *const NwauAbiEdInput,
+    reference: *const NwauAbiEdReferenceRow,
+    out: *mut NwauAbiEdOutput,
+) -> NwauAbiStatus {
+    if input.is_null() || reference.is_null() || out.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let input = unsafe { &*input };
+    let reference = unsafe { &*reference };
+    let Some(code) = (unsafe { view_to_str(&input.code) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let Some(ref_code) = (unsafe { view_to_str(&reference.code) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+
+    let class_opt = match input.classification_option {
+        1 => nwau_core::EdClassificationOption::UdgMapped,
+        2 => nwau_core::EdClassificationOption::UdgDirect,
+        _ => nwau_core::EdClassificationOption::AeccDirect,
+    };
+    let elig_opt = match input.eligibility_option {
+        1 => nwau_core::EdEligibilityOption::CompensableDva,
+        _ => nwau_core::EdEligibilityOption::FundingSource,
+    };
+
+    let ed_input = nwau_core::EdEpisodeInput {
+        code,
+        classification_option: class_opt,
+        eligibility_option: elig_opt,
+        compensable_status: if input.compensable_status > 0 {
+            Some(input.compensable_status as u8)
+        } else {
+            None
+        },
+        dva_status: if input.dva_status > 0 {
+            Some(input.dva_status as u8)
+        } else {
+            None
+        },
+        funding_source: if input.funding_source > 0 {
+            Some(input.funding_source as u8)
+        } else {
+            None
+        },
+    };
+
+    let ed_ref = nwau_core::EdReferenceRow {
+        code: ref_code,
+        price_weight: reference.price_weight,
+    };
+
+    let ed_adj = nwau_core::EdAdjustmentFactors {
+        indigenous_adjustment: input.indigenous_adjustment,
+        remoteness_adjustment: input.remoteness_adjustment,
+        treatment_remoteness_adjustment: input.treatment_remoteness_adjustment,
+    };
+
+    let inscope = [1, 2, 8];
+    let res = nwau_core::calculate_ed(ed_input, Some(ed_ref), ed_adj, &inscope);
+    unsafe {
+        *out = NwauAbiEdOutput {
+            error_code: res.error_code as u32,
+            w01: res.w01,
+            gwau: res.gwau,
+            nwau: res.nwau,
+        };
+    }
+    NWAU_ABI_STATUS_OK
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiMhInput {
+    pub amhcc: NwauAbiStringView,
+    pub los: f64,
+    pub pat_sameday_flag: u8,
+    pub pat_private_flag: u8,
+    pub state: u8,
+    pub sc_pat_pub: f64,
+    pub sc_nopat_pub: f64,
+    pub specialist_paediatric_multiplier: f64,
+    pub indigenous_adjustment: f64,
+    pub remoteness_adjustment: f64,
+    pub treatment_remoteness_adjustment: f64,
+    pub private_serv_rate_national: f64,
+    pub private_serv_rate_state: f64,
+    pub private_accomm_sameday: f64,
+    pub private_accomm_overnight: f64,
+    pub ppsa_option: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiMhAdmittedReferenceRow {
+    pub amhcc: NwauAbiStringView,
+    pub price_cat: u32,
+    pub inlier_lower_bound: f64,
+    pub inlier_upper_bound: f64,
+    pub sso_base_weight: f64,
+    pub sso_per_diem: f64,
+    pub inlier_weight: f64,
+    pub lso_per_diem: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiMhOutput {
+    pub error_code: u32,
+    pub substream: u32,
+    pub separation_category: u32,
+    pub w01: f64,
+    pub gwau: f64,
+    pub private_service_deduction: f64,
+    pub private_accommodation_deduction: f64,
+    pub nwau: f64,
+}
+
+/// # Safety
+///
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiMhOutput>()` bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_calculate_mh(
+    input: *const NwauAbiMhInput,
+    reference: *const NwauAbiMhAdmittedReferenceRow,
+    out: *mut NwauAbiMhOutput,
+) -> NwauAbiStatus {
+    if input.is_null() || reference.is_null() || out.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let input = unsafe { &*input };
+    let reference = unsafe { &*reference };
+    let Some(amhcc) = (unsafe { view_to_str(&input.amhcc) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let Some(ref_amhcc) = (unsafe { view_to_str(&reference.amhcc) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+
+    let mh_input = nwau_core::MhEpisodeInput {
+        amhcc,
+        los: input.los,
+        pat_sameday_flag: input.pat_sameday_flag != 0,
+        pat_private_flag: input.pat_private_flag != 0,
+        state: input.state,
+        sc_pat_pub: input.sc_pat_pub,
+        sc_nopat_pub: input.sc_nopat_pub,
+    };
+
+    let mh_ref = nwau_core::MhAdmittedReferenceRow {
+        amhcc: ref_amhcc,
+        price_cat: reference.price_cat as u8,
+        inlier_lower_bound: reference.inlier_lower_bound,
+        inlier_upper_bound: reference.inlier_upper_bound,
+        sso_base_weight: reference.sso_base_weight,
+        sso_per_diem: reference.sso_per_diem,
+        inlier_weight: reference.inlier_weight,
+        lso_per_diem: reference.lso_per_diem,
+    };
+
+    let mh_adj = nwau_core::MhAdjustmentFactors {
+        specialist_paediatric_multiplier: input.specialist_paediatric_multiplier,
+        indigenous_adjustment: input.indigenous_adjustment,
+        remoteness_adjustment: input.remoteness_adjustment,
+        treatment_remoteness_adjustment: input.treatment_remoteness_adjustment,
+        private_serv_rate_national: input.private_serv_rate_national,
+        private_serv_rate_state: input.private_serv_rate_state,
+        private_accomm_sameday: input.private_accomm_sameday,
+        private_accomm_overnight: input.private_accomm_overnight,
+    };
+
+    let ppsa = match input.ppsa_option {
+        2 => nwau_core::MhPpsaOption::StateLevel,
+        _ => nwau_core::MhPpsaOption::National,
+    };
+
+    let res = nwau_core::calculate_mh(mh_input, Some(mh_ref), None, mh_adj, ppsa);
+    unsafe {
+        *out = NwauAbiMhOutput {
+            error_code: res.error_code as u32,
+            substream: match res.substream {
+                nwau_core::MhSubstream::Admitted => 0,
+                nwau_core::MhSubstream::Community => 1,
+            },
+            separation_category: res.separation_category.map(|s| s as u32).unwrap_or(0),
+            w01: res.w01,
+            gwau: res.gwau,
+            private_service_deduction: res.private_service_deduction,
+            private_accommodation_deduction: res.private_accommodation_deduction,
+            nwau: res.nwau,
+        };
+    }
+    NWAU_ABI_STATUS_OK
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiOutpatientInput {
+    pub clinic_code: NwauAbiStringView,
+    pub data_type: u32,
+    pub multiprovider_flag: u8,
+    pub eligible_paediatric_flag: u8,
+    pub inscope_flag: u8,
+    pub group_event_count: f64,
+    pub indiv_event_count: f64,
+    pub multidisciplinary_event_count: f64,
+    pub indigenous_adjustment: f64,
+    pub remoteness_adjustment: f64,
+    pub treatment_remoteness_adjustment: f64,
+    pub multiprovider_adjustment: f64,
+    pub paediatric_adjustment: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiOutpatientReferenceRow {
+    pub clinic_code: NwauAbiStringView,
+    pub price_weight: f64,
+    pub paediatric_adjustment: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiOutpatientOutput {
+    pub error_code: u32,
+    pub w01: f64,
+    pub gwau: f64,
+    pub nwau: f64,
+}
+
+/// # Safety
+///
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiOutpatientOutput>()` bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_calculate_outpatients(
+    input: *const NwauAbiOutpatientInput,
+    reference: *const NwauAbiOutpatientReferenceRow,
+    out: *mut NwauAbiOutpatientOutput,
+) -> NwauAbiStatus {
+    if input.is_null() || reference.is_null() || out.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let input = unsafe { &*input };
+    let reference = unsafe { &*reference };
+    let Some(clinic_code) = (unsafe { view_to_str(&input.clinic_code) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let Some(ref_clinic) = (unsafe { view_to_str(&reference.clinic_code) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+
+    let op_input = nwau_core::OutpatientEpisodeInput {
+        clinic_code,
+        data_type: match input.data_type {
+            2 => nwau_core::OutpatientDataType::AggregateCount,
+            _ => nwau_core::OutpatientDataType::EventLevel,
+        },
+        multiprovider_flag: input.multiprovider_flag != 0,
+        eligible_paediatric_flag: input.eligible_paediatric_flag != 0,
+        inscope_flag: input.inscope_flag != 0,
+        group_event_count: input.group_event_count,
+        indiv_event_count: input.indiv_event_count,
+        multidisciplinary_event_count: input.multidisciplinary_event_count,
+    };
+
+    let op_ref = nwau_core::OutpatientReferenceRow {
+        clinic_code: ref_clinic,
+        price_weight: reference.price_weight,
+        paediatric_adjustment: reference.paediatric_adjustment,
+    };
+
+    let op_adj = nwau_core::OutpatientAdjustmentFactors {
+        indigenous_adjustment: input.indigenous_adjustment,
+        remoteness_adjustment: input.remoteness_adjustment,
+        treatment_remoteness_adjustment: input.treatment_remoteness_adjustment,
+        multiprovider_adjustment: input.multiprovider_adjustment,
+        paediatric_adjustment: input.paediatric_adjustment,
+    };
+
+    let res = nwau_core::calculate_outpatients(op_input, Some(op_ref), op_adj);
+    unsafe {
+        *out = NwauAbiOutpatientOutput {
+            error_code: res.error_code as u32,
+            w01: res.w01,
+            gwau: res.gwau,
+            nwau: res.nwau,
+        };
+    }
+    NWAU_ABI_STATUS_OK
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiSubacuteInput {
+    pub ansnap: NwauAbiStringView,
+    pub los: f64,
+    pub pat_sameday_flag: u8,
+    pub pat_private_flag: u8,
+    pub pat_public_flag: u8,
+    pub age: f64,
+    pub state: u8,
+    pub indigenous_adjustment: f64,
+    pub remoteness_adjustment: f64,
+    pub treatment_remoteness_adjustment: f64,
+    pub radiotherapy_adjustment: f64,
+    pub dialysis_adjustment: f64,
+    pub private_serv_rate_national: f64,
+    pub private_serv_rate_state: f64,
+    pub private_accomm_sameday: f64,
+    pub private_accomm_overnight: f64,
+    pub ppsa_option: u32,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiSubacuteReferenceRow {
+    pub ansnap: NwauAbiStringView,
+    pub sameday_list_flag: u8,
+    pub inlier_lower_bound: f64,
+    pub inlier_upper_bound: f64,
+    pub pw_sameday: f64,
+    pub pw_sso_perdiem: f64,
+    pub pw_inlier: f64,
+    pub pw_lso_perdiem: f64,
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
+pub struct NwauAbiSubacuteOutput {
+    pub error_code: u32,
+    pub separation_category: u32,
+    pub w01: f64,
+    pub gwau: f64,
+    pub private_service_deduction: f64,
+    pub private_accommodation_deduction: f64,
+    pub nwau: f64,
+}
+
+/// # Safety
+///
+/// Caller must ensure all pointer arguments are non-null and point to valid,
+/// properly aligned data. String views with non-zero length must point to
+/// valid UTF-8 bytes. `out` must point to a writable region of at least
+/// `size_of::<NwauAbiSubacuteOutput>()` bytes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_calculate_subacute(
+    input: *const NwauAbiSubacuteInput,
+    reference: *const NwauAbiSubacuteReferenceRow,
+    out: *mut NwauAbiSubacuteOutput,
+) -> NwauAbiStatus {
+    if input.is_null() || reference.is_null() || out.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let input = unsafe { &*input };
+    let reference = unsafe { &*reference };
+    let Some(ansnap) = (unsafe { view_to_str(&input.ansnap) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+    let Some(ref_ansnap) = (unsafe { view_to_str(&reference.ansnap) }) else {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    };
+
+    let sa_input = nwau_core::SubacuteEpisodeInput {
+        ansnap,
+        los: input.los,
+        pat_sameday_flag: input.pat_sameday_flag != 0,
+        pat_private_flag: input.pat_private_flag != 0,
+        pat_public_flag: input.pat_public_flag != 0,
+        age: input.age,
+        state: input.state,
+    };
+
+    let sa_ref = nwau_core::SubacuteReferenceRow {
+        ansnap: ref_ansnap,
+        sameday_list_flag: reference.sameday_list_flag != 0,
+        inlier_lower_bound: reference.inlier_lower_bound,
+        inlier_upper_bound: reference.inlier_upper_bound,
+        pw_sameday: reference.pw_sameday,
+        pw_sso_perdiem: reference.pw_sso_perdiem,
+        pw_inlier: reference.pw_inlier,
+        pw_lso_perdiem: reference.pw_lso_perdiem,
+    };
+
+    let sa_adj = nwau_core::SubacuteAdjustmentFactors {
+        indigenous_adjustment: input.indigenous_adjustment,
+        remoteness_adjustment: input.remoteness_adjustment,
+        treatment_remoteness_adjustment: input.treatment_remoteness_adjustment,
+        radiotherapy_adjustment: input.radiotherapy_adjustment,
+        dialysis_adjustment: input.dialysis_adjustment,
+        private_serv_rate_national: input.private_serv_rate_national,
+        private_serv_rate_state: input.private_serv_rate_state,
+        private_accomm_sameday: input.private_accomm_sameday,
+        private_accomm_overnight: input.private_accomm_overnight,
+    };
+
+    let ppsa = match input.ppsa_option {
+        2 => nwau_core::SubacutePpsaOption::StateLevel,
+        _ => nwau_core::SubacutePpsaOption::National,
+    };
+
+    let res = nwau_core::calculate_subacute(sa_input, Some(sa_ref), sa_adj, ppsa);
+    unsafe {
+        *out = NwauAbiSubacuteOutput {
+            error_code: res.error_code as u32,
+            separation_category: res.separation_category.map(|s| s as u32).unwrap_or(0),
+            w01: res.w01,
+            gwau: res.gwau,
+            private_service_deduction: res.private_service_deduction,
+            private_accommodation_deduction: res.private_accommodation_deduction,
+            nwau: res.nwau,
+        };
+    }
+    NWAU_ABI_STATUS_OK
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
     fn version_queries_match() {
         assert_eq!(nwau_abi_version_major(), 0);
-        assert_eq!(nwau_abi_version_minor(), 2);
+        assert_eq!(nwau_abi_version_minor(), 3);
         assert_eq!(nwau_abi_version_patch(), 0);
     }
     #[test]
@@ -290,44 +769,55 @@ mod tests {
         assert_eq!(status, NWAU_ABI_STATUS_INVALID_ARGUMENT);
     }
     #[test]
-    fn valid_pointer_shape_returns_ok() {
-        let drg = b"801A\0";
-        let input = NwauAbiEpisodeInput {
-            drg: NwauAbiStringView {
-                ptr: drg.as_ptr() as *const c_char,
-                len: 4,
+    fn test_abi_multi_stream_functions() {
+        // 1. ED ABI Test
+        let ed_code = b"E0110A\0";
+        let ed_input = NwauAbiEdInput {
+            code: NwauAbiStringView {
+                ptr: ed_code.as_ptr() as *const c_char,
+                len: 6,
             },
-            los: 10.0,
-            icu_hours: 0.0,
-            icu_other: 0.0,
-            pat_sameday_flag: 0,
-            pat_private_flag: 0,
-            pat_covid_flag: 0,
-            eligible_paed_flag: 0,
+            classification_option: 3,
+            eligibility_option: 2,
+            funding_source: 1,
+            ..NwauAbiEdInput::default()
         };
-        let ref_drg = b"801A\0";
-        let reference = NwauAbiReferenceRow {
-            drg: NwauAbiStringView {
-                ptr: ref_drg.as_ptr() as *const c_char,
-                len: 4,
+        let ed_ref = NwauAbiEdReferenceRow {
+            code: NwauAbiStringView {
+                ptr: ed_code.as_ptr() as *const c_char,
+                len: 6,
             },
-            inlier_lower_bound: 7.0,
-            inlier_upper_bound: 72.0,
-            paediatric_multiplier: 1.35,
-            same_day_list_flag: 0,
-            bundled_icu_flag: 0,
-            same_day_base_weight: 0.9527,
-            same_day_per_diem: 1.1849,
-            inlier_weight: 9.2472,
-            long_stay_per_diem: 0.26,
-            private_service_adjustment: 0.0,
+            price_weight: 0.2837,
         };
-        let adjustments = NwauAbiAdjustmentFactors::default();
-        let mut output = NwauAbiEpisodeOutput::default();
-        let status =
-            unsafe { nwau_abi_calculate_acute_2025(&input, &reference, &adjustments, &mut output) };
+        let mut ed_out = NwauAbiEdOutput::default();
+        let status = unsafe { nwau_abi_calculate_ed(&ed_input, &ed_ref, &mut ed_out) };
         assert_eq!(status, NWAU_ABI_STATUS_OK);
-        assert_eq!(output.error_code, 0);
-        assert!((output.nwau25 - 9.2472).abs() < 1e-4);
+        assert_eq!(ed_out.error_code, 0);
+        assert!((ed_out.nwau - 0.2837).abs() < 1e-4);
+
+        // 2. Outpatient ABI Test
+        let op_code = b"10.01\0";
+        let op_input = NwauAbiOutpatientInput {
+            clinic_code: NwauAbiStringView {
+                ptr: op_code.as_ptr() as *const c_char,
+                len: 5,
+            },
+            data_type: 1,
+            inscope_flag: 1,
+            ..NwauAbiOutpatientInput::default()
+        };
+        let op_ref = NwauAbiOutpatientReferenceRow {
+            clinic_code: NwauAbiStringView {
+                ptr: op_code.as_ptr() as *const c_char,
+                len: 5,
+            },
+            price_weight: 0.1742,
+            paediatric_adjustment: 1.0,
+        };
+        let mut op_out = NwauAbiOutpatientOutput::default();
+        let status = unsafe { nwau_abi_calculate_outpatients(&op_input, &op_ref, &mut op_out) };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        assert_eq!(op_out.error_code, 0);
+        assert!((op_out.nwau - 0.1742).abs() < 1e-4);
     }
 }

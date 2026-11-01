@@ -44,18 +44,25 @@ Conditional surfaces:
 - TypeScript/WASM for GitHub Pages demos and optional web delivery.
 - Power Platform where service boundaries are approved.
 
-## Deprioritized by default
+## Deprioritized, Decommissioned, and Removed from Roadmap
 
-These should not block Rust Core GA:
+These language surfaces are deprioritized, decommissioned, and removed from the active roadmap to keep focus strictly on the Rust core:
 
-- Scala/Spark.
-- Swift.
-- MATLAB.
-- Go.
-- Standalone C language support.
-- SQL/DuckDB as an active surface.
-- Additional language bindings without a named audience, sponsor, and test
-  owner.
+- Scala/Spark (Formally decommissioned and removed from the active roadmap; no new development).
+- Swift (Formally decommissioned and removed from the active roadmap; no new development).
+- MATLAB (Historical submission evidence retained only; deprioritized).
+- Go (Module proxy evidence retained; deprioritized).
+- Standalone C language support / C/C++ (vcpkg/Conan decommissioned; no new development).
+- SQL/DuckDB (Deprioritized by default).
+- Additional language bindings without a named audience, sponsor, and test owner.
+
+## Active Language Focus (Rust-Core First)
+
+The active roadmap is strictly focused on three core environments:
+
+1. **Rust (`nwau-core`):** Canonical calculation engine, 128-bit decimal arithmetic, high-performance CLI, and single source of truth.
+2. **Python (`nwau_py` / Polars):** Thin PyO3 wrapper for health economics, data science, and pipeline execution.
+3. **R (`nwauR`):** C-ABI / thin wrapper for academic biostatistics and clinical researchers.
 
 ## Promotion criteria
 
