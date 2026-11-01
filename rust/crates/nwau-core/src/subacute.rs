@@ -113,7 +113,7 @@ pub fn validate_subacute_episode(
     }
     if matches!(
         input.ansnap,
-        "5J01" | "5O01" | "5K01" | "5P01" | "5L01" | "5M01"
+        "5J01" | "5K01" | "5L01" | "5M01"
     ) && (input.los > 1.0 || !ref_row.sameday_list_flag)
     {
         return 4;

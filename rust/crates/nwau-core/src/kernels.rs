@@ -5,6 +5,7 @@
 
 use crate::diagnostics::{Diagnostic, DiagnosticLevel};
 use crate::types::{AdjustmentFactors, EpisodeOutput, EpisodeRow, ReferenceRow};
+use rust_decimal::Decimal;
 
 /// The formula kernel trait. Every calculator version provides an
 /// implementation that maps (episode, reference, adjustments) → output.
@@ -55,20 +56,43 @@ impl Kernel for Acute2026Kernel {
         adjustments: &AdjustmentFactors,
     ) -> EpisodeOutput {
         let validation = crate::acute::AcuteValidationState::valid();
-        let input = crate::acute::AcuteEpisodeInput {
+        let f_to_d = |v: f64| Decimal::from_f64_retain(v).unwrap_or_default();
+        let input = crate::acute::AcuteEpisodeInputDecimal {
             drg: &episode.drg,
-            los: episode.los,
-            icu_hours: episode.icu_hours,
-            icu_other: episode.icu_other,
+            los: f_to_d(episode.los),
+            icu_hours: f_to_d(episode.icu_hours),
+            icu_other: f_to_d(episode.icu_other),
             pat_sameday_flag: episode.flags.same_day,
             pat_private_flag: episode.flags.private_patient,
             pat_covid_flag: episode.flags.covid,
             eligible_paed_flag: episode.flags.eligible_paediatric,
             validation,
         };
-        let acute_ref = reference.to_acute_ref();
-        let acute_adj: crate::acute::AcuteAdjustmentFactors = (*adjustments).into();
-        let acute_out = crate::acute::calculate_acute_2025(input, acute_ref, acute_adj);
+        let acute_ref = crate::acute::AcuteReferenceRowDecimal {
+            drg: reference.drg.as_str(),
+            inlier_lower_bound: f_to_d(reference.inlier_lower_bound),
+            inlier_upper_bound: f_to_d(reference.inlier_upper_bound),
+            paediatric_multiplier: f_to_d(reference.paediatric_multiplier),
+            same_day_list_flag: reference.same_day_list_flag,
+            bundled_icu_flag: reference.bundled_icu_flag,
+            same_day_base_weight: f_to_d(reference.same_day_base_weight),
+            same_day_per_diem: f_to_d(reference.same_day_per_diem),
+            inlier_weight: f_to_d(reference.inlier_weight),
+            long_stay_per_diem: f_to_d(reference.long_stay_per_diem),
+            private_service_adjustment: f_to_d(reference.private_service_adjustment),
+        };
+        let acute_adj = crate::acute::AcuteAdjustmentFactorsDecimal {
+            icu_rate: f_to_d(adjustments.icu_rate),
+            covid_adjustment: f_to_d(adjustments.covid_adjustment),
+            indigenous_adjustment: f_to_d(adjustments.indigenous_adjustment),
+            remoteness_adjustment: f_to_d(adjustments.remoteness_adjustment),
+            treatment_remoteness_adjustment: f_to_d(adjustments.treatment_remoteness_adjustment),
+            radiotherapy_adjustment: f_to_d(adjustments.radiotherapy_adjustment),
+            dialysis_adjustment: f_to_d(adjustments.dialysis_adjustment),
+            private_accommodation_same_day: f_to_d(adjustments.private_accommodation_same_day),
+            private_accommodation_overnight: f_to_d(adjustments.private_accommodation_overnight),
+        };
+        let acute_out = crate::acute::calculate_acute_2026(input, acute_ref, acute_adj);
         acute_out.into()
     }
 }

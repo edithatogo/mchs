@@ -41,7 +41,7 @@ pub struct MhEpisodeInput<'a> {
     pub sc_nopat_pub: f64,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct MhAdjustmentFactors {
     pub specialist_paediatric_multiplier: f64, // default 1.0
     pub indigenous_adjustment: f64,
@@ -51,6 +51,21 @@ pub struct MhAdjustmentFactors {
     pub private_serv_rate_state: f64,
     pub private_accomm_sameday: f64,
     pub private_accomm_overnight: f64,
+}
+
+impl Default for MhAdjustmentFactors {
+    fn default() -> Self {
+        Self {
+            specialist_paediatric_multiplier: 1.0,
+            indigenous_adjustment: 0.0,
+            remoteness_adjustment: 0.0,
+            treatment_remoteness_adjustment: 0.0,
+            private_serv_rate_national: 0.0,
+            private_serv_rate_state: 0.0,
+            private_accomm_sameday: 0.0,
+            private_accomm_overnight: 0.0,
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -104,7 +119,7 @@ pub fn calculate_mh(
         MhSubstream::Community
     };
 
-    let specpaed = if adjustments.specialist_paediatric_multiplier > 0.0 {
+    let specpaed = if adjustments.specialist_paediatric_multiplier >= 1.0 {
         adjustments.specialist_paediatric_multiplier
     } else {
         1.0
