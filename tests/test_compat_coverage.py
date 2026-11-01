@@ -631,3 +631,58 @@ def test_compat_extra_gaps():
     df_named = pd.DataFrame({"a": [1, 2, 3]}, index=["r1", "r2", "r3"])
     df_named.loc[0, "a"] = 55
     assert df_named["a"].iloc[0] == 55
+
+
+def test_compat_additional_edge_cases():
+    import numpy as np
+
+    from nwau_py.compat import CompatFrame, CompatSeries, concat, testing
+
+    # 1. combine_first exception fallback with mixed dtypes
+    s1 = CompatSeries(np.array(["a", None], dtype=object))
+    s2 = CompatSeries(np.array([1, 2], dtype=int))
+    res = s1.combine_first(s2)
+    assert res.iloc[1] == 2
+
+    # 2. iloc on series in tuple indexing
+    df = CompatFrame({"a": [10, 20, 30], "b": [40, 50, 60]})
+    val = df.iloc[1, 0]
+    assert val == 20
+
+    # 3. concat axis=1 with dict
+    c1 = CompatFrame({"a": [1, 2]})
+    c_res = concat([c1, {"b": np.array([3, 4])}], axis=1)
+    assert "b" in c_res.columns
+
+    # 4. concat axis=0 with non-frame non-series
+    c_empty = concat([123], axis=0)
+    assert len(c_empty) == 0
+
+    # 5. assert_frame_equal column and length mismatches, and string column values
+    f1 = CompatFrame({"col_str": ["x", "y"]})
+    f2 = CompatFrame({"col_str": ["x", "y"]})
+    f_diff = CompatFrame({"col_str": ["x", "z"]})
+    testing.assert_frame_equal(f1, f2)
+    with pytest.raises(AssertionError, match="Values in column"):
+        testing.assert_frame_equal(f1, f_diff)
+
+    with pytest.raises(AssertionError, match="Column mismatch"):
+        testing.assert_frame_equal(CompatFrame({"a": [1]}), CompatFrame({"b": [1]}))
+
+    with pytest.raises(AssertionError, match="Length mismatch"):
+        testing.assert_frame_equal(CompatFrame({"a": [1]}), CompatFrame({"a": [1, 2]}))
+
+    # 6. assert_series_equal with strings
+    s_str1 = CompatSeries(["foo", "bar"])
+    s_str2 = CompatSeries(["foo", "bar"])
+    s_str_diff = CompatSeries(["foo", "baz"])
+    testing.assert_series_equal(s_str1, s_str2)
+    with pytest.raises(AssertionError, match="Series values differ"):
+        testing.assert_series_equal(s_str1, s_str_diff)
+
+    # 7. astype invalid fallback, str.contains non-regex, and KeyError on named index
+    s_test = CompatSeries(["hello", "world"], index=["a", "b"])
+    assert s_test.astype("invalid_dtype_XYZ").iloc[0] == "hello"
+    assert bool(s_test.str.contains("ell", regex=False).iloc[0]) is True
+    with pytest.raises(KeyError):
+        _ = s_test["missing_label"]

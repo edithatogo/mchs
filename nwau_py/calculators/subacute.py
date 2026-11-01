@@ -24,6 +24,13 @@ from nwau_py.data.loader import load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import impute_adjustment, ra_suffix, sas_ref_dir
 
+try:
+    from nwau_py import _rust
+
+    _RUST_AVAILABLE = True
+except ImportError:
+    _RUST_AVAILABLE = False
+
 _DEFAULT_YEAR = "2025"
 
 
@@ -554,3 +561,10 @@ def calculate_subacute(
     if is_polars_input:
         return result.to_polars() if hasattr(result, "to_polars") else result
     return result
+
+
+def calculate_subacute_rust_row(**kwargs: Any) -> dict[str, Any]:
+    """Calculate a subacute row using the Rust kernel."""
+    if not _RUST_AVAILABLE:
+        raise RuntimeError("Rust extension _rust is not available")
+    return _rust.calculate_subacute_row(**kwargs)

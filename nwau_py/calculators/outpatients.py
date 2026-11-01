@@ -28,6 +28,13 @@ from nwau_py.data.loader import load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import impute_adjustment, ra_suffix, sas_ref_dir
 
+try:
+    from nwau_py import _rust
+
+    _RUST_AVAILABLE = True
+except ImportError:
+    _RUST_AVAILABLE = False
+
 _DEFAULT_YEAR = "2025"
 
 
@@ -253,10 +260,8 @@ def calculate_outpatients(
     ref_dir: Path | None = None,
 ) -> Any:
     """Calculate NWAU25 for outpatient activity using resolved reference data."""
-    collect_fn: Any = getattr(df, "collect_schema", None)
-    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_tier_2_input(
-        cols,
+        tuple(df.columns),
         year=year,
         version=get_classification_version("tier_2", year),
     )
@@ -598,3 +603,10 @@ def calculate_outpatients(
     if is_polars_input:
         return result.to_polars() if hasattr(result, "to_polars") else result
     return result
+
+
+def calculate_outpatients_rust_row(**kwargs: Any) -> dict[str, Any]:
+    """Calculate an outpatient row using the Rust kernel."""
+    if not _RUST_AVAILABLE:
+        raise RuntimeError("Rust extension _rust is not available")
+    return _rust.calculate_outpatients_row(**kwargs)

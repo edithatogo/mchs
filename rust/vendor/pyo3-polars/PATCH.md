@@ -1,0 +1,3 @@
+# NWAU expression-only feature selection
+
+Source: crates.io pyo3-polars 0.28.0, distributed under MIT. All library source files are unchanged. The sole manifest change enables polars-plan instead of polars-plan/python for the derive feature. The NWAU plugin exports numeric expressions and field mappings. It does not exchange serialized Python logical plans. Activating the Python logical-plan serializer introduces IPC compression and vulnerable zstd dependencies that the expressions never need. Remove the patch when upstream releases an equivalent feature split or qualifies a patched compression dependency. Validate with the six expression exports, calculator tests and cargo audit.

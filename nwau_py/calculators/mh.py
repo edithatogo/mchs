@@ -19,6 +19,13 @@ from nwau_py.data.loader import load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import impute_adjustment, sas_ref_dir
 
+try:
+    from nwau_py import _rust
+
+    _RUST_AVAILABLE = True
+except ImportError:
+    _RUST_AVAILABLE = False
+
 _DEFAULT_YEAR = "2025"
 
 
@@ -107,10 +114,8 @@ def calculate_mh(
     the patient-level variables referenced below (e.g. ``AMHCC``, ``LOS``,
     ``PAT_PRIVATE_FLAG`` etc.).
     """
-    collect_fn: Any = getattr(df, "collect_schema", None)
-    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_amhcc_input(
-        cols,
+        tuple(df.columns),
         year=year,
         version=get_classification_version("amhcc", year),
     )
@@ -293,3 +298,17 @@ def calculate_mh(
     if is_polars_input:
         return result.to_polars() if hasattr(result, "to_polars") else result
     return result
+
+
+def calculate_mh_rust_admitted_row(**kwargs: Any) -> dict[str, Any]:
+    """Calculate an admitted mental health row using the Rust kernel."""
+    if not _RUST_AVAILABLE:
+        raise RuntimeError("Rust extension _rust is not available")
+    return _rust.calculate_mh_admitted_row(**kwargs)
+
+
+def calculate_mh_rust_community_row(**kwargs: Any) -> dict[str, Any]:
+    """Calculate a community mental health row using the Rust kernel."""
+    if not _RUST_AVAILABLE:
+        raise RuntimeError("Rust extension _rust is not available")
+    return _rust.calculate_mh_community_row(**kwargs)

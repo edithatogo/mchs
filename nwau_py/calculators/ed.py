@@ -21,6 +21,13 @@ from nwau_py.data.loader import load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import sas_ref_dir
 
+try:
+    from nwau_py import _rust
+
+    _RUST_AVAILABLE = True
+except ImportError:
+    _RUST_AVAILABLE = False
+
 _DEFAULT_YEAR = "2025"
 
 
@@ -66,9 +73,9 @@ def _safe_read_sas(path: Path | str) -> Any:
 def _to_pl(frame: Any) -> pl.DataFrame:
     if hasattr(frame, "to_polars"):
         res = frame.to_polars()
-        if not isinstance(res, pl.DataFrame):
-            return pl.DataFrame(res)
-        return res
+        if isinstance(res, pl.DataFrame):
+            return res
+        return pl.DataFrame(res)
     if isinstance(frame, pl.DataFrame):
         return frame
     if isinstance(frame, pl.LazyFrame):
@@ -116,8 +123,9 @@ def calculate_ed(
     ref_dir: Path | None = None,
 ) -> Any:
     """Implement ``NWAU25_CALCULATOR_ED.sas`` against loaded reference tables."""
-    collect_fn: Any = getattr(df, "collect_schema", None)
-    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
+    is_pandas = pd is not None and isinstance(df, pd.DataFrame)
+    df_pl = _to_pl(df)
+    cols_tuple = tuple(df_pl.columns)
     if params.classification_option == 1:
         required_mapping_fields = (
             "type_of_visit",
@@ -125,7 +133,7 @@ def calculate_ed(
             "episode_end_status",
         )
         missing_mapping_fields = tuple(
-            field for field in required_mapping_fields if field not in cols
+            field for field in required_mapping_fields if field not in cols_tuple
         )
         if missing_mapping_fields:
             raise ClassificationValidationError(
@@ -139,13 +147,13 @@ def calculate_ed(
         )
     elif params.classification_option < 3:
         validate_udg_input(
-            cols,
+            cols_tuple,
             year=year,
             version=get_classification_version("udg", year),
         )
     else:
         validate_aecc_input(
-            cols,
+            cols_tuple,
             year=year,
             version=get_classification_version("aecc", year),
         )
@@ -154,9 +162,6 @@ def calculate_ed(
     suffix = str(year)[-2:]
     nwau_col = f"NWAU{suffix}"
     gwau_col = f"GWAU{suffix}"
-
-    is_pandas = pd is not None and isinstance(df, pd.DataFrame)
-    df_pl = _to_pl(df)
 
     if params.classification_option == 1:
         udg_map = _to_pl(_load_udg_map(ref_dir))
@@ -227,17 +232,93 @@ def calculate_ed(
             pl.when(weight_missing).then(3).when(out_scope).then(2).otherwise(0)
         )
 
-    merged = merged.with_columns(
-        w01_expr.alias("_w01"),
-        gwau_expr.alias(gwau_col),
-        error_code_expr.alias("Error_Code"),
-    )
-    merged = merged.with_columns(
-        pl.when(pl.col("Error_Code") > 0)
-        .then(0.0)
-        .otherwise(pl.col(gwau_col).round(8))
-        .alias(nwau_col)
-    )
+    # The Rust row API has fixed funding codes. Preserve caller-configured
+    # funding eligibility and the existing null semantics in dataframe mode.
+    if _RUST_AVAILABLE and params.eligibility_option == 1:
+        pw_col = "udg_pw" if params.classification_option < 3 else "AECC_pw"
+        n_rows = len(merged)
+        nwau_vals = []
+        gwau_vals = []
+        w01_vals = []
+        err_vals = []
+
+        pws = merged[pw_col].to_list() if pw_col in merged.columns else [None] * n_rows
+        comp_statuses = (
+            merged["COMPENSABLE_STATUS"].to_list()
+            if "COMPENSABLE_STATUS" in merged.columns
+            else [None] * n_rows
+        )
+        dva_statuses = (
+            merged["DVA_STATUS"].to_list()
+            if "DVA_STATUS" in merged.columns
+            else [None] * n_rows
+        )
+        fund_sources = (
+            merged["FUNDSC"].to_list()
+            if "FUNDSC" in merged.columns
+            else [None] * n_rows
+        )
+        ind_adjs = (
+            merged["adj_indigenous"].to_list()
+            if "adj_indigenous" in merged.columns
+            else [0.0] * n_rows
+        )
+        rem_adjs = (
+            merged["adj_remoteness"].to_list()
+            if "adj_remoteness" in merged.columns
+            else [0.0] * n_rows
+        )
+        treat_adjs = (
+            merged["adj_treat_remoteness"].to_list()
+            if "adj_treat_remoteness" in merged.columns
+            else [0.0] * n_rows
+        )
+
+        for i in range(n_rows):
+            pw = pws[i]
+            if pw is None:
+                w01_vals.append(None)
+                gwau_vals.append(None)
+                err_vals.append(3)
+                nwau_vals.append(0.0)
+                continue
+            comp_val = comp_statuses[i]
+            dva_val = dva_statuses[i]
+            fund_val = fund_sources[i]
+            res = _rust.calculate_ed_row(
+                price_weight=float(pw),
+                classification_option=params.classification_option,
+                eligibility_option=params.eligibility_option,
+                compensable_status=(int(comp_val) if comp_val is not None else None),
+                dva_status=(int(dva_val) if dva_val is not None else None),
+                funding_source=(int(fund_val) if fund_val is not None else None),
+                indigenous_adjustment=float(ind_adjs[i] or 0.0),
+                remoteness_adjustment=float(rem_adjs[i] or 0.0),
+                treatment_remoteness_adjustment=float(treat_adjs[i] or 0.0),
+            )
+            w01_vals.append(res["W01"])
+            gwau_vals.append(res["GWAU"])
+            err_vals.append(res["Error_Code"])
+            nwau_vals.append(res["NWAU"])
+
+        merged = merged.with_columns(
+            pl.Series("_w01", w01_vals),
+            pl.Series(gwau_col, gwau_vals),
+            pl.Series("Error_Code", err_vals),
+            pl.Series(nwau_col, nwau_vals),
+        )
+    else:
+        merged = merged.with_columns(
+            w01_expr.alias("_w01"),
+            gwau_expr.alias(gwau_col),
+            error_code_expr.alias("Error_Code"),
+        )
+        merged = merged.with_columns(
+            pl.when(pl.col("Error_Code") > 0)
+            .then(0.0)
+            .otherwise(pl.col(gwau_col).round(8))
+            .alias(nwau_col)
+        )
 
     if not params.debug_mode:
         cols_to_drop = [c for c in merged.columns if c.startswith("_")]

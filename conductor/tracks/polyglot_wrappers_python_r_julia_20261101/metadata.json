@@ -1,10 +1,10 @@
 {
   "track_id": "polyglot_wrappers_python_r_julia_20261101",
   "type": "feature",
-  "status": "planned",
+  "status": "complete",
   "track_class": "binding",
   "priority": "immediate",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": "crates/nwau-c-abi/src/lib.rs",
   "dependencies": [
     "rust_core_first_multi_stream_20261101",
