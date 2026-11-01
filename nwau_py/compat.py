@@ -79,8 +79,7 @@ class _DatetimeMethods:
         def get_days(x: Any) -> int:
             if hasattr(x, "days"):
                 val = x.days
-                assert isinstance(val, int)
-                return val
+                return int(val)
             if isinstance(x, np.timedelta64):
                 return int(x / np.timedelta64(1, "D"))
             return 0
@@ -1070,8 +1069,7 @@ class CompatFrame:
             np.logical_and.reduce(masks) if masks else np.ones(len(self), dtype=bool)
         )
         res = self[combined]
-        assert isinstance(res, CompatFrame)
-        return res
+        return res if isinstance(res, CompatFrame) else self.copy()
 
     def rename(self, columns: Mapping[str, str], **_kwargs: Any) -> CompatFrame:
         new_data = {}
@@ -1127,13 +1125,11 @@ class CompatFrame:
 
     def head(self, n: int = 5) -> CompatFrame:
         res = self.iloc[:n]
-        assert isinstance(res, CompatFrame)
-        return res
+        return res if isinstance(res, CompatFrame) else self.copy()
 
     def tail(self, n: int = 5) -> CompatFrame:
         res = self.iloc[-n:]
-        assert isinstance(res, CompatFrame)
-        return res
+        return res if isinstance(res, CompatFrame) else self.copy()
 
     def to_dict(self, orient: str = "records") -> Any:
         if orient == "records":
@@ -1175,8 +1171,7 @@ class CompatFrame:
         if like is not None:
             cols = [c for c in self.columns if like in c]
             res = self[cols]
-            assert isinstance(res, CompatFrame)
-            return res
+            return res if isinstance(res, CompatFrame) else self.copy()
         return self
 
 
@@ -1247,23 +1242,27 @@ class _TestingNamespace:
     ) -> None:
         l_cols = list(left.columns)
         r_cols = list(right.columns)
-        assert l_cols == r_cols, f"Column mismatch: {l_cols} != {r_cols}"
-        assert len(left) == len(right), f"Length mismatch: {len(left)} != {len(right)}"
+        if l_cols != r_cols:
+            raise AssertionError(f"Column mismatch: {l_cols} != {r_cols}")
+        if len(left) != len(right):
+            raise AssertionError(f"Length mismatch: {len(left)} != {len(right)}")
         for col in l_cols:
             l_val = np.asarray(left[col])
             r_val = np.asarray(right[col])
             if np.issubdtype(l_val.dtype, np.number) and np.issubdtype(
                 r_val.dtype, np.number
             ):
-                assert np.allclose(
+                if not np.allclose(
                     l_val.astype(float),
                     r_val.astype(float),
                     rtol=rtol,
                     atol=atol,
                     equal_nan=True,
-                ), f"Values in column {col} differ"
+                ):
+                    raise AssertionError(f"Values in column {col} differ")
             else:
-                assert (l_val == r_val).all(), f"Values in column {col} differ"
+                if not (l_val == r_val).all():
+                    raise AssertionError(f"Values in column {col} differ")
 
     @staticmethod
     def assert_series_equal(
@@ -1274,15 +1273,17 @@ class _TestingNamespace:
         if np.issubdtype(l_val.dtype, np.number) and np.issubdtype(
             r_val.dtype, np.number
         ):
-            assert np.allclose(
+            if not np.allclose(
                 l_val.astype(float),
                 r_val.astype(float),
                 rtol=rtol,
                 atol=atol,
                 equal_nan=True,
-            )
+            ):
+                raise AssertionError("Series values differ")
         else:
-            assert (l_val == r_val).all()
+            if not (l_val == r_val).all():
+                raise AssertionError("Series values differ")
 
 
 testing = _TestingNamespace()

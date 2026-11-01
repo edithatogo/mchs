@@ -1,7 +1,6 @@
 """Strict assertion test verifying the zero-pandas invariant across mchs-qualified."""
 
 import sys
-from pathlib import Path
 
 import polars as pl
 import pytest
@@ -35,11 +34,13 @@ def test_calculators_execute_pure_polars():
             "PAT_COVID_FLAG": [0],
         }
     )
+    from nwau_py.utils import sas_ref_dir
+
     res = acute.calculate_acute(
         df_acute,
         acute.AcuteParams(),
         year="2025",
-        ref_dir=Path("tests/data/2025"),
+        ref_dir=sas_ref_dir("2025"),
     )
     assert isinstance(res, pl.DataFrame)
     assert "pandas" not in sys.modules

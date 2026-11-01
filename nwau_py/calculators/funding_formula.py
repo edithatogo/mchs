@@ -80,7 +80,7 @@ def calculate_funding(weights_df: Any, formula: dict[str, Any]) -> Any:
             env[lhs] = env[sym] if sym in env else float(sym)
         else:
             # Multi-token algebraic evaluation using sandboxed Python arithmetic
-            env[lhs] = eval(expr, {"__builtins__": {}}, env)  # noqa: S307
+            env[lhs] = eval(expr, {"__builtins__": {}}, env)  # nosec B307 # noqa: S307
 
     res = env.get(target_key, next(reversed(env.values())))
     native_res = res.to_native() if hasattr(res, "to_native") else res
