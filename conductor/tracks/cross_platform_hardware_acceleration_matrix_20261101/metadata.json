@@ -1,17 +1,17 @@
 {
   "track_id": "cross_platform_hardware_acceleration_matrix_20261101",
   "type": "feature",
-  "status": "planned",
+  "status": "complete",
   "track_class": "infrastructure",
   "priority": "high",
-  "current_state": "planned",
+  "current_state": "complete",
   "primary_contract": ".github/workflows/hardware-matrix.yml",
   "dependencies": [
     "rust_core_first_multi_stream_20261101",
     "polyglot_wrappers_python_r_julia_20261101"
   ],
   "created_at": "2026-11-01T12:55:00Z",
-  "updated_at": "2026-11-01T12:55:00Z",
+  "updated_at": "2026-11-01T23:19:00Z",
   "description": "Establish a bleeding-edge matrix test harness covering macOS ARM64 + Metal/MLX, Windows, Linux x86_64/arm64, and universal GPU compute (CUDA, AMD ROCm, Intel oneAPI/Level Zero, WebGPU).",
   "completion_evidence_required": [
     "macOS arm64 (Apple Silicon) native tests with Metal / MLX acceleration",

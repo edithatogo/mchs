@@ -740,13 +740,13 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 ---
 
-- [ ] **Track: Zero-Copy Polyglot Wrappers (Python, R, Julia)**
+- [x] **Track: Zero-Copy Polyglot Wrappers (Python, R, Julia)**
 *Link: [./tracks/polyglot_wrappers_python_r_julia_20261101/](./tracks/polyglot_wrappers_python_r_julia_20261101/)*
 *Gate: Invert Python (pyo3-polars expressions), R (nanoarrow/extendr), and Julia (ccall) into thin adapters over nwau-core.*
 
 ---
 
-- [ ] **Track: Bleeding-Edge Cross-Platform & Hardware Acceleration Matrix**
+- [x] **Track: Bleeding-Edge Cross-Platform & Hardware Acceleration Matrix**
 *Link: [./tracks/cross_platform_hardware_acceleration_matrix_20261101/](./tracks/cross_platform_hardware_acceleration_matrix_20261101/)*
 *Gate: Implement unified test matrix across macOS ARM64 + Metal/MLX, Windows, Linux x64/arm64, and universal GPU compute (CUDA, ROCm, Level Zero, WebGPU).*
 

@@ -688,6 +688,90 @@ pub unsafe extern "C" fn nwau_abi_calculate_subacute(
     NWAU_ABI_STATUS_OK
 }
 
+/// Verify 128-bit architecture invariants via C ABI.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_verify_128bit_invariants(
+    count: usize,
+    out_checksum: *mut u64,
+) -> NwauAbiStatus {
+    if out_checksum.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    match nwau_core::accel::verify_128bit_invariants(count) {
+        Ok(chk) => {
+            unsafe {
+                *out_checksum = chk;
+            }
+            NWAU_ABI_STATUS_OK
+        }
+        Err(_) => NWAU_ABI_STATUS_INVALID_ARGUMENT,
+    }
+}
+
+/// Run hardware-accelerated batch valuation across a slice of episodes.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_evaluate_batch_accelerated(
+    inputs: *const nwau_core::EpisodeGpuInput,
+    count: usize,
+    nep: f32,
+    outputs: *mut nwau_core::EpisodeGpuOutput,
+) -> NwauAbiStatus {
+    if inputs.is_null() || outputs.is_null() {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let input_slice = unsafe { slice::from_raw_parts(inputs, count) };
+    let device = nwau_core::ComputeDevice::auto();
+    let res = device.evaluate_batch(input_slice, Some(nep));
+    let out_slice = unsafe { slice::from_raw_parts_mut(outputs, count) };
+    out_slice.copy_from_slice(&res);
+    NWAU_ABI_STATUS_OK
+}
+
+/// Run Monte Carlo bootstrap resampling via C ABI.
+/// `out_stats` must point to an array of 5 doubles: [mean, std_err, ci_lower_2_5, median, ci_upper_97_5].
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_bootstrap_cohort(
+    values: *const f64,
+    count: usize,
+    iterations: usize,
+    out_stats: *mut f64,
+) -> NwauAbiStatus {
+    if values.is_null() || out_stats.is_null() || count == 0 || iterations == 0 {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let val_slice = unsafe { slice::from_raw_parts(values, count) };
+    let device = nwau_core::ComputeDevice::auto();
+    let res = device.bootstrap(val_slice, iterations, None);
+    unsafe {
+        *out_stats.add(0) = res.mean;
+        *out_stats.add(1) = res.std_err;
+        *out_stats.add(2) = res.ci_lower_2_5;
+        *out_stats.add(3) = res.median;
+        *out_stats.add(4) = res.ci_upper_97_5;
+    }
+    NWAU_ABI_STATUS_OK
+}
+
+/// Copy active acceleration backend name into `out_buf`.
+#[no_mangle]
+pub unsafe extern "C" fn nwau_abi_get_acceleration_backend(
+    out_buf: *mut c_char,
+    buf_len: usize,
+) -> NwauAbiStatus {
+    if out_buf.is_null() || buf_len == 0 {
+        return NWAU_ABI_STATUS_INVALID_ARGUMENT;
+    }
+    let device = nwau_core::ComputeDevice::auto();
+    let info = device.acceleration_info();
+    let bytes = info.backend_name.as_bytes();
+    let copy_len = bytes.len().min(buf_len - 1);
+    unsafe {
+        core::ptr::copy_nonoverlapping(bytes.as_ptr() as *const c_char, out_buf, copy_len);
+        *out_buf.add(copy_len) = 0;
+    }
+    NWAU_ABI_STATUS_OK
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -819,5 +903,45 @@ mod tests {
         assert_eq!(status, NWAU_ABI_STATUS_OK);
         assert_eq!(op_out.error_code, 0);
         assert!((op_out.nwau - 0.1742).abs() < 1e-4);
+    }
+
+    #[test]
+    fn test_abi_acceleration_functions() {
+        // 1. Verify 128-bit architecture invariants
+        let mut chk: u64 = 0;
+        let status = unsafe { nwau_abi_verify_128bit_invariants(1000, &mut chk) };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        assert_eq!(chk, nwau_core::accel::GOLDEN_128BIT_INVARIANT_CHECKSUM);
+
+        // 2. Query acceleration backend
+        let mut buf = [0u8; 64];
+        let status =
+            unsafe { nwau_abi_get_acceleration_backend(buf.as_mut_ptr() as *mut c_char, 64) };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        let backend = core::str::from_utf8(&buf)
+            .unwrap()
+            .trim_matches(char::from(0));
+        assert!(!backend.is_empty());
+
+        // 3. Batch evaluation
+        let episodes = nwau_core::accel::generate_invariant_test_fixtures(50);
+        let mut outputs = vec![nwau_core::EpisodeGpuOutput::default(); 50];
+        let status = unsafe {
+            nwau_abi_evaluate_batch_accelerated(episodes.as_ptr(), 50, 7418.0, outputs.as_mut_ptr())
+        };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        assert_eq!(outputs.len(), 50);
+        assert!(outputs[0].nwau >= 0.0);
+
+        // 4. Bootstrap cohort
+        let values: [f64; 10] = [1.0, 1.2, 1.5, 2.0, 2.2, 2.5, 3.0, 3.2, 3.5, 4.0];
+        let mut stats = [0.0f64; 5];
+        let status =
+            unsafe { nwau_abi_bootstrap_cohort(values.as_ptr(), 10, 100, stats.as_mut_ptr()) };
+        assert_eq!(status, NWAU_ABI_STATUS_OK);
+        assert!(stats[0] > 0.0); // mean
+        assert!(stats[1] > 0.0); // std_err
+        assert!(stats[2] <= stats[3]); // ci_lower <= median
+        assert!(stats[3] <= stats[4]); // median <= ci_upper
     }
 }

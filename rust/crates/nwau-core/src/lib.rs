@@ -4,6 +4,7 @@
 //! validation, and runtime adapters stay outside this crate's calculation
 //! functions.
 
+pub mod accel;
 pub mod acute;
 pub mod cli;
 pub mod diagnostics;
@@ -17,6 +18,11 @@ pub mod provenance;
 pub mod registries;
 pub mod subacute;
 pub mod types;
+
+pub use accel::{
+    bootstrap_cpu, evaluate_batch_cpu, evaluate_batch_decimal_exact, verify_128bit_invariants,
+    AccelerationInfo, BootstrapResult, ComputeDevice, EpisodeGpuInput, EpisodeGpuOutput,
+};
 
 pub use acute::{
     acute_error_code, calculate_acute_2025, calculate_acute_2026, calculate_acute_decimal,
