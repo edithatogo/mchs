@@ -12,7 +12,7 @@ pub enum ComputeDevice {
     Cpu,
     /// Hardware GPU execution (Metal on Apple Silicon, Vulkan on Linux, DX12 on Windows).
     #[cfg(feature = "hardware-accel")]
-    Gpu(GpuContext),
+    Gpu(Box<GpuContext>),
 }
 
 impl ComputeDevice {
@@ -24,7 +24,7 @@ impl ComputeDevice {
         #[cfg(feature = "hardware-accel")]
         {
             if let Some(gpu) = GpuContext::try_init() {
-                return ComputeDevice::Gpu(gpu);
+                return ComputeDevice::Gpu(Box::new(gpu));
             }
         }
         ComputeDevice::Cpu
@@ -39,7 +39,7 @@ impl ComputeDevice {
     pub fn gpu() -> Option<Self> {
         #[cfg(feature = "hardware-accel")]
         {
-            GpuContext::try_init().map(ComputeDevice::Gpu)
+            GpuContext::try_init().map(|g| ComputeDevice::Gpu(Box::new(g)))
         }
         #[cfg(not(feature = "hardware-accel"))]
         {

@@ -991,7 +991,7 @@ fn get_acceleration_info(py: Python<'_>) -> PyResult<Bound<'_, PyDict>> {
 fn verify_128bit_invariants(py: Python<'_>, count: Option<usize>) -> PyResult<Bound<'_, PyDict>> {
     let count = count.unwrap_or(1000);
     let checksum = nwau_core::accel::verify_128bit_invariants(count)
-        .map_err(|e| pyo3::exceptions::PyValueError::new_err(e))?;
+        .map_err(pyo3::exceptions::PyValueError::new_err)?;
     let dict = PyDict::new(py);
     dict.set_item("count", count)?;
     dict.set_item("checksum", format!("0x{:016X}", checksum))?;

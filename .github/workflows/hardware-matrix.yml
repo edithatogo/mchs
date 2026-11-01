@@ -58,7 +58,7 @@ jobs:
       - name: Run parallel 100k episode throughput and bootstrap verification
         run: |
           cd rust
-          cargo test -p nwau-core --test hardware_acceleration --nocapture
+          cargo test -p nwau-core --test hardware_acceleration -- --nocapture
 
       - name: Build Python extension with maturin
         run: |

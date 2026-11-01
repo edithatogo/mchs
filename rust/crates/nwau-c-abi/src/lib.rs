@@ -689,6 +689,10 @@ pub unsafe extern "C" fn nwau_abi_calculate_subacute(
 }
 
 /// Verify 128-bit architecture invariants via C ABI.
+///
+/// # Safety
+///
+/// Caller must ensure `out_checksum` is non-null and points to a writable `u64`.
 #[no_mangle]
 pub unsafe extern "C" fn nwau_abi_verify_128bit_invariants(
     count: usize,
@@ -709,6 +713,11 @@ pub unsafe extern "C" fn nwau_abi_verify_128bit_invariants(
 }
 
 /// Run hardware-accelerated batch valuation across a slice of episodes.
+///
+/// # Safety
+///
+/// Caller must ensure `inputs` points to at least `count` readable `EpisodeGpuInput` structs,
+/// and `outputs` points to at least `count` writable `EpisodeGpuOutput` structs.
 #[no_mangle]
 pub unsafe extern "C" fn nwau_abi_evaluate_batch_accelerated(
     inputs: *const nwau_core::EpisodeGpuInput,
@@ -728,7 +737,11 @@ pub unsafe extern "C" fn nwau_abi_evaluate_batch_accelerated(
 }
 
 /// Run Monte Carlo bootstrap resampling via C ABI.
-/// `out_stats` must point to an array of 5 doubles: [mean, std_err, ci_lower_2_5, median, ci_upper_97_5].
+///
+/// # Safety
+///
+/// Caller must ensure `values` points to at least `count` readable `f64` floats,
+/// and `out_stats` points to at least 5 writable `f64` floats: [mean, std_err, ci_lower_2_5, median, ci_upper_97_5].
 #[no_mangle]
 pub unsafe extern "C" fn nwau_abi_bootstrap_cohort(
     values: *const f64,
@@ -753,6 +766,10 @@ pub unsafe extern "C" fn nwau_abi_bootstrap_cohort(
 }
 
 /// Copy active acceleration backend name into `out_buf`.
+///
+/// # Safety
+///
+/// Caller must ensure `out_buf` points to at least `buf_len` writable bytes.
 #[no_mangle]
 pub unsafe extern "C" fn nwau_abi_get_acceleration_backend(
     out_buf: *mut c_char,

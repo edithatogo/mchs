@@ -71,13 +71,11 @@ pub fn verify_128bit_invariants(count: usize) -> Result<u64, String> {
     let checksum = compute_invariant_checksum(&results);
 
     // If validating standard 1,000 count, assert against golden hash
-    if count == 1000 {
-        if checksum != GOLDEN_128BIT_INVARIANT_CHECKSUM {
-            return Err(format!(
-                "128-bit architecture invariant drift detected! Expected 0x{:016X}, got 0x{:016X}",
-                GOLDEN_128BIT_INVARIANT_CHECKSUM, checksum
-            ));
-        }
+    if count == 1000 && checksum != GOLDEN_128BIT_INVARIANT_CHECKSUM {
+        return Err(format!(
+            "128-bit architecture invariant drift detected! Expected 0x{:016X}, got 0x{:016X}",
+            GOLDEN_128BIT_INVARIANT_CHECKSUM, checksum
+        ));
     }
 
     Ok(checksum)

@@ -222,7 +222,7 @@ impl GpuContext {
                 encoder.begin_compute_pass(&wgpu::ComputePassDescriptor::default());
             compute_pass.set_pipeline(&compute_pipeline);
             compute_pass.set_bind_group(0, &bind_group, &[]);
-            let workgroups = (total_episodes + 63) / 64;
+            let workgroups = total_episodes.div_ceil(64);
             compute_pass.dispatch_workgroups(workgroups, 1, 1);
         }
 
