@@ -27,6 +27,10 @@ bin/
 obj/
 *.Rcheck/
 *.tar.gz
+*.so
+*.o
+*.dylib
+*.dll
 scalene-profile.json
 
 # Raw external source archives are large provenance artifacts.

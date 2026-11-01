@@ -1,6 +1,9 @@
 module NationalWeightedActivityUnitWrapper
 
+# Formula logic remains in the shared core; this module provides bindings and adapters.
+
 using Downloads
+using Libdl
 
 export CliFileAdapter,
     ServiceAdapter,
@@ -11,18 +14,42 @@ export CliFileAdapter,
     calculate_ed,
     calculate_non_admitted,
     interop_contract,
-    execute_service_request
+    execute_service_request,
+    # C-ABI structs and direct in-process functions
+    NwauAbiStringView,
+    NwauAbiEpisodeInput,
+    NwauAbiReferenceRow,
+    NwauAbiAdjustmentFactors,
+    NwauAbiEpisodeOutput,
+    NwauAbiEdInput,
+    NwauAbiEdReferenceRow,
+    NwauAbiEdOutput,
+    NwauAbiMhInput,
+    NwauAbiMhAdmittedReferenceRow,
+    NwauAbiMhOutput,
+    NwauAbiOutpatientInput,
+    NwauAbiOutpatientReferenceRow,
+    NwauAbiOutpatientOutput,
+    NwauAbiSubacuteInput,
+    NwauAbiSubacuteReferenceRow,
+    NwauAbiSubacuteOutput,
+    calculate_acute_c_abi,
+    calculate_ed_c_abi,
+    calculate_mh_c_abi,
+    calculate_outpatients_c_abi,
+    calculate_subacute_c_abi,
+    calculate_batch_c_abi
 
 const DEFAULT_PYTHON = get(ENV, "NWAU_PYTHON", "python3")
 const DEFAULT_MODULE = get(ENV, "NWAU_MODULE", "nwau_py.cli.main")
 const SUPPORTED_FILE_COMMANDS = Set(["acute", "ed", "non-admitted"])
 
-"""
-    CliFileAdapter(; python, cli_module)
+include("c_abi.jl")
 
-Boundary adapter for the shared CLI/file contract. It only owns process
-execution and file handoff; formula logic remains in the shared core.
-"""
+# ============================================================================
+# LEGACY CLI & SERVICE ADAPTERS
+# ============================================================================
+
 struct CliFileAdapter
     python::String
     cli_module::String
@@ -31,12 +58,6 @@ end
 CliFileAdapter(; python::AbstractString=DEFAULT_PYTHON, cli_module::AbstractString=DEFAULT_MODULE) =
     CliFileAdapter(String(python), String(cli_module))
 
-"""
-    ServiceAdapter(url; timeout=30)
-
-Transport-only adapter for service-backed binding experiments. Request and
-response bodies are opaque JSON files so Julia does not duplicate domain logic.
-"""
 struct ServiceAdapter
     url::String
     timeout::Real
