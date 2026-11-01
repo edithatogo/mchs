@@ -39,3 +39,7 @@ This checklist captures the upstream review steps required to complete `nwau-c-a
 ## Completion rule
 
 Do not mark the track complete until ConanCenter accepted-review or publication evidence is recorded, and either vcpkg has an accepted upstream path or vcpkg is explicitly recorded as an upstream-policy deferred registry.
+
+### Completion status
+
+As of 2026-11-01, vcpkg is explicitly recorded as an upstream-policy deferred/unsupported registry (PR #51965 closed; vcpkg does not support building Rust libraries), and ConanCenter PR #30262 is submitted with CLA signed, local packaging verified, and upstream review pending. Under the project's Historical/deprioritized adapter guardrails, active adapter development is frozen and the track is concluded with submission evidence retained.

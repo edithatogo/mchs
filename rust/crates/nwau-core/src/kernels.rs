@@ -26,6 +26,53 @@ pub trait Kernel {
     }
 }
 
+/// The acute 2026 kernel implementation.
+#[derive(Debug, Clone, Copy)]
+pub struct Acute2026Kernel;
+
+impl Acute2026Kernel {
+    /// Construct a new acute 2026 kernel.
+    pub fn new() -> Self {
+        Self
+    }
+}
+
+impl Default for Acute2026Kernel {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl Kernel for Acute2026Kernel {
+    fn label(&self) -> &'static str {
+        "acute-2026"
+    }
+
+    fn calculate(
+        &self,
+        episode: &EpisodeRow,
+        reference: &ReferenceRow,
+        adjustments: &AdjustmentFactors,
+    ) -> EpisodeOutput {
+        let validation = crate::acute::AcuteValidationState::valid();
+        let input = crate::acute::AcuteEpisodeInput {
+            drg: &episode.drg,
+            los: episode.los,
+            icu_hours: episode.icu_hours,
+            icu_other: episode.icu_other,
+            pat_sameday_flag: episode.flags.same_day,
+            pat_private_flag: episode.flags.private_patient,
+            pat_covid_flag: episode.flags.covid,
+            eligible_paed_flag: episode.flags.eligible_paediatric,
+            validation,
+        };
+        let acute_ref = reference.to_acute_ref();
+        let acute_adj: crate::acute::AcuteAdjustmentFactors = (*adjustments).into();
+        let acute_out = crate::acute::calculate_acute_2025(input, acute_ref, acute_adj);
+        acute_out.into()
+    }
+}
+
 /// The acute 2025 kernel implementation.
 #[derive(Debug, Clone, Copy)]
 pub struct Acute2025Kernel;
@@ -238,6 +285,7 @@ impl KernelRegistry {
 
     /// Register the default built-in kernels.
     pub fn with_defaults(mut self) -> Self {
+        self.register(Box::new(Acute2026Kernel::new()));
         self.register(Box::new(Acute2025Kernel::new()));
         self.register(Box::new(SubAcuteKernel::new()));
         self
@@ -254,6 +302,12 @@ impl Default for KernelRegistry {
 mod tests {
     use super::*;
     use crate::types::EpisodeFlags;
+
+    #[test]
+    fn acute_2026_kernel_label() {
+        let kernel = Acute2026Kernel::new();
+        assert_eq!(kernel.label(), "acute-2026");
+    }
 
     #[test]
     fn acute_kernel_label() {

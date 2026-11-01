@@ -1,0 +1,23 @@
+{
+  "track_id": "polyglot_wrappers_python_r_julia_20261101",
+  "type": "feature",
+  "status": "planned",
+  "track_class": "binding",
+  "priority": "immediate",
+  "current_state": "planned",
+  "primary_contract": "crates/nwau-c-abi/src/lib.rs",
+  "dependencies": [
+    "rust_core_first_multi_stream_20261101",
+    "polars_pure_migration_20261101",
+    "julia_monorepo_consolidation_20261101"
+  ],
+  "created_at": "2026-11-01T12:55:00Z",
+  "updated_at": "2026-11-01T12:55:00Z",
+  "description": "Invert Python, R, and Julia packages into thin, zero-copy wrappers over the canonical nwau-core engine using pyo3-polars expressions, nanoarrow, and direct ccall.",
+  "completion_evidence_required": [
+    "nwau_py refactored into thin facade calling Rust expressions via pyo3-polars",
+    "nwauR bound to nwau-c-abi with nanoarrow buffer transfer",
+    "NationalWeightedActivityUnitWrapper.jl bound directly to nwau-c-abi via ccall",
+    "All three language wrappers pass differential parity against the Rust core"
+  ]
+}

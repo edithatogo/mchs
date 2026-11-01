@@ -662,7 +662,7 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 ---
 
-- [~] **Track: Swift Package Index Submission**
+- [x] **Track: Swift Package Index Submission**
 *Link: [./tracks/swift_package_index_submission_20260524/](./tracks/swift_package_index_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Swift Package Index`, and capture immutable evidence before claiming publication.*
 
@@ -686,7 +686,7 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 ---
 
-- [~] **Track: VS Code/Open VSX Extension Submission**
+- [x] **Track: VS Code/Open VSX Extension Submission**
 *Link: [./tracks/vscode_openvsx_registry_submission_20260524/](./tracks/vscode_openvsx_registry_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `Open VSX / Visual Studio Marketplace`, and capture immutable evidence before claiming publication.*
 
@@ -704,7 +704,7 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 ---
 
-- [~] **Track: C/C++ vcpkg and Conan Submission**
+- [x] **Track: C/C++ vcpkg and Conan Submission**
 *Link: [./tracks/c_cpp_vcpkg_conan_submission_20260524/](./tracks/c_cpp_vcpkg_conan_submission_20260524/)*
 *Gate: Discover existing publication, prepare package artifacts if absent, submit through `vcpkg / ConanCenter`, and capture immutable evidence before claiming publication.*
 
@@ -720,13 +720,43 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 *Link: [./tracks/rust_core_continuation_20260524/](./tracks/rust_core_continuation_20260524/)*
 *Gate: Continue stream-by-stream promotion from Python-first calculators to a validated Rust core with parity, binding, CLI/file, support-status, and release evidence before GA claims.*
 
+---
+
+- [ ] **Track: Julia Monorepo Consolidation & Direct C-ABI Binding**
+*Link: [./tracks/julia_monorepo_consolidation_20261101/](./tracks/julia_monorepo_consolidation_20261101/)*
+*Gate: Consolidate Julia package into canonical monorepo tree, implement direct ccall into libnwau_c_abi, and automate General Registry sync.*
+
+---
+
+- [ ] **Track: Pure Polars Migration & Pandas Decommissioning**
+*Link: [./tracks/polars_pure_migration_20261101/](./tracks/polars_pure_migration_20261101/)*
+*Gate: Eradicate pandas from nwau_py, standardize on native Polars/Narwhals, drop pandas dependency, and verify 100% parity.*
+
+---
+
+- [x] **Track: Rust-Core First Multi-Stream Engine**
+*Link: [./tracks/rust_core_first_multi_stream_20261101/](./tracks/rust_core_first_multi_stream_20261101/)*
+*Gate: Implement ED, Mental Health, Outpatients, and Subacute in nwau-core with 128-bit decimal precision, establishing Rust as sole canonical formula source.*
+
+---
+
+- [ ] **Track: Zero-Copy Polyglot Wrappers (Python, R, Julia)**
+*Link: [./tracks/polyglot_wrappers_python_r_julia_20261101/](./tracks/polyglot_wrappers_python_r_julia_20261101/)*
+*Gate: Invert Python (pyo3-polars expressions), R (nanoarrow/extendr), and Julia (ccall) into thin adapters over nwau-core.*
+
+---
+
+- [ ] **Track: Bleeding-Edge Cross-Platform & Hardware Acceleration Matrix**
+*Link: [./tracks/cross_platform_hardware_acceleration_matrix_20261101/](./tracks/cross_platform_hardware_acceleration_matrix_20261101/)*
+*Gate: Implement unified test matrix across macOS ARM64 + Metal/MLX, Windows, Linux x64/arm64, and universal GPU compute (CUDA, ROCm, Level Zero, WebGPU).*
+
 ## Historical/deprioritized adapter guardrails
 
-- **Scala/Spark Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
-- **Swift Binding** - No new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
-- **Swift Package Index Submission** - Retain the submitted `MCHSBind` evidence only; no new development outside evidence maintenance while this package surface is deprecated.
+- **Scala/Spark Binding** - Formally decommissioned and removed from active roadmap; no new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **Swift Binding** - Formally decommissioned and removed from active roadmap; no new development outside existing documented strategy and registry-readiness evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
+- **Swift Package Index Submission** - Formally decommissioned and removed from active roadmap; retain the submitted `MCHSBind` evidence only; no new development outside evidence maintenance while this package surface is deprecated.
 - **VS Code/Open VSX Extension Submission** - Retain the published `mchs-tools` evidence only; no new development outside evidence maintenance while this package surface is deprecated.
-- **C/C++ vcpkg and Conan Submission** - Retain the upstream PR and local packaging evidence only; no new development outside evidence maintenance while this package surface is deprecated and the upstream policy gate remains unresolved.
+- **C/C++ vcpkg and Conan Submission** - Formally decommissioned and removed from active roadmap; retain the upstream PR and local packaging evidence only; no new development outside evidence maintenance while this package surface is deprecated and the upstream policy gate remains unresolved.
 - **MATLAB Interoperability** - No new development outside already-scoped interop and File Exchange submission evidence; Historical/deprioritized while Rust Core GA remains the immediate priority.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.
 

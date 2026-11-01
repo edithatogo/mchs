@@ -24,3 +24,6 @@ chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1", features = ["v4", "serde"] }
 arrow = { version = "54", default-features = false, features = ["csv", "json"], optional = true }
 parquet = { version = "54", default-features = false, features = ["arrow", "snap"], optional = true }
+rust_decimal = { version = "1.43.0", features = ["serde", "maths"] }
+rust_decimal_macros = "1.40.0"
+zeroize = { version = "1.9.1", features = ["derive"] }

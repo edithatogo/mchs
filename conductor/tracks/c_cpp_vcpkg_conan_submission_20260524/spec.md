@@ -69,7 +69,9 @@ Remaining blockers:
 - ConanCenter upstream PR: `https://github.com/conan-io/conan-center-index/pull/30262`.
 - Remaining external blocker: ConanCenter maintainer job scheduling/review and
   vcpkg Rust-library support policy; no public vcpkg or ConanCenter publication
-  is claimed yet.
+  is claimed. In accordance with `conductor/tracks.md` (Historical/deprioritized adapter
+  guardrails), this track is concluded with upstream PR and packaging evidence
+  retained without claiming external publication.
 
 ## Acceptance Criteria
 

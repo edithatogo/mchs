@@ -1,0 +1,22 @@
+{
+  "track_id": "polars_pure_migration_20261101",
+  "type": "refactor",
+  "status": "planned",
+  "track_class": "core",
+  "priority": "immediate",
+  "current_state": "planned",
+  "primary_contract": "pyproject.toml",
+  "dependencies": [
+    "arrow_polars_data_bundle_20260504"
+  ],
+  "created_at": "2026-11-01T12:55:00Z",
+  "updated_at": "2026-11-01T12:55:00Z",
+  "description": "Completely eradicate pandas from nwau_py, migrating 100% of tabular loading, transformation, weight joining, and output generation to native Polars and Narwhals, dropping pandas from pyproject.toml.",
+  "completion_evidence_required": [
+    "Zero imports of pandas in nwau_py/",
+    "pandas removed from dependencies in pyproject.toml and uv.lock",
+    "All calculators and groupers accept and emit native polars.DataFrame / LazyFrame",
+    "Narwhals maintains backward compatibility for external callers passing legacy tabular objects",
+    "Full test suite passes with zero pandas runtime requirement"
+  ]
+}
