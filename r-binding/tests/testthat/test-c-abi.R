@@ -33,3 +33,14 @@ test_that("in-process C-ABI valuation works across all 5 streams", {
   expect_equal(round(batch_ed[1], 4), 0.2837)
   expect_equal(round(batch_ed[2], 4), 0.1542)
 })
+
+test_that("vector lengths and patient and reference same-day flags are independent", {
+  expect_error(nwau_ed_c_abi(code = c("A", "B"), price_weight = c(.1, .2, .3)),
+               "argument lengths must match")
+  value <- nwau_acute_c_abi(drg = "A", los = c(1, 1, 1), inlier_lower_bound = 2,
+                            inlier_upper_bound = 10, inlier_weight = 1,
+                            same_day_base_rate = .4, same_day_diem_rate = .2,
+                            same_day_list_flag = c(1L, 1L, 0L),
+                            pat_sameday_flag = c(TRUE, FALSE, TRUE))
+  expect_equal(value, c(.4, .6, .6))
+})

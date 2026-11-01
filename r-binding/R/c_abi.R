@@ -4,11 +4,11 @@
 #' @export
 nwau_ed_c_abi <- function(code, price_weight, classification_option = 3L, eligibility_option = 1L, compensable_status = 2L, dva_status = 2L) {
   n <- length(price_weight)
-  if (length(code) == 1L && n > 1L) code <- rep(code, n)
-  if (length(classification_option) == 1L && n > 1L) classification_option <- rep(classification_option, n)
-  if (length(eligibility_option) == 1L && n > 1L) eligibility_option <- rep(eligibility_option, n)
-  if (length(compensable_status) == 1L && n > 1L) compensable_status <- rep(compensable_status, n)
-  if (length(dva_status) == 1L && n > 1L) dva_status <- rep(dva_status, n)
+  if (length(code) == 1L && n != 1L) code <- rep(code, n)
+  if (length(classification_option) == 1L && n != 1L) classification_option <- rep(classification_option, n)
+  if (length(eligibility_option) == 1L && n != 1L) eligibility_option <- rep(eligibility_option, n)
+  if (length(compensable_status) == 1L && n != 1L) compensable_status <- rep(compensable_status, n)
+  if (length(dva_status) == 1L && n != 1L) dva_status <- rep(dva_status, n)
 
   .Call("r_nwau_calculate_ed",
         as.character(code),
@@ -23,17 +23,18 @@ nwau_ed_c_abi <- function(code, price_weight, classification_option = 3L, eligib
 #' @export
 nwau_acute_c_abi <- function(drg, los, inlier_lower_bound, inlier_upper_bound, inlier_weight,
                               paediatric_multiplier = 1.0, same_day_list_flag = 0L,
-                              same_day_base_rate = 0.0, same_day_diem_rate = 0.0, long_stay_rate = 0.0) {
+                              same_day_base_rate = 0.0, same_day_diem_rate = 0.0, long_stay_rate = 0.0, pat_sameday_flag = FALSE) {
   n <- length(los)
-  if (length(drg) == 1L && n > 1L) drg <- rep(drg, n)
-  if (length(inlier_lower_bound) == 1L && n > 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
-  if (length(inlier_upper_bound) == 1L && n > 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
-  if (length(inlier_weight) == 1L && n > 1L) inlier_weight <- rep(inlier_weight, n)
-  if (length(paediatric_multiplier) == 1L && n > 1L) paediatric_multiplier <- rep(paediatric_multiplier, n)
-  if (length(same_day_list_flag) == 1L && n > 1L) same_day_list_flag <- rep(same_day_list_flag, n)
-  if (length(same_day_base_rate) == 1L && n > 1L) same_day_base_rate <- rep(same_day_base_rate, n)
-  if (length(same_day_diem_rate) == 1L && n > 1L) same_day_diem_rate <- rep(same_day_diem_rate, n)
-  if (length(long_stay_rate) == 1L && n > 1L) long_stay_rate <- rep(long_stay_rate, n)
+  if (length(drg) == 1L && n != 1L) drg <- rep(drg, n)
+  if (length(inlier_lower_bound) == 1L && n != 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
+  if (length(inlier_upper_bound) == 1L && n != 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
+  if (length(inlier_weight) == 1L && n != 1L) inlier_weight <- rep(inlier_weight, n)
+  if (length(paediatric_multiplier) == 1L && n != 1L) paediatric_multiplier <- rep(paediatric_multiplier, n)
+  if (length(pat_sameday_flag) == 1L && n != 1L) pat_sameday_flag <- rep(pat_sameday_flag, n)
+  if (length(same_day_list_flag) == 1L && n != 1L) same_day_list_flag <- rep(same_day_list_flag, n)
+  if (length(same_day_base_rate) == 1L && n != 1L) same_day_base_rate <- rep(same_day_base_rate, n)
+  if (length(same_day_diem_rate) == 1L && n != 1L) same_day_diem_rate <- rep(same_day_diem_rate, n)
+  if (length(long_stay_rate) == 1L && n != 1L) long_stay_rate <- rep(long_stay_rate, n)
 
   .Call("r_nwau_calculate_acute_2025",
         as.character(drg),
@@ -42,6 +43,7 @@ nwau_acute_c_abi <- function(drg, los, inlier_lower_bound, inlier_upper_bound, i
         as.numeric(inlier_upper_bound),
         as.numeric(paediatric_multiplier),
         as.integer(same_day_list_flag),
+        as.integer(pat_sameday_flag),
         as.numeric(same_day_base_rate),
         as.numeric(same_day_diem_rate),
         as.numeric(inlier_weight),
@@ -52,10 +54,10 @@ nwau_acute_c_abi <- function(drg, los, inlier_lower_bound, inlier_upper_bound, i
 #' @export
 nwau_outpatients_c_abi <- function(clinic_code, price_weight, data_type = 1L, inscope_flag = 1L, paediatric_adjustment = 1.0) {
   n <- length(price_weight)
-  if (length(clinic_code) == 1L && n > 1L) clinic_code <- rep(clinic_code, n)
-  if (length(data_type) == 1L && n > 1L) data_type <- rep(data_type, n)
-  if (length(inscope_flag) == 1L && n > 1L) inscope_flag <- rep(inscope_flag, n)
-  if (length(paediatric_adjustment) == 1L && n > 1L) paediatric_adjustment <- rep(paediatric_adjustment, n)
+  if (length(clinic_code) == 1L && n != 1L) clinic_code <- rep(clinic_code, n)
+  if (length(data_type) == 1L && n != 1L) data_type <- rep(data_type, n)
+  if (length(inscope_flag) == 1L && n != 1L) inscope_flag <- rep(inscope_flag, n)
+  if (length(paediatric_adjustment) == 1L && n != 1L) paediatric_adjustment <- rep(paediatric_adjustment, n)
 
   .Call("r_nwau_calculate_outpatients",
         as.character(clinic_code),
@@ -69,11 +71,11 @@ nwau_outpatients_c_abi <- function(clinic_code, price_weight, data_type = 1L, in
 #' @export
 nwau_subacute_c_abi <- function(ansnap, los, pw_inlier, inlier_lower_bound, inlier_upper_bound, age = 50.0) {
   n <- length(pw_inlier)
-  if (length(ansnap) == 1L && n > 1L) ansnap <- rep(ansnap, n)
-  if (length(los) == 1L && n > 1L) los <- rep(los, n)
-  if (length(inlier_lower_bound) == 1L && n > 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
-  if (length(inlier_upper_bound) == 1L && n > 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
-  if (length(age) == 1L && n > 1L) age <- rep(age, n)
+  if (length(ansnap) == 1L && n != 1L) ansnap <- rep(ansnap, n)
+  if (length(los) == 1L && n != 1L) los <- rep(los, n)
+  if (length(inlier_lower_bound) == 1L && n != 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
+  if (length(inlier_upper_bound) == 1L && n != 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
+  if (length(age) == 1L && n != 1L) age <- rep(age, n)
 
   .Call("r_nwau_calculate_subacute",
         as.character(ansnap),
@@ -88,11 +90,11 @@ nwau_subacute_c_abi <- function(ansnap, los, pw_inlier, inlier_lower_bound, inli
 #' @export
 nwau_mh_c_abi <- function(amhcc, los, inlier_weight, inlier_lower_bound, inlier_upper_bound, price_cat = 1L) {
   n <- length(inlier_weight)
-  if (length(amhcc) == 1L && n > 1L) amhcc <- rep(amhcc, n)
-  if (length(los) == 1L && n > 1L) los <- rep(los, n)
-  if (length(inlier_lower_bound) == 1L && n > 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
-  if (length(inlier_upper_bound) == 1L && n > 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
-  if (length(price_cat) == 1L && n > 1L) price_cat <- rep(price_cat, n)
+  if (length(amhcc) == 1L && n != 1L) amhcc <- rep(amhcc, n)
+  if (length(los) == 1L && n != 1L) los <- rep(los, n)
+  if (length(inlier_lower_bound) == 1L && n != 1L) inlier_lower_bound <- rep(inlier_lower_bound, n)
+  if (length(inlier_upper_bound) == 1L && n != 1L) inlier_upper_bound <- rep(inlier_upper_bound, n)
+  if (length(price_cat) == 1L && n != 1L) price_cat <- rep(price_cat, n)
 
   .Call("r_nwau_calculate_mh",
         as.character(amhcc),
@@ -120,7 +122,7 @@ nwau_batch_c_abi <- function(stream, df) {
     sp <- if ("same_day_per_diem" %in% names(df)) df$same_day_per_diem else 0.0
     ls <- if ("long_stay_per_diem" %in% names(df)) df$long_stay_per_diem else 0.0
     nwau_acute_c_abi(df$drg, df$los, df$inlier_lower_bound, df$inlier_upper_bound, df$inlier_weight,
-                     pm, sd, sb, sp, ls)
+                     pm, sd, sb, sp, ls, if ("pat_sameday_flag" %in% names(df)) df$pat_sameday_flag else FALSE)
   } else if (stream == "outpatients") {
     dt <- if ("data_type" %in% names(df)) df$data_type else 1L
     ins <- if ("inscope_flag" %in% names(df)) df$inscope_flag else 1L

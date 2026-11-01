@@ -15,16 +15,45 @@ JULIA_BIN = shutil.which("julia")
 R_BIN = shutil.which("R")
 
 
-def _ensure_r_so():
-    so_path = ROOT / "r-binding" / "src" / "nwauR.so"
-    if not so_path.exists():
-        subprocess.run(
-            ["R", "CMD", "SHLIB", "src/nwau_r_abi.c", "-o", "src/nwauR.so"],
-            cwd=ROOT / "r-binding",
-            check=True,
-            capture_output=True,
-        )
-    return so_path
+@pytest.fixture(scope="session")
+def r_bridge(tmp_path_factory):
+    build = tmp_path_factory.mktemp("r-abi")
+    source = Path(shutil.copy2(ROOT / "r-binding/src/nwau_r_abi.c", build))
+    ext = subprocess.check_output(
+        [R_BIN, "CMD", "config", "SHLIB_EXT"], text=True
+    ).strip()
+    library = build / ("nwauR" + ext)
+    subprocess.run(
+        [R_BIN, "CMD", "SHLIB", source.name, "-o", library.name],
+        cwd=build,
+        check=True,
+        capture_output=True,
+    )
+    return library
+
+
+def _r_ed_parity(library):
+    script = """
+    paths <- commandArgs(trailingOnly = TRUE)
+    dyn.load(paths[[1]])
+    source(paths[[2]])
+    df <- data.frame(code = "E0110A", price_weight = 0.2837)
+    cat(nwau_batch_c_abi("ed", df)[1])
+    """
+    result = subprocess.check_output(
+        [
+            R_BIN,
+            "--vanilla",
+            "--slave",
+            "-e",
+            script,
+            "--args",
+            str(library),
+            str(ROOT / "r-binding/R/c_abi.R"),
+        ],
+        text=True,
+    )
+    return float(result.strip())
 
 
 def test_python_and_rust_exact_parity_all_streams():
@@ -122,29 +151,12 @@ def test_julia_in_process_parity():
 
 
 @pytest.mark.skipif(not R_BIN, reason="R binary not installed in test environment")
-def test_r_in_process_parity():
-    """Verify parity between Python/Rust and R in-process C-ABI evaluation."""
-    so_path = _ensure_r_so()
-    r_script = f"""
-    dyn.load("{so_path}")
-    source("{ROOT}/r-binding/R/c_abi.R")
-    df <- data.frame(code = "E0110A", price_weight = 0.2837)
-    res <- nwau_batch_c_abi("ed", df)
-    cat(res[1], "\n")
-    """
-    proc = subprocess.run(
-        [R_BIN, "-e", r_script], capture_output=True, text=True, check=True
-    )
-    lines = [
-        line.strip()
-        for line in proc.stdout.splitlines()
-        if line.strip() and not line.startswith(">")
-    ]
-    r_nwau = float(lines[-1])
-    assert abs(r_nwau - 0.2837) < 1e-4
+def test_r_in_process_parity(r_bridge):
+    """Verify parity between Python/Rust and in-process R evaluation."""
+    assert _r_ed_parity(r_bridge) == pytest.approx(0.2837)
 
 
-def test_four_language_cross_parity_report():
+def test_four_language_cross_parity_report(request):
     """Verify 100% decimal parity across Rust, Python, R, and Julia on shared synthetic episode."""
     expected_ed_nwau = 0.2837
     # 1. Rust
@@ -189,21 +201,6 @@ def test_four_language_cross_parity_report():
 
     # 4. R
     if R_BIN:
-        so_path = _ensure_r_so()
-        r_script = f"""
-        dyn.load("{so_path}")
-        source("{ROOT}/r-binding/R/c_abi.R")
-        df <- data.frame(code = "E0110A", price_weight = 0.2837)
-        res <- nwau_batch_c_abi("ed", df)
-        cat(res[1], "\n")
-        """
-        proc = subprocess.run(
-            [R_BIN, "-e", r_script], capture_output=True, text=True, check=True
+        assert _r_ed_parity(request.getfixturevalue("r_bridge")) == pytest.approx(
+            expected_ed_nwau
         )
-        lines = [
-            line.strip()
-            for line in proc.stdout.splitlines()
-            if line.strip() and not line.startswith(">")
-        ]
-        r_val = float(lines[-1])
-        assert abs(r_val - expected_ed_nwau) < 1e-6

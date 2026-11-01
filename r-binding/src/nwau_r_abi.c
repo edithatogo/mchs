@@ -296,6 +296,12 @@ static int ensure_lib_loaded(void) {
     g_calc_op = (fn_calculate_outpatients)dlsym(g_lib_handle, "nwau_abi_calculate_outpatients");
     g_calc_sub = (fn_calculate_subacute)dlsym(g_lib_handle, "nwau_abi_calculate_subacute");
 
+    if (!g_calc_acute || !g_calc_ed || !g_calc_mh || !g_calc_op || !g_calc_sub) {
+        dlclose(g_lib_handle);
+        g_lib_handle = NULL;
+        warning("The loaded NWAU library does not export every required calculator");
+        return -1;
+    }
     return 0;
 }
 
@@ -316,6 +322,13 @@ SEXP r_nwau_calculate_ed(
     }
 
     R_xlen_t n = XLENGTH(r_price_weights);
+    if (XLENGTH(r_codes) != n ||
+        XLENGTH(r_cls_opts) != n ||
+        XLENGTH(r_elg_opts) != n ||
+        XLENGTH(r_cmp_statuses) != n ||
+        XLENGTH(r_dva_statuses) != n) {
+        error("All calculator argument lengths must match after scalar expansion");
+    }
     SEXP out_nwau = PROTECT(allocVector(REALSXP, n));
     double *out_ptr = REAL(out_nwau);
     double *pw_ptr = REAL(r_price_weights);
@@ -356,6 +369,7 @@ SEXP r_nwau_calculate_acute_2025(
     SEXP r_inlier_upper,
     SEXP r_paed_mult,
     SEXP r_same_day_flag,
+    SEXP r_patient_same_day,
     SEXP r_same_day_base_weight,
     SEXP r_same_day_per_diem,
     SEXP r_inlier_weight,
@@ -366,6 +380,18 @@ SEXP r_nwau_calculate_acute_2025(
     }
 
     R_xlen_t n = XLENGTH(r_los);
+    if (XLENGTH(r_drgs) != n ||
+        XLENGTH(r_inlier_lower) != n ||
+        XLENGTH(r_inlier_upper) != n ||
+        XLENGTH(r_paed_mult) != n ||
+        XLENGTH(r_same_day_flag) != n ||
+        XLENGTH(r_patient_same_day) != n ||
+        XLENGTH(r_same_day_base_weight) != n ||
+        XLENGTH(r_same_day_per_diem) != n ||
+        XLENGTH(r_inlier_weight) != n ||
+        XLENGTH(r_long_stay_per_diem) != n) {
+        error("All calculator argument lengths must match after scalar expansion");
+    }
     SEXP out_nwau = PROTECT(allocVector(REALSXP, n));
     double *out_ptr = REAL(out_nwau);
     double *los_ptr = REAL(r_los);
@@ -373,6 +399,7 @@ SEXP r_nwau_calculate_acute_2025(
     double *ub_ptr = REAL(r_inlier_upper);
     double *paed_ptr = REAL(r_paed_mult);
     int *sd_flag_ptr = INTEGER(r_same_day_flag);
+    int *patient_sd_ptr = INTEGER(r_patient_same_day);
     double *sd_base_ptr = REAL(r_same_day_base_weight);
     double *sd_diem_ptr = REAL(r_same_day_per_diem);
     double *iw_ptr = REAL(r_inlier_weight);
@@ -388,7 +415,7 @@ SEXP r_nwau_calculate_acute_2025(
         input.drg.ptr = drg_str;
         input.drg.len = strlen(drg_str);
         input.los = los_ptr[i];
-        input.pat_sameday_flag = (uint8_t)sd_flag_ptr[i];
+        input.pat_sameday_flag = (uint8_t)patient_sd_ptr[i];
 
         nwau_abi_reference_row ref;
         memset(&ref, 0, sizeof(ref));
@@ -396,6 +423,7 @@ SEXP r_nwau_calculate_acute_2025(
         ref.inlier_lower_bound = lb_ptr[i];
         ref.inlier_upper_bound = ub_ptr[i];
         ref.paediatric_multiplier = paed_ptr[i];
+        ref.same_day_list_flag = (uint8_t)sd_flag_ptr[i];
         ref.same_day_base_weight = sd_base_ptr[i];
         ref.same_day_per_diem = sd_diem_ptr[i];
         ref.inlier_weight = iw_ptr[i];
@@ -423,6 +451,12 @@ SEXP r_nwau_calculate_outpatients(
     }
 
     R_xlen_t n = XLENGTH(r_price_weights);
+    if (XLENGTH(r_clinic_codes) != n ||
+        XLENGTH(r_data_types) != n ||
+        XLENGTH(r_inscope_flags) != n ||
+        XLENGTH(r_paed_adjs) != n) {
+        error("All calculator argument lengths must match after scalar expansion");
+    }
     SEXP out_nwau = PROTECT(allocVector(REALSXP, n));
     double *out_ptr = REAL(out_nwau);
     double *pw_ptr = REAL(r_price_weights);
@@ -469,6 +503,13 @@ SEXP r_nwau_calculate_subacute(
     }
 
     R_xlen_t n = XLENGTH(r_pw_inliers);
+    if (XLENGTH(r_ansnap_codes) != n ||
+        XLENGTH(r_los) != n ||
+        XLENGTH(r_inlier_lower) != n ||
+        XLENGTH(r_inlier_upper) != n ||
+        XLENGTH(r_ages) != n) {
+        error("All calculator argument lengths must match after scalar expansion");
+    }
     SEXP out_nwau = PROTECT(allocVector(REALSXP, n));
     double *out_ptr = REAL(out_nwau);
     double *los_ptr = REAL(r_los);
@@ -518,6 +559,13 @@ SEXP r_nwau_calculate_mh(
     }
 
     R_xlen_t n = XLENGTH(r_inlier_weights);
+    if (XLENGTH(r_amhcc_codes) != n ||
+        XLENGTH(r_los) != n ||
+        XLENGTH(r_inlier_lower) != n ||
+        XLENGTH(r_inlier_upper) != n ||
+        XLENGTH(r_price_cats) != n) {
+        error("All calculator argument lengths must match after scalar expansion");
+    }
     SEXP out_nwau = PROTECT(allocVector(REALSXP, n));
     double *out_ptr = REAL(out_nwau);
     double *los_ptr = REAL(r_los);
@@ -560,7 +608,7 @@ SEXP r_nwau_calculate_mh(
 
 static const R_CallMethodDef CallEntries[] = {
     {"r_nwau_calculate_ed", (DL_FUNC) &r_nwau_calculate_ed, 6},
-    {"r_nwau_calculate_acute_2025", (DL_FUNC) &r_nwau_calculate_acute_2025, 10},
+    {"r_nwau_calculate_acute_2025", (DL_FUNC) &r_nwau_calculate_acute_2025, 11},
     {"r_nwau_calculate_outpatients", (DL_FUNC) &r_nwau_calculate_outpatients, 5},
     {"r_nwau_calculate_subacute", (DL_FUNC) &r_nwau_calculate_subacute, 6},
     {"r_nwau_calculate_mh", (DL_FUNC) &r_nwau_calculate_mh, 6},

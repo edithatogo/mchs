@@ -16,7 +16,8 @@ from nwau_py.calculators import ed, mh, outpatients, subacute
 def test_rust_exports_all_stream_row_calculators():
     """Verify that _rust exports all 5 funding stream row calculators."""
     assert hasattr(_rust, "calculate_acute_2025_row")
-    assert hasattr(_rust, "calculate_acute_2026_row")
+    assert "acute-2026" not in _rust.list_calculators()
+    assert not hasattr(_rust, "calculate_acute_2026_row")
     assert hasattr(_rust, "calculate_ed_row")
     assert hasattr(_rust, "calculate_mh_admitted_row")
     assert hasattr(_rust, "calculate_mh_community_row")

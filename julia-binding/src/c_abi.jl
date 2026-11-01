@@ -7,7 +7,8 @@ struct NwauAbiStringView
     len::Csize_t
 end
 
-NwauAbiStringView(s::AbstractString) = NwauAbiStringView(pointer(s), sizeof(s))
+# A borrowed ABI view. Callers must GC.@preserve the backing String through the native call.
+NwauAbiStringView(s::String) = NwauAbiStringView(pointer(s), sizeof(s))
 NwauAbiStringView() = NwauAbiStringView(C_NULL, 0)
 
 function Base.String(sv::NwauAbiStringView)
@@ -381,7 +382,7 @@ function calculate_batch_c_abi(
                 NwauAbiStringView(code_str),
                 Float64(table.price_weight[i]),
             )
-            out = calculate_ed_c_abi(input, ref; libpath=libpath)
+            out = GC.@preserve code_str calculate_ed_c_abi(input, ref; libpath=libpath)
             res[i] = out.nwau
         end
         return res
@@ -424,7 +425,7 @@ function calculate_batch_c_abi(
                 hasproperty(table, :private_accommodation_same_day) ? Float64(table.private_accommodation_same_day[i]) : 0.0,
                 hasproperty(table, :private_accommodation_overnight) ? Float64(table.private_accommodation_overnight[i]) : 0.0,
             )
-            out = calculate_acute_c_abi(input, ref, adj; libpath=libpath)
+            out = GC.@preserve drg_str calculate_acute_c_abi(input, ref, adj; libpath=libpath)
             res[i] = out.nwau25
         end
         return res
@@ -453,7 +454,7 @@ function calculate_batch_c_abi(
                 Float64(table.price_weight[i]),
                 hasproperty(table, :paediatric_adjustment) ? Float64(table.paediatric_adjustment[i]) : 0.0,
             )
-            out = calculate_outpatients_c_abi(input, ref; libpath=libpath)
+            out = GC.@preserve clinic_str calculate_outpatients_c_abi(input, ref; libpath=libpath)
             res[i] = out.nwau
         end
         return res
@@ -491,7 +492,7 @@ function calculate_batch_c_abi(
                 hasproperty(table, :pw_inlier) ? Float64(table.pw_inlier[i]) : 0.0,
                 hasproperty(table, :pw_lso_perdiem) ? Float64(table.pw_lso_perdiem[i]) : 0.0,
             )
-            out = calculate_subacute_c_abi(input, ref; libpath=libpath)
+            out = GC.@preserve ansnap_str calculate_subacute_c_abi(input, ref; libpath=libpath)
             res[i] = out.nwau
         end
         return res
@@ -528,7 +529,7 @@ function calculate_batch_c_abi(
                 hasproperty(table, :inlier_weight) ? Float64(table.inlier_weight[i]) : 0.0,
                 hasproperty(table, :lso_per_diem) ? Float64(table.lso_per_diem[i]) : 0.0,
             )
-            out = calculate_mh_c_abi(input, ref; libpath=libpath)
+            out = GC.@preserve amhcc_str calculate_mh_c_abi(input, ref; libpath=libpath)
             res[i] = out.nwau
         end
         return res
