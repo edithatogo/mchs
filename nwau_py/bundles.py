@@ -17,8 +17,6 @@ from pathlib import Path
 from types import ModuleType
 from typing import Any
 
-import pandas as pd
-
 try:  # pragma: no cover - optional dependency
     import polars as pl
 except Exception:  # pragma: no cover - polars is optional in some environments
@@ -218,10 +216,19 @@ def _ensure_payload_path(bundle: DataBundle, role: str) -> Path:
     return path
 
 
-def read_bundle_frame(bundle: DataBundle, role: str) -> pd.DataFrame:
-    """Read a bundle payload as a pandas dataframe."""
+def read_bundle_frame(bundle: DataBundle, role: str):
+    """Read a bundle payload as a dataframe."""
     path = _ensure_payload_path(bundle, role)
-    return pd.read_parquet(path)
+    if pl is not None:
+        return pl.read_parquet(path)
+    try:
+        import pyarrow.parquet as pq
+
+        return pq.read_table(path)
+    except Exception:
+        from nwau_py import compat as pd
+
+        return pd.read_parquet(path)
 
 
 def read_bundle_frame_polars(bundle: DataBundle, role: str):

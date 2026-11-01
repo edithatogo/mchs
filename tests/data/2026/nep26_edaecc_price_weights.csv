@@ -1,0 +1,178 @@
+AECC,EmergencyCareClassification,Description,AECC_pw
+E0001Z,Pre-ECDG,Not attended by a healthcare professional,0.0386
+E0002Z,Pre-ECDG,Planned return visit,0.1041
+E0003Z,Pre-ECDG,Dead on arrival,0.0724
+E0110A,E01 Nervous system and neurological,Dementia and other chronic brain syndromes Complexity level A,0.2809
+E0110B,E01 Nervous system and neurological,Dementia and other chronic brain syndromes Complexity level B,0.1978
+E0120A,E01 Nervous system and neurological,Delirium Complexity level A,0.3561
+E0120B,E01 Nervous system and neurological,Delirium Complexity level B,0.2704
+E0130A,E01 Nervous system and neurological,Stroke and other cerebrovascular disorders Complexity level A,0.4554
+E0130B,E01 Nervous system and neurological,Stroke and other cerebrovascular disorders Complexity level B,0.3797
+E0140Z,E01 Nervous system and neurological,TIA and precerebral occlusion,0.3056
+E0150A,E01 Nervous system and neurological,Seizures Complexity level A,0.387
+E0150B,E01 Nervous system and neurological,Seizures Complexity level B,0.2305
+E0150C,E01 Nervous system and neurological,Seizures Complexity level C,0.1662
+E0160A,E01 Nervous system and neurological,Convulsions Complexity level A,0.2745
+E0160B,E01 Nervous system and neurological,Convulsions Complexity level B,0.1591
+E0170A,E01 Nervous system and neurological,Headaches Complexity level A,0.2088
+E0170B,E01 Nervous system and neurological,Headaches Complexity level B,0.1337
+E0190A,E01 Nervous system and neurological,Nervous system and neurological disorders Complexity level A,0.2968
+E0190B,E01 Nervous system and neurological,Nervous system and neurological disorders Complexity level B,0.2313
+E0190C,E01 Nervous system and neurological,Nervous system and neurological disorders Complexity level C,0.15
+E0290A,E02 Eye,Eye disorders Complexity level A,0.1777
+E0290B,E02 Eye,Eye disorders Complexity level B,0.1011
+E0290C,E02 Eye,Eye disorders Complexity level C,0.0721
+E0310A,"E03 Ear, nose, mouth and throat","Ear, nose, mouth and throat disorders Complexity level A",0.1813
+E0310B,"E03 Ear, nose, mouth and throat","Ear, nose, mouth and throat disorders Complexity level B",0.1159
+E0310C,"E03 Ear, nose, mouth and throat","Ear, nose, mouth and throat disorders Complexity level C",0.0792
+E0320A,"E03 Ear, nose, mouth and throat",Disorders of the teeth and supporting structures Complexity level A,0.1935
+E0320B,"E03 Ear, nose, mouth and throat",Disorders of the teeth and supporting structures Complexity level B,0.1245
+E0320C,"E03 Ear, nose, mouth and throat",Disorders of the teeth and supporting structures Complexity level C,0.09
+E0410A,E04 Respiratory,Major respiratory conditions Complexity level A,0.4067
+E0410B,E04 Respiratory,Major respiratory conditions Complexity level B,0.3283
+E0410C,E04 Respiratory,Major respiratory conditions Complexity level C,0.2604
+E0420A,E04 Respiratory,Chronic obstructive airways disease Complexity level A,0.3315
+E0420B,E04 Respiratory,Chronic obstructive airways disease Complexity level B,0.2811
+E0420C,E04 Respiratory,Chronic obstructive airways disease Complexity level C,0.2058
+E0430A,E04 Respiratory,Asthma Complexity level A,0.2298
+E0430B,E04 Respiratory,Asthma Complexity level B,0.1737
+E0430C,E04 Respiratory,Asthma Complexity level C,0.1242
+E0440A,E04 Respiratory,Upper respiratory tract infections Complexity level A,0.1686
+E0440B,E04 Respiratory,Upper respiratory tract infections Complexity level B,0.1041
+E0450A,E04 Respiratory,Lower respiratory tract infections Complexity level A,0.3163
+E0450B,E04 Respiratory,Lower respiratory tract infections Complexity level B,0.2169
+E0450C,E04 Respiratory,Lower respiratory tract infections Complexity level C,0.1318
+E0490A,E04 Respiratory,"Respiratory disorders, other Complexity level A",0.3187
+E0490B,E04 Respiratory,"Respiratory disorders, other Complexity level B",0.2355
+E0490C,E04 Respiratory,"Respiratory disorders, other Complexity level C",0.167
+E0490D,E04 Respiratory,"Respiratory disorders, other Complexity level D",0.1052
+E0510Z,E05 Circulatory,Acute coronary syndromes,0.2718
+E0520A,E05 Circulatory,Arrhythmia and cardiac arrest Complexity level A,0.2775
+E0520B,E05 Circulatory,Arrhythmia and cardiac arrest Complexity level B,0.1856
+E0530A,E05 Circulatory,Heart failure and shock Complexity level A,0.3166
+E0530B,E05 Circulatory,Heart failure and shock Complexity level B,0.2445
+E0540A,E05 Circulatory,Chest pain Complexity level A,0.216
+E0540B,E05 Circulatory,Chest pain Complexity level B,0.1854
+E0540C,E05 Circulatory,Chest pain Complexity level C,0.1521
+E0590A,E05 Circulatory,"Circulatory disorders, other Complexity level A",0.2823
+E0590B,E05 Circulatory,"Circulatory disorders, other Complexity level B",0.1931
+E0590C,E05 Circulatory,"Circulatory disorders, other Complexity level C",0.1318
+E0610A,E06 Digestive,Gastrointestinal haemorrhage Complexity level A,0.3043
+E0610B,E06 Digestive,Gastrointestinal haemorrhage Complexity level B,0.1915
+E0620Z,E06 Digestive,Gastrointestinal obstruction,0.2892
+E0630A,E06 Digestive,Peritonitis and gastrointestinal perforation Complexity level A,0.2888
+E0630B,E06 Digestive,Peritonitis and gastrointestinal perforation Complexity level B,0.2146
+E0640A,E06 Digestive,Oesophagitis and gastroenteritis Complexity level A,0.2582
+E0640B,E06 Digestive,Oesophagitis and gastroenteritis Complexity level B,0.1694
+E0640C,E06 Digestive,Oesophagitis and gastroenteritis Complexity level C,0.1138
+E0650A,E06 Digestive,Abdominal pain Complexity level A,0.2333
+E0650B,E06 Digestive,Abdominal pain Complexity level B,0.1751
+E0650C,E06 Digestive,Abdominal pain Complexity level C,0.128
+E0690A,E06 Digestive,"Digestive system disorders, other Complexity level A",0.2701
+E0690B,E06 Digestive,"Digestive system disorders, other Complexity level B",0.2127
+E0690C,E06 Digestive,"Digestive system disorders, other Complexity level C",0.1602
+E0690D,E06 Digestive,"Digestive system disorders, other Complexity level D",0.1109
+E0710A,"E07 Liver, gall bladder, bile duct and pancreas",Liver disorders Complexity level A,0.3208
+E0710B,"E07 Liver, gall bladder, bile duct and pancreas",Liver disorders Complexity level B,0.1813
+E0720A,"E07 Liver, gall bladder, bile duct and pancreas","Gall bladder, bile duct and pancreas disorders Complexity level A",0.3458
+E0720B,"E07 Liver, gall bladder, bile duct and pancreas","Gall bladder, bile duct and pancreas disorders Complexity level B",0.2722
+E0720C,"E07 Liver, gall bladder, bile duct and pancreas","Gall bladder, bile duct and pancreas disorders Complexity level C",0.2116
+E0890A,E08 Musculoskeletal,Musculoskeletal and musculotendinous disorders Complexity level A,0.2377
+E0890B,E08 Musculoskeletal,Musculoskeletal and musculotendinous disorders Complexity level B,0.1743
+E0890C,E08 Musculoskeletal,Musculoskeletal and musculotendinous disorders Complexity level C,0.1341
+E0890D,E08 Musculoskeletal,Musculoskeletal and musculotendinous disorders Complexity level D,0.0983
+E0910A,"E09 Skin, subcutaneous and breast tissue",Skin and subcutaneous tissue infections Complexity level A,0.2183
+E0910B,"E09 Skin, subcutaneous and breast tissue",Skin and subcutaneous tissue infections Complexity level B,0.1421
+E0910C,"E09 Skin, subcutaneous and breast tissue",Skin and subcutaneous tissue infections Complexity level C,0.0995
+E0990A,"E09 Skin, subcutaneous and breast tissue","Skin disorders, other Complexity level A",0.1849
+E0990B,"E09 Skin, subcutaneous and breast tissue","Skin disorders, other Complexity level B",0.1092
+E0990C,"E09 Skin, subcutaneous and breast tissue","Skin disorders, other Complexity level C",0.0849
+E1010A,"E10 Endocrine, nutritional and metabolic",Diabetes Complexity level A,0.3385
+E1010B,"E10 Endocrine, nutritional and metabolic",Diabetes Complexity level B,0.2749
+E1010C,"E10 Endocrine, nutritional and metabolic",Diabetes Complexity level C,0.1836
+E1090A,"E10 Endocrine, nutritional and metabolic","Metabolic and nutritional disorders, other Complexity level A",0.2994
+E1090B,"E10 Endocrine, nutritional and metabolic","Metabolic and nutritional disorders, other Complexity level B",0.2244
+E1090C,"E10 Endocrine, nutritional and metabolic","Metabolic and nutritional disorders, other Complexity level C",0.1562
+E1110A,E11 Kidney and urinary tract,Kidney failure Complexity level A,0.3394
+E1110B,E11 Kidney and urinary tract,Kidney failure Complexity level B,0.2895
+E1110C,E11 Kidney and urinary tract,Kidney failure Complexity level C,0.2462
+E1120A,E11 Kidney and urinary tract,Urinary stones and obstruction Complexity level A,0.2334
+E1120B,E11 Kidney and urinary tract,Urinary stones and obstruction Complexity level B,0.1847
+E1130A,E11 Kidney and urinary tract,Kidney and urinary tract infections Complexity level A,0.2513
+E1130B,E11 Kidney and urinary tract,Kidney and urinary tract infections Complexity level B,0.1532
+E1130C,E11 Kidney and urinary tract,Kidney and urinary tract infections Complexity level C,0.1031
+E1190A,E11 Kidney and urinary tract,"Kidney and urinary tract disorders, other Complexity level A",0.2261
+E1190B,E11 Kidney and urinary tract,"Kidney and urinary tract disorders, other Complexity level B",0.1418
+E1290A,E12 Male genitourinary,Male genitourinary disorders Complexity level A,0.1692
+E1290B,E12 Male genitourinary,Male genitourinary disorders Complexity level B,0.12
+E1390A,E13 Gynaecology,Gynaecological disorders Complexity level A,0.1973
+E1390B,E13 Gynaecology,Gynaecological disorders Complexity level B,0.1259
+E1410A,E14 Obstetrics,Postpartum and post abortion conditions Complexity level A,0.1857
+E1410B,E14 Obstetrics,Postpartum and post abortion conditions Complexity level B,0.1154
+E1420A,E14 Obstetrics,Antenatal and other obstetric conditions Complexity level A,0.1349
+E1420B,E14 Obstetrics,Antenatal and other obstetric conditions Complexity level B,0.0883
+E1590Z,E15 Perinatal,Perinatal disorder,0.1388
+E1610A,E16 Blood and immunology,Immune system disorders Complexity level A,0.2894
+E1610B,E16 Blood and immunology,Immune system disorders Complexity level B,0.1509
+E1620Z,E16 Blood and immunology,Red blood cell disorders,0.2333
+E1630A,E16 Blood and immunology,Haemostasis disorders Complexity level A,0.2465
+E1630B,E16 Blood and immunology,Haemostasis disorders Complexity level B,0.1463
+E1790A,E17 Neoplasms,Neoplasms Complexity level A,0.3284
+E1790B,E17 Neoplasms,Neoplasms Complexity level B,0.2651
+E1790C,E17 Neoplasms,Neoplasms Complexity level C,0.1783
+E1810Z,E18 Infectious diseases,Septicaemia,0.3526
+E1820A,E18 Infectious diseases,Viral illnesses Complexity level A,0.2136
+E1820B,E18 Infectious diseases,Viral illnesses Complexity level B,0.1289
+E1820C,E18 Infectious diseases,Viral illnesses Complexity level C,0.0995
+E1830A,E18 Infectious diseases,Fever of unknown origin Complexity level A,0.3189
+E1830B,E18 Infectious diseases,Fever of unknown origin Complexity level B,0.2132
+E1830C,E18 Infectious diseases,Fever of unknown origin Complexity level C,0.1245
+E1890A,E18 Infectious diseases,"Infectious and parasitic diseases, other Complexity level A",0.1867
+E1890B,E18 Infectious diseases,"Infectious and parasitic diseases, other Complexity level B",0.0927
+E1910A,"E19 Mental, behavioural and neurodevelopment",Alcohol and drug related mental and behavioural disorders Complexity level A,0.2889
+E1910B,"E19 Mental, behavioural and neurodevelopment",Alcohol and drug related mental and behavioural disorders Complexity level B,0.2039
+E1910C,"E19 Mental, behavioural and neurodevelopment",Alcohol and drug related mental and behavioural disorders Complexity level C,0.1458
+E1920A,"E19 Mental, behavioural and neurodevelopment",Psychoses Complexity level A,0.4111
+E1920B,"E19 Mental, behavioural and neurodevelopment",Psychoses Complexity level B,0.2738
+E1920C,"E19 Mental, behavioural and neurodevelopment",Psychoses Complexity level C,0.181
+E1990A,"E19 Mental, behavioural and neurodevelopment","Mental, behavioural and neurodevelopment disorders, other Complexity level A",0.2471
+E1990B,"E19 Mental, behavioural and neurodevelopment","Mental, behavioural and neurodevelopment disorders, other Complexity level B",0.1749
+E1990C,"E19 Mental, behavioural and neurodevelopment","Mental, behavioural and neurodevelopment disorders, other Complexity level C",0.1313
+E2010A,E20 Injuries and other externally-caused morbidity,"Head, intracranial, spine, internal organ and other complex injuries Complexity level A",0.5343
+E2010B,E20 Injuries and other externally-caused morbidity,"Head, intracranial, spine, internal organ and other complex injuries Complexity level B",0.3666
+E2010C,E20 Injuries and other externally-caused morbidity,"Head, intracranial, spine, internal organ and other complex injuries Complexity level C",0.2185
+E2010D,E20 Injuries and other externally-caused morbidity,"Head, intracranial, spine, internal organ and other complex injuries Complexity level D",0.1133
+E2020A,E20 Injuries and other externally-caused morbidity,Pelvic and femoral fractures Complexity level A,0.3633
+E2020B,E20 Injuries and other externally-caused morbidity,Pelvic and femoral fractures Complexity level B,0.2729
+E2025A,E20 Injuries and other externally-caused morbidity,"Fractures, dislocations and ligament injuries Complexity level A",0.2996
+E2025B,E20 Injuries and other externally-caused morbidity,"Fractures, dislocations and ligament injuries Complexity level B",0.1609
+E2025C,E20 Injuries and other externally-caused morbidity,"Fractures, dislocations and ligament injuries Complexity level C",0.101
+E2030A,E20 Injuries and other externally-caused morbidity,"Injuries, other Complexity level A",0.2674
+E2030B,E20 Injuries and other externally-caused morbidity,"Injuries, other Complexity level B",0.1617
+E2030C,E20 Injuries and other externally-caused morbidity,"Injuries, other Complexity level C",0.1052
+E2030D,E20 Injuries and other externally-caused morbidity,"Injuries, other Complexity level D",0.0856
+E2040A,E20 Injuries and other externally-caused morbidity,"Finger, toe and superficial injuries Complexity level A",0.255
+E2040B,E20 Injuries and other externally-caused morbidity,"Finger, toe and superficial injuries Complexity level B",0.1431
+E2040C,E20 Injuries and other externally-caused morbidity,"Finger, toe and superficial injuries Complexity level C",0.0914
+E2050A,E20 Injuries and other externally-caused morbidity,Burns Complexity level A,0.2309
+E2050B,E20 Injuries and other externally-caused morbidity,Burns Complexity level B,0.1166
+E2050C,E20 Injuries and other externally-caused morbidity,Burns Complexity level C,0.0861
+E2060A,E20 Injuries and other externally-caused morbidity,Poisoning Complexity level A,0.2802
+E2060B,E20 Injuries and other externally-caused morbidity,Poisoning Complexity level B,0.2017
+E2060C,E20 Injuries and other externally-caused morbidity,Poisoning Complexity level C,0.1223
+E2070A,E20 Injuries and other externally-caused morbidity,Allergic reactions Complexity level A,0.1596
+E2070B,E20 Injuries and other externally-caused morbidity,Allergic reactions Complexity level B,0.0991
+E2080A,E20 Injuries and other externally-caused morbidity,Complications of surgical and medical care Complexity level A,0.1978
+E2080B,E20 Injuries and other externally-caused morbidity,Complications of surgical and medical care Complexity level B,0.1034
+E5010A,E50 General symptoms without diagnosis,Pain syndrome Complexity level A,0.2085
+E5010B,E50 General symptoms without diagnosis,Pain syndrome Complexity level B,0.1143
+E5090A,E50 General symptoms without diagnosis,"Symptoms, other Complexity level A",0.2457
+E5090B,E50 General symptoms without diagnosis,"Symptoms, other Complexity level B",0.1572
+E5090C,E50 General symptoms without diagnosis,"Symptoms, other Complexity level C",0.0883
+E6010A,E60 Other factors influencing health status,Forensic examination Complexity level A,0.2917
+E6010B,E60 Other factors influencing health status,Forensic examination Complexity level B,0.1541
+E6010C,E60 Other factors influencing health status,Forensic examination Complexity level C,0.0773
+E6020A,E60 Other factors influencing health status,Abuse and neglect Complexity level A,0.2724
+E6020B,E60 Other factors influencing health status,Abuse and neglect Complexity level B,0.1473
+E6090A,E60 Other factors influencing health status,Other factors influencing health status Complexity level A,0.142
+E6090B,E60 Other factors influencing health status,Other factors influencing health status Complexity level B,0.079

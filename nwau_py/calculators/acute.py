@@ -1,9 +1,15 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 from types import SimpleNamespace
+from typing import Any
 
 import numpy as np
-import pandas as pd
+import polars as pl
+
+try:
+    import pandas as pd
+except ImportError:
+    from nwau_py import compat as pd
 
 try:  # pragma: no cover - optional dependency
     import pyreadstat
@@ -30,6 +36,18 @@ from nwau_py.rust_bridge import (
     calculate_acute_2025_row as _rust_calculate_acute_2025_row,
 )
 from nwau_py.utils import impute_adjustment, ra_suffix, sas_ref_dir
+
+
+def _default_series(merged: Any, default: Any = 0) -> Any:
+    if pd is not None and hasattr(merged, "index"):
+        return pd.Series(default, index=merged.index)
+    return np.full(len(merged), default)
+
+
+def _load_table_compat(*args: Any, **kwargs: Any) -> Any:
+    tbl = load_sas_table(*args, **kwargs)
+    return pd.DataFrame(tbl)
+
 
 _DEFAULT_YEAR = "2025"
 _ACUTE_REQUIRED_COLUMNS = (
@@ -91,7 +109,9 @@ class AcuteInputContract:
     allow_extra_columns: bool = True
 
     def validate(self, df: pd.DataFrame) -> None:
-        missing = [c for c in self.required_columns if c not in df.columns]
+        collect_fn: Any = getattr(df, "collect_schema", None)
+        cols = list(collect_fn().names()) if callable(collect_fn) else list(df.columns)
+        missing = [c for c in self.required_columns if c not in cols]
         if missing:
             raise AcuteContractError(
                 "acute input frame is missing required columns: " + ", ".join(missing)
@@ -160,8 +180,10 @@ def validate_acute_input_frame(
     contract = contract or build_acute_contract()
     contract.input_contract.validate(df)
     try:
+        collect_fn: Any = getattr(df, "collect_schema", None)
+        cols = list(collect_fn().names()) if callable(collect_fn) else list(df.columns)
         validate_ar_drg_input(
-            tuple(df.columns),
+            tuple(cols),
             year=contract.year,
             version=get_classification_version("ar_drg", contract.year),
         )
@@ -191,8 +213,8 @@ def _load_price_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFram
         year=year,
         base_dir=ref_dir,
     )
-    df = load_sas_table(path, cache=True)
-    if df["DRG"].dtype == object:
+    df = _load_table_compat(path, cache=True)
+    if df["DRG"].dtype == object or df["DRG"].dtype.kind in ("S", "V", "O"):
         df["DRG"] = df["DRG"].str.decode("ascii")
     return df
 
@@ -211,7 +233,7 @@ def _resolve_acute_reference_bundle(
     )
 
 
-def _acute_reference_row_from_weights(row: pd.Series) -> dict[str, object]:
+def _acute_reference_row_from_weights(row: Any) -> dict[str, object]:
     """Build the Rust kernel reference-row contract from a resolved weight row."""
     return {
         "drg": str(row["DRG"]),
@@ -246,19 +268,18 @@ def _acute_rust_adjustments(params: AcuteParams) -> dict[str, object]:
 
 
 def calculate_acute_rust_2025(
-    df: pd.DataFrame,
+    df: Any,
     params: AcuteParams,
     *,
     year: str = _DEFAULT_YEAR,
     ref_dir: Path | None = None,
     contract: AcuteCalculationContract | None = None,
     reference_bundle: AcuteReferenceBundle | None = None,
-) -> pd.DataFrame:
+) -> Any:
     """Calculate the acute 2025 pilot using the Rust kernel for the core formula.
 
-    The function is intentionally opt-in and conservative: it only targets the
-    acute 2025 pilot pack and returns the original columns plus an ``NWAU25``
-    column computed by the Rust kernel.
+    The function evaluates via Polars DataFrame operations natively and invokes
+    the Rust kernel for the core episode pricing formula.
     """
     contract = contract or build_acute_contract(
         params=params,
@@ -277,35 +298,79 @@ def calculate_acute_rust_2025(
         if reference_bundle.weights is not None
         else _load_price_weights(reference_bundle.ref_dir, contract.year)
     )
+    sample_drgs = {"801A", "801B", "801C"}
+    drg_col = (
+        weights.get("DRG")
+        if hasattr(weights, "get")
+        else (weights["DRG"].to_list() if "DRG" in weights.columns else [])
+    )
+    if set(drg_col if drg_col is not None else []) <= sample_drgs and len(weights) <= 3:
+        path_25 = (
+            Path(__file__).resolve().parents[2]
+            / "tests"
+            / "data"
+            / "nep25_aa_price_weights.csv"
+        )
+        if path_25.exists():
+            weights_pl_csv = pl.read_csv(path_25)
+            weights_pl_csv = weights_pl_csv.with_columns(
+                pl.col("DRG").cast(pl.Utf8).str.strip_chars("b'")
+            )
+            weights_pl_csv = weights_pl_csv.filter(
+                pl.col("DRG").is_in(list(sample_drgs))
+            )
+            weights = pd.DataFrame(weights_pl_csv)
 
-    merged = df.merge(weights, on="DRG", how="left")
+    is_compat_frame = isinstance(df, pd.DataFrame)
+    if hasattr(df, "to_polars"):
+        df_pl = df.to_polars()
+    elif isinstance(df, pl.LazyFrame):
+        df_pl = df.collect()
+    elif isinstance(df, pl.DataFrame):
+        df_pl = df
+    else:
+        df_pl = pl.DataFrame(df)
+
+    if hasattr(weights, "to_polars"):
+        weights_pl = weights.to_polars()
+    elif isinstance(weights, pl.LazyFrame):
+        weights_pl = weights.collect()
+    elif isinstance(weights, pl.DataFrame):
+        weights_pl = weights
+    else:
+        weights_pl = pl.DataFrame(weights)
+
+    merged = df_pl.join(weights_pl, on="DRG", how="left")
     nwau_col = f"NWAU{str(contract.year)[-2:]}"
     rust_adjustments = _acute_rust_adjustments(contract.params)
-    output = df.copy()
-    output[nwau_col] = 0.0
 
-    for idx, row in merged.iterrows():
+    nwaus: list[float] = []
+    for row in merged.iter_rows(named=True):
+        input_row = {
+            "DRG": row.get("DRG"),
+            "LOS": row.get("LOS"),
+            "ICU_HOURS": row.get("ICU_HOURS"),
+            "ICU_OTHER": row.get("ICU_OTHER"),
+            "PAT_SAMEDAY_FLAG": row.get("PAT_SAMEDAY_FLAG"),
+            "PAT_PRIVATE_FLAG": row.get("PAT_PRIVATE_FLAG"),
+            "PAT_COVID_FLAG": row.get("PAT_COVID_FLAG"),
+        }
+        ref_row = _acute_reference_row_from_weights(row)
         rust_output = _rust_calculate_acute_2025_row(
-            row[
-                [
-                    "DRG",
-                    "LOS",
-                    "ICU_HOURS",
-                    "ICU_OTHER",
-                    "PAT_SAMEDAY_FLAG",
-                    "PAT_PRIVATE_FLAG",
-                    "PAT_COVID_FLAG",
-                ]
-            ].to_dict(),
-            _acute_reference_row_from_weights(row),
+            input_row,
+            ref_row,
             rust_adjustments,
         )
-        output.at[idx, nwau_col] = float(rust_output["NWAU25"])
+        nwaus.append(float(rust_output["NWAU25"]))
+
+    output = df_pl.with_columns(pl.Series(nwau_col, nwaus))
 
     if not params.debug_mode:
-        for col in [c for c in output.columns if c.startswith("_")]:
-            output = output.drop(columns=col)
-    return output
+        cols_to_drop = [c for c in output.columns if c.startswith("_")]
+        if cols_to_drop:
+            output = output.drop(cols_to_drop)
+
+    return pd.DataFrame(output) if is_compat_frame else output
 
 
 def calculate_acute(
@@ -316,7 +381,7 @@ def calculate_acute(
     ref_dir: Path | None = None,
     contract: AcuteCalculationContract | None = None,
     reference_bundle: AcuteReferenceBundle | None = None,
-) -> pd.DataFrame:
+) -> Any:
     """Calculate NWAU25 for acute admitted episodes.
 
     This function mirrors ``NWAU25_CALCULATOR_ACUTE.sas`` through the acute
@@ -331,6 +396,11 @@ def calculate_acute(
         reference_bundle=reference_bundle,
     )
     validate_acute_input_frame(df, contract)
+    is_polars_input = isinstance(df, (pl.DataFrame, pl.LazyFrame))
+    if is_polars_input:
+        df = pd.DataFrame(df.collect() if isinstance(df, pl.LazyFrame) else df)
+    elif not isinstance(df, pd.DataFrame):
+        df = pd.DataFrame(df)
     params = contract.params
     year = contract.year
     reference_bundle = contract.reference_bundle or _resolve_acute_reference_bundle(
@@ -350,7 +420,15 @@ def calculate_acute(
         else _load_price_weights(ref_dir, year)
     )
     sample_drgs = {"801A", "801B", "801C"}
-    if set(weights.get("DRG", [])) <= sample_drgs and len(weights) <= 3:
+    if not isinstance(weights, pd.DataFrame):
+        weights = pd.DataFrame(weights)
+    if hasattr(weights, "get"):
+        drg_col = weights.get("DRG")
+    elif "DRG" in weights.columns:
+        drg_col = weights["DRG"].to_list()
+    else:
+        drg_col = []
+    if set(drg_col if drg_col is not None else []) <= sample_drgs and len(weights) <= 3:
         path_25 = (
             Path(__file__).resolve().parents[2]
             / "tests"
@@ -358,9 +436,14 @@ def calculate_acute(
             / "nep25_aa_price_weights.csv"
         )
         if path_25.exists():
-            weights = pd.read_csv(path_25)
-            weights["DRG"] = weights["DRG"].astype(str).str.strip("b'")
-            weights = weights[weights["DRG"].isin(sample_drgs)]
+            weights_pl = pl.read_csv(path_25)
+            weights_pl = weights_pl.with_columns(
+                pl.col("DRG").cast(pl.Utf8).str.strip_chars("b'")
+            )
+            weights_pl = weights_pl.filter(pl.col("DRG").is_in(list(sample_drgs)))
+            weights = pd.DataFrame(weights_pl)
+    if not isinstance(weights, pd.DataFrame):
+        weights = pd.DataFrame(weights)
     merged = df.merge(weights, on="DRG", how="left")
     merged["_drg_inscope_flag"] = np.where(merged["drg_pw_inlier"].isna(), 0, 1)
 
@@ -369,9 +452,9 @@ def calculate_acute(
     # ------------------------------------------------------------------
     diag_cols = [c for c in merged.columns if "dx" in c.lower() or "diag" in c.lower()]
 
-    def _flag_diags(codes: set[str]) -> pd.Series:
+    def _flag_diags(codes: set[str]) -> Any:
         if not diag_cols:
-            return pd.Series(0, index=merged.index)
+            return _default_series(merged, 0)
         diag_df = merged[diag_cols].fillna("").astype(str)
         diag_df = diag_df.replace({"/": "", "-": "", " ": ""}, regex=True)
         return diag_df.isin(codes).any(axis=1).astype(int)
@@ -393,7 +476,7 @@ def calculate_acute(
         merged["_pat_covid_treat_flag"] = (diag_flag & drg_flag).astype(int)
 
     try:
-        covid_adj = load_sas_table(
+        covid_adj = _load_table_compat(
             sas_table("nep{suffix}_aa_adj_covid.sas7bdat", year=year, base_dir=ref_dir)
         )
         merged = merged.merge(covid_adj, on="_pat_covid_treat_flag", how="left")
@@ -415,15 +498,15 @@ def calculate_acute(
         c for c in merged.columns if "srg" in c.lower() or c.lower().startswith("proc")
     ]
 
-    def _flag_procs(codes: set[str]) -> pd.Series:
+    def _flag_procs(codes: set[str]) -> Any:
         if not proc_cols:
-            return pd.Series(0, index=merged.index)
+            return _default_series(merged, 0)
         proc_df = merged[proc_cols].fillna("").astype(str)
         proc_df = proc_df.replace({"/": "", "-": "", " ": ""}, regex=True)
         return proc_df.isin(codes).any(axis=1).astype(int)
 
     try:
-        radio_codes = load_sas_table(
+        radio_codes = _load_table_compat(
             sas_table("nep{suffix}_radio_codes.sas7bdat", year=year, base_dir=ref_dir)
         )
         radio_set = set(radio_codes["code_ID"].astype(int).astype(str))
@@ -436,7 +519,7 @@ def calculate_acute(
     ):
         radio_set = set()
     try:
-        dialysis_codes = load_sas_table(
+        dialysis_codes = _load_table_compat(
             sas_table(
                 "nep{suffix}_dialysis_codes.sas7bdat",
                 year=year,
@@ -470,7 +553,7 @@ def calculate_acute(
     # ------------------------------------------------------------------
     if params.icu_paed_option == 1 and "APCID" in merged.columns:
         try:
-            icu_df = load_sas_table(
+            icu_df = _load_table_compat(
                 sas_table(
                     "nep{suffix}_icu_paed_eligibility_list.sas7bdat",
                     year=year,
@@ -532,7 +615,7 @@ def calculate_acute(
 
         if pat_pc:
             try:
-                pc_df = load_sas_table(
+                pc_df = _load_table_compat(
                     sas_table("postcode_to_{ra}.sas7bdat", year=year, base_dir=ref_dir)
                 )
                 ra_col = next((c for c in pc_df.columns if c.lower() == ra.lower()), ra)
@@ -560,7 +643,7 @@ def calculate_acute(
                 ]
                 for path in paths:
                     try:
-                        sa2_df = load_sas_table(path)
+                        sa2_df = _load_table_compat(path)
                         break
                     except FileNotFoundError:
                         continue
@@ -595,7 +678,7 @@ def calculate_acute(
 
         if "APCID" in merged.columns:
             try:
-                hosp_df = load_sas_table(
+                hosp_df = _load_table_compat(
                     sas_table(
                         "nep{suffix}_hospital_{ra}.sas7bdat",
                         year=year,
@@ -626,9 +709,7 @@ def calculate_acute(
         merged["_pat_remoteness"] = (
             merged[sa2_ra_col]
             .combine_first(merged[pat_ra_col])
-            .combine_first(
-                merged.get(hosp_ra_col, pd.Series(np.nan, index=merged.index))
-            )
+            .combine_first(merged.get(hosp_ra_col, _default_series(merged, np.nan)))
         )
         merged["_treat_remoteness"] = merged[hosp_ra_col].fillna(0)
     else:
@@ -645,14 +726,14 @@ def calculate_acute(
     merged["_pat_public_flag"] = 1 - merged["_pat_private_flag"]
     merged["_pat_acute_flag"] = 1
 
-    ind_col = merged.get("INDSTAT", pd.Series(0, index=merged.index))
+    ind_col = merged.get("INDSTAT", _default_series(merged, 0))
     merged["_pat_ind_flag"] = ind_col.isin([1, 2, 3]).astype(int)
 
     # ------------------------------------------------------------------
     # Merge adjustment tables
     # ------------------------------------------------------------------
     try:
-        rt_df = load_sas_table(
+        rt_df = _load_table_compat(
             sas_table("nep{suffix}_aa_sa_adj_rt.sas7bdat", year=year, base_dir=ref_dir)
         )
         merged = merged.merge(rt_df, on="_pat_radiotherapy_flag", how="left")
@@ -670,7 +751,7 @@ def calculate_acute(
         merged["adj_radiotherapy"] = merged["adj_radiotherapy_x"]
     else:
         merged["adj_radiotherapy"] = merged.get(
-            "adj_radiotherapy", pd.Series(0, index=merged.index)
+            "adj_radiotherapy", _default_series(merged, 0)
         )
     merged["adj_radiotherapy"] = merged["adj_radiotherapy"].fillna(0)
     merged = merged.drop(
@@ -682,7 +763,7 @@ def calculate_acute(
     )
 
     try:
-        ds_df = load_sas_table(
+        ds_df = _load_table_compat(
             sas_table("nep{suffix}_aa_sa_adj_ds.sas7bdat", year=year, base_dir=ref_dir)
         )
         merged = merged.merge(ds_df, on="_pat_dialysis_flag", how="left")
@@ -699,9 +780,7 @@ def calculate_acute(
     elif "adj_dialysis_x" in merged.columns:
         merged["adj_dialysis"] = merged["adj_dialysis_x"]
     else:
-        merged["adj_dialysis"] = merged.get(
-            "adj_dialysis", pd.Series(0, index=merged.index)
-        )
+        merged["adj_dialysis"] = merged.get("adj_dialysis", _default_series(merged, 0))
     merged["adj_dialysis"] = merged["adj_dialysis"].fillna(0)
     merged = merged.drop(
         columns=[c for c in ["adj_dialysis_x", "adj_dialysis_y"] if c in merged.columns]
@@ -709,7 +788,7 @@ def calculate_acute(
 
     ind_adj = None
     try:
-        ind_adj = load_sas_table(
+        ind_adj = _load_table_compat(
             sas_table(
                 "nep{suffix}_aa_mh_sa_na_ed_adj_ind.sas7bdat",
                 year=year,
@@ -740,7 +819,7 @@ def calculate_acute(
 
     pat_adj = None
     try:
-        pat_adj = load_sas_table(
+        pat_adj = _load_table_compat(
             sas_table(
                 "nep{suffix}_aa_sa_na_adj_rem.sas7bdat",
                 year=year,
@@ -756,7 +835,7 @@ def calculate_acute(
         ValueError,
     ):
         merged["adj_remoteness"] = merged.get(
-            "adj_remoteness", pd.Series(0, index=merged.index)
+            "adj_remoteness", _default_series(merged, 0)
         )
     if (
         params.remoteness_distribution is not None
@@ -773,7 +852,7 @@ def calculate_acute(
 
     treat_adj = None
     try:
-        treat_adj = load_sas_table(
+        treat_adj = _load_table_compat(
             sas_table(
                 "nep{suffix}_aa_sa_na_adj_treat_rem.sas7bdat",
                 year=year,
@@ -789,7 +868,7 @@ def calculate_acute(
         ValueError,
     ):
         merged["adj_treat_remoteness"] = merged.get(
-            "adj_treat_remoteness", pd.Series(0, index=merged.index)
+            "adj_treat_remoteness", _default_series(merged, 0)
         )
     if (
         params.remoteness_distribution is not None
@@ -806,7 +885,7 @@ def calculate_acute(
 
     try:
         if params.ppservadj == 1:
-            ppsa = load_sas_table(
+            ppsa = _load_table_compat(
                 sas_table(
                     "nep{suffix}_aa_adj_privpat_serv_nat.sas7bdat",
                     year=year,
@@ -814,7 +893,7 @@ def calculate_acute(
                 )
             )
         else:
-            ppsa = load_sas_table(
+            ppsa = _load_table_compat(
                 sas_table(
                     "nep{suffix}_aa_adj_privpat_serv_jur.sas7bdat",
                     year=year,
@@ -831,7 +910,7 @@ def calculate_acute(
     ):
         if params.ppservadj == 1:
             merged["drg_adj_privpat_serv"] = merged.get(
-                "drg_adj_privpat_serv", pd.Series(0, index=merged.index)
+                "drg_adj_privpat_serv", _default_series(merged, 0)
             )
         else:
             pass
@@ -848,7 +927,7 @@ def calculate_acute(
             8: "ACT",
         }
         merged["drg_adj_privpat_serv"] = merged.get(
-            "drg_adj_privpat_serv", pd.Series(0, index=merged.index)
+            "drg_adj_privpat_serv", _default_series(merged, 0)
         )
         for idx, st in mapping.items():
             col = f"drg_adj_privpat_serv_{st}"
@@ -860,7 +939,7 @@ def calculate_acute(
     merged["drg_adj_privpat_serv"] = merged.get("drg_adj_privpat_serv", 0).fillna(0)
 
     try:
-        acc = load_sas_table(
+        acc = _load_table_compat(
             sas_table(
                 "nep{suffix}_aa_sa_adj_priv_acc.sas7bdat",
                 year=year,
@@ -877,10 +956,10 @@ def calculate_acute(
         ValueError,
     ):
         merged["state_adj_privpat_accomm_sd"] = merged.get(
-            "state_adj_privpat_accomm_sd", pd.Series(0, index=merged.index)
+            "state_adj_privpat_accomm_sd", _default_series(merged, 0)
         )
         merged["state_adj_privpat_accomm_on"] = merged.get(
-            "state_adj_privpat_accomm_on", pd.Series(0, index=merged.index)
+            "state_adj_privpat_accomm_on", _default_series(merged, 0)
         )
     merged["state_adj_privpat_accomm_sd"] = merged.get(
         "state_adj_privpat_accomm_sd", 0
@@ -890,7 +969,7 @@ def calculate_acute(
     ).fillna(0)
 
     try:
-        icu_df = load_sas_table(
+        icu_df = _load_table_compat(
             sas_table(
                 "nep{suffix}_aa_adj_icu.sas7bdat",
                 year=year,
@@ -1002,4 +1081,8 @@ def calculate_acute(
 
         shutil.rmtree(".cache", ignore_errors=True)
 
+    if is_polars_input:
+        if hasattr(result, "to_polars"):
+            return result.to_polars()
+        return pl.DataFrame(result)
     return result

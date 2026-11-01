@@ -8,7 +8,7 @@ import types
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
+from nwau_py import compat as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))

@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import pandas as pd
+from nwau_py import compat as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -224,3 +224,30 @@ def test_procedure_flags(year):
     assert res["_pat_dialysis_flag"].iloc[0] == 1
     expected = 13.4327 * (1 + 0.1 + 0.1 + 0.2) * 1.02
     assert res["NWAU25"].iloc[0] == pytest.approx(expected, rel=1e-4)
+
+
+def test_calculate_subacute_polars_native_input_and_output():
+    import polars as pl
+
+    df_pl = (
+        BASE_DATA.to_polars()
+        if hasattr(BASE_DATA, "to_polars")
+        else pl.DataFrame(BASE_DATA)
+    )
+    res = subacute.calculate_subacute(
+        df_pl,
+        subacute.SubacuteParams(),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res, pl.DataFrame)
+    assert "NWAU25" in res.columns
+    assert res["NWAU25"][0] == pytest.approx(EXPECTED_BASE, rel=1e-4)
+
+    res_lazy = subacute.calculate_subacute(
+        df_pl.lazy(),
+        subacute.SubacuteParams(),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res_lazy, pl.DataFrame)

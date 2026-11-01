@@ -728,7 +728,7 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 
 ---
 
-- [ ] **Track: Pure Polars Migration & Pandas Decommissioning**
+- [x] **Track: Pure Polars Migration & Pandas Decommissioning**
 *Link: [./tracks/polars_pure_migration_20261101/](./tracks/polars_pure_migration_20261101/)*
 *Gate: Eradicate pandas from nwau_py, standardize on native Polars/Narwhals, drop pandas dependency, and verify 100% parity.*
 

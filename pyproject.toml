@@ -16,10 +16,10 @@ dependencies = [
     "lightgbm",
     "msgpack>=1.2.1",
     "numpy",
-    "pandas",
     "pyarrow",
     "pydantic",
     "polars",
+    "narwhals>=2.28.0",
     "pyreadstat",
     "pyxlsb",
     "pyyaml>=6.0.3",
@@ -27,6 +27,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "maturin>=1.16.0",
     "ruff",
 ]
 test = [
@@ -89,7 +90,8 @@ ignore = ["UP042"]
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S", "NPY"]
+"tests/**/*.py" = ["S", "NPY", "E501"]
+"nwau_py/compat.py" = ["S", "E501"]
 "**/helpers/**/*.py" = ["S", "NPY"]
 "scripts/**/*.py" = ["S", "NPY"]
 "examples/**/*.py" = ["S", "NPY"]

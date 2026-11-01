@@ -4,8 +4,17 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
+from typing import Any
 
-import pandas as pd
+import polars as pl
+
+try:
+    import pandas as pd
+except ImportError:
+    from nwau_py import compat as pd
+
+if not hasattr(pl.DataFrame, "empty"):
+    setattr(pl.DataFrame, "empty", property(lambda self: self.is_empty()))  # noqa: B010
 
 try:  # pragma: no cover - optional dependency
     import pyreadstat
@@ -37,8 +46,9 @@ def load_sas_table(
     cache_format: str = "parquet",
     cache_dir: str | Path = ".cache",
     force: bool = False,
-) -> pd.DataFrame:
-    """Load a SAS ``.sas7bdat`` table.
+    as_pandas: bool = False,
+) -> Any:
+    """Load a SAS ``.sas7bdat`` table as a native Polars DataFrame.
 
     Parameters
     ----------
@@ -53,6 +63,8 @@ def load_sas_table(
         Directory where cache files are stored.
     force:
         If ``True`` the SAS file will be read even if a cached version exists.
+    as_pandas:
+        Compatibility flag for callers requiring a legacy pandas frame.
     """
     path = Path(path)
     cache_dir = Path(cache_dir)
@@ -68,20 +80,29 @@ def load_sas_table(
 
     if cache and cache_path.exists() and not force:
         if cache_format == "parquet":
-            return pd.read_parquet(cache_path)
+            df = pl.read_parquet(cache_path)
         else:
-            return pd.read_csv(cache_path)
+            df = pl.read_csv(cache_path)
+        return pd.DataFrame(df) if as_pandas else df
 
     if pyreadstat is None:  # pragma: no cover - dependency guard
         raise ImportError(
             "pyreadstat is required to read SAS files when no cache exists"
         ) from _PYREADSTAT_IMPORT_ERROR
 
-    df, _ = pyreadstat.read_sas7bdat(str(path))
+    try:
+        raw_df, _ = pyreadstat.read_sas7bdat(str(path), output_format="dict")
+        df = pl.from_dict(raw_df)
+    except Exception:
+        raw_df, _ = pyreadstat.read_sas7bdat(str(path))
+        if hasattr(raw_df, "columns"):
+            df = pd.DataFrame(raw_df).to_polars()
+        else:
+            df = pl.DataFrame(raw_df)
 
     if cache:
         if cache_format == "parquet":
-            df.to_parquet(cache_path, index=False)
+            df.write_parquet(cache_path)
         else:
-            df.to_csv(cache_path, index=False)
-    return df
+            df.write_csv(cache_path)
+    return pd.DataFrame(df) if as_pandas else df

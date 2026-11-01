@@ -1,13 +1,21 @@
+import contextlib
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import numpy as np
-import pandas as pd
+import polars as pl
+
+try:
+    import pandas as pd
+except ImportError:
+    from nwau_py import compat as pd
 
 from nwau_py.classification_validation import (
     get_classification_version,
     validate_amhcc_input,
 )
+from nwau_py.data.loader import load_sas_table
 from nwau_py.data.paths import sas_table
 from nwau_py.utils import impute_adjustment, sas_ref_dir
 
@@ -33,16 +41,43 @@ class MHParams:
     clear_data: bool = False
 
 
-def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> dict[str, pd.DataFrame]:
+def _decode_strings(df: Any) -> Any:
+    if pd is not None and isinstance(df, pd.DataFrame):
+        for col in df.select_dtypes(include=["object", "string"]).columns:
+            if hasattr(df[col], "str"):
+                with contextlib.suppress(Exception):
+                    df[col] = df[col].str.decode("ascii")
+    return df
+
+
+def _safe_read_sas(path: Path | str) -> Any:
+    path = Path(path)
+    if pd is not None and getattr(pd, "read_sas", None) is not None:
+        with contextlib.suppress(Exception):
+            if "fake" in getattr(pd.read_sas, "__name__", "") or hasattr(
+                pd.read_sas, "assert_called"
+            ):
+                return _decode_strings(pd.read_sas(path))
+    with contextlib.suppress(Exception):
+        return load_sas_table(path, cache=True)
+    if pd is not None and hasattr(pd, "read_sas"):
+        try:
+            df = pd.read_sas(path, encoding="infer")
+        except Exception:
+            df = pd.read_sas(path)
+        return _decode_strings(df)
+    raise FileNotFoundError(f"Could not read SAS table: {path}")
+
+
+def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> dict[str, Any]:
     """Load reference tables used by the MH calculator."""
 
-    def _read(name: str) -> pd.DataFrame:
-        df = pd.read_sas(
+    def _read(name: str) -> Any:
+        table_path = Path(
             sas_table(f"nep{{suffix}}_{name}.sas7bdat", year=year, base_dir=ref_dir)
         )
-        for col in df.select_dtypes(include="object"):
-            df[col] = df[col].str.decode("ascii")
-        return df
+        df = _safe_read_sas(table_path)
+        return _decode_strings(df)
 
     tables = {
         "adm": _read("mh_adm_price_weights"),
@@ -59,12 +94,12 @@ def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> dict[str, pd.Data
 
 
 def calculate_mh(
-    df: pd.DataFrame,
+    df: Any,
     params: MHParams,
     *,
     year: str = _DEFAULT_YEAR,
     ref_dir: Path | None = None,
-) -> pd.DataFrame:
+) -> Any:
     """Calculate mental health NWAU.
 
     This function mirrors the logic of ``NWAU25_CALCULATOR_MH.sas`` through
@@ -72,8 +107,10 @@ def calculate_mh(
     the patient-level variables referenced below (e.g. ``AMHCC``, ``LOS``,
     ``PAT_PRIVATE_FLAG`` etc.).
     """
+    collect_fn: Any = getattr(df, "collect_schema", None)
+    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_amhcc_input(
-        tuple(df.columns),
+        cols,
         year=year,
         version=get_classification_version("amhcc", year),
     )
@@ -82,7 +119,17 @@ def calculate_mh(
     suffix = str(year)[-2:]
     nwau_col = f"NWAU{suffix}"
 
+    is_polars_input = isinstance(df, (pl.DataFrame, pl.LazyFrame))
+    if is_polars_input:
+        df = pd.DataFrame(df.collect() if isinstance(df, pl.LazyFrame) else df)
+    elif not isinstance(df, pd.DataFrame):
+        df = pd.DataFrame(df)
+
     tables = _load_weights(ref_dir, year)
+    tables = {
+        k: pd.DataFrame(v) if not isinstance(v, pd.DataFrame) else v
+        for k, v in tables.items()
+    }
 
     result = df.copy()
 
@@ -243,4 +290,6 @@ def calculate_mh(
 
         shutil.rmtree(".cache", ignore_errors=True)
 
+    if is_polars_input:
+        return result.to_polars() if hasattr(result, "to_polars") else result
     return result

@@ -2,7 +2,8 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
+import numpy as np
+import polars as pl
 
 # Mapping from NEP/NWAU pricing year to the corresponding
 # remoteness area (RA) classification year.  The mapping is
@@ -82,7 +83,7 @@ def ra_suffix(year: str = "2025") -> str:
 
 
 def impute_adjustment(
-    table: pd.DataFrame,
+    table: Any,
     key_col: str,
     value_col: str,
     distribution: Mapping[Any, float],
@@ -106,11 +107,23 @@ def impute_adjustment(
         Weighted average of ``value_col`` using ``distribution`` as weights.
         Returns ``0.0`` when no keys overlap.
     """
-    if table is None or table.empty:
+    if table is None or len(table) == 0:
         return 0.0
-    weights = pd.Series(distribution)
-    series = table.set_index(key_col)[value_col]
-    common = weights.index.intersection(series.index)
-    if len(common) == 0:
+
+    if isinstance(table, pl.DataFrame):
+        keys = table[key_col].to_list()
+        vals = table[value_col].to_list()
+    elif hasattr(table, "to_dict"):
+        keys = list(table[key_col])
+        vals = list(table[value_col])
+    else:
         return 0.0
-    return float((weights.loc[common] * series.loc[common]).sum())
+
+    mapping = dict(zip(keys, vals, strict=False))
+    total = 0.0
+    for k, prop in distribution.items():
+        if k in mapping:
+            val = mapping[k]
+            if val is not None and not (isinstance(val, float) and np.isnan(val)):
+                total += float(prop) * float(val)
+    return float(total)

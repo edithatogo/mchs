@@ -10,8 +10,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-import pandas as pd
 import pytest
+
+from nwau_py import compat as pd
 
 # Ensure the project root is on sys.path so nwau_py is importable
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -80,7 +81,7 @@ def golden_fixture(request) -> tuple[fixtures.FixturePack, fixtures.FixtureCase]
 
 def _load_price_weights(ref_dir: Path, year: str = "2025") -> pd.DataFrame:
     """Load reference price weights for the given pricing year."""
-    import pandas as pd
+    from nwau_py import compat as pd
 
     weights = pd.read_csv(Path("tests/data") / "nep25_aa_price_weights.csv")
     weights["DRG"] = weights["DRG"].astype(str).str.strip("b'")
@@ -206,7 +207,7 @@ def test_blocked_rust_calculators_have_tracked_defer_reasons():
 def test_rust_parity_holds_under_input_variation(monkeypatch):
     """Randomised input variation must not break Rust/Python parity."""
     _require_rust_extension_available()
-    import pandas as pd
+    from nwau_py import compat as pd
 
     monkeypatch.setattr(acute, "_load_price_weights", _load_price_weights)
 

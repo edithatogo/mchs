@@ -1,7 +1,7 @@
 import pathlib
 import sys
 
-import pandas as pd
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 
@@ -96,4 +96,24 @@ def test_grouping_and_scoring():
     res = group_readmissions(df, maps, "08")
     assert res.loc[1, "AHR030c02p11_flag"] == 1
     assert res.loc[1, "ahr_flag"] == 1
+    assert "dampening1" in res.columns
+
+
+def test_polars_native_grouping_and_scoring():
+    import polars as pl
+
+    maps = load_ahr_maps(MAP_DIR)
+    df = pl.DataFrame(
+        {
+            "patient_id": ["p1", "p1"],
+            "adm_date": ["2024-01-01", "2024-01-03"],
+            "sep_date": ["2024-01-02", "2024-01-05"],
+            "ddx1": ["Z999", "A021"],
+            "onset1": ["1", "2"],
+        }
+    )
+    res = group_readmissions(df, maps, "08")
+    assert isinstance(res, pl.DataFrame)
+    assert res["AHR030c02p11_flag"][1] == 1
+    assert res["ahr_flag"][1] == 1
     assert "dampening1" in res.columns

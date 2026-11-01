@@ -7,8 +7,9 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
 import pytest
+
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -115,9 +116,14 @@ def test_canary_bundle_loads_strictly_and_preserves_provenance() -> None:
     } <= source_ids
 
     weights = resolved.weights_frame()
-    assert isinstance(weights, pd.DataFrame)
+    import polars as pl
+
+    assert isinstance(weights, (pd.DataFrame, pl.DataFrame))
     assert list(weights["DRG"]) == ["801A", "801B", "801C"]
-    assert weights.loc[weights["DRG"] == "801A", "drg_pw_inlier"].item() > 0
+    if hasattr(weights, "loc"):
+        assert weights.loc[weights["DRG"] == "801A", "drg_pw_inlier"].item() > 0
+    else:
+        assert weights.filter(pl.col("DRG") == "801A")["drg_pw_inlier"][0] > 0
 
 
 def test_resolved_bundle_serialization_hash_and_diff_are_stable() -> None:

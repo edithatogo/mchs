@@ -9,9 +9,12 @@ IHACPA.
 
 from __future__ import annotations
 
+from datetime import date, datetime
 from pathlib import Path
+from typing import Any
 
-import pandas as pd
+import polars as pl
+import pyreadstat
 
 from nwau_py.scoring import score_readmission
 
@@ -87,125 +90,252 @@ _AGG_MAP = {
 }
 
 
-def load_ahr_maps(maps_dir: Path) -> dict[str, pd.DataFrame]:
-    """Load all ``ahr_map_XX.sas7bdat`` files found in ``maps_dir``."""
-    maps: dict[str, pd.DataFrame] = {}
+def _parse_dt(v: Any) -> date:
+    if isinstance(v, datetime):
+        return v.date()
+    if isinstance(v, date):
+        return v
+    s = str(v)[:10]
+    return datetime.strptime(s, "%Y-%m-%d").date()
+
+
+def load_ahr_maps(maps_dir: Path) -> dict[str, pl.DataFrame]:
+    """Load all ``ahr_map_XX.sas7bdat`` files found in ``maps_dir`` using pyreadstat."""
+    maps: dict[str, pl.DataFrame] = {}
     for path in sorted(maps_dir.glob("ahr_map_*.sas7bdat")):
         edition = path.stem.split("_")[-1]
-        df = pd.read_sas(path, format="sas7bdat")
-        for col in df.select_dtypes(include="object").columns:
-            df[col] = df[col].str.decode("ascii")
-        maps[edition] = df
+        data, _ = pyreadstat.read_sas7bdat(str(path), output_format="dict")
+        maps[edition] = pl.from_dict(data)
     return maps
 
 
 def flag_diagnoses(
-    episode_df: pd.DataFrame,
-    maps: dict[str, pd.DataFrame],
+    episode_df: Any,
+    maps: dict[str, Any],
     edition: str,
     diag_prefix: str = "ddx",
     onset_prefix: str = "onset",
-) -> pd.DataFrame:
+) -> Any:
     """Flag diagnoses using the AHR mapping tables.
 
     ``episode_df`` must contain columns ``ddx1``-``ddx100`` and matching
     ``onset1``-``onset100`` values. Only diagnoses with onset value ``"2"``
     (condition arose in hospital) trigger flags.
     """
-    map_df = maps[edition].set_index("DDX").fillna(0)
+    is_pandas = (
+        not isinstance(episode_df, pl.DataFrame)
+        and hasattr(episode_df, "to_dict")
+        and not hasattr(episode_df, "lazy")
+    )
+    if hasattr(episode_df, "to_polars"):
+        df_pl = episode_df.to_polars()
+    elif is_pandas:
+        df_pl = pl.DataFrame(episode_df)
+    else:
+        df_pl = episode_df
+
+    map_df = maps[edition]
+    if hasattr(map_df, "to_polars"):
+        map_df = map_df.to_polars()
+    elif not isinstance(map_df, pl.DataFrame):
+        map_df = pl.DataFrame(map_df)
+    map_df = map_df.with_columns(
+        pl.col("DDX").cast(pl.Utf8).str.strip_chars().str.to_uppercase()
+    )
     flag_cols = [c for c in map_df.columns if c.startswith("AHR")]
-    result = pd.DataFrame(0, index=episode_df.index, columns=flag_cols)
+
+    flag_code_sets = {
+        col: set(map_df.filter(pl.col(col) > 0)["DDX"].to_list()) for col in flag_cols
+    }
+
+    pairs: list[tuple[str, str | None]] = []
     for i in range(1, 101):
         dcol = f"{diag_prefix}{i}"
         ocol = f"{onset_prefix}{i}"
-        if dcol not in episode_df.columns:
+        if dcol not in df_pl.columns:
             break
-        codes = episode_df[dcol].astype(str).str.upper()
-        onset = episode_df.get(ocol)
-        mask = (
-            onset.eq("2") if onset is not None else pd.Series(True, index=codes.index)
-        )
-        matched = map_df.reindex(codes.where(mask).fillna(""))
-        matched = matched.fillna(0).astype(int)
-        result = result | matched.values
-    episode_df = episode_df.join(result)
-    return episode_df
+        pairs.append((dcol, ocol if ocol in df_pl.columns else None))
+
+    row_active_codes: list[set[str]] = []
+    for row in df_pl.iter_rows(named=True):
+        codes = set()
+        for dcol, ocol in pairs:
+            code = row.get(dcol)
+            if (
+                code is not None
+                and str(code).strip() != ""
+                and str(code).strip() != "None"
+            ):
+                onset = row.get(ocol) if ocol is not None else None
+                if onset is None or str(onset).strip() in {"2", "2.0"}:
+                    codes.add(str(code).strip().upper())
+        row_active_codes.append(codes)
+
+    flag_data = {}
+    for col in flag_cols:
+        target_set = flag_code_sets[col]
+        flag_data[col] = [
+            1 if (codes & target_set) else 0 for codes in row_active_codes
+        ]
+
+    result_flags = pl.DataFrame(flag_data)
+    out = pl.concat([df_pl, result_flags], how="horizontal")
+    if is_pandas:
+        from nwau_py import compat as pd
+
+        return pd.DataFrame(out)
+    return out
 
 
-def past_admissions(
-    episodes: pd.DataFrame, patient_col: str, date_col: str
-) -> pd.Series:
+def past_admissions(episodes: Any, patient_col: str, date_col: str) -> Any:
     """Count admissions in the previous 365 days for each episode."""
-    episodes = episodes.sort_values([patient_col, date_col])
-    counts = pd.Series(0, index=episodes.index)
-    for _pid, group in episodes.groupby(patient_col):
-        dates = pd.to_datetime(group[date_col])
-        past_counts = []
-        for _, current in enumerate(dates):
-            window_start = current - pd.Timedelta(days=365)
-            past_counts.append(int(((dates < current) & (dates >= window_start)).sum()))
-        counts.loc[group.index] = past_counts
-    return counts
+    is_pandas = (
+        not isinstance(episodes, pl.DataFrame)
+        and hasattr(episodes, "to_dict")
+        and not hasattr(episodes, "lazy")
+    )
+    if hasattr(episodes, "to_polars"):
+        df_pl = episodes.to_polars()
+    elif is_pandas:
+        df_pl = pl.DataFrame(episodes)
+    else:
+        df_pl = episodes
+
+    episodes_with_idx = df_pl.with_columns(
+        __orig_idx=pl.arange(0, len(df_pl), dtype=pl.Int64)
+    )
+    episodes_sorted = episodes_with_idx.sort([patient_col, date_col])
+
+    pids = episodes_sorted[patient_col].to_list()
+    dates = [_parse_dt(v) for v in episodes_sorted[date_col].to_list()]
+    orig_indices = episodes_sorted["__orig_idx"].to_list()
+
+    counts_at_orig = [0] * len(df_pl)
+    current_pid = None
+    patient_start = 0
+    for idx in range(len(pids)):
+        pid = pids[idx]
+        if pid != current_pid:
+            current_pid = pid
+            patient_start = idx
+        curr_date = dates[idx]
+        cnt = 0
+        for k in range(patient_start, idx):
+            delta_days = (curr_date - dates[k]).days
+            if 0 < delta_days <= 365:
+                cnt += 1
+        counts_at_orig[orig_indices[idx]] = cnt
+
+    if is_pandas:
+        from nwau_py import compat as pd
+
+        return pd.Series(counts_at_orig, index=getattr(episodes, "index", None))
+    return pl.Series("adm_past_year", counts_at_orig)
 
 
 def group_readmissions(
-    episodes: pd.DataFrame,
-    maps: dict[str, pd.DataFrame],
+    episodes: Any,
+    maps: dict[str, Any],
     edition: str,
     patient_col: str = "patient_id",
     adm_col: str = "adm_date",
     sep_col: str = "sep_date",
-) -> pd.DataFrame:
+) -> Any:
     """Group episodes into AHR categories.
 
     The input must be sorted by ``patient_id`` and ``adm_date``. Diagnostic flags
     are derived using :func:`flag_diagnoses` and time between episodes determines
     whether a readmission occurred.
     """
+    is_pandas = (
+        not isinstance(episodes, pl.DataFrame)
+        and hasattr(episodes, "to_dict")
+        and not hasattr(episodes, "lazy")
+    )
+
     df = flag_diagnoses(episodes, maps, edition)
-    df = df.sort_values([patient_col, adm_col])
-    df["ahr_time"] = pd.NA
-    flags: dict[str, list[int]] = {c: [] for c in AHR_THRESHOLD_DAYS}
-    prev_sep = None
+    if hasattr(df, "to_polars"):
+        df_pl = df.to_polars()
+    elif is_pandas:
+        df_pl = pl.DataFrame(df)
+    else:
+        df_pl = df
+    df_pl = df_pl.sort([patient_col, adm_col])
+
+    flags: dict[str, set[int]] = {c: set() for c in AHR_THRESHOLD_DAYS}
+    ahr_times: list[int | None] = []
+    prev_sep: date | None = None
     prev_pid = None
-    for idx, row in df.iterrows():
+
+    rows = df_pl.iter_rows(named=True)
+    for idx, row in enumerate(rows):
         pid = row[patient_col]
         if pid != prev_pid:
             prev_sep = None
         if prev_sep is not None:
-            delta = (pd.to_datetime(row[adm_col]) - prev_sep).days
-            df.at[idx, "ahr_time"] = delta
+            delta = (_parse_dt(row[adm_col]) - prev_sep).days
+            ahr_times.append(delta)
             for col, days in AHR_THRESHOLD_DAYS.items():
                 if row.get(col) == 1 and delta <= days:
-                    flags[col].append(idx)
-        prev_sep = pd.to_datetime(row[sep_col])
+                    flags[col].add(idx)
+        else:
+            ahr_times.append(None)
+        prev_sep = _parse_dt(row[sep_col])
         prev_pid = pid
-    for col, rows in flags.items():
-        df[col + "_flag"] = 0
-        if rows:
-            df.loc[rows, col + "_flag"] = 1
 
-    df["adm_past_year"] = past_admissions(df, patient_col, adm_col)
+    new_cols = [pl.Series("ahr_time", ahr_times, dtype=pl.Int64)]
+    for col in AHR_THRESHOLD_DAYS:
+        target_indices = flags[col]
+        col_flags = [1 if i in target_indices else 0 for i in range(len(df_pl))]
+        new_cols.append(pl.Series(f"{col}_flag", col_flags, dtype=pl.Int64))
+
+    # Past admissions
+    past_adm_series = past_admissions(df_pl, patient_col, adm_col)
+    if not isinstance(past_adm_series, pl.Series):
+        past_adm_series = pl.Series("adm_past_year", past_adm_series.to_list())
+    new_cols.append(past_adm_series.alias("adm_past_year"))
+
+    df_pl = df_pl.with_columns(new_cols)
 
     # aggregate sub-condition flags
+    agg_exprs = []
     for agg, sub in _AGG_MAP.items():
-        cols = [c for c in sub if c in df.columns]
+        cols = [c for c in sub if c in df_pl.columns]
         if cols:
-            df[agg] = df[cols].max(axis=1)
+            agg_exprs.append(pl.max_horizontal(cols).alias(agg))
+    if agg_exprs:
+        df_pl = df_pl.with_columns(agg_exprs)
 
     # overall AHR flag and count
-    sub_cols = [c for sublist in _AGG_MAP.values() for c in sublist if c in df.columns]
+    sub_cols = [
+        c for sublist in _AGG_MAP.values() for c in sublist if c in df_pl.columns
+    ]
     if sub_cols:
-        df["ahr_flag"] = df[sub_cols].max(axis=1)
-        df["ahrs"] = df[sub_cols].sum(axis=1)
+        df_pl = df_pl.with_columns(
+            pl.max_horizontal(sub_cols).alias("ahr_flag"),
+            pl.sum_horizontal(sub_cols).alias("ahrs"),
+        )
     else:
-        df["ahr_flag"] = 0
-        df["ahrs"] = 0
+        df_pl = df_pl.with_columns(
+            pl.lit(0).alias("ahr_flag"),
+            pl.lit(0).alias("ahrs"),
+        )
 
     # risk adjustment scores
-    scores = score_readmission(df)
-    df = pd.concat([df, scores], axis=1)
-    return df
+    scores = score_readmission(df_pl)
+    if isinstance(scores, pl.DataFrame):
+        df_pl = pl.concat([df_pl, scores], how="horizontal")
+    elif hasattr(scores, "to_polars"):
+        df_pl = pl.concat([df_pl, scores.to_polars()], how="horizontal")
+    else:
+        scores_pl = pl.DataFrame(scores)
+        df_pl = pl.concat([df_pl, scores_pl], how="horizontal")
+
+    if is_pandas:
+        from nwau_py import compat as pd
+
+        return pd.DataFrame(df_pl)
+    return df_pl
 
 
 __all__ = ["flag_diagnoses", "group_readmissions", "load_ahr_maps", "past_admissions"]

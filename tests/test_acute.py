@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # noqa: E402
 
 import numpy as np
-import pandas as pd
+from nwau_py import compat as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -122,7 +122,7 @@ def test_covid_flags_from_diagnosis(monkeypatch, year):
     )
     assert result["_pat_covid_flag"].tolist() == [1, 1, 0]
     assert result["_pat_covid_treat_flag"].tolist() == [1, 0, 0]
-    assert result["adj_covid"].iloc[0] == 0.23
+    assert result["adj_covid"][0] == 0.23
 
 
 @pytest.mark.parametrize("year", YEARS)
@@ -162,9 +162,9 @@ def test_covid_flags_provided(monkeypatch, year):
     result = acute.calculate_acute(
         df, params, year=year, ref_dir=Path("tests/data/2025")
     )
-    assert result["_pat_covid_flag"].iloc[0] == 1
-    assert result["_pat_covid_treat_flag"].iloc[0] == 1
-    assert result["adj_covid"].iloc[0] == 0.23
+    assert result["_pat_covid_flag"][0] == 1
+    assert result["_pat_covid_treat_flag"][0] == 1
+    assert result["adj_covid"][0] == 0.23
 
     assert any(col.startswith("_") for col in result.columns)
 
@@ -237,7 +237,7 @@ def test_calculate_acute_legacy_runs(monkeypatch, year, weights_path):
         lambda *_a, **_k: (_ for _ in ()).throw(FileNotFoundError()),
     )
 
-    df = DATA.iloc[:1].copy()
+    df = DATA[:1]
     res = acute.calculate_acute(
         df,
         acute.AcuteParams(),
@@ -245,7 +245,7 @@ def test_calculate_acute_legacy_runs(monkeypatch, year, weights_path):
         ref_dir=Path(dir_path),
     )
     col = f"NWAU{year[-2:]}"
-    assert res[col].iloc[0] > 0
+    assert res[col][0] > 0
 
 
 # ---------------------------------------------------------------------------
@@ -349,9 +349,9 @@ def test_proc_adjustments(monkeypatch, year):
     res = acute.calculate_acute(
         df, acute.AcuteParams(icu_paed_option=2), year=year, ref_dir=Path("unused")
     )
-    assert res["adj_radiotherapy"].iloc[0] == 0.1
-    assert res["adj_dialysis"].iloc[0] == 0.2
-    assert res["NWAU25"].iloc[0] == pytest.approx(1.3, rel=1e-4)
+    assert res["adj_radiotherapy"][0] == 0.1
+    assert res["adj_dialysis"][0] == 0.2
+    assert res["NWAU25"][0] == pytest.approx(1.3, rel=1e-4)
 
 
 @pytest.mark.parametrize("year", YEARS)
@@ -374,9 +374,9 @@ def test_icu_and_paediatric(monkeypatch, year):
     res = acute.calculate_acute(
         df, acute.AcuteParams(debug_mode=True), year=year, ref_dir=Path("unused")
     )
-    assert res["_est_eligible_icu_flag"].iloc[0] == 1
-    assert res["_est_eligible_paed_flag"].iloc[0] == 1
-    assert res["NWAU25"].iloc[0] == pytest.approx(3.4, rel=1e-4)
+    assert res["_est_eligible_icu_flag"][0] == 1
+    assert res["_est_eligible_paed_flag"][0] == 1
+    assert res["NWAU25"][0] == pytest.approx(3.4, rel=1e-4)
 
 
 @pytest.mark.parametrize("year", YEARS)
@@ -399,12 +399,12 @@ def test_private_patient_deductions(monkeypatch, year):
     res1 = acute.calculate_acute(
         base.copy(), acute.AcuteParams(ppservadj=1), year=year, ref_dir=Path("unused")
     )
-    assert res1["NWAU25"].iloc[0] == pytest.approx(0.86, rel=1e-4)
+    assert res1["NWAU25"][0] == pytest.approx(0.86, rel=1e-4)
 
     res2 = acute.calculate_acute(
         base.copy(), acute.AcuteParams(ppservadj=2), year=year, ref_dir=Path("unused")
     )
-    assert res2["NWAU25"].iloc[0] == pytest.approx(0.86, rel=1e-4)
+    assert res2["NWAU25"][0] == pytest.approx(0.86, rel=1e-4)
 
 
 @pytest.mark.parametrize("year", YEARS)
@@ -433,6 +433,59 @@ def test_remoteness_adjustments(monkeypatch, year):
     res = acute.calculate_acute(
         df, acute.AcuteParams(debug_mode=True), year=year, ref_dir=Path("unused")
     )
-    assert res["_pat_remoteness"].iloc[0] == 3
-    assert res["_treat_remoteness"].iloc[0] == 4
-    assert res["NWAU25"].iloc[0] == pytest.approx(1.26, rel=1e-4)
+    assert res["_pat_remoteness"][0] == 3
+    assert res["_treat_remoteness"][0] == 4
+    assert res["NWAU25"][0] == pytest.approx(1.26, rel=1e-4)
+
+
+def test_calculate_acute_polars_native_input_and_output(monkeypatch):
+    import polars as pl
+
+    weights = pl.DataFrame(
+        {
+            "DRG": ["801A"],
+            "drg_inlier_lb": [2.0],
+            "drg_inlier_ub": [20.0],
+            "drg_adj_paed": [1.0],
+            "drg_samedaylist_flag": [0],
+            "drg_bundled_icu_flag": [0],
+            "drg_pw_sso_base": [1.0],
+            "drg_pw_sso_perdiem": [0.5],
+            "drg_pw_inlier": [5.0],
+            "drg_pw_lso_perdiem": [0.2],
+            "drg_adj_privpat_serv": [0.0],
+        }
+    )
+    monkeypatch.setattr(acute, "_load_price_weights", lambda *_: weights)
+
+    df_pl = pl.DataFrame(
+        {
+            "DRG": ["801A"],
+            "LOS": [5],
+            "ICU_HOURS": [0],
+            "ICU_OTHER": [0],
+            "PAT_SAMEDAY_FLAG": [0],
+            "PAT_PRIVATE_FLAG": [0],
+            "PAT_COVID_FLAG": [0],
+        }
+    )
+
+    res_rust = acute.calculate_acute_rust_2025(
+        df_pl,
+        acute.AcuteParams(),
+        year="2025",
+        ref_dir=Path("tests/data/2025"),
+    )
+    assert isinstance(res_rust, pl.DataFrame)
+    assert "NWAU25" in res_rust.columns
+    assert res_rust["NWAU25"][0] == pytest.approx(6.8772)
+
+    res_py = acute.calculate_acute(
+        df_pl,
+        acute.AcuteParams(),
+        year="2025",
+        ref_dir=Path("tests/data/2025"),
+    )
+    assert isinstance(res_py, pl.DataFrame)
+    assert "NWAU25" in res_py.columns
+    assert res_py["NWAU25"][0] == pytest.approx(6.8772)

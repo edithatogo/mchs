@@ -1,0 +1,18 @@
+udg,Description,udg_pw,udg_no
+UDG01,Adm_T1,0.3958,1.0
+UDG02,Adm_T2,0.2814,2.0
+UDG03,Adm_T3,0.2297,3.0
+UDG04,Adm_T4,0.1829,4.0
+UDG05,Adm_T5,0.1296,5.0
+UDG06,N-A_T1,0.3457,6.0
+UDG07,N-A_T2,0.1963,7.0
+UDG08,N-A_T3,0.1445,8.0
+UDG09,N-A_T4,0.1033,9.0
+UDG10,N-A_T5,0.0772,10.0
+UDG11,Did Not Wait,0.0384,11.0
+UDG12,Dead on Arrival w any Triage w any MDB,0.071,12.0
+UDG13,Transfer presentation,0.3544,13.0
+UDG14,Died in emergency department,0.3339,14.0
+UDG15,"Adm_Return visit, planned w any Triage",0.1449,15.0
+UDG16,"N-A Return visit, planned – Triage 1, 2, 3",0.1252,16.0
+UDG17,"N-A Return visit, planned – Triage 4, 5",0.0896,17.0

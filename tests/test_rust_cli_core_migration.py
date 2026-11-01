@@ -3,9 +3,10 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
-import pandas as pd
 import pytest
 from click.testing import CliRunner
+
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -48,6 +49,10 @@ def test_surface_inventory_and_evidence_do_not_claim_rust_default():
 
 def test_cli_accepts_rust_runtime_for_acute_2025(monkeypatch, tmp_path):
     def rust_calculator(df, params, *, year, ref_dir=None):
+        import polars as pl
+
+        if isinstance(df, pl.DataFrame):
+            return df.with_columns(pl.lit(1.25).alias(f"NWAU{year[-2:]}"))
         output = df.copy()
         output[f"NWAU{year[-2:]}"] = 1.25
         return output

@@ -1,0 +1,90 @@
+ansnap,description,ansnap_type,ansnap_inlier_lb,ansnap_inlier_ub,ansnap_samedaylist_flag,ansnap_pw_sd,ansnap_pw_sso_perdiem,ansnap_pw_inlier,ansnap_pw_lso_perdiem
+5AZ1,"Weighted FIM Motor score 13-18, Brain, Spine, MMT, Burns, Age >= 59",2.0,32.0,70.0,0.0,,0.4232,13.5414,0.2943
+5AZ2,"Weighted FIM Motor score 13-18, Brain, Spine, MMT, Burns, Age 18 - 58",2.0,46.0,90.0,0.0,,0.431,19.8278,0.2401
+5AZ3,"Weighted FIM Motor score 13-18, All other impairments, Age >= 79",2.0,15.0,34.0,0.0,,0.3663,5.4944,0.2187
+5AZ4,"Weighted FIM Motor score 13-18, All other impairments, Age 18 - 78",2.0,27.0,61.0,0.0,,0.3713,10.0243,0.2233
+5AA1,"Stroke, Weighted FIM Motor 63 - 91, FIM Cognition 30 - 35",2.0,7.0,19.0,0.0,,0.3415,2.3908,0.217
+5AA2,"Stroke, Weighted FIM Motor 63 - 91, FIM Cognition 21 - 29",2.0,9.0,22.0,0.0,,0.3578,3.2204,0.2332
+5AA3,"Stroke, Weighted FIM Motor 63 - 91, FIM Cognition 5 - 20",2.0,15.0,36.0,0.0,,0.3729,5.5941,0.2505
+5AA4,"Stroke, Weighted FIM Motor 44 - 62, FIM Cognition 18 - 35",2.0,12.0,30.0,0.0,,0.3751,4.5014,0.217
+5AA5,"Stroke, Weighted FIM Motor 44 - 62, FIM Cognition 5 - 17",2.0,16.0,38.0,0.0,,0.3787,6.0586,0.232
+5AA6,"Stroke, Weighted FIM Motor 19 - 43, Age >= 80",2.0,17.0,41.0,0.0,,0.3741,6.3596,0.2201
+5AA7,"Stroke, Weighted FIM Motor 19 - 43, Age 67 - 79",2.0,22.0,51.0,0.0,,0.3707,8.1552,0.2141
+5AA8,"Stroke, Weighted FIM Motor 19 - 43 Age 18 - 66",2.0,28.0,63.0,0.0,,0.3796,10.629,0.2295
+5AB1,"Brain dysfunction, FIM Cognition 27 - 35 Weighted FIM Motor 59 - 91",2.0,8.0,19.0,0.0,,0.3736,2.9885,0.2409
+5AB2,"Brain dysfunction, FIM Cognition 27 - 35 Weighted FIM Motor 19 - 58",2.0,14.0,33.0,0.0,,0.3984,5.577,0.2258
+5AB3,"Brain dysfunction, FIM Cognition 19 - 26 Weighted FIM Motor 50 - 91",2.0,12.0,30.0,0.0,,0.4491,5.3892,0.2598
+5AB4,"Brain dysfunction, FIM Cognition 19 - 26 Weighted FIM Motor 19 - 49",2.0,18.0,42.0,0.0,,0.4104,7.3871,0.2641
+5AB5,"Brain dysfunction, FIM Cognition 5 - 18 Weighted FIM Motor 39 - 91",2.0,19.0,50.0,0.0,,0.4852,9.2182,0.2735
+5AB6,"Brain dysfunction, FIM Cognition 5 - 18 Weighted FIM Motor 19 - 38",2.0,26.0,59.0,0.0,,0.4278,11.1235,0.2453
+5AC1,"Neurological conditions, Weighted FIM Motor 70 - 91",2.0,8.0,20.0,0.0,,0.3297,2.6378,0.2263
+5AC2,"Neurological conditions, Weighted FIM Motor 50 - 69",2.0,11.0,27.0,0.0,,0.3557,3.9128,0.2297
+5AC3,"Neurological conditions, Weighted FIM Motor 19 - 49",2.0,17.0,43.0,0.0,,0.3671,6.2408,0.2101
+5AD1,"Spinal cord dysfunction, Weighted FIM Motor 55 - 91",2.0,15.0,35.0,0.0,,0.3628,5.4423,0.2676
+5AD2,"Spinal cord dysfunction, Weighted FIM Motor 37 - 54",2.0,21.0,55.0,0.0,,0.4288,9.0042,0.2807
+5AD3,"Spinal cord dysfunction, Weighted FIM Motor 19 - 36",2.0,35.0,73.0,0.0,,0.4038,14.1317,0.2814
+5AE1,Amputation of limb,2.0,18.0,42.0,0.0,,0.3503,6.3057,0.208
+5AH1,"Orthopaedic conditions, fractures, Weighted FIM Motor 48 - 91, FIM Cognition 33 - 35",2.0,9.0,19.0,0.0,,0.3054,2.7487,0.1947
+5AH2,"Orthopaedic conditions, fractures, Weighted FIM Motor 48 - 91, FIM Cognition 21 - 32",2.0,10.0,23.0,0.0,,0.3166,3.1656,0.1883
+5AH3,"Orthopaedic conditions, fractures, Weighted FIM Motor 48 - 91, FIM Cognition 5 - 20",2.0,11.0,27.0,0.0,,0.3523,3.8758,0.1884
+5AH4,"Orthopaedic conditions, fractures, Weighted FIM Motor 19 - 47",2.0,13.0,31.0,0.0,,0.3507,4.5591,0.1886
+5A41,"Orthopaedic conditions, replacement (knee, hip, shoulder), Weighted FIM Motor 61 - 91",2.0,7.0,14.0,0.0,,0.2609,1.8261,0.1535
+5A42,"Orthopaedic conditions, replacement (knee, hip, shoulder), Weighted FIM Motor 45 - 60",2.0,7.0,18.0,0.0,,0.3864,2.7049,0.1819
+5A43,"Orthopaedic conditions, replacement (knee, hip, shoulder), Weighted FIM Motor 19 - 44",2.0,11.0,27.0,0.0,,0.3473,3.8198,0.1954
+5A21,"Orthopaedic conditions, all other, Weighted FIM Motor 57 - 91",2.0,8.0,20.0,0.0,,0.2994,2.3949,0.1949
+5A22,"Orthopaedic conditions, all other, Weighted FIM Motor 41 - 56",2.0,11.0,24.0,0.0,,0.3263,3.5898,0.1983
+5A23,"Orthopaedic conditions, all other, Weighted FIM Motor 19 - 40",2.0,14.0,33.0,0.0,,0.3619,5.0672,0.2057
+5A31,"Cardiac, Pain syndromes, and Pulmonary, Weighted FIM Motor 66 - 91",2.0,7.0,16.0,0.0,,0.3137,2.1962,0.2226
+5A32,"Cardiac, Pain syndromes, and Pulmonary, Weighted FIM Motor 38 - 65",2.0,9.0,23.0,0.0,,0.351,3.1589,0.1874
+5A33,"Cardiac, Pain syndromes, and Pulmonary, Weighted FIM Motor 19 - 37",2.0,14.0,34.0,0.0,,0.3482,4.8752,0.1831
+5AP1,"Major Multiple Trauma, Weighted FIM Motor 51 - 91",2.0,11.0,27.0,0.0,,0.4115,4.5269,0.3028
+5AP2,"Major Multiple Trauma, Weighted FIM Motor 19 - 50",2.0,23.0,53.0,0.0,,0.4414,10.152,0.2791
+5AR1,"Reconditioning, Weighted FIM Motor 64 - 91, FIM Cognition 29 - 35",2.0,7.0,18.0,0.0,,0.3197,2.2381,0.1907
+5AR2,"Reconditioning, Weighted FIM Motor 64 - 91, FIM Cognition 5 - 28",2.0,8.0,21.0,0.0,,0.3388,2.7102,0.2245
+5AR3,"Reconditioning, Weighted FIM Motor 48 - 63, FIM Cognition 19 - 35",2.0,9.0,22.0,0.0,,0.3503,3.153,0.1881
+5AR4,"Reconditioning, Weighted FIM Motor 48 - 63, FIM Cognition 5 - 18",2.0,10.0,25.0,0.0,,0.3547,3.547,0.2125
+5AR5,"Reconditioning, Weighted FIM Motor 19 - 47",2.0,12.0,30.0,0.0,,0.3731,4.4769,0.2056
+5A91,"All other impairments, Weighted FIM Motor 61 - 91",2.0,9.0,21.0,0.0,,0.3037,2.7332,0.2281
+5A92,"All other impairments, Weighted FIM Motor 42 - 60",2.0,10.0,25.0,0.0,,0.3798,3.7975,0.2326
+5A93,"All other impairments, Weighted FIM Motor 19 - 41",2.0,15.0,35.0,0.0,,0.3711,5.5664,0.2234
+5J01,Adult Same-Day Rehabilitation,2.0,,,1.0,0.1483,,,
+5F01,"Rehabilitation, Age <= 3",2.0,14.0,33.0,0.0,,0.8837,12.3724,0.3978
+5F02,"Rehabilitation, Age >= 4, Spinal cord dysfunction",2.0,22.0,75.0,0.0,,0.8429,18.5432,0.3436
+5F03,"Rehabilitation, Age >= 4, Brain dysfunction",2.0,18.0,42.0,0.0,,0.8019,14.434,0.3835
+5F04,"Rehabilitation, Age >= 4, Neurological conditions",2.0,9.0,23.0,0.0,,0.6339,5.7053,0.6315
+5F05,"Rehabilitation, Age >= 4, All other impairments",2.0,11.0,27.0,0.0,,0.6215,6.8368,0.4597
+5O01,Paediatric Same-Day Rehabilitation,2.0,,,1.0,0.4754,,,
+5BS1,"Stable phase, RUG-ADL 4-5",3.0,4.0,10.0,0.0,,0.4552,1.8209,0.2601
+5BS2,"Stable phase, RUG-ADL 6-16",3.0,4.0,11.0,0.0,,0.4633,1.8532,0.2536
+5BS3,"Stable phase, RUG-ADL 17-18",3.0,3.0,9.0,0.0,,0.4726,1.4179,0.2445
+5BU1,"Unstable phase, First Phase in Episode, RUG-ADL 4-13",3.0,2.0,6.0,0.0,,0.4927,0.9853,0.2866
+5BU2,"Unstable phase, First Phase in Episode, RUG-ADL 14-18",3.0,1.0,4.0,0.0,,0.5213,0.5213,0.298
+5BU3,"Unstable phase, Not first Phase in Episode, RUG-ADL 4-5",3.0,1.0,4.0,0.0,,0.6012,0.6012,0.3005
+5BU4,"Unstable phase, Not first Phase in Episode, RUG-ADL 6-18",3.0,1.0,3.0,0.0,,0.5958,0.5958,0.258
+5BD1,"Deteriorating phase, RUG-ADL 4-14",3.0,4.0,10.0,0.0,,0.4472,1.789,0.2577
+5BD2,"Deteriorating phase, RUG-ADL 15-18, Age >= 75",3.0,2.0,7.0,0.0,,0.5078,1.0157,0.2554
+5BD3,"Deteriorating phase, RUG-ADL 15-18, Age 55-74",3.0,2.0,7.0,0.0,,0.5532,1.1064,0.2617
+5BD4,"Deteriorating phase, RUG-ADL 15-18, Age <= 54",3.0,3.0,8.0,0.0,,0.5022,1.5065,0.2531
+5BT1,Terminal phase,3.0,1.0,4.0,0.0,,0.5928,0.5928,0.2769
+5K01,Adult Same-Day Palliative Care,3.0,,,1.0,0.2058,,,
+5G01,"Phase Type: Not Terminal, Age < 1 year",3.0,5.0,22.0,0.0,,1.1945,5.9723,0.4539
+5G02,"Phase Type: Not Terminal, Age >= 1 year, Stable phase",3.0,4.0,10.0,0.0,,0.8834,3.5336,0.6052
+5G03,"Phase Type: Not Terminal, Age >= 1 year, Unstable or Deteriorating phase",3.0,2.0,11.0,0.0,,1.1469,2.2937,0.4986
+5G04,Terminal phase,3.0,3.0,9.0,0.0,,0.989,2.967,0.5726
+5P01,Paediatric Same-Day Palliative Care,3.0,,,1.0,0.2196,,,
+5CL1,"FRIC Score 0 - 1.8, FIM Motor 58 - 91",4.0,8.0,18.0,0.0,,0.2648,2.1183,0.1614
+5CL2,"FRIC Score 0 - 1.8, FIM Motor 13 - 57",4.0,11.0,25.0,0.0,,0.3176,3.4931,0.197
+5CM1,"FRIC Score 1.9 - 7.3, FIM Motor 51 - 91",4.0,10.0,23.0,0.0,,0.296,2.9596,0.1912
+5CM2,"FRIC Score 1.9 - 7.3, FIM Motor 13 - 50",4.0,14.0,33.0,0.0,,0.335,4.6906,0.1961
+5CH1,"FRIC Score >= 7.4, FIM Motor 40 - 91",4.0,13.0,33.0,0.0,,0.3341,4.3429,0.2015
+5CH2,"FRIC Score >= 7.4, FIM Motor 13 - 39",4.0,18.0,42.0,0.0,,0.3507,6.3127,0.1931
+5L01,Same-Day GEM,4.0,,,1.0,0.1458,,,
+5DL1,Long term care (LOS > 91),5.0,99.0,170.0,0.0,,0.327,32.373,0.2373
+5DS1,"LOS =< 91, HoNOS 65+ Total 18 - 48",5.0,16.0,41.0,0.0,,0.4591,7.3455,0.2572
+5DS2,"LOS =< 91, HoNOS 65+ Total 0 - 17",5.0,15.0,35.0,0.0,,0.4018,6.0277,0.2549
+5M01,Same-Day Psychogeriatric Care,5.0,,,1.0,0.1943,,,
+5EL1,Long term care (LOS > 91),6.0,100.0,171.0,0.0,,0.2554,25.5415,0.208
+5ES1,"Shorter term care (LOS =< 91), Age >= 65, FRIC Score 0 - 1.9",6.0,7.0,18.0,0.0,,0.3641,2.5484,0.1761
+5ES2,"Shorter term care (LOS =< 91), Age >= 65, FRIC Score >= 2",6.0,12.0,28.0,0.0,,0.3518,4.222,0.2018
+5ES3,"Shorter term care (LOS =< 91), Age = 18-64",6.0,11.0,25.0,0.0,,0.3993,4.3928,0.2225
+5ES4,"Shorter term care (LOS =< 91), Age =< 17",6.0,6.0,16.0,0.0,,0.8184,4.9102,0.4831

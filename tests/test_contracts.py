@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import pandas as pd
 import pytest
 
 from nwau_py.contracts import (
@@ -33,7 +32,7 @@ def test_calculator_contract_validates_columns_and_identifiers():
 
     assert contract.schema_version == "1.0"
     contract.validate_input_columns(["DRG", "LOS", "PAT_SAMEDAY_FLAG", "EXTRA"])
-    contract.validate_output_columns(pd.Index(["NWAU25", "EXTRA"]))
+    contract.validate_output_columns(["NWAU25", "EXTRA"])
 
 
 @pytest.mark.parametrize("calculator_id", ["", "bad", "acute ", "web"])

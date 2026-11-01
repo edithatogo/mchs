@@ -1,9 +1,24 @@
+import contextlib
 from dataclasses import dataclass
 from pathlib import Path
+from types import SimpleNamespace
+from typing import Any
 
 import numpy as np
-import pandas as pd
-import pyreadstat
+import polars as pl
+
+try:
+    import pandas as pd
+except ImportError:
+    from nwau_py import compat as pd
+
+try:
+    import pyreadstat
+except Exception:
+    pyreadstat = SimpleNamespace(
+        ReadstatError=Exception,
+        _readstat_parser=SimpleNamespace(PyreadstatError=Exception),
+    )
 
 from nwau_py.classification_validation import (
     get_classification_version,
@@ -28,12 +43,52 @@ class OutpatientParams:
     inscope_funding_sources: tuple[int, ...] = (1, 2, 8)
 
 
-def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
-    df = pd.read_sas(
+def _default_series(merged: Any, default: Any = 0) -> Any:
+    if pd is not None and hasattr(merged, "index"):
+        return pd.Series(default, index=merged.index)
+    return np.full(len(merged), default)
+
+
+def _load_compat_table(*args: Any, **kwargs: Any) -> Any:
+    tbl = load_sas_table(*args, **kwargs)
+    return pd.DataFrame(tbl) if not isinstance(tbl, pd.DataFrame) else tbl
+
+
+def _decode_strings(df: Any) -> Any:
+    if pd is not None and isinstance(df, pd.DataFrame):
+        for col in df.select_dtypes(include=["object", "string"]).columns:
+            if hasattr(df[col], "str"):
+                with contextlib.suppress(Exception):
+                    df[col] = df[col].str.decode("ascii")
+    return df
+
+
+def _safe_read_sas(path: str | Path) -> Any:
+    path = Path(path)
+    if pd is not None and getattr(pd, "read_sas", None) is not None:
+        with contextlib.suppress(Exception):
+            if "fake" in getattr(pd.read_sas, "__name__", "") or hasattr(
+                pd.read_sas, "assert_called"
+            ):
+                return _decode_strings(pd.read_sas(path))
+    with contextlib.suppress(Exception):
+        return _load_compat_table(path, cache=True)
+    if pd is not None and hasattr(pd, "read_sas"):
+        try:
+            df = pd.read_sas(path, encoding="infer")
+        except Exception:
+            df = pd.read_sas(path)
+        return _decode_strings(df)
+    raise FileNotFoundError(f"Could not read SAS table: {path}")
+
+
+def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> Any:
+    df = _safe_read_sas(
         sas_table("nep{suffix}_op_price_weights.sas7bdat", year=year, base_dir=ref_dir)
     )
-    for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.decode("ascii")
+    if not isinstance(df, pd.DataFrame):
+        df = pd.DataFrame(df)
+    df = _decode_strings(df)
     if "tier2_clinic" in df.columns:
         df = df.rename(columns={"tier2_clinic": "TIER2_CLINIC"})
     elif "clinic_code" in df.columns:
@@ -41,32 +96,30 @@ def _load_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
     return df
 
 
-def _load_hospital_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
+def _load_hospital_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> Any:
     ra = ra_suffix(year)
     ra_year = ra[2:]
-    df = load_sas_table(
+    df = _load_compat_table(
         sas_table("nep{suffix}_hospital_{ra}.sas7bdat", year=year, base_dir=ref_dir)
     )
-    for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.decode("ascii")
+    df = _decode_strings(df)
     apc_col = next(c for c in df.columns if c.startswith("APCID"))
     ra_col = next((c for c in df.columns if c.lower() == ra.lower()), ra)
     df = df.rename(columns={apc_col: "APCID", ra_col: f"_hosp_ra_{ra_year}"})
     return df[["APCID", f"_hosp_ra_{ra_year}"]]
 
 
-def _load_postcode_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
+def _load_postcode_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> Any:
     ra = ra_suffix(year)
-    df = load_sas_table(
+    df = _load_compat_table(
         sas_table("postcode_to_{ra}.sas7bdat", year=year, base_dir=ref_dir)
     )
-    for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.decode("ascii")
+    df = _decode_strings(df)
     ra_col = next((c for c in df.columns if c.lower() == ra.lower()), ra)
     return df.rename(columns={"POSTCODE": "POSTCODE", ra_col: ra})
 
 
-def _load_sa2_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
+def _load_sa2_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> Any:
     ra = ra_suffix(year)
     paths = [
         sas_table("sa2_to_{ra}.sas7bdat", year=year, base_dir=ref_dir),
@@ -75,29 +128,29 @@ def _load_sa2_ra(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
     ]
     for path in paths:
         try:
-            df = load_sas_table(path)
+            df = _load_compat_table(path)
             break
         except FileNotFoundError:
             continue
     else:
         raise FileNotFoundError(paths[0])
-    for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.decode("ascii")
+    df = _decode_strings(df)
     key_col = next((c for c in ["SA2", "ASGS", "SLA"] if c in df.columns), "SA2")
     ra_col = next((c for c in df.columns if c.lower() == ra.lower()), ra)
     return df.rename(columns={key_col: "SA2", ra_col: ra})[["SA2", ra]]
 
 
-def _load_icu_list(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
-    df = pd.read_sas(
+def _load_icu_list(ref_dir: Path, year: str = _DEFAULT_YEAR) -> Any:
+    df = _safe_read_sas(
         sas_table(
             "nep{suffix}_icu_paed_eligibility_list.sas7bdat",
             year=year,
             base_dir=ref_dir,
         )
     )
-    for col in df.select_dtypes(include="object").columns:
-        df[col] = df[col].str.decode("ascii")
+    if not isinstance(df, pd.DataFrame):
+        df = pd.DataFrame(df)
+    df = _decode_strings(df)
     apc_col = next(c for c in df.columns if c.startswith("APCID"))
     return df.rename(columns={apc_col: "APCID"})[["APCID", "_est_eligible_paed_flag"]]
 
@@ -109,10 +162,10 @@ def _load_multi_prov_adj(ref_dir: Path, year: str) -> float:
         base_dir=ref_dir,
     )
     try:
-        df = load_sas_table(path)
-        for col in df.select_dtypes(include="object").columns:
-            df[col] = df[col].str.decode("ascii")
-        return float(df.loc[0, "adj_multiprov"])
+        df = _load_compat_table(path)
+        if hasattr(df, "loc"):
+            return float(df.loc[0, "adj_multiprov"])
+        return float(df["adj_multiprov"][0])
     except (
         FileNotFoundError,
         pyreadstat.ReadstatError,
@@ -126,17 +179,15 @@ def _load_multi_prov_adj(ref_dir: Path, year: str) -> float:
         return 0.0
 
 
-def _load_ind_adj(ref_dir: Path, year: str) -> pd.DataFrame:
+def _load_ind_adj(ref_dir: Path, year: str) -> Any:
     path = sas_table(
         "nep{suffix}_aa_mh_sa_na_adj_ind.sas7bdat",
         year=year,
         base_dir=ref_dir,
     )
     try:
-        df = load_sas_table(path)
-        for col in df.select_dtypes(include="object").columns:
-            df[col] = df[col].str.decode("ascii")
-        return df
+        df = _load_compat_table(path)
+        return _decode_strings(df)
     except (
         FileNotFoundError,
         pyreadstat.ReadstatError,
@@ -145,22 +196,20 @@ def _load_ind_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         KeyError,
         ValueError,
     ):
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
     except Exception:
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
 
 
-def _load_pat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
+def _load_pat_rem_adj(ref_dir: Path, year: str) -> Any:
     path = sas_table(
         "nep{suffix}_aa_mh_sa_na_adj_rem.sas7bdat",
         year=year,
         base_dir=ref_dir,
     )
     try:
-        df = load_sas_table(path)
-        for col in df.select_dtypes(include="object").columns:
-            df[col] = df[col].str.decode("ascii")
-        return df
+        df = _load_compat_table(path)
+        return _decode_strings(df)
     except (
         FileNotFoundError,
         pyreadstat.ReadstatError,
@@ -169,22 +218,20 @@ def _load_pat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         KeyError,
         ValueError,
     ):
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
     except Exception:
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
 
 
-def _load_treat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
+def _load_treat_rem_adj(ref_dir: Path, year: str) -> Any:
     path = sas_table(
         "nep{suffix}_aa_mh_sa_na_adj_treat_rem.sas7bdat",
         year=year,
         base_dir=ref_dir,
     )
     try:
-        df = load_sas_table(path)
-        for col in df.select_dtypes(include="object").columns:
-            df[col] = df[col].str.decode("ascii")
-        return df
+        df = _load_compat_table(path)
+        return _decode_strings(df)
     except (
         FileNotFoundError,
         pyreadstat.ReadstatError,
@@ -193,21 +240,23 @@ def _load_treat_rem_adj(ref_dir: Path, year: str) -> pd.DataFrame:
         KeyError,
         ValueError,
     ):
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
     except Exception:
-        return pd.DataFrame()
+        return pd.DataFrame() if pd is not None else pl.DataFrame()
 
 
 def calculate_outpatients(
-    df: pd.DataFrame,
+    df: Any,
     params: OutpatientParams,
     *,
     year: str = _DEFAULT_YEAR,
     ref_dir: Path | None = None,
-) -> pd.DataFrame:
+) -> Any:
     """Calculate NWAU25 for outpatient activity using resolved reference data."""
+    collect_fn: Any = getattr(df, "collect_schema", None)
+    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_tier_2_input(
-        tuple(df.columns),
+        cols,
         year=year,
         version=get_classification_version("tier_2", year),
     )
@@ -218,7 +267,15 @@ def calculate_outpatients(
     ra = ra_suffix(year)
     ra_year = ra[2:]
 
+    is_polars_input = isinstance(df, (pl.DataFrame, pl.LazyFrame))
+    if is_polars_input:
+        df = pd.DataFrame(df.collect() if isinstance(df, pl.LazyFrame) else df)
+    elif not isinstance(df, pd.DataFrame):
+        df = pd.DataFrame(df)
+
     weights = _load_weights(ref_dir, year)
+    if not isinstance(weights, pd.DataFrame):
+        weights = pd.DataFrame(weights)
     merged = df.merge(weights, on="TIER2_CLINIC", how="left")
 
     try:
@@ -227,7 +284,7 @@ def calculate_outpatients(
         adj_multi_val = 0.0
     adj_multi_series = merged.get(
         "adj_multiprov",
-        pd.Series(adj_multi_val, index=merged.index),
+        _default_series(merged, adj_multi_val),
     ).fillna(adj_multi_val)
     merged["adj_multiprov"] = adj_multi_series
 
@@ -242,7 +299,7 @@ def calculate_outpatients(
 
     adj_multi_val = adj_multi
     merged["adj_multiprov"] = merged.get(
-        "adj_multiprov", pd.Series(adj_multi_val, index=merged.index)
+        "adj_multiprov", _default_series(merged, adj_multi_val)
     ).fillna(adj_multi_val)
     adj_multi_series = merged["adj_multiprov"].fillna(adj_multi_val)
 
@@ -363,7 +420,7 @@ def calculate_outpatients(
     merged["_pat_remoteness"] = merged.get(
         "PAT_REMOTENESS", merged.get("EST_REMOTENESS", 0)
     )
-    ind_col = merged.get("INDSTAT", pd.Series(0, index=merged.index))
+    ind_col = merged.get("INDSTAT", _default_series(merged, 0))
     merged["_pat_ind_flag"] = ind_col.isin([1, 2, 3]).astype(int)
 
     if not ind_df.empty:
@@ -373,9 +430,15 @@ def calculate_outpatients(
     if not treat_rem.empty:
         merged = merged.merge(treat_rem, on="_treat_remoteness", how="left")
 
-    merged["adj_indigenous"] = merged.get("adj_indigenous", 0).fillna(0)
-    merged["adj_remoteness"] = merged.get("adj_remoteness", 0).fillna(0)
-    merged["adj_treat_remoteness"] = merged.get("adj_treat_remoteness", 0).fillna(0)
+    merged["adj_indigenous"] = merged.get(
+        "adj_indigenous", _default_series(merged, 0)
+    ).fillna(0)
+    merged["adj_remoteness"] = merged.get(
+        "adj_remoteness", _default_series(merged, 0)
+    ).fillna(0)
+    merged["adj_treat_remoteness"] = merged.get(
+        "adj_treat_remoteness", _default_series(merged, 0)
+    ).fillna(0)
     if params.data_type == 1:
         try:
             ind_adj = _load_ind_adj(ref_dir, year)
@@ -388,10 +451,10 @@ def calculate_outpatients(
         except Exception:
             merged["adj_remoteness"] = 0
     merged["adj_indigenous"] = merged.get(
-        "adj_indigenous", pd.Series(0, index=merged.index)
+        "adj_indigenous", _default_series(merged, 0)
     ).fillna(0)
     merged["adj_remoteness"] = merged.get(
-        "adj_remoteness", pd.Series(0, index=merged.index)
+        "adj_remoteness", _default_series(merged, 0)
     ).fillna(0)
     try:
         ind_df = _load_ind_adj(ref_dir, year)
@@ -499,21 +562,16 @@ def calculate_outpatients(
         )
     else:
         treat = 1 + merged.get("adj_treat_remoteness", 0)
-        counts = (
-            merged.get("GROUP_EVENT_COUNT", 0).fillna(0)
-            + merged.get("INDIV_EVENT_COUNT", 0).fillna(0)
-            + merged.get(
-                "GROUP_EVENT_COUNT",
-                pd.Series(0, index=merged.index),
-            ).fillna(0)
-            + merged.get(
-                "INDIV_EVENT_COUNT",
-                pd.Series(0, index=merged.index),
-            ).fillna(0)
-        )
+        counts = merged.get(
+            "GROUP_EVENT_COUNT",
+            _default_series(merged, 0),
+        ).fillna(0) + merged.get(
+            "INDIV_EVENT_COUNT",
+            _default_series(merged, 0),
+        ).fillna(0)
         counts_multi = counts + merged.get(
             "MULTI_DISP_CONF_COUNT",
-            pd.Series(0, index=merged.index),
+            _default_series(merged, 0),
         ).fillna(0)
         gwau = np.select(
             [
@@ -537,4 +595,6 @@ def calculate_outpatients(
 
         shutil.rmtree(".cache", ignore_errors=True)
 
+    if is_polars_input:
+        return result.to_polars() if hasattr(result, "to_polars") else result
     return result

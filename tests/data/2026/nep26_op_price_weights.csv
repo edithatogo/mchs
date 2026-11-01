@@ -1,0 +1,154 @@
+description,tier2_clinic,tier2_adj_paed,clinic_pw
+Hyperbaric medicine,10.01,1.0,0.0899
+Interventional imaging,10.02,1.0,0.567
+Minor surgical,10.03,0.8,0.0783
+Dental,10.04,0.8,0.0729
+Angioplasty/angiography,10.05,1.0,0.3339
+Endoscopy - gastrointestinal,10.06,1.0,0.4551
+Endoscopy - urological/gynaecological,10.07,1.0,0.0672
+Endoscopy - orthopaedic,10.08,1.0,0.0427
+"Endoscopy - respiratory/ear, nose and throat (ENT)",10.09,0.8,0.2255
+Renal dialysis - hospital delivered,10.1,1.0,0.0516
+Chemotherapy treatment,10.11,1.92,0.0646
+Radiation therapy - treatment,10.12,1.0,0.0645
+Minor medical procedures,10.13,1.19,0.1009
+Pain management interventions,10.14,1.0,0.1189
+Renal dialysis - haemodialysis - home delivered,10.15,1.0,0.3349
+Renal dialysis - peritoneal dialysis - home delivered,10.16,1.0,0.4274
+Total parenteral nutrition - home delivered,10.17,1.09,1.3758
+Enteral nutrition - home delivered,10.18,1.0,0.0656
+Ventilation - home delivered,10.19,,
+Radiation therapy - simulation and planning,10.2,1.0,0.1094
+Subcutaneous immunoglobulin (SCIg) infusion therapy - home delivered,10.22,1.0,0.0727
+Transplants,20.01,1.98,0.0692
+Anaesthetics,20.02,0.8,0.0743
+Pain management,20.03,1.0,0.0958
+Developmental disabilities,20.04,1.0,0.117
+General medicine,20.05,0.8,0.0664
+General practice and primary care,20.06,,
+General surgery,20.07,0.8,0.0488
+Genetics,20.08,1.08,0.1587
+Geriatric medicine,20.09,1.0,0.0835
+Haematology,20.1,1.0,0.0642
+Paediatric medicine,20.11,1.0,0.0758
+Paediatric surgery,20.12,0.94,0.0531
+Palliative care,20.13,1.99,0.071
+Epilepsy,20.14,1.47,0.0543
+Neurology,20.15,1.29,0.0562
+Neurosurgery,20.16,1.26,0.0588
+Ophthalmology,20.17,0.95,0.0472
+"Ear, nose and throat (ENT)",20.18,0.86,0.0493
+Respiratory,20.19,1.72,0.0658
+Respiratory - cystic fibrosis,20.2,1.0,0.1438
+Anti-coagulant screening and management,20.21,1.0,0.0418
+Cardiology,20.22,1.17,0.0627
+Cardiothoracic,20.23,1.24,0.0826
+Vascular surgery,20.24,1.0,0.0578
+Gastroenterology,20.25,1.54,0.0507
+Hepatobiliary,20.26,2.0,0.0638
+Craniofacial,20.27,1.19,0.046
+Metabolic bone,20.28,2.0,0.0578
+Orthopaedics,20.29,1.0,0.0463
+Rheumatology,20.3,1.13,0.0633
+Spinal,20.31,1.44,0.0689
+Breast,20.32,0.8,0.0706
+Dermatology,20.33,1.05,0.0532
+Endocrinology,20.34,1.28,0.0563
+Nephrology,20.35,1.36,0.0576
+Urology,20.36,1.0,0.0511
+Assisted reproductive technology,20.37,1.0,0.089
+Gynaecology,20.38,1.35,0.053
+Gynaecological oncology,20.39,1.0,0.0682
+Obstetrics - management of pregnancy without complications,20.4,1.22,0.0519
+Immunology,20.41,0.95,0.0708
+Medical oncology - consultation,20.42,1.17,0.0669
+Radiation therapy - consultation,20.43,1.0,0.0574
+Infectious diseases,20.44,0.8,0.0701
+Psychiatry,20.45,1.0,0.0653
+Plastic and reconstructive surgery,20.46,1.1,0.0425
+Rehabilitation,20.47,1.51,0.0904
+Multidisciplinary burns clinic,20.48,0.92,0.065
+Geriatric evaluation and management (GEM),20.49,0.8,0.0732
+Psychogeriatric,20.5,1.0,0.0539
+Sleep disorders,20.51,1.14,0.0775
+Addiction medicine,20.52,2.0,0.0436
+Obstetrics - management of complex pregnancy,20.53,0.89,0.0537
+Maternal fetal medicine,20.54,1.0,0.0688
+Telehealth - patient location,20.55,1.3,0.0643
+Multidisciplinary case conference - patient not present,20.56,1.32,0.0777
+COVID-19 response,20.57,1.0,0.057
+Long COVID,20.58,1.0,0.1594
+Voluntary assisted dying,20.59,0.8,0.0664
+General imaging,30.01,,
+Magnetic Resonance imaging,30.02,,
+Computerised tomography,30.03,,
+Nuclear medicine,30.04,,
+"Pathology (microbiology, haematology, biochemistry)",30.05,,
+Positron emission tomography,30.06,,
+Mammography screening,30.07,,
+Clinical measurement,30.08,,
+COVID-19 response diagnostics,30.09,,
+Aged care assessment,40.02,,
+Aids and appliances,40.03,0.8,0.0377
+Clinical pharmacy,40.04,1.41,0.0648
+Hydrotherapy,40.05,1.61,0.0304
+Occupational therapy,40.06,1.0,0.0409
+Pre-admission and pre-anaesthesia,40.07,0.87,0.0402
+Primary health care,40.08,,
+Physiotherapy,40.09,1.0,0.0326
+Sexual health,40.1,1.0,0.0388
+Social work,40.11,0.8,0.0615
+Rehabilitation,40.12,1.45,0.0473
+Wound management,40.13,1.99,0.037
+Neuropsychology,40.14,1.63,0.089
+Optometry,40.15,1.0,0.0315
+Orthoptics,40.16,0.8,0.0282
+Audiology,40.17,0.84,0.0494
+Speech pathology,40.18,1.12,0.0491
+Cardiac rehabilitation,40.21,1.33,0.0437
+Stomal therapy,40.22,1.16,0.0563
+Nutrition/dietetics,40.23,0.83,0.0318
+Orthotics,40.24,0.88,0.0652
+Podiatry,40.25,1.0,0.0394
+Family planning,40.27,,
+Midwifery and maternity,40.28,0.84,0.0387
+Psychology,40.29,0.8,0.0499
+Alcohol and other drugs,40.3,0.8,0.0257
+Burns,40.31,1.72,0.0455
+Continence,40.32,1.0,0.0415
+General counselling,40.33,,
+Palliative care,40.35,1.45,0.0463
+Geriatric evaluation and management (GEM),40.36,1.0,0.0455
+Psychogeriatric,40.37,1.0,0.0165
+Infectious diseases,40.38,1.21,0.0397
+Neurology,40.39,1.66,0.0471
+Respiratory,40.4,1.23,0.0453
+Gastroenterology,40.41,1.46,0.0424
+Circulatory,40.42,1.35,0.0526
+Hepatobiliary,40.43,1.33,0.0747
+Orthopaedics,40.44,1.69,0.0308
+Dermatology,40.45,1.32,0.0339
+Endocrinology,40.46,1.16,0.0401
+Nephrology,40.47,1.07,0.0567
+Haematology and immunology,40.48,1.0,0.0516
+Gynaecology,40.49,0.81,0.0537
+Urology,40.5,1.24,0.0416
+Breast,40.51,1.0,0.0449
+Oncology,40.52,1.52,0.0472
+General medicine,40.53,1.86,0.0399
+General surgery,40.54,1.18,0.0279
+Paediatrics,40.55,1.32,0.0412
+Falls prevention,40.56,1.0,0.0379
+Cognition and memory,40.57,1.0,0.049
+Hospital avoidance programs,40.58,0.8,0.0505
+Post-acute care,40.59,1.28,0.0375
+Pulmonary rehabilitation,40.6,1.77,0.0411
+Telehealth - patient location,40.61,1.0,0.046
+Multidisciplinary case conference - patient not present,40.62,1.1,0.0708
+COVID-19 response,40.63,1.0,0.0264
+Chronic pain management,40.64,1.26,0.06
+"Violence, Abuse and Neglect Services",40.65,0.85,0.1015
+Genetic Counselling,40.66,1.39,0.0927
+Long COVID,40.67,1.0,0.0447
+Supervised administration of opioid substitution therapy,40.68,1.0,0.0305
+Voluntary assisted dying,40.69,1.86,0.0399
