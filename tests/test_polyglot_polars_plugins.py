@@ -2,7 +2,15 @@
 
 from __future__ import annotations
 
+import builtins
+import runpy
+from pathlib import Path
+
+import polars as pl
+import pytest
+
 from nwau_py import _rust
+from nwau_py.calculators import ed, mh, outpatients, subacute
 
 
 def test_rust_exports_all_stream_row_calculators():
@@ -35,7 +43,7 @@ def test_ed_row_calculation():
 
 def test_mh_admitted_row_calculation():
     """Verify Admitted Mental Health row calculation through PyO3."""
-    res = _rust.calculate_mh_admitted_row(
+    res = mh.calculate_mh_rust_admitted_row(
         amhcc="101A",
         los=5.0,
         price_cat=1,
@@ -62,7 +70,7 @@ def test_mh_admitted_row_calculation():
 
 def test_mh_community_row_calculation():
     """Verify Community Mental Health row calculation through PyO3."""
-    res = _rust.calculate_mh_community_row(
+    res = mh.calculate_mh_rust_community_row(
         amhcc="201A",
         sc_pat_pub=2.0,
         sc_nopat_pub=1.0,
@@ -77,7 +85,7 @@ def test_mh_community_row_calculation():
 
 def test_outpatients_row_calculation():
     """Verify Outpatients row calculation through PyO3."""
-    res = _rust.calculate_outpatients_row(
+    res = outpatients.calculate_outpatients_rust_row(
         clinic_code="10.01",
         price_weight=0.0825,
         data_type=1,
@@ -99,7 +107,7 @@ def test_outpatients_row_calculation():
 
 def test_subacute_row_calculation():
     """Verify Subacute row calculation through PyO3."""
-    res = _rust.calculate_subacute_row(
+    res = subacute.calculate_subacute_rust_row(
         ansnap="5AA1",
         los=10.0,
         age=65.0,
@@ -164,3 +172,41 @@ def test_ed_missing_price_weight_sets_error_3():
     res = calculate_ed(df, params=EDParams(classification_option=3))
     assert res["Error_Code"][0] == 3
     assert res["NWAU25"][0] == 0.0
+
+
+def test_configured_funding_sources_survive_native_install(monkeypatch):
+    monkeypatch.setattr(
+        ed,
+        "_load_weights",
+        lambda *args, **kwargs: pl.DataFrame({"AECC": ["E0110A"], "AECC_pw": [0.5]}),
+    )
+    patients = pl.DataFrame({"AECC": ["E0110A"] * 2, "FUNDSC": [4, 1]})
+    result = ed.calculate_ed(
+        patients, ed.EDParams(eligibility_option=2, inscope_funding_sources=(4,))
+    )
+    assert result["Error_Code"].to_list() == [0, 2]
+    assert result["NWAU25"].to_list() == [0.5, 0.0]
+
+
+def test_calculator_modules_without_optional_native_extension(monkeypatch):
+    real_import = builtins.__import__
+
+    def without_rust(name, globals=None, locals=None, fromlist=(), level=0):
+        if name == "nwau_py" and "_rust" in (fromlist or ()):
+            raise ImportError("native extension absent")
+        return real_import(name, globals, locals, fromlist, level)
+
+    monkeypatch.setattr(builtins, "__import__", without_rust)
+    for module, methods in [
+        (ed, []),
+        (mh, ["calculate_mh_rust_admitted_row", "calculate_mh_rust_community_row"]),
+        (outpatients, ["calculate_outpatients_rust_row"]),
+        (subacute, ["calculate_subacute_rust_row"]),
+    ]:
+        isolated = runpy.run_path(str(Path(module.__file__)))
+        assert not isolated["_RUST_AVAILABLE"]
+        for method in methods:
+            with pytest.raises(
+                RuntimeError, match="Rust extension _rust is not available"
+            ):
+                isolated[method]()

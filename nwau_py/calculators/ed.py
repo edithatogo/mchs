@@ -232,7 +232,9 @@ def calculate_ed(
             pl.when(weight_missing).then(3).when(out_scope).then(2).otherwise(0)
         )
 
-    if _RUST_AVAILABLE:
+    # The Rust row API has fixed funding codes. Preserve caller-configured
+    # funding eligibility and the existing null semantics in dataframe mode.
+    if _RUST_AVAILABLE and params.eligibility_option == 1:
         pw_col = "udg_pw" if params.classification_option < 3 else "AECC_pw"
         n_rows = len(merged)
         nwau_vals = []
