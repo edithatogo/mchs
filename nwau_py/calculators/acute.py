@@ -109,7 +109,9 @@ class AcuteInputContract:
     allow_extra_columns: bool = True
 
     def validate(self, df: pd.DataFrame) -> None:
-        missing = [c for c in self.required_columns if c not in df.columns]
+        collect_fn: Any = getattr(df, "collect_schema", None)
+        cols = list(collect_fn().names()) if callable(collect_fn) else list(df.columns)
+        missing = [c for c in self.required_columns if c not in cols]
         if missing:
             raise AcuteContractError(
                 "acute input frame is missing required columns: " + ", ".join(missing)
@@ -178,8 +180,10 @@ def validate_acute_input_frame(
     contract = contract or build_acute_contract()
     contract.input_contract.validate(df)
     try:
+        collect_fn: Any = getattr(df, "collect_schema", None)
+        cols = list(collect_fn().names()) if callable(collect_fn) else list(df.columns)
         validate_ar_drg_input(
-            tuple(df.columns),
+            tuple(cols),
             year=contract.year,
             version=get_classification_version("ar_drg", contract.year),
         )

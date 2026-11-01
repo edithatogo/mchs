@@ -36,3 +36,13 @@ def test_hac_multiple_codes(year):
     assert flags.get("hac032c03_flag") == 1
     assert flags.get("hac032c04_flag") == 1
     assert flags.get("hac032_flag") == 1
+
+
+def test_hac_empty_and_mapping():
+    from nwau_py.groupers.hac import count_hac_diagnoses, load_hac_mapping
+
+    df = load_hac_mapping("07", year="2025")
+    assert df is not None
+
+    counts = count_hac_diagnoses(["NONEXISTENT_CODE_XYZ"], edition="07", year="2025")
+    assert all(v == 0 for v in counts.values())

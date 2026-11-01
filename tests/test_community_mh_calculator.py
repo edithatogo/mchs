@@ -144,3 +144,32 @@ def test_calculate_community_mh_different_years():
     )
     assert "NWAU24" in result.columns
     assert "NWAU25" not in result.columns
+
+
+def test_community_mh_polars_and_defaults():
+    from pathlib import Path
+
+    import polars as pl
+
+    from nwau_py.calculators.community_mh_calculator import _safe_read_sas
+
+    # non-existent path in _safe_read_sas
+    empty_df = _safe_read_sas(Path("nonexistent.sas7bdat"))
+    assert len(empty_df) == 0
+
+    # run with default params None
+    calc = CommunityMHCalculator()
+    res1 = calc.run(DATA.copy(), cmty_weights=_mock_cmty_weights())
+    assert "NWAU25" in res1.columns
+
+    # Polars native dataframe and dict cmty_weights
+    df_pl = pl.DataFrame(DATA.to_dict(orient="list"))
+    weights_dict = {
+        "AMHCC": ["2001", "2002"],
+        "_cmty_fixed_pw": [0.0, 0.0],
+        "_cmty_sc_pat_pw": [0.10, 0.15],
+        "_cmty_sc_nopat_pw": [0.05, 0.08],
+    }
+    res_pl = calc.run(df_pl, cmty_weights=weights_dict)
+    assert isinstance(res_pl, pl.DataFrame)
+    assert "NWAU25" in res_pl.columns

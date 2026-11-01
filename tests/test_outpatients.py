@@ -303,3 +303,11 @@ def test_calculate_outpatients_polars_native_input_and_output(monkeypatch):
     assert isinstance(res, pl.DataFrame)
     assert "NWAU25" in res.columns
     assert res["NWAU25"][0] == 0.0 or res["NWAU25"][0] >= 0.0
+
+    res_lazy = outpatients.calculate_outpatients(
+        df_pl.lazy(),
+        outpatients.OutpatientParams(data_type=2),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res_lazy, pl.DataFrame)

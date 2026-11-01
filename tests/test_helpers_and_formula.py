@@ -61,3 +61,39 @@ def test_path_helpers_and_imputation(tmp_path, monkeypatch):
     )
 
     assert imputed == 0.1
+
+
+def test_funding_formula_full_branches(tmp_path):
+    import polars as pl
+    import pytest
+
+    from nwau_py.calculators.funding_formula import _ColumnsList
+
+    cols = _ColumnsList(["a", "b"])
+    assert cols.tolist() == ["a", "b"]
+
+    weights_path = tmp_path / "weights2.csv"
+    weights_path.write_text("A\n10\n", encoding="utf-8")
+    pl_weights = load_weights(weights_path, as_polars=True)
+    assert isinstance(pl_weights, pl.DataFrame)
+
+    # test +, -, /, single token, eval, and polars input
+    formula = {
+        "variables": {"X": "A"},
+        "steps": [
+            "S1 = X + 5",
+            "S2 = S1 - 3",
+            "S3 = S2 / 2",
+            "S4 = S3",
+            "NWAU = (S4 + 1) * 2",
+        ],
+    }
+    df_pl = pl.DataFrame({"A": [10.0]})
+    res_pl = calculate_funding(df_pl, formula)
+    assert isinstance(res_pl, pl.Series)
+    # (10 + 5 - 3) / 2 = 6; (6 + 1) * 2 = 14
+    assert res_pl[0] == 14.0
+
+    bad_formula = {"variables": {"X": "A"}, "steps": ["NWAU = X ^ 2"]}
+    with pytest.raises(ValueError, match="Unsupported formula operator"):
+        calculate_funding(df_pl, bad_formula)

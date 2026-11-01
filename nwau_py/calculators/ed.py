@@ -116,6 +116,8 @@ def calculate_ed(
     ref_dir: Path | None = None,
 ) -> Any:
     """Implement ``NWAU25_CALCULATOR_ED.sas`` against loaded reference tables."""
+    collect_fn: Any = getattr(df, "collect_schema", None)
+    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     if params.classification_option == 1:
         required_mapping_fields = (
             "type_of_visit",
@@ -123,7 +125,7 @@ def calculate_ed(
             "episode_end_status",
         )
         missing_mapping_fields = tuple(
-            field for field in required_mapping_fields if field not in df.columns
+            field for field in required_mapping_fields if field not in cols
         )
         if missing_mapping_fields:
             raise ClassificationValidationError(
@@ -137,13 +139,13 @@ def calculate_ed(
         )
     elif params.classification_option < 3:
         validate_udg_input(
-            tuple(df.columns),
+            cols,
             year=year,
             version=get_classification_version("udg", year),
         )
     else:
         validate_aecc_input(
-            tuple(df.columns),
+            cols,
             year=year,
             version=get_classification_version("aecc", year),
         )

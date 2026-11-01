@@ -253,8 +253,10 @@ def calculate_outpatients(
     ref_dir: Path | None = None,
 ) -> Any:
     """Calculate NWAU25 for outpatient activity using resolved reference data."""
+    collect_fn: Any = getattr(df, "collect_schema", None)
+    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_tier_2_input(
-        tuple(df.columns),
+        cols,
         year=year,
         version=get_classification_version("tier_2", year),
     )

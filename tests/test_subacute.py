@@ -243,3 +243,11 @@ def test_calculate_subacute_polars_native_input_and_output():
     assert isinstance(res, pl.DataFrame)
     assert "NWAU25" in res.columns
     assert res["NWAU25"][0] == pytest.approx(EXPECTED_BASE, rel=1e-4)
+
+    res_lazy = subacute.calculate_subacute(
+        df_pl.lazy(),
+        subacute.SubacuteParams(),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res_lazy, pl.DataFrame)

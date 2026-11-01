@@ -208,3 +208,11 @@ def test_calculate_ed_polars_native_input_and_output(monkeypatch):
     assert "NWAU25" in res.columns
     assert res["NWAU25"][0] == pytest.approx(0.2837, rel=1e-4)
     assert res["Error_Code"][0] == 0
+
+    res_lazy = ed.calculate_ed(
+        df_pl.lazy(),
+        ed.EDParams(classification_option=3, eligibility_option=1),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res_lazy, pl.DataFrame)

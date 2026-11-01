@@ -191,3 +191,9 @@ def test_calculate_mh_polars_native_input_and_output():
     assert "NWAU25" in res.columns
     assert res["NWAU25"][0] == pytest.approx(1.4, rel=1e-4)
     assert res["NWAU25"][1] == pytest.approx(1.195, rel=1e-4)
+    res_lazy = mh.calculate_mh(
+        df_pl.lazy(),
+        mh.MHParams(debug_mode=True),
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res_lazy, pl.DataFrame)

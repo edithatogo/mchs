@@ -107,8 +107,10 @@ def calculate_mh(
     the patient-level variables referenced below (e.g. ``AMHCC``, ``LOS``,
     ``PAT_PRIVATE_FLAG`` etc.).
     """
+    collect_fn: Any = getattr(df, "collect_schema", None)
+    cols = tuple(collect_fn().names() if callable(collect_fn) else df.columns)
     validate_amhcc_input(
-        tuple(df.columns),
+        cols,
         year=year,
         version=get_classification_version("amhcc", year),
     )
