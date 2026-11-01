@@ -555,7 +555,14 @@ fn core_version() -> &'static str {
 
 #[pyfunction(name = "list_calculators")]
 fn list_calculators() -> Vec<&'static str> {
-    vec!["acute-2025", "acute-2026", "ed", "mental-health", "outpatients", "sub-acute"]
+    vec![
+        "acute-2025",
+        "acute-2026",
+        "ed",
+        "mental-health",
+        "outpatients",
+        "sub-acute",
+    ]
 }
 
 #[pyfunction(name = "is_drg_in_scope")]
