@@ -17,6 +17,7 @@ R_BIN = shutil.which("R")
 
 @pytest.fixture(scope="session")
 def r_bridge(tmp_path_factory):
+    assert R_BIN is not None
     build = tmp_path_factory.mktemp("r-abi")
     source = Path(shutil.copy2(ROOT / "r-binding/src/nwau_r_abi.c", build))
     ext = subprocess.check_output(
@@ -33,6 +34,7 @@ def r_bridge(tmp_path_factory):
 
 
 def _r_ed_parity(library):
+    assert R_BIN is not None
     script = """
     paths <- commandArgs(trailingOnly = TRUE)
     dyn.load(paths[[1]])
@@ -123,10 +125,11 @@ def test_python_and_rust_exact_parity_all_streams():
 
 
 @pytest.mark.skipif(
-    not JULIA_BIN, reason="Julia binary not installed in test environment"
+    JULIA_BIN is None, reason="Julia binary not installed in test environment"
 )
 def test_julia_in_process_parity():
     """Verify parity between Python/Rust and Julia ccall evaluation."""
+    assert JULIA_BIN is not None
     cmd = [
         JULIA_BIN,
         f"--project={ROOT / 'julia-binding'}",
@@ -150,7 +153,7 @@ def test_julia_in_process_parity():
     assert abs(julia_nwau - 0.2837) < 1e-4
 
 
-@pytest.mark.skipif(not R_BIN, reason="R binary not installed in test environment")
+@pytest.mark.skipif(R_BIN is None, reason="R binary not installed in test environment")
 def test_r_in_process_parity(r_bridge):
     """Verify parity between Python/Rust and in-process R evaluation."""
     assert _r_ed_parity(r_bridge) == pytest.approx(0.2837)
@@ -176,7 +179,7 @@ def test_four_language_cross_parity_report(request):
     assert abs(rust_val - expected_ed_nwau) < 1e-6
 
     # 3. Julia
-    if JULIA_BIN:
+    if JULIA_BIN is not None:
         cmd = [
             JULIA_BIN,
             f"--project={ROOT / 'julia-binding'}",
@@ -200,7 +203,7 @@ def test_four_language_cross_parity_report(request):
         assert abs(julia_val - expected_ed_nwau) < 1e-6
 
     # 4. R
-    if R_BIN:
+    if R_BIN is not None:
         assert _r_ed_parity(request.getfixturevalue("r_bridge")) == pytest.approx(
             expected_ed_nwau
         )
