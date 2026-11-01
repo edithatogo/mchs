@@ -21,9 +21,7 @@
     "power_platform_operational_evidence_20260518",
     "r_cran_registry_submission_20260524",
     "research_software_registry_readiness_20260721",
-    "julia_monorepo_consolidation_20261101",
-    "polyglot_wrappers_python_r_julia_20261101",
-    "cross_platform_hardware_acceleration_matrix_20261101"
+    "julia_monorepo_consolidation_20261101"
   ],
   "recommendedNextTracks": [
     "canonical_contract_foundation_20260513",

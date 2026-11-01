@@ -537,3 +537,27 @@ function calculate_batch_c_abi(
         error("Unsupported batch valuation stream: $stream")
     end
 end
+
+# ============================================================================
+# HARDWARE ACCELERATION & 128-BIT INVARIANT VERIFICATION
+# ============================================================================
+
+function verify_128bit_invariants_c_abi(count::Int=1000; libpath::String=_find_libnwau_c_abi())
+    fn = _get_fn_ptr(:nwau_abi_verify_128bit_invariants, libpath)
+    chk_ref = Ref{UInt64}(0)
+    status = ccall(fn, UInt32, (Csize_t, Ptr{UInt64}), count, chk_ref)
+    if status != 0
+        error("128-bit architecture invariant verification failed with status: $status")
+    end
+    return chk_ref[]
+end
+
+function get_acceleration_backend_c_abi(; libpath::String=_find_libnwau_c_abi())
+    fn = _get_fn_ptr(:nwau_abi_get_acceleration_backend, libpath)
+    buf = zeros(UInt8, 128)
+    status = ccall(fn, UInt32, (Ptr{Cchar}, Csize_t), pointer(buf), length(buf))
+    if status != 0
+        error("Failed to query acceleration backend with status: $status")
+    end
+    return GC.@preserve buf unsafe_string(pointer(buf))
+end

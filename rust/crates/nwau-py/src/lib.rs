@@ -971,6 +971,126 @@ fn calculate_batch<'py>(
     Ok(results)
 }
 
+/// Query hardware acceleration capabilities (Metal on macOS, Vulkan on Linux, DX12 on Windows).
+#[pyfunction]
+fn get_acceleration_info(py: Python<'_>) -> PyResult<Bound<'_, PyDict>> {
+    let device = nwau_core::ComputeDevice::auto();
+    let info = device.acceleration_info();
+    let dict = PyDict::new(py);
+    dict.set_item("backend_name", info.backend_name)?;
+    dict.set_item("is_gpu", info.is_gpu)?;
+    dict.set_item("simd_architecture", info.simd_architecture)?;
+    dict.set_item("available_threads", info.available_threads)?;
+    dict.set_item("device_description", info.device_description)?;
+    Ok(dict)
+}
+
+/// Verify 128-bit cross-platform numerical invariants across architectures.
+#[pyfunction]
+#[pyo3(signature = (count = None))]
+fn verify_128bit_invariants(py: Python<'_>, count: Option<usize>) -> PyResult<Bound<'_, PyDict>> {
+    let count = count.unwrap_or(1000);
+    let checksum = nwau_core::accel::verify_128bit_invariants(count)
+        .map_err(pyo3::exceptions::PyValueError::new_err)?;
+    let dict = PyDict::new(py);
+    dict.set_item("count", count)?;
+    dict.set_item("checksum", format!("0x{:016X}", checksum))?;
+    dict.set_item(
+        "golden",
+        format!(
+            "0x{:016X}",
+            nwau_core::accel::GOLDEN_128BIT_INVARIANT_CHECKSUM
+        ),
+    )?;
+    dict.set_item(
+        "passed",
+        checksum == nwau_core::accel::GOLDEN_128BIT_INVARIANT_CHECKSUM,
+    )?;
+    Ok(dict)
+}
+
+/// Hardware-accelerated batch valuation of episodes.
+#[pyfunction]
+#[pyo3(signature = (episodes, nep = None))]
+fn evaluate_batch_accelerated<'py>(
+    py: Python<'py>,
+    episodes: &Bound<'py, PyList>,
+    nep: Option<f32>,
+) -> PyResult<Bound<'py, PyList>> {
+    let count = episodes.len();
+    let mut inputs = Vec::with_capacity(count);
+
+    for item in episodes.iter() {
+        let dict = item.cast::<PyDict>()?;
+        let get_f32 = |key: &str, default: f32| -> PyResult<f32> {
+            match dict.get_item(key)? {
+                Some(val) => val.extract::<f32>(),
+                None => Ok(default),
+            }
+        };
+        let get_u32 = |key: &str, default: u32| -> PyResult<u32> {
+            match dict.get_item(key)? {
+                Some(val) => val.extract::<u32>(),
+                None => Ok(default),
+            }
+        };
+
+        inputs.push(nwau_core::EpisodeGpuInput {
+            los: get_f32("los", 1.0)?,
+            icu_hours: get_f32("icu_hours", 0.0)?,
+            icu_rate: get_f32("icu_rate", 0.0)?,
+            base_weight: get_f32("base_weight", 1.0)?,
+            inlier_lower: get_f32("inlier_lower", 1.0)?,
+            inlier_upper: get_f32("inlier_upper", 10.0)?,
+            short_stay_per_diem: get_f32("short_stay_per_diem", 0.5)?,
+            long_stay_per_diem: get_f32("long_stay_per_diem", 0.1)?,
+            adjustment_factor: get_f32("adjustment_factor", 1.0)?,
+            private_deduction: get_f32("private_deduction", 0.0)?,
+            same_day_flag: get_u32("same_day_flag", 0)?,
+            _pad: 0,
+        });
+    }
+
+    let device = nwau_core::ComputeDevice::auto();
+    let outputs = device.evaluate_batch(&inputs, nep);
+
+    let py_outputs = PyList::empty(py);
+    for out in outputs {
+        let d = PyDict::new(py);
+        d.set_item("nwau", out.nwau)?;
+        d.set_item("funding", out.funding)?;
+        d.set_item("error_code", out.error_code)?;
+        py_outputs.append(d)?;
+    }
+
+    Ok(py_outputs)
+}
+
+/// Monte Carlo bootstrap resampling for empirical confidence intervals.
+#[pyfunction]
+#[pyo3(signature = (values, iterations = None))]
+fn bootstrap_cohort(
+    py: Python<'_>,
+    values: Vec<f64>,
+    iterations: Option<usize>,
+) -> PyResult<Bound<'_, PyDict>> {
+    let iters = iterations.unwrap_or(2000);
+    let device = nwau_core::ComputeDevice::auto();
+    let res = device.bootstrap(&values, iters, None);
+
+    let dict = PyDict::new(py);
+    dict.set_item("mean", res.mean)?;
+    dict.set_item("std_err", res.std_err)?;
+    dict.set_item("ci_lower_2_5", res.ci_lower_2_5)?;
+    dict.set_item("median", res.median)?;
+    dict.set_item("ci_upper_97_5", res.ci_upper_97_5)?;
+    dict.set_item("iterations", res.iterations)?;
+    dict.set_item("sample_size", res.sample_size)?;
+    dict.set_item("device_used", res.device_used)?;
+    dict.set_item("elapsed_ms", res.elapsed_ms)?;
+    Ok(dict)
+}
+
 #[pymodule]
 fn _rust(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add(
@@ -994,6 +1114,10 @@ fn _rust(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
                 "calculate_outpatients_row",
                 "calculate_subacute_row",
                 "calculate_batch",
+                "get_acceleration_info",
+                "verify_128bit_invariants",
+                "evaluate_batch_accelerated",
+                "bootstrap_cohort",
                 "__version__",
             ],
         )?,
@@ -1009,5 +1133,9 @@ fn _rust(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(calculate_outpatients_row, m)?)?;
     m.add_function(wrap_pyfunction!(calculate_subacute_row, m)?)?;
     m.add_function(wrap_pyfunction!(calculate_batch, m)?)?;
+    m.add_function(wrap_pyfunction!(get_acceleration_info, m)?)?;
+    m.add_function(wrap_pyfunction!(verify_128bit_invariants, m)?)?;
+    m.add_function(wrap_pyfunction!(evaluate_batch_accelerated, m)?)?;
+    m.add_function(wrap_pyfunction!(bootstrap_cohort, m)?)?;
     Ok(())
 }

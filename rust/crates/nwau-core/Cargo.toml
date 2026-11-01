@@ -11,8 +11,10 @@ name = "nwau_core"
 path = "src/lib.rs"
 
 [features]
-default = ["arrow-parquet"]
+default = ["arrow-parquet", "hardware-accel"]
 arrow-parquet = ["dep:arrow", "dep:parquet"]
+hardware-accel = ["dep:wgpu"]
+wgpu = ["hardware-accel"]
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
@@ -27,3 +29,7 @@ parquet = { version = "54", default-features = false, features = ["arrow", "snap
 rust_decimal = { version = "1.43.0", features = ["serde", "maths"] }
 rust_decimal_macros = "1.40.0"
 zeroize = { version = "1.9.1", features = ["derive"] }
+rayon = "1.12.0"
+bytemuck = { version = "1.25.2", features = ["derive"] }
+wgpu = { version = "30.0.1", optional = true }
+pollster = "1.0.1"
