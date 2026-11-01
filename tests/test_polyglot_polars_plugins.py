@@ -129,18 +129,19 @@ def test_subacute_row_calculation():
 
 def test_polars_plugin_symbols_registered():
     """Verify that all polars plugin symbols are exported by the dynamic library."""
-    import subprocess
+    from ctypes import CDLL
 
-    output = subprocess.check_output(["nm", "-gU", _rust.__file__]).decode()
-    for symbol in (
-        "__polars_plugin_nwau_acute_expr",
-        "__polars_plugin_nwau_ed_expr",
-        "__polars_plugin_nwau_mh_admitted_expr",
-        "__polars_plugin_nwau_mh_community_expr",
-        "__polars_plugin_nwau_outpatients_expr",
-        "__polars_plugin_nwau_subacute_expr",
+    library = CDLL(_rust.__file__)
+    for expression in (
+        "nwau_acute_expr",
+        "nwau_ed_expr",
+        "nwau_mh_admitted_expr",
+        "nwau_mh_community_expr",
+        "nwau_outpatients_expr",
+        "nwau_subacute_expr",
     ):
-        assert symbol in output
+        for prefix in ("_polars_plugin_", "_polars_plugin_field_"):
+            assert getattr(library, prefix + expression)
 
 
 def test_ed_missing_price_weight_sets_error_3():

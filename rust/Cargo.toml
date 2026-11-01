@@ -10,3 +10,7 @@ resolver = "2"
 edition = "2021"
 license = "Apache-2.0"
 repository = "https://github.com/edithatogo/microcosting_healthservices"
+
+# Keep the native expression ABI, without the unused Python plan serialization stack.
+[patch.crates-io]
+pyo3-polars = { path = "vendor/pyo3-polars" }
