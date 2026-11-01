@@ -89,14 +89,14 @@ Compile/ship and then it is ready to use:
 import polars as pl
 from expression_lib import language
 
-df = pl.DataFrame({
-    "names": ["Richard", "Alice", "Bob"],
-})
-
-
-out = df.with_columns(
-   pig_latin = language.pig_latinnify("names")
+df = pl.DataFrame(
+    {
+        "names": ["Richard", "Alice", "Bob"],
+    }
 )
+
+
+out = df.with_columns(pig_latin=language.pig_latinnify("names"))
 ```
 
 Alternatively, you can
@@ -104,9 +104,7 @@ Alternatively, you can
 which enables you to write:
 
 ```python
-out = df.with_columns(
-   pig_latin = pl.col("names").language.pig_latinnify()
-)
+out = df.with_columns(pig_latin=pl.col("names").language.pig_latinnify())
 ```
 
 See the full example in [example/derive_expression]:
