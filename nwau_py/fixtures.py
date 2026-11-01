@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-import pandas as pd
+import polars as pl
 
 SUPPORTED_MANIFEST_SCHEMA_VERSION = "1.0"
 SUPPORTED_PRIVACY_CLASSIFICATIONS = {"synthetic", "deidentified", "public"}
@@ -123,7 +123,7 @@ class FixtureCase:
     """A runnable fixture pack entry for a specific calculator."""
 
     pack: FixturePack
-    calculator: Callable[..., pd.DataFrame]
+    calculator: Callable[..., Any]
     calculator_params: Any
     result_column: str
     parity_type: str = "output parity"
@@ -150,15 +150,15 @@ class FixtureRunResult:
     """Executed fixture case with captured payloads."""
 
     case: FixtureCase
-    result: pd.DataFrame
-    expected: pd.DataFrame | None = None
+    result: Any
+    expected: Any | None = None
 
 
 @dataclass(frozen=True, slots=True)
 class FixtureRunner:
     """Runner-neutral execution wrapper for a set of fixture cases."""
 
-    execute_case: Callable[[FixtureCase], pd.DataFrame] | None = None
+    execute_case: Callable[[FixtureCase], Any] | None = None
 
     def run_case(self, case: FixtureCase) -> FixtureRunResult:
         """Execute a single fixture case and wrap the result."""
@@ -402,7 +402,7 @@ def discover_fixture_packs(root: str | Path) -> list[FixturePack]:
 def iter_fixture_cases(
     packs: Iterable[FixturePack],
     *,
-    calculator_map: dict[str, tuple[Callable[..., pd.DataFrame], Any, str]],
+    calculator_map: dict[str, tuple[Callable[..., Any], Any, str]],
 ) -> list[FixtureCase]:
     """Return runnable fixture cases for the requested packs."""
     cases: list[FixtureCase] = []
@@ -455,7 +455,7 @@ def iter_fixture_pytest_params(
 def iter_fixture_pytest_params_from_root(
     root: str | Path,
     *,
-    calculator_map: dict[str, tuple[Callable[..., pd.DataFrame], Any, str]],
+    calculator_map: dict[str, tuple[Callable[..., Any], Any, str]],
 ) -> list[Any]:
     """Return pytest parameters for every valid fixture pack under ``root``."""
     packs = discover_fixture_packs(root)
@@ -463,7 +463,7 @@ def iter_fixture_pytest_params_from_root(
     return iter_fixture_pytest_params(cases)
 
 
-def run_fixture_case(case: FixtureCase) -> pd.DataFrame:
+def run_fixture_case(case: FixtureCase) -> Any:
     """Execute a fixture case and return the calculator output frame."""
     input_df = read_payload_frame(case.pack, "input")
     return case.calculator(
@@ -493,7 +493,7 @@ def run_fixture_suite(cases: Iterable[FixtureCase]) -> list[FixtureRunResult]:
 def run_fixture_suite_from_root(
     root: str | Path,
     *,
-    calculator_map: dict[str, tuple[Callable[..., pd.DataFrame], Any, str]],
+    calculator_map: dict[str, tuple[Callable[..., Any], Any, str]],
 ) -> list[FixtureRunResult]:
     """Discover, materialize, and execute fixture cases from a fixture root."""
     packs = discover_fixture_packs(root)
@@ -503,28 +503,46 @@ def run_fixture_suite_from_root(
 
 def assert_fixture_case_output(
     case: FixtureCase,
-    result: pd.DataFrame,
-    expected: pd.DataFrame,
+    result: Any,
+    expected: Any,
 ) -> None:
     """Assert parity for a fixture case with manifest-backed provenance."""
     tolerance = case.tolerance
-    if case.result_column not in result.columns:
+    result_cols = (
+        result.columns
+        if isinstance(result.columns, (list, tuple))
+        else list(result.columns)
+    )
+    expected_cols = (
+        expected.columns
+        if isinstance(expected.columns, (list, tuple))
+        else list(expected.columns)
+    )
+    if case.result_column not in result_cols:
         raise FixtureManifestError(
             f"{case.provenance_label} missing result column {case.result_column!r}"
         )
-    if case.result_column not in expected.columns:
+    if case.result_column not in expected_cols:
         raise FixtureManifestError(
             f"{case.provenance_label} missing expected column {case.result_column!r}"
         )
-    actual = result[case.result_column].to_numpy()
-    reference = expected[case.result_column].to_numpy()
-    if len(actual) != len(reference):
+    actual = result[case.result_column]
+    reference = expected[case.result_column]
+    actual_arr = (
+        actual.to_numpy() if hasattr(actual, "to_numpy") else np.asarray(actual)
+    )
+    reference_arr = (
+        reference.to_numpy()
+        if hasattr(reference, "to_numpy")
+        else np.asarray(reference)
+    )
+    if len(actual_arr) != len(reference_arr):
         raise FixtureManifestError(
             f"{case.provenance_label} length mismatch: "
-            f"{len(actual)} != {len(reference)}"
+            f"{len(actual_arr)} != {len(reference_arr)}"
         )
-    actual_float = np.asarray(actual, dtype=float)
-    reference_float = np.asarray(reference, dtype=float)
+    actual_float = np.asarray(actual_arr, dtype=float)
+    reference_float = np.asarray(reference_arr, dtype=float)
     matched = np.isclose(
         actual_float,
         reference_float,
@@ -542,16 +560,16 @@ def assert_fixture_case_output(
         )
 
 
-def read_payload_frame(pack: FixturePack, role: str) -> pd.DataFrame:
-    """Read a payload frame from a validated fixture pack."""
+def read_payload_frame(pack: FixturePack, role: str) -> pl.DataFrame:
+    """Read a payload frame from a validated fixture pack as native Polars."""
     payload = pack.manifest.payloads[role]
     path = pack.payload_path(role)
     if not path.exists():
         raise FixtureManifestError(f"missing payload file: {path}")
     if payload.format == "csv":
-        frame = pd.read_csv(path)
+        frame = pl.read_csv(path)
     elif payload.format == "parquet":
-        frame = pd.read_parquet(path)
+        frame = pl.read_parquet(path)
     else:  # pragma: no cover - guarded by validation
         raise FixtureManifestError(f"unsupported payload format: {payload.format}")
     if list(frame.columns) != list(payload.columns):

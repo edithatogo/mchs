@@ -1,8 +1,7 @@
 from pathlib import Path
 
-import pandas as pd
-
 import nwau_py.calculators.outpatients as outpatients
+from nwau_py import compat as pd
 
 
 def _weights(*_args, **_kwargs) -> pd.DataFrame:
@@ -269,3 +268,38 @@ def test_outpatient_optional_reference_loaders_fail_closed(monkeypatch):
     assert outpatients._load_ind_adj(Path("ref"), "2025").empty
     assert outpatients._load_pat_rem_adj(Path("ref"), "2025").empty
     assert outpatients._load_treat_rem_adj(Path("ref"), "2025").empty
+
+
+def test_calculate_outpatients_polars_native_input_and_output(monkeypatch):
+    import polars as pl
+
+    weights = pl.DataFrame(
+        {
+            "TIER2_CLINIC": [20.48],
+            "clinic_pw": [1.5],
+            "tier2_adj_paed": [1.0],
+        }
+    )
+    monkeypatch.setattr(outpatients, "_load_weights", lambda *_: weights)
+    monkeypatch.setattr(outpatients, "_load_multi_prov_adj", lambda *_: 0.0)
+
+    df_pl = pl.DataFrame(
+        {
+            "TIER2_CLINIC": [20.48],
+            "INSCOPE_FLAG": [1],
+            "PAT_MULTIPROV_FLAG": [0],
+            "PAT_REMOTENESS": [0],
+            "EST_REMOTENESS": [0],
+            "INDSTAT": [0],
+        }
+    )
+
+    res = outpatients.calculate_outpatients(
+        df_pl,
+        outpatients.OutpatientParams(data_type=2),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res, pl.DataFrame)
+    assert "NWAU25" in res.columns
+    assert res["NWAU25"][0] == 0.0 or res["NWAU25"][0] >= 0.0

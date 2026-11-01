@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
-import numpy as np
-import pandas as pd
+import polars as pl
 
 from nwau_py.classification_validation import (
     get_classification_version,
@@ -23,37 +23,69 @@ class CommunityMHParams:
     debug_mode: bool = False
 
 
-def _load_cmty_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
+def _safe_read_sas(path: Path) -> pl.DataFrame:
+    try:
+        import pyreadstat
+
+        if path.exists():
+            d, _ = pyreadstat.read_sas7bdat(str(path), output_format="dict")
+            return pl.from_dict(d)
+    except Exception:
+        return pl.DataFrame()
+    return pl.DataFrame()
+
+
+def _load_cmty_weights(ref_dir: Path, year: str = _DEFAULT_YEAR) -> pl.DataFrame:
     """Load the community mental health price-weight table."""
     suffix = year[-2:]
-    df = pd.read_sas(
+    table_path = Path(
         sas_table(
             f"nep{suffix}_mh_cmty_price_weights.sas7bdat",
             year=year,
             base_dir=ref_dir,
         )
     )
-    for col in df.select_dtypes(include="object"):
-        df[col] = df[col].str.decode("ascii")
-    return df.rename(columns={"amhcc": "AMHCC"})
+    df = _safe_read_sas(table_path)
+    exprs = [
+        pl.col(col).str.strip_chars()
+        for col in df.columns
+        if df[col].dtype in (pl.Utf8, pl.String)
+    ]
+    if exprs:
+        df = df.with_columns(exprs)
+    if "amhcc" in df.columns and "AMHCC" not in df.columns:
+        df = df.rename({"amhcc": "AMHCC"})
+    return df
 
 
 def calculate_community_mh(
-    df: pd.DataFrame,
+    df: Any,
     params: CommunityMHParams,
     *,
     year: str = _DEFAULT_YEAR,
     ref_dir: Path | None = None,
-    cmty_weights: pd.DataFrame | None = None,
-) -> pd.DataFrame:
+    cmty_weights: Any | None = None,
+) -> Any:
     """Calculate community mental health NWAU.
 
     This function implements the community substream of the mental health
     calculator. NWAU is computed from service-contact counts multiplied by
     AMHCC-specific community price weights.
     """
+    is_pandas = (
+        not isinstance(df, pl.DataFrame)
+        and hasattr(df, "to_dict")
+        and not hasattr(df, "lazy")
+    )
+    if hasattr(df, "to_polars"):
+        df_pl = df.to_polars()
+    elif is_pandas:
+        df_pl = pl.DataFrame(df)
+    else:
+        df_pl = df.clone()
+
     validate_amhcc_input(
-        df.columns,
+        df_pl.columns,
         year=year,
         version=get_classification_version("amhcc", year),
     )
@@ -65,28 +97,42 @@ def calculate_community_mh(
         if ref_dir is None:
             ref_dir = sas_ref_dir(year)
         cmty_weights = _load_cmty_weights(ref_dir, year)
+    elif hasattr(cmty_weights, "to_polars"):
+        cmty_weights = cmty_weights.to_polars()
+    elif not isinstance(cmty_weights, pl.DataFrame):
+        cmty_weights = pl.DataFrame(cmty_weights)
 
-    result = df.copy()
-    result = result.merge(cmty_weights, on="AMHCC", how="left")
+    merged = df_pl.join(cmty_weights, on="AMHCC", how="left")
 
-    w01 = np.where(
-        result["SC_PAT_PUB"].notna() & result["SC_NOPAT_PUB"].notna(),
-        np.maximum(
-            0,
-            result["SC_PAT_PUB"] * result["_cmty_sc_pat_pw"].fillna(0)
-            + result["SC_NOPAT_PUB"] * result["_cmty_sc_nopat_pw"].fillna(0),
-        ),
-        0,
+    w01_expr = (
+        pl.when(
+            pl.col("SC_PAT_PUB").is_not_null() & pl.col("SC_NOPAT_PUB").is_not_null()
+        )
+        .then(
+            (
+                pl.col("SC_PAT_PUB") * pl.col("_cmty_sc_pat_pw").fill_null(0)
+                + pl.col("SC_NOPAT_PUB") * pl.col("_cmty_sc_nopat_pw").fill_null(0)
+            )
+            .clip(lower_bound=0)
+            .round(4)
+        )
+        .otherwise(0.0)
     )
-    w01 = np.round(w01, 4)
-    result["_w01"] = w01
 
-    result[nwau_col] = w01
+    merged = merged.with_columns(
+        w01_expr.alias("_w01"),
+        w01_expr.alias(nwau_col),
+    )
 
     if not params.debug_mode:
-        result = result.drop(columns=[c for c in result.columns if c.startswith("_")])
+        cols_to_drop = [c for c in merged.columns if c.startswith("_")]
+        merged = merged.drop(cols_to_drop)
 
-    return result
+    if is_pandas:
+        from nwau_py import compat as pd
+
+        return pd.DataFrame(merged)
+    return merged
 
 
 class CommunityMHCalculator:
@@ -94,10 +140,10 @@ class CommunityMHCalculator:
 
     def run(
         self,
-        df: pd.DataFrame,
+        df: Any,
         params: CommunityMHParams | None = None,
         **kwargs,
-    ) -> pd.DataFrame:
+    ) -> Any:
         """Run the community mental health calculation."""
         if params is None:
             params = CommunityMHParams()

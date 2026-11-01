@@ -2,8 +2,9 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Mapping
 from functools import lru_cache
+from typing import Any
 
-import pandas as pd
+import polars as pl
 import pyreadstat
 
 from nwau_py.data.paths import sas_table
@@ -13,36 +14,39 @@ _DEFAULT_YEAR = "2025"
 
 
 @lru_cache
-def load_hac_mapping(edition: str = "07", *, year: str = _DEFAULT_YEAR) -> pd.DataFrame:
-    """Return diagnosis-to-HAC mapping for the given ICD edition and year."""
+def load_hac_mapping_pl(
+    edition: str = "07", *, year: str = _DEFAULT_YEAR
+) -> pl.DataFrame:
+    """Return diagnosis-to-HAC mapping as Polars DataFrame for ICD edition/year."""
     ref_dir = sas_ref_dir(year)
     path = sas_table(f"hac_map_{edition}.sas7bdat", base_dir=ref_dir)
-    df, _ = pyreadstat.read_sas7bdat(str(path))
-    df["DDX"] = df["DDX"].astype(str)
-    return df
+    df_dict, _ = pyreadstat.read_sas7bdat(str(path), output_format="dict")
+    df = pl.from_dict(df_dict)
+    return df.with_columns(pl.col("DDX").cast(pl.Utf8).str.strip_chars())
+
+
+@lru_cache
+def load_hac_mapping(edition: str = "07", *, year: str = _DEFAULT_YEAR) -> Any:
+    """Return diagnosis-to-HAC mapping as native Polars DataFrame."""
+    return load_hac_mapping_pl(edition, year=year)
 
 
 def count_hac_diagnoses(
     diagnoses: Iterable[str], *, edition: str = "07", year: str = _DEFAULT_YEAR
 ) -> Mapping[str, int]:
-    """Count HAC sub-condition occurrences for ``diagnoses``.
+    """Count HAC sub-condition occurrences for ``diagnoses`` using vectorized Polars."""
+    df = load_hac_mapping_pl(edition, year=year)
+    diag_set = [str(d).strip() for d in diagnoses]
+    condition_cols = [c for c in df.columns if c != "DDX"]
 
-    Parameters
-    ----------
-    diagnoses:
-        Iterable of diagnosis codes.
-    edition:
-        ICD-10-AM edition number used to select the mapping table.
-    """
-    df = load_hac_mapping(edition, year=year).set_index("DDX")
-    counts: dict[str, int] = {str(col): 0 for col in df.columns if col != "DDX"}
-    for code in diagnoses:
-        if code in df.index:
-            row = df.loc[code]
-            for col, val in row.items():
-                if pd.notna(val) and int(val) == 1:
-                    counts[col] += 1
-    return counts
+    matched = df.filter(pl.col("DDX").is_in(diag_set))
+    if len(matched) == 0:
+        return {col: 0 for col in condition_cols}
+
+    sums = matched.select(
+        [pl.col(c).fill_null(0).cast(pl.Int64).sum() for c in condition_cols]
+    ).to_dicts()[0]
+    return {str(k): int(v) for k, v in sums.items()}
 
 
 def create_hac_flags(counts: Mapping[str, int]) -> Mapping[str, int]:

@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
-import pandas as pd
+import polars as pl
 from pydantic import (
     BaseModel,
     ConfigDict,
@@ -386,9 +386,10 @@ class FormulaParameterBundle(StrictModel):
             raise ValueError("source-only validations must use source-only status")
         return self
 
-    def weights_frame(self) -> pd.DataFrame:
-        """Return the weight section as a pandas dataframe."""
-        return pd.DataFrame([record.parameters for record in self.weights])
+    def weights_frame(self) -> pl.DataFrame:
+        """Return the weight section as a polars dataframe."""
+        data = [record.parameters for record in self.weights]
+        return pl.DataFrame(data) if data else pl.DataFrame()
 
 
 @dataclass(frozen=True, slots=True)
@@ -399,7 +400,7 @@ class ResolvedFormulaParameterBundle:
     bundle_dir: Path
     bundle: FormulaParameterBundle
 
-    def weights_frame(self) -> pd.DataFrame:
+    def weights_frame(self) -> pl.DataFrame:
         return self.bundle.weights_frame()
 
 

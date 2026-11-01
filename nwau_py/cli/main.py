@@ -31,8 +31,11 @@ _RUNTIME_ENV = "NWAU_RUNTIME"
 _VALID_RUNTIMES = {"python", "rust", "auto"}
 
 
-def _write_output(df: _CsvFrame, outfh: IO[str]) -> None:
-    df.to_csv(outfh, index=False)
+def _write_output(df: Any, outfh: IO[str]) -> None:
+    if hasattr(df, "write_csv"):
+        df.write_csv(outfh)
+    else:
+        df.to_csv(outfh, index=False)
 
 
 def _load_interop_contract() -> dict[str, Any]:
@@ -78,7 +81,7 @@ def _run(
     ref_dir: str | None,
     runtime: str | None = None,
 ) -> None:
-    import pandas as pd
+    import polars as pl
 
     from nwau_py.classification_validation import get_classification_requirement
     from nwau_py.runtime import run_csv_calculation
@@ -92,7 +95,7 @@ def _run(
         runtime=selected_runtime,
     )
     try:
-        input_df = pd.read_csv(input_csv)
+        input_df = pl.read_csv(input_csv)
         requirement = get_classification_requirement(
             _CLASSIFICATION_SYSTEMS[stream],
             validation_year,
@@ -119,7 +122,7 @@ def _run(
             params=params,
             year=year,
             ref_dir=ref_dir,
-            read_csv=pd.read_csv,
+            read_csv=pl.read_csv,
             write_csv=_write_output,
         )
     except ImportError as exc:

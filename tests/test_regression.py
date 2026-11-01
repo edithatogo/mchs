@@ -1,12 +1,12 @@
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import pytest
 
 import nwau_py.calculators.acute as acute
 import nwau_py.calculators.outpatients as outpatients
 import nwau_py.calculators.subacute as subacute
+from nwau_py import compat as pd
 from nwau_py.calculators import (
     AcuteParams,
     OutpatientParams,

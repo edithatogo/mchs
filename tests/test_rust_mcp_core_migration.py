@@ -5,9 +5,10 @@ import sys
 from pathlib import Path
 from typing import Any, cast
 
-import pandas as pd
 import pytest
 from click.testing import CliRunner
+
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -58,6 +59,10 @@ def test_mcp_support_status_separates_transport_from_formula_runtime():
 
 def test_mcp_calculate_accepts_rust_runtime_for_acute_2025(monkeypatch):
     def rust_calculator(df, params, *, year, ref_dir=None):
+        import polars as pl
+
+        if isinstance(df, pl.DataFrame):
+            return df.with_columns(pl.lit(2.5).alias(f"NWAU{year[-2:]}"))
         output = df.copy()
         output[f"NWAU{year[-2:]}"] = 2.5
         return output
@@ -91,7 +96,8 @@ def test_mcp_validate_input_accepts_rust_runtime_for_acute_2025(monkeypatch):
         return {"year": year}
 
     def validate_frame(df, contract):
-        assert df.iloc[0]["DRG"] == _acute_fixture_row()["DRG"]
+        drg = df["DRG"][0] if hasattr(df, "__getitem__") else df.iloc[0]["DRG"]
+        assert drg == _acute_fixture_row()["DRG"]
         assert contract["year"] == "2025"
 
     monkeypatch.setattr(

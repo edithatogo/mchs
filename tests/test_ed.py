@@ -2,9 +2,9 @@ import importlib.util
 import sys
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
+from nwau_py import compat as pd
 from nwau_py.utils import RA_VERSION
 
 YEARS = [y for y in sorted(RA_VERSION.keys()) if int(y) >= 2025]
@@ -86,8 +86,11 @@ def test_ed_reference_loaders_decode_classification_tables(monkeypatch):
 
 @pytest.mark.parametrize("year", YEARS)
 def test_calculate_ed_aecc_basic(monkeypatch, year):
-    weights = pd.read_sas(CALC_DIR / "nep25_edaecc_price_weights.sas7bdat")
-    weights["AECC"] = weights["AECC"].str.decode("ascii")
+    import pyreadstat
+
+    table_path = CALC_DIR / "nep25_edaecc_price_weights.sas7bdat"
+    d, _ = pyreadstat.read_sas7bdat(str(table_path), output_format="dict")
+    weights = pd.DataFrame(d)
     row = weights[weights["AECC"] == "E0110A"].iloc[0]
 
     def _load(
@@ -123,8 +126,11 @@ def test_calculate_ed_aecc_basic(monkeypatch, year):
 
 @pytest.mark.parametrize("year", YEARS)
 def test_calculate_ed_udg_mapping_and_errors(monkeypatch, year):
-    weights = pd.read_sas(CALC_DIR / "nep25_edudg_price_weights.sas7bdat")
-    weights["UDG"] = weights["UDG"].str.decode("ascii")
+    import pyreadstat
+
+    table_path = CALC_DIR / "nep25_edudg_price_weights.sas7bdat"
+    d, _ = pyreadstat.read_sas7bdat(str(table_path), output_format="dict")
+    weights = pd.DataFrame(d)
     udg_pw = weights[weights["UDG"] == "UDG01"].iloc[0]["udg_pw"]
 
     def _load_map(ref_dir: Path) -> pd.DataFrame:
@@ -173,3 +179,32 @@ def test_calculate_ed_udg_mapping_and_errors(monkeypatch, year):
 
     assert result.loc[2, "Error_Code"] == 2
     assert result.loc[2, "NWAU25"] == 0
+
+
+def test_calculate_ed_polars_native_input_and_output(monkeypatch):
+    import polars as pl
+
+    weights = pl.DataFrame({"AECC": ["E0110A"], "AECC_pw": [0.2837]})
+    monkeypatch.setattr(ed, "_load_weights", lambda *_: weights)
+
+    df_pl = pl.DataFrame(
+        {
+            "AECC": ["E0110A"],
+            "COMPENSABLE_STATUS": [2],
+            "DVA_STATUS": [2],
+            "adj_indigenous": [0.0],
+            "adj_remoteness": [0.0],
+            "adj_treat_remoteness": [0.0],
+        }
+    )
+
+    res = ed.calculate_ed(
+        df_pl,
+        ed.EDParams(classification_option=3, eligibility_option=1),
+        year="2025",
+        ref_dir=Path("unused"),
+    )
+    assert isinstance(res, pl.DataFrame)
+    assert "NWAU25" in res.columns
+    assert res["NWAU25"][0] == pytest.approx(0.2837, rel=1e-4)
+    assert res["Error_Code"][0] == 0

@@ -5,9 +5,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
+from nwau_py import compat as pd
 from nwau_py.calculators.community_mh_contract import (
     COMMUNITY_MH_CONTRACT,
     CommunityMHContractError,

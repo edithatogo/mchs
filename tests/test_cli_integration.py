@@ -6,8 +6,9 @@ import types
 from io import StringIO
 from pathlib import Path
 
-import pandas as pd
 import pytest
+
+from nwau_py import compat as pd
 
 CLI = shutil.which("funding-calculator")
 FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "golden" / "acute_2025"

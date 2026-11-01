@@ -1,10 +1,14 @@
 from collections.abc import Sequence
+from typing import Any
 
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:
+    from nwau_py import compat as pd
 
 
 def calculate_adjusted_nwau(
-    df: pd.DataFrame,
+    df: Any,
     *,
     base_nwau_col: str = "nwau25",
     weight_col: str = "_w01",
@@ -16,9 +20,9 @@ def calculate_adjusted_nwau(
     ahr_adj_cols: Sequence[str] | None = None,
     covid_flag_col: str | None = None,
     error_col: str | None = None,
-    complexity_df: pd.DataFrame | None = None,
+    complexity_df: Any | None = None,
     drop_intermediate: bool = False,
-) -> pd.DataFrame:
+) -> Any:
     """Combine base NWAU with HAC/AHR risk adjustments.
 
     Parameters

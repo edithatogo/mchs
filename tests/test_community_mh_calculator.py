@@ -1,8 +1,8 @@
 """Tests for the community mental health calculator module."""
 
 import numpy as np
-import pandas as pd
 
+from nwau_py import compat as pd
 from nwau_py.calculators.community_mh_calculator import (
     CommunityMHCalculator,
     CommunityMHParams,

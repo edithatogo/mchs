@@ -1,7 +1,6 @@
 from pathlib import Path
 
-import pandas as pd
-
+from nwau_py import compat as pd
 from nwau_py.calculators.funding_formula import (
     calculate_funding,
     load_formula,
@@ -24,7 +23,7 @@ def test_funding_formula_helpers(tmp_path):
     formula = load_formula(formula_path)
     result = calculate_funding(pd.DataFrame({"A": [3]}), formula)
 
-    assert weights.columns.tolist() == ["A"]
+    assert list(weights.columns) == ["A"]
     assert formula["variables"] == {"X": "A"}
     assert result.iloc[0] == 6
 

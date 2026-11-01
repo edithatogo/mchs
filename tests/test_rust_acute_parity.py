@@ -8,7 +8,7 @@ import sys
 import types
 from pathlib import Path
 
-import pandas as pd
+from nwau_py import compat as pd
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -93,8 +93,14 @@ def test_rust_failure_reports_include_provenance_and_tolerance(monkeypatch):
         year=pack.manifest.pricing_year,
         ref_dir=Path("tests/data") / pack.manifest.pricing_year,
     )
-    expected_df = fixtures.read_payload_frame(pack, "expected_output").copy()
-    expected_df["NWAU25"] = expected_df["NWAU25"] + 1.0
+    expected_df = fixtures.read_payload_frame(pack, "expected_output")
+    if hasattr(expected_df, "with_columns"):
+        import polars as pl
+
+        expected_df = expected_df.with_columns((pl.col("NWAU25") + 1.0).alias("NWAU25"))
+    else:
+        expected_df = expected_df.copy()
+        expected_df["NWAU25"] = expected_df["NWAU25"] + 1.0
 
     with pytest.raises(fixtures.FixtureManifestError) as exc_info:
         fixtures.assert_fixture_case_output(case, rust_result, expected_df)

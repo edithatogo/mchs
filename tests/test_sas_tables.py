@@ -1,10 +1,10 @@
 import re
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
 import nwau_py.calculators.acute as acute
+from nwau_py import compat as pd
 from nwau_py.calculators import AcuteParams, calculate_acute
 from nwau_py.utils import ra_suffix
 

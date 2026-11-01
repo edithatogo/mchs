@@ -5,8 +5,9 @@ import types
 from pathlib import Path
 from typing import Any, cast
 
-import pandas as pd
 from click.testing import CliRunner
+
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 

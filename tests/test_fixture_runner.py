@@ -8,8 +8,9 @@ import types
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
 import pytest
+
+from nwau_py import compat as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -237,8 +238,14 @@ def test_assert_fixture_case_output_reports_tolerance_failures(monkeypatch):
     monkeypatch.setattr(acute, "_load_price_weights", _load_weights)
 
     result = fixtures.run_fixture_case(case)
-    expected = fixtures.read_payload_frame(pack, "expected_output").copy()
-    expected["NWAU25"] = expected["NWAU25"] + np.array([1.0, 1.0, 1.0])
+    expected = fixtures.read_payload_frame(pack, "expected_output")
+    if hasattr(expected, "with_columns"):
+        import polars as pl
+
+        expected = expected.with_columns((pl.col("NWAU25") + 1.0).alias("NWAU25"))
+    else:
+        expected = expected.copy()
+        expected["NWAU25"] = expected["NWAU25"] + np.array([1.0, 1.0, 1.0])
 
     with pytest.raises(fixtures.FixtureManifestError):
         fixtures.assert_fixture_case_output(case, result, expected)

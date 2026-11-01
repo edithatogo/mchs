@@ -11,9 +11,7 @@ surface used by adapters and orchestration layers:
 
 from __future__ import annotations
 
-from typing import Final
-
-import pandas as pd
+from typing import Any, Final
 
 from nwau_py.classification_validation import (
     ClassificationValidationError,
@@ -109,11 +107,11 @@ def _contract_for_year(year: str | None) -> CalculatorContract:
     return build_community_mh_contract(year)
 
 
-def _dataframe_columns(df: pd.DataFrame) -> tuple[str, ...]:
+def _dataframe_columns(df: Any) -> tuple[str, ...]:
     return tuple(str(column) for column in df.columns)
 
 
-def validate_community_mh_input(df: pd.DataFrame, *, year: str | None = None) -> None:
+def validate_community_mh_input(df: Any, *, year: str | None = None) -> None:
     """Validate input columns for the community mental health stream.
 
     Parameters
@@ -146,7 +144,7 @@ def validate_community_mh_input(df: pd.DataFrame, *, year: str | None = None) ->
         raise CommunityMHContractError(str(exc)) from exc
 
 
-def validate_community_mh_output(df: pd.DataFrame, *, year: str | None = None) -> None:
+def validate_community_mh_output(df: Any, *, year: str | None = None) -> None:
     """Validate output columns from the community mental health stream.
 
     Parameters

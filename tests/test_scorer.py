@@ -1,7 +1,6 @@
 from pathlib import Path
 
-import pandas as pd
-
+from nwau_py import compat as pd
 from nwau_py import score_readmission
 
 CALC_DIR = (

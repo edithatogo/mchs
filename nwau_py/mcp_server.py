@@ -14,7 +14,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
+import polars as pl
 
 from nwau_py.calculators import AcuteParams
 from nwau_py.calculators import acute as acute_calculator
@@ -265,7 +265,7 @@ def validate_input(arguments: dict[str, Any]) -> dict[str, Any]:
                 ref_dir=_ref_dir_from_options(arguments),
             )
             acute_calculator.validate_acute_input_frame(
-                pd.DataFrame([inputs]), contract
+                pl.DataFrame([inputs]), contract
             )
         except ImportError as exc:
             return {
@@ -359,14 +359,19 @@ def _calculate_with_rust(
         raise McpError("MCHS-ERR-VAL-001", "inputs must be a JSON object.")
     try:
         output = acute_calculator.calculate_acute_rust_2025(
-            pd.DataFrame([inputs]),
+            pl.DataFrame([inputs]),
             AcuteParams(),
             year=year,
             ref_dir=_ref_dir_from_options(arguments),
         )
     except ImportError as exc:
         raise McpError("MCHS-MCP-RUST-UNAVAILABLE", str(exc)) from exc
-    row = output.iloc[0].where(pd.notna(output.iloc[0]), None).to_dict()
+    if hasattr(output, "to_dicts"):
+        row = output.to_dicts()[0]
+    elif hasattr(output, "to_polars"):
+        row = output.to_polars().to_dicts()[0]
+    else:
+        row = dict(output.iloc[0])
     return {
         "calculatorId": calculator_id,
         "year": year,
