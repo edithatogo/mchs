@@ -308,7 +308,10 @@ impl From<crate::acute::AcuteEpisodeOutputDecimal> for EpisodeOutput {
             w04: o.w04.to_f64().unwrap_or(0.0),
             gwau: o.gwau.to_f64().unwrap_or(0.0),
             private_service_deduction: o.private_service_deduction.to_f64().unwrap_or(0.0),
-            private_accommodation_deduction: o.private_accommodation_deduction.to_f64().unwrap_or(0.0),
+            private_accommodation_deduction: o
+                .private_accommodation_deduction
+                .to_f64()
+                .unwrap_or(0.0),
             nwau: o.nwau.to_f64().unwrap_or(0.0),
         }
     }

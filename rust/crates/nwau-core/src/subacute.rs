@@ -111,10 +111,8 @@ pub fn validate_subacute_episode(
     if input.age >= 0.0 && input.age <= 17.0 && !is_allowable_paediatric_ansnap(input.ansnap) {
         return 1;
     }
-    if matches!(
-        input.ansnap,
-        "5J01" | "5K01" | "5L01" | "5M01"
-    ) && (input.los > 1.0 || !ref_row.sameday_list_flag)
+    if matches!(input.ansnap, "5J01" | "5K01" | "5L01" | "5M01")
+        && (input.los > 1.0 || !ref_row.sameday_list_flag)
     {
         return 4;
     }
