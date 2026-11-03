@@ -1,0 +1,107 @@
+{
+  "2012": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%202012%E2%80%9313.pdf",
+    "sha256": "460a69489e2bb4210203d35f5095851f8440d55b6a610afc1d580534c7f1983d",
+    "filename": "2012.pdf",
+    "edition": "6.x",
+    "check_801B": null
+  },
+  "2013": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%202013%E2%80%9314.pdf",
+    "sha256": "063d084031c2e30eb3c895acc7717f64f8d93c9e00d372c3ce8dbe04ede07189",
+    "filename": "2013.pdf",
+    "edition": "6.x",
+    "check_801B": null
+  },
+  "2014": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%202014%E2%80%9315.pdf",
+    "sha256": "ee81e37fa8b158ef8fbecabe515f70d101f684d633af862b312ac0c0da552ae6",
+    "filename": "2014.pdf",
+    "edition": "7.0",
+    "check_801B": 8.2
+  },
+  "2015": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202015%E2%80%9316.pdf",
+    "sha256": "569615f5dd242c2a974e742f37c3d0057ac2d08236c52cc5b77c69c157182deb",
+    "filename": "2015.pdf",
+    "edition": "7.0",
+    "check_801B": 7.5
+  },
+  "2016": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/NEP16%20Price%20Weight%20Tables.xlsb_.zip",
+    "sha256": "1b334b94f407c96ec5b710b690f6eeb47915a4af740c7e5abf9babcae8c6d4e1",
+    "filename": "2016.zip",
+    "edition": "8.0",
+    "check_801B": 9.3
+  },
+  "2017": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202017%E2%80%9318%20Price%20Weight%20Tables.xlsb_.zip",
+    "sha256": "58bdaa404e5cddcafcc353736b8320579e9f1901135a93e0aef7e50678353c93",
+    "filename": "2017.zip",
+    "edition": "8.0",
+    "check_801B": 9.1
+  },
+  "2018": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202018%E2%80%9319%20Price%20Weight%20Tables.xlsb_.zip",
+    "sha256": "6e1d03b78be305a41076958d07273240fcd65f21723886776d5e8de9cd01142e",
+    "filename": "2018.zip",
+    "edition": "9.0",
+    "check_801B": 10.3
+  },
+  "2019": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202019%E2%80%9320%20-%20Price%20Weight%20Tables.xlsb_.zip",
+    "sha256": "9e4550a9d89566ed003ac61e231953de2fb2937b45f0697c2e033a3a32caac66",
+    "filename": "2019.zip",
+    "edition": "9.0",
+    "check_801B": 8.7
+  },
+  "2020": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202020%E2%80%9321%20-%20Price%20Weight%20Tables.xlsx",
+    "sha256": "f595ec1bd3137c699ab0db45fe70941c648b516880649b96631057d71b265433",
+    "filename": "2020.xlsx",
+    "edition": "10.0",
+    "check_801B": 9.0
+  },
+  "2021": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-02/National%20Efficient%20Price%20Determination%202021%E2%80%9322%20%E2%80%93%20Price%20Weight%20Tables.xlsx",
+    "sha256": "de8e1b0de031e3b015516966e16146285e7c2ba6d70c7e05c06a50ff663657ac",
+    "filename": "2021.xlsx",
+    "edition": "10.0",
+    "check_801B": 8.5
+  },
+  "2022": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2022-08/National%20Efficient%20Price%20Determination%202022%E2%80%9323%20%E2%80%93%20Price%20Weight%20Tables.xlsx",
+    "sha256": "2fc3158eb23c23b1b0c955067db5b7e470f15378f647d43f297f34b8830ebd31",
+    "filename": "2022.xlsx",
+    "edition": "10.0",
+    "check_801B": 9.2
+  },
+  "2023": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2023-03/National%20Efficient%20Price%20Determination%202023%E2%80%9324%20%E2%80%93%20Price%20Weight%20Tables.xlsx",
+    "sha256": "c68eeda1b2c26411701c9b94fba620327b7e86eae55fb12164df97cb7a35b5e4",
+    "filename": "2023.xlsx",
+    "edition": "11.0",
+    "check_801B": 8.6
+  },
+  "2024": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2024-04/National_%20Efficient_Price_Determination_2024-25_-_Price_Weight_Tables.XLSX",
+    "sha256": "04c078293c2150fee095f3176fff4a61dbb437383f75d5bb6e9400317efe2133",
+    "filename": "2024.xlsx",
+    "edition": "11.0",
+    "check_801B": 9.2
+  },
+  "2025": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2025-03/national_efficient_price_determination_2025-26-price_weight_tables.xlsx",
+    "sha256": "6fc71ffc2b55de37ae9b2bad7be8f83e61f73f80624396de9ee392b9aefbeda5",
+    "filename": "2025.xlsx",
+    "edition": "11.0",
+    "check_801B": 8.3
+  },
+  "2026": {
+    "url": "https://www.ihacpa.gov.au/sites/default/files/2026-03/National_Efficient_Price_Determination_2026-27_Price_Weight_Tables.XLSX",
+    "sha256": "cca4212fccca2e40b741ee4279d8cf67c2b35a277049865c8453d485f6086fc3",
+    "filename": "2026.xlsx",
+    "edition": "12.0",
+    "check_801B": 9.4
+  }
+}

@@ -761,3 +761,5 @@ Historical gate: Gate: implement the first Rust-backed acute 2025 canary.
 - **Stata Interoperability** - Retain. Support health-economics Stata workflows through the already-scoped interop and SSC submission evidence; No new development outside that boundary while Rust Core GA remains the immediate priority.
 
 ---
+
+[Indirect relative stay calculator and validation](relative-stay-index.md)

@@ -33,3 +33,5 @@ NEP26 and mapping PR branches under parent #396. This is a fresh verified remote
 clone, not the unrelated dirty local checkout. Earlier assignments above remain
 history; no changes to their local files or native operations. No deployment,
 registry submission or patient-data publication is part of this lane.
+
+2026-11-03 · MCHS RSI and multi-year pricing ALOS implementation, benchmark import and pre-publication privacy checks. Workstream feat/multi-year-stay-benchmarks. Public benchmark sources and synthetic tests only.
