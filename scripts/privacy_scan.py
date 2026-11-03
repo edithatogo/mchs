@@ -1,10 +1,10 @@
 """Screen added Git lines with Microsoft Presidio without displaying matched text."""
 
 import argparse
-import subprocess
 import sys
 from pathlib import PurePosixPath
 
+from local_tool_output import read_output
 from presidio_analyzer import Pattern, PatternRecognizer
 
 RULES = {
@@ -24,9 +24,11 @@ RULES = {
 
 
 def scan(revision):
+    if revision is not None and (not revision or revision.startswith("-")):
+        raise ValueError("Expected a Git revision")
     options = ["--cached"] if revision is None else [revision]
     names = (
-        subprocess.check_output(
+        read_output(
             ["git", "diff", "--name-only", "-z", "--diff-filter=ACMRT", *options]
         )
         .decode()
@@ -52,7 +54,7 @@ def scan(revision):
             for part in path.parts
         ):
             findings.add("restricted file type or directory")
-        diff = subprocess.check_output(
+        diff = read_output(
             [
                 "git",
                 "diff",

@@ -6,12 +6,12 @@ import hashlib
 import json
 import math
 import re
-import subprocess
 import tempfile
 from io import BytesIO
 from pathlib import Path
 from zipfile import ZipFile
 
+from local_tool_output import read_output
 from openpyxl import load_workbook
 from pyxlsb import open_workbook
 
@@ -56,7 +56,7 @@ def extract_workbook(path, edition):
 
 def extract_legacy_pdf(path, edition):
     """Pinned 2014/2015 acute pages repeat a column-aligned ALOS heading."""
-    text = subprocess.check_output(["pdftotext", "-layout", str(path), "-"], text=True)
+    text = read_output(["pdftotext", "-layout", str(path.resolve()), "-"]).decode()
     if not re.search(r"AR-DRG\s+V\s*" + re.escape(edition), text, re.I):
         raise ValueError("Unexpected historical edition")
     rows = []
