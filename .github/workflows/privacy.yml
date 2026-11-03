@@ -17,7 +17,7 @@ jobs:
       - name: Scan changed text with Presidio
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
-        run: uv run --locked --only-group privacy --no-install-project python scripts/privacy_scan.py --revision "$BASE...HEAD"
+        run: uv run --locked --only-group privacy python scripts/privacy_scan.py --revision "$BASE...HEAD"
       - name: Scan submitted commits for secrets
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
