@@ -57,11 +57,19 @@ profiling = [
 docs = [
     "vale",
 ]
+privacy = [
+    "presidio-analyzer==2.2.366",
+]
 
 [project.scripts]
 funding-calculator = "nwau_py.cli.main:cli"
 mchs-mcp = "nwau_py.mcp_server:main"
 mchs-mcp-http = "nwau_py.mcp_http_server:main"
+
+[project.optional-dependencies]
+pricing-import = [
+    "openpyxl==3.1.5",
+]
 
 [tool.setuptools.packages.find]
 where = [".", "excel_calculator/src"]
