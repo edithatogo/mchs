@@ -143,9 +143,16 @@ def test_vale_validation_claims_style_pins_the_expected_tokens_and_message():
 
 def test_tech_stack_documents_the_starlight_docs_site_contract():
     tech_stack = _read_text(TECH_STACK_FILE)
+    dependencies = json.loads(_read_text(ROOT / "docs-site" / "package.json"))[
+        "dependencies"
+    ]
 
     assert "## Starlight Documentation Site" in tech_stack
-    assert "@astrojs/starlight" in tech_stack
-    assert "0.39.2" in tech_stack
-    assert "starlight-links-validator" in tech_stack
+    for package in (
+        "@astrojs/starlight",
+        "astro",
+        "starlight-links-validator",
+        "starlight-versions",
+    ):
+        assert f"`{package}` `{dependencies[package]}`" in tech_stack
     assert "starlight-openapi" in tech_stack

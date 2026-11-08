@@ -47,6 +47,10 @@ and [PCF limitations](https://learn.microsoft.com/en-us/power-apps/developer/com
 - Outputs and errors should be structured for workflow apps.
 - Calculation uses the shared Rust-backed core through a qualified delivery
   route. Power Platform formulas must not reproduce its calculation rules.
+- Each qualified route uses a secured service boundary or Rust-backed core;
+  the optional API and real patient-level data workflows retain the secured
+  service requirement described below. This does not require an HTTP endpoint
+  for manual, permitted-data bundle exchange.
 - The calculation contract and core remain independently buildable and releasable
   from Power Platform, including when a qualified build is packaged in PCF.
 - Power Platform and optional Dataverse remain orchestration and storage layers.

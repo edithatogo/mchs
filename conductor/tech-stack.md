@@ -53,6 +53,11 @@ that every calculator or binding is qualified.
 
 ## Target Platform
 
+For calculators awaiting promotion, Rust is the intended future calculator core.
+Where a Python implementation has qualified validation evidence and no Rust
+promotion record exists, Python remains the current validated runtime path for
+that calculator. This statement does not reverse an existing promotion.
+
 MCHS currently declares the Python range recorded above. The earlier Python
 3.10–3.14 target is superseded as a description of current packaging. A future
 shared-framework compatibility matrix must be selected from installable provider
@@ -98,7 +103,7 @@ The target DataFrame engine should be Polars rather than pandas.
 
 Arrow should be the canonical interchange and storage format for tabular reference data, extracted calculator tables, intermediate reusable datasets, and cross-library compatibility. DataFrame boundaries should prefer Arrow-compatible schemas so data can move between Polars, Python libraries, and future compute backends without lossy conversion.
 
-For MCHS batch execution, Arrow-compatible input and output remain the intended
+For MCHS execution, Arrow-compatible batch input and output remain the intended
 interchange boundary. The proposed Dapane core uses typed quantities and exact
 decimal/rational semantics independently of a table engine; optional Arrow and
 Polars adapters must preserve those semantics without silent float coercion.
@@ -162,6 +167,12 @@ tests demonstrate that the correct contract is used and incompatible versions
 or duplicated formula paths are rejected.
 
 Rust-core promotion should be staged:
+
+For each stream still using a qualified Python comparison implementation,
+Python remains the baseline for validation and promotion until Rust
+parity is recorded and the calculator-specific promotion record is accepted.
+This migration policy does not declare every legacy Python output an independent
+scientific reference or describe already promoted streams as Python-default.
 
 - Retain qualified Python/reference implementations as comparison baselines until
   a Rust stream matches the applicable independent fixtures. Record any repairs

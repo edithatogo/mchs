@@ -32,17 +32,30 @@
       "Roadmap-only and future-only maturity assertions",
       "New relative documentation links",
       "git diff --check",
-      "Ruff 0.17.3 across all tracked Python files and applicable configuration in an isolated materialized copy"
+      "Ruff 0.17.3 across all tracked Python files and applicable configuration in an isolated materialized copy",
+      "Conductor status matrix validator",
+      "Nineteen tests across the seven affected architecture, migration-policy, maintenance and status-matrix test files",
+      "Ruff lint and formatting checks for the documentation-integration follow-up"
     ],
     "not_run": [
-      "Runtime tests",
-      "Native builds",
-      "Installed binding tests",
+      "New shared Dapane runtime qualification; no such runtime is implemented by this track",
       "Power Platform deployment"
     ],
+    "prior_head_hosted_evidence": {
+      "commit": "a4e03b9f4c4de09dc449196dbde9ca9e83bc6ea6",
+      "run_url": "https://github.com/edithatogo/mchs/actions/runs/42429147467",
+      "passed": [
+        "Native Rust checks",
+        "Windows, Linux and macOS wheel builds and installed binding smoke checks",
+        "Security, dependency review and quality checks",
+        "863 Python tests; 8 skipped"
+      ],
+      "integration_failures": "Seven documentation/status-matrix assertions failed at this prior head; all affected test files pass locally after the follow-up. Hosted CI must qualify the updated head."
+    },
     "baseline_findings": [
       "Fourteen pre-existing track registry links target missing directories; no new links affected"
     ],
-    "related_catalogue_pr": "https://github.com/edithatogo/standards_check/pull/65"
+    "related_catalogue_pr": "https://github.com/edithatogo/standards_check/pull/65",
+    "related_ontology_pr": "https://github.com/edithatogo/UOGTO/pull/128"
   }
 }
