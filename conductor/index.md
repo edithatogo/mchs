@@ -1,5 +1,8 @@
 # Project Context
 
+- [Shared microcosting and valuation programme](./tracks/shared_microcosting_valuation_20261108/index.md)
+- [Dapane architecture and newborn-screening roadmap](../docs/roadmaps/dapane-framework.md)
+
 ## Definition
 - [Product Definition](./product.md)
 - [Product Guidelines](./product-guidelines.md)

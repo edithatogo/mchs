@@ -1,0 +1,48 @@
+{
+  "track_id": "shared_microcosting_valuation_20261108",
+  "type": "feature",
+  "status": "in_progress",
+  "track_class": "costing",
+  "current_state": "roadmap-only",
+  "primary_contract": "docs/roadmaps/dapane-framework.md",
+  "dependencies": [
+    "rust_core_first_multi_stream_20261101",
+    "polyglot_wrappers_python_r_julia_20261101",
+    "microcosting_healthworkforce:workforce-conditions-costing-v2_20261106",
+    "UOGTO:costing_valuation_reporting_20261108",
+    "voiage:simulation_outcome_boundary_20261107",
+    "kairos:Track 114"
+  ],
+  "completion_evidence": [
+    "two independent domain consumers of one Rust implementation",
+    "independent exact arithmetic and allocation reference fixtures",
+    "installed Python and later R/Julia parity evidence",
+    "source-qualified newborn programme model and reporting profiles",
+    "qualified standard Power App integration and optional transport evidence"
+  ],
+  "publication_status": "future-only",
+  "created_at": "2026-11-08T00:00:00Z",
+  "updated_at": "2026-11-08T00:00:00Z",
+  "description": "Coordinate an independent Rust microcosting and valuation core, composable domain models, optional Power Platform/process adapters and sourced reporting semantics. Runtime and archive actions remain pending.",
+  "verification": {
+    "status": "documentation_checks_passed",
+    "scope": "Architecture, dependency declarations and roadmap only; no new runtime qualification",
+    "passed": [
+      "Track JSON and required metadata",
+      "Roadmap-only and future-only maturity assertions",
+      "New relative documentation links",
+      "git diff --check",
+      "Ruff 0.17.3 across all tracked Python files and applicable configuration in an isolated materialized copy"
+    ],
+    "not_run": [
+      "Runtime tests",
+      "Native builds",
+      "Installed binding tests",
+      "Power Platform deployment"
+    ],
+    "baseline_findings": [
+      "Fourteen pre-existing track registry links target missing directories; no new links affected"
+    ],
+    "related_catalogue_pr": "https://github.com/edithatogo/standards_check/pull/65"
+  }
+}
