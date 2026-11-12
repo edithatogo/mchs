@@ -1,5 +1,11 @@
 # Project Tracks
 
+## [ ] Shared microcosting and valuation — Dapane working name
+
+[Specification and execution plan](./tracks/shared_microcosting_valuation_20261108/index.md).
+Architecture/roadmap recorded; runtime, bindings, deployment and archive work remain
+pending. Existing provider tracks retain ownership and no dependency pin advances.
+
 ## [ ] Track: research_software_registry_readiness_20260721
 
 [Specification and plan](./tracks/research_software_registry_readiness_20260721/)
