@@ -53,7 +53,7 @@ def test_starlight_package_declares_required_plugins_and_scripts():
 
     dependencies = package_json["dependencies"]
     assert dependencies["@astrojs/starlight"] == "0.42.8"
-    assert dependencies["astro"] == "7.4.4"
+    assert dependencies["astro"] == "7.4.12"
     assert "starlight-links-validator" in dependencies
     assert "starlight-versions" in dependencies
     assert package_json["dependencies"]["starlight-versions"] == "0.10.1"
