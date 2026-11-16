@@ -28,6 +28,11 @@ jobs:
       RELEASE_REF_NAME: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.event_name == 'push' && github.ref_name || '' }}
       RELEASE_REF_TYPE: ${{ github.event_name == 'release' && 'tag' || github.event_name == 'workflow_dispatch' && github.event.inputs.tag && 'tag' || github.ref_type }}
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: audit
+
       - name: Check out repository at tagged ref
         if: github.event_name == 'release'
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
@@ -49,7 +54,7 @@ jobs:
           python-version: "3.15.1"
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
 
       - name: Validate release tag and package version metadata
         env:
@@ -182,6 +187,6 @@ jobs:
           cp dist/*.whl dist/*.tar.gz dist-pypi/
 
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1
         with:
           packages-dir: dist-pypi/
