@@ -99,6 +99,7 @@ convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["S", "NPY", "E501"]
+"property_tests/**/*.py" = ["S101"]
 "nwau_py/compat.py" = ["S", "E501"]
 "**/helpers/**/*.py" = ["S", "NPY"]
 "scripts/**/*.py" = ["S", "NPY"]
