@@ -32,7 +32,8 @@ do not cover the consumer's system runtime or independently supplied native tool
 
 The shared action retains the normalized inventory, report, database metadata,
 source identity, policy outcome and hashes. Caller-owned subject receipts are
-retained separately, including on failure. Release evidence retention is 30 days.
+retained separately, including on failure. Caller-owned release receipts are
+retained for 30 days; shared scanner outputs for 90 days.
 The weekly job resolves the latest published non-prerelease release once and
 checks the exact `sbom.cdx.json` asset identity and GitHub-provided SHA-256 before
 scanning. An older release without that asset produces an explicit failure;
