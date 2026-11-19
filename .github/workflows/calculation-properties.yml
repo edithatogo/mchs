@@ -1,0 +1,56 @@
+name: Synthetic calculation properties
+
+on:
+  pull_request:
+    paths:
+      - 'nwau_py/calculators/nep26_equation.py'
+      - 'nwau_py/calculators/relative_stay.py'
+      - 'property_tests/**'
+      - 'pyproject.toml'
+      - 'uv.lock'
+      - '.github/workflows/calculation-properties.yml'
+  schedule:
+    - cron: '47 18 * * 3'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+concurrency:
+  group: calculation-properties-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  properties:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CALCULATION_PROPERTY_EXAMPLES: ${{ github.event_name == 'pull_request' && '100' || '1000' }}
+      PYTHON_JIT: '0'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2
+        with:
+          version: '0.13.7'
+          python-version: '3.15.1'
+      - name: Install locked property-test dependencies
+        run: |
+          uv export --locked --only-group test --only-group property --no-emit-project --output-file "$RUNNER_TEMP/property-requirements.txt"
+          uv venv --python 3.15.1 .venv-properties
+          uv pip sync --python .venv-properties/bin/python --require-hashes "$RUNNER_TEMP/property-requirements.txt"
+      - name: Exercise bounded synthetic equations and cohort accounting
+        env:
+          PROPERTY_SEED: ${{ github.run_id }}
+        run: |
+          ulimit -v 4194304
+          timeout 300 .venv-properties/bin/python -m pytest property_tests -q --hypothesis-seed="$PROPERTY_SEED" --hypothesis-show-statistics --junitxml=.cache/calculation-properties.xml
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: synthetic-calculation-properties
+          path: |
+            .cache/calculation-properties.xml
+            .hypothesis/examples/
+          include-hidden-files: true
+          retention-days: 14
