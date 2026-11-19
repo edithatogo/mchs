@@ -52,33 +52,30 @@ jobs:
       - name: Validate MCP package artifacts
         run: uv run python .github/scripts/validate_mcp_package_artifacts.py
 
-      - name: Generate SBOM (CycloneDX)
-        run: |
-          uv run python - <<'PY'
-          import json
-          import pathlib
-          import tomllib
+      - name: Generate resolved runtime SBOM (CycloneDX)
+        run: bash .github/scripts/generate_release_sbom.sh dist dist/sbom.cdx.json
 
-          version = tomllib.loads(
-              pathlib.Path("pyproject.toml").read_text(encoding="utf-8")
-          )["project"]["version"]
-          payload = {
-              "bomFormat": "CycloneDX",
-              "specVersion": "1.5",
-              "version": 1,
-              "metadata": {
-                  "component": {
-                      "name": "nwau_py",
-                      "version": version,
-                      "type": "library",
-                  }
-              },
-          }
-          pathlib.Path("dist/sbom.cdx.json").write_text(
-              json.dumps(payload, indent=2) + "\n",
-              encoding="utf-8",
-          )
-          PY
+      - name: Gate release dependencies with Grype
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@06a7bd00074b402fe91b2e3ed7a8af806be945e7
+        with:
+          sbom: dist/sbom.cdx.json
+          mode: enforce
+          severity-cutoff: critical
+          artifact-name: grype-python-release
+          output-directory: .grype-evidence
+
+      - name: Retain release subject binding
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: grype-python-release-inputs
+          path: .grype-inputs/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Verify scanned release subjects are unchanged
+        run: sha256sum --check .grype-inputs/subjects.sha256
 
       - name: Generate artifact checksums
         run: |

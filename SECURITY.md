@@ -40,6 +40,11 @@ release on the default branch.
 
 ## Response process
 
+The [Grype dependency evidence contract](docs/grype-dependency-evidence.md)
+describes the initial Critical release gates, advisory pull-request scans,
+retained release rescans and their inventory boundaries. Workflow configuration
+alone is not successful scanner or release evidence.
+
 - We acknowledge security reports within a few business days.
 - Reproduction and severity are validated against active CI and pinned evidence.
 - A patched version is prioritized by impact and dependency risk.
