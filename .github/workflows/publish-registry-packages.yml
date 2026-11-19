@@ -31,6 +31,45 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Package and inventory locked Rust candidate
+        run: |
+          cargo package --locked --manifest-path rust/Cargo.toml -p nwau-core
+          mkdir -p .grype-rust-inputs .grype-rust-binding
+          cp rust/Cargo.lock .grype-rust-inputs/Cargo.lock
+          cp rust/target/package/nwau-core-*.crate .grype-rust-inputs/
+          sha256sum rust/Cargo.lock rust/target/package/nwau-core-*.crate > .grype-rust-binding/subjects.sha256
+
+      - name: Generate resolved Rust SPDX inventory
+        uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+        with:
+          path: .grype-rust-inputs
+          syft-version: v1.57.2
+          format: spdx-json
+          output-file: .grype-rust-binding/sbom.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Gate Rust registry candidate with Grype
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: .grype-rust-binding/sbom.spdx.json
+          mode: enforce
+          artifact-name: grype-cratesio
+          output-directory: .grype-rust-evidence
+
+      - name: Retain Rust candidate binding
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: grype-cratesio-inputs
+          path: .grype-rust-binding/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Verify scanned Rust candidate inputs
+        run: sha256sum --check .grype-rust-binding/subjects.sha256
+
       - name: Publish nwau-core to crates.io
         working-directory: rust/crates/nwau-core
         env:
@@ -60,6 +99,44 @@ jobs:
       - name: Pack Mchs.Bindings.DotNet
         working-directory: bindings/dotnet
         run: dotnet pack DotNetBinding.csproj --configuration Release --output artifacts
+
+      - name: Record exact NuGet package subjects
+        run: |
+          mkdir -p .grype-nuget-inputs
+          sha256sum bindings/dotnet/artifacts/*.nupkg > .grype-nuget-inputs/subjects.sha256
+
+      - name: Inventory built .NET assemblies and resolved runtime metadata
+        uses: anchore/sbom-action@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+        env:
+          SYFT_DOTNET_EXCLUDE_PROJECT_REFERENCES: 'false'
+        with:
+          path: bindings/dotnet/bin/Release
+          syft-version: v1.57.2
+          format: spdx-json
+          output-file: .grype-nuget-inputs/sbom.spdx.json
+          upload-artifact: false
+          upload-release-assets: false
+
+      - name: Gate NuGet package dependencies with Grype
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: .grype-nuget-inputs/sbom.spdx.json
+          mode: enforce
+          artifact-name: grype-nuget
+          output-directory: .grype-nuget-evidence
+
+      - name: Retain NuGet candidate binding
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: grype-nuget-inputs
+          path: .grype-nuget-inputs/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Verify scanned NuGet package is unchanged
+        run: sha256sum --check .grype-nuget-inputs/subjects.sha256
 
       - name: Push Mchs.Bindings.DotNet to NuGet
         working-directory: bindings/dotnet

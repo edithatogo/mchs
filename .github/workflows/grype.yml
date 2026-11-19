@@ -1,0 +1,65 @@
+name: Grype dependency evidence
+
+on:
+  pull_request:
+    paths:
+      - pyproject.toml
+      - uv.lock
+      - .github/scripts/generate_release_sbom.sh
+      - .github/workflows/grype.yml
+      - .github/workflows/release.yml
+      - .github/workflows/publish.yml
+  workflow_dispatch:
+  schedule:
+    - cron: '37 5 * * 1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: grype-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-candidate:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.15.1'
+      - uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990
+        with:
+          version: '0.13.6'
+          enable-cache: false
+      - name: Build candidate distributions
+        run: uv build
+      - name: Inventory exact wheel and frozen runtime lock
+        run: bash .github/scripts/generate_release_sbom.sh
+      - name: Report candidate dependency vulnerabilities
+        uses: edithatogo/repository-standards/.github/actions/grype-scan@bc76f1fbe0fa87a1371eadc06b08f54b48c623f7
+        with:
+          sbom: dist/sbom.cdx.json
+          mode: advisory
+          artifact-name: grype-python-candidate
+          output-directory: .grype-evidence
+      - name: Retain candidate subject binding
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: grype-python-candidate-inputs
+          path: .grype-inputs/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
+  released-sbom:
+    if: github.event_name == 'schedule'
+    uses: edithatogo/repository-standards/.github/workflows/grype-release-rescan.yml@f3a877ccf65dc4fa94858977c25ab2544f83cba1
+    with:
+      sbom-asset: sbom.cdx.json
+      artifact-name: grype-released-python
