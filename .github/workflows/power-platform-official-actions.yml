@@ -16,19 +16,24 @@ jobs:
   official-actions-static:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           persist-credentials: false
       - name: Install Microsoft Power Platform Actions
-        uses: microsoft/powerplatform-actions/actions-install@v1
+        uses: microsoft/powerplatform-actions/actions-install@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
       - name: Pack managed solution with Microsoft action
-        uses: microsoft/powerplatform-actions/pack-solution@v1
+        uses: microsoft/powerplatform-actions/pack-solution@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
         with:
           solution-folder: power-platform/solution/src
           solution-file: dist/power-platform/mchs_alm_orchestration_managed.zip
           solution-type: Managed
       - name: Pack unmanaged solution with Microsoft action
-        uses: microsoft/powerplatform-actions/pack-solution@v1
+        uses: microsoft/powerplatform-actions/pack-solution@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
         with:
           solution-folder: power-platform/solution/src
           solution-file: dist/power-platform/mchs_alm_orchestration_unmanaged.zip
@@ -43,26 +48,31 @@ jobs:
     runs-on: ubuntu-latest
     environment: nsw-power-platform
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: audit
+
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           persist-credentials: false
       - name: Install Microsoft Power Platform Actions
-        uses: microsoft/powerplatform-actions/actions-install@v1
+        uses: microsoft/powerplatform-actions/actions-install@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
       - name: Verify target environment identity
-        uses: microsoft/powerplatform-actions/who-am-i@v1
+        uses: microsoft/powerplatform-actions/who-am-i@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
         with:
           environment-url: ${{ secrets.POWER_PLATFORM_ENVIRONMENT_URL }}
           app-id: ${{ secrets.POWER_PLATFORM_APPLICATION_ID }}
           client-secret: ${{ secrets.POWER_PLATFORM_CLIENT_SECRET }}
           tenant-id: ${{ secrets.POWER_PLATFORM_TENANT_ID }}
       - name: Pack managed solution for live checker
-        uses: microsoft/powerplatform-actions/pack-solution@v1
+        uses: microsoft/powerplatform-actions/pack-solution@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
         with:
           solution-folder: power-platform/solution/src
           solution-file: dist/power-platform/mchs_alm_orchestration_managed.zip
           solution-type: Managed
       - name: Run solution checker
-        uses: microsoft/powerplatform-actions/checker@v1
+        uses: microsoft/powerplatform-actions/checker@6e91314a9c6e694ea5c894fe8c40e09d73aa892b # v1
         with:
           environment-url: ${{ secrets.POWER_PLATFORM_ENVIRONMENT_URL }}
           app-id: ${{ secrets.POWER_PLATFORM_APPLICATION_ID }}
