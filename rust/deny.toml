@@ -92,6 +92,9 @@ allow = [
     "Unicode-3.0",
     "BSD-3-Clause",
     "BSD-2-Clause",
+    "Zlib", # observed foldhash/slotmap dependency licence
+    "ISC", # observed libloading dependency licence
+    "BSL-1.0", # observed xxhash-rust dependency licence
     "Unlicense",
     "CC0-1.0",
 ]
