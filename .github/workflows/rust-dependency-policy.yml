@@ -1,0 +1,18 @@
+name: Rust dependency policy
+on:
+  pull_request:
+    paths: ['rust/**/Cargo.toml', 'rust/Cargo.lock', 'rust/deny.toml', '.github/workflows/rust-dependency-policy.yml']
+  push:
+    branches: [master]
+    paths: ['rust/**/Cargo.toml', 'rust/Cargo.lock', 'rust/deny.toml', '.github/workflows/rust-dependency-policy.yml']
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dependency-policy:
+    uses: edithatogo/repository-standards/.github/workflows/rust-dependency-policy.yml@28f977dd612e2f2131026223b9fb82b24c83f507 # pinned pilot
+    with:
+      manifest-path: ./rust/Cargo.toml
+      rust-version: stable
