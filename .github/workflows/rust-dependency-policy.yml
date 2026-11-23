@@ -12,7 +12,7 @@ permissions:
   contents: read
 jobs:
   dependency-policy:
-    uses: edithatogo/repository-standards/.github/workflows/rust-dependency-policy.yml@e1e606f2689ac3e2cf472c01cb207cce367d423d # pinned pilot
+    uses: edithatogo/repository-standards/.github/workflows/rust-dependency-policy.yml@3fa29fff49268393e427ca3043fb6e1f0e49f877 # pinned pilot
     with:
       manifest-path: ./rust/Cargo.toml
       rust-version: stable
